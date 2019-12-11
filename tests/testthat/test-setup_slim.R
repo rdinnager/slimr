@@ -1,3 +1,3 @@
-test_that("multiplication works", {
-  expect_equal(2 * 2, 4)
+test_that("none-existent platform throws error", {
+  expect_error(setup_slim(platform = "none"))
 })

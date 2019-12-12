@@ -1,5 +1,5 @@
 Package: slimr
-Title: Run and post-process SLiM population genetics forward simulations.
+Title: Run and post-process SLiM population genetics forward simulations
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Russell",
@@ -19,4 +19,6 @@ Suggests:
     spelling
 RoxygenNote: 7.0.2
 Roxygen: list(markdown = TRUE)
-Language: en-US
+Language: en-GB
+Imports: 
+    stringr

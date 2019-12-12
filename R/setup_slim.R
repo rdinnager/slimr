@@ -1,11 +1,11 @@
 #' Attempt to install and / or setup SLiM for use with slimr
 #'
-#' `setup_slim()` will attempt to determine the user's OS and install SLiM automatically.
+#' `slim_setup()` will attempt to determine the user's OS and install SLiM automatically.
 #' Note that on Windows, you must have Windows subsystem for linux installed, which requires at least Windows 10.
 #'
-#' @param install_dir Directory to install SLiM to. If "default" `setup_slim()` will install in the default
-#' directory. For simplicity we reccommend sticking with "default" unless you have a good reason not to.
-#' @param test_slim
+#' @param install_dir Directory to install SLiM to. If "default" `slim_setup()` will install in the default
+#' directory. For simplicity we recommend sticking with "default" unless you have a good reason not to.
+#' @param test_slim Should SLiM be tested once installation is complete?
 #'
 #' @export
 #'
@@ -13,7 +13,7 @@
 #' \donttest{
 #' setup_slim()
 #' }
-setup_slim <- function(install_dir = "default", test_slim = TRUE) {
+slim_setup <- function(install_dir = "default", test_slim = TRUE) {
 
   platform <- get_os()
   if(!platform %in% c("windows", "unix", "osx")) {
@@ -103,4 +103,18 @@ get_slim_call <- function() {
     return('slim {slim_options}')
   }
 
+}
+
+#' Is SLiM Available?
+#'
+#' Function to test if SLiM is available on user's system.
+#'
+#' @return
+is_slim_available <- function() {
+  slim_call <- get_slim_call()
+  slim_call_version <- stringr::str_replace(slim_call, stringr::fixed("{slim_options}"), stringr::fixed("-v"))
+
+  test <- system(slim_call_version, ignore.stdout = TRUE)
+
+  return(test == 0)
 }

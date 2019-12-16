@@ -1,4 +1,4 @@
-.onLoad <- function(libname, pkgname) {
+.onAttach <- function(libname, pkgname) {
   slim_avail <- is_slim_available()
   if(slim_avail) {
     slim_settings$slim_call <- get_slim_call()

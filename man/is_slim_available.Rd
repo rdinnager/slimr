@@ -6,9 +6,6 @@
 \usage{
 is_slim_available()
 }
-\value{
-
-}
 \description{
 Function to test if SLiM is available on user's system.
 }

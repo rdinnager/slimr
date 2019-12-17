@@ -201,9 +201,15 @@ get_slim_call <- function() {
     slim_call <- '{install_dir}slim {slim_options}'
   }
 
-  slim_call <- stringr::str_replace(slim_call,
-                                    stringr::fixed("{install_dir}"),
-                                    stringr::fixed(paste0(install_dir, "/bin/")))
+  if(install_dir == "default" | install_dir == "") {
+    slim_call <- stringr::str_replace(slim_call,
+                                      stringr::fixed("{install_dir}"),
+                                      stringr::fixed(""))
+  } else {
+    slim_call <- stringr::str_replace(slim_call,
+                                      stringr::fixed("{install_dir}"),
+                                      stringr::fixed(paste0(install_dir, "/bin/")))
+  }
   return(slim_call)
 }
 

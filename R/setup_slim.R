@@ -49,14 +49,13 @@ slim_setup <- function(install_dir = "default", test_slim = TRUE) {
                           make \
                           make install"')
       } else {
-        if(!dir.exists(install_dir)) {
-          dir.create(install_dir)
-        }
 
-        compile <- system(stringr::str_replace("cd SLiM_build \
+        system(paste0('bash -c "mkdir -p ', install_dir, '"'))
+
+        compile <- system(stringr::str_replace('bash -c "cd SLiM_build \
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/path/to/install ../SLiM \
 make \
-                          make install",
+                          make install"',
                                                "/path/to/install",
                                                install_dir))
       }

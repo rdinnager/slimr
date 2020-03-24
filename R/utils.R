@@ -20,3 +20,10 @@ get_os <- function(){
   }
   tolower(os)
 }
+
+
+convert_to_wsl_path <- function(windows_path) {
+  stringr::str_replace(windows_path, "C:", "\\\\mnt\\\\c") %>%
+    stringr::str_replace_all("\\\\", "/")
+
+}

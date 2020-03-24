@@ -4,7 +4,8 @@
 #' Note that on Windows, you must have Windows subsystem for linux installed, which requires at least Windows 10.
 #'
 #' @param install_dir Directory to install SLiM to. If "default" `slim_setup()` will install in the default
-#' directory. For simplicity we recommend sticking with "default" unless you have a good reason not to.
+#' directory. Be carefult to make sure you have write and execution permissions for the installation folder
+#' you specify.
 #' @param test_slim Should SLiM be tested once installation is complete?
 #'
 #' @export
@@ -13,7 +14,7 @@
 #' \donttest{
 #' setup_slim()
 #' }
-slim_setup <- function(install_dir = "default", test_slim = TRUE) {
+slim_setup <- function(install_dir = "~/slim", test_slim = TRUE) {
 
   platform <- get_os()
   if(!platform %in% c("windows", "linux", "osx")) {
@@ -21,7 +22,7 @@ slim_setup <- function(install_dir = "default", test_slim = TRUE) {
   }
 
   if(platform == "windows") {
-    if(system('wsl.exe "echo"') != 0) {
+    if(system('wsl.exe "echo"', show.output.on.console = FALSE) != 0) {
       stop("It appears your Windows system does not have a working Windows subsystem for linux (WSL). Please make
            sure you setup and install WSL before proceeding. Note WSL is only available for Windows 10 and above.
            See https://docs.microsoft.com/en-us/windows/wsl/install-win10 for installation instructions")

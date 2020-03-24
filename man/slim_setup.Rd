@@ -4,11 +4,12 @@
 \alias{slim_setup}
 \title{Attempt to install and / or setup SLiM for use with slimr}
 \usage{
-slim_setup(install_dir = "default", test_slim = TRUE)
+slim_setup(install_dir = "~/slim", test_slim = TRUE)
 }
 \arguments{
 \item{install_dir}{Directory to install SLiM to. If "default" \code{slim_setup()} will install in the default
-directory. For simplicity we recommend sticking with "default" unless you have a good reason not to.}
+directory. Be carefult to make sure you have write and execution permissions for the installation folder
+you specify.}
 
 \item{test_slim}{Should SLiM be tested once installation is complete?}
 }

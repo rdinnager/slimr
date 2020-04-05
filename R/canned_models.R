@@ -27,31 +27,31 @@ simple_spatial_model <- function(ngen = 10000, N = 500, nloc = 10000, mating_sd 
   mod <-
 '
 initialize() {
-  setSeed(<.seed>);
+  setSeed(<<.seed>>);
 
-	defineConstant("sigma_M", <mating_sd>);
-	defineConstant("N", <N>);
+	defineConstant("sigma_M", <<mating_sd>>);
+	defineConstant("N", <<N>>);
 
 	initializeSLiMOptions(dimensionality="xy");
 	initializeMutationRate(<mutation_rate>);
 	initializeMutationType("m1", 0.5, "f", 0.0);        // neutral
 
 	initializeGenomicElementType("g1", m1, 1.0);
-	initializeGenomicElement(g1, 0, <nloc - 1>);
-	initializeRecombinationRate(<recomb_rate>);
+	initializeGenomicElement(g1, 0, <<nloc - 1>>);
+	initializeRecombinationRate(<<recomb_rate>>);
 
-	initializeInteractionType(2, "xy", reciprocal=T, maxDistance= sigma_M * 3);     // mate choice
+	initializeInteractionType(2, "xy", reciprocal=T, maxDistance= sigma_M * 3); // mate choice
 	i2.setInteractionFunction("n", 1.0, sigma_M);
 }
 
 1 late() {
 	sim.addSubpop("p1", N);
-	p1.setSpatialBounds(c(<xlims[1]>, <ylims[1]>, <xlims[2]>, <ylims[2]>));
+	p1.setSpatialBounds(c(<<xlims[1]>>, <<ylims[1]>>, <<xlims[2]>>, <<ylims[2]>>));
 	p1.individuals.setSpatialPosition(p1.pointUniform(N));
 }
 modifyChild() {
 	// set offspring position based on parental position
-	do pos = c(parent1.spatialPosition + rnorm(2, 0, <move_sd>));
+	do pos = c(parent1.spatialPosition + rnorm(2, 0, <<move_sd>>));
 	while (!p1.pointInBounds(pos));
 	child.setSpatialPosition(pos);
 
@@ -64,7 +64,7 @@ modifyChild() {
 
 
 	if(sim.generation % <output_every> == 0) {
-	  sim.outputFull(filePath = "<output_file>", append = T);
+	  sim.outputFull(filePath = "<<output_file>>", append = T);
 	  catn("Generation: " + sim.generation);
 	}
 }
@@ -77,7 +77,7 @@ mateChoice() {
 }
 '
 
-  script <- glue::glue(mod, .open = "<", .close = ">")[[1]]
+  script <- glue::glue(mod, .open = "<<", .close = ">>")[[1]]
 
   script
 
@@ -102,26 +102,40 @@ spatial_sim_w_pedigree <- function(ngen = 10000, N = 500, nloc = 10000, mating_m
 
   MK <- match.arg(movement_kernel)
 
+  output_dir <- dirname(output_file)
+  output_filename <- basename(output_file)
+  file_split <- strsplit(output_filename, ".", fixed = TRUE)
+
+  output_mating <- file_split[[1]]
+  output_mating[1] <- paste0(output_mating[1], "_mating")
+  output_mating <- paste0(output_mating, collapse = ".")
+  output_mating <- file.path(output_dir, output_mating)
+
+  output_full <- file_split[[1]]
+  output_full[1] <- paste0(output_full[1], "_full_at_end")
+  output_full <- paste0(output_full, collapse = ".")
+  output_full <- file.path(output_dir, output_full)
+
   script <-
 'initialize() {
-  setSeed(<.seed>);
+  setSeed(<<.seed>>);
 	initializeSLiMModelType("nonWF");
 	initializeSLiMOptions(keepPedigrees = T, dimensionality="xy");
 
-	defineConstant("N", <N>);   // Staring population size
-	defineConstant("save_every", <output_every>);   // How often to save some results
-	defineConstant("Nsample", <N_output>);   // How many individuals to sample for output?
-	defineConstant("NO", <NO>);   // NO, Non-overlapping generation; 1 = Non-overlapping, 0 = overlapping
-	defineConstant("MK", "<MK>");   // MK, Movement Kernel; "gauss" or "laplace"
-	defineConstant("K", <K>);   // carrying-capacity density
-	defineConstant("Fe", <formatC(x, format = "f", digits = 1)>);   // Fecundity
-	defineConstant("MD", <mating_max_dist>);   // MD, Maximum mating distance
+	defineConstant("N", <<N>>);   // Staring population size
+	defineConstant("save_every", <<output_every>>);   // How often to save some results
+	defineConstant("Nsample", <<N_output>>);   // How many individuals to sample for output?
+	defineConstant("NO", <<NO>>);   // NO, Non-overlapping generation; 1 = Non-overlapping, 0 = overlapping
+	defineConstant("MK", "<<MK>>");   // MK, Movement Kernel; "gauss" or "laplace"
+	defineConstant("K", <<K>>);   // carrying-capacity density
+	defineConstant("Fe", <<formatC(fecundity, format = "f", digits = 1)>>);   // Fecundity
+	defineConstant("MD", <<mating_max_dist>>);   // MD, Maximum mating distance
 	defineConstant("OD", 0.01);   // OD, Maximum offspring distance
-	defineConstant("MvR", 0.1);   // MvR, Movement Rate
+	defineConstant("MvR", <<move_sd>>);   // MvR, Movement Rate
 
-	defineConstant("genome_length", 100000);   // MR, Movement Rate
-	defineConstant("M", 1e-6);   // M, Mutation Rate
-	defineConstant("R", 1e-7);   // R, Recombination Rate
+	defineConstant("genome_length", <<nloc>>);   // MR, Movement Rate
+	defineConstant("M", <<mutation_rate>>);   // M, Mutation Rate
+	defineConstant("R", <<recomb_rate>>);   // R, Recombination Rate
 
 	initializeMutationType("m1", 0.5, "f", 0.0);
 	m1.convertToSubstitution = T;
@@ -154,8 +168,8 @@ reproduction() {
       // log the mating
       line1 = paste(c(sim.generation, individual.tag, offspring.tag));
       line2 = paste(c(sim.generation, mate.tag, offspring.tag));
-      writeFile("mating_1.txt", line1, append=T);
-      writeFile("mating_1.txt", line2, append=T);
+      writeFile("<<output_mating>>", line1, append=T);
+      writeFile("<<output_mating>>", line2, append=T);
 	   }
 	}
 }
@@ -217,22 +231,22 @@ reproduction() {
 	  pedigree_grandparents = paste(ind_samp.pedigreeGrandparentIDs);
 	  inds_x = paste(ind_samp.x);
 	  inds_y = paste(ind_samp.y);
-	  writeFile("sim_spatial_VCF_1.txt", "#OUT", append=T);
-  writeFile("sim_spatial_VCF_1.txt", paste(sim.generation), append=T);
-  writeFile("sim_spatial_VCF_1.txt", inds_x, append=T);
-  writeFile("sim_spatial_VCF_1.txt", inds_y, append=T);
-  writeFile("sim_spatial_VCF_1.txt", ind_tags, append=T);
-  writeFile("sim_spatial_VCF_1.txt", pedigree_inds, append=T);
-  writeFile("sim_spatial_VCF_1.txt", pedigree_parents, append=T);
-  writeFile("sim_spatial_VCF_1.txt", pedigree_grandparents, append=T);
-  ind_samp.genomes.outputVCF(filePath = "sim_spatial_VCF_1.txt", append = T);
+	  writeFile("<<output_file>>", "#OUT", append=T);
+    writeFile("<<output_file>>", paste(sim.generation), append=T);
+    writeFile("<<output_file>>", inds_x, append=T);
+    writeFile("<<output_file>>", inds_y, append=T);
+    writeFile("<<output_file>>", ind_tags, append=T);
+    writeFile("<<output_file>>", pedigree_inds, append=T);
+    writeFile("<<output_file>>", pedigree_parents, append=T);
+    writeFile("<<output_file>>", pedigree_grandparents, append=T);
+    ind_samp.genomes.outputVCF(filePath = "<<output_file>>", append = T);
 
-  catn("Generation: " + sim.generation);
+    catn("Generation: " + sim.generation);
 }
 }
 
-1000 late() {
-  sim.outputFull(filePath = "sim_spatial_full_output_end_1.txt", append = T);
+<<ngen>> late() {
+  sim.outputFull(filePath = "<<output_full>>", append = T);
   inds2 = sim.subpopulations.individuals;
 
   // filter out only individuals in central region; probably a more concise way to write this...
@@ -246,15 +260,18 @@ reproduction() {
   pedigree_grandparents = paste(ind_samp.pedigreeGrandparentIDs);
   inds_x = paste(ind_samp.x);
   inds_y = paste(ind_samp.y);
-  writeFile("sim_spatial_VCF_1.txt", "#OUT", append=T);
-  writeFile("sim_spatial_VCF_1.txt", paste(sim.generation), append=T);
-  writeFile("sim_spatial_VCF_1.txt", inds_x, append=T);
-  writeFile("sim_spatial_VCF_1.txt", inds_y, append=T);
-  writeFile("sim_spatial_VCF_1.txt", ind_tags, append=T);
-  writeFile("sim_spatial_VCF_1.txt", pedigree_inds, append=T);
-  writeFile("sim_spatial_VCF_1.txt", pedigree_parents, append=T);
-  writeFile("sim_spatial_VCF_1.txt", pedigree_grandparents, append=T);
-  ind_samp.genomes.outputVCF(filePath = "sim_spatial_VCF_1.txt", append = T);
+  writeFile("<<output_file>>", "#OUT", append=T);
+  writeFile("<<output_file>>", paste(sim.generation), append=T);
+  writeFile("<<output_file>>", inds_x, append=T);
+  writeFile("<<output_file>>", inds_y, append=T);
+  writeFile("<<output_file>>", ind_tags, append=T);
+  writeFile("<<output_file>>", pedigree_inds, append=T);
+  writeFile("<<output_file>>", pedigree_parents, append=T);
+  writeFile("<<output_file>>", pedigree_grandparents, append=T);
+  ind_samp.genomes.outputVCF(filePath = "<<output_file>>", append = T);
   sim.simulationFinished();
 }'
+
+  script_filled <- glue::glue(script, .open = "<<", .close = ">>")[[1]]
+  script_filled
 }

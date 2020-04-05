@@ -227,7 +227,8 @@ is_slim_available <- function() {
 
   slim_call_version <- stringr::str_replace(slim_call, stringr::fixed("{slim_options}"), stringr::fixed("-v"))
 
-  test <- system(slim_call_version, ignore.stdout = TRUE)
+  test <- system(slim_call_version, ignore.stdout = TRUE, ignore.stderr = TRUE,
+                 show.output.on.console = FALSE)
 
   return(test == 0)
 }

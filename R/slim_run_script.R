@@ -6,15 +6,19 @@
 #' @export
 #'
 #' @examples
-slim_run_script <- function(slim_script) {
+slim_run_script <- function(slim_script, slim_path = NULL) {
   script_file <- tempfile(fileext = ".txt")
   readr::write_file(slim_script, script_file)
-  if(slimr:::get_os() == "windows") {
+  if(get_os() == "windows") {
     script_file <- convert_to_wsl_path(script_file)
   }
   slim_options <- script_file
-  slim_string <- slimr:::get_slim_call() %>%
-    glue::glue()
+  if(is.null(slim_path)) {
+    slim_string <- get_slim_call() %>%
+      glue::glue()
+  } else {
+    slim_string <- paste(slim_path, slim_options)
+  }
   out <- system(slim_string)
   out
 }
@@ -30,6 +34,6 @@ slim_run_script <- function(slim_script) {
 #' @export
 #'
 #' @examples
-slim_run_script_template <- function(slim_script_template, param_list) {
+slim_run_script_template <- function(slim_script_template, param_list, slim_path = NULL) {
 
 }

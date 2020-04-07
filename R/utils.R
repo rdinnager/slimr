@@ -23,7 +23,12 @@ get_os <- function(){
 
 
 convert_to_wsl_path <- function(windows_path) {
-  stringr::str_replace(windows_path, "C:", "\\\\mnt\\\\c") %>%
+  drive_letter <- stringr::str_match(windows_path, "^([a-z]):")
+  stringr::str_replace(windows_path, drive_letter[1], paste0("\\\\mnt\\\\", drive_letter[2])) %>%
     stringr::str_replace_all("\\\\", "/")
 
+}
+
+get_generation_lines <- function(slim_script) {
+  gen_lines <- stringr::str_match(strsplit(slim_script, "\n")[[1]], "^([0-9]+) ")
 }

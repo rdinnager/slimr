@@ -6,6 +6,12 @@
     packageStartupMessage("Welcome to the slimr package. slimr requires SLiM population genetics forward simulation software. Run slim_setup() for slimr to attempt to download and install the package automatically. If that doesn't work, try installing manually by going to https://messerlab.org/slim/ and following the instructions.")
   }
 
-  recipes <- list.files(system.file('Recipes', package = 'existing_package'))
+  if(Sys.getenv("slim_install_dir") != "") {
+    slim_settings$install_dir <- Sys.getenv("slim_install_dir")
+  } else {
+    slim_settings$install_dir <- "~/slim"
+  }
+
+  #recipes <- list.files(system.file('Recipes', package = 'existing_package'))
 
 }

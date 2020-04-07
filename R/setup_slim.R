@@ -5,7 +5,8 @@
 #'
 #' @param install_dir Directory to install SLiM to. If "default" `slim_setup()` will install in the default
 #' directory. Be carefult to make sure you have write and execution permissions for the installation folder
-#' you specify.
+#' you specify. We recommend using the default directory "~/slim", in which case you will not have to set an
+#' environmental variable to tell slimr where to find your slim installation.
 #' @param test_slim Should SLiM be tested once installation is complete?
 #'
 #' @export
@@ -176,6 +177,7 @@ make \
     install_dir <- ""
   }
   slim_settings$install_dir <- install_dir
+  Sys.setenv(slim_install_dir = install_dir)
   invisible(NULL)
 }
 
@@ -192,13 +194,13 @@ get_slim_call <- function() {
   install_dir <- get_slim_install_dir()
 
   if(platform == "windows") {
-    slim_call <- 'bash -c "{install_dir}slim {slim_options}"'
+    slim_call <- 'bash -c "{install_dir}slim"'
   }
   if(platform == "linux") {
-    slim_call <- '{install_dir}slim {slim_options}'
+    slim_call <- '{install_dir}slim'
   }
   if(platform == "osx") {
-    slim_call <- '{install_dir}slim {slim_options}'
+    slim_call <- '{install_dir}slim'
   }
 
   if(install_dir == "default" | install_dir == "") {
@@ -238,10 +240,10 @@ get_slim_install_dir <- function() {
   if(!is.null(slim_settings$install_dir)) {
     return(slim_settings$install_dir)
   } else {
-    if(!is.null(Sys.getenv("slim_install_dir"))) {
+    if(Sys.getenv("slim_install_dir") != "") {
       return(Sys.getenv("slim_install_dir"))
     } else {
-      return(NULL)
+      return("~/slim")
     }
   }
 }

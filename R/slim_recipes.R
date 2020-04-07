@@ -7,7 +7,7 @@
 #'
 #' @examples
 get_recipe <- function(recipe = 1) {
-  recipes[recipe]
+  slim_recipes[[recipe]]
 }
 
 

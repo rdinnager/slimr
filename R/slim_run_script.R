@@ -31,23 +31,48 @@ slim_run_script <- function(slim_script, slim_path = NULL) {
 #' @export
 #'
 #' @examples
-slim_run_script <- function(slim_script, slim_path = NULL, save_every = 100, write_data_live = FALSE) {
+slim_run_script <- function(slim_script, slim_path = NULL, asis = TRUE, progress = TRUE, save_every = 100, write_data_live = FALSE) {
   if(is.null(slim_path)) {
     slim_path <- get_slim_call()
   }
+
+  mentioned_gens <- get_generation_lines(slim_script)
+
+  if(progress) {
+    last_gen <- max(mentioned_gens$generations)
+    slim_script <- insert_generation_output(slim_script, end_gen = last_gen)
+    pb <- progress::progress_bar$new(format = "[:bar] :current/:total (:percent)", total = last_gen)
+  }
+
   script_file <- tempfile(fileext = ".txt")
   readr::write_file(slim_script, script_file)
   if(get_os() == "windows") {
     script_file <- convert_to_wsl_path(script_file)
   }
 
+  if(progress) {
+    pb$tick(0)
+  }
   slim_p <- processx::process$new(normalizePath(slim_path), script_file,
                                   stdout = "|", stderr = "|")
+  while(slim_p$is_alive()) {
+    slim_p$poll_io(100000)
+    out <- slim_p$read_output_lines()
+    if(progress) {
+      gens <- grep("generation: ", out, value = TRUE) %>%
+        readr::parse_number()
+      if(length(gens) == 0) {
+        gens <- 0
+      }
+      pb$tick(max(gens) - min(gens))
+    }
 
+  }
   while(slim_p$is_alive()) {
     out <- slim_p$read_output_lines()
     out_tibble_list <- process_output_to_tibble_list(out, out_tibble_list)
   }
+
 
   err <- slim_p$read_all_error_lines()
 

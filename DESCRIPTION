@@ -25,4 +25,5 @@ Imports:
     processx,
     readr,
     glue,
-    magrittr
+    magrittr,
+    progress

@@ -31,4 +31,6 @@ convert_to_wsl_path <- function(windows_path) {
 
 get_generation_lines <- function(slim_script) {
   gen_lines <- stringr::str_match(strsplit(slim_script, "\n")[[1]], "^([0-9]+) ")
+  lines <- which(!is.na(gen_lines[ ,1]))
+  list(lines = lines, generations = readr::parse_number(gen_lines[ , 2][lines]))
 }

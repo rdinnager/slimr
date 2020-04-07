@@ -41,7 +41,7 @@ slim_run_script <- function(slim_script, slim_path = NULL, asis = TRUE, progress
   if(progress) {
     last_gen <- max(mentioned_gens$generations)
     slim_script <- insert_generation_output(slim_script, end_gen = last_gen)
-    pb <- progress::progress_bar$new(format = "[:bar] :current/:total (:percent)", total = last_gen)
+    pb <- progress::progress_bar$new(format = "[:bar] :spin :current/:total (:percent)", total = last_gen)
   }
 
   script_file <- tempfile(fileext = ".txt")
@@ -55,23 +55,33 @@ slim_run_script <- function(slim_script, slim_path = NULL, asis = TRUE, progress
   }
   slim_p <- processx::process$new(normalizePath(slim_path), script_file,
                                   stdout = "|", stderr = "|")
+  current_gen <- 0
+  #previous_gen <- 0
   while(slim_p$is_alive()) {
-    slim_p$poll_io(100000)
+    slim_p$poll_io(10000)
     out <- slim_p$read_output_lines()
+    gens <- grep("generation: ", out, value = TRUE) %>%
+      readr::parse_number()
+    if(length(gens) != 0) {
+      #previous_gen <- current_gen
+      current_gen <- max(gens)
+    }
     if(progress) {
-      gens <- grep("generation: ", out, value = TRUE) %>%
-        readr::parse_number()
-      if(length(gens) == 0) {
-        gens <- 0
-      }
-      pb$tick(max(gens) - min(gens))
+      pb$update(current_gen/last_gen)
     }
 
   }
-  while(slim_p$is_alive()) {
-    out <- slim_p$read_output_lines()
-    out_tibble_list <- process_output_to_tibble_list(out, out_tibble_list)
+
+  gens <- grep("generation: ", out, value = TRUE) %>%
+    readr::parse_number()
+  if(length(gens) != 0) {
+    current_gen <- max(gens)
+    if(progress) {
+      pb$update(current_gen/last_gen)
+    }
   }
+
+
 
 
   err <- slim_p$read_all_error_lines()

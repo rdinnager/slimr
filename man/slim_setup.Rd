@@ -9,7 +9,8 @@ slim_setup(install_dir = "~/slim", test_slim = TRUE)
 \arguments{
 \item{install_dir}{Directory to install SLiM to. If "default" \code{slim_setup()} will install in the default
 directory. Be carefult to make sure you have write and execution permissions for the installation folder
-you specify.}
+you specify. We recommend using the default directory "~/slim", in which case you will not have to set an
+environmental variable to tell slimr where to find your slim installation.}
 
 \item{test_slim}{Should SLiM be tested once installation is complete?}
 }

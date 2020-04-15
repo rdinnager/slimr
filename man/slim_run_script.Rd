@@ -4,7 +4,14 @@
 \alias{slim_run_script}
 \title{Title}
 \usage{
-slim_run_script(slim_script, slim_path = NULL)
+slim_run_script(
+  slim_script,
+  slim_path = NULL,
+  asis = TRUE,
+  .progress = TRUE,
+  save_every = 100,
+  write_data_live = FALSE
+)
 }
 \arguments{
 \item{slim_script}{A character vector (of length 1) containing the SLiM script to run}

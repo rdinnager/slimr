@@ -27,7 +27,7 @@ insert_generation_output <- function(slim_script, line = NULL, start_gen = 1, en
 #' @export
 #'
 #' @examples
-slim_script_text_from_text <- function(slim_script_text) {
+slim_script_from_text <- function(slim_script_text) {
 
   suppressWarnings(
     block_regx <- gregexpr("\\{(?:[^{}]*|(?R))*\\}",

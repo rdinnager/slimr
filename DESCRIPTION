@@ -16,8 +16,10 @@ BugReports: https://github.com/rdinnager/slimr/issues
 Suggests: 
     covr,
     testthat (>= 2.1.0),
-    spelling
-RoxygenNote: 7.0.2
+    spelling,
+    knitr,
+    rmarkdown
+RoxygenNote: 7.1.0
 Roxygen: list(markdown = TRUE)
 Language: en-GB
 Imports: 
@@ -26,4 +28,7 @@ Imports:
     readr,
     glue,
     magrittr,
-    progress
+    progress,
+    unglue,
+    crayon
+VignetteBuilder: knitr

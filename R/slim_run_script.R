@@ -6,51 +6,38 @@
 #' @export
 #'
 #' @examples
-slim_run_script <- function(slim_script, slim_path = NULL) {
-  script_file <- tempfile(fileext = ".txt")
-  readr::write_file(slim_script, script_file)
-  if(get_os() == "windows") {
-    script_file <- convert_to_wsl_path(script_file)
-  }
-  slim_options <- script_file
+slim_run_script <- function(slim_script, slim_path = NULL, asis = TRUE, .progress = TRUE, save_every = 100, write_data_live = FALSE) {
+
+  on.exit({
+        try(slim_p$kill(), silent = TRUE)
+      }, add = TRUE)
+
   if(is.null(slim_path)) {
-    slim_string <- get_slim_call() %>%
-      glue::glue()
-  } else {
-    slim_string <- paste(slim_path, slim_options)
-  }
-  out <- system(slim_string)
-  out
-}
-
-#' Title
-#'
-#' @param slim_script A character vector (of length 1) containing the SLiM script to run
-#'
-#' @return
-#' @export
-#'
-#' @examples
-slim_run_script <- function(slim_script, slim_path = NULL, asis = TRUE, progress = TRUE, save_every = 100, write_data_live = FALSE) {
-  if(is.null(slim_path)) {
-    slim_path <- get_slim_call()
+    slim_path <- slimr:::get_slim_call()
   }
 
-  mentioned_gens <- get_generation_lines(slim_script)
+  mentioned_gens <- slimr:::get_generation_lines(slim_script)
 
-  if(progress) {
+  print(mentioned_gens)
+
+  if(.progress) {
     last_gen <- max(mentioned_gens$generations)
-    slim_script <- insert_generation_output(slim_script, end_gen = last_gen)
-    pb <- progress::progress_bar$new(format = "[:bar] :spin :current/:total (:percent)", total = last_gen)
+    print(last_gen)
+    slim_script <- slimr:::insert_generation_output(slim_script, end_gen = last_gen)
+    pb <- progress::progress_bar$new(format = "[:bar] :spin :current/:total (:percent)", total = last_gen,
+                                     clear = FALSE, show_after = 0)
   }
+
+  cat(slim_script)
 
   script_file <- tempfile(fileext = ".txt")
   readr::write_file(slim_script, script_file)
-  if(get_os() == "windows") {
+
+  if(slimr:::get_os() == "windows") {
     script_file <- convert_to_wsl_path(script_file)
   }
 
-  if(progress) {
+  if(.progress) {
     pb$tick(0)
   }
   slim_p <- processx::process$new(normalizePath(slim_path), script_file,
@@ -60,15 +47,23 @@ slim_run_script <- function(slim_script, slim_path = NULL, asis = TRUE, progress
   while(slim_p$is_alive()) {
     slim_p$poll_io(10000)
     out <- slim_p$read_output_lines()
+
     gens <- grep("generation: ", out, value = TRUE) %>%
       readr::parse_number()
+    print(gens)
+    print(slim_p$is_alive())
     if(length(gens) != 0) {
-      #previous_gen <- current_gen
+
       current_gen <- max(gens)
+      if(.progress) {
+        pb$update(current_gen/last_gen)
+      }
+    } else {
+      if(.progress) {
+        pb$tick(0)
+      }
     }
-    if(progress) {
-      pb$update(current_gen/last_gen)
-    }
+
 
   }
 
@@ -76,25 +71,18 @@ slim_run_script <- function(slim_script, slim_path = NULL, asis = TRUE, progress
     readr::parse_number()
   if(length(gens) != 0) {
     current_gen <- max(gens)
-    if(progress) {
+    if(.progress) {
       pb$update(current_gen/last_gen)
     }
   }
 
-
+  #pb$terminate
 
 
   err <- slim_p$read_all_error_lines()
 
-  slim_options <- script_file
-  if(is.null(slim_path)) {
-    slim_string <- get_slim_call() %>%
-      glue::glue()
-  } else {
-    slim_string <- paste(slim_path, slim_options)
-  }
-  out <- system(slim_string)
-  out
+  slim_p$kill()
+  err
 }
 
 #' Title

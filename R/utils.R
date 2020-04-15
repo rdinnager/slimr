@@ -1,5 +1,3 @@
-slim_settings <- new.env(parent = emptyenv())
-
 #' Function to return the OS
 #'
 #' This function shamelessly stolen from: https://www.r-bloggers.com/identifying-the-os-from-r/

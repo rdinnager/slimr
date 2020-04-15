@@ -176,7 +176,7 @@ make \
   if(install_dir == "default") {
     install_dir <- ""
   }
-  slim_settings$install_dir <- install_dir
+  .slim_settings$install_dir <- install_dir
   Sys.setenv(slim_install_dir = install_dir)
   invisible(NULL)
 }
@@ -237,8 +237,8 @@ is_slim_available <- function() {
 
 get_slim_install_dir <- function() {
 
-  if(!is.null(slim_settings$install_dir)) {
-    return(slim_settings$install_dir)
+  if(!is.null(.slim_settings$install_dir)) {
+    return(.slim_settings$install_dir)
   } else {
     if(Sys.getenv("slim_install_dir") != "") {
       return(Sys.getenv("slim_install_dir"))

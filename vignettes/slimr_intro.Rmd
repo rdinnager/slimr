@@ -1,0 +1,27 @@
+---
+title: "Introduction to Population Genetics modelling in slimr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to Population Genetics modelling in slimr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Welcome to `slimr`, an R package designed to make advanced population genetics simulations powered by the *SLiM* software easy to write, run and analyse in R. Let's start with a quick example. `slimr` comes with all the SLiM "recipes" that are laid out in the excellent SliM manual. These are stored as character vectors of length 1. We can use one of these recipes to demonstrate the most basic functionality of `slimr`, to run a SLiM script from R. To run this code you will need to have installed the SLiM software and connected it to `slimr`. See the vignette "Installing SLiM for use with slimr" if you need help with that. First let's get the very first recipe from the SLiM manual, and print it out to see what it looks like.
+
+```{r setup}
+library(slimr)
+
+recipe_1 <- slimr::get_recipe(recipe = 1)
+cat(recipe_1)
+
+```
+
+

@@ -27,11 +27,10 @@ cat(recipe_1)
 We can now fee this directly into the `slim_run_script` function to run it in SLiM!
 
 ```{r run_slim_1}
-
-
+slimr::slim_run_script(recipe_1)
 ```
 
-So the returned value just tells us whether SLiM ran successfully or not. Also, there is not much to do now. Why? Because the recipe we ran didn't actually output anything. The recipes that come with SLiM are generally meant to be run with SLiMGUI, a mac-only piece of software that can monitor simulations from scripts like this, and give graphical information about what is happening while it runs. If we just run the script using the SLiM software itself, the simulation runs, but we can't see what is happening in it. In this case, we can get much more out of our script by first converting it into a `slim_script` object. This will allow `slimr` to run the script in such a way that we can get output from it without having to specify output in the SLiM language itself. Let's try this.
+So the returned value just tells us whether SLiM ran successfully or not. Exit status 0 means that it did! But, there is not much to do now. Why? Because the recipe we ran didn't actually output anything. The recipes that come with SLiM are generally meant to be run with SLiMGUI, a mac-only piece of software that can monitor simulations from scripts like this, and give graphical information about what is happening while it runs. If we just run the script using the SLiM software itself, the simulation runs, but we can't see what is happening in it. In this case, we can get much more out of our script by first converting it into a `slim_script` object. This will allow `slimr` to run the script in such a way that we can get output from it without having to specify output in the SLiM language itself. Let's try this.
 
 ```{r convert2slim_script} 
 slim_script_1 <- slimr::slim_script_from_text(recipe_1)
@@ -43,5 +42,12 @@ Now if we print this object out we get a slightly prettier output:
 slim_script_1
 ```
 
-You might also notice a few changes. For one the comments have been removed because they are not relevant to the computation. Also, code block names have been added (with blue background). These can be used to refer to different blocks when manipulating the script in `slimr`.
+You might also notice a few changes. For one the comments have been removed because they are not relevant to the computation. Also, code block names have been added (with blue background). These can be used to refer to different blocks when manipulating the script in `slimr`. We can now also run this object using the `slim_run_script()` function and this time monitor and return output from it. 
+
+Monitoring progress in real-time is great but it doesn't work too well in a static document like this, so we will just collect information about how the run is going into an object which we can plot later.
+
+```{r get_sim_output}
+
+
+```
 

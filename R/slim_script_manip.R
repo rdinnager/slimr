@@ -74,6 +74,38 @@ slim_script_from_text <- function(slim_script_text) {
 
 }
 
+#' Title
+#'
+#' @param slim_script
+#'
+#' @return
+#' @export
+#'
+#' @examples
+slim_find_block_1 <- function(slim_script) {
+  block_1 <- which(slim_script$start_gens == 1 & !slim_script$colons)
+  if(length(block_1) == 0) {
+    block_1 <- ""
+  } else {
+    block_1 <- names(slim_script$code_blocks)[block_1]
+  }
+  block_1
+}
+
+slim_modify_block_code <- function(slim_script, block, what = NULL, where = NULL) {
+
+
+  block_end <- length(slim_script$code_blocks[[block]] == "}")
+
+  if(inherits(where, "character")) {
+    where <- dplyr::case_when(where == "end" ~ block_end,
+                              where == "start" ~ 1L,
+                              NA ~ block_end)
+  }
+
+
+}
+
 
 #' Title
 #'

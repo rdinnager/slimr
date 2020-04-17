@@ -5,16 +5,21 @@
 \title{Title}
 \usage{
 slim_run_script(
-  slim_script,
+  slim_script = NULL,
+  script_file = NULL,
   slim_path = NULL,
-  asis = TRUE,
+  output = NULL,
+  output_every = NULL,
+  output_sample = NULL,
   .progress = TRUE,
-  save_every = 100,
-  write_data_live = FALSE
+  write_data_live = FALSE,
+  log_output_to = NULL
 )
 }
 \arguments{
 \item{slim_script}{A character vector (of length 1) containing the SLiM script to run}
+
+\item{log_output_to}{}
 }
 \value{
 

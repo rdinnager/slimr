@@ -11,7 +11,7 @@
 #' @export
 #'
 #' @examples
-slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = NULL, .progress = TRUE, output_every = 100, write_data_live = FALSE, log_output_to = NULL) {
+slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = NULL, output = NULL, output_every = NULL, output_sample = NULL, .progress = TRUE, write_data_live = FALSE, log_output_to = NULL) {
 
   if(is.null(slim_script) & is.null(script_file)) {
     stop("One of slim_script or script_file must be specified")
@@ -34,6 +34,13 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
         warning("slim_script has more than one element. We will concatenate them with newline separators...")
       }
       slim_script <- paste(slim_script, collapse = "\n")
+    }
+
+    if(!is.null(output)) {
+      warning("Sorry, no slimr output is available when running scripts as a character object or from a script file.
+              output parameters ignored. You will only see output if the SLiM script itself produces output.
+              If you'd like slimr to track output for you, please convert to a slim_script object first,
+              via slimr::slim_script_from_text()")
     }
 
     script_file <- tempfile(fileext = ".txt")
@@ -77,6 +84,11 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
 
 
   } else {
+
+    if(!is.null(output)) {
+      block_1 <- slim_find_block_1(slim_script)
+      slim_script <- slim_modify_block_code(slim_script, block_1, what = "stuff", where = "end")
+    }
 
     mentioned_gens <- slimr:::get_generation_lines(slim_script)
 

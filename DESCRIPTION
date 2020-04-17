@@ -30,5 +30,6 @@ Imports:
     magrittr,
     progress,
     unglue,
-    crayon
+    crayon,
+    dplyr
 VignetteBuilder: knitr

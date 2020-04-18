@@ -25,10 +25,10 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
     slim_path <- slimr:::get_slim_call()
   }
 
-  if(!inherits(slim_script, "slim_script")) {
+  if(inherits(slim_script, "character") | (is.null(slim_script) & !is.null(script_file))) {
 
     if(!inherits(slim_script, "character")) {
-      stop("Sorry, slim_script must be a character or slim_script object.")
+
     } else {
       if(length(slim_script) > 1) {
         warning("slim_script has more than one element. We will concatenate them with newline separators...")
@@ -43,9 +43,10 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
               via slimr::slim_script_from_text()")
     }
 
-    script_file <- tempfile(fileext = ".txt")
-    readr::write_file(slim_script, script_file)
-
+    if(inherits(slim_script, "character")) {
+      script_file <- tempfile(fileext = ".txt")
+      readr::write_file(slim_script, script_file)
+    }
     if(slimr:::get_os() == "windows") {
       script_file <- convert_to_wsl_path(script_file)
     }
@@ -85,78 +86,83 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
 
   } else {
 
-    if(!is.null(output)) {
-      block_1 <- slim_find_block_1(slim_script)
-      slim_script <- slim_modify_block_code(slim_script, block_1, what = "stuff", where = "end")
-    }
+    if(inherits(slim_script, "slim_script")) {
+      if(!is.null(output)) {
+        block_1 <- slim_find_block_1(slim_script)
+        slim_script <- slim_modify_block_code(slim_script, block_1, what = "stuff", where = "end")
+      }
 
-    mentioned_gens <- slimr:::get_generation_lines(slim_script)
+      mentioned_gens <- slimr:::get_generation_lines(slim_script)
 
-    print(mentioned_gens)
+      print(mentioned_gens)
 
-    if(.progress) {
-      last_gen <- max(mentioned_gens$generations)
-      print(last_gen)
-      slim_script <- slimr:::insert_generation_output(slim_script, end_gen = last_gen)
-      pb <- progress::progress_bar$new(format = "[:bar] :spin :current/:total (:percent)", total = last_gen,
-                                       clear = FALSE, show_after = 0)
-    }
+      if(.progress) {
+        last_gen <- max(mentioned_gens$generations)
+        print(last_gen)
+        slim_script <- slimr:::insert_generation_output(slim_script, end_gen = last_gen)
+        pb <- progress::progress_bar$new(format = "[:bar] :spin :current/:total (:percent)", total = last_gen,
+                                         clear = FALSE, show_after = 0)
+      }
 
-    cat(slim_script)
+      cat(slim_script)
 
-    script_file <- tempfile(fileext = ".txt")
-    readr::write_file(slim_script, script_file)
+      script_file <- tempfile(fileext = ".txt")
+      readr::write_file(slim_script, script_file)
 
-    if(slimr:::get_os() == "windows") {
-      script_file <- convert_to_wsl_path(script_file)
-    }
+      if(slimr:::get_os() == "windows") {
+        script_file <- convert_to_wsl_path(script_file)
+      }
 
-    if(.progress) {
-      pb$tick(0)
-    }
-    slim_p <- processx::process$new(normalizePath(slim_path), script_file,
-                                    stdout = "|", stderr = "|")
-    current_gen <- 0
-    #previous_gen <- 0
-    while(slim_p$is_alive()) {
-      slim_p$poll_io(10000)
-      out <- slim_p$read_output_lines()
+      if(.progress) {
+        pb$tick(0)
+      }
+      slim_p <- processx::process$new(normalizePath(slim_path), script_file,
+                                      stdout = "|", stderr = "|")
+      current_gen <- 0
+      #previous_gen <- 0
+      while(slim_p$is_alive()) {
+        slim_p$poll_io(10000)
+        out <- slim_p$read_output_lines()
+
+        gens <- grep("generation: ", out, value = TRUE) %>%
+          readr::parse_number()
+        print(gens)
+        print(slim_p$is_alive())
+        if(length(gens) != 0) {
+
+          current_gen <- max(gens)
+          if(.progress) {
+            pb$update(current_gen/last_gen)
+          }
+        } else {
+          if(.progress) {
+            pb$tick(0)
+          }
+        }
+      }
+
+
 
       gens <- grep("generation: ", out, value = TRUE) %>%
         readr::parse_number()
-      print(gens)
-      print(slim_p$is_alive())
       if(length(gens) != 0) {
-
         current_gen <- max(gens)
         if(.progress) {
           pb$update(current_gen/last_gen)
         }
-      } else {
-        if(.progress) {
-          pb$tick(0)
-        }
       }
+
+      #pb$terminate
+
+
+      err <- slim_p$read_all_error_lines()
+
+      slim_p$kill()
+      err
+    } else {
+      stop("Sorry, slim_script must be a character or slim_script object or script_file must be specified.")
     }
 
-
-
-    gens <- grep("generation: ", out, value = TRUE) %>%
-      readr::parse_number()
-    if(length(gens) != 0) {
-      current_gen <- max(gens)
-      if(.progress) {
-        pb$update(current_gen/last_gen)
-      }
-    }
-
-    #pb$terminate
-
-
-    err <- slim_p$read_all_error_lines()
-
-    slim_p$kill()
-    err
   }
 }
 

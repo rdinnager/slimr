@@ -17,147 +17,73 @@
 #' }
 slim_setup <- function(install_dir = "~/slim", test_slim = TRUE) {
 
-  platform <- get_os()
-  if(!platform %in% c("windows", "linux", "osx")) {
-    stop("Sorry, we don't recognize that platform. Valid options are \"windows\", \"unix\", or \"osx\"")
-  }
-
-  if(platform == "windows") {
-    if(system('wsl.exe "echo"', show.output.on.console = FALSE) != 0) {
-      stop("It appears your Windows system does not have a working Windows subsystem for linux (WSL). Please make
-           sure you setup and install WSL before proceeding. Note WSL is only available for Windows 10 and above.
-           See https://docs.microsoft.com/en-us/windows/wsl/install-win10 for installation instructions")
+  if(!is_slim_available()){
+    platform <- get_os()
+    if(!platform %in% c("windows", "linux", "osx")) {
+      stop("Sorry, we don't recognize that platform. Valid options are \"windows\", \"unix\", or \"osx\"")
     }
 
-    ## check if slim is already installed
-
-    if(system('bash -c "slim -v"') != 0) {
-
-      message("Attempting to install slim using Window subsystem for linux (WSL)")
-
-      system('bash -c "wget http://benhaller.com/slim/SLiM.zip"')
-
-      unzip <- system('bash -c "unzip -o SLiM.zip"')
-      if(unzip != 0) {
-        stop("Unzipping of SLiM archive failed. Make sure you have unzip installed on your WSL distro. e.g.
-             for Ubuntu run `sudo apt-get install unzip`.")
+    if(platform == "windows") {
+      if(system('wsl.exe "echo"', show.output.on.console = FALSE) != 0) {
+        stop("It appears your Windows system does not have a working Windows subsystem for linux (WSL). Please make
+             sure you setup and install WSL before proceeding. Note WSL is only available for Windows 10 and above.
+             See https://docs.microsoft.com/en-us/windows/wsl/install-win10 for installation instructions")
       }
 
-      system('bash -c "mkdir SLiM_build"')
+      ## check if slim is already installed
 
-      if(install_dir == "default") {
-        compile <- system('bash -c "cd SLiM_build \
-                          cmake -DCMAKE_BUILD_TYPE=Release ../SLiM \
-                          make \
-                          make install"')
-      } else {
+      if(system('bash -c "slim -v"') != 0) {
 
-        system(paste0('bash -c "mkdir -p ', install_dir, '"'))
+        message("Attempting to install slim using Window subsystem for linux (WSL)")
 
-        compile <- system(stringr::str_replace('bash -c "cd SLiM_build \
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/path/to/install ../SLiM \
-make \
-                          make install"',
-                                               "/path/to/install",
-                                               install_dir))
-      }
+        system('bash -c "wget http://benhaller.com/slim/SLiM.zip"')
 
-      if(compile != 0) {
+        unzip <- system('bash -c "unzip -o SLiM.zip"')
+        if(unzip != 0) {
+          stop("Unzipping of SLiM archive failed. Make sure you have unzip installed on your WSL distro. e.g.
+               for Ubuntu run `sudo apt-get install unzip`.")
+        }
+
+        system('bash -c "mkdir SLiM_build"')
+
+        if(install_dir == "default") {
+          compile <- system('bash -c "cd SLiM_build \
+                            cmake -DCMAKE_BUILD_TYPE=Release ../SLiM \
+                            make \
+                            make install"')
+        } else {
+
+          system(paste0('bash -c "mkdir -p ', install_dir, '"'))
+
+          compile <- system(stringr::str_replace('bash -c "cd SLiM_build \
+  cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/path/to/install ../SLiM \
+  make \
+                            make install"',
+                                                 "/path/to/install",
+                                                 install_dir))
+        }
+
+        if(compile != 0) {
+
+          system('bash -c "rm SLiM.zip"')
+          system('bash -c "rm -r SLiM"')
+          system('bash -c "rm -r SLiM_build"')
+
+          stop("It looks like installation failed at compiling time. Make sure you have cmake and gcc (or build-essential)
+               installed in your WSL distro and that they are accessible (e.g. in the PATH)")
+        }
 
         system('bash -c "rm SLiM.zip"')
         system('bash -c "rm -r SLiM"')
         system('bash -c "rm -r SLiM_build"')
 
-        stop("It looks like installation failed at compiling time. Make sure you have cmake and gcc (or build-essential)
-             installed in your WSL distro and that they are accessible (e.g. in the PATH)")
-      }
+        message("SLiM installed! Running a test now...")
 
-      system('bash -c "rm SLiM.zip"')
-      system('bash -c "rm -r SLiM"')
-      system('bash -c "rm -r SLiM_build"')
-
-      message("SLiM installed! Running a test now...")
-
-      # test <- system('bash -c "slim -testSLiM"', intern = TRUE)
-      #
-      # if(any(grepl("SUCCESS", test))) {
-      #   message("SLiM test successful. You should now be able to use `slimr`")
-      # }
-
-    } else {
-      message("Looks like SLiM is already installed. Running a test now...")
-
-      # test <- system('bash -c "slim -testSLiM"', intern = TRUE)
-      #
-      # if(any(grepl("SUCCESS", test))) {
-      #   message("SLiM test successful. You should now be able to use `slimr`")
-      # }
-    }
-
-    #slim_settings$slim_call <- 'bash -c "slim {slim_options}"'
-
-  }
-
-  if(platform == "linux") {
-
-    ## check if slim is already installed
-
-
-
-    if(!is_slim_available()) {
-
-      message("Attempting to install slim on linux...")
-
-      system("wget http://benhaller.com/slim/SLiM.zip")
-
-      unzip <- system("unzip -o SLiM.zip")
-      if(unzip != 0) {
-        stop("Unzipping of SLiM archive failed. Make sure you have unzip installed on your WSL distro. e.g.
-             for Ubuntu run `sudo apt-get install unzip`.")
-      }
-
-      system("mkdir SLiM_build")
-
-      if(install_dir == "default") {
-        compile <- system('bash -c "cd SLiM_build \
-                          cmake -DCMAKE_BUILD_TYPE=Release ../SLiM \
-                          make \
-                          make install"')
-      } else {
-        if(!dir.exists(install_dir)) {
-          dir.create(install_dir)
-        }
-
-        compile <- system(stringr::str_replace("cd SLiM_build \
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/path/to/install ../SLiM \
-make \
-                          make install",
-                                               "/path/to/install",
-                                               install_dir))
-      }
-
-      if(compile != 0) {
-
-        system("rm SLiM.zip")
-        system("rm -r SLiM")
-        system("rm -r SLiM_build")
-
-        stop("It looks like installation failed at compiling time. Make sure you have cmake and gcc (or build-essential)
-             installed in your linux distro and that they are accessible (e.g. in the PATH)")
-      }
-
-      system("rm SLiM.zip")
-      system("rm -r SLiM")
-      system("rm -r SLiM_build")
-
-      message("SLiM installed! Running a test now...")
-
-
-      # test <- system("slim -testSLiM", intern = TRUE)
-      #
-      # if(any(grepl("SUCCESS", test))) {
-      #   message("SLiM test successful. You should now be able to use `slimr`")
-      # }
+        # test <- system('bash -c "slim -testSLiM"', intern = TRUE)
+        #
+        # if(any(grepl("SUCCESS", test))) {
+        #   message("SLiM test successful. You should now be able to use `slimr`")
+        # }
 
       } else {
         message("Looks like SLiM is already installed. Running a test now...")
@@ -169,16 +95,92 @@ make \
         # }
       }
 
+      #slim_settings$slim_call <- 'bash -c "slim {slim_options}"'
+
+    }
+
+    if(platform == "linux") {
+
+      ## check if slim is already installed
 
 
-      }
 
-  if(install_dir == "default") {
-    install_dir <- ""
+      if(!is_slim_available()) {
+
+        message("Attempting to install slim on linux...")
+
+        system("wget http://benhaller.com/slim/SLiM.zip")
+
+        unzip <- system("unzip -o SLiM.zip")
+        if(unzip != 0) {
+          stop("Unzipping of SLiM archive failed. Make sure you have unzip installed on your WSL distro. e.g.
+               for Ubuntu run `sudo apt-get install unzip`.")
+        }
+
+        system("mkdir SLiM_build")
+
+        if(install_dir == "default") {
+          compile <- system('bash -c "cd SLiM_build \
+                            cmake -DCMAKE_BUILD_TYPE=Release ../SLiM \
+                            make \
+                            make install"')
+        } else {
+          if(!dir.exists(install_dir)) {
+            dir.create(install_dir)
+          }
+
+          compile <- system(stringr::str_replace("cd SLiM_build \
+  cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/path/to/install ../SLiM \
+  make \
+                            make install",
+                                                 "/path/to/install",
+                                                 install_dir))
+        }
+
+        if(compile != 0) {
+
+          system("rm SLiM.zip")
+          system("rm -r SLiM")
+          system("rm -r SLiM_build")
+
+          stop("It looks like installation failed at compiling time. Make sure you have cmake and gcc (or build-essential)
+               installed in your linux distro and that they are accessible (e.g. in the PATH)")
+        }
+
+        system("rm SLiM.zip")
+        system("rm -r SLiM")
+        system("rm -r SLiM_build")
+
+        message("SLiM installed! Running a test now...")
+
+
+        # test <- system("slim -testSLiM", intern = TRUE)
+        #
+        # if(any(grepl("SUCCESS", test))) {
+        #   message("SLiM test successful. You should now be able to use `slimr`")
+        # }
+
+        } else {
+          message("Looks like SLiM is already installed. Running a test now...")
+
+          # test <- system('bash -c "slim -testSLiM"', intern = TRUE)
+          #
+          # if(any(grepl("SUCCESS", test))) {
+          #   message("SLiM test successful. You should now be able to use `slimr`")
+          # }
+        }
+
+
+
+        }
+
+    if(install_dir == "default") {
+      install_dir <- ""
+    }
+    .slim_settings$install_dir <- install_dir
+    Sys.setenv(slim_install_dir = install_dir)
+    invisible(NULL)
   }
-  .slim_settings$install_dir <- install_dir
-  Sys.setenv(slim_install_dir = install_dir)
-  invisible(NULL)
 }
 
 #' Get SLiM call
@@ -221,18 +223,11 @@ get_slim_call <- function() {
 #'
 #' @return
 is_slim_available <- function() {
-  slim_call <- get_slim_call()
 
-  if(is.null(slim_call)) {
-    return(FALSE)
-  }
+  slim_dir <- get_slim_install_dir()
 
-  slim_call_version <- stringr::str_replace(slim_call, stringr::fixed("{slim_options}"), stringr::fixed("-v"))
+  file.exists(file.path(slim_dir, "bin", "slim"))
 
-  test <- system(slim_call_version, ignore.stdout = TRUE, ignore.stderr = TRUE,
-                 show.output.on.console = FALSE)
-
-  return(test == 0)
 }
 
 get_slim_install_dir <- function() {
@@ -246,4 +241,10 @@ get_slim_install_dir <- function() {
       return("~/slim")
     }
   }
+}
+
+slim_test <- function() {
+
+  test <- run_slim_script(script_file = "--test")
+
 }

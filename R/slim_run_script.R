@@ -79,9 +79,13 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
       pb$terminate()
     }
 
-    cat("Simulation finished with exit status: ", slim_p$get_exit_status())
+    exit <- slim_p$get_exit_status()
 
-    invisible(slim_p$kill())
+    cat("Simulation finished with exit status: ", exit)
+
+    slim_p$kill()
+
+    return(exit)
 
 
   } else {

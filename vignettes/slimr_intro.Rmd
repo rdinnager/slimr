@@ -12,6 +12,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+slimr::slim_setup()
 ```
 
 Welcome to `slimr`, an R package designed to make advanced population genetics simulations powered by the *SLiM* software easy to write, run and analyse in R. Let's start with a quick example. `slimr` comes with all the SLiM "recipes" that are laid out in the excellent SliM manual. These are stored as character vectors of length 1. We can use one of these recipes to demonstrate the most basic functionality of `slimr`, to run a SLiM script from R. To run this code you will need to have installed the SLiM software and connected it to `slimr`. See the vignette "Installing SLiM for use with slimr" if you need help with that. First let's get the very first recipe from the SLiM manual, and print it out to see what it looks like.

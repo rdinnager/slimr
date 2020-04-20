@@ -99,6 +99,8 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
         if(.progress) {
           output_gens <- slim_output_gens_code(last_gen)
           slim_script <- slim_modify_block_code(slim_script, block_1, what = output_gens, where = "end")
+          pb <- progress::progress_bar$new(format = "[:bar] :spin :current/:total (:percent) :eta", total = last_gen,
+                                           clear = FALSE, show_after = 0)
         }
       }
 

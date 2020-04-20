@@ -140,7 +140,7 @@ slim_modify_block_code <- function(slim_script, block, what = NULL, where = NULL
 #' @examples
 print.slim_script <- function(x) {
 
-  code <- as.character(slim_script)
+  code <- as.character(x)
 
   string <- purrr::map(code,
                        ~stringr::str_replace_all(.x, "([-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?)",

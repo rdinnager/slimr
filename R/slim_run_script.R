@@ -85,33 +85,27 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
 
     slim_p$kill()
 
-    return(exit)
+    return(invisible(exit))
 
 
   } else {
 
     if(inherits(slim_script, "slim_script")) {
-      if(!is.null(output)) {
-        block_1 <- slim_find_block_1(slim_script)
-        slim_script <- slim_modify_block_code(slim_script, block_1, what = "stuff", where = "end")
+
+      last_gen <- max(c(slim_script$start, slim_script$end), na.rm = TRUE)
+
+      if(!is.null(output) | .progress) {
+        block_1 <- slim_find_block_starting_at(slim_script, 1L)
+        if(.progress) {
+          output_gens <- slim_output_gens_code(last_gen)
+          slim_script <- slim_modify_block_code(slim_script, block_1, what = output_gens, where = "end")
+        }
       }
 
-      mentioned_gens <- slimr:::get_generation_lines(slim_script)
-
-      print(mentioned_gens)
-
-      if(.progress) {
-        last_gen <- max(mentioned_gens$generations)
-        print(last_gen)
-        slim_script <- slimr:::insert_generation_output(slim_script, end_gen = last_gen)
-        pb <- progress::progress_bar$new(format = "[:bar] :spin :current/:total (:percent)", total = last_gen,
-                                         clear = FALSE, show_after = 0)
-      }
-
-      cat(slim_script)
 
       script_file <- tempfile(fileext = ".txt")
-      readr::write_file(slim_script, script_file)
+      slim_write_script(slim_script, script_file)
+
 
       if(slimr:::get_os() == "windows") {
         script_file <- convert_to_wsl_path(script_file)
@@ -168,6 +162,42 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
     }
 
   }
+}
+
+#' Title
+#'
+#' @param slim_script
+#'
+#' @return
+#' @export
+#'
+#' @examples
+as.character.slim_script <- function(x) {
+  code <- paste0(ifelse(is.na(x$start), "", x$start),
+                 x$colon, ifelse(is.na(x$end), "", x$end),
+                 " ",
+                 x$callback,
+                 " {\n\t\t",
+                 purrr::map_chr(x$code, ~paste(.x, collapse = "\n")),
+                 "\n}")
+  code
+}
+
+#' Title
+#'
+#' @param slim_script
+#' @param script_file
+#'
+#' @return
+#' @export
+#'
+#' @examples
+slim_write_script <- function(slim_script, script_file) {
+
+  script <- as.character(slim_script)
+
+  readr::write_lines(script, script_file)
+
 }
 
 #' Title

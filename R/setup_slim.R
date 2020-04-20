@@ -245,6 +245,6 @@ get_slim_install_dir <- function() {
 
 slim_test <- function() {
 
-  test <- run_slim_script(script_file = "--test")
+  test <- slim_run_script(script_file = "--test")
 
 }

@@ -45,10 +45,15 @@ slim_script_from_text <- function(slim_script_text) {
   n_blocks <- length(blocks)
 
   ## remove comments
-  blocks <- stringr::str_replace_all(blocks, "//(.*?)(\\n|$)", "")
+  blocks <- stringr::str_remove_all(blocks, "//(.*?)(\\n|$)")
 
-  heads <- stringr::str_match(blocks[], "([\\S\\s]*?)\\{")[ , 2]
-  heads <- gsub("\n", "", heads, fixed = TRUE)
+  heads <- stringr::str_match(blocks, "([\\S\\s]*?)\\{")[ , 2]
+  heads <- stringr::str_remove_all(heads, stringr::fixed("\n"))
+
+  blocks <- stringr::str_trim(blocks)
+  blocks <- stringr::str_remove_all(blocks, "([\\S\\s]*?)\\{")
+  blocks <- stringr::str_remove_all(blocks, "\\}$")
+
   start_nums <- stringr::str_extract(heads, "^(\\d+)")
   end_nums <- stringr::str_match(heads, ":(\\d+)")[ , 2]
   max_num <- max(c(start_nums, end_nums), na.rm = TRUE)
@@ -61,12 +66,15 @@ slim_script_from_text <- function(slim_script_text) {
 
   blocks <- stringr::str_trim(blocks)
   block_list <- stringr::str_split(blocks, stringr::fixed("\n"))
-  names(block_list) <- block_names
 
-  res <- list(code_blocks = block_list,
-              start_gens = start_nums,
-              end_gens = end_nums,
-              colons = has_colon)
+  heads[!stringr::str_detect(heads, "\\)")] <- ""
+
+  res <- dplyr::tibble(block_id = block_names,
+                       start = start_nums,
+                       colon = ifelse(has_colon, ":", ""),
+                       end = end_nums,
+                       callback = heads,
+                       code = block_list)
 
   class(res) <- "slim_script"
 
@@ -82,20 +90,31 @@ slim_script_from_text <- function(slim_script_text) {
 #' @export
 #'
 #' @examples
-slim_find_block_1 <- function(slim_script) {
-  block_1 <- which(slim_script$start_gens == 1 & !slim_script$colons)
+slim_find_block_starting_at <- function(slim_script, start_gen) {
+  block_1 <- which(slim_script$start == start_gen & slim_script$colon == "")
   if(length(block_1) == 0) {
     block_1 <- ""
   } else {
-    block_1 <- names(slim_script$code_blocks)[block_1]
+    block_1 <- slim_script$block_id[block_1]
   }
   block_1
 }
 
+#' Title
+#'
+#' @param slim_script
+#' @param block
+#' @param what
+#' @param where
+#'
+#' @return
+#' @export
+#'
+#' @examples
 slim_modify_block_code <- function(slim_script, block, what = NULL, where = NULL) {
 
 
-  block_end <- length(slim_script$code_blocks[[block]] == "}")
+  block_end <- length(slim_script$code[[which(slim_script$block_id == block)]])
 
   if(inherits(where, "character")) {
     where <- dplyr::case_when(where == "end" ~ block_end,
@@ -103,6 +122,10 @@ slim_modify_block_code <- function(slim_script, block, what = NULL, where = NULL
                               NA ~ block_end)
   }
 
+  slim_script$code[[which(slim_script$block_id == block)]] <-
+    append(slim_script$code[[which(slim_script$block_id == block)]], what, where)
+
+  slim_script
 
 }
 
@@ -117,9 +140,13 @@ slim_modify_block_code <- function(slim_script, block, what = NULL, where = NULL
 #' @examples
 print.slim_script <- function(x) {
 
-  string <- purrr::map(x$code_blocks,
+  code <- as.character(slim_script)
+
+  string <- purrr::map(code,
                        ~stringr::str_replace_all(.x, "([-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?)",
                                                  "<highlight>crayon::green('\\1')</highlight>"))
+
+  names(string) <- x$block_id
 
   string <- purrr::imap_chr(string,
                             ~purrr::assign_in(.x, 1, paste0("<highlight>crayon::bgBlue('", .y, "')</highlight> ", .x[1])) %>%

@@ -6,9 +6,9 @@ init:
         $ErrorActionPreference = "Stop"
         Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
         Import-Module '..\appveyor-tool.ps1'
-        wsl.exe sudo apt-get --yes --force-yes install unzip
-        wsl.exe sudo apt-get --yes --force-yes install build-essential
-        wsl.exe sudo apt-get --yes --force-yes install cmake
+        wsl.exe sudo apt-get -y install unzip
+        wsl.exe sudo apt-get -y install build-essential
+        wsl.exe sudo apt-get -y install cmake
 
 install:
   ps: Bootstrap

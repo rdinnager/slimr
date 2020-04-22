@@ -32,3 +32,30 @@ get_generation_lines <- function(slim_script) {
   lines <- which(!is.na(gen_lines[ ,1]))
   list(lines = lines, generations = readr::parse_number(gen_lines[ , 2][lines]))
 }
+
+#' Title
+#'
+#' @param a
+#' @param b
+#'
+#' @return
+#' @export
+#'
+#' @examples
+`%+%` <- function(a, b) {
+  stringr::str_c(a, b, sep = " ")
+}
+
+#' Title
+#'
+#' @param a
+#' @param b
+#'
+#' @return
+#' @export
+#'
+#' @examples
+`%+n%` <- function(a, b) {
+  stringr::str_c(a, b, sep = "\n")
+}
+

@@ -17,6 +17,25 @@ slim_gen_output_markup_code <- function(begin = TRUE) {
 
 #' Title
 #'
+#' @param output_type
+#' @param output_format
+#'
+#' @return
+#' @export
+#'
+#' @examples
+slim_gen_output_code <- function(output_type = c("individuals", "genomes"),
+                                 output_format = c("genlight", "VCF", "slim_tibble")) {
+
+  output_type <- match.arg(output_type)
+  output_format <- match.arg(output_format)
+
+  glue::glue('catn("<<markup>>" + paste(sim.generation));', .open = "<<", .close = ">>")
+
+}
+
+#' Title
+#'
 #' @param code_snippet
 #' @param output_every
 #' @param auto_bracket

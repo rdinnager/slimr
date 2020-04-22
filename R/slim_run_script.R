@@ -96,8 +96,9 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
 
       if(!is.null(output) | .progress) {
         block_1 <- slim_find_block_starting_at(slim_script, 1L)
-        if(.progress) {
-          output_gens <- slim_output_gens_code() %>%
+        if(!is.null(output)) {
+          output_gens <- slim_gen_output_markup_code(begin = TRUE) %+n%
+            slim_gen_output_markup_code(begin = FALSE) %>%
             slim_output_every_code(output_every) %>%
             slim_register_event_code(1, last_gen)
           slim_script <- slim_modify_block_code(slim_script, block_1, what = output_gens, where = "end")

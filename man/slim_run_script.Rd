@@ -9,7 +9,7 @@ slim_run_script(
   script_file = NULL,
   slim_path = NULL,
   output = NULL,
-  output_every = NULL,
+  output_every = 1,
   output_sample = NULL,
   .progress = TRUE,
   write_data_live = FALSE,

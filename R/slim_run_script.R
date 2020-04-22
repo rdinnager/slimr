@@ -11,7 +11,9 @@
 #' @export
 #'
 #' @examples
-slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = NULL, output = NULL, output_every = 1, output_sample = NULL, .progress = TRUE, write_data_live = FALSE, log_output_to = NULL) {
+slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = NULL, output = NULL, output_every = 1, output_sample = NULL, output_format = c("genlight", "slim_tibble", "vcf_tibble"), .progress = TRUE, write_data_live = FALSE, log_output_to = NULL) {
+
+  output_format <- match.arg(output_format)
 
   if(is.null(slim_script) & is.null(script_file)) {
     stop("One of slim_script or script_file must be specified")

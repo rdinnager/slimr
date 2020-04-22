@@ -25,10 +25,17 @@ slim_gen_output_markup_code <- function(begin = TRUE) {
 #'
 #' @examples
 slim_gen_output_code <- function(output_type = c("individuals", "genomes"),
-                                 output_format = c("genlight", "VCF", "slim_tibble")) {
+                                 output_format = c("VCF", "slim_tibble"),
+                                 output_sample = 0) {
 
   output_type <- match.arg(output_type)
   output_format <- match.arg(output_format)
+
+  if(output_sample == 0) {
+
+  } else {
+
+  }
 
   glue::glue('catn("<<markup>>" + paste(sim.generation));', .open = "<<", .close = ">>")
 

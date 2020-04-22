@@ -29,13 +29,11 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
 
   if(inherits(slim_script, "character") | (is.null(slim_script) & !is.null(script_file))) {
 
-    if(!inherits(slim_script, "character")) {
-
-    } else {
+    if(inherits(slim_script, "character")) {
       if(length(slim_script) > 1) {
         warning("slim_script has more than one element. We will concatenate them with newline separators...")
+        slim_script <- paste(slim_script, collapse = "\n")
       }
-      slim_script <- paste(slim_script, collapse = "\n")
     }
 
     if(!is.null(output)) {
@@ -94,17 +92,28 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
 
     if(inherits(slim_script, "slim_script")) {
 
-      last_gen <- max(c(slim_script$start, slim_script$end), na.rm = TRUE)
+      last_gen <- max(as.numeric(c(slim_script$start, slim_script$end)), na.rm = TRUE)
 
       if(!is.null(output) | .progress) {
         block_1 <- slim_find_block_starting_at(slim_script, 1L)
         if(!is.null(output)) {
-          output_gens <- slim_gen_output_markup_code(begin = TRUE) %+n%
+          output_gens <- slim_gen_output_markup_code(begin = TRUE) %+%
             slim_gen_output_markup_code(begin = FALSE) %>%
             slim_output_every_code(output_every) %>%
             slim_register_event_code(1, last_gen)
-          slim_script <- slim_modify_block_code(slim_script, block_1, what = output_gens, where = "end")
-          pb <- progress::progress_bar$new(format = "[:bar] :spin :current/:total (:percent) :eta", total = last_gen,
+
+        } else {
+          output_gens <- slim_gen_output_markup_code(begin = TRUE) %+%
+            slim_gen_output_markup_code(begin = FALSE) %>%
+            slim_output_every_code(output_every) %>%
+            slim_register_event_code(1, last_gen)
+        }
+        slim_script <- slim_modify_block_code(slim_script, block_1, what = output_gens, where = "end")
+
+        if(.progress) {
+          fmt <- glue::glue("[:bar] :spin Generation: :current/:total (:percent) Estimated time to completion: :eta") %>%
+            as.character()
+          pb <- progress::progress_bar$new(format = fmt, total = last_gen,
                                            clear = FALSE, show_after = 0)
         }
       }
@@ -129,13 +138,23 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
         slim_p$poll_io(10000)
         out <- slim_p$read_output_lines()
 
-        gens <- grep("generation: ", out, value = TRUE) %>%
-          readr::parse_number()
-        print(gens)
-        print(slim_p$is_alive())
-        if(length(gens) != 0) {
 
-          current_gen <- max(gens)
+        if(length(out) > 0){
+
+          lines_started <- stringr::str_which(out, "<slimr_output:generation_start>")
+          gens_started <-  unglue::unglue_data(out[lines_started], "<slimr_output:generation_start>{gen_start}")
+
+          lines_ended <- stringr::str_which(out, "<slimr_output:generation_end>")
+          gens_ended <-  unglue::unglue_data(out[lines_ended], "<slimr_output:generation_end>{gen_end}")
+
+          finished <- which(gens_ended$gen_end %in% gens_started$gen_start)
+          gens_finished <- gens_ended$gen_end[finished] %>% as.integer()
+        }
+
+        if(length(gens_finished) != 0) {
+
+          current_gen <- max(gens_finished)
+
           if(.progress) {
             pb$update(current_gen/last_gen)
           }
@@ -146,24 +165,22 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
         }
       }
 
+      out <- slim_p$read_output_lines()
 
+      pb$update(1)
 
-      gens <- grep("generation: ", out, value = TRUE) %>%
-        readr::parse_number()
-      if(length(gens) != 0) {
-        current_gen <- max(gens)
-        if(.progress) {
-          pb$update(current_gen/last_gen)
-        }
-      }
+      pb$terminate()
 
-      #pb$terminate
+      slim_p$read_all_error_lines()
 
+      exit <- slim_p$get_exit_status()
 
-      err <- slim_p$read_all_error_lines()
+      cat("Simulation finished with exit status: ", exit)
 
       slim_p$kill()
-      err
+
+      return(invisible(exit))
+
     } else {
       stop("Sorry, slim_script must be a character or slim_script object or script_file must be specified.")
     }

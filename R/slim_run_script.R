@@ -11,7 +11,7 @@
 #' @export
 #'
 #' @examples
-slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = NULL, output = NULL, output_every = NULL, output_sample = NULL, .progress = TRUE, write_data_live = FALSE, log_output_to = NULL) {
+slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = NULL, output = NULL, output_every = 1, output_sample = NULL, .progress = TRUE, write_data_live = FALSE, log_output_to = NULL) {
 
   if(is.null(slim_script) & is.null(script_file)) {
     stop("One of slim_script or script_file must be specified")
@@ -97,7 +97,9 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
       if(!is.null(output) | .progress) {
         block_1 <- slim_find_block_starting_at(slim_script, 1L)
         if(.progress) {
-          output_gens <- slim_output_gens_code(last_gen)
+          output_gens <- slim_output_gens_code() %>%
+            slim_output_every_code(output_every) %>%
+            slim_register_event_code(1, last_gen)
           slim_script <- slim_modify_block_code(slim_script, block_1, what = output_gens, where = "end")
           pb <- progress::progress_bar$new(format = "[:bar] :spin :current/:total (:percent) :eta", total = last_gen,
                                            clear = FALSE, show_after = 0)

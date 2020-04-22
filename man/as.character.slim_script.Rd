@@ -4,7 +4,7 @@
 \alias{as.character.slim_script}
 \title{Title}
 \usage{
-\method{as.character}{slim_script}(slim_script)
+\method{as.character}{slim_script}(x)
 }
 \arguments{
 \item{slim_script}{}

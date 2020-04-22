@@ -24,7 +24,7 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE) {
     }
 
     if(platform == "windows") {
-      if(system('wsl.exe "echo"', show.output.on.console = FALSE) != 0) {
+      if(system2("wsl.exe", "echo") != 0) {
         stop("It appears your Windows system does not have a working Windows subsystem for linux (WSL). Please make
              sure you setup and install WSL before proceeding. Note WSL is only available for Windows 10 and above.
              See https://docs.microsoft.com/en-us/windows/wsl/install-win10 for installation instructions")

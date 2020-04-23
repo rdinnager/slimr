@@ -133,11 +133,11 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
       slim_p <- processx::process$new(normalizePath(slim_path), script_file,
                                       stdout = "|", stderr = "|")
       current_gen <- 0
-      #previous_gen <- 0
+      leftovers <- NULL
       while(slim_p$is_alive()) {
         slim_p$poll_io(10000)
         out <- slim_p$read_output_lines()
-
+        out <- c(leftovers, out)
 
         if(length(out) > 0){
 
@@ -149,6 +149,17 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
 
           finished <- which(gens_ended$gen_end %in% gens_started$gen_start)
           gens_finished <- gens_ended$gen_end[finished] %>% as.integer()
+
+          leftovers <- out[(lines_ended[finished] + 1L):length(out)]
+
+          intervals <- cbind(lines_started[finished], lines_ended[finished],
+                             lines_ended[finished] - lines_started[finished] - 1L)
+
+          if(any(intervals[ , 3] > 0)) {
+            output_this <- purrr::map(purrr::array_branch(intervals, 1),
+                                   ~out[(.x[1] - 1L):(.x[2] - 1L)])
+            dat_this <- extract_output(output_this)
+          }
         }
 
         if(length(gens_finished) != 0) {

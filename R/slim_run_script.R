@@ -1,13 +1,24 @@
-#' Title
+#' Run a SLiM script and optionally return output from it to R.
 #'
-#' @param slim_script A character vector (of length 1) containing the SLiM script to run
-#' @param slim_path
-#' @param .progress
-#' @param output_every
-#' @param write_data_live
-#' @param log_output_to
+#' @param slim_script This can either be a character vector (of length 1) containing the SLiM script to run or a \code{slim_script} object such as created by \code{\link{slim_script_from_text}}. If this is \code{NULL} then you must provide a text file with your script in \code{script_file}.
+#' @param slim_path Path to SLiM executable. If \code{NULL} \code{slimr} will try and find the SLiM executable through default locations or environmental variables. See documentation for \code{\link{slim_setup()}} for details.
+#' @param .progress Should a progress bar be displayed while the SLiM script is running?
+#' @param output_every How often should R collect output from SLiM? Output will be collected once every \code{output_every} generations.
+#' @param write_data_live Should the output being read into R from SLiM be saved as it is running? Use \code{log_output_to} to specify a file to save to.
+#' @param log_output_to File path to save output to. Ignored if \code{write_data_live} is \code{FALSE}
+#' @param script_file A file path specifying a text file with a valid SLiM script to run. If you specify both this and \code{slim_script}, \code{slim_script} will be run and this parameter will be ignored.
+#' @param output What would you like to output from SLiM to R? A character vector containing the names of output to generate. See details for valid output names.
+#' @param output_sample When generating output from SLiM, how many samples of the population to take? 0 means sample all extant members of the population.
+#' @param output_format In what format should the genomic data be outputted? Valid values are: "VCF", "genlight", or "tibble". Regardless of your choice the genomes will be contained in a list column of the \code{slim_sim} tibble output (named "genomes".
 #'
-#' @return
+#' @details Valid output names that can be added to the \code{output} parameter include:
+#' \itemize{
+#'   \item{"genomes"}{"Add this to get output on simulated genomes."}
+#'   \item{"individuals}{"Add this for output on individuals, specifically their (two) genomes."}
+#'   \item{"coordinates}{"If running a spatially explicit simulation, add this to output spatial coordinates of individuals."}
+#' }
+#'
+#' @return A \code{slim_sim} object with output from the simulation if \code{output} is specified. If \code{output} is not specified or if \code{slim_script} is of class \code{character}, this will be the exit code of the SLiM run (exit code 0 means it ran successfully)
 #' @export
 #'
 #' @examples

@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "russell.dinnage@gmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: Run SLiM population genetics forward simulations from R. Also has utilities for monitoring the simulations, and bringing the resulting data into R for post-processing and visualization.
+Description: Run and Analyse SLiM Population Genetics Forward Simulations from R.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

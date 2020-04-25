@@ -150,7 +150,9 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
           finished <- which(gens_ended$gen_end %in% gens_started$gen_start)
           gens_finished <- gens_ended$gen_end[finished] %>% as.integer()
 
-          leftovers <- out[(lines_ended[finished] + 1L):length(out)]
+          if(lines_ended[finished] < length(out)) {
+            leftovers <- out[(lines_ended[finished] + 1L):length(out)]
+          }
 
           intervals <- cbind(lines_started[finished], lines_ended[finished],
                              lines_ended[finished] - lines_started[finished] - 1L)

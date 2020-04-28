@@ -7,3 +7,6 @@
 ^codecov\.yml$
 ^inst\\get_recipes\.R$
 ^data-raw$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

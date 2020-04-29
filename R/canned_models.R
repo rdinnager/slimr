@@ -444,7 +444,8 @@ p1.fitnessScaling = K / size(inds);
   // filter out only individuals in central region; probably a more concise way to write this...
   inds2 = inds2[inds2.x > -1.0 & inds2.x < 1.0 & inds2.y > -1.0 & inds2.y < 1.0];
 
-  ind_samp = sample(inds2, Nsample);
+  nsamp = min(size(inds2), Nsample);
+  ind_samp = sample(inds2, nsamp);
 
   ind_tags = paste(ind_samp.tag);
   pedigree_inds = paste(ind_samp.pedigreeID);

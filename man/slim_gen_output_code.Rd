@@ -5,9 +5,10 @@
 \title{Title}
 \usage{
 slim_gen_output_code(
-  output_type = c("individuals", "genomes"),
+  output_type = c("individuals", "genomes", "coordinates", "sexes"),
   output_format = c("VCF", "slim_tibble"),
-  output_sample = 0
+  output_sample = 0,
+  subpops = "all"
 )
 }
 \arguments{

@@ -22,9 +22,7 @@
 #' @export
 #'
 #' @examples
-slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = NULL, output = NULL, output_every = 1, output_sample = NULL, output_format = c("genlight", "slim_tibble", "vcf_tibble"), .progress = TRUE, write_data_live = FALSE, log_output_to = NULL) {
-
-  output_format <- match.arg(output_format)
+slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = NULL, output = NULL, output_every = 1, output_sample = NULL, output_format = c("genlight", "slim_tibble", "vcf_tibble"), .progress = TRUE, write_data_live = FALSE, log_output_to = NULL, subpops = "all") {
 
   if(is.null(slim_script) & is.null(script_file)) {
     stop("One of slim_script or script_file must be specified")
@@ -92,7 +90,7 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
 
     exit <- slim_p$get_exit_status()
 
-    cat("Simulation finished with exit status: ", exit)
+    message("Simulation finished with exit status: ", exit)
 
     slim_p$kill()
 
@@ -103,12 +101,24 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
 
     if(inherits(slim_script, "slim_script")) {
 
+      output_format <- match.arg(output_format)
+
+      if(output_format == "vcf_tibble" | output_format == "genlight") {
+        output_format_final <- output_format
+        output_format <- "VCF"
+      }
+      slim_script <- slim_script_remove_cats(slim_script)
+
       last_gen <- max(as.numeric(c(slim_script$start, slim_script$end)), na.rm = TRUE)
 
       if(!is.null(output) | .progress) {
         block_1 <- slim_find_block_starting_at(slim_script, 1L)
         if(!is.null(output)) {
           output_gens <- slim_gen_output_markup_code(begin = TRUE) %+%
+            slim_gen_output_code(output_type = output,
+                                 output_format = output_format,
+                                 output_sample = output_sample,
+                                 subpops = subpops) %+%
             slim_gen_output_markup_code(begin = FALSE) %>%
             slim_output_every_code(output_every) %>%
             slim_register_event_code(1, last_gen)
@@ -140,13 +150,21 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
 
       if(.progress) {
         pb$tick(0)
+        pb$message("Simulation is setting up...")
       }
       slim_p <- processx::process$new(normalizePath(slim_path), script_file,
                                       stdout = "|", stderr = "|")
       current_gen <- 0
       leftovers <- NULL
+      started <- 0
+      dat <- NULL
       while(slim_p$is_alive()) {
         slim_p$poll_io(10000)
+        if(.progress & started == 0) {
+          pb$message("Simulation is running...")
+        }
+        started <- 1
+
         out <- slim_p$read_output_lines()
         out <- c(leftovers, out)
 
@@ -166,6 +184,15 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
 
             if(last_line < length(out)) {
               leftovers <- out[(last_line + 1L):length(out)]
+            } else {
+              leftovers <- NULL
+            }
+          } else {
+            if(length(lines_started) > 0) {
+              first_line <- min(lines_started)
+              leftovers <- out[first_line:length(out)]
+            } else {
+              leftovers <- NULL
             }
           }
 
@@ -174,8 +201,14 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
 
           if(any(intervals[ , 3] > 0)) {
             output_this <- purrr::map(purrr::array_branch(intervals, 1),
-                                   ~out[(.x[1] - 1L):(.x[2] - 1L)])
-            dat_this <- extract_output(output_this)
+                                   ~out[(.x[1] + 1L):(.x[2] - 1L)])
+            dat_this <- slim_output_extract(output_this, gens_finished)
+
+            if(is.null(dat)) {
+              dat <- dat_this
+            } else {
+              dat <- dplyr::bind_rows(dat, dat_this)
+            }
           }
         }
 
@@ -195,7 +228,9 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
 
       out <- slim_p$read_output_lines()
 
-      pb$update(1)
+      if(!pb$finished) {
+        pb$update(1)
+      }
 
       pb$terminate()
 
@@ -203,11 +238,15 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
 
       exit <- slim_p$get_exit_status()
 
-      cat("Simulation finished with exit status: ", exit)
+      message("Simulation finished with exit status: ", exit)
 
       slim_p$kill()
 
-      return(invisible(exit))
+      res <- list(output = dat)
+      res$process <- slim_p
+      res$exit_status <- exit
+
+      return(res)
 
     } else {
       stop("Sorry, slim_script must be a character or slim_script object or script_file must be specified.")

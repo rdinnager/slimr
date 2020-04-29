@@ -45,13 +45,13 @@ slim_script_from_text <- function(slim_script_text) {
   n_blocks <- length(blocks)
 
   ## remove comments
-  blocks <- stringr::str_remove_all(blocks, "//(.*?)(\\n|$)")
+  blocks <- stringr::str_replace_all(blocks, "//(.*?)(\\n|$)", "\n")
 
   heads <- stringr::str_match(blocks, "([\\S\\s]*?)\\{")[ , 2]
   heads <- stringr::str_remove_all(heads, stringr::fixed("\n"))
 
   blocks <- stringr::str_trim(blocks)
-  blocks <- stringr::str_remove_all(blocks, "([\\S\\s]*?)\\{")
+  blocks <- stringr::str_remove_all(blocks, "^([\\S\\s]*?)\\{")
   blocks <- stringr::str_remove_all(blocks, "\\}$")
 
   start_nums <- stringr::str_extract(heads, "^(\\d+)")
@@ -66,8 +66,12 @@ slim_script_from_text <- function(slim_script_text) {
 
   blocks <- stringr::str_trim(blocks)
   block_list <- stringr::str_split(blocks, stringr::fixed("\n"))
+  block_list <- purrr::map(block_list,
+                           ~.x[.x != ""])
 
-  heads[!stringr::str_detect(heads, "\\)")] <- ""
+  heads <- stringr::str_remove_all(heads, "^(\\d+)")
+  heads <- stringr::str_remove_all(heads, ":(\\d+)")
+  heads <- stringr::str_remove_all(heads, "^:")
 
   res <- dplyr::tibble(block_id = block_names,
                        start = start_nums,
@@ -76,7 +80,7 @@ slim_script_from_text <- function(slim_script_text) {
                        callback = heads,
                        code = block_list)
 
-  class(res) <- "slim_script"
+  class(res) <- c("slim_script", "tibble")
 
   res
 
@@ -129,6 +133,25 @@ slim_modify_block_code <- function(slim_script, block, what = NULL, where = NULL
 
 }
 
+#' Title
+#'
+#' @param slim_script
+#'
+#' @return
+#' @export
+#'
+#' @examples
+slim_script_remove_cats <- function(slim_script) {
+   cats_here <- purrr::map(slim_script$code,
+                           ~stringr::str_detect(.x, "(cat\\(|catn\\()"))
+
+
+
+   slim_script$code <- purrr::map2(cats_here, slim_script$code,
+                                  ~.y[!.x])
+
+   slim_script
+}
 
 #' Title
 #'

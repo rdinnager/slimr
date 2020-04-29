@@ -33,6 +33,28 @@ slim_gen_output_markup_code <- function(begin = TRUE) {
   glue::glue('catn("<<markup>>" + paste(sim.generation));', .open = "<<", .close = ">>")
 }
 
+slim_gen_output_code_one <- function(output_type = c("individuals", "genomes", "coordinates", "sexes"),
+                                 output_format = c("VCF", "slim_tibble")) {
+
+  output_type <- match.arg(output_type)
+  output_format <- match.arg(output_format)
+
+  sampling_code <- dplyr::case_when(output_type == "individuals" & output_format == "VCF" ~ "samp.genomes.outputVCF();",
+                                    output_type == "individuals" & output_format == "slim_tibble" ~ "samp.genomes.output();",
+                                    output_type == "genomes" & output_format == "VCF" ~ "samp.outputVCF();",
+                                    output_type == "genomes" & output_format == "slim_tibble" ~ "samp.genomes.output();",
+                                    output_type == "coordinates" ~ "catn(paste(c(samp.x, samp.y)));",
+                                    output_type == "sexes" ~ "catn(paste(samp.sex));")
+
+  markup_begin <- glue::glue('cat("{slim_code_markup(output_type, begin = TRUE)}"); catn("{output_format}");')
+  markup_end <- glue::glue('catn("{slim_code_markup(output_type, begin = FALSE)}");')
+  code_snippet <- paste(markup_begin, sampling_code, markup_end)
+
+  code_snippet
+
+}
+
+
 #' Title
 #'
 #' @param output_type
@@ -47,8 +69,6 @@ slim_gen_output_code <- function(output_type = c("individuals", "genomes", "coor
                                  output_sample = 0,
                                  subpops = "all") {
 
-  output_type <- match.arg(output_type)
-  output_format <- match.arg(output_format)
 
   if(output_sample == 0) {
     output_sample <- "size(inds)"
@@ -60,25 +80,29 @@ slim_gen_output_code <- function(output_type = c("individuals", "genomes", "coor
     subpops <- paste0('c("', paste(subpops, collapse = '", "'), '")')
   }
 
-  if(output_type == "genomes") {
-    setup_code <- glue::glue("ps = <<subpops>>; inds = ps.individuals; inds = inds.genomes; nsamp = min(<<output_sample>>, size(inds)); samp = sample(inds, nsamp);",
-                             .open = "<<", .close = ">>")
+  if(length(output_type) == 1) {
+    if(output_type == "genomes") {
+      setup_code <- glue::glue("ps = <<subpops>>; inds = ps.individuals; inds = inds.genomes; nsamp = min(<<output_sample>>, size(inds)); samp = sample(inds, nsamp);",
+                               .open = "<<", .close = ">>")
+    } else {
+      setup_code <- glue::glue("ps = <<subpops>>; inds = ps.individuals; nsamp = min(<<output_sample>>, size(inds)); samp = sample(inds, nsamp);",
+                               .open = "<<", .close = ">>")
+    }
   } else {
+    if(any(output_type == "genomes")) {
+      stop("I'm afraid slimr currently only allows outputting genomes by themselves.")
+    }
     setup_code <- glue::glue("ps = <<subpops>>; inds = ps.individuals; nsamp = min(<<output_sample>>, size(inds)); samp = sample(inds, nsamp);",
                              .open = "<<", .close = ">>")
   }
 
 
-  sampling_code <- dplyr::case_when(output_type == "individuals" & output_format == "VCF" ~ "samp.genomes.outputVCF();",
-                                    output_type == "individuals" & output_format == "slim_tibble" ~ "samp.genomes.output();",
-                                    output_type == "genomes" & output_format == "VCF" ~ "samp.outputVCF();",
-                                    output_type == "genomes" & output_format == "slim_tibble" ~ "samp.genomes.output();",
-                                    output_type == "coordinates" ~ "catn(paste(samp.spatialPosition));",
-                                    output_type == "sexes" ~ "catn(paste(samp.sex));")
+  sampling_code <- purrr::map2(output_type, output_format,
+                               ~slim_gen_output_code_one(.x, .y))
 
-  markup_begin <- glue::glue('cat("{slim_code_markup(output_type, begin = TRUE)}"); catn("{output_format}");')
-  markup_end <- glue::glue('catn("{slim_code_markup(output_type, begin = FALSE)}");')
-  code_snippet <- paste(setup_code, markup_begin, sampling_code, markup_end)
+  code_snippet <- paste(setup_code, paste(sampling_code, collapse = " "))
+
+  code_snippet
 
 }
 

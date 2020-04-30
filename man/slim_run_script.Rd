@@ -14,7 +14,8 @@ slim_run_script(
   output_format = c("genlight", "slim_tibble", "vcf_tibble"),
   .progress = TRUE,
   write_data_live = FALSE,
-  log_output_to = NULL
+  log_output_to = NULL,
+  subpops = "all"
 )
 }
 \arguments{

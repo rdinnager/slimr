@@ -23,3 +23,6 @@ recipe_txt <- recipe_txt[order_frame$name]
 slim_recipes <- recipe_txt
 
 usethis::use_data(slim_recipes, internal = TRUE)
+
+## code to generate package logo
+

@@ -20,6 +20,6 @@ Note that on Windows, you must have Windows subsystem for linux installed, which
 }
 \examples{
 \donttest{
-setup_slim()
+slim_setup()
 }
 }

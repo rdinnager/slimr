@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' \donttest{
-#' setup_slim()
+#' slim_setup()
 #' }
 slim_setup <- function(install_dir = "~/slim", test_slim = TRUE) {
 

@@ -6,7 +6,7 @@ Authors@R:
            family = "Dinnage",
            role = c("aut", "cre"),
            email = "russell.dinnage@gmail.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           comment = c(ORCID = "0000-0003-0846-2819"))
 Description: Run and Analyse SLiM Population Genetics Forward Simulations from R.
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -18,7 +18,8 @@ Suggests:
     testthat (>= 2.1.0),
     spelling,
     knitr,
-    rmarkdown
+    rmarkdown,
+    roxygen2
 RoxygenNote: 7.1.0
 Roxygen: list(markdown = TRUE)
 Language: en-GB
@@ -31,5 +32,6 @@ Imports:
     progress,
     unglue,
     crayon,
-    dplyr
+    dplyr,
+    rlang (>= 0.1.2)
 VignetteBuilder: knitr

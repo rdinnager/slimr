@@ -34,6 +34,7 @@ slimr_which <- function(slim_path, os = c("linux", "osx", "windows")) {
   } else {
     here_it_is <- Sys.which(slim_path)
   }
+  here_it_is
 }
 
 

@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/rdinnager/slimr?branch=master&svg=true)](https://ci.appveyor.com/project/rdinnager/slimr)
 [![Codecov test coverage](https://codecov.io/gh/rdinnager/slimr/branch/master/graph/badge.svg)](https://codecov.io/gh/rdinnager/slimr?branch=master)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![R build status](https://github.com/rdinnager/slimr/workflows/R-CMD-check/badge.svg)](https://github.com/rdinnager/slimr/actions)
 <!-- badges: end -->
 
 The goal of slimr is to run SLiM population genetics forward simulations from R. It also has utilities for monitoring the simulations, and bringing the resulting data into R for post-processing and visualization.

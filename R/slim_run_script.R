@@ -65,7 +65,7 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
       script_file <- tempfile(fileext = ".txt")
       readr::write_file(slim_script, script_file)
     }
-    if(slimr:::get_os() == "windows") {
+    if(platform == "windows") {
       script_file <- convert_to_wsl_path(script_file)
     }
 
@@ -157,7 +157,7 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
       slim_write_script(slim_script, script_file)
 
 
-      if(slimr:::get_os() == "windows") {
+      if(platform == "windows") {
         script_file <- convert_to_wsl_path(script_file)
       }
 

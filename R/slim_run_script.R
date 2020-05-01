@@ -32,8 +32,17 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
         try(slim_p$kill(), silent = TRUE)
       }, add = TRUE)
 
+  platform <- get_os()
+
   if(is.null(slim_path)) {
-    slim_path <- slimr:::get_slim_call()
+    slim_call <- slimr:::get_slim_call()
+  } else {
+    if(platform == "windows") {
+      slim_call <- list(call = "bash", args = c("-c", paste0('"', slim_path,
+                                                             ' {script_file}"')))
+    } else {
+      slim_call <- list(call = slim_path, args = "{script_file}")
+    }
   }
 
   if(inherits(slim_script, "character") | (is.null(slim_script) & !is.null(script_file))) {
@@ -67,9 +76,13 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
         clear = FALSE, total = NA, width = 3)
     }
 
+    slim_call$args <- purrr::map_chr(slim_call$args,
+                                     ~glue::glue(.x))
 
-    slim_p <- processx::process$new(normalizePath(slim_path), script_file,
-                                    stdout = "|", stderr = "2>&1")
+    slim_p <- processx::process$new(slim_call$call, slim_call$args,
+                                    stdout = "|", stderr = "2>&1",
+                                    windows_verbatim_args = TRUE,
+                                    windows_hide_window = TRUE)
 
     while(slim_p$is_alive()) {
       out <- slim_p$read_output_lines()
@@ -148,12 +161,19 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
         script_file <- convert_to_wsl_path(script_file)
       }
 
+      slim_call$args <- purrr::map_chr(slim_call$args,
+                                       ~glue::glue(.x))
+
       if(.progress) {
         pb$tick(0)
         pb$message("Simulation is setting up...")
       }
-      slim_p <- processx::process$new(normalizePath(slim_path), script_file,
-                                      stdout = "|", stderr = "|")
+
+      slim_p <- processx::process$new(slim_call$call, slim_call$args,
+                                      stdout = "|", stderr = "|",
+                                      windows_verbatim_args = TRUE,
+                                      windows_hide_window = TRUE)
+
       current_gen <- 0
       leftovers <- NULL
       started <- 0
@@ -246,7 +266,7 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
       res$process <- slim_p
       res$exit_status <- exit
 
-      return(res)
+      return(invisible(res))
 
     } else {
       stop("Sorry, slim_script must be a character or slim_script object or script_file must be specified.")

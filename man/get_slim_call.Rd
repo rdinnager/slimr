@@ -2,13 +2,13 @@
 % Please edit documentation in R/setup_slim.R
 \name{get_slim_call}
 \alias{get_slim_call}
-\title{Get SLiM call}
+\title{Get the call information for running SLiM. Doubles as a check for SLiM availability.}
 \usage{
 get_slim_call()
 }
 \value{
-Character with call to run SLiM
+
 }
 \description{
-Get SLiM call
+Function to test if SLiM is available on user's system.
 }

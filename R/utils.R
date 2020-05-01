@@ -19,19 +19,32 @@ get_os <- function(){
   tolower(os)
 }
 
+slimr_which <- function(slim_path, os = c("linux", "osx", "windows")) {
+  if(missing(os)) {
+    os <- get_os()
+  }
+  if(os == "windows") {
+    exe <- processx::run("bash", c("-c", glue::glue('"which -a {slim_path}"')),
+                         windows_verbatim_args = TRUE, error_on_status = FALSE)
+    if(exe$status == 0) {
+      here_it_is <- stringr::str_remove_all(exe$stdout, "\n")
+    } else {
+      here_it_is <- ""
+    }
+  } else {
+    here_it_is <- Sys.which(slim_path)
+  }
+}
+
 
 convert_to_wsl_path <- function(windows_path) {
-  drive_letter <- stringr::str_match(windows_path, "^([a-z]):")
-  stringr::str_replace(windows_path, drive_letter[1], paste0("\\\\mnt\\\\", drive_letter[2])) %>%
+  windows_path <- normalizePath(windows_path)
+  drive_letter <- stringr::str_match(windows_path, "^([A-Za-z]):")
+  stringr::str_replace(windows_path, drive_letter[1], paste0("\\\\mnt\\\\", tolower(drive_letter[2]))) %>%
     stringr::str_replace_all("\\\\", "/")
 
 }
 
-get_generation_lines <- function(slim_script) {
-  gen_lines <- stringr::str_match(strsplit(slim_script, "\n")[[1]], "^([0-9]+) ")
-  lines <- which(!is.na(gen_lines[ ,1]))
-  list(lines = lines, generations = readr::parse_number(gen_lines[ , 2][lines]))
-}
 
 #' Title
 #'

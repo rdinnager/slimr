@@ -8,6 +8,7 @@
 #' you specify. We recommend using the default directory "~/slim", in which case you will not have to set an
 #' environmental variable to tell slimr where to find your slim installation.
 #' @param test_slim Should SLiM be tested once installation is complete?
+#' @param verbose Whether to print out progress of the installation.
 #'
 #' @export
 #'
@@ -15,7 +16,7 @@
 #' \donttest{
 #' slim_setup()
 #' }
-slim_setup <- function(install_dir = "~/slim", test_slim = TRUE) {
+slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE) {
 
   if(!is_slim_available()){
     platform <- get_os()
@@ -24,7 +25,7 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE) {
     }
 
     if(platform == "windows") {
-      if(system2("wsl.exe", "echo") != 0) {
+      if(Sys.which("wsl.exe") == "") {
         stop("It appears your Windows system does not have a working Windows subsystem for linux (WSL). Please make
              sure you setup and install WSL before proceeding. Note WSL is only available for Windows 10 and above.
              See https://docs.microsoft.com/en-us/windows/wsl/install-win10 for installation instructions")
@@ -32,7 +33,7 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE) {
 
       ## check if slim is already installed
 
-      if(system('bash -c "slim -v"') != 0) {
+      if(!.slim_settings$slim_avail) {
 
         message("Attempting to install slim using Window subsystem for linux (WSL)")
 
@@ -97,9 +98,7 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE) {
 
       #slim_settings$slim_call <- 'bash -c "slim {slim_options}"'
 
-    }
-
-    if(platform == "linux") {
+    } else {
 
       ## check if slim is already installed
 
@@ -120,10 +119,10 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE) {
         system("mkdir SLiM_build")
 
         if(install_dir == "default") {
-          compile <- system('bash -c "cd SLiM_build \
+          compile <- system("cd SLiM_build \
                             cmake -DCMAKE_BUILD_TYPE=Release ../SLiM \
                             make \
-                            make install"')
+                            make install")
         } else {
           if(!dir.exists(install_dir)) {
             dir.create(install_dir)
@@ -151,7 +150,9 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE) {
         system("rm -r SLiM")
         system("rm -r SLiM_build")
 
+        message("\n")
         message("SLiM installed! Running a test now...")
+        message("\n")
 
 
         # test <- system("slim -testSLiM", intern = TRUE)
@@ -174,73 +175,83 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE) {
 
         }
 
-    if(install_dir == "default") {
-      install_dir <- ""
+    .slim_settings$slim_dir <- install_dir
+
+    .slim_settings$slim_call <- get_slim_call()
+    .slim_settings$slim_avail <- TRUE
+
+    Sys.setenv(SLIMR_SLIM_DIR = install_dir)
+
+    if(install_dir != "~/slim") {
+      message("\n")
+      message(stringr::str_wrap(glue::glue("It looks like you didn't use the default installation directory for SLiM. If you want slimr to find your SLiM installation in subsequent R sessions, please either make sure the slim executable is on the path, or set the SLIMR_SLIM_DIR evironmental variable to '{install_dir}'. We recommend adding this to your .RProfile file. This is most easily done by using {crayon::green('usethis::edit_r_environ()')}, and copying in the following line:\n{crayon::blue('SLIMR_SLIM_DIR=')}'{crayon::green(install_dir)}'\nThis snippet has been copied to the clipboard."),
+              exdent = 2))
+      message("\n")
+      clipr::write_clip(glue::glue("SLIMR_SLIM_DIR='{install_dir}'"))
     }
-    .slim_settings$install_dir <- install_dir
-    Sys.setenv(slim_install_dir = install_dir)
-    invisible(NULL)
+
+    return(invisible(NULL))
   }
 }
 
-#' Get SLiM call
-#'
-#' @return Character with call to run SLiM
-get_slim_call <- function() {
-  platform <- get_os()
 
-  if(!platform %in% c("windows", "linux", "osx")) {
-    stop("Couldn't detect OS.")
-  }
-
-  install_dir <- get_slim_install_dir()
-
-  if(platform == "windows") {
-    slim_call <- 'bash -c "{install_dir}slim"'
-  }
-  if(platform == "linux") {
-    slim_call <- '{install_dir}slim'
-  }
-  if(platform == "osx") {
-    slim_call <- '{install_dir}slim'
-  }
-
-  if(install_dir == "default" | install_dir == "") {
-    slim_call <- stringr::str_replace(slim_call,
-                                      stringr::fixed("{install_dir}"),
-                                      stringr::fixed(""))
-  } else {
-    slim_call <- stringr::str_replace(slim_call,
-                                      stringr::fixed("{install_dir}"),
-                                      stringr::fixed(paste0(install_dir, "/bin/")))
-  }
-  return(slim_call)
-}
-
-#' Is SLiM Available?
+#' Get the call information for running SLiM. Doubles as a check for SLiM availability.
 #'
 #' Function to test if SLiM is available on user's system.
 #'
 #' @return
-is_slim_available <- function() {
+get_slim_call <- function() {
 
-  slim_dir <- get_slim_install_dir()
+  if(!is.null(.slim_settings$slim_call)) {
 
-  file.exists(file.path(slim_dir, "bin", "slim"))
+    return(.slim_settings$slim_call)
 
+  } else {
+
+    platform <- get_os()
+
+    if(!platform %in% c("windows", "linux", "osx")) {
+      stop("Couldn't detect OS.")
+    }
+
+    slim_dir <- get_slim_dir()
+
+    slim_path <- slimr_which(file.path(slim_dir, "bin", "slim"), platform)
+    if(slim_path == "") {
+      slim_path <- slimr_which("slim", platform)
+    }
+    if(slim_path == "") {
+      slim_call <- NULL
+    } else {
+      if(platform == "windows") {
+        slim_call <- list(call = "bash",
+                          args = c("-c", paste0('"', slim_path,
+                                                ' {script_file}"')))
+      } else {
+        slim_call <- list(call = slim_path,
+                          args = "{script_file}")
+      }
+    }
+
+    return(slim_call)
+  }
 }
 
-get_slim_install_dir <- function() {
+get_slim_dir <- function() {
 
   if(!is.null(.slim_settings$install_dir)) {
-    return(.slim_settings$install_dir)
+    return(.slim_settings$slim_dir)
   } else {
-    if(Sys.getenv("slim_install_dir") != "") {
-      return(Sys.getenv("slim_install_dir"))
+    if(Sys.getenv("SLIMR_SLIM_DIR") != "") {
+      return(Sys.getenv("SLIMR_SLIM_DIR"))
     } else {
       return("~/slim")
     }
   }
+}
+
+is_slim_available <- function() {
+  .slim_settings$slim_avail
 }
 
 slim_test <- function() {

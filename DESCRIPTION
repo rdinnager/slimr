@@ -33,5 +33,9 @@ Imports:
     unglue,
     crayon,
     dplyr,
-    rlang (>= 0.1.2)
+    rlang (>= 0.1.2),
+    clipr,
+    purrr,
+    ggplot2,
+    gganimate
 VignetteBuilder: knitr

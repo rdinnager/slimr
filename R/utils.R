@@ -32,7 +32,7 @@ slimr_which <- function(slim_path, os = c("linux", "osx", "windows")) {
       here_it_is <- ""
     }
   } else {
-    here_it_is <- Sys.which(slim_path)
+    here_it_is <- Sys.which(normalizePath(slim_path))
   }
   here_it_is
 }

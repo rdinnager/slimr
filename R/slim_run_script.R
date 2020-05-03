@@ -35,7 +35,7 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
   platform <- get_os()
 
   if(is.null(slim_path)) {
-    slim_call <- slimr:::get_slim_call()
+    slim_call <- get_slim_call()
   } else {
     if(platform == "windows") {
       slim_call <- list(call = "bash", args = c("-c", paste0('"', slim_path,

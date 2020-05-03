@@ -2,16 +2,18 @@
 % Please edit documentation in R/slim_code.R
 \name{slim_code_markup}
 \alias{slim_code_markup}
-\title{Title}
+\title{Generate SLiM output markup codes.}
 \usage{
 slim_code_markup(keyword, begin = TRUE)
 }
 \arguments{
-\item{begin}{}
+\item{keyword}{Keyword to use in markup. e.g. "generation", "coordinates", etc}
+
+\item{begin}{Whether to generate the begin markup, or if FALSE, the end markup tag.}
 }
 \value{
-
+The markup tag ("character")
 }
 \description{
-Title
+Generate SLiM output markup codes.
 }

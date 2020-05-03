@@ -1,10 +1,9 @@
-#' Title
+#' Generate SLiM output markup codes.
 #'
-#' @param keyword
-#' @param begin
+#' @param keyword Keyword to use in markup. e.g. "generation", "coordinates", etc
+#' @param begin Whether to generate the begin markup, or if FALSE, the end markup tag.
 #'
-#' @return
-#' @export
+#' @return The markup tag ("character")
 #'
 #' @examples
 slim_code_markup <- function(keyword, begin = TRUE) {

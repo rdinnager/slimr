@@ -18,6 +18,8 @@
 #' }
 slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE) {
 
+  suppress_out <- !verbose
+
   if(!is_slim_available()){
     platform <- get_os()
     if(!platform %in% c("windows", "linux", "osx")) {
@@ -37,46 +39,70 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE)
 
         message("Attempting to install slim using Window subsystem for linux (WSL)")
 
-        system('bash -c "wget http://benhaller.com/slim/SLiM.zip"')
+        system('bash -c "wget http://benhaller.com/slim/SLiM.zip"',
+               ignore.stdout = suppress_out,
+               ignore.stderr = suppress_out)
 
-        unzip <- system('bash -c "unzip -o SLiM.zip"')
+        unzip <- system('bash -c "unzip -o SLiM.zip"',
+                        ignore.stdout = suppress_out,
+                        ignore.stderr = suppress_out)
         if(unzip != 0) {
           stop("Unzipping of SLiM archive failed. Make sure you have unzip installed on your WSL distro. e.g.
                for Ubuntu run `sudo apt-get install unzip`.")
         }
 
-        system('bash -c "mkdir SLiM_build"')
+        system('bash -c "mkdir SLiM_build"',
+               ignore.stdout = suppress_out,
+               ignore.stderr = suppress_out)
 
         if(install_dir == "default") {
           compile <- system('bash -c "cd SLiM_build \
                             cmake -DCMAKE_BUILD_TYPE=Release ../SLiM \
                             make \
-                            make install"')
+                            make install"',
+                            ignore.stdout = suppress_out,
+                            ignore.stderr = suppress_out)
         } else {
 
-          system(paste0('bash -c "mkdir -p ', install_dir, '"'))
+          system(paste0('bash -c "mkdir -p ', install_dir, '"'),
+                 ignore.stdout = suppress_out,
+                 ignore.stderr = suppress_out)
 
           compile <- system(stringr::str_replace('bash -c "cd SLiM_build \
   cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/path/to/install ../SLiM \
   make \
                             make install"',
                                                  "/path/to/install",
-                                                 install_dir))
+                                                 install_dir),
+                            ignore.stdout = suppress_out,
+                            ignore.stderr = suppress_out)
         }
 
         if(compile != 0) {
 
-          system('bash -c "rm SLiM.zip"')
-          system('bash -c "rm -r SLiM"')
-          system('bash -c "rm -r SLiM_build"')
+          system('bash -c "rm SLiM.zip"',
+                 ignore.stdout = suppress_out,
+                 ignore.stderr = suppress_out)
+          system('bash -c "rm -r SLiM"',
+                 ignore.stdout = suppress_out,
+                 ignore.stderr = suppress_out)
+          system('bash -c "rm -r SLiM_build"',
+                 ignore.stdout = suppress_out,
+                 ignore.stderr = suppress_out)
 
           stop("It looks like installation failed at compiling time. Make sure you have cmake and gcc (or build-essential)
                installed in your WSL distro and that they are accessible (e.g. in the PATH)")
         }
 
-        system('bash -c "rm SLiM.zip"')
-        system('bash -c "rm -r SLiM"')
-        system('bash -c "rm -r SLiM_build"')
+        system('bash -c "rm SLiM.zip"',
+               ignore.stdout = suppress_out,
+               ignore.stderr = suppress_out)
+        system('bash -c "rm -r SLiM"',
+               ignore.stdout = suppress_out,
+               ignore.stderr = suppress_out)
+        system('bash -c "rm -r SLiM_build"',
+               ignore.stdout = suppress_out,
+               ignore.stderr = suppress_out)
 
         message("SLiM installed! Running a test now...")
 
@@ -108,21 +134,29 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE)
 
         message("Attempting to install slim on linux...")
 
-        system("wget http://benhaller.com/slim/SLiM.zip")
+        system("wget http://benhaller.com/slim/SLiM.zip",
+               ignore.stdout = suppress_out,
+               ignore.stderr = suppress_out)
 
-        unzip <- system("unzip -o SLiM.zip")
+        unzip <- system("unzip -o SLiM.zip",
+                        ignore.stdout = suppress_out,
+                        ignore.stderr = suppress_out)
         if(unzip != 0) {
           stop("Unzipping of SLiM archive failed. Make sure you have unzip installed on your WSL distro. e.g.
                for Ubuntu run `sudo apt-get install unzip`.")
         }
 
-        system("mkdir SLiM_build")
+        system("mkdir SLiM_build",
+               ignore.stdout = suppress_out,
+               ignore.stderr = suppress_out)
 
         if(install_dir == "default") {
           compile <- system("cd SLiM_build \
                             cmake -DCMAKE_BUILD_TYPE=Release ../SLiM \
                             make \
-                            make install")
+                            make install",
+                            ignore.stdout = suppress_out,
+                            ignore.stderr = suppress_out)
         } else {
           if(!dir.exists(install_dir)) {
             dir.create(install_dir)
@@ -133,22 +167,36 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE)
   make \
                             make install",
                                                  "/path/to/install",
-                                                 install_dir))
+                                                 install_dir),
+                            ignore.stdout = suppress_out,
+                            ignore.stderr = suppress_out)
         }
 
         if(compile != 0) {
 
-          system("rm SLiM.zip")
-          system("rm -r SLiM")
-          system("rm -r SLiM_build")
+          system("rm SLiM.zip",
+                 ignore.stdout = suppress_out,
+                 ignore.stderr = suppress_out)
+          system("rm -r SLiM",
+                 ignore.stdout = suppress_out,
+                 ignore.stderr = suppress_out)
+          system("rm -r SLiM_build",
+                 ignore.stdout = suppress_out,
+                 ignore.stderr = suppress_out)
 
           stop("It looks like installation failed at compiling time. Make sure you have cmake and gcc (or build-essential)
                installed in your linux distro and that they are accessible (e.g. in the PATH)")
         }
 
-        system("rm SLiM.zip")
-        system("rm -r SLiM")
-        system("rm -r SLiM_build")
+        system("rm SLiM.zip",
+               ignore.stdout = suppress_out,
+               ignore.stderr = suppress_out)
+        system("rm -r SLiM",
+               ignore.stdout = suppress_out,
+               ignore.stderr = suppress_out)
+        system("rm -r SLiM_build",
+               ignore.stdout = suppress_out,
+               ignore.stderr = suppress_out)
 
         message("\n")
         message("SLiM installed! Running a test now...")

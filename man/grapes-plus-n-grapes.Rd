@@ -7,10 +7,12 @@
 a \%+n\% b
 }
 \arguments{
-\item{b}{}
+\item{a}{First string}
+
+\item{b}{Second sring}
 }
 \value{
-
+New string with a and b pasted together with a newline in between.
 }
 \description{
 Glue two string together with a newline separator

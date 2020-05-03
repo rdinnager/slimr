@@ -1,3 +1,7 @@
+#' Extract data from a single generation's output
+#' @param output_one Lines output in a single generation from SLiM
+#'
+#' @return A four column tibble.
 slim_output_extract_one <- function(output_one) {
   output_starts <- stringr::str_which(output_one, "<slimr_output:[a-zA-Z]+_start>")
   output_ends <- stringr::str_which(output_one, "<slimr_output:[a-zA-Z]+_end>")
@@ -10,13 +14,12 @@ slim_output_extract_one <- function(output_one) {
            dplyr::mutate(raw_data = raw_data))
 }
 
-#' Title
+#' Extract data from SLiM output
 #'
-#' @param output_this
-#' @param generations
+#' @param output_this Lines of SLiM output to extract from. Should be a  list, each element of which has a single generations worth of output (encloded in <slimr_output:generation_start> and <slimr_output:generation_end>.
+#' @param generations Generation numbers corresponding to the \code{output_this} list. Should be a numeric vector of the same length of \code{output_this}.
 #'
-#' @return
-#' @export
+#' @return A four column tibble containing the output type, output format, the raw data, and the generation. There will be one row per generation in the \code{output_this} list.
 #'
 #' @examples
 slim_output_extract <- function(output_this, generations) {
@@ -38,7 +41,7 @@ slim_output_process_one <- function(output_type, output_format = "text", raw_dat
     out <- out  %>%
       matrix(ncol = 2) %>%
       dplyr::as_tibble(.repair_names = make.names) %>%
-      dplyr::rename(x = V1, y = V2) %>%
+      dplyr::rename(x = .data$V1, y = .data$V2) %>%
       dplyr::mutate_all(~as.numeric(.))
   }
   if(output_type == "sexes") {
@@ -51,13 +54,15 @@ slim_output_process_one <- function(output_type, output_format = "text", raw_dat
 
 slim_output_process <- function(slim_output) {
   nongenomes <- slim_output %>%
-    dplyr::filter(!output_type %in% c("genomes", "individuals"))
+    dplyr::filter(!.data$output_type %in% c("genomes", "individuals"))
 
   processed_nongenomes <- nongenomes %>%
     dplyr::mutate(tibbles = purrr::pmap(nongenomes %>%
-                                          dplyr::select(output_type, output_format, raw_data),
+                                          dplyr::select(.data$output_type,
+                                                        .data$output_format,
+                                                        .data$raw_data),
                                         ~slim_output_process_one(..1, ..2, ..3))) %>%
-    dplyr::group_by(generation) %>%
+    dplyr::group_by(.data$generation) %>%
     dplyr::group_modify(~dplyr::bind_cols(.$tibbles))
 
 }

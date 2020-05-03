@@ -2,16 +2,18 @@
 % Please edit documentation in R/slim_output.R
 \name{slim_output_extract}
 \alias{slim_output_extract}
-\title{Title}
+\title{Extract data from SLiM output}
 \usage{
 slim_output_extract(output_this, generations)
 }
 \arguments{
-\item{generations}{}
+\item{output_this}{Lines of SLiM output to extract from. Should be a  list, each element of which has a single generations worth of output (encloded in <slimr_output:generation_start> and <slimr_output:generation_end>.}
+
+\item{generations}{Generation numbers corresponding to the \code{output_this} list. Should be a numeric vector of the same length of \code{output_this}.}
 }
 \value{
-
+A four column tibble containing the output type, output format, the raw data, and the generation. There will be one row per generation in the \code{output_this} list.
 }
 \description{
-Title
+Extract data from SLiM output
 }

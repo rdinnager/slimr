@@ -1,5 +1,6 @@
 .slim_settings <- new.env(parent = emptyenv())
 .slim_assets <- new.env(parent = emptyenv())
+if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 
 .onLoad <- function(libname, pkgname) {
 

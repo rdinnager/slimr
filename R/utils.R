@@ -77,13 +77,10 @@ convert_to_wsl_path <- function(windows_path) {
 
 #' Glue two string together with a newline separator
 #'
-#' @param a
-#' @param b
+#' @param a First string
+#' @param b Second sring
 #'
-#' @return
-#' @export
-#'
-#' @examples
+#' @return New string with a and b pasted together with a newline in between.
 `%+n%` <- function(a, b) {
   stringr::str_c(a, b, sep = "\n")
 }

@@ -2,7 +2,6 @@
 
 S3method(as.character,slim_script)
 S3method(print,slim_script)
-export("%+%")
 export("%+n%")
 export("%>%")
 export(":=")

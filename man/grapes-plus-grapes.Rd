@@ -2,16 +2,18 @@
 % Please edit documentation in R/utils.R
 \name{\%+\%}
 \alias{\%+\%}
-\title{Title}
+\title{Glue two strings together.}
 \usage{
 a \%+\% b
 }
 \arguments{
-\item{b}{}
+\item{a}{First string}
+
+\item{b}{Second sring}
 }
 \value{
-
+New string with a and b pasted together with a space in between.
 }
 \description{
-Title
+Glue two strings together.
 }

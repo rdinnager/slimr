@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{\%+n\%}
 \alias{\%+n\%}
-\title{Title}
+\title{Glue two string together with a newline separator}
 \usage{
 a \%+n\% b
 }
@@ -13,5 +13,5 @@ a \%+n\% b
 
 }
 \description{
-Title
+Glue two string together with a newline separator
 }

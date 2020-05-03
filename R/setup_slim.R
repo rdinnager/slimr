@@ -210,10 +210,6 @@ get_slim_call <- function() {
 
     platform <- get_os()
 
-    if(!platform %in% c("windows", "linux", "osx")) {
-      stop("Couldn't detect OS.")
-    }
-
     slim_dir <- get_slim_dir()
 
     slim_path <- slimr_which(file.path(slim_dir, "bin", "slim"), platform)

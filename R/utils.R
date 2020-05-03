@@ -16,9 +16,20 @@ get_os <- function(){
     if (grepl("linux-gnu", R.version$os))
       os <- "linux"
   }
-  tolower(os)
+  os <- tolower(os)
+
+  if(!os %in% c("windows", "linux", "osx")) {
+    stop("Couldn't detect OS.")
+  }
+
+  os
 }
 
+#' Get the proper path for the SLiM executable. Returns "" if it cannot be found
+#'
+#' @param slim_path Path to SLiM executable
+#' @param os What operating system are we working in? Must be "windows", "osx", or "linux#', if left blank slimr will try and detrmine it automatically
+#' @return The full path to the executable as a character, or "" if not found.
 slimr_which <- function(slim_path, os = c("linux", "osx", "windows")) {
   if(missing(os)) {
     os <- get_os()
@@ -32,12 +43,19 @@ slimr_which <- function(slim_path, os = c("linux", "osx", "windows")) {
       here_it_is <- ""
     }
   } else {
-    here_it_is <- Sys.which(normalizePath(slim_path))
+    here_it_is <- Sys.which(path.expand(slim_path))
   }
   here_it_is
 }
 
 
+#' Convert a path into a path that works inside Windows Subsystem for Linux
+#'
+#' WSL can access windows files through a directory mounted in the /mnt directory. This function converts a windows path from outside WSL to point to the correct directory inside WSL
+#'
+#' @param windows_path The windows path to convert.
+#'
+#' @return The modified path.
 convert_to_wsl_path <- function(windows_path) {
   windows_path <- normalizePath(windows_path)
   drive_letter <- stringr::str_match(windows_path, "^([A-Za-z]):")
@@ -47,20 +65,17 @@ convert_to_wsl_path <- function(windows_path) {
 }
 
 
-#' Title
+#' Glue two strings together.
 #'
-#' @param a
-#' @param b
+#' @param a First string
+#' @param b Second sring
 #'
-#' @return
-#' @export
-#'
-#' @examples
+#' @return New string with a and b pasted together with a space in between.
 `%+%` <- function(a, b) {
   stringr::str_c(a, b, sep = " ")
 }
 
-#' Title
+#' Glue two string together with a newline separator
 #'
 #' @param a
 #' @param b

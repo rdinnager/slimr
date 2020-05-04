@@ -2,16 +2,19 @@
 % Please edit documentation in R/slim_script_manip.R
 \name{print.slim_script}
 \alias{print.slim_script}
-\title{Title}
+\title{Print a slim_script object with highlighting}
 \usage{
 \method{print}{slim_script}(x)
 }
 \arguments{
-\item{x}{}
+\item{x}{slim_script object to print.}
 }
 \value{
-
+The formatted string (invisibly)
 }
 \description{
-Title
+Print a slim_script object with highlighting
+}
+\examples{
+print(slimr::slim_get_recipe() \%>\% slimr::slim_script_from_text())
 }

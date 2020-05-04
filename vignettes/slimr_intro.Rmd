@@ -20,7 +20,7 @@ Welcome to `slimr`, an R package designed to make advanced population genetics s
 ```{r setup}
 library(slimr)
 
-recipe_1 <- slimr::get_recipe(recipe = "4.1")
+recipe_1 <- slimr::slim_get_recipe(recipe = "4.1")
 cat(recipe_1)
 
 ```

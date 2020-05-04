@@ -48,6 +48,20 @@ slimr_which <- function(slim_path, os = c("linux", "osx", "windows")) {
   here_it_is
 }
 
+#' Compares two sets and returns TRUE if they are the same.
+#'
+#' This code modified from code (by fangly) found here: https://github.com/r-lib/testthat/issues/473. Should be equivalent to the test performed in testthat::expect_setequal
+#'
+#' @param actual The actual set.
+#' @param expected The expected set.
+#'
+#' @return A logical scalar, TRUE if the sets are equal, FALSE if they are not equal
+sets_equal <- function(actual, expected) {
+  differences <- setdiff(actual, expected)
+  sets_equal  <- length(differences) == 0
+  sets_equal
+}
+
 
 #' Convert a path into a path that works inside Windows Subsystem for Linux
 #'

@@ -10,7 +10,7 @@ slim_script_from_text(slim_script_text)
 \item{slim_script_text}{A character vector of length 1 giving the full SLiM script to convert to a \code{slim_script} object}
 }
 \value{
-A \code{slim_script} object.
+A \code{slim_script} object, which inherits from \link[tibble:tibble-package]{tibble}.
 }
 \description{
 Title

@@ -1,10 +1,18 @@
 ## code to prepare `DATASET` dataset goes here
+library(dplyr)
 
-download.file("http://benhaller.com/slim/SLiM_Recipes.zip", "inst/recipes.zip")
-zip::unzip("inst/recipes.zip") ## doesn't work, had to do it manually with winzip because of double quotes in filenames
+download.file("http://benhaller.com/slim/SLiM_Recipes.zip", "data-raw/recipes.zip")
+zip::unzip("data-raw/recipes.zip") ## doesn't work, had to do it manually with winzip because of double quotes in filenames
 
-recipes <- list.files("inst/SLiM_Recipes/", full.names = TRUE) %>%
+files <- list.files("data-raw/SLiM_Recipes/", full.names = TRUE)
+
+recipes <- files %>%
   grep("Recipe ", .,  value = TRUE)
+
+resources <- files[!stringr::str_detect(files, "Recipe ")]
+resources <- resources[resources != "_README.txt"]
+
+file.copy(resources, file.path("inst/recipe_resources", basename(resources)))
 
 recipe_name <- basename(recipes) %>%
   strsplit(" - ", fixed = TRUE) %>%

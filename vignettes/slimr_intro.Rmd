@@ -48,7 +48,7 @@ You might also notice a few changes. For one the comments have been removed beca
 Monitoring progress in real-time is great but it doesn't work too well in a static document like this, so we will just collect information about how the run is going into an object which we can plot later. Here, we will ask `slimr` to output information on the genomes being simulated every 1000 generations, and to sample 20 genomes each time.
 
 ```{r get_sim_output}
-sim_ob <- slimr::slim_run_script(slim_script_1, output = list("genomes"), output_every = 1, output_sample = 20, .progress = TRUE, output_format = "vcf_tibble")
+sim_ob <- slimr::slim_run_script(slim_script_1, output = list("genomes"), output_every = 100, output_sample = 20, .progress = TRUE, output_format = "vcf_tibble")
 
 ```
 

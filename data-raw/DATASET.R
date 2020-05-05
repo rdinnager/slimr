@@ -12,7 +12,7 @@ recipes <- files %>%
 resources <- files[!stringr::str_detect(files, "Recipe ")]
 resources <- resources[resources != "_README.txt"]
 
-file.copy(resources, file.path("inst/recipe_resources", basename(resources)))
+file.copy(resources, file.path("inst/extdata/recipe_resources", basename(resources)))
 
 recipe_name <- basename(recipes) %>%
   strsplit(" - ", fixed = TRUE) %>%

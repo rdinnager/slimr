@@ -193,71 +193,76 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
         out <- slim_p$read_output_lines()
         out <- c(leftovers, out)
 
-        if(length(out) > 0){
+        if(.progress | !is.null(output)) {
 
-          lines_started <- stringr::str_which(out, "<slimr_output:generation_start>")
-          gens_started <-  unglue::unglue_data(out[lines_started], "<slimr_output:generation_start>{gen_start}")
+          if(length(out) > 0){
 
-          lines_ended <- stringr::str_which(out, "<slimr_output:generation_end>")
-          gens_ended <-  unglue::unglue_data(out[lines_ended], "<slimr_output:generation_end>{gen_end}")
+            lines_started <- stringr::str_which(out, "<slimr_output:generation_start>")
+            gens_started <-  unglue::unglue_data(out[lines_started], "<slimr_output:generation_start>{gen_start}")
 
-          finished <- which(gens_ended$gen_end %in% gens_started$gen_start)
-          gens_finished <- gens_ended$gen_end[finished] %>% as.integer()
+            lines_ended <- stringr::str_which(out, "<slimr_output:generation_end>")
+            gens_ended <-  unglue::unglue_data(out[lines_ended], "<slimr_output:generation_end>{gen_end}")
 
-          if(length(lines_ended[finished]) > 0) {
-            last_line <- max(lines_ended[finished])
+            finished <- which(gens_ended$gen_end %in% gens_started$gen_start)
+            gens_finished <- gens_ended$gen_end[finished] %>% as.integer()
 
-            if(last_line < length(out)) {
-              leftovers <- out[(last_line + 1L):length(out)]
+            if(length(lines_ended[finished]) > 0) {
+              last_line <- max(lines_ended[finished])
+
+              if(last_line < length(out)) {
+                leftovers <- out[(last_line + 1L):length(out)]
+              } else {
+                leftovers <- NULL
+              }
             } else {
-              leftovers <- NULL
+              if(length(lines_started) > 0) {
+                first_line <- min(lines_started)
+                leftovers <- out[first_line:length(out)]
+              } else {
+                leftovers <- NULL
+              }
+            }
+
+            intervals <- cbind(lines_started[finished], lines_ended[finished],
+                               lines_ended[finished] - lines_started[finished] - 1L)
+
+            if(any(intervals[ , 3] > 0)) {
+              output_this <- purrr::map(purrr::array_branch(intervals, 1),
+                                     ~out[(.x[1] + 1L):(.x[2] - 1L)])
+              dat_this <- slim_output_extract(output_this, gens_finished)
+
+              if(is.null(dat)) {
+                dat <- dat_this
+              } else {
+                dat <- dplyr::bind_rows(dat, dat_this)
+              }
+            }
+          }
+
+          if(length(gens_finished) != 0) {
+
+            current_gen <- max(gens_finished)
+
+            if(.progress) {
+              pb$update(current_gen/last_gen)
             }
           } else {
-            if(length(lines_started) > 0) {
-              first_line <- min(lines_started)
-              leftovers <- out[first_line:length(out)]
-            } else {
-              leftovers <- NULL
+            if(.progress) {
+              pb$tick(0)
             }
           }
 
-          intervals <- cbind(lines_started[finished], lines_ended[finished],
-                             lines_ended[finished] - lines_started[finished] - 1L)
-
-          if(any(intervals[ , 3] > 0)) {
-            output_this <- purrr::map(purrr::array_branch(intervals, 1),
-                                   ~out[(.x[1] + 1L):(.x[2] - 1L)])
-            dat_this <- slim_output_extract(output_this, gens_finished)
-
-            if(is.null(dat)) {
-              dat <- dat_this
-            } else {
-              dat <- dplyr::bind_rows(dat, dat_this)
-            }
-          }
-        }
-
-        if(length(gens_finished) != 0) {
-
-          current_gen <- max(gens_finished)
-
-          if(.progress) {
-            pb$update(current_gen/last_gen)
-          }
-        } else {
-          if(.progress) {
-            pb$tick(0)
-          }
         }
       }
 
       out <- slim_p$read_output_lines()
 
-      if(!pb$finished) {
-        pb$update(1)
+      if(.progress){
+        if(!pb$finished) {
+          pb$update(1)
+        }
+        pb$terminate()
       }
-
-      pb$terminate()
 
       slim_p$read_all_error_lines()
 

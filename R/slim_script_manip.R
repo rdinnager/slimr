@@ -200,7 +200,7 @@ slim_script_remove_output <- function(slim_script, no_file_only = FALSE) {
 #'
 #' @examples
 #' print(slimr::slim_get_recipe() %>% slimr::slim_script_from_text())
-print.slim_script <- function(x) {
+print.slim_script <- function(x, ...) {
 
   code <- as.character(x)
 
@@ -230,12 +230,12 @@ slim_script_is_valid <- function(slim_script) {
   if(!class_correct) {
     stop('The input is not of class "slim_script", which is required')
   }
-  istibble <- inherits(slim_script, "tibble")
+  istibble <- inherits(slim_script, "tbl_df")
   if(!istibble) {
-    stop('The format of the input appears to be corrupted, as it does not inherit from tibble')
+    stop('The format of the input appears to be corrupted, as it does not inherit from tbl_df')
   }
 
-  has_correct_columns <- set_equal(colnames(slim_script), c("block_id",
+  has_correct_columns <- sets_equal(colnames(slim_script), c("block_id",
                                                             "start",
                                                             "colon",
                                                             "end",

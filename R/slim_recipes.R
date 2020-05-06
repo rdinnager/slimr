@@ -8,7 +8,7 @@
 #' @examples
 #' slim_get_recipe(recipe = "4.1")
 slim_get_recipe <- function(recipe = 1) {
-  slim_recipes[[recipe]]
+  .slim_assets$slim_recipes[[recipe]]
 }
 
 #' Get a list of SLiM recipes (as text)
@@ -23,10 +23,10 @@ slim_get_recipe <- function(recipe = 1) {
 #' recipes[[12]]
 slim_get_recipes <- function(recipes = "all") {
   if(is.numeric(recipes)) {
-    slim_recipes[recipes]
+    .slim_assets$slim_recipes[recipes]
   } else {
    if(recipes == "all") {
-    slim_recipes
+     .slim_assets$slim_recipes
    }
   }
 

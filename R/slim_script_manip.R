@@ -45,7 +45,7 @@ slim_script_from_text <- function(slim_script_text) {
   n_blocks <- length(blocks)
 
   ## remove comments
-  blocks <- stringr::str_replace_all(blocks, "//(.*?)(\\n|$)", "\n")
+  blocks <- stringr::str_replace_all(blocks, "//([^\"]+?)(\\n|$)", "\n")
 
   heads <- stringr::str_match(blocks, "([\\S\\s]*?)\\{")[ , 2]
   heads <- stringr::str_remove_all(heads, stringr::fixed("\n"))
@@ -56,9 +56,9 @@ slim_script_from_text <- function(slim_script_text) {
 
   start_nums <- stringr::str_extract(heads, "^(\\d+)")
   end_nums <- stringr::str_match(heads, ":(\\d+)")[ , 2]
-  max_num <- max(c(start_nums, end_nums), na.rm = TRUE)
+  max_num <- max(c(as.numeric(start_nums), as.numeric(end_nums)), na.rm = TRUE)
   has_colon <- grepl(":", heads, fixed = TRUE)
-  end_nums <- ifelse(has_colon & is.na(end_nums), max_num, end_nums)
+  end_nums <- ifelse(has_colon & is.na(end_nums), as.character(max_num), end_nums)
 
   block_names <- paste0("s", stringr::str_pad(seq_along(blocks),
                                               nchar(trunc(n_blocks)),

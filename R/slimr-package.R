@@ -48,7 +48,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
                                                        ~stringr::str_replace_all(.x,
                                                                                  paste0('\".*\\Q', basename(.y), '\\E\"'), ## some handy regex here
                                                                                  paste0('"', .y, '"')))
-
+  .slim_assets$slim_recipes <- slim_recipes
 
 
 }

@@ -264,7 +264,7 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
         pb$terminate()
       }
 
-      slim_p$read_all_error_lines()
+      errors <- slim_p$read_all_error_lines()
 
       exit <- slim_p$get_exit_status()
 
@@ -273,7 +273,8 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
       slim_p$kill()
 
       res <- list(output = dat)
-      res$process <- slim_p
+      #res$process <- slim_p
+      res$errors <- errors
       res$exit_status <- exit
 
       return(invisible(res))

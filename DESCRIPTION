@@ -39,5 +39,6 @@ Imports:
     purrr,
     ggplot2,
     gganimate,
-    tibble
+    tibble,
+    styler
 VignetteBuilder: knitr

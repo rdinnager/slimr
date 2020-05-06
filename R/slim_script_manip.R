@@ -65,6 +65,21 @@ slim_script_from_text <- function(slim_script_text) {
                                               pad = "0"))
 
   blocks <- stringr::str_trim(blocks)
+
+  ## trick to get styler to work
+  blocks <- purrr::map(blocks,
+                       ~stringr::str_replace_all(.x,
+                                                 "return[:space:]+(.*?);",
+                                                 "return(\\1);"))
+  blocks <- purrr::map(blocks,
+                       ~styler::style_text(.x, scope = "line_breaks"))
+
+  blocks <- purrr::map(blocks,
+               ~stringr::str_replace_all(.x,
+                                         "return\\((.*?)\\);",
+                                         "return \\1;"))
+
+
   block_list <- stringr::str_split(blocks, stringr::fixed("\n"))
   block_list <- purrr::map(block_list,
                            ~.x[.x != ""])

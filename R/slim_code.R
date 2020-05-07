@@ -140,3 +140,89 @@ slim_register_event_code <- function(code_snippet, start_gen = 1, last_gen = NUL
                          .open = "<<", .close = ">>")
   code_bit
 }
+
+#' Rify some SLiM code
+#'
+#' Utility code to convert SliM code into a form that can be parsed by R
+#' (e.g. in \code{styler} or \code{prettycode}). Don't forget to re-SLiMify
+#' afterwards (via \code{\link(slim_code_SLiMify))!
+#'
+#' @param code_snippet SLiM code to Rify as a character vector
+#'
+#' @return Rified code snippet
+slim_code_Rify <- function(code_snippet) {
+
+
+  ## replace % with %%
+  code_snippet <- stringr::str_replace_all(code_snippet,
+                                           "([^.])%([^.])",
+                                           "\\1%%\\2")
+
+  ## replace mid-expression else with %slimr_else% fake operator
+  # code_snippet <- stringr::str_replace_all(code_snippet,
+  #                                          "(.*?)else(.*?)",
+  #                                          "%slimr_else%")
+
+  ## remove overhanging elses
+  code_snippet <- stringr::str_replace_all(code_snippet,
+                                           "\\}\n[:blank:]*\\Qelse\\E",
+                                           "} else")
+  code_snippet <- stringr::str_replace_all(code_snippet,
+                                           ";[:blank:]*\n[:blank:]*\\Qelse\\E",
+                                           " else")
+  ## make sure do statements are on their own line (R treats it as a variable then)
+  code_snippet <- stringr::str_replace_all(code_snippet,
+                                           "do[:blank:]*\\{",
+                                           "do\n{")
+  ## convert return x; to return(x);
+  code_snippet <- stringr::str_replace_all(code_snippet,
+                                           "return[:space:]+(.*?)([;[:space:]])",
+                                           "return(\\1)\\2")
+  ## replace . with %.% (shim operator)
+  code_snippet <- stringr::str_replace_all(code_snippet,
+                                           "([^[:digit:]])\\.([^[:digit:]])",
+                                           "\\1%.%\\2")
+  ## add {..slimr_special..} construct to while statements to make R parse it OK.
+  code_snippet <- stringr::str_replace_all(code_snippet,
+                                           "(while[:blank:]*\\((.*?)\\))[:blank:]*;",
+                                           "\\1{..slimr_special..}")
+
+  code_snippet
+
+}
+
+#' Rify some SLiM code
+#'
+#' Utility code to convert Rified (via \code{\link(slim_code_Rify)}) SLiM code back to valid SLiM code!
+#'
+#' @param code_snippet SLiM code to Rify as a character vector
+#'
+#' @return SLiMified code snippet
+slim_code_SLiMify <- function(code_snippet, ansi_aware = FALSE) {
+
+  # code_snippet <- stringr::str_replace_all(code_snippet,
+  #                                          stringr::fixed("%slimr_else%"),
+  #                                          stringr::fixed("else"))
+
+  code_snippet <- stringr::str_replace_all(code_snippet,
+                                           "return\\((.*?)\\)([;[:space:]])",
+                                           "return \\1\\2")
+
+
+  code_snippet <- stringr::str_replace_all(code_snippet,
+                                           "[:space:]*%.%[:space:]*",
+                                           stringr::fixed("."))
+
+  code_snippet <- stringr::str_replace_all(code_snippet,
+                                           "\\{[\n]*[:blank:]*(.*?)\\Q..slimr_special..\\E[[:blank:]\n]*(.*?)\\}",
+                                           ";")
+
+  code_snippet <- stringr::str_replace_all(code_snippet,
+                                           "([^.])%%([^.])",
+                                           "\\1%\\2")
+
+
+  code_snippet
+
+}
+

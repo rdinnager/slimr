@@ -40,5 +40,6 @@ Imports:
     ggplot2,
     gganimate,
     tibble,
-    styler
+    styler,
+    prettycode
 VignetteBuilder: knitr

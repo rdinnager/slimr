@@ -299,9 +299,9 @@ as.character.slim_script <- function(x) {
                  x$colon, ifelse(is.na(x$end), "", x$end),
                  " ",
                  x$callback,
-                 " {\n\t\t",
-                 purrr::map_chr(x$code, ~paste(.x, collapse = "\n")),
-                 "\n}")
+                 " {\n",
+                 purrr::map_chr(x$code, ~paste(paste0("\t", .x), collapse = "\n")),
+                 "\n}\n")
   code
 }
 

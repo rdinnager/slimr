@@ -19,7 +19,7 @@ insert_generation_output <- function(slim_script, line = NULL, start_gen = 1, en
   new_script
 }
 
-#' Title
+#' Convert a character vector into a slim_script object
 #'
 #' @param slim_script_text A character vector of length 1 giving the full SLiM script to convert to a \code{slim_script} object
 #'
@@ -68,21 +68,22 @@ slim_script_from_text <- function(slim_script_text) {
 
   ## trick to get styler to work
   blocks <- purrr::map(blocks,
-                       ~stringr::str_replace_all(.x,
-                                                 "return[:space:]+(.*?);",
-                                                 "return(\\1);"))
+                       ~slim_code_Rify(.x))
   blocks <- purrr::map(blocks,
                        ~styler::style_text(.x, scope = "line_breaks"))
 
+  # blocks <- purrr::map(blocks,
+  #                      ~stringr::str_trim(.x))
   blocks <- purrr::map(blocks,
-               ~stringr::str_replace_all(.x,
-                                         "return\\((.*?)\\);",
-                                         "return \\1;"))
+                       ~paste(.x, collapse = "\n"))
+
+  blocks <- purrr::map(blocks,
+               ~slim_code_SLiMify(.x))
 
 
-  block_list <- stringr::str_split(blocks, stringr::fixed("\n"))
-  block_list <- purrr::map(block_list,
-                           ~.x[.x != ""])
+  blocks <- stringr::str_split(blocks, stringr::fixed("\n"))
+  # block_list <- purrr::map(block_list,
+  #                          ~.x[.x != ""])
 
   heads <- stringr::str_remove_all(heads, "^(\\d+)")
   heads <- stringr::str_remove_all(heads, ":(\\d+)")
@@ -93,7 +94,7 @@ slim_script_from_text <- function(slim_script_text) {
                        colon = ifelse(has_colon, ":", ""),
                        end = end_nums,
                        callback = heads,
-                       code = block_list)
+                       code = blocks)
 
   class(res) <- c("slim_script", "tbl_df", "tbl", "data.frame")
 
@@ -217,16 +218,23 @@ slim_script_remove_output <- function(slim_script, no_file_only = FALSE) {
 #' print(slimr::slim_get_recipe() %>% slimr::slim_script_from_text())
 print.slim_script <- function(x, ...) {
 
-  code <- as.character(x)
+  code <- purrr::map(x$code,
+                     ~slim_code_Rify(.x))
+  code_pretty <- purrr::map(code,
+                            ~prettycode::highlight(.x))
+  code_pretty <- purrr::map(code_pretty,
+                            ~slim_code_SLiMify(.x))
+  x$code <- code_pretty
+  string <- as.character(x)
 
-  string <- purrr::map(code,
-                       ~stringr::str_replace_all(.x, "([-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?)",
-                                                 "<highlight>crayon::green('\\1')</highlight>"))
+  # string <- purrr::map(code,
+  #                      ~stringr::str_replace_all(.x, "([-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?)",
+  #                                                "<highlight>crayon::green('\\1')</highlight>"))
 
   names(string) <- x$block_id
 
   string <- purrr::imap_chr(string,
-                            ~purrr::assign_in(.x, 1, paste0("<highlight>crayon::bgBlue('", .y, "')</highlight> ", .x[1])) %>%
+                            ~purrr::assign_in(.x, 1, paste0("<highlight>crayon::bold$bgCyan('", .y, "')</highlight> ", .x[1])) %>%
                               paste(collapse = "\n")) %>%
     paste(collapse = "\n")
 

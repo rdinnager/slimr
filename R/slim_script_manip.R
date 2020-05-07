@@ -70,7 +70,15 @@ slim_script_from_text <- function(slim_script_text) {
   blocks <- purrr::map(blocks,
                        ~slim_code_Rify(.x))
   blocks <- purrr::map(blocks,
-                       ~styler::style_text(.x, scope = "line_breaks"))
+                       ~styler::style_text(.x))
+
+  blocks <- purrr::map(blocks,
+                       ~.x[.x != ""])
+
+  blocks <- purrr::map(blocks,
+                       ~{non_brackets <- !stringr::str_detect(.x, "(\\{|\\})")
+                       .x[non_brackets] <- paste0(.x[non_brackets], ";")
+                       .x})
 
   # blocks <- purrr::map(blocks,
   #                      ~stringr::str_trim(.x))

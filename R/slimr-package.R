@@ -46,7 +46,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
   slim_recipes[recipes_using_resources] <- purrr::map2(slim_recipes[recipes_using_resources],
                                                        resources,
                                                        ~stringr::str_replace_all(.x,
-                                                                                 paste0('\".*\\Q', basename(.y), '\\E\"'), ## some handy regex here
+                                                                                 paste0('\"[^"]*\\Q', basename(.y), '\\E\"'), ## some handy regex here
                                                                                  paste0('"', .y, '"')))
   .slim_assets$slim_recipes <- slim_recipes
 
@@ -54,6 +54,8 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 
 
 }
+
+
 
 ## usethis namespace: start
 #' @importFrom tibble tibble

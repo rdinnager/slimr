@@ -80,6 +80,11 @@ slim_script_from_text <- function(slim_script_text) {
                        .x[non_brackets] <- paste0(.x[non_brackets], ";")
                        .x})
 
+  blocks <- purrr::map(blocks,
+                       ~stringr::str_replace_all(.x,
+                                                 stringr::fixed("<-"),
+                                                 stringr::fixed("=")))
+
   # blocks <- purrr::map(blocks,
   #                      ~stringr::str_trim(.x))
   blocks <- purrr::map(blocks,

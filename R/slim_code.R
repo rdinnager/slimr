@@ -152,10 +152,15 @@ slim_register_event_code <- function(code_snippet, start_gen = 1, last_gen = NUL
 #' @return Rified code snippet
 slim_code_Rify <- function(code_snippet) {
 
-  ## make sure { is not on a line by itself
+  ## make sure { or ( is not on a line by itself
   code_snippet <- stringr::str_replace_all(code_snippet,
                                            "\n[:blank:]*\\{",
                                            "\\{")
+
+  ## remove newlines immediately following a comma
+  # code_snippet <- stringr::str_replace_all(code_snippet,
+  #                                          ",[:blank:]*\n+",
+  #                                          ", ")
 
   ## replace % with %%
   code_snippet <- stringr::str_replace_all(code_snippet,
@@ -184,7 +189,7 @@ slim_code_Rify <- function(code_snippet) {
                                            "do\n{")
   ## convert return x; to return(x);
   code_snippet <- stringr::str_replace_all(code_snippet,
-                                           "return[:space:]+(.*)(;| else)",
+                                           "return[:space:]+?(.*)(;| else)",
                                            "return(\\1)\\2")
   ## replace . with %.% (shim operator)
   code_snippet <- stringr::str_replace_all(code_snippet,
@@ -221,7 +226,7 @@ slim_code_SLiMify <- function(code_snippet, ansi_aware = FALSE) {
                                            stringr::fixed("else"))
 
   code_snippet <- stringr::str_replace_all(code_snippet,
-                                           "return\\((.*?)\\)([;[:space:]])",
+                                           "return\\((.*)\\)([;[:space:]])",
                                            "return \\1\\2")
 
 

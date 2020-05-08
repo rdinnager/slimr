@@ -183,6 +183,7 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
       leftovers <- NULL
       started <- 0
       dat <- NULL
+      collect_output <- NULL
       while(slim_p$is_alive()) {
         slim_p$poll_io(10000)
         if(.progress & started == 0) {
@@ -237,6 +238,8 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
                 dat <- dplyr::bind_rows(dat, dat_this)
               }
             }
+          } else {
+            collect_output <- c(collect_output, out)
           }
 
           if(length(gens_finished) != 0) {
@@ -255,7 +258,7 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
         }
       }
 
-      out <- slim_p$read_output_lines()
+      collect_output <- c(collect_output, slim_p$read_output_lines())
 
       if(.progress){
         if(!pb$finished) {
@@ -273,6 +276,7 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
       slim_p$kill()
 
       res <- list(output = dat)
+      res$last_output <- collect_output
       #res$process <- slim_p
       res$errors <- errors
       res$exit_status <- exit

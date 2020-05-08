@@ -37,6 +37,11 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
   ## replace all mentions of external files in recipes with their proper internal package file paths
   resources <- list.files(system.file("extdata", "recipe_resources", package = "slimr"), full.names = TRUE)
   resources <- resources[!stringr::str_detect(resources, stringr::fixed("FIN_samples.txt"))]
+
+  if(get_os() == "windows") {
+    resources <- convert_to_wsl_path(resources)
+  }
+
   recipe_vec <- unlist(slim_recipes)
 
   recipes_using_resources <- purrr::map_int(resources,

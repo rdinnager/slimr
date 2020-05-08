@@ -1,0 +1,317 @@
++ (void)addMutations(object<Mutation> mutations)
+Add the existing mutations in mutations to the genome, if they are not already present (if they are
+already present, they will be ignored), and if the addition is not prevented by the mutation stacking
+policy (see the mutationStackPolicy property of MutationType, section 23.9.1).
+Calling this will normally affect the fitness values calculated at the end of the current generation; if
+you want current fitness values to be affected, you can call SLiMSim’s method
+recalculateFitness() – but see the documentation of that method for caveats.
++ (object<Mutation>)addNewDrawnMutation(io<MutationType> mutationType,
+integer position, [Ni originGeneration = NULL],
+[Nio<Subpopulation> originSubpop = NULL], [Nis nucleotide = NULL])
+Add new mutations to the target genome(s) with the specified mutationType (specified by the
+MutationType object or by integer identifier), position, originGeneration (which may
+be NULL, the default, to specify the current generation), and originSubpop (specified by the
+Subpopulation object or by integer identifier, or by NULL, the default, to specify the
+subpopulation to which the first target genome belongs). If originSubpop is supplied as an
+integer, it is intentionally not checked for validity; you may use arbitrary values of
+originSubpop to “tag” the mutations that you create (see section 23.8.1). The selection
+coefficients of the mutations are drawn from their mutation types; addNewMutation() may be
+used instead if you wish to specify selection coefficients.
+In non-nucleotide-based models, mutationType will always be a non-nucleotide-based
+mutation type, and so nucleotide must be NULL (the default). In a nucleotide-based model,
+mutationType might still be non-nucleotide-based (in which case nucleotide must still be
+NULL), or mutationType might be nucleotide-based, in which case a non-NULL value must be
+supplied for nucleotide, specifying the nucleotide(s) to be associated with the new
+mutation(s). Nucleotides may be specified with string values ("A", "C", "G", or "T"), or with
+integer values (A=0, C=1, G=2, T=3). If a nucleotide mutation already exists at the mutating
+position, it is replaced automatically in accordance with the stacking policy for nucleotidebased
+mutation types. No check is performed that a new mutation’s nucleotide differs from
+the ancestral sequence, or that its selection coefficient is consistent with other mutations that
+may already exist at the given position with the same nucleotide; model consistency is the
+responsibility of the model.
+Beginning in SLiM 2.5 this method is vectorized, so all of these parameters may be singletons
+(in which case that single value is used for all mutations created by the call) or non-singleton
+vectors (in which case one element is used for each corresponding mutation created). Nonsingleton
+parameters must match in length, since their elements need to be matched up oneto-
+one.
+The new mutations created by this method are returned, even if their actual addition is
+prevented by the mutation stacking policy (see the mutationStackPolicy property of
+MutationType, section 23.9.1). However, the order of the mutations in the returned vector is
+not guaranteed to be the same as the order in which the values are specified in parameter
+vectors, unless the position parameter is specified in ascending order. In other words, presorting
+the parameters to this method into ascending order by position, using order() and
+subsetting, will guarantee that the order of the returned vector of mutations corresponds to the
+order of elements in the parameters to this method; otherwise, no such guarantee exists.
+Beginning in SLiM 2.1, this is a class method, not an instance method. This means that it does
+not get multiplexed out to all of the elements of the receiver (which would add a different
+new mutation to each element); instead, it is performed as a single operation, adding the
+same new mutation objects to all of the elements of the receiver. Before SLiM 2.1, to add the
+same mutations to multiple genomes, it was necessary to call addNewDrawnMutation() on
+one of the genomes, and then add the returned Mutation object to all of the other genomes
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 480
+using addMutations(). That is not necessary in SLiM 2.1 and later, because of this change
+(although doing it the old way does no harm and produces identical behavior). Pre-2.1 code
+that actually relied upon the old multiplexing behavior will no longer work correctly (but this
+is expected to be an extremely rare pattern of usage).
+Calling this will normally affect the fitness values calculated at the end of the current
+generation (but not sooner); if you want current fitness values to be affected, you can call
+SLiMSim’s method recalculateFitness() – but see the documentation of that method for
+caveats.
++ (object<Mutation>)addNewMutation(io<MutationType> mutationType,
+numeric selectionCoeff, integer position, [Ni originGeneration = NULL],
+[Nio<Subpopulation> originSubpop = NULL], [Nis nucleotide = NULL])
+Add new mutations to the target genome(s) with the specified mutationType (specified by the
+MutationType object or by integer identifier), selectionCoeff, position,
+originGeneration (which may be NULL, the default, to specify the current generation), and
+originSubpop (specified by the Subpopulation object or by integer identifier, or by NULL,
+the default, to specify the subpopulation to which the first target genome belongs). If
+originSubpop is supplied as an integer, it is intentionally not checked for validity; you may
+use arbitrary values of originSubpop to “tag” the mutations that you create (see section
+23.8.1). The addNewDrawnMutation() method may be used instead if you wish selection
+coefficients to be drawn from the mutation types of the mutations.
+In non-nucleotide-based models, mutationType will always be a non-nucleotide-based
+mutation type, and so nucleotide must be NULL (the default). In a nucleotide-based model,
+mutationType might still be non-nucleotide-based (in which case nucleotide must still be
+NULL), or mutationType might be nucleotide-based, in which case a non-NULL value must be
+supplied for nucleotide, specifying the nucleotide(s) to be associated with the new
+mutation(s). Nucleotides may be specified with string values ("A", "C", "G", or "T"), or with
+integer values (A=0, C=1, G=2, T=3). If a nucleotide mutation already exists at the mutating
+position, it is replaced automatically in accordance with the stacking policy for nucleotidebased
+mutation types. No check is performed that a new mutation’s nucleotide differs from
+the ancestral sequence, or that its selection coefficient is consistent with other mutations that
+may already exist at the given position with the same nucleotide; model consistency is the
+responsibility of the model.
+The new mutations created by this method are returned, even if their actual addition is
+prevented by the mutation stacking policy (see the mutationStackPolicy property of
+MutationType, section 23.9.1). However, the order of the mutations in the returned vector is
+not guaranteed to be the same as the order in which the values are specified in parameter
+vectors, unless the position parameter is specified in ascending order. In other words, presorting
+the parameters to this method into ascending order by position, using order() and
+subsetting, will guarantee that the order of the returned vector of mutations corresponds to the
+order of elements in the parameters to this method; otherwise, no such guarantee exists.
+Beginning in SLiM 2.1, this is a class method, not an instance method. This means that it does
+not get multiplexed out to all of the elements of the receiver (which would add a different
+new mutation to each element); instead, it is performed as a single operation, adding the
+same new mutation object to all of the elements of the receiver. Before SLiM 2.1, to add the
+same mutation to multiple genomes, it was necessary to call addNewMutation() on one of
+the genomes, and then add the returned Mutation object to all of the other genomes using
+addMutations(). That is not necessary in SLiM 2.1 and later, because of this change
+(although doing it the old way does no harm and produces identical behavior). Pre-2.1 code
+that actually relied upon the old multiplexing behavior will no longer work correctly (but this
+is expected to be an extremely rare pattern of usage).
+Calling this will normally affect the fitness values calculated at the end of the current
+generation (but not sooner); if you want current fitness values to be affected, you can call
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 481
+SLiMSim’s method recalculateFitness() – but see the documentation of that method for
+caveats.
+– (Nlo<Mutation>$)containsMarkerMutation(io<MutationType>$ mutType,
+integer$ position, [logical$ returnMutation = F])
+Returns T if the genome contains a mutation of type mutType at position, F otherwise (if
+returnMutation has its default value of F; see below). This method is, as its name suggests, intended
+for checking for “marker mutations”: mutations of a special mutation type that are not literally
+mutations in the usual sense, but instead are added in to particular genomes to mark them as
+possessing some property. Marker mutations are not typically added by SLiM’s mutation-generating
+machinery; instead they are added explicitly with addNewMutation() or addNewDrawnMutation() at
+a known, constant position in the genome. This method provides a check for whether a marker
+mutation of a given type exists in a particular genome; because the position to check is known in
+advance, that check can be done much faster than the equivalent check with containsMutations()
+or countOfMutationsOfType(), using a binary search of the genome. See section 14.4 for one
+example of a model that uses marker mutations – in that case, to mark chromosomes that possess an
+inversion.
+If returnMutation is T (an option added in SLiM 3), this method returns the actual mutation found,
+rather than just T or F. More specifically, the first mutation found of mutType at position will be
+returned; if more than one such mutation exists in the target genome, which one is returned is not
+defined. If returnMutation is T and no mutation of mutType is found at position, NULL will be
+returned.
+– (logical)containsMutations(object<Mutation> mutations)
+Returns a logical vector indicating whether each of the mutations in mutations is present in the
+genome; each element in the returned vector indicates whether the corresponding mutation is present
+(T) or absent (F). This method is provided for speed; it is much faster than the corresponding Eidos
+code.
+– (integer$)countOfMutationsOfType(io<MutationType>$ mutType)
+Returns the number of mutations that are of the type specified by mutType, out of all of the mutations
+in the genome. If you need a vector of the matching Mutation objects, rather than just a count, use
+-mutationsOfType(). This method is provided for speed; it is much faster than the corresponding
+Eidos code.
+– (object<Mutation>)mutationsOfType(io<MutationType>$ mutType)
+Returns an object vector of all the mutations that are of the type specified by mutType, out of all of
+the mutations in the genome. If you just need a count of the matching Mutation objects, rather than
+a vector of the matches, use -countOfMutationsOfType(); if you need just the positions of matching
+Mutation objects, use -positionsOfMutationsOfType(); and if you are aiming for a sum of the
+selection coefficients of matching Mutation objects, use -sumOfMutationsOfType(). This method is
+provided for speed; it is much faster than the corresponding Eidos code.
+– (is)nucleotides([Ni$ start = NULL], [Ni$ end = NULL],
+[string$ format = “string"])
+Returns the nucleotide sequence for the genome. This is the current ancestral sequence, as would be
+returned by the Chromosome method ancestralNucleotides(), with the nucleotides for any
+nucleotide-based mutations in the genome overlaid. The range of the returned sequence may be
+constrained by a start position given in start and/or an end position given in end; nucleotides will be
+returned from start to end, inclusive. The default value of NULL for start and end represent the first
+and last base positions of the chromosome, respectively.
+The format of the returned sequence is controlled by the format parameter. A format of "string"
+will return the sequence as a singleton string (e.g., "TATA"). A format of "char" will return a
+string vector with one element per nucleotide (e.g., "T", "A", "T", "A"). A format of "integer"
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 482
+will return an integer vector with values A=0, C=1, G=2, T=3 (e.g., 3, 0, 3, 0). A format of "codon"
+will return an integer vector with values from 0 to 63, based upon successive nucleotide triplets in
+the sequence (which, for this format, must have a length that is a multiple of three); see the
+ancestralNucleotides() documentation for details. If the sequence returned is likely to be long,
+the "string" format will be the most memory-efficient, and may also be the fastest (but may be
+harder to work with).
+Several helper functions are provided for working with sequences, such as nucleotideCounts() to
+get the counts of A/C/G/T nucleotides in a sequence, nucleotideFrequencies() to get the same
+information as frequencies, and codonsToAminoAcids() to convert a codon sequence (such as
+provided by the codon format described above) to an amino acid sequence; see section 23.15.1.
++ (void)output([Ns$ filePath = NULL], [logical$ append = F])
+Output the target genomes in SLiM’s native format (see section 25.3.1 for output format details). This
+low-level output method may be used to output any sample of Genome objects (the Eidos function
+sample() may be useful for constructing custom samples, as may the SLiM class Individual). For
+output of a sample from a single Subpopulation, the outputSample() of Subpopulation may be
+more straightforward to use. If the optional parameter filePath is NULL (the default), output is
+directed to SLiM’s standard output. Otherwise, the output is sent to the file specified by filePath,
+overwriting that file if append if F, or appending to the end of it if append is T.
+See outputMS() and outputVCF() for other output formats. Output is generally done in a late()
+event, so that the output reflects the state of the simulation at the end of a generation.
++ (void)outputMS([Ns$ filePath = NULL], [logical$ append = F],
+[logical$ filterMonomorphic = F])
+Output the target genomes in MS format (see section 25.3.2 for output format details). This low-level
+output method may be used to output any sample of Genome objects (the Eidos function sample()
+may be useful for constructing custom samples, as may the SLiM class Individual). For output of a
+sample from a single Subpopulation, the outputMSSample() of Subpopulation may be more
+straightforward to use. If the optional parameter filePath is NULL (the default), output is directed to
+SLiM’s standard output. Otherwise, the output is sent to the file specified by filePath, overwriting
+that file if append if F, or appending to the end of it if append is T. Positions in the output will span
+the interval [0,1].
+If filterMonomorphic is F (the default), all mutations that are present in the sample will be included
+in the output. This means that some mutations may be included that are actually monomorphic within
+the sample (i.e., that exist in every sampled genome, and are thus apparently fixed). These may be
+filtered out with filterMonomorphic = T if desired; note that this option means that some mutations
+that do exist in the sampled genomes might not be included in the output, simply because they exist
+in every sampled genome.
+See output() and outputVCF() for other output formats. Output is generally done in a late()
+event, so that the output reflects the state of the simulation at the end of a generation.
++ (void)outputVCF([Ns$ filePath = NULL], [logical$ outputMultiallelics = T],
+[logical$ append = F], [logical$ simplifyNucleotides = F],
+[logical$ outputNonnucleotides = T])
+Output the target genomes in VCF format (see sections 25.2.3, 25.2.4, and 25.3.3 for output format
+details). The target genomes are treated as pairs comprising individuals for purposes of structuring the
+VCF output, so an even number of genomes is required. This low-level output method may be used to
+output any sample of Genome objects (the Eidos function sample() may be useful for constructing
+custom samples, as may the SLiM class Individual). For output of a sample from a single
+Subpopulation, the outputVCFSample() of Subpopulation may be more straightforward to use. If
+the optional parameter filePath is NULL (the default), output is directed to SLiM’s standard output.
+Otherwise, the output is sent to the file specified by filePath, overwriting that file if append if F, or
+appending to the end of it if append is T.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 483
+The parameters outputMultiallelics, simplifyNucleotides, and outputNonnucleotides affect
+the format of the output produced; see sections 25.2.3 and 25.2.4 for further discussion.
+See outputMS() and output() for other output formats. Output is generally done in a late() event,
+so that the output reflects the state of the simulation at the end of a generation.
+– (integer)positionsOfMutationsOfType(io<MutationType>$ mutType)
+Returns the positions of mutations that are of the type specified by mutType, out of all of the mutations
+in the genome. If you need a vector of the matching Mutation objects, rather than just positions, use
+-mutationsOfType(). This method is provided for speed; it is much faster than the corresponding
+Eidos code.
++ (object<Mutation>)readFromMS(string$ filePath, io<MutationType>$ mutationType)
+Read new mutations from the MS format file at filePath and add them to the target genomes. The
+number of target genomes must match the number of genomes represented in the MS file. To read
+into all of the genomes in a given subpopulation pN, simply call pN.genomes.readFromMS(),
+assuming the subpopulation’s size matches that of the MS file. A vector containing all of the
+mutations created by readFromMS() is returned.
+Each mutation is created at the position specified in the file, using the mutation type given by
+mutationType. Positions are expected to be in [0,1], and are scaled to the length of the chromosome
+by multiplying by the last valid base position of the chromosome (i.e., one less than the chromosome
+length). Selection coefficients are drawn from the mutation type. The population of origin for each
+mutation is set to -1, and the generation of origin is set to the current generation. In a nucleotidebased
+model, if mutationType is nucleotide-based, a random nucleotide different from the ancestral
+nucleotide at the position will be chosen with equal probability.
+The target genomes correspond, in order, to the call lines in the MS file. In sex-based models that
+simulate the X or Y chromosome, null genomes in the target vector will be skipped, and will not be
+used to correspond to any call line; however, care should be taken in this case that the lines in the MS
+file correspond to the target genomes in the manner desired.
++ (object<Mutation>)readFromVCF(string$ filePath,
+[Nio<MutationType>$ mutationType = NULL])
+Read new mutations from the VCF format file at filePath and add them to the target genomes. The
+number of target genomes must match the number of genomes represented in the VCF file (i.e., two
+times the number of samples, if each sample is diploid). To read into all of the genomes in a given
+subpopulation pN, simply call pN.genomes.readFromVCF(), assuming the subpopulation’s size
+matches that of the VCF file taking ploidy into account. A vector containing all of the mutations
+created by readFromVCF() is returned.
+SLiM’s VCF parsing is quite primitive. The header is parsed only inasmuch as SLiM looks to see
+whether SLiM-specific VCF fields (see sections 25.2.3 and 25.2.4) are defined or not; the rest of the
+header information is ignored. Call lines are assumed to follow the format:
+#CHROM POS ID REF ALT QUAL FILTER INFO FORMAT i0...iN
+The CHROM, ID, QUAL, FILTER, and FORMAT fields are ignored, and information in the genotype fields
+beyond the GT genotype subfield are also ignored. SLiM’s own VCF annotations (see section 25.2.3)
+are honored; in particular, mutations will be created using the given values of MID, S, PO, GO, and MT if
+those subfields are present, and DOM, if it is present, must match the dominance coefficient of the
+mutation type. The parameter mutationType (a MutationType object or id) will be used for any
+mutations that have no supplied mutation type id in the MT subfield; if mutationType would be used
+but is NULL an error will result. Mutation IDs supplied in MID will be used if no mutation IDs have
+been used in the simulation so far; if any have been used, it is difficult for SLiM to guarantee that there
+are no conflicts, so a warning will be emitted and the MID values will be ignored. If selection
+coefficients are not supplied with the S subfield, they will be drawn from the mutation type used for
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 484
+the mutation. If a population of origin is not supplied with the PO subfield, -1 will be used. If a
+generation of origin is not supplied with the GO subfield, the current generation will be used.
+REF and ALT must always be comprised of simple nucleotides (A/C/G/T) rather than values representing
+indels or other complex states. Beyond this, the handling of the REF and ALT fields depends upon
+several factors. First of all, these fields are ignored in non-nucleotide-based models, although they are
+still checked for conformance. In nucleotide-based models, when a header definition for SLiM’s
+NONNUC tag is present (as when nucleotide-based output is generated by SLiM): Second, if a NONNUC
+field is present in the INFO field the call line is taken to represent a non-nucleotide-based mutation,
+and REF and ALT are again ignored. In this case the mutation type used must be non-nucleotidebased.
+Third, if NONNUC is not present the call line is taken to represent a nucleotide-based mutation.
+In this case, the mutation type used must be nucleotide-based. Also, in this case, the specified
+reference nucleotide must match the existing ancestral nucleotide at the given position. In nucleotidebased
+models, when a header definition for SLiM’s NONNUC tag is not present (as when loading a non-
+SLiM-generated VCF file): The mutation type will govern the way nucleotides are handled. If the
+mutation type used for a mutation is nucleotide-based, the nucleotide provided in the VCF file for that
+allele will be used. If the mutation type is non-nucleotide-based, the nucleotide provided will be
+ignored.
+If multiple alleles using the same nucleotide at the same position are specified in the VCF file, a
+separate mutation will be created for each, mirroring SLiM’s behavior with independent mutational
+lineages when writing VCF (see section 25.2.4). The MULTIALLELIC flag is ignored by
+readFromVCF(); call lines for mutations at the same base position in the same genome will result in
+stacked mutations whether or not MULTIALLELIC is present.
+The target genomes correspond, in order, to the haploid or diploid calls provided for i0…iN (the
+sample IDs) in the VCF file. In sex-based models that simulate the X or Y chromosome, null genomes
+in the target vector will be skipped, and will not be used to correspond to any of i0…iN; however,
+care should be taken in this case that the genomes in the VCF file correspond to the target genomes in
+the manner desired.
++ (void)removeMutations([No<Mutation> mutations = NULL], [logical$ substitute = F])
+Remove the mutations in mutations from the target genome(s), if they are present (if they are not
+present, they will be ignored). If NULL is passed for mutations (which is the default), then all
+mutations will be removed from the target genomes; in this case, substitute must be F (a specific
+vector of mutations to be substituted is required). Note that the Mutation objects removed remain
+valid, and will still be in the simulation’s mutation registry (i.e. will be returned by SLiMSim’s
+mutations property), until the next generation.
+Changing this will normally affect the fitness values calculated at the end of the current generation; if
+you want current fitness values to be affected, you can call SLiMSim’s method
+recalculateFitness() – but see the documentation of that method for caveats.
+The optional parameter substitute was added in SLiM 2.2, with a default of F for backward
+compatibility. If substitute is T, Substitution objects will be created for all of the removed
+mutations so that they are recorded in the simulation as having fixed, just as if they had reached
+fixation and been removed by SLiM’s own internal machinery. This will occur regardless of whether
+the mutations have in fact fixed, regardless of the convertToSubstitution property of the relevant
+mutation types, and regardless of whether all copies of the mutations have even been removed from
+the simulation (making it possible to create Substitution objects for mutations that are still
+segregating). It is up to the caller to perform whatever checks are necessary to preserve the integrity of
+the simulation’s records. Typically substitute will only be set to T in the context of calls like
+sim.subpopulations.genomes.removeMutations(muts, T), such that the substituted mutations
+are guaranteed to be entirely removed from circulation. As mentioned above, substitute may not
+be T if mutations is NULL.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 485
+– (float$)sumOfMutationsOfType(io<MutationType>$ mutType)
+Returns the sum of the selection coefficients of all mutations that are of the type specified by mutType,
+out of all of the mutations in the genome. This is often useful in models that use a particular mutation
+type to represent QTLs with additive effects; in that context, sumOfMutationsOfType() will provide
+the sum of the additive effects of the QTLs for the given mutation type. This method is provided for
+speed; it is much faster than the corresponding Eidos code. Note that this method also exists on
+Individual, for cases in which the sum across both genomes of an individual is desired.

@@ -1,0 +1,135 @@
+– (is)ancestralNucleotides([Ni$ start = NULL], [Ni$ end = NULL],
+[s$ format = "string")
+Returns the ancestral nucleotide sequence originally supplied to
+initializeAncestralNucleotides(), including any sequence changes due to nucleotide
+mutations that have fixed and substituted. This nucleotide sequence is the reference sequence for
+positions in a genome that do not contain a nucleotide-based mutation. The range of the returned
+sequence may be constrained by a start position given in start and/or an end position given in end;
+nucleotides will be returned from start to end, inclusive. The default value of NULL for start and
+end represent the first and last base positions of the chromosome, respectively.
+The format of the returned sequence is controlled by the format parameter. A format of "string"
+will return the sequence as a singleton string (e.g., "TATA"). A format of "char" will return a
+string vector with one element per nucleotide (e.g., "T", "A", "T", "A"). A format of "integer"
+will return an integer vector with values A=0, C=1, G=2, T=3 (e.g., 3, 0, 3, 0). If the sequence
+returned is likely to be long, the "string" format will be the most memory-efficient, and may also be
+the fastest (but may be harder to work with).
+For purposes related to interpreting the nucleotide sequence as a coding sequence, a format of
+"codon" is also supported. This format will return an integer vector with values from 0 to 63, based
+upon successive nucleotide triplets in the sequence (which, for this format, must have a length that is a
+multiple of three). The codon value for a given nucleotide triplet XYZ is 16X + 4Y + Z, where X, Y,
+and Z have the usual values A=0, C=1, G=2, T=3. For example, the triplet AAA has a codon value of
+0, AAC is 1, AAG is 2, AAT is 3, ACA is 4, and on upward to TTT which is 63. If the nucleotide
+sequence AACACATTT is requested in codon format, the codon vector 1 4 63 will therefore be
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 476
+returned. These codon values can be useful in themselves; they can also be passed to
+codonsToAminoAcids() to translate them into the corresponding amino acid sequence if desired (see
+section 23.15.1).
+– (integer)drawBreakpoints([No<Individual>$ parent = NULL], [Ni$ n = NULL])
+Draw recombination breakpoints, using the chromosome’s recombination rate map, the current gene
+conversion parameters, and (in some cases – see below) any active and applicable recombination()
+callbacks. The number of breakpoints to generate, n, may be supplied; if it is NULL (the default), the
+number of breakpoints will be drawn based upon the overall recombination rate and the chromosome
+length (following the standard procedure in SLiM). Note that if the double-stranded breaks model has
+been chosen, the number of breakpoints generated will probably not be equal to the number
+requested, because most breakpoints will entail gene conversion tracts, which entail additional
+crossover breakpoints.
+It is generally recommended that the parent individual be supplied to this method, but parent is NULL
+by default. The individual supplied in parent is used for two purposes. First, in sexual models that
+define separate recombination rate maps for males versus females, the sex of parent will be used to
+determine which map is used; in this case, a non-NULL value must be supplied for parent, since the
+choice of recombination rate map must be determined. Second, in models that define
+recombination() callbacks, parent is used to determine the various pseudo-parameters that are
+passed to recombination() callbacks (individual, genome1, genome2, subpop), and the
+subpopulation to which parent belongs is used to select which recombination() callbacks are
+applicable; given the necessity of this information, recombination() callbacks will not be called as a
+side effect of this method if parent is NULL. Apart from these two uses, parent is not used, and the
+caller does not guarantee that the generated breakpoints will actually be used to recombine the
+genomes of parent in particular.
+– (integer$)setAncestralNucleotides(is sequence)
+This method, which may be called only in nucleotide-based models (see section 1.8), replaces the
+ancestral nucleotide sequence for the model. The sequence parameter is interpreted exactly as it is in
+the initializeAncestralSequence() function; see that documentation for details (section 23.1).
+The length of the ancestral sequence is returned.
+It is unusual to replace the ancestral sequence in a running simulation, since the nucleotide states of
+segregating and fixed mutations will depend upon the original ancestral sequence. It can be useful
+when loading a new population state with readFromMS() or readFromVCF(), such as when resetting
+the simulation state to an earlier state in a conditional simulation; however, that is more commonly
+done using readFromPopulationFile() with a SLiM or .trees file.
+– (void)setGeneConversion(numeric$ nonCrossoverFraction, numeric$ meanLength,
+numeric$ simpleConversionFraction, [numeric$ bias = 0])
+This method switches the recombination model to the “double-stranded break (DSB)” model (if it is
+not already set to that), and configures the details of the gene conversion tracts that will therefore be
+modeled (see section 1.5.6 for discussion of the “DSB” recombination model). The meanings and
+effects of the parameters exactly mirror the initializeGeneConversion() function; see section 23.1
+for details.
+– (void)setHotspotMap(numeric multipliers, [Ni ends = NULL], [string$ sex = "*"])
+In nucleotide-based models, set the mutation rate multiplier along the chromosome. There are two
+ways to call this method. If the optional ends parameter is NULL (the default), then multipliers
+must be a singleton value that specifies a single multiplier to be used along the entire chromosome. If,
+on the other hand, ends is supplied, then multipliers and ends must be the same length, and the
+values in ends must be specified in ascending order. In that case, multipliers and ends taken
+together specify the multipliers to be used along successive contiguous stretches of the chromosome,
+from beginning to end; the last position specified in ends should extend to the end of the
+chromosome (as previously determined, during simulation initialization). See the
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 477
+initializeHotspotMap() function for further discussion of precisely how these multipliers and
+positions are interpreted.
+If the optional sex parameter is "*" (the default), then the supplied hotspot map will be used for both
+sexes (which is the only option for hermaphroditic simulations). In sexual simulations sex may be
+"M" or "F" instead, in which case the supplied hotspot map is used only for that sex. Note that
+whether sex-specific hotspot maps will be used is set by the way that the simulation is initially
+configured with initializeHotspot(), and cannot be changed with this method; so if the
+simulation was set up to use sex-specific hotspot maps then sex must be "M" or "F" here, whereas if it
+was set up not to, then sex must be "*" or unsupplied here. If a simulation needs sex-specific hotspot
+maps only some of the time, the male and female maps can simply be set to be identical the rest of
+the time.
+The hotspot map is normally constant in simulations, so be sure you know what you are doing.
+– (void)setMutationRate(numeric rates, [Ni ends = NULL], [string$ sex = "*"])
+Set the mutation rate per base position per generation along the chromosome. There are two ways to
+call this method. If the optional ends parameter is NULL (the default), then rates must be a singleton
+value that specifies a single mutation rate to be used along the entire chromosome. If, on the other
+hand, ends is supplied, then rates and ends must be the same length, and the values in ends must
+be specified in ascending order. In that case, rates and ends taken together specify the mutation
+rates to be used along successive contiguous stretches of the chromosome, from beginning to end; the
+last position specified in ends should extend to the end of the chromosome (as previously determined,
+during simulation initialization). See the initializeMutationRate() function for further discussion
+of precisely how these rates and positions are interpreted.
+If the optional sex parameter is "*" (the default), then the supplied mutation rate map will be used for
+both sexes (which is the only option for hermaphroditic simulations). In sexual simulations sex may
+be "M" or "F" instead, in which case the supplied mutation rate map is used only for that sex. Note
+that whether sex-specific mutation rate maps will be used is set by the way that the simulation is
+initially configured with initializeMutationRate(), and cannot be changed with this method; so if
+the simulation was set up to use sex-specific mutation rate maps then sex must be "M" or "F" here,
+whereas if it was set up not to, then sex must be "*" or unsupplied here. If a simulation needs sexspecific
+mutation rate maps only some of the time, the male and female maps can simply be set to be
+identical the rest of the time.
+The mutation rate intervals are normally a constant in simulations, so be sure you know what you are
+doing.
+In nucleotide-based models, setMutationRate() may not be called. If variation in the mutation rate
+along the chromosome is desired, setHotspotMap() should be used.
+– (void)setRecombinationRate(numeric rates, [Ni ends = NULL], [string$ sex = "*"])
+Set the recombination rate per base position per generation along the chromosome. All rates must be
+in the interval [0.0, 0.5]. There are two ways to call this method. If the optional ends parameter is
+NULL (the default), then rates must be a singleton value that specifies a single recombination rate to
+be used along the entire chromosome. If, on the other hand, ends is supplied, then rates and ends
+must be the same length, and the values in ends must be specified in ascending order. In that case,
+rates and ends taken together specify the recombination rates to be used along successive
+contiguous stretches of the chromosome, from beginning to end; the last position specified in ends
+should extend to the end of the chromosome (as previously determined, during simulation
+initialization). See the initializeRecombinationRate() function for further discussion of precisely
+how these rates and positions are interpreted.
+If the optional sex parameter is "*" (the default), then the supplied recombination rate map will be
+used for both sexes (which is the only option for hermaphroditic simulations). In sexual simulations
+sex may be "M" or "F" instead, in which case the supplied recombination map is used only for that
+sex. Note that whether sex-specific recombination maps will be used is set by the way that the
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 478
+simulation is initially configured with initializeRecombinationRate(), and cannot be changed
+with this method; so if the simulation was set up to use sex-specific recombination maps then sex
+must be "M" or "F" here, whereas if it was set up not to, then sex must be "*" or unsupplied here. If
+a simulation needs sex-specific recombination maps only some of the time, the male and female maps
+can simply be set to be identical the rest of the time.
+The recombination intervals are normally a constant in simulations, so be sure you know what you are
+doing.

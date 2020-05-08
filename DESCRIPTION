@@ -1,5 +1,5 @@
 Package: slimr
-Title: Run and Post-process SLiM Population Genetics Forward Simulations
+Title: Run and Post-Process SLiM Population Genetics Forward Simulations
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Russell",

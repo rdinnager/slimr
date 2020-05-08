@@ -1,0 +1,485 @@
+(integer$)initializeAncestralNucleotides(is sequence)
+This function, which may be called only in nucleotide-based models (see section 1.8), supplies an
+ancestral nucleotide sequence for the model. The sequence parameter may be an integer vector
+providing nucleotide values (A=0, C=1, G=2, T=3), or a string vector providing single-character
+nucleotides ("A", "C", "G", "T"), or a singleton string providing the sequence as one string
+("ACGT..."), or a singleton string providing the filesystem path of a FASTA file which will be read in
+to provide the sequence (if the file contains than one sequence, the first sequence will be used). Only
+A/C/G/T nucleotide values may be provided; other symbols, such as those for amino acids, gaps, or
+nucleotides of uncertain identity, are not allowed. The two semantic meanings of sequence that
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 463
+involve a singleton string value are distinguished heuristically; a singleton string that contains only
+the letters ACGT will be assumed to be a nucleotide sequence rather than a filename. The length of
+the ancestral sequence is returned.
+A utility function, randomNucleotides(), is provided by SLiM to assist in generating simple random
+nucleotide sequences; see section 23.15.1.
+(void)initializeGeneConversion(numeric$ nonCrossoverFraction, numeric$ meanLength,
+numeric$ simpleConversionFraction, [numeric$ bias = 0])
+Calling this function switches the recombination model from a “simple crossover” model to a
+“double-stranded break (DSB)” model, and configures the details of the gene conversion tracts that
+will therefore be modeled (see section 1.5.6 for discussion of these models). The fraction of DSBs that
+will be modeled as non-crossover events is given by nonCrossoverFraction. The mean length of
+gene conversion tracts (whether associated with crossover or non-crossover events) is given by
+meanLength; the actual extent of a gene conversion tract will be the sum of two independent draws
+from a geometric distribution with mean meanLength/2. The fraction of gene conversion tracts that
+are modeled as “simple” is given by simpleConversionFraction; the remainder will be modeled as
+“complex”, involving repair of heteroduplex mismatches. Finally, the GC bias during heteroduplex
+mismatch repair is given by bias, with the default of 0.0 indicating no bias, 1.0 indicating an
+absolute preference for G/C mutations over A/T mutations, and -1.0 indicating an absolute preference
+for A/T mutations over G/C mutations. A non-zero bias may only be set in nucleotide-based models
+(see section 1.8). This function, and the way that gene conversion is modeled, fundamentally changed
+in SLiM 3.3; see section 1.5.6 for discussion.
+(object<GenomicElement>)initializeGenomicElement(io<GenomicElementType> genomicElem
+entType, integer start, integer end)
+Add a genomic element to the chromosome at initialization time. The start and end parameters give
+the first and last base positions to be spanned by the new genomic element. The new element will be
+based upon the genomic element type identified by genomicElementType, which can be either an
+integer, representing the ID of the desired element type, or an object of type
+GenomicElementType specified directly.
+Beginning in SLiM 3.3, this function is vectorized: the genomicElementType, start, and end
+parameters do not have to be singletons. In particular, start and end may be of any length, but must
+be equal in length; each start/end element pair will generate one new genomic element spanning
+the given base positions. In this case, genomicElementType may still be a singleton, providing the
+genomic element type to be used for all of the new genomic elements, or it may be equal in length to
+start and end, providing an independent genomic element type for each new element. When
+adding a large number of genomic elements, it will be much faster to add them in order of ascending
+position with a vectorized call.
+The return value provides the genomic element(s) created by the call, in the order in which they were
+specified in the parameters to initializeGenomicElement().
+(object<GenomicElementType>$)initializeGenomicElementType(is$ id,
+io<MutationType> mutationTypes, numeric proportions,
+[Nf mutationMatrix = NULL])
+Add a genomic element type at initialization time. The id must not already be used for any genomic
+element type in the simulation. The mutationTypes vector identifies the mutation types used by the
+genomic element, and the proportions vector should be of equal length, specifying the relative
+proportion of mutations that will be drawn from the corresponding mutation type (proportions do not
+need to add up to one; they are interpreted relatively). The id parameter may be either an integer
+giving the ID of the new genomic element type, or a string giving the name of the new genomic
+element type (such as "g5" to specify an ID of 5). The mutationTypes parameter may be either an
+integer vector representing the IDs of the desired mutation types, or an object vector of
+MutationType elements specified directly. The global symbol for the new genomic element type is
+immediately available; the return value also provides the new object.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 464
+The mutationMatrix parameter is NULL by default, and in non-nucleotide-based models it must be
+NULL. In nucleotide-based models, on the other hand, it must be non-NULL, and therefore must be
+supplied. In that case, mutationMatrix should take one of two standard forms. For sequence-based
+mutation rates that depend upon only the single nucleotide at a mutation site, mutationMatrix
+should be a 4×4 float matrix, specifying mutation rates for an existing nucleotide state (rows from 0–
+3 representing A/C/G/T) to each of the four possible derived nucleotide states (columns, with the same
+meaning):
+The mutation rates in this matrix are absolute rates, per nucleotide per generation; they will be used
+by SLiM directly unless they are multiplied by a factor from the hotspot map (see
+initializeHotspotMap()). Rates in mutationMatrix that involve the mutation of a nucleotide to
+itself (A to A, C to C, etc.) are not used by SLiM and must be 0.0 by convention (shown above with
+asterisks).
+It is important to note that the order of the rows and columns used in SLiM, A/C/G/T, is not a universal
+convention; other sources will present substitution-rate/transition-rate matrices using different
+conventions, and so care must be taken when importing such matrices into SLiM.
+For sequence-based mutation rates that depend upon the trinucleotide sequence centered upon a
+mutation site (the adjacent bases to the left and right, in other words, as well as the mutating
+nucleotide itself), mutationMatrix should be a 64×4 float matrix, specifying mutation rates for the
+central nucleotide of an existing trinucleotide sequence (rows from 0–63, representing codons as
+described in the documentation for the ancestralNucleotides() method of Chromosome) to each
+of the four possible derived nucleotide states (columns from 0–3 for A/C/G/T as before):
+Note that in every case it is the central nucleotide of the trinucleotide sequence that is mutating, but
+rates can be specified independently based upon the nucleotides in the first and third positions as
+well, with this type of mutation matrix.
+Several helper functions are defined to construct common types of mutation matrices, such as
+mmJukesCantor() to create a mutation matrix for a Jukes–Cantor model; see section 23.15.1. See
+chapter 18 for practical examples of mutation matrices, and section 21.2.3 for further discussion of the
+mutational paradigm in nucleotide-based models.
+* PA→C PA→G PA→T
+PC→A * PC→G PC→T
+PG→A PG→C * PG→T
+PT→A PT→C PT→G *
+* PAAA→ACA PAAA→AGA PAAA→ATA
+* PAAC→ACC PAAC→AGC PAAC→ATC
+* PAAG→ACG PAAG→AGG PAAG→ATG
+* PAAT→ACT PAAT→AGT PAAT→ATT
+PACA→AAA * PACA→AGA PACA→ATA
+PACC→AAC * PACC→AGC PACC→ATC
+PACG→AAG * PACG→AGG PACG→ATG
+. . . . . . . . . . . .
+PTTC→TAC PTTC→TCC PTTC→TGC *
+PTTG→TAG PTTG→TCG PTTG→TGG *
+PTTT→TAT PTTT→TCT PTTT→TGT *
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 465
+(void)initializeHotspotMap(numeric multipliers, [Ni ends = NULL],
+[string$ sex = "*"])
+In nucleotide-based models, set the mutation rate multiplier along the chromosome. Nucleotidebased
+models define sequence-based mutation rates that are set up with the mutationMatrix
+parameter to initializeGenomicElementType(). If no hotspot map is specified by calling
+initializeHotspotMap(), a hotspot map with a multiplier of 1.0 across the whole chromosome is
+assumed (and so the sequence-based rates are the absolute mutation rates used by SLiM). A hotspot
+map modifies the sequence-based rates by scaling them up in some regions, with multipliers greater
+than 1.0 (representing mutational hot spots), and/or scaling them down in some regions, with
+multipliers less than 1.0 (representing mutational cold spots).
+There are two ways to call this function. If the optional ends parameter is NULL (the default), then
+multipliers must be a singleton value that specifies a single multiplier to be used along the entire
+chromosome (typically 1.0, but not required to be). If, on the other hand, ends is supplied, then
+multipliers and ends must be the same length, and the values in ends must be specified in
+ascending order. In that case, multipliers and ends taken together specify the multipliers to be
+used along successive contiguous stretches of the chromosome, from beginning to end; the last
+position specified in ends should extend to the end of the chromosome (i.e. at least to the end of the
+last genomic element, if not further).
+For example, if the following call is made:
+initializeHotspotMap(c(1.0, 1.2), c(5000, 9999));
+then the result is that the mutation rate multiplier for bases 0...5000 (inclusive) will be 1.0 (and so the
+specified sequence-based mutation rates will be used verbatim), and the multiplier for bases
+5001...9999 (inclusive) will be 1.2 (and so the sequence-based mutation rates will be multiplied by
+1.2 within the region).
+Note that mutations are generated by SLiM only within genomic elements, regardless of the hotspot
+map. In effect, the hotspot map given is intersected with the coverage area of the genomic elements
+defined; areas outside of any genomic element are given a multiplier of zero. There is no harm in
+supplying a hotspot map that specifies multipliers for areas outside of the genomic elements defined;
+the excess information is simply not used.
+If the optional sex parameter is "*" (the default), then the supplied hotspot map will be used for both
+sexes (which is the only option for hermaphroditic simulations). In sexual simulations sex may be
+"M" or "F" instead, in which case the supplied hotspot map is used only for that sex (i.e., when
+generating a gamete from a parent of that sex). In this case, two calls must be made to
+initializeHotspotMap(), one for each sex, even if a multiplier of 1.0 is desired for the other sex;
+no default hotspot map is supplied.
+(object<InteractionType>$)initializeInteractionType(is$ id, string$ spatiality,
+[logical$ reciprocal = F], [numeric$ maxDistance = INF],
+[string$ sexSegregation = "**"])
+Add an interaction type at initialization time. The id must not already be used for any interaction type
+in the simulation. The id parameter may be either an integer giving the ID of the new interaction
+type, or a string giving the name of the new interaction type (such as "i5" to specify an ID of 5).
+The spatiality may be "", for non-spatial interactions (i.e., interactions that do not depend upon
+the distance between individuals); "x", "y", or "z" for one-dimensional interactions; "xy", "xz", or
+"yz" for two-dimensional interactions; or "xyz" for three-dimensional interactions. The dimensions
+referenced by spatiality must have been previously defined as spatial dimensions with
+initializeSLiMOptions(); if the simulation has dimensionality "xy", for example, then
+interactions in the simulation may have spatiality "", "x", "y", or "xy", but may not reference spatial
+dimension z and thus may not have spatiality "xz", "yz", or "xyz". If no spatial dimensions have
+been configured, only non-spatial interactions may be defined.
+The reciprocal flag may be T, in which case the interaction is guaranteed by the user to be
+reciprocal: whatever the interaction strength is for individual B upon individual A, it will be equal (in
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 466
+magnitude and sign) for A upon B. This allows the InteractionType to reduce the amount of
+computation necessary by up to a factor of two. If reciprocal is F, the interaction is not guaranteed
+to be reciprocal and each interaction will be computed independently. The built-in interaction
+formulas are all reciprocal, but if you implement an interaction() callback (see section 24.6), you
+must consider whether the callback you have implemented preserves reciprocality or not. For this
+reason, the default is reciprocal=F, so that bugs are not inadvertently introduced by an invalid
+assumption of reciprocality. See below for a note regarding reciprocality in sexual simulations when
+using the sexSegregation flag.
+Note that even if an interaction is reciprocal, it may occasionally be slightly faster for reciprocal to
+be set to F. This is most likely when the amount of computation per interaction is very small
+(particularly if no interaction() callbacks are involved), and when it is unlikely that the reciprocal
+of a queried interaction will also be queried. Even in such cases, however, the slowdown for
+reciprocal=T should be fairly small. In most usage cases, setting reciprocal to T (when the
+interaction is in fact reciprocal) will result in at least equal performance, if not better; with a very slow
+interaction() callback, the performance can be as much as double, making it generally worthwhile
+to use reciprocal=T when possible. However, for maximal performance one might wish to time and
+compare runs with reciprocality enabled and disabled (using the same random number seed).
+The maxDistance parameter supplies the maximum distance over which interactions of this type will
+be evaluated; at greater distances, the interaction strength is considered to be zero (for efficiency). The
+default value of maxDistance, INF (positive infinity), indicates that there is no maximum interaction
+distance; note that this can make some interaction queries much less efficient, and is therefore not
+recommended. In SLiM 3.1 and later, a warning will be issued if a spatial interaction type is defined
+with no maximum distance to encourage a maximum distance to be defined.
+The sexSegregation parameter governs the applicability of the interaction to each sex, in sexual
+simulations. It does not affect distance calculations in any way; it only modifies the way in which
+interaction strengths are calculated. The default, "**", implies that the interaction is felt by both sexes
+(the first character of the string value) and is exerted by both sexes (the second character of the
+string value). Either or both characters may be M or F instead; for example, "MM" would indicate a
+male-male interaction, such as male-male competition, whereas "FM" would indicate an interaction
+influencing only females that is influenced only by males, such as male mating displays that influence
+female attraction. This parameter may be set only to "**" unless sex has been enabled with
+initializeSex(). Note that a value of sexSegregation other than "**" may imply some degree of
+non-reciprocality, but it is not necessary to specify reciprocal to be F for this reason; SLiM will take
+the sex-segregation of the interaction into account for you. The value of reciprocal may therefore be
+interpreted as meaning: in those cases, if any, in which A interacts with B and B interacts with A, is the
+interaction strength guaranteed to be the same in both directions?
+By default, the interaction strength is 1.0 for all interactions within maxDistance. Often it is
+desirable to change the interaction function using setInteractionFunction(); modifying
+interaction strengths can also be achieved with interaction() callbacks if necessary (see section
+24.6). In any case, interactions beyond maxDistance always have a strength of 0.0, and the
+interaction strength of an individual with itself is always 0.0, regardless of the interaction function or
+callbacks.
+The global symbol for the new interaction type is immediately available; the return value also provides
+the new object.
+(void)initializeMutationRate(numeric rates, [Ni ends = NULL], [string$ sex = "*"])
+Set the mutation rate per base position per generation along the chromosome. To be precise, this
+mutation rate is the expected mean number of mutations that will occur per base position per
+generation (per new offspring genome being generated); note that this is different from how the
+recombination rate is defined (see initializeRecombinationRate()). The number of mutations
+that actually occurs at a given base position when generating an offspring genome is, in effect, drawn
+from a Poisson distribution with that expected mean (but under the hood SLiM uses a mathematically
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 467
+equivalent but much more efficient strategy). It is possible for this Poisson draw to indicate that two or
+more new mutations have arisen at the same base position, particularly when the mutation rate is very
+high; in this case, the new mutations will be added to the site one at a time, and as always the
+mutation stacking policy (see section 1.5.3) will be followed.
+There are two ways to call this function. If the optional ends parameter is NULL (the default), then
+rates must be a singleton value that specifies a single mutation rate to be used along the entire
+chromosome. If, on the other hand, ends is supplied, then rates and ends must be the same length,
+and the values in ends must be specified in ascending order. In that case, rates and ends taken
+together specify the mutation rates to be used along successive contiguous stretches of the
+chromosome, from beginning to end; the last position specified in ends should extend to the end of
+the chromosome (i.e. at least to the end of the last genomic element, if not further).
+For example, if the following call is made:
+initializeMutationRate(c(1e-7, 2.5e-8), c(5000, 9999));
+then the result is that the mutation rate for bases 0...5000 (inclusive) will be 1e-7, and the rate for
+bases 5001...9999 (inclusive) will be 2.5e-8.
+Note that mutations are generated by SLiM only within genomic elements, regardless of the mutation
+rate map. In effect, the mutation rate map given is intersected with the coverage area of the genomic
+elements defined; areas outside of any genomic element are given a mutation rate of zero. There is no
+harm in supplying a mutation rate map that specifies rates for areas outside of the genomic elements
+defined; that rate information is simply not used. The overallMutationRate family of properties on
+Chromosome provide the overall mutation rate after genomic element coverage has been taken into
+account, so it will reflect the rate at which new mutations will actually be generated in the simulation
+as configured.
+If the optional sex parameter is "*" (the default), then the supplied mutation rate map will be used for
+both sexes (which is the only option for hermaphroditic simulations). In sexual simulations sex may
+be "M" or "F" instead, in which case the supplied mutation rate map is used only for that sex (i.e.,
+when generating a gamete from a parent of that sex). In this case, two calls must be made to
+initializeMutationRate(), one for each sex, even if a rate of zero is desired for the other sex; no
+default mutation rate map is supplied.
+In nucleotide-based models, initializeMutationRate() may not be called. Instead, the desired
+sequence-based mutation rate(s) should be expressed in the mutationMatrix parameter to
+initializeGenomicElementType(). If variation in the mutation rate along the chromosome is
+desired, initializeHotspotMap() should be used.
+(object<MutationType>$)initializeMutationType(is$ id, numeric$ dominanceCoeff,
+string$ distributionType, ...)
+Add a mutation type at initialization time. The id must not already be used for any mutation type in
+the simulation. The id parameter may be either an integer giving the ID of the new mutation type,
+or a string giving the name of the new mutation type (such as "m5" to specify an ID of 5). The
+dominanceCoeff parameter supplies the dominance coefficient for the mutation type; 0.0 produces
+no dominance, 1.0 complete dominance, and values greater than 1.0, overdominance. The
+distributionType may be "f", in which case the ellipsis ... should supply a numeric$ fixed
+selection coefficient; "e", in which case the ellipsis should supply a numeric$ mean selection
+coefficient for an exponential distribution; "g", in which case the ellipsis should supply a numeric$
+mean selection coefficient and a numeric$ alpha shape parameter for a gamma distribution; "n", in
+which case the ellipsis should supply a numeric$ mean selection coefficient and a numeric$ sigma
+(standard deviation) parameter for a normal distribution; "w", in which case the ellipsis should supply
+a numeric$ λ scale parameter and a numeric$ k shape parameter for a Weibull distribution; or "s",
+in which case the ellipsis should supply a string$ Eidos script parameter. See section 23.9 for
+discussion of the various DFEs and their uses. The global symbol for the new mutation type is
+immediately available; the return value also provides the new object.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 468
+Note that by default in WF models, all mutations of a given mutation type will be converted into
+Substitution objects when they reach fixation, for efficiency reasons. If you need to disable this
+conversion, to keep mutations of a given type active in the simulation even after they have fixed, you
+can do so by setting the convertToSubstitution property of MutationType to T.
+In contrast, by default in nonWF models mutations will not be converted into Substitution objects
+when they reach fixation; convertToSubstitution is F by default in nonWF models. To enable
+conversion in nonWF models for neutral mutation types with no indirect fitness effects, you should
+therefore set convertToSubstitution to T.
+See sections 21.3, 22.5, and 23.9.1 for further discussion regarding the convertToSubstitution
+property.
+(object<MutationType>$)initializeMutationTypeNuc(is$ id, numeric$ dominanceCoeff,
+string$ distributionType, ...)
+Add a nucleotide-based mutation type at initialization time. This function is identical to
+initializeMutationType() except that the new mutation type will be nucleotide-based – in other
+words, mutations belonging to the new mutation type will have an associated nucleotide. This
+function may be called only in nucleotide-based models (as enabled by the nucleotideBased
+parameter to initializeSLiMOptions()).
+Nucleotide-based mutations always use a mutationStackGroup of -1 and a mutationStackPolicy
+of "l". This ensures that a new nucleotide mutation always replaces any previously existing
+nucleotide mutation at a given position, regardless of the mutation types of the nucleotide mutations.
+These values are set automatically by initializeMutationTypeNuc(), and may not be changed.
+See the documentation for initializeMutationType() for all other discussion.
+(void)initializeRecombinationRate(numeric rates, [Ni ends = NULL],
+[string$ sex = "*"])
+Set the recombination rate per base position per generation along the chromosome. To be precise,
+this recombination rate is the probability that a breakpoint will occur between one base and the next
+base; note that this is different from how the mutation rate is defined (see
+initializeMutationRate()). All rates must be in the interval [0.0, 0.5]. A rate of 0.5 implies
+complete independence between the adjacent bases, which might be used to implement independent
+assortment of loci located on different chromosomes (see the example below). Whether a breakpoint
+occurs between two bases is then, in effect, determined by a binomial draw with a single trial and the
+given rate as probability (but under the hood SLiM uses a mathematically equivalent but much more
+efficient strategy). Unlike the mutational process in SLiM, then, which can generate more than one
+mutation at a given site (in one generation/genome), the recombinational process in SLiM will never
+generate more then one crossover between one base and the next (in one generation/genome), and a
+supplied rate of 0.5 will therefore result in an actual probability of 0.5 for a crossover at the relevant
+position. (Note that this was not true in SLiM 2.x and earlier, however; their implementation of
+recombination resulted in a crossover probability of about 39.3% for a rate of 0.5, due to the use of
+an inaccurate approximation method. Recombination rates lower than about 0.01 would have been
+essentially exact, since the approximation error became large only as the rate approached 0.5.)
+There are two ways to call this function. If the optional ends parameter is NULL (the default), then
+rates must be a singleton value that specifies a single recombination rate to be used along the entire
+chromosome. If, on the other hand, ends is supplied, then rates and ends must be the same length,
+and the values in ends must be specified in ascending order. In that case, rates and ends taken
+together specify the recombination rates to be used along successive contiguous stretches of the
+chromosome, from beginning to end; the last position specified in ends should extend to the end of
+the chromosome (i.e. at least to the end of the last genomic element, if not further). Note that a
+recombination rate of 1 centimorgan/Mbp corresponds to a recombination rate of 1e-8 in the units
+used by SLiM.
+For example, if the following call is made:
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 469
+initializeRecombinationRate(c(0, 0.5, 0), c(5000, 5001, 9999));
+then the result is that the recombination rates between bases 0 / 1, 1 / 2, ..., 4999 / 5000 will be 0, the
+rate between bases 5000 / 5001 will be 0.5, and the rate between bases 5001 / 5002 onward (up to
+9998 / 9999) will again be 0. Setting the recombination rate between one specific pair of bases to 0.5
+forces recombination to occur with a probability of 0.5 between those bases, which effectively breaks
+the simulated locus into separate chromosomes at that point; this example effectively has one
+simulated chromosome from base position 0 to 5000, and another from 5001 to 9999.
+If the optional sex parameter is "*" (the default), then the supplied recombination rate map will be
+used for both sexes (which is the only option for hermaphroditic simulations). In sexual simulations
+sex may be "M" or "F" instead, in which case the supplied recombination map is used only for that
+sex. In this case, two calls must be made to initializeRecombinationRate(), one for each sex,
+even if a rate of zero is desired for the other sex; no default recombination map is supplied.
+(void)initializeSex(string$ chromosomeType, [numeric$ xDominanceCoeff = 1])
+Enable and configure sex in the simulation. The argument chromosomeType gives the type of
+chromosome to be simulated; this should be "A", "X", or "Y". If the chromosomeType is "X", the
+optional xDominanceCoeff parameter can supply the dominance coefficient used when a mutation is
+present in an XY male, and is thus “heterozygous” (but in a different sense than the heterozygosity of
+an XX female with one copy of the mutation). Calling this function has the side effect of enabling sex
+in the simulation; individuals will be male and female (rather than hermaphroditic) regardless of the
+chromosomeType chosen for simulation. There is no way to disable sex once it has been enabled; if
+you don’t want to have sex, don’t call this function.
+(void)initializeSLiMModelType(string$ modelType)
+Configure the type of SLiM model used for the simulation. At present, one of two model types may be
+selected. If modelType is "WF", SLiM will use a Wright–Fisher (WF) model; this is the model type that
+has always been supported by SLiM, and is the model type used if initializeSLiMModelType() is
+not called. If modelType is "nonWF", SLiM will use a non-Wright–Fisher (nonWF) model instead; this
+is a new model type supported by SLiM 3.0 and above (see section 1.6).
+If initializeSLiMModelType() is called at all then it must be called before any other initialization
+function, so that SLiM knows from the outset which features are enabled and which are not.
+(void)initializeSLiMOptions([logical$ keepPedigrees = F],
+[string$ dimensionality = ""], [string$ periodicity = ""],
+[integer$ mutationRuns = 0], [logical$ preventIncidentalSelfing = F],
+[logical$ nucleotideBased = F])
+Configure options for the simulation. If initializeSLiMOptions() is called at all then it must be
+called before any other initialization function (except initializeSLiMModelType()), so that SLiM
+knows from the outset which optional features are enabled and which are not.
+If keepPedigrees is T, SLiM will keep pedigree information for every individual in the simulation,
+tracking the identity of its parents and grandparents. This allows individuals to assess their degree of
+pedigree-based relatedness to other individuals (see Individual’s relatedness() method, section
+23.6.2), as well as allowing a model to find “trios” (two parents and an offspring they generated) using
+the pedigree properties of Individual (section 23.6.1). As a side effect of keepPedigrees being T,
+the pedigreeID, pedigreeParentIDs, and pedigreeGrandparentIDs properties of Individual
+will have defined values (see section 23.6.1), as will the genomePedigreeID property of Genome (see
+section 23.3.1). Note that pedigree-based relatedness doesn’t necessarily correspond to genetic
+relatedness, due to effects such as assortment and recombination. For an overview of other ways of
+tracking genetic ancestry, including true local ancestry at each position on the chromosome, see
+sections 1.7 and 14.7.
+If dimensionality is not "", SLiM will enable its optional “continuous space” facility. Three values
+for dimensionality are presently supported: "x", "xy", and "xyz", specifying that continuous space
+should be enabled for one, two, or three dimensions, respectively, using (x), (x, y), and (x, y, z)
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 470
+coordinates respectively. This has a number of side effects. First of all, it means that the specified
+properties of Individual (x, y, and/or z) will be interpreted by SLiM as spatial positions; in particular,
+SLiMgui will use those properties to display subpopulations spatially. Second, it allows spatial
+interactions to be defined, evaluated, and queried using initializeInteractionType() and
+interaction() callbacks. And third, it enables the use of any other properties and methods related
+to continuous space, such as setting the spatial boundaries of subpopulations, which would otherwise
+raise an error.
+If periodicity is not "", SLiM will designate the specified spatial dimensions as being periodic –
+wrapping around at the edges of the spatial boundaries of that dimension. This option may only be
+used if the dimensionality parameter to initializeSLiMOptions() has been used to enable
+spatiality in the model, and only spatial dimensions that were specified in the dimensionality of the
+model may be declared to be periodic (but if desired, it is permissible to make just a subset of those
+dimensions periodic; it is not an all-or-none proposition). For example, if the specified dimensionality
+is "xy", the model’s periodicity may be "x", "y", or "xy" (or "", the default, to specify that there are
+no periodic dimensions). A one-dimensional periodic model would model a space like the perimeter
+of a circle. A two-dimensional model periodic in one of those dimensions would model a space like a
+cylinder without its end caps; if periodic in both dimensions, the modeled space is a torus. The
+shapes of three-dimensional periodic models are harder to visualize, but are essentially higherdimensional
+analogues of these concepts. Periodic boundary conditions are commonly used to model
+spatial scenarios without “edge effects”, since there are no edges in the periodic spatial dimensions.
+The pointPeriodic() method of Subpopulation is typically used in conjunction with this option,
+to actually implement the periodic boundary condition for the specified dimensions.
+If mutationRuns is not 0, SLiM will use the value given as the number of mutation runs inside Genome
+objects; if it is 0 (the default), SLiM will calculate a number of mutation runs that it estimates will work
+well. Internally, SLiM divides genomes into a sequence of consecutive mutation runs, allowing more
+efficient internal computations. The optimal mutation run length is short enough that each mutation
+run is relatively unlikely to be modified by mutation/recombination events when inherited, but long
+enough that each mutation run is likely to contain a relatively large number of mutations; these
+priorities are in tension, so an intermediate balance between them is generally desirable. The optimal
+number of mutation runs will depend upon the machine and even the compiler used to build SLiM, so
+SLiM’s default value may not be optimal; for maximal performance it can thus be beneficial to
+experiment with different values and find the optimal value for the simulation – a process which SLiM
+can assist with (see section 20.4). Specifying the number of mutation runs is an advanced technique,
+but in certain cases it can improve performance significantly.
+If preventIncidentalSelfing is T, incidental selfing in hermaphroditic models will be prevented by
+SLiM. By default (i.e., if preventIncidentalSelfing is F), SLiM chooses the first and second
+parents in a biparental mating event independently. It is therefore possible for the same individual to
+be chosen as both the first and second parent, resulting in selfing events even when the selfing rate is
+zero. In many models this is unimportant, since it happens fairly infrequently and does not have large
+consequences. This behavior is SLiM’s default because it is the simplest option, and produces results
+that most closely align with simple analytical population genetics models. However, in some models
+this selfing can be undesirable and problematic. In particular, models that involve very high variance
+in fitness or very small effective population sizes may see elevated rates of selfing that substantially
+influence model results. If preventIncidentalSelfing is set to T, all such incidental selfing will be
+prevented (by choosing a new second parent if the first parent was chosen again). Non-incidental
+selfing, as requested by the selfing rate, will still be permitted. Note that if incidental selfing is
+prevented, SLiM will hang if it is unable to find a different second parent; there must always be at least
+two individuals in the population with non-zero fitness, and mateChoice() and modifyChild()
+callbacks must not absolutely prevent those two individuals from producing viable offspring.
+Enforcement of the prohibition on incidental selfing will occur after mateChoice() callbacks have
+been called (and thus the default mating weights provided to mateChoice() callbacks will not
+exclude the first parent!), but will occur before modifyChild() callbacks are called (so those
+callbacks may assume that the first and second parents are distinct).
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 471
+If nucleotideBased is T, the model will be nucleotide-based. In this case, auto-generated mutations
+(i.e., mutation types used by genomic element types) must be nucleotide-based, and an ancestral
+nucleotide sequence must be supplied with initializeAncestralNucleotides(). Nonnucleotide-
+based mutations may still be used, but may not be referenced by genomic element types.
+A mutation rate (or rate map) may not be supplied with initializeMutationRate(); instead, a
+hotspot map may (optionally) be supplied with initializeHotspotMap(). This choice has many
+consequences across SLiM; see section 1.8 for further discussion.
+This function will likely be extended with further options in the future, added on to the end of the
+argument list. Using named arguments with this call is recommended for readability. Note that
+turning on optional features may increase the runtime and memory footprint of SLiM.
+(void)initializeTreeSeq([logical$ recordMutations = T],
+[Nif$ simplificationRatio = NULL], [Ni$ simplificationInterval = NULL],
+[logical$ checkCoalescence = F], [logical$ runCrosschecks = F])
+Configure options for tree sequence recording. Calling this function turns on tree sequence recording,
+as a side effect, for later reconstruction of the simulation’s evolutionary dynamics; if you do not want
+tree sequence recording to be enabled, do not call this function.
+The recordMutations flag controls whether information about individual mutations is recorded or
+not. Such recording takes time and memory, and so can be turned off if only the tree sequence itself is
+needed, but it is turned on by default since mutation recording is generally useful.
+The simplificationRatio and simplificationInterval parameters control how often automatic
+simplification of the recorded tree sequence occurs. This is a speed–memory tradeoff: more frequent
+simplification (lower simplificationRatio or smaller simplificationInterval) means the stored
+tree sequences will use less memory, but at a cost of somewhat longer run times. Conversely, a larger
+simplificationRatio or simplificationInterval means that SLiM will wait longer between
+simplifications. There are three ways these parameters can be used. With the first option, with a non-
+NULL simplificationRatio and a NULL value for simplificationInterval, SLiM will try to find
+an optimal generation interval for simplification such that the ratio of the memory used by the tree
+sequence tables, (before:after) simplification, is close to the requested ratio. The default of 10 (used if
+both simplificationRatio and simplificationInterval are NULL) thus requests that SLiM try to
+find a generation interval such that the maximum size of the stored tree sequences is ten times the size
+after simplification. INF may be supplied to indicate that automatic simplification should never occur;
+0 may be supplied to indicate that automatic simplification should be performed at the end of every
+generation. Alternatively – the second option – simplificationRatio may be NULL and
+simplificationInterval may be set to the interval, in generations, between simplifications. This
+may provide more reliable performance, but the interval must be chosen carefully to avoid exceeding
+the available memory. The simplificationInterval value may be a very large number to specify
+that simplification should never occur (not INF, though, since it is an integer value), or 1 to simplify
+every generation. Finally – the third option – both parameters may be non-NULL, in which case
+simplificationRatio is used as described above, while simplificationInterval provides the
+initial interval first used by SLiM (and then subsequently increased or decreased to try to match the
+requested simplification ratio). The default initial interval, used when simplificationInterval is
+NULL, is usually 20; this is chosen to be relatively frequent, and thus unlikely to lead to a memory
+overflow, but it can result in rather slow spool-up for models where the equilibrium simplification
+interval, as determined by the simplification ratio, is much longer. It can therefore be helpful to set a
+larger initial interval so that the early part of the model run is not excessively bogged down in
+simplification.
+The checkCoalescence parameter controls whether a check for full coalescence is conducted after
+each simplification. If a model will call treeSeqCoalesced() to check for coalescence during its
+execution, checkCoalescence should be set to T. Since the coalescence checks entail a performance
+penalty, the default of F is preferable otherwise. See the documentation for treeSeqCoalesced() for
+further discussion.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 472
+The runCrosschecks parameter controls whether cross-checks between SLiM’s internal data
+structures and the tree-sequence recording data structures will be conducted. These two sets of data
+structures record much the same thing (mutations in genomes), but using completely different
+representations, so such cross-checks can be useful to confirm that the two data structures do indeed
+represent the same conceptual state. This slows down the model considerably, however, and would
+normally be turned on only for debugging purposes, so it is turned off by default.

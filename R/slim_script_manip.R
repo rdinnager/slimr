@@ -70,20 +70,20 @@ slim_script_from_text <- function(slim_script_text) {
   blocks <- purrr::map(blocks,
                        ~slim_code_Rify(.x))
   blocks <- purrr::map(blocks,
-                       ~styler::style_text(.x))
+                       ~styler::style_text(.x, scope = "line_breaks"))
 
-  blocks <- purrr::map(blocks,
-                       ~.x[.x != ""])
+  # blocks <- purrr::map(blocks,
+  #                      ~.x[.x != ""])
+  #
+  # blocks <- purrr::map(blocks,
+  #                      ~{non_brackets <- !stringr::str_detect(.x, "(\\{|\\})")
+  #                      .x[non_brackets] <- paste0(.x[non_brackets], ";")
+  #                      .x})
 
-  blocks <- purrr::map(blocks,
-                       ~{non_brackets <- !stringr::str_detect(.x, "(\\{|\\})")
-                       .x[non_brackets] <- paste0(.x[non_brackets], ";")
-                       .x})
-
-  blocks <- purrr::map(blocks,
-                       ~stringr::str_replace_all(.x,
-                                                 stringr::fixed("<-"),
-                                                 stringr::fixed("=")))
+  # blocks <- purrr::map(blocks,
+  #                      ~stringr::str_replace_all(.x,
+  #                                                stringr::fixed("<-"),
+  #                                                stringr::fixed("=")))
 
   # blocks <- purrr::map(blocks,
   #                      ~stringr::str_trim(.x))
@@ -179,7 +179,7 @@ slim_script_add_code <- function(slim_script, block, what = NULL, where = NULL) 
 #' Remove line from a slim_script pertaining to output
 #'
 #' @param slim_script The \code{slim_script} object to remove output related line from
-#' @param no_file_only Should only output to stout be removed, leaving output to files? Note if TRUE, this will only work properly if the script contains arguments named filePath. If filenames are specified using unnamed arguments in SLiM, this function currently fails to keep them.
+#' @param no_file_only Should only output to stout be removed, leaving output to files? Note if TRUE, this will only work properly if the script does not construct filenames programmatically.
 #'
 #' @return A \code{slim_script} object with output related lines removed
 #' @export
@@ -190,16 +190,17 @@ slim_script_remove_output <- function(slim_script, no_file_only = FALSE) {
                            ~stringr::str_detect(.x, "cat\\(|catn\\(.*\\)"))
 
    outputs_here <- purrr::map(slim_script$code,
-                              ~stringr::str_detect(.x, "output[a-zA-Z]+\\(.*\\)"))
+                              ~stringr::str_detect(.x, "output[a-zA-Z]*\\(.*\\)"))
 
 
    if(no_file_only) {
 
      writes_here <- purrr::map(slim_script$code,
-                               ~stringr::str_detect(.x, "write[a-zA-Z]+\\(.*\\)"))
+                               ~stringr::str_detect(.x, "write[a-zA-Z]*\\(.*\\)"))
 
      no_files_here <- purrr::map(slim_script$code,
-                                 ~!stringr::str_detect(.x, "filePath"))
+                                 ~!(stringr::str_detect(.x, "output[a-zA-Z]*\\(\"(.*?)\"\\)") |
+                                   stringr::str_detect(.x, "write[a-zA-Z]*\\(\"(.*?)\"\\)")))
 
      outputs_here <- purrr::pmap(list(outputs_here, no_files_here),
                                  ~..1 & ..2)
@@ -218,6 +219,86 @@ slim_script_remove_output <- function(slim_script, no_file_only = FALSE) {
                                   ~.y[!.x])
 
    slim_script
+}
+
+slim_script_set_wd <- function(slim_script, slim_wd) {
+
+  replace_wd_output <- function(s) {
+    if(any(stringr::str_detect(s, "(output[a-zA-Z]*\\(\")(.*\\/)(.*?)(\",*)"))) {
+      file_match <- stringr::str_match(s,
+                                       "(output[a-zA-Z]*\\(\")(.*\\/)(.*?)(\",*)") %>%
+        na.omit()
+
+      if(nrow(file_match) > 0) {
+        for(i in 1:nrow(file_match)) {
+          s <- stringr::str_replace_all(s,
+                                        stringr::fixed(file_match[i, 3]),
+                                        paste0(slim_wd, "/"))
+
+        }
+        files_again <- file_match[ , 3:4, drop = FALSE]
+      } else {
+        files_again <- NULL
+      }
+
+      # s <- stringr::str_replace_all(s,
+      #                        "(output[a-zA-Z]*\\(\")(.*\\/)(.*?)(\",*)",
+      #                        paste0("\\1", slim_wd, "\\/\\3\\4"))
+    } else {
+
+      file_match <- stringr::str_match(s,
+                                       "(output[a-zA-Z]*\\(\")(.*?)(\",*)") %>%
+        na.omit()
+
+      if(nrow(file_match) > 0) {
+        for(i in 1:nrow(file_match)) {
+          s <- stringr::str_replace_all(s,
+                                        stringr::fixed(file_match[i, 3]),
+                                        paste0(slim_wd, "/", file_match[i, 3]))
+
+        }
+        files_again <- rbind("", file_match[ , 3, drop = FALSE])
+      } else {
+        files_again <- NULL
+      }
+    }
+    list(s, files_again)
+  }
+
+  to_replace <- purrr::map(slim_script$code,
+             ~replace_wd_output(.x))
+
+  new_code <- purrr::map(to_replace,
+                         ~.x[[1]])
+
+  files_to_replace <- purrr::map(to_replace,
+                                 ~.x[[2]]) %>%
+    do.call(rbind, .)
+
+  if(length(files_to_replace) > 0) {
+    for(i in 1:nrow(files_to_replace)) {
+
+      new_code <- purrr::map(new_code,
+                             ~stringr::str_replace_all(.x,
+                                           stringr::fixed(paste0(files_to_replace[i, 1],
+                                                                 files_to_replace[i, 2])),
+                                           stringr::fixed(paste0(slim_wd,
+                                                                 "/",
+                                                                 files_to_replace[i, 2])))
+      )
+    }
+
+  }
+  slim_script$code <- new_code
+
+  slim_script
+  # stringr::str_replace_all(slim_script$code[[3]],
+  #                          "(output[a-zA-Z]*\\(\"[/]*)(.*?)(\",*)",
+  #                          paste0("\\1", slim_wd, "\\3"))
+  #
+  #
+  # stringr::str_match_all(slim_script$code[[3]],
+  #                          "(output[a-zA-Z]*\\(\")(.*\\/)(.*?)(\",*)")
 }
 
 #' Print a slim_script object with highlighting

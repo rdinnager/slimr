@@ -41,5 +41,6 @@ Imports:
     gganimate,
     tibble,
     styler,
-    prettycode
+    prettycode,
+    grDevices
 VignetteBuilder: knitr

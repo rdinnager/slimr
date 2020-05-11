@@ -216,7 +216,7 @@ slim_script_remove_output <- function(slim_script, no_file_only = FALSE) {
 
 
    slim_script$code <- purrr::map2(all_here, slim_script$code,
-                                  ~.y[!.x])
+                                  ~{.y[.x] <- ";";.y})
 
    slim_script
 }

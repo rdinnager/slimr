@@ -152,17 +152,8 @@ slim_register_event_code <- function(code_snippet, start_gen = 1, last_gen = NUL
 #' @return Rified code snippet
 slim_code_Rify <- function(code_snippet) {
 
-  ## make sure { or ( is not on a line by itself
-  # code_snippet <- stringr::str_replace_all(code_snippet,
-  #                                          "\n[:blank:]*\\{",
-  #                                          "\\{")
 
-  ## remove newlines immediately following a comma
-  # code_snippet <- stringr::str_replace_all(code_snippet,
-  #                                          ",[:blank:]*\n+",
-  #                                          ", ")
-
-  ## replace % with %%
+  ## replace SLiM modulus % with R modulus %%
   code_snippet <- stringr::str_replace_all(code_snippet,
                                            "([^.])%([^.])",
                                            "\\1%%\\2")
@@ -172,13 +163,15 @@ slim_code_Rify <- function(code_snippet) {
                                            "(.*?)\\?(.*?)else(.*?)",
                                            "\\1%?%\\2%else%\\3")
 
-  ## remove overhanging elses
+  ## remove overhanging elses and ; elses
   code_snippet <- stringr::str_replace_all(code_snippet,
-                                           "\\}\n[:blank:]*\\Qelse\\E",
-                                           "} else")
-  code_snippet <- stringr::str_replace_all(code_snippet,
-                                           ";[:blank:]*[\n]?[:blank:]*\\Qelse\\E",
+                                           "\n+[:blank:]*\\Qelse\\E",
                                            " else")
+
+  code_snippet <- stringr::str_replace_all(code_snippet,
+                                           ";[:blank:]*\\Qelse\\E",
+                                           " else")
+
   ## make sure do statements are on their own line (R treats it as a variable then)
   code_snippet <- stringr::str_replace_all(code_snippet,
                                            "do[:blank:]+(.*?);",
@@ -187,15 +180,18 @@ slim_code_Rify <- function(code_snippet) {
   code_snippet <- stringr::str_replace_all(code_snippet,
                                            "do[:blank:]*\\{",
                                            "do\n{")
+
   ## convert return x; to return(x);
   code_snippet <- stringr::str_replace_all(code_snippet,
                                            "return[:space:]+?(.*)(;| else)",
                                            "return(\\1)\\2")
+
   ## replace . with %.% (shim operator)
   code_snippet <- stringr::str_replace_all(code_snippet,
                                            "([^[:digit:]])\\.([^[:digit:]])",
                                            "\\1%.%\\2")
-  ## add {..slimr_special..} construct to while statements to make R parse it OK.
+
+  ## add slimr_special__ keyword to while statements to make R parse it OK.
   code_snippet <- stringr::str_replace_all(code_snippet,
                                            "(while[:blank:]*\\((.*?)\\))[:blank:]*;",
                                            "\\1slimr_special__")
@@ -211,12 +207,13 @@ slim_code_Rify <- function(code_snippet) {
 #' @param code_snippet SLiM code to Rify as a character vector
 #'
 #' @return SLiMified code snippet
-slim_code_SLiMify <- function(code_snippet, ansi_aware = FALSE) {
+slim_code_SLiMify <- function(code_snippet, prettycode = FALSE) {
 
   # code_snippet <- stringr::str_replace_all(code_snippet,
   #                                          stringr::fixed("do;"),
   #                                          stringr::fixed("do"))
 
+  ## put ternary operators right
   code_snippet <- stringr::str_replace_all(code_snippet,
                                            stringr::fixed("%?%"),
                                            stringr::fixed("?"))
@@ -225,23 +222,31 @@ slim_code_SLiMify <- function(code_snippet, ansi_aware = FALSE) {
                                            stringr::fixed("%else%"),
                                            stringr::fixed("else"))
 
-  code_snippet <- stringr::str_replace_all(code_snippet,
-                                           "(\n[^}]*)[:blank:]*\\Qelse\\E",
-                                           "\\1; else")
+  # code_snippet <- stringr::str_replace_all(code_snippet,
+  #                                          "(\n[^}]*)[:blank:]*\\Qelse\\E",
+  #                                          "\\1; else")
 
+  ## replace elses not preceded by } with ; else
   code_snippet <- stringr::str_replace_all(code_snippet,
-                                           "return\\((.*?)\\)([;[:space:]])",
+                                           "(?<!\\})[:blank:]\\Qelse\\E",
+                                           "; else")
+
+  ## change back to SLiM return syntax (e.g no brackets)
+  code_snippet <- stringr::str_replace_all(code_snippet,
+                                           "return\\((.*)\\)[:blank:]*(;| else)",
                                            "return \\1\\2")
 
-
+  ## go back to regular dots from special dot operator
   code_snippet <- stringr::str_replace_all(code_snippet,
                                            "[:space:]*%.%[:space:]*",
                                            stringr::fixed("."))
 
+  ## remove special keyword used to make do while state,ents work with R parser
   code_snippet <- stringr::str_replace_all(code_snippet,
                                            stringr::fixed("slimr_special__"),
                                            ";")
 
+  ## turn R modulus %% back into SLiM modulus %
   code_snippet <- stringr::str_replace_all(code_snippet,
                                            "([^.])%%([^.])",
                                            "\\1%\\2")

@@ -175,7 +175,7 @@ slim_code_Rify <- function(code_snippet) {
   ## make sure do statements are on their own line (R treats it as a variable then)
   code_snippet <- stringr::str_replace_all(code_snippet,
                                            "do[:blank:]+(.*?);",
-                                           "do\n{\\1}")
+                                           "do\n{\\1;}")
 
   code_snippet <- stringr::str_replace_all(code_snippet,
                                            "do[:blank:]*\\{",
@@ -213,16 +213,7 @@ slim_code_SLiMify <- function(code_snippet, prettycode = FALSE) {
   #                                          stringr::fixed("do;"),
   #                                          stringr::fixed("do"))
 
-  ## put ternary operators right
-  code_snippet <- stringr::str_replace_all(code_snippet,
-                                           stringr::fixed("%?%"),
-                                           stringr::fixed("?"))
-
-  code_snippet <- stringr::str_replace_all(code_snippet,
-                                           stringr::fixed("%else%"),
-                                           stringr::fixed("else"))
-
-  # code_snippet <- stringr::str_replace_all(code_snippet,
+    # code_snippet <- stringr::str_replace_all(code_snippet,
   #                                          "(\n[^}]*)[:blank:]*\\Qelse\\E",
   #                                          "\\1; else")
 
@@ -238,13 +229,18 @@ slim_code_SLiMify <- function(code_snippet, prettycode = FALSE) {
 
   ## go back to regular dots from special dot operator
   code_snippet <- stringr::str_replace_all(code_snippet,
-                                           "[:space:]*%.%[:space:]*",
+                                           "[:space:]*%\\.%[:space:]*",
                                            stringr::fixed("."))
 
   ## remove special keyword used to make do while state,ents work with R parser
   code_snippet <- stringr::str_replace_all(code_snippet,
                                            stringr::fixed("slimr_special__"),
                                            ";")
+
+  ## put ternary operators right
+  code_snippet <- stringr::str_replace_all(code_snippet,
+                                           "(.*?)%\\?%(.*?)%else%(.*?)",
+                                           "\\1?\\2else\\3")
 
   ## turn R modulus %% back into SLiM modulus %
   code_snippet <- stringr::str_replace_all(code_snippet,

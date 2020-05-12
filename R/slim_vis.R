@@ -12,3 +12,11 @@ slim_vis_animation <- function(processed_data) {
                                   detail = 1)
 
 }
+
+slim_vis_data_live <- function(dat_this,
+                               vis_data_live,
+                               current_gen) {
+
+
+
+}

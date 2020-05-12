@@ -35,7 +35,7 @@ slim_output_extract <- function(output_this, generations) {
 slim_output_process_one <- function(output_type, output_format = "text", raw_data) {
   out <- dplyr::case_when(output_type == "sexes" ~ stringr::str_split(raw_data, " ")[[1]],
                           output_type == "coordinates" ~ stringr::str_split(raw_data, " ")[[1]],
-                          NA ~ slim_output_one$raw_data)
+                          NA ~ raw_data)
 
   if(output_type == "coordinates") {
     out <- out  %>%

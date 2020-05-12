@@ -54,13 +54,16 @@ slim_script_from_text <- function(slim_script_text) {
   blocks <- stringr::str_remove_all(blocks, "^([\\S\\s]*?)\\{")
   blocks <- stringr::str_remove_all(blocks, "\\}$")
 
-  start_nums <- stringr::str_extract(heads, "^(\\d+)")
+  block_ids <- stringr::str_extract(heads, "^s(\\d+)")
+  heads <- stringr::str_remove_all(heads, "^s(\\d+) ")
+  start_nums <- stringr::str_match(heads, "^([:digit:]*e?(?!a)[:digit:]*)[[:space:]:]?")[ , 2]
+  start_nums <- stringr::str_trim(start_nums)
   end_nums <- stringr::str_match(heads, ":(\\d+)")[ , 2]
   max_num <- max(c(as.numeric(start_nums), as.numeric(end_nums)), na.rm = TRUE)
   has_colon <- grepl(":", heads, fixed = TRUE)
   end_nums <- ifelse(has_colon & is.na(end_nums), as.character(max_num), end_nums)
 
-  block_names <- paste0("s", stringr::str_pad(seq_along(blocks),
+  block_names <- paste0("block", stringr::str_pad(seq_along(blocks),
                                               nchar(trunc(n_blocks)),
                                               pad = "0"))
 
@@ -98,11 +101,16 @@ slim_script_from_text <- function(slim_script_text) {
   # block_list <- purrr::map(block_list,
   #                          ~.x[.x != ""])
 
-  heads <- stringr::str_remove_all(heads, "^(\\d+)")
+  heads <- stringr::str_remove_all(heads, "^([:digit:]*e?(?!a)[:digit:]*)")
   heads <- stringr::str_remove_all(heads, ":(\\d+)")
   heads <- stringr::str_remove_all(heads, "^:")
 
-  res <- dplyr::tibble(block_id = block_names,
+  heads <- stringr::str_trim(heads)
+
+  block_names[heads == "initialize()"] <- "block_init"
+
+  res <- dplyr::tibble(block_name = block_names,
+                       block_id = block_ids,
                        start = start_nums,
                        colon = ifelse(has_colon, ":", ""),
                        end = end_nums,
@@ -128,7 +136,7 @@ slim_find_block_starting_at <- function(slim_script, start_gen) {
   if(length(block_1) == 0) {
     block_1 <- ""
   } else {
-    block_1 <- slim_script$block_id[block_1]
+    block_1 <- slim_script$block_name[block_1]
   }
   block_1
 }
@@ -160,7 +168,7 @@ slim_script_change_duration <- function(slim_script,
 #' @examples
 slim_script_add_code <- function(slim_script, block, what = NULL, where = NULL) {
 
-  block_end <- length(slim_script$code[[which(slim_script$block_id == block)]])
+  block_end <- length(slim_script$code[[which(slim_script$block_name == block)]])
 
 
   if(inherits(where, "character")) {
@@ -169,8 +177,8 @@ slim_script_add_code <- function(slim_script, block, what = NULL, where = NULL) 
                               NA ~ block_end)
   }
 
-  slim_script$code[[which(slim_script$block_id == block)]] <-
-    append(slim_script$code[[which(slim_script$block_id == block)]], what, where)
+  slim_script$code[[which(slim_script$block_name == block)]] <-
+    append(slim_script$code[[which(slim_script$block_name == block)]], what, where)
 
   slim_script
 
@@ -223,10 +231,10 @@ slim_script_remove_output <- function(slim_script, no_file_only = FALSE) {
 
 slim_script_set_wd <- function(slim_script, slim_wd) {
 
-  replace_wd_output <- function(s) {
-    if(any(stringr::str_detect(s, "(output[a-zA-Z]*\\(\")(.*\\/)(.*?)(\",*)"))) {
+  replace_wd_output <- function(s, out_key = "output") {
+    if(any(stringr::str_detect(s, glue::glue("({out_key}[a-zA-Z]*\\(\")(.*\\/)(.*?)(\",*)")))) {
       file_match <- stringr::str_match(s,
-                                       "(output[a-zA-Z]*\\(\")(.*\\/)(.*?)(\",*)") %>%
+                                       glue::glue("({out_key}[a-zA-Z]*\\(\")(.*\\/)(.*?)(\",*)")) %>%
         na.omit()
 
       if(nrow(file_match) > 0) {
@@ -247,7 +255,7 @@ slim_script_set_wd <- function(slim_script, slim_wd) {
     } else {
 
       file_match <- stringr::str_match(s,
-                                       "(output[a-zA-Z]*\\(\")(.*?)(\",*)") %>%
+                                       glue::glue("({out_key}[a-zA-Z]*\\(\")(.*?)(\",*)")) %>%
         na.omit()
 
       if(nrow(file_match) > 0) {
@@ -257,7 +265,7 @@ slim_script_set_wd <- function(slim_script, slim_wd) {
                                         paste0(slim_wd, "/", file_match[i, 3]))
 
         }
-        files_again <- rbind("", file_match[ , 3, drop = FALSE])
+        files_again <- cbind("", file_match[ , 3, drop = FALSE])
       } else {
         files_again <- NULL
       }
@@ -274,6 +282,18 @@ slim_script_set_wd <- function(slim_script, slim_wd) {
   files_to_replace <- purrr::map(to_replace,
                                  ~.x[[2]]) %>%
     do.call(rbind, .)
+
+  to_replace <- purrr::map(slim_script$code,
+                           ~replace_wd_output(.x, out_key = "write"))
+
+  new_code <- purrr::map(to_replace,
+                         ~.x[[1]])
+
+  files_to_replace2 <- purrr::map(to_replace,
+                                 ~.x[[2]]) %>%
+    do.call(rbind, .)
+
+  files_to_replace <- rbind(files_to_replace, files_to_replace2)
 
   if(length(files_to_replace) > 0) {
     for(i in 1:nrow(files_to_replace)) {
@@ -325,7 +345,7 @@ print.slim_script <- function(x, ...) {
   #                      ~stringr::str_replace_all(.x, "([-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?)",
   #                                                "<highlight>crayon::green('\\1')</highlight>"))
 
-  names(string) <- x$block_id
+  names(string) <- x$block_name
 
   string <- purrr::imap_chr(string,
                             ~purrr::assign_in(.x, 1, paste0("<highlight>crayon::bold$bgCyan('", .y, "')</highlight> ", .x[1])) %>%
@@ -352,7 +372,8 @@ slim_script_is_valid <- function(slim_script) {
     stop('The format of the input appears to be corrupted, as it does not inherit from tbl_df')
   }
 
-  has_correct_columns <- sets_equal(colnames(slim_script), c("block_id",
+  has_correct_columns <- sets_equal(colnames(slim_script), c("block_name",
+                                                             "block_id",
                                                             "start",
                                                             "colon",
                                                             "end",

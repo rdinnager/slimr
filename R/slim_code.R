@@ -202,7 +202,7 @@ slim_code_Rify <- function(code_snippet) {
 
 #' Rify some SLiM code
 #'
-#' Utility code to convert Rified (via \code{\link(slim_code_Rify)}) SLiM code back to valid SLiM code!
+#' Utility code to convert Rified (via \code{\link{slim_code_Rify}}) SLiM code back to valid SLiM code!
 #'
 #' @param code_snippet SLiM code to Rify as a character vector
 #'

@@ -35,10 +35,13 @@ slimr_which <- function(slim_path, os = c("linux", "osx", "windows")) {
     os <- get_os()
   }
   if(os == "windows") {
-    exe <- processx::run("bash", c("-c", glue::glue('"which -a {slim_path}"')),
-                         windows_verbatim_args = TRUE, error_on_status = FALSE)
-    if(exe$status == 0) {
-      here_it_is <- stringr::str_remove_all(exe$stdout, "\n")
+    # exe <- processx::run("bash", c("-c", glue::glue('"which -a {slim_path}"')),
+    #                      windows_verbatim_args = TRUE, error_on_status = FALSE)
+
+    exe <- system(glue::glue('bash -c "which -a {slim_path}"'),
+                  show.output.on.console = FALSE)
+    if(is.null(attr(exe, "status"))) {
+      here_it_is <- stringr::str_remove_all(exe, "\n")
     } else {
       here_it_is <- ""
     }

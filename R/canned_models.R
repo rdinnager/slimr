@@ -423,13 +423,26 @@ p1.fitnessScaling = K / size(inds);
   // move around a bit
   for (ind in p1.individuals)
   {
+
+
   if(MK == "gauss") { // gaussian kernel
-  do pos = c(ind.spatialPosition + rnorm(2, 0, MvR));
-  while (!p1.pointInBounds(pos));
+  do {
+    angle = runif(1, 0, 2 * PI);
+    dist = c(abs(rnorm(1, 0, MvR * sqrt(PI) / sqrt(2))));
+    dev_xy = c(sin(angle) * dist, cos(angle) * dist);
+    pos = ind.spatialPosition + dev_xy;
+    print(pos);
+  } while (!p1.pointInBounds(pos));
+
   }
   if(MK == "laplace") { // laplacian kernel
-  do pos = c(ind.spatialPosition + (rexp(2, MvR) * ((rbinom(2, 1, 0.5) * 2) - 1)));
-  while (!p1.pointInBounds(pos));
+  do {
+    angle = runif(1, 0, 2 * PI);
+    dist = c(rexp(1, MvR));
+    dev_xy = c(sin(angle) * dist, cos(angle) * dist);
+    pos = ind.spatialPosition + dev_xy;
+    print(pos);
+  } while (!p1.pointInBounds(pos));
   }
   ind.setSpatialPosition(pos);
 

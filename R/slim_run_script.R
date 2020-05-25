@@ -124,7 +124,7 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
 
     slim_p$kill()
 
-    return(invisible(exit))
+    return(invisible(list(process = slim_p, out = out)))
 
 
   } else {

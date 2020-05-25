@@ -13,5 +13,5 @@ slim_code_SLiMify(code_snippet, prettycode = FALSE)
 SLiMified code snippet
 }
 \description{
-Utility code to convert Rified (via \code{\link(slim_code_Rify)}) SLiM code back to valid SLiM code!
+Utility code to convert Rified (via \code{\link{slim_code_Rify}}) SLiM code back to valid SLiM code!
 }

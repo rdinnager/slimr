@@ -4,7 +4,7 @@
 \alias{print.slim_script}
 \title{Print a slim_script object with highlighting}
 \usage{
-\method{print}{slim_script}(x)
+\method{print}{slim_script}(x, ...)
 }
 \arguments{
 \item{x}{slim_script object to print.}

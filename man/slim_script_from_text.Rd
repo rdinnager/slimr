@@ -2,7 +2,7 @@
 % Please edit documentation in R/slim_script_manip.R
 \name{slim_script_from_text}
 \alias{slim_script_from_text}
-\title{Title}
+\title{Convert a character vector into a slim_script object}
 \usage{
 slim_script_from_text(slim_script_text)
 }
@@ -13,5 +13,5 @@ slim_script_from_text(slim_script_text)
 A \code{slim_script} object, which inherits from \link[tibble:tibble-package]{tibble}.
 }
 \description{
-Title
+Convert a character vector into a slim_script object
 }

@@ -9,7 +9,7 @@ slim_script_remove_output(slim_script, no_file_only = FALSE)
 \arguments{
 \item{slim_script}{The \code{slim_script} object to remove output related line from}
 
-\item{no_file_only}{Should only output to stout be removed, leaving output to files? Note if TRUE, this will only work properly if the script contains arguments named filePath. If filenames are specified using unnamed arguments in SLiM, this function currently fails to keep them.}
+\item{no_file_only}{Should only output to stout be removed, leaving output to files? Note if TRUE, this will only work properly if the script does not construct filenames programmatically.}
 }
 \value{
 A \code{slim_script} object with output related lines removed

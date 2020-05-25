@@ -60,7 +60,8 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 
 }
 
-
+#' @import slimrlang
+NULL
 
 ## usethis namespace: start
 #' @importFrom tibble tibble

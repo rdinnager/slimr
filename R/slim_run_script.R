@@ -156,13 +156,13 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
                                  subpops = subpops) %+%
             slim_gen_output_markup_code(begin = FALSE) %>%
             slim_output_every_code(output_every) %>%
-            slim_register_event_code(1, last_gen)
+            slim_register_event_code(2, last_gen)
 
         } else {
           output_gens <- slim_gen_output_markup_code(begin = TRUE) %+%
             slim_gen_output_markup_code(begin = FALSE) %>%
             slim_output_every_code(output_every) %>%
-            slim_register_event_code(1, last_gen)
+            slim_register_event_code(2, last_gen)
         }
         slim_script <- slim_script_add_code(slim_script, block_1, what = output_gens, where = "end")
 
@@ -197,6 +197,10 @@ slim_run_script <- function(slim_script = NULL, script_file = NULL, slim_path = 
                                       stdout = "|", stderr = "|",
                                       windows_verbatim_args = TRUE,
                                       windows_hide_window = TRUE)
+
+      if(!is.null(vis_data_live)) {
+        grDevices::dev.new(noRStudioGD = TRUE)
+      }
 
       current_gen <- 0
       leftovers <- NULL

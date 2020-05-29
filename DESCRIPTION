@@ -23,7 +23,9 @@ Suggests:
 RoxygenNote: 7.1.0
 Roxygen: list(markdown = TRUE)
 Language: en-GB
-Depends: R (>= 2.10)
+Depends: 
+    R (>= 2.10),
+    slimrlang (>= 0.0.0.9000)
 Imports: 
     stringr,
     processx,
@@ -42,8 +44,7 @@ Imports:
     tibble,
     styler,
     prettycode,
-    grDevices,
-    slimrlang (>= 0.0.0.9000)
+    grDevices
 VignetteBuilder: knitr
 Remotes:  
     rdinnager/slimrlang

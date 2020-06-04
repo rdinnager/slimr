@@ -38,19 +38,3 @@ minimal_slim_sim <- function(command) {
 
 }
 
-slim_script(
-  slim_block(initialize(), {
-    initializeMutationRate(1e-7);
-    initializeMutationType("m1", 0.5, "f", 0.0);
-    initializeGenomicElementType("g1", m1, 1.0);
-    initializeGenomicElement(g1, 0, 99999);
-    initializeRecombinationRate(1e-8);
-  }),
-  slim_block(1, {
-    sim.addSubpop("p1", 500);
-    {print("hello")}
-    sim.simulationFinished();
-  })
-)
-
-rlang::expr_interp(print("hello"))

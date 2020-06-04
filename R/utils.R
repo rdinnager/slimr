@@ -1,8 +1,33 @@
+# modified from drake::assert_pkg
+assert_package <- function (pkg, version = NULL, install = "install.packages") {
+
+  if (!requireNamespace(pkg, quietly = TRUE)) {
+    stop("This function requires the ", pkg, " package, which is not installed. Install with ",
+         install, "(\"", pkg, "\").", call. = FALSE)
+  }
+  if (!is.null(version)) {
+
+    installed_version <- as.character(utils::packageVersion(pkg))
+    is_too_old <- utils::compareVersion(installed_version, version) < 0
+    if (is_too_old) {
+      stop("This function package requires the ", pkg, " package to be version ",
+           version, " or heigher. ", "Found version ",
+           version, " installed.", "Update it with ",
+           install, "(\"", pkg, "\").",
+           call. = FALSE)
+    }
+  }
+
+  invisible()
+
+}
+
 #' Function to return the OS
 #'
 #' This function shamelessly stolen from: https://www.r-bloggers.com/identifying-the-os-from-r/
 #'
 #' @return Lowercase character stating the OS: linux, windows, or osx
+#' @noRd
 get_os <- function(){
   sysinf <- Sys.info()
   if (!is.null(sysinf)){
@@ -30,6 +55,7 @@ get_os <- function(){
 #' @param slim_path Path to SLiM executable
 #' @param os What operating system are we working in? Must be "windows", "osx", or "linux#', if left blank slimr will try and detrmine it automatically
 #' @return The full path to the executable as a character, or "" if not found.
+#' @noRd
 slimr_which <- function(slim_path, os = c("linux", "osx", "windows")) {
   if(missing(os)) {
     os <- get_os()
@@ -39,6 +65,7 @@ slimr_which <- function(slim_path, os = c("linux", "osx", "windows")) {
     #                      windows_verbatim_args = TRUE, error_on_status = FALSE)
 
     exe <- system(glue::glue('bash -c "which -a {slim_path}"'),
+                  intern = TRUE,
                   show.output.on.console = FALSE)
     if(is.null(attr(exe, "status"))) {
       here_it_is <- stringr::str_remove_all(exe, "\n")
@@ -59,6 +86,7 @@ slimr_which <- function(slim_path, os = c("linux", "osx", "windows")) {
 #' @param expected The expected set.
 #'
 #' @return A logical scalar, TRUE if the sets are equal, FALSE if they are not equal
+#' @noRd
 sets_equal <- function(actual, expected) {
   differences <- setdiff(actual, expected)
   sets_equal  <- length(differences) == 0
@@ -73,6 +101,7 @@ sets_equal <- function(actual, expected) {
 #' @param windows_path The windows path to convert.
 #'
 #' @return The modified path.
+#' @noRd
 convert_to_wsl_path <- function(windows_path) {
   windows_path <- normalizePath(windows_path, winslash = "/")
   drive_letter <- stringr::str_match(windows_path, "^([A-Za-z]):")
@@ -86,6 +115,7 @@ convert_to_wsl_path <- function(windows_path) {
 #' @param b Second sring
 #'
 #' @return New string with a and b pasted together with a space in between.
+#' @noRd
 `%+%` <- function(a, b) {
   stringr::str_c(a, b, sep = " ")
 }
@@ -96,6 +126,7 @@ convert_to_wsl_path <- function(windows_path) {
 #' @param b Second sring
 #'
 #' @return New string with a and b pasted together with a newline in between.
+#' @noRd
 `%+n%` <- function(a, b) {
   stringr::str_c(a, b, sep = "\n")
 }

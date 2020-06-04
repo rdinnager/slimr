@@ -19,7 +19,12 @@ Suggests:
     spelling,
     knitr,
     rmarkdown,
-    roxygen2
+    roxygen2,
+    clipr,
+    ggplot2,
+    gganimate,
+    grDevices,
+    fansi
 RoxygenNote: 7.1.0
 Roxygen: list(markdown = TRUE)
 Language: en-GB
@@ -34,17 +39,10 @@ Imports:
     magrittr,
     progress,
     unglue,
-    crayon,
     dplyr,
     rlang (>= 0.1.2),
-    clipr,
     purrr,
-    ggplot2,
-    gganimate,
-    tibble,
-    styler,
-    prettycode,
-    grDevices
+    styler
 VignetteBuilder: knitr
 Remotes:  
     rdinnager/slimrlang

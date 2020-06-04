@@ -21,8 +21,8 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 
   .slim_settings$slim_dir <- get_slim_dir()
 
-  slim_avail <- get_slim_call()
-  if(!is.null(slim_avail)) {
+  slim_avail <- try(get_slim_call(), silent = TRUE)
+  if(!is.null(slim_avail) || inherits(slim_avail, "try-error")) {
     #packageStartupMessage("Welcome to the slimr package for forward population genetics simulation in SLiM. For more information on SLiM please visit https://messerlab.org/slim/ .")
     .slim_settings$slim_call <- slim_avail
     .slim_settings$slim_avail <- TRUE
@@ -61,9 +61,4 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
 }
 
 #' @import slimrlang
-NULL
-
-## usethis namespace: start
-#' @importFrom tibble tibble
-## usethis namespace: end
 NULL

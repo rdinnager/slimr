@@ -39,7 +39,7 @@ slim_run_script(
 
 \item{subpops}{Character vector specifying what subpopulations in the SLiM simulation to collect output for. SLiM subpopulation names are of the form "p1", "p2", etc. The default is the special argument "all", which tells slimr to sample from all subpopulations in the simulation.}
 
-\item{vis_data_live}{Should the output data from SLiM be visualised live (as the script is running)? This should be a vector or list specifying which elements in \script{output} should be visualised. The default \script(NULL), mean no visualisation.}
+\item{vis_data_live}{Should the output data from SLiM be visualised live (as the script is running)? This should be a vector or list specifying which elements in \code{output} should be visualised. The default \code{NULL}, mean no visualisation.}
 
 \item{.progress}{Should a progress bar be displayed while the SLiM script is running?}
 

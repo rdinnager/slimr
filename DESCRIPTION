@@ -38,11 +38,9 @@ Imports:
     glue,
     magrittr,
     progress,
-    unglue,
     dplyr,
     rlang (>= 0.1.2),
-    purrr,
-    styler
+    purrr
 VignetteBuilder: knitr
-Remotes:  
+Remotes: 
     rdinnager/slimrlang

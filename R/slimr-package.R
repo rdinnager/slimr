@@ -55,8 +55,6 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
                                                                                  paste0('"', .y, '"')))
   .slim_assets$slim_recipes <- slim_recipes
 
-  styler::cache_deactivate(verbose = FALSE)
-
 
 }
 

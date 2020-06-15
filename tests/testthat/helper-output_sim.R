@@ -2374,19 +2374,29 @@ data <- c("// Initial random seed:",
 ########### functions #################
 
 make_slim_output_sim <- function(data) {
+  force(data)
   line <- 1L
   tot_lines <- length(data)
+  finished <- FALSE
   function(n_lines) {
-    end_line <- line + n_lines
-    if(end_line > tot_lines) {
-      end_line <- tot_lines
-    }
-    data_to_send <- data[line:end_line]
-    if(end_line == tot_lines) {
-      line <<- 1L
+
+    if(finished) {
+      data_to_send <- "finished"
+      finished <<- FALSE
     } else {
-      line <<- end_line + 1L
+      end_line <- line + n_lines
+      if(end_line > tot_lines) {
+        end_line <- tot_lines
+      }
+      data_to_send <- data[line:end_line]
+      if(end_line == tot_lines) {
+        finished <<- TRUE
+        line <<- 1L
+      } else {
+        line <<- end_line + 1L
+      }
     }
+
     return(data_to_send)
   }
 }

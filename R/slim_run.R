@@ -9,8 +9,6 @@
 #' @param simple_run
 #' @param capture_output
 #' @param show_output
-#' @param progress If the script outputs indicators of progress, should this be displayed
-#' as a progress bar?
 #' @param slim_path
 #' @param callbacks A list of functions to be called during the SLiM run. This can be used to
 #' dynamically transform or visualise output from the simulation while it is running. It should
@@ -23,6 +21,7 @@
 #' \item{expression}{The SLiM expression used to generate the output}
 #' \item{data}{The raw data output from SLiM as a character vector}
 #' }
+#' @param vis_callbacks
 #' @param ... Additional arguments to be passed to any callback functions.
 #'
 #' @return A \code{slimr_results} object which has the following components:
@@ -38,8 +37,8 @@ slim_run <- function(x, slim_path = NULL,
                      simple_run = FALSE,
                      capture_output = TRUE,
                      show_output = !capture_output,
-                     progress = TRUE,
                      callbacks = NULL,
+                     vis_callbacks = NULL,
                      ...) {
   UseMethod("slim_run", x)
 }
@@ -73,7 +72,10 @@ slim_run_script <- function(script_txt,
                             simple_run = FALSE,
                             capture_output = TRUE,
                             show_output = FALSE,
-                            end_gen = NULL, ...) {
+                            end_gen = NULL,
+                            vis_callbacks = NULL,
+                            callbacks = NULL,
+                            ...) {
 
   platform <- get_os()
 
@@ -96,7 +98,8 @@ slim_run_script <- function(script_txt,
   pb <- progress::progress_bar$new(format = ":spin SLiM running.. Time Elapsed: :elapsedfull",
                                    clear = FALSE,
                                    total = NA,
-                                   width = 60)
+                                   width = 60,
+                                   show_after = 0)
 
   simple_pb <- TRUE
 
@@ -120,6 +123,7 @@ slim_run_script <- function(script_txt,
     leftovers <- NULL
 
     if(simple_run) {
+      pb$tick(0)
       if(length(out_lines) > 0) {
         if(show_output) {
           pb$message(paste(out_lines, collapse = "\n"))
@@ -128,8 +132,8 @@ slim_run_script <- function(script_txt,
           out_i <- out_i + 1L
           all_output[[out_i]] <- out_lines
         }
-        pb$tick()
       }
+      pb$tick()
     } else {
 
 
@@ -162,7 +166,7 @@ slim_run_script <- function(script_txt,
 
   exit <- slim_p$get_exit_status()
 
-  slim_cleanup(slim_p, pb = pb)
+  slim_cleanup(slim_p, pb = pb, simple_pb)
 
   message("\n\nSimulation finished with exit status: ", exit)
 
@@ -231,10 +235,12 @@ slim_update_progress <- function(output_list, pb, show_output, simple_pb, end_ge
 
 }
 
-slim_cleanup <- function(slim_p, pb) {
+slim_cleanup <- function(slim_p, pb, simple_pb) {
 
-  if(!pb$finished) {
-    pb$update(1)
+  if(!simple_pb) {
+    if(!pb$finished) {
+      pb$update(1)
+    }
   }
 
   pb$terminate()

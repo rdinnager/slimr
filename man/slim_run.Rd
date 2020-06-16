@@ -13,8 +13,8 @@ slim_run(
   simple_run = FALSE,
   capture_output = TRUE,
   show_output = !capture_output,
-  progress = TRUE,
   callbacks = NULL,
+  vis_callbacks = NULL,
   ...
 )
 
@@ -23,9 +23,6 @@ slim_run(
 \method{slim_run}{slimr_script}(x, ...)
 }
 \arguments{
-\item{progress}{If the script outputs indicators of progress, should this be displayed
-as a progress bar?}
-
 \item{callbacks}{A list of functions to be called during the SLiM run. This can be used to
 dynamically transform or visualise output from the simulation while it is running. It should
 be of the form \code{function(data, ...) \{do something..\}}. If using \code{\link[slimrlang]{slimr_output}}

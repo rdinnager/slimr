@@ -1,0 +1,28 @@
+id => (integer$)
+The identifier for this interaction type; for interaction type i3, for example, this is 3.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 494
+maxDistance <–> (float$)
+The maximum distance over which this interaction will be evaluated. For inter-individual distances
+greater than maxDistance, the interaction strength will be zero.
+reciprocal => (logical$)
+The reciprocality of the interaction, as specified in initializeInteractionType(). This will be T
+for reciprocal interactions (those for which the interaction strength of B upon A is equal to the
+interaction strength of A upon B), and F otherwise.
+sexSegregation => (string$)
+The sex-segregation of the interaction, as specified in initializeInteractionType(). For nonsexual
+simulations, this will be "**". For sexual simulations, this string value indicates the sex of
+individuals feeling the interaction, and the sex of individuals exerting the interaction; see
+initializeInteractionType() for details.
+spatiality => (string$)
+The spatial dimensions used by the interaction, as specified in initializeInteractionType(). This
+will be "" (the empty string) for non-spatial interactions, or "x", "y", "z", "xy", "xz", "yz", or
+"xyz", for interactions using those spatial dimensions respectively. The specified dimensions are used
+to calculate the distances between individuals for this interaction. The value of this property is always
+the same as the value given to initializeInteractionType().
+tag <–> (integer$)
+A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read
+it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value
+prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.
+See also the getValue() and setValue() methods, for another way of attaching state to interaction
+types.

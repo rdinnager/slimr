@@ -1,0 +1,68 @@
+cloningRate => (float)
+The fraction of children in the next generation that will be produced by cloning (as opposed to
+biparental mating). In non-sexual (i.e. hermaphroditic) simulations, this property is a singleton float
+representing the overall subpopulation cloning rate. In sexual simulations, this property is a float
+vector with two values: the cloning rate for females (at index 0) and for males (at index 1).
+firstMaleIndex => (integer$)
+The index of the first male individual in the subpopulation. The genomes vector is sorted into females
+first and males second; firstMaleIndex gives the position of the boundary between those sections.
+Note, however, that there are two genomes per diploid individual, and the firstMaleIndex is not
+premultiplied by 2; you must multiply it by 2 before using it to decide whether a given index into
+genomes is a genome for a male or a female. The firstMaleIndex property is also the number of
+females in the subpopulation, given this design. For non-sexual (i.e. hermaphroditic) simulations, this
+property has an undefined value and should not be used.
+fitnessScaling <–> (float$)
+A float scaling factor applied to the fitness of all individuals in this subpopulation (i.e., the fitness
+value computed for each individual will be multiplied by this value). This is primarily of use in
+nonWF models, where fitness is absolute, rather than in WF models, where fitness is relative (and thus
+a constant factor multiplied into the fitness of every individual will make no difference); however, it
+may be used in either type of model. This provides a simple, fast way to modify the fitness of all
+individuals in a subpopulation; conceptually it is similar to returning the same fitness effect for all
+individuals in the subpopulation from a fitness(NULL) callback, but without the complexity and
+performance overhead of implementing such a callback. To scale the fitness of individuals by different
+(individual-specific) factors, see the fitnessScaling property of Individual.
+The value of fitnessScaling is reset to 1.0 every generation, so that any scaling factor set lasts for
+only a single generation. This reset occurs immediately after fitness values are calculated, in both WF
+and nonWF models.
+genomes => (object<Genome>)
+All of the genomes contained by the subpopulation; there are two genomes per diploid individual.
+id => (integer$)
+The identifier for this subpopulation; for subpopulation p3, for example, this is 3.
+immigrantSubpopFractions => (float)
+The expected value of the fraction of children in the next generation that are immigrants arriving from
+particular subpopulations.
+immigrantSubpopIDs => (integer)
+The identifiers of the particular subpopulations from which immigrants will arrive in the next
+generation.
+individualCount => (integer$)
+The number of individuals in the subpopulation; one-half of the number of genomes.
+individuals => (object<Individual>)
+All of the individuals contained by the subpopulation. Each individual is diploid and thus contains
+two Genome objects. See the sampleIndividuals() and subsetIndividuals() for fast ways to get
+a subset of the individuals in a subpopulation.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 518
+selfingRate => (float$)
+The expected value of the fraction of children in the next generation that will be produced by selfing
+(as opposed to biparental mating). Selfing is only possible in non-sexual (i.e. hermaphroditic)
+simulations; for sexual simulations this property always has a value of 0.0.
+sexRatio => (float$)
+For sexual simulations, the sex ratio for the subpopulation. This is defined, in SLiM, as the fraction of
+the subpopulation that is male; in other words, it is actually the M:(M+F) ratio. For non-sexual (i.e.
+hermaphroditic) simulations, this property has an undefined value and should not be used.
+spatialBounds => (float)
+The spatial boundaries of the subpopulation. The length of the spatialBounds property depends
+upon the spatial dimensionality declared with initializeSLiMOptions(). If the spatial
+dimensionality is zero (as it is by default), the value of this property is float(0) (a zero-length float
+vector). Otherwise, minimums are supplied for each coordinate used by the dimensionality of the
+simulation, followed by maximums for each. In other words, if the declared dimensionality is "xy",
+the spatialBounds property will contain values (x0, y0, x1, y1); bounds for the z coordinate
+will not be included in that case, since that coordinate is not used in the simulation’s dimensionality.
+This property cannot be set, but the setSpatialBounds() method may be used to achieve the same
+thing.
+tag <–> (integer$)
+A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read
+it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value
+prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.
+See also the getValue() and setValue() methods, for another way of attaching state to
+subpopulations.

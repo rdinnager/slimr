@@ -1,0 +1,5 @@
+– (void)setGenomicElementType(io<GenomicElementType>$ genomicElementType)
+Set the genomic element type used for a genomic element (see section 1.5.4). The
+genomicElementType parameter should supply the new genomic element type for the element, either
+as a GenomicElementType object or as an integer identifier. The genomic element type for a
+genomic element is normally a constant in simulations, so be sure you know what you are doing.

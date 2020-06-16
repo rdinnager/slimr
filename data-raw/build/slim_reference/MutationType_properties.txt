@@ -1,0 +1,114 @@
+color <–> (string$)
+The color used to display mutations of this type in SLiMgui. Outside of SLiMgui, this property still
+exists, but is not used by SLiM. Colors may be specified by name, or with hexadecimal RGB values of
+the form "#RRGGBB" (see the Eidos manual). If color is the empty string, "", SLiMgui’s default
+(selection-coefficient–based) color scheme is used; this is the default for new MutationType objects.
+colorSubstitution <–> (string$)
+The color used to display substitutions of this type in SLiMgui (see the discussion for the
+colorSubstitution property of the Chromosome class for details). Outside of SLiMgui, this property
+still exists, but is not used by SLiM. Colors may be specified by name, or with hexadecimal RGB
+values of the form "#RRGGBB" (see the Eidos manual). If colorSubstitution is the empty string, "",
+SLiMgui’s default (selection-coefficient–based) color scheme is used; this is the default for new
+MutationType objects.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 502
+convertToSubstitution <–> (logical$)
+This property governs whether mutations of this mutation type will be converted to Substitution
+objects when they reach fixation.
+In WF models this property is T by default, since conversion to Substitution objects provides large
+speed benefits; it should be set to F only if necessary, and only on the mutation types for which it is
+necessary. This might be needed, for example, if you are using a fitness() callback to implement an
+epistatic relationship between mutations; a mutation epistatically influencing the fitness of other
+mutations through a fitness() callback would need to continue having that influence even after
+reaching fixation, but if the simulation were to replace the fixed mutation with a Substitution
+object the mutation would no longer be considered in fitness calculations (unless the callback
+explicitly consulted the list of Substitution objects kept by the simulation). Other script-defined
+behaviors in fitness(), interaction(), mateChoice(), modifyChild(), and recombination()
+callbacks might also necessitate the disabling of substitution for a given mutation type; this is an
+important consideration to keep in mind. See section 21.3 for further discussion of
+convertToSubstitution in WF models.
+In contrast, for nonWF models this property is F by default, because even mutations with no epistatis
+or other indirect fitness effects will continue to influence the survival probabilities of individuals. For
+nonWF models, only neutral mutation types with no epistasis or other side effects can safely be
+converted to substitutions upon fixation. When such a pure-neutral mutation type is defined in a
+nonWF model, this property should be set to T to tell SLiM that substitution is allowed; this may have
+very large positive effects on performance, so it is important to remember when modeling background
+neutral mutations. See section 22.5 for further discussion of convertToSubstitution in nonWF
+models.
+SLiM consults this flag at the end of each generation when deciding whether to substitute each fixed
+mutation. If this flag is T, all eligible fixed mutations will be converted at the end of the current
+generation, even if they were previously left unconverted because of the previous value of the flag.
+Setting this flag to F will prevent future substitutions, but will not cause any existing Substitution
+objects to be converted back into Mutation objects.
+distributionParams => (float)
+The parameters that configure the chosen distribution of fitness effects. This will be of type string for
+DFE type "s", and type float for all other DFE types.
+distributionType => (string$)
+The type of distribution of fitness effects; one of "f", "g", "e", "n", "w", or "s" (see section 23.9,
+above).
+dominanceCoeff <–> (float$)
+The dominance coefficient used for mutations of this type when heterozygous. Changing this will
+normally affect the fitness values calculated at the end of the current generation; if you want current
+fitness values to be affected, you can call SLiMSim’s method recalculateFitness() – but see the
+documentation of that method for caveats.
+Note that the dominance coefficient is not bounded. A dominance coefficient greater than 1.0 may
+be used to achieve an overdominance effect. By making the selection coefficient very small and the
+dominance coefficient very large, an overdominance scenario in which both homozygotes have the
+same fitness may be approximated, to a nearly arbitrary degree of precision.
+Note that this property has a quirk: it is stored internally in SLiM using a single-precision float, not the
+double-precision float type normally used by Eidos. This means that if you set a mutation type
+muttype’s dominance coefficient to some number x, muttype.dominanceCoeff==x may be F due to
+floating-point rounding error. Comparisons of floating-point numbers for exact equality is often a bad
+idea, but this is one case where it may fail unexpectedly. Instead, it is recommended to use the id or
+tag properties to identify particular mutation types.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 503
+id => (integer$)
+The identifier for this mutation type; for mutation type m3, for example, this is 3.
+mutationStackGroup <–> (integer$)
+The group into which this mutation type belongs for purposes of mutation stacking policy. This is
+equal to the mutation type’s id by default. See mutationStackPolicy, below, for discussion.
+In nucleotide-based models, the stacking group for nucleotide-based mutation types is always -1, and
+cannot be changed. Non-nucleotide-based mutation types may also be set to share the -1 stacking
+group, if they should participate in the same stacking policy as nucleotide-based mutations, but that
+would be quite unusual.
+mutationStackPolicy <–> (string$)
+This property and the mutationStackGroup property together govern whether mutations of this
+mutation type’s stacking group can “stack” – can occupy the same position in a single individual. A
+set of mutation types with the same value for mutationStackGroup is called a “stacking group”, and
+all mutation types in a given stacking group must have the same mutationStackPolicy value, which
+defines the stacking behavior of all mutations of the mutation types in the stacking group. In other
+words, one stacking group might allow its mutations to stack, while another stacking group might not,
+but the policy within each stacking group must be unambiguous.
+This property is "s" by default, indicating that mutations in this stacking group should be allowed to
+stack without restriction. If the policy is set to "f", the first mutation of stacking group at a given site
+is retained; further mutations of this stacking group at the same site are discarded with no effect. This
+can be useful for modeling one-way changes; once a gene is disabled by a premature stop codon, for
+example, you might wish to assume, for simplicity, that further mutations cannot alter that fact. If the
+policy is set to "l", the last mutation of this stacking group at a given site is retained; earlier mutation
+of this stacking group at the same site are discarded. This can be useful for modeling an “infinitealleles”
+scenario in which every new mutation at a site generates a completely new allele, rather than
+retaining the previous mutations at the site.
+The mutation stacking policy applies only within the given mutation type’s stacking group; mutations
+of different stacking groups are always allowed to stack in SLiM. The policy applies to all mutations
+added to the model after the policy is set, whether those mutations are introduced by calls such as
+addMutation(), addNewMutation(), or addNewDrawnMutation(), or are added by SLiM’s own
+mutation-generation machinery. However, no attempt is made to enforce the policy for mutations
+already existing at the time the policy is set; typically, therefore, the policy is set in an initialize()
+callback so that it applies throughout the simulation. The policy is also not enforced upon the
+mutations loaded from a file with readFromPopulationFile(); such mutations were governed by
+whatever stacking policy was in effect when the population file was generated.
+In nucleotide-based models, the stacking policy for nucleotide-based mutation types is always "l",
+and cannot be changed. This ensures that new nucleotide mutations always replace the previous
+nucleotide at a site, and that more than one nucleotide mutation is never present at the same position
+in a single genome.
+nucleotideBased => (logical$)
+If the mutation type was created with initializeMutationType(), it is not nucleotide-based, and
+this property is F. If it was created with initializeMutationTypeNuc(), it is nucleotide-based, and
+this property is T. See those methods for further discussion.
+tag <–> (integer$)
+A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read
+it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value
+prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.
+See also the getValue() and setValue() methods, for another way of attaching state to mutation
+types.

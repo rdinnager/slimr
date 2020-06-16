@@ -1,0 +1,470 @@
+– (object<Subpopulation>$)addSubpop(is$ subpopID, integer$ size,
+[float$ sexRatio = 0.5])
+Add a new subpopulation with id subpopID and size individuals. The subpopID parameter may be
+either an integer giving the ID of the new subpopulation, or a string giving the name of the new
+subpopulation (such as "p5" to specify an ID of 5). Only if sex is enabled in the simulation, the initial
+sex ratio may optionally be specified as sexRatio (as the male fraction, M:M+F); if it is not specified,
+a default of 0.5 is used. The new subpopulation will be defined as a global variable immediately by
+this method (see section 23.13), and will also be returned by this method. Subpopulations added by
+this method will initially consist of individuals with empty genomes. In order to model subpopulations
+that split from an already existing subpopulation, use addSubpopSplit().
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 508
+– (object<Subpopulation>$)addSubpopSplit(is$ subpopID, integer$ size,
+io<Subpopulation>$ sourceSubpop, [float$ sexRatio = 0.5])
+Split off a new subpopulation with id subpopID and size individuals derived from subpopulation
+sourceSubpop. The subpopID parameter may be either an integer giving the ID of the new
+subpopulation, or a string giving the name of the new subpopulation (such as "p5" to specify an ID
+of 5). The sourceSubpop parameter may specify the source subpopulation either as a
+Subpopulation object or by integer identifier. Only if sex is enabled in the simulation, the initial
+sex ratio may optionally be specified as sexRatio (as the male fraction, M:M+F); if it is not specified,
+a default of 0.5 is used. The new subpopulation will be defined as a global variable immediately by
+this method (see section 23.13), and will also be returned by this method.
+Subpopulations added by this method will consist of individuals that are clonal copies of individuals
+from the source subpopulation, randomly chosen with probabilities proportional to fitness. The fitness
+of all of these initial individuals is considered to be 1.0, to avoid a doubled round of selection in the
+initial generation, given that fitness values were already used to choose the individuals to clone. Once
+this initial set of individuals has mated to produce offspring, the model is effectively of parental
+individuals in the source subpopulation mating randomly according to fitness, as usual in SLiM, with
+juveniles migrating to the newly added subpopulation. Effectively, then, then new subpopulation is
+created empty, and is filled by migrating juveniles from the source subpopulation, in accordance with
+SLiM’s usual model of juvenile migration.
+– (integer$)countOfMutationsOfType(io<MutationType>$ mutType)
+Returns the number of mutations that are of the type specified by mutType, out of all of the mutations
+that are currently active in the simulation. If you need a vector of the matching Mutation objects,
+rather than just a count, use -mutationsOfType(). This method is often used to determine whether
+an introduced mutation is still active (as opposed to being either lost or fixed). This method is
+provided for speed; it is much faster than the corresponding Eidos code.
+– (void)deregisterScriptBlock(io<SLiMEidosBlock> scriptBlocks)
+All SLiMEidosBlock objects specified by scriptBlocks (either with SLiMEidosBlock objects or
+with integer identifiers) will be scheduled for deregistration. The deregistered blocks remain valid,
+and may even still be executed in the current stage of the current generation (see section 24.9); the
+blocks are not actually deregistered and deallocated until sometime after the currently executing script
+block has completed. To immediately prevent a script block from executing, even when it is
+scheduled to execute in the current stage of the current generation, use the active property of the
+script block (see sections 23.10.1 and 24.9).
+– (+)getValue(string$ key)
+Returns the value previously set for the dictionary entry identifier key using setValue(), or NULL if
+no value has been set. This dictionary-style functionality is actually provided by the superclass of
+SLiMSim, SLiMEidosDictionary, although that fact is not presently visible in Eidos since
+superclasses are not introspectable.
+– (integer)mutationCounts(No<Subpopulation> subpops,
+[No<Mutation> mutations = NULL])
+Return an integer vector with the frequency counts of all of the Mutation objects passed in
+mutations, within the Subpopulation objects in subpops. The subpops argument is required, but
+you may pass NULL to get population-wide frequency counts. If the optional mutations argument is
+NULL (the default), frequency counts will be returned for all of the active Mutation objects in the
+simulation – the same Mutation objects, and in the same order, as would be returned by the
+mutations property of sim, in other words.
+See the -mutationFrequencies() method to obtain float frequencies instead of integer counts.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 509
+– (float)mutationFrequencies(No<Subpopulation> subpops,
+[No<Mutation> mutations = NULL])
+Return a float vector with the frequencies of all of the Mutation objects passed in mutations,
+within the Subpopulation objects in subpops. The subpops argument is required, but you may pass
+NULL to get population-wide frequencies. If the optional mutations argument is NULL (the default),
+frequencies will be returned for all of the active Mutation objects in the simulation – the same
+Mutation objects, and in the same order, as would be returned by the mutations property of sim, in
+other words.
+See the -mutationCounts() method to obtain integer counts instead of float frequencies.
+– (object<Mutation>)mutationsOfType(io<MutationType>$ mutType)
+Returns an object vector of all the mutations that are of the type specified by mutType, out of all of
+the mutations that are currently active in the simulation. If you just need a count of the matching
+Mutation objects, rather than a vector of the matches, use -countOfMutationsOfType(). This
+method is often used to look up an introduced mutation at a later point in the simulation, since there
+is no way to keep persistent references to objects in SLiM. This method is provided for speed; it is
+much faster than the corresponding Eidos code.
+– (void)outputFixedMutations([Ns$ filePath = NULL], [logical$ append = F])
+Output all fixed mutations – all Substitution objects, in other words (see section 1.5.2) – in a SLiM
+native format (see section 25.1.2 for output format details). If the optional parameter filePath is
+NULL (the default), output will be sent to Eidos’s output stream (see section 4.2.1). Otherwise, output
+will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or
+appending to the end of it if append is T. Mutations which have fixed but have not been turned into
+Substitution objects – typically because convertToSubstitution has been set to F for their
+mutation type (see section 23.9.1) – are not output; they are still considered to be segregating
+mutations by SLiM.
+In SLiM 3.3 and later, the output format includes the nucleotides associated with any nucleotide-based
+mutations; see section 25.1.2.
+Output is generally done in a late() event, so that the output reflects the state of the simulation at
+the end of a generation.
+– (void)outputFull([Ns$ filePath = NULL], [logical$ binary = F],
+[logical$ append = F], [logical$ spatialPositions = T], [logical$ ages = T],
+[logical$ ancestralNucleotides = T])
+Output the state of the entire population (see section 25.1.1 for output format details). If the optional
+parameter filePath is NULL (the default), output will be sent to Eidos’s output stream (see section
+4.2.1). Otherwise, output will be sent to the filesystem path specified by filePath, overwriting that
+file if append if F, or appending to the end of it if append is T. When writing to a file, a logical flag,
+binary, may be supplied as well. If binary is T, the population state will be written as a binary file
+instead of a text file (binary data cannot be written to the standard output stream). The binary file is
+usually smaller, and in any case will be read much faster than the corresponding text file would be
+read. Binary files are not guaranteed to be portable between platforms; in other words, a binary file
+written on one machine may not be readable on a different machine (but in practice it usually will be,
+unless the platforms being used are fairly unusual). If binary is F (the default), a text file will be
+written.
+Beginning with SLiM 2.3, the spatialPositions parameter may be used to control the output of the
+spatial positions of individuals in simulations for which continuous space has been enabled using the
+dimensionality option of initializeSLiMOptions(). If spatialPositions is F, the output will
+not contain spatial positions, and will be identical to the output generated by SLiM 2.1 and later. If
+spatialPositions is T, spatial position information will be output if it is available (see section
+25.1.1 for format details). If the simulation does not have continuous space enabled, the
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 510
+spatialPositions parameter will be ignored. Positional information may be output for all output
+destinations – the Eidos output stream, a text file, or a binary file.
+Beginning with SLiM 3.0, the ages parameter may be used to control the output of the ages of
+individuals in nonWF simulations. If ages is F, the output will not contain ages, preserving backward
+compatibility with the output format of SLiM 2.1 and later. If ages is T, ages will be output for nonWF
+models (see section 25.1.1 for format details). In WF simulations, the ages parameter will be ignored.
+Beginning with SLiM 3.3, the ancestralNucleotides parameter may be used to control the output
+of the ancestral nucleotide sequence in nucleotide-based models (see section 25.1.1 for format
+details). If ancestralNucleotides is F, the output will not contain ancestral nucleotide information,
+and so the ancestral sequence will not be restored correctly if the saved file is loaded with
+readPopulationFile(). This option is provided because the ancestral sequence may be quite large,
+for models with a long chromosome (e.g., 1 GB if the chromosome is 109 bases long, when saved in
+text format, or 0.25 GB when saved in binary format). If the model is not nucleotide-based (as
+enabled with the nucleotideBased parameter to initializeSLiMOptions()), the
+ancestralNucleotides parameter will be ignored. Note that in nucleotide-based models the output
+format will always include the nucleotides associated with any nucleotide-based mutations; the
+ancestralNucleotides flag governs only the ancestral sequence.
+Output is generally done in a late() event, so that the output reflects the state of the simulation at
+the end of a generation.
+– (void)outputMutations(object<Mutation> mutations, [Ns$ filePath = NULL],
+[logical$ append = F])
+Output all of the given mutations (see section 25.1.3 for output format details). This can be used to
+output all mutations of a given mutation type, for example. If the optional parameter filePath is
+NULL (the default), output will be sent to Eidos’s output stream (see section 4.2.1). Otherwise, output
+will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or
+appending to the end of it if append is T.
+In SLiM 3.3 and later, the output format includes the nucleotides associated with any nucleotide-based
+mutations; see section 25.1.3.
+Output is generally done in a late() event, so that the output reflects the state of the simulation at
+the end of a generation.
+– (void)outputUsage(void)
+Output the current memory usage of the simulation to Eidos’s output stream. The specifics of what is
+printed, and in what format, should not be relied upon as they may change from version to version of
+SLiM. This method is primarily useful for understanding where the memory usage of a simulation
+predominantly resides, for debugging or optimization. Note that it does not capture all memory usage
+by the process; rather, it summarizes the memory usage by SLiM and Eidos in directly allocated
+objects and buffers. To get the total memory usage of the running process (either current or peak), use
+the Eidos function usage().
+– (integer$)readFromPopulationFile(string$ filePath)
+Read from a population initialization file, whether in text or binary format as previously specified to
+outputFull(), and return the generation counter value represented by the file’s contents (i.e., the
+generation at which the file was generated). Although this is most commonly used to set up initial
+populations (often in an Eidos event set to run in generation 1, immediately after simulation
+initialization), it may be called in any Eidos event; the current state of all populations will be wiped
+and replaced by the state in the file at filePath. All Eidos variables that are of type object and have
+element type Subpopulation, Genome, Mutation, Individual, or Substitution will be removed
+as a side effect of this method, since all such variables would refer to objects that no longer exist in
+the SLiM simulation; if you want to preserve any of that state, you should output it or save it to a file
+prior to this call. New symbols will be defined to refer to the new Subpopulation objects loaded
+from the file.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 511
+If the file being read was written by a version of SLiM prior to 2.3, then for backward compatibility
+fitness values will be calculated immediately for any new subpopulations created by this call, which
+will trigger the calling of any activated and applicable fitness() callbacks. When reading files
+written by SLiM 2.3 or later, fitness values are not calculated as a side effect of this call (because the
+simulation will often need to evaluate interactions or modify other state prior to doing so).
+In SLiM 2.3 and later when using the WF model, calling readFromPopulationFile() from any
+context other than a late() event causes a warning; calling from a late() event is almost always
+correct in WF models, so that fitness values can be automatically recalculated by SLiM at the usual
+time in the generation cycle without the need to force their recalculation (see chapter 21, and
+comments on recalculateFitness() below).
+In SLiM 3.0 when using the nonWF model, calling readFromPopulationFile() from any context
+other than an early() event causes a warning; calling from an early() event is almost always
+correct in nonWF models, so that fitness values can be automatically recalculated by SLiM at the
+usual time in the generation cycle without the need to force their recalculation (see chapter 22, and
+comments on recalculateFitness() below).
+As of SLiM 2.1, this method changes the generation counter to the generation read from the file. If
+you do not want the generation counter to be changed, you can change it back after reading, by
+setting sim.generation to whatever value you wish. Note that restoring a saved past state and
+running forward again will not yield the same simulation results, because the random number
+generator’s state will not be the same; to ensure reproducibility from a given time point, setSeed()
+can be used to establish a new seed value. Any changes made to the simulation’s structure (mutation
+types, genomic element types, etc.) will not be wiped and re-established by
+readFromPopulationFile(); this method loads only the population’s state, not the simulation
+configuration, so care should be taken to ensure that the simulation structure meshes coherently with
+the loaded data. Indeed, state such as the selfing and cloning rates of subpopulations, values set into
+tag properties, and values set onto objects with setValue() will also be lost, since it is not saved out
+by outputFull(). Only information saved by outputFull() will be restored; all other state
+associated with the simulation’s subpopulations, individuals, genomes, mutations, and substitutions
+will be lost, and should be re-established by the model if it is still needed.
+As of SLiM 2.3, this method will read and restore the spatial positions of individuals if that information
+is present in the output file and the simulation has enabled continuous space (see outputFull() for
+details). If spatial positions are present in the output file but the simulation has not enabled
+continuous space (or the number of spatial dimensions does not match), an error will result. If the
+simulation has enabled continuous space but spatial positions are not present in the output file, the
+spatial positions of the individuals read will be undefined, but an error is not raised.
+As of SLiM 3.0, this method will read and restore the ages of individuals if that information is present
+in the output file and the simulation is based upon the nonWF model. If ages are present but the
+simulation uses a WF model, an error will result; the WF model does not use age information. If ages
+are not present but the simulation uses a nonWF model, an error will also result; the nonWF model
+requires age information.
+As of SLiM 3.3, this method will restore the nucleotides of nucleotide-based mutations, and will
+restore the ancestral nucleotide sequence, if that information is present in the output file. Loading an
+output file that contains nucleotide information in a non-nucleotide-based model, and vice versa, will
+produce an error.
+This method can also be used to read tree-sequence (.trees) files saved by treeSeqOutput() or
+generated by the Python pyslim package. When loading a tree sequence, a crosscheck of the loaded
+data will be performed to ensure that the tree sequence was well-formed and was loaded correctly.
+When running a Release build of SLiM, however, this crosscheck will only occur the first time that
+readFromPopulationFile() is called to load a tree sequence; subsequent calls will not perform this
+crosscheck, for greater speed when running models that load saved population state many times (such
+as models that are conditional on fixation). If you suspect that a tree sequence file might be corrupted
+or read incorrectly, running a Debug build of SLiM enables crosschecks after every load.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 512
+– (void)recalculateFitness([Ni$ generation = NULL])
+Force an immediate recalculation of fitness values for all individuals in all subpopulations. Normally
+fitness values are calculated at a fixed point in each generation, and those values are cached and used
+throughout the following generation. If simulation parameters are changed in script in a way that
+affects fitness calculations, and if you wish those changes to take effect immediately rather than taking
+effect at the end of the current generation, you may call recalculateFitness() to force an
+immediate recalculation and recache.
+The optional parameter generation provides the generation for which fitness() callbacks should
+be selected; if it is NULL (the default), the simulation’s current generation value, sim.generation, is
+used. If you call recalculateFitness() in an early() event in a WF model, you may wish this to
+be sim.generation - 1 in order to utilize the fitness() callbacks for the previous generation, as if
+the changes that you have made to fitness-influencing parameters were already in effect at the end of
+the previous generation when the new generation was first created and evaluated (usually it is simpler
+to just make such changes in a late() event instead, however, in which case calling
+recalculateFitness() is probably not necessary at all since fitness values will be recalculated
+immediately afterwards). Regardless of the value supplied for generation here, sim.generation
+inside fitness() callbacks will report the true generation number, so if your callbacks consult that
+parameter in order to create generation-specific fitness effects you will need to handle the discrepancy
+somehow. (Similar considerations apply for nonWF models that call recalculateFitness() in a
+late() event, which is also not advisable in general.)
+After this call, the fitness values used for all purposes in SLiM will be the newly calculated values.
+Calling this method will trigger the calling of any enabled and applicable fitness() callbacks, so
+this is quite a heavyweight operation; you should think carefully about what side effects might result
+(which is why fitness recalculation does not just occur automatically after changes that might affect
+fitness values).
+– (object<SLiMEidosBlock>$)registerEarlyEvent(Nis$ id, string$ source,
+[Ni$ start = NULL], [Ni$ end = NULL])
+Register a block of Eidos source code, represented as the string singleton source, as an Eidos
+early() event in the current simulation, with optional start and end generations limiting its
+applicability. The script block will be given identifier id (specified as an integer, or as a string
+symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block
+later. The registered event is added to the end of the list of registered SLiMEidosBlock objects, and is
+active immediately; it may be eligible to execute in the current generation (see section 24.9 for
+details). The new SLiMEidosBlock will be defined as a global variable immediately by this method
+(see section 23.10), and will also be returned by this method.
+– (object<SLiMEidosBlock>$)registerFitnessCallback(Nis$ id, string$ source,
+Nio<MutationType>$ mutType, [Nio<Subpopulation>$ subpop = NULL],
+[Ni$ start = NULL], [Ni$ end = NULL])
+Register a block of Eidos source code, represented as the string singleton source, as an Eidos
+fitness() callback in the current simulation, with a required mutation type mutType (which may be
+an integer mutation type identifier, or NULL to indicate a global fitness() callback – see section
+24.2), optional subpopulation subpop (which may also be an integer identifier, or NULL, the default,
+to indicate all subpopulations), and optional start and end generations all limiting its applicability.
+The script block will be given identifier id (specified as an integer, or as a string symbolic name
+such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered
+callback is added to the end of the list of registered SLiMEidosBlock objects, and is active
+immediately; it may be eligible to execute in the current generation (see section 24.9 for details). The
+new SLiMEidosBlock will be defined as a global variable immediately by this method (see section
+23.10), and will also be returned by this method.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 513
+– (object<SLiMEidosBlock>$)registerInteractionCallback(Nis$ id, string$ source,
+io<InteractionType>$ intType, [Nio<Subpopulation>$ subpop = NULL],
+[Ni$ start = NULL], [Ni$ end = NULL])
+Register a block of Eidos source code, represented as the string singleton source, as an Eidos
+interaction() callback in the current simulation, with a required interaction type intType (which
+may be an integer identifier), optional subpopulation subpop (which may also be an integer
+identifier, or NULL, the default, to indicate all subpopulations), and optional start and end
+generations all limiting its applicability. The script block will be given identifier id (specified as an
+integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be
+able to refer to the block later. The registered callback is added to the end of the list of registered
+SLiMEidosBlock objects, and is active immediately; it will be eligible to execute the next time an
+InteractionType is evaluated. The new SLiMEidosBlock will be defined as a global variable
+immediately by this method (see section 23.10), and will also be returned by this method.
+– (object<SLiMEidosBlock>$)registerLateEvent(Nis$ id, string$ source,
+[Ni$ start = NULL], [Ni$ end = NULL])
+Register a block of Eidos source code, represented as the string singleton source, as an Eidos
+late() event in the current simulation, with optional start and end generations limiting its
+applicability. The script block will be given identifier id (specified as an integer, or as a string
+symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block
+later. The registered event is added to the end of the list of registered SLiMEidosBlock objects, and is
+active immediately; it may be eligible to execute in the current generation (see section 24.9 for
+details). The new SLiMEidosBlock will be defined as a global variable immediately by this method
+(see section 23.10), and will also be returned by this method.
+– (object<SLiMEidosBlock>$)registerMateChoiceCallback(Nis$ id, string$ source,
+[Nio<Subpopulation>$ subpop = NULL], [Ni$ start = NULL], [Ni$ end = NULL])
+Register a block of Eidos source code, represented as the string singleton source, as an Eidos
+mateChoice() callback in the current simulation, with optional subpopulation subpop (which may
+be an integer identifier, or NULL, the default, to indicate all subpopulations) and optional start and
+end generations all limiting its applicability. The script block will be given identifier id (specified as
+an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be
+able to refer to the block later. The registered callback is added to the end of the list of registered
+SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in the current
+generation (see section 24.9 for details). The new SLiMEidosBlock will be defined as a global
+variable immediately by this method (see section 23.10), and will also be returned by this method.
+– (object<SLiMEidosBlock>$)registerModifyChildCallback(Nis$ id, string$ source,
+[Nio<Subpopulation>$ subpop = NULL], [Ni$ start = NULL], [Ni$ end = NULL])
+Register a block of Eidos source code, represented as the string singleton source, as an Eidos
+modifyChild() callback in the current simulation, with optional subpopulation subpop (which may
+be an integer identifier, or NULL, the default, to indicate all subpopulations) and optional start and
+end generations all limiting its applicability. The script block will be given identifier id (specified as
+an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be
+able to refer to the block later. The registered callback is added to the end of the list of registered
+SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in the current
+generation (see section 24.9 for details). The new SLiMEidosBlock will be defined as a global
+variable immediately by this method (see section 23.10), and will also be returned by this method.
+– (object<SLiMEidosBlock>$)registerRecombinationCallback(Nis$ id, string$ source,
+[Nio<Subpopulation>$ subpop = NULL], [Ni$ start = NULL], [Ni$ end = NULL])
+Register a block of Eidos source code, represented as the string singleton source, as an Eidos
+recombination() callback in the current simulation, with optional subpopulation subpop (which
+may be an integer identifier, or NULL, the default, to indicate all subpopulations) and optional start
+and end generations all limiting its applicability. The script block will be given identifier id (specified
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 514
+as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to
+be able to refer to the block later. The registered callback is added to the end of the list of registered
+SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in the current
+generation (see section 24.9 for details). The new SLiMEidosBlock will be defined as a global
+variable immediately by this method (see section 23.10), and will also be returned by this method.
+– (object<SLiMEidosBlock>$)registerMutationCallback(Nis$ id, string$ source,
+[Nio<MutationType>$ mutType = NULL], [Nio<Subpopulation>$ subpop = NULL],
+[Ni$ start = NULL], [Ni$ end = NULL])
+Register a block of Eidos source code, represented as the string singleton source, as an Eidos
+mutation() callback in the current simulation, with an optional mutation type mutType (which may
+be an integer mutation type identifier, or NULL, the default, to indicate all mutation types – see
+section 24.8), optional subpopulation subpop (which may also be an integer identifier, or NULL, the
+default, to indicate all subpopulations), and optional start and end generations all limiting its
+applicability. The script block will be given identifier id (specified as an integer, or as a string
+symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block
+later. The registered callback is added to the end of the list of registered SLiMEidosBlock objects,
+and is active immediately; it may be eligible to execute in the current generation (see section 24.9 for
+details). The new SLiMEidosBlock will be defined as a global variable immediately by this method
+(see section 23.10), and will also be returned by this method.
+– (object<SLiMEidosBlock>$)registerReproductionCallback(Nis$ id, string$ source,
+[Nio<Subpopulation>$ subpop = NULL], [Ns$ sex = NULL], [Ni$ start = NULL],
+[Ni$ end = NULL])
+Register a block of Eidos source code, represented as the string singleton source, as an Eidos
+reproduction() callback in the current simulation, with optional subpopulation subpop (which may
+be an integer identifier, or NULL, the default, to indicate all subpopulations), optional sex-specificity
+sex (which may be "M" or "F" in sexual simulations to make the callback specific to males or females
+respectively, or NULL for no sex-specificity), and optional start and end generations all limiting its
+applicability. The script block will be given identifier id (specified as an integer, or as a string
+symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block
+later. The registered callback is added to the end of the list of registered SLiMEidosBlock objects,
+and is active immediately; it may be eligible to execute in the current generation (see section 24.9 for
+details). The new SLiMEidosBlock will be defined as a global variable immediately by this method
+(see section 23.10), and will also be returned by this method.
+– (object<SLiMEidosBlock>)rescheduleScriptBlock(object<SLiMEidosBlock>$ block,
+integer$ start, [Ni$ end = NULL], [Ni generations = NULL])
+Reschedule the target script block given by block to execute in a specified set of generations.
+The first way to specify the generation set is with start and end parameter values; block will then
+execute from start to end, inclusive. In this case, block is returned.
+The second way to specify the generation set is using the generations parameter; this is more
+flexible but more complicated. Since script blocks execute across a contiguous span of generations
+defined by their start and end properties, this may result in the duplication of block; one script
+block will be used for each contiguous span of generations in generations. The block object itself
+will be rescheduled to cover the first such span, whereas duplicates of block will be created to cover
+subsequent contiguous spans. A vector containing all of the script blocks scheduled by this method,
+including block, will be returned; this vector is guaranteed to be sorted by the (ascending) scheduled
+execution order of the blocks. Any duplicates of block created will be given values for the active,
+source, tag, and type properties equal to the current values for block, but will be given an id of -1
+since script block identifiers must be unique; if it is necessary to find the duplicated blocks again later,
+their tag property should be used. The vector supplied for generations does not need to be in
+sorted order, but it must not contain any duplicates.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 515
+Because this method can create a large number of duplicate script blocks, it can sometimes be better
+to handle script block scheduling in other ways. If an early() event needs to execute every tenth
+generation over the whole duration of a long model run, for example, it would not be advisable to use
+a call like sim.rescheduleScriptBlock(s1, generations=seq(10, 100000, 10)) for that
+purpose, since that would result in thousands of duplicate script blocks. Instead, it would be
+preferable to add a test such as if (sim.generation % 10 != 0) return; at the beginning of the
+event. It is legal to reschedule a script block while the block is executing; a call like
+sim.rescheduleScriptBlock(self, sim.generation + 10, sim.generation + 10); made
+inside a given block would therefore also cause the block to execute every tenth generation, although
+this sort of self-rescheduling code is probably harder to read, maintain, and debug.
+Whichever way of specifying the generation set is used, the discussion in section 24.9 applies: block
+may continue to be executed during the current life cycle stage even after it has been rescheduled,
+unless it is made inactive using its active property, and similarly, the block may not execute during
+the current life cycle stage if it was not already scheduled to do so. Rescheduling script blocks during
+the generation and life cycle stage in which they are executing, or in which they are intended to
+execute, should be avoided.
+Note that new script blocks can also be created and scheduled using the register...() methods of
+SLiMSim; by using the same source as a template script block, the template can be duplicated and
+scheduled for different generations. In fact, rescheduleScriptBlock() does essentially that
+internally.
+– (void)setValue(string$ key, + value)
+Sets a value for the dictionary entry identifier key. The value, which may be of any type other than
+object, can be fetched later using getValue(). This dictionary-style functionality is actually
+provided by the superclass of SLiMSim, SLiMEidosDictionary, although that fact is not presently
+visible in Eidos since superclasses are not introspectable.
+– (void)simulationFinished(void)
+Declare the current simulation finished. Normally SLiM ends a simulation when, at the end of a
+generation, there are no script events or callbacks registered for any future generation (excluding
+scripts with no declared end generation). If you wish to end a simulation before this condition is met,
+a call to simulationFinished() will cause the current simulation to end at the end of the current
+generation. For example, a simulation might self-terminate if a test for a dynamic equilibrium
+condition is satisfied. Note that the current generation will finish executing; if you want the
+simulation to stop immediately, you can use the Eidos method stop(), which raises an error
+condition.
+– (logical$)treeSeqCoalesced(void)
+Returns the coalescence state for the recorded tree sequence at the last simplification. The returned
+value is a logical singleton flag, T to indicate that full coalescence was observed at the last treesequence
+simplification (meaning that there is a single ancestral individual that roots all ancestry trees
+at all sites along the chromosome – although not necessarily the same ancestor at all sites), or F if full
+coalescence was not observed. For simple models, reaching coalescence may indicate that the model
+has reached an equilibrium state, but this may not be true in models that modify the dynamics of the
+model during execution by changing migration rates, introducing new mutations programmatically,
+dictating non-random mating, etc., so be careful not to attach more meaning to coalescence than it is
+due; some models may require burn-in beyond coalescence to reach equilibrium, or may not have an
+equilibrium state at all. Also note that some actions by a model, such as adding a new subpopulation,
+may cause the coalescence state to revert from T back to F (at the next simplification), so a return
+value of T may not necessarily mean that the model is coalesced at the present moment – only that it
+was coalesced at the last simplification.
+This method may only be called if tree sequence recording has been turned on with
+initializeTreeSeq(); in addition, checkCoalescence=T must have been supplied to
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 516
+initializeTreeSeq(), so that the necessary work is done during each tree-sequence simplification.
+Since this method does not perform coalescence checking itself, but instead simply returns the
+coalescence state observed at the last simplification, it may be desirable to call treeSeqSimplify()
+immediately before treeSeqCoalesced() to obtain up-to-date information. However, the speed
+penalty of doing this in every generation would be large, and most models do not need this level of
+precision; usually it is sufficient to know that the model has coalesced, without knowing whether that
+happened in the current generation or in a recent preceding generation.
+– (void)treeSeqOutput(string$ path, [logical$ simplify = T])
+Outputs the current tree sequence recording tables to the path specified by path. This method may
+only be called if tree sequence recording has been turned on with initializeTreeSeq(). If
+simplify is T (the default), simplification will be done immediately prior to output; this is almost
+always desirable, unless a model wishes to avoid simplification entirely. A binary tree sequence file
+will be written to the specified path; a filename extension of .trees is suggested for this type of file.
+– (void)treeSeqRememberIndividuals(object<Individual> individuals)
+Permanently adds the individuals specified by individuals to the sample retained across tree
+sequence table simplification. This method may only be called if tree sequence recording has been
+turned on with initializeTreeSeq(). All currently living individuals are always retained across
+simplification; this method does not need to be called, and indeed should not be called, for that
+purpose. Instead, treeSeqRememberIndividuals() is for permanently adding particular individuals
+to the retained sample. Typically this would be used, for example, to retain particular individuals that
+you wanted to be able to trace ancestry back to in later analysis. However, this is not the typical
+usage pattern for tree sequence recording; most models will not need to call this method.
+The metadata (age, location, etc) that are stored in the resulting tree sequence are those values present
+at either (a) the final generation, if the individual is alive at the end of the simulation, or (b) the last
+time that the individual was remembered, if not. Calling treeSeqRememberIndividuals() on an
+individual that is already remembered will cause the archived information about the remembered
+individual to be updated to reflect the individual’s current state. A case where this is particularly
+important is for the spatial location of individuals in continuous-space models. SLiM automatically
+remembers the individuals that comprise the first generation of any new subpopulation created with
+addSubpop(), for easy recapitation and other analysis (see sections 17.2 and 17.10). However, since
+these first-generation individuals are remembered at the moment they are created, their spatial
+locations have not yet been set up, and will contain garbage – and those garbage values will be
+archived in their remembered state. If you need correct spatial locations of first-generation individuals
+for your post-simulation analysis, you should call treeSeqRememberIndividuals() explicitly on the
+first generation, after setting spatial locations, to update the archived information with the correct
+spatial positions.
+– (void)treeSeqSimplify(void)
+Triggers an immediate simplification of the tree sequence recording tables. This method may only be
+called if tree sequence recording has been turned on with initializeTreeSeq(). A call to this
+method will free up memory being used by entries that are no longer in the ancestral path of any
+individual within the current sample (currently living individuals, in other words, plus those explicitly
+added to the sample with treeSeqRememberIndividuals()), but it can also take a significant
+amount of time. Typically calling this method is not necessary; the automatic simplification performed
+occasionally by SLiM should be sufficient for most models.

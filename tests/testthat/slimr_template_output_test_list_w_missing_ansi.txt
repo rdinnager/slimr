@@ -1,0 +1,38 @@
+> script_partial
+<slimr_script_coll[2]>
+<1>
+
+[1m[46mblock_init:[49m[22minitialize() [33m{[39m
+    [36minitializeMutationRate[39m[34m([39m[34m1e-05[39m[34m)[39m;
+    [36minitializeMutationType[39m[34m([39m[33m"m1"[39m, [34m0.5[39m, [33m"f"[39m, [34m0[39m[34m)[39m;
+    [36minitializeGenomicElementType[39m[34m([39m[33m"g1"[39m, m1, [34m1[39m[34m)[39m;
+    [36minitializeGenomicElement[39m[34m([39mg1, [34m0[39m, [34m99999[39m[34m)[39m;
+    [36minitializeRecombinationRate[39m[34m([39m[34m1e-08[39m[34m)[39m;
+[33m}[39m
+
+[1m[46mblock_2:[49m[22m1 early() [33m{[39m
+    [36msim.addSubpop[39m[34m([39m[33m"p1"[39m, [34m500[39m[34m)[39m;
+[33m}[39m
+
+[1m[46mblock_3:[49m[22m10000 early() [33m{[39m
+    [36msim.simulationFinished[39m[34m([39m[34m)[39m;
+[33m}[39m
+
+<2>
+
+[1m[46mblock_init:[49m[22minitialize() [33m{[39m
+    [36minitializeMutationRate[39m[34m([39m[34m1e-07[39m[34m)[39m;
+    [36minitializeMutationType[39m[34m([39m[33m"m1"[39m, [34m0.5[39m, [33m"f"[39m, [34m0[39m[34m)[39m;
+    [36minitializeGenomicElementType[39m[34m([39m[33m"g1"[39m, m1, [34m1[39m[34m)[39m;
+    [36minitializeGenomicElement[39m[34m([39mg1, [34m0[39m, [34m2999[39m[34m)[39m;
+    [36minitializeRecombinationRate[39m[34m([39m[34m1e-08[39m[34m)[39m;
+[33m}[39m
+
+[1m[46mblock_2:[49m[22m1 early() [33m{[39m
+    [36msim.addSubpop[39m[34m([39m[33m"p1"[39m, [34m500[39m[34m)[39m;
+[33m}[39m
+
+[1m[46mblock_3:[49m[22m10000 early() [33m{[39m
+    [36msim.simulationFinished[39m[34m([39m[34m)[39m;
+[33m}[39m
+

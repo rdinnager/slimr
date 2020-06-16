@@ -1,0 +1,78 @@
+– (logical)containsMutations(object<Mutation> mutations)
+Returns a logical vector indicating whether each of the mutations in mutations is present in the
+individual (in either of its genomes); each element in the returned vector indicates whether the
+corresponding mutation is present (T) or absent (F). This method is provided for speed; it is much
+faster than the corresponding Eidos code.
+– (integer$)countOfMutationsOfType(io<MutationType>$ mutType)
+Returns the number of mutations that are of the type specified by mutType, out of all of the mutations
+in the individual (in both of its genomes; a mutation that is present in both genomes counts twice). If
+you need a vector of the matching Mutation objects, rather than just a count, you should probably
+use uniqueMutationsOfType(). This method is provided for speed; it is much faster than the
+corresponding Eidos code.
+– (+)getValue(string$ key)
+Returns the value previously set for the dictionary entry identifier key using setValue(), or NULL if
+no value has been set. This dictionary-style functionality is actually provided by the superclass of
+Individual, SLiMEidosDictionary, although that fact is not presently visible in Eidos since
+superclasses are not introspectable.
+– (float)relatedness(object<Individual> individuals)
+Returns a vector containing the degrees of relatedness between the receiver and each of the
+individuals in individuals. The relatedness between A and B is always 1.0 if A and B are actually
+the same individual; this facility works even if SLiM’s optional pedigree tracking is turned off (in which
+case all other relatedness values will be 0.0). Otherwise, if pedigree tracking is turned on with
+initializeSLiMOptions(keepPedigrees=T), this method will use the pedigree information
+described in section 23.6.1 to construct a relatedness estimate. More specifically, if information about
+the grandparental generation is available, then each grandparent shared by A and B contributes 0.125
+towards the total relatedness, for a maximum value of 0.5 with four shared grandparents. If
+grandparental information in unavailable, then if parental information is available it is used, with each
+parent shared by A and B contributing 0.25, again for a maximum of 0.5. If even parental
+information is unavailable, then the relatedness is assumed to be 0.0. Again, however, if A and B are
+the same individual, the relatedness will be 1.0 in all cases.
+Note that this relatedness is simply pedigree-based relatedness. This does not necessarily correspond
+to genetic relatedness, because of the effects of factors like assortment and recombination.
++ (void)setSpatialPosition(float position)
+Sets the spatial position of the individual (as accessed through the spatialPosition property). The
+length of position (the number of coordinates in the spatial position of an individual) depends upon
+the spatial dimensionality declared with initializeSLiMOptions(). If the spatial dimensionality is
+zero (as it is by default), it is an error to call this method. The elements of position are set into the
+values of the x, y, and z properties (if those properties are encompassed by the spatial dimensionality
+of the simulation). In other words, if the declared dimensionality is "xy", calling
+individual.setSpatialPosition(c(1.0, 0.5)) property is equivalent to individual.x = 1.0;
+individual.y = 0.5; individual.z is not set (even if a third value is supplied in position) since
+it is not encompassed by the simulation’s dimensionality in this example.
+Note that this is an Eidos class method, somewhat unusually, which allows it to work in a special way
+when called on a vector of individuals. When the target vector of individuals is non-singleton, this
+method can do one of two things. If position contains just a single point (i.e., is equal in length to
+the spatial dimensionality of the model), the spatial position of all of the target individuals will be set
+to the given point. Alternatively, if position contains one point per target individual (i.e., is equal in
+length to the number of individuals multiplied by the spatial dimensionality of the model), the spatial
+position of each target individual will be set to the corresponding point from position (where the
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 491
+point data is concatenated, not interleaved, just as it would be returned by accessing the
+spatialPosition property on the vector of target individuals). Calling this method with a position
+vector of any other length is an error.
+– (void)setValue(string$ key, + value)
+Sets a value for the dictionary entry identifier key. The value, which may be of any type other than
+object, can be fetched later using getValue(). This dictionary-style functionality is actually
+provided by the superclass of Individual, SLiMEidosDictionary, although that fact is not presently
+visible in Eidos since superclasses are not introspectable.
+– (float$)sumOfMutationsOfType(io<MutationType>$ mutType)
+Returns the sum of the selection coefficients of all mutations that are of the type specified by mutType,
+out of all of the mutations in the genomes of the individual. This is often useful in models that use a
+particular mutation type to represent QTLs with additive effects; in that context,
+sumOfMutationsOfType() will provide the sum of the additive effects of the QTLs for the given
+mutation type. This method is provided for speed; it is much faster than the corresponding Eidos code.
+Note that this method also exists on Genome, for cases in which the sum for just one genome is
+desired.
+– (object<Mutation>)uniqueMutationsOfType(io<MutationType>$ mutType)
+Returns an object vector of all the mutations that are of the type specified by mutType, out of all of
+the mutations in the individual. Mutations present in both genomes will occur only once in the result
+of this method, and the mutations will be given in sorted order by position, so this method is similar
+to sortBy(unique(individual.genomes.mutationsOfType(mutType)), "position"). It is not
+identical to that call, only because if multiple mutations exist at the exact same position, they may be
+sorted differently by this method than they would be by sortBy(). If you just need a count of the
+matching Mutation objects, rather than a vector of the matches, use -countOfMutationsOfType().
+This method is provided for speed; it is much faster than the corresponding Eidos code. Indeed, it is
+faster than just individual.genomes.mutationsOfType(mutType), and gives uniquing and sorting
+on top of that, so it is advantageous unless duplicate entries for homozygous mutations are actually
+needed.

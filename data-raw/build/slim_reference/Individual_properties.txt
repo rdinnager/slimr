@@ -1,0 +1,140 @@
+age <–> (integer$)
+The age of the individual, measured in generation “ticks”. A newly generated offspring individual will
+have an age of 0 in the same generation in which is was created. The age of every individual is
+incremented by one at the same point that the generation counter is incremented. The age of
+individuals may be changed; usually this only makes sense when setting up the initial state of a model,
+however.
+color <–> (string$)
+The color used to display the individual in SLiMgui. Outside of SLiMgui, this property still exists, but
+is not used by SLiM. Colors may be specified by name, or with hexadecimal RGB values of the form
+"#RRGGBB" (see the Eidos manual). If color is the empty string, "", SLiMgui’s default (fitness-based)
+color scheme is used; this is the default for new Individual objects.
+fitnessScaling <–> (float$)
+A float scaling factor applied to the individual’s fitness (i.e., the fitness value computed for the
+individual will be multiplied by this value). This provides a simple, fast way to modify the fitness of an
+individual; conceptually it is similar to returning a fitness effect for the individual from a
+fitness(NULL) callback, but without the complexity and performance overhead of implementing
+such a callback. To scale the fitness of all individuals in a subpopulation by the same factor, see the
+fitnessScaling property of Subpopulation.
+The value of fitnessScaling is reset to 1.0 every generation, so that any scaling factor set lasts for
+only a single generation. This reset occurs immediately after fitness values are calculated, in both WF
+and nonWF models.
+genomes => (object<Genome>)
+The pair of Genome objects associated with this individual. If only one of the two genomes is desired,
+the genome1 or genome2 property may be used.
+genome1 => (object<Genome>$)
+The first Genome object associated with this individual. This property is particularly useful when you
+want the first genome from each of a vector of individuals, as often arises in haploid models.
+genome2 => (object<Genome>$)
+The second Genome object associated with this individual. This property is particularly useful when
+you want the second genome from each of a vector of individuals, as often arises in haploid models.
+index => (integer$)
+The index of the individual in the individuals vector of its Subpopulation.
+migrant => (logical$)
+Set to T if the individual migrated during the current generation, F otherwise.
+In WF models, this flag is set at the point when a new child is generated if it is a migrant (i.e., if its
+source subpopulation is not the same as its subpopulation), and remains valid, with the same value,
+for the rest of the individual’s lifetime.
+In nonWF models, this flag is F for all new individuals, is set to F in all individuals at the end of the
+reproduction generation cycle stage, and is set to T on all individuals moved to a new subpopulation
+by takeMigrants(); the T value set by takeMigrants() will remain until it is reset at the end of the
+next reproduction generation cycle stage.
+pedigreeID => (integer$)
+If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), pedigreeID is
+a unique non-negative identifier for each individual in a simulation, never re-used throughout the
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 488
+duration of the simulation run. This property is also available when tree-sequence recording is
+enabled. If neither pedigree tracking nor tree-sequence recording is enabled, this property is
+unavailable.
+pedigreeParentIDs => (integer)
+If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
+pedigreeParentIDs contains the values of pedigreeID that were possessed by the parents of an
+individual; it is thus a vector of two values. If pedigree tracking is not on, this property is unavailable.
+Parental values may be -1 if insufficient generations have elapsed for that information to be available
+(because the simulation just started, or because a subpopulation is new).
+pedigreeGrandparentIDs => (integer)
+If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
+pedigreeGrandparentIDs contains the values of pedigreeID that were possessed by the
+grandparents of an individual; it is thus a vector of four values. If pedigree tracking is not on, this
+property is unavailable. Grandparental values may be -1 if insufficient generations have elapsed for
+that information to be available (because the simulation just started, or because a subpopulation is
+new).
+sex => (string$)
+The sex of the individual. This will be "H" if sex is not enabled in the simulation (i.e., for
+hermaphrodites), otherwise "F" or "M" as appropriate.
+spatialPosition => (float)
+The spatial position of the individual. The length of the spatialPosition property (the number of
+coordinates in the spatial position of an individual) depends upon the spatial dimensionality declared
+with initializeSLiMOptions(). If the spatial dimensionality is zero (as it is by default), it is an
+error to access this property. The elements of this property are identical to the values of the x, y, and z
+properties (if those properties are encompassed by the spatial dimensionality of the simulation). In
+other words, if the declared dimensionality is "xy", the individual.spatialPosition property is
+equivalent to c(individual.x, individual.y); individual.z is not used since it is not
+encompassed by the simulation’s dimensionality. This property cannot be set, but the
+setSpatialPosition() method may be used to achieve the same thing.
+subpopulation => (object<Subpopulation>$)
+The Subpopulation object to which the individual belongs.
+tag <–> (integer$)
+A user-defined integer value (as opposed to tagF, which is of type float). The value of tag is
+initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must
+arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value
+of tag is not used by SLiM; it is free for you to use. See also the getValue() and setValue()
+methods, for another way of attaching state to individuals.
+Note that the Individual objects used by SLiM are (conceptually) new with every generation, so the
+tag value of each new offspring generated in each generation will be initially undefined. If you set a
+tag value for an offspring individual inside a modifyChild() callback, that tag value will be
+preserved as the offspring individual becomes a parent (across the generation boundary, in other
+words). If you take advantage of this, however, you should be careful to set up initial values for the tag
+values of all offspring, otherwise undefined initial values might happen to match the values that you
+are trying to use to tag particular individuals. A rule of thumb in programming: undefined values
+should always be assumed to take on the most inconvenient value possible.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 489
+tagF <–> (float$)
+A user-defined float value (as opposed to tag, which is of type integer). The value of tagF is
+initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must
+arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value
+of tagF is not used by SLiM; it is free for you to use. See also the getValue() and setValue()
+methods, for another way of attaching state to individuals.
+Note that at present, although many classes in SLiM have an integer-type tag property, only
+Individual has a float-type tagF property, because attaching model state to individuals seems to
+be particularly common and useful. If a tagF property would be helpful on another class, it would be
+easy to add.
+See the description of the tag property above for additional comments.
+uniqueMutations => (object<Mutation>)
+All of the Mutation objects present in this individual. Mutations present in both genomes will occur
+only once in this property, and the mutations will be given in sorted order by position, so this
+property is similar to sortBy(unique(individual.genomes.mutations), "position"). It is not
+identical to that call, only because if multiple mutations exist at the exact same position, they may be
+sorted differently by this method than they would be by sortBy(). This method is provided primarily
+for speed; it executes much faster than the Eidos equivalent above. Indeed, it is faster than just
+individual.genomes.mutations, and gives uniquing and sorting on top of that, so it is
+advantageous unless duplicate entries for homozygous mutations are actually needed.
+x <–> (float$)
+A user-defined float value. The value of x is initially undefined (i.e., has an effectively random value
+that could be different every time you run your model); if you wish it to have a defined value, you
+must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code,
+typically in a modifyChild() callback. The value of x is not used by SLiM unless the optional
+“continuous space” facility is enabled with the dimensionality parameter to
+initializeSLiMOptions(), in which case x will be understood to represent the x coordinate of the
+individual in space. If continuous space is not enabled, you may use x as an additional tag value of
+type float.
+y <–> (float$)
+A user-defined float value. The value of y is initially undefined (i.e., has an effectively random value
+that could be different every time you run your model); if you wish it to have a defined value, you
+must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code,
+typically in a modifyChild() callback. The value of y is not used by SLiM unless the optional
+“continuous space” facility is enabled with the dimensionality parameter to
+initializeSLiMOptions(), in which case y will be understood to represent the y coordinate of the
+individual in space (if the dimensionality is "xy" or "xyz"). If continuous space is not enabled, or the
+dimensionality is not "xy" or "xyz", you may use y as an additional tag value of type float.
+z <–> (float$)
+A user-defined float value. The value of z is initially undefined (i.e., has an effectively random value
+that could be different every time you run your model); if you wish it to have a defined value, you
+must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code,
+typically in a modifyChild() callback. The value of z is not used by SLiM unless the optional
+“continuous space” facility is enabled with the dimensionality parameter to
+initializeSLiMOptions(), in which case z will be understood to represent the z coordinate of the
+individual in space (if the dimensionality is "xyz"). If continuous space is not enabled, or the
+dimensionality is not "xyz", you may use z as an additional tag value of type float.

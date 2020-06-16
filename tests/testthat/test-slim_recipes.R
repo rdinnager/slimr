@@ -1,18 +1,20 @@
 test_that("All slim recipes work", {
   slim_scripts <- list()
   slim_recipes <- slim_get_recipes()
-  for(i in seq_along(slim_recipes)) {
-    print(i)
-    slim_scripts[[i]] <- slim_script_from_text(slim_recipes[[i]])
-    expect_true(slim_script_is_valid(slim_scripts[[!!i]]))
-  }
-  # slim_scripts <- purrr::map(slim_scripts,
-  #                            ~slim_script_remove_output(.x))
+
   skip_on_ci()
   skip_on_cran()
   skip_on_covr()
 
-  #slim_scripts[[111]] <- slim_script_from_text(slim_recipes[[111]])
+  for(i in seq_along(slim_recipes)) {
+    print(i)
+    slim_scripts[[i]] <- as_slimr_script(slim_recipes[[i]])
+    expect_s3_class(slim_scripts[[!!i]], "slimr_script")
+  }
+  # slim_scripts <- purrr::map(slim_scripts,
+  #                            ~slim_script_remove_output(.x))
+
+  skip_if_not(identical(Sys.getenv("test_recipes"), "true"))
 
   test_scripts <- list()
   for(i in seq_along(slim_scripts)[115:length(slim_scripts)]) {

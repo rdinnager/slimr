@@ -1,0 +1,101 @@
+(string)codonsToAminoAcids(integer codons, [logical$ long = F],
+[logical$ paste = T])
+Returns the amino acid sequence corresponding to the codon sequence in codons. Codons should be
+represented with values in [0, 63] where AAA is 0, AAC is 1, AAG is 2, and TTT is 63; see
+ancestralNucleotides() for discussion of this encoding. If long is F (the default), the standard
+single-letter codes for amino acids will be used (where Serine is "S", etc.); if long is T, the standard
+three-letter codes will be used instead (where Serine is "Ser", etc.).
+When paste is T (the default), the amino acid sequence returned will be a singleton string, such as
+"LYATI" (when long is F) or "Leu-Tyr-Ala-Thr-Ile" (when long is T). When paste is F, the
+amino acid sequence will instead be returned as a string vector, with one element per amino acid,
+such as "L" "Y" "A" "T" "I" (when long is F) or "Leu" "Tyr" "Ala" "Thr" "Ile" (when long
+is T). Using the paste=T option is considerably faster than using paste() in script.
+This function interprets the supplied codon sequence as the sense strand (i.e., the strand that is not
+transcribed, and which mirrors the mRNA’s sequence). This uses the standard DNA codon table
+directly. For example, if the nucleotide sequence is CAA TTC, that will correspond to a codon vector
+of 16 61, and will result in the amino acid sequence Gln-Phe (“QF").
+(is)codonsToNucleotides(integer codons, [string$ format = "string"])
+Returns the nucleotide sequence corresponding to the codon sequence supplied in codons. Codons
+should be represented with values in [0, 63] where AAA is 0, AAC is 1, AAG is 2, and TTT is 63; see
+ancestralNucleotides() for discussion of this encoding.
+The format parameter controls the format of the returned sequence. It may be "string" to obtain
+the sequence as a singleton string (e.g., "TATACG"), "char" to obtain it as a string vector of single
+characters (e.g., "T", "A", "T", "A", "C", "G"), or "integer" to obtain it as an integer vector (e.g.,
+3, 0, 3, 0, 1, 2), using SLiM’s standard code of A=0, C=1, G=2, T=3.
+(float)mm16To256(float mutationMatrix16)
+Returns a 64×4 mutation matrix that is functionally identical to the supplied 4×4 mutation matrix in
+mutationMatrix16. The mutation rate for each of the 64 trinucleotides will depend only upon the
+central nucleotide of the trinucleotide, and will be taken from the corresponding entry for the same
+nucleotide in mutationMatrix16. This function can be used to easily construct a simple
+trinucleotide-based mutation matrix which can then be modified so that specific trinucleotides sustain
+a mutation rate that does not depend only upon their central nucleotide.
+See the documentation for initializeGenomicElementType() in section 23.1 for further discussion
+of how these 64×4 mutation matrices are interpreted and used.
+(float)mmJukesCantor(float$ alpha)
+Returns a mutation matrix representing a Jukes–Cantor (1969) model with mutation rate alpha to each
+possible alternative nucleotide at a site:
+This 2×2 matrix is suitable for use with initializeGenomicElementType(). Note that the actual
+mutation rate produced by this matrix is 3*alpha.
+0 α α α
+α 0 α α
+α α 0 α
+α α α 0
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 531
+(float)mmKimura(float$ alpha, float$ beta)
+Returns a mutation matrix representing a Kimura (1980) model with transition rate alpha and
+transversion rate beta:
+This 2×2 matrix is suitable for use with initializeGenomicElementType(). Note that the actual
+mutation rate produced by this model is alpha+2*beta.
+(integer)nucleotideCounts(is sequence)
+A convenience function that returns an integer vector of length four, providing the number of
+occurrences of A / C / G / T nucleotides, respectively, in the supplied nucleotide sequence. The
+parameter sequence may be a singleton string (e.g., "TATA"), a string vector of single characters
+(e.g., "T", "A", "T", "A"), or an integer vector (e.g., 3, 0, 3, 0), using SLiM’s standard code of A=0,
+C=1, G=2, T=3.
+(float)nucleotideFrequencies(is sequence)
+A convenience function that returns a float vector of length four, providing the frequencies of
+occurrences of A / C / G / T nucleotides, respectively, in the supplied nucleotide sequence. The
+parameter sequence may be a singleton string (e.g., "TATA"), a string vector of single characters
+(e.g., "T", "A", "T", "A"), or an integer vector (e.g., 3, 0, 3, 0), using SLiM’s standard code of A=0,
+C=1, G=2, T=3.
+(integer)nucleotidesToCodons(is sequence)
+Returns the codon sequence corresponding to the nucleotide sequence in sequence. The codon
+sequence is an integer vector with values from 0 to 63, based upon successive nucleotide triplets in
+the nucleotide sequence. The codon value for a given nucleotide triplet XYZ is 16X + 4Y + Z, where
+X, Y, and Z have the usual values A=0, C=1, G=2, T=3. For example, the triplet AAA has a codon
+value of 0, AAC is 1, AAG is 2, AAT is 3, ACA is 4, and on upward to TTT which is 63. If the
+nucleotide sequence AACACATTT is passed in, the codon vector 1 4 63 will therefore be returned.
+These codon values can be useful in themselves; they can also be passed to codonsToAminoAcids()
+to translate them into the corresponding amino acid sequence if desired.
+The nucleotide sequence in sequence may be supplied in any of three formats: a string vector with
+single-letter nucleotides (e.g., "T", "A", "T", "A"), a singleton string of nucleotide letters (e.g.,
+"TATA"), or an integer vector of nucleotide values (e.g., 3, 0, 3, 0) using SLiM’s standard code of
+A=0, C=1, G=2, T=3. If the choice of format is not driven by other considerations, such as ease of
+manipulation, then the singleton string format will certainly be the most memory-efficient for long
+sequences, and will probably also be the fastest. The nucleotide sequence provided must be a
+multiple of three in length, so that it translates to an integral number of codons.
+(is)randomNucleotides(integer$ length, [Nif basis = NULL],
+[string$ format = "string"])
+Generates a new random nucleotide sequence with length bases. The four nucleotides ACGT are
+equally probable if basis is NULL (the default); otherwise, basis may be a 4-element integer or
+float vector providing relative fractions for A, C, G, and T respectively (these need not sum to 1.0, as
+they will be normalized). More complex generative models such as Markov processes are not
+supported intrinsically in SLiM at this time, but arbitrary generated sequences may always be loaded
+from files on disk.
+The format parameter controls the format of the returned sequence. It may be "string" to obtain
+the generated sequence as a singleton string (e.g., "TATA"), "char" to obtain it as a string vector
+of single characters (e.g., "T", "A", "T", "A"), or "integer" to obtain it as an integer vector (e.g., 3,
+0 β α β
+β 0 β α
+α β 0 β
+β α β 0
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 532
+0, 3, 0), using SLiM’s standard code of A=0, C=1, G=2, T=3. For passing directly to
+initializeAncestralNucleotides(), format "string" (a singleton string) will certainly be the
+most memory-efficient, and probably also the fastest. Memory efficiency can be a significant
+consideration; the nucleotide sequence for a chromosome of length 109 will occupy approximately 1
+GB of memory when stored as a singleton string (with one byte per nucleotide), and much more if
+stored in the other formats. However, the other formats can be easier to work with in Eidos, and so
+may be preferable for relatively short chromosomes if you are manipulating the generated sequence.

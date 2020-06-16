@@ -7,7 +7,7 @@
 slim_setup(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE)
 }
 \arguments{
-\item{install_dir}{Directory to install SLiM to. If "default" \code{slim_setup()} will install in the default
+\item{install_dir}{Directory to install SLiM to. If "default" `slim_setup()` will install in the default
 directory. Be carefult to make sure you have write and execution permissions for the installation folder
 you specify. We recommend using the default directory "~/slim", in which case you will not have to set an
 environmental variable to tell slimr where to find your slim installation.}
@@ -17,7 +17,7 @@ environmental variable to tell slimr where to find your slim installation.}
 \item{verbose}{Whether to print out progress of the installation.}
 }
 \description{
-\code{slim_setup()} will attempt to determine the user's OS and install SLiM automatically.
+`slim_setup()` will attempt to determine the user's OS and install SLiM automatically.
 Note that on Windows, you must have Windows subsystem for linux installed, which requires at least Windows 10.
 }
 \examples{

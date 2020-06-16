@@ -1,0 +1,32 @@
+id => (integer$)
+The identifier for this mutation. Each mutation created during a run receives an immutable identifier
+that will be unique across the duration of the run, and that identifier is carried over to the
+Substitution object when the mutation fixes.
+fixationGeneration => (integer$)
+The generation in which this mutation fixed.
+mutationType => (object<MutationType>$)
+The MutationType from which this mutation was drawn.
+nucleotide <–> (string$)
+A string representing the nucleotide associated with this mutation; this will be "A", "C", "G", or
+"T". If the mutation is not nucleotide-based, this property is unavailable.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 529
+nucleotideValue <–> (integer$)
+An integer representing the nucleotide associated with this mutation; this will be 0 (A), 1 (C), 2 (G),
+or 3 (T). If the mutation is not nucleotide-based, this property is unavailable.
+originGeneration => (integer$)
+The generation in which this mutation arose.
+position => (integer$)
+The position in the chromosome of this mutation.
+selectionCoeff => (float$)
+The selection coefficient of the mutation, drawn from the distribution of fitness effects of its
+MutationType.
+subpopID <–> (integer$)
+The identifier of the subpopulation in which this mutation arose. This value is carried over from the
+Mutation object directly; if a “tag” value was used in the Mutation object (see section 23.8.1), that
+value will carry over to the corresponding Substitution object. The subpopID in Substitution is
+a read-write property to allow it to be used as a “tag” in the same way, if the origin subpopulation
+identifier is not needed.
+tag <–> (integer$)
+A user-defined integer value. The value of tag is carried over automatically from the original
+Mutation object. Apart from that, the value of tag is not used by SLiM; it is free for you to use.

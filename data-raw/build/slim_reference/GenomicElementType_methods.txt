@@ -1,0 +1,20 @@
+– (+)getValue(string$ key)
+Returns the value previously set for the dictionary entry identifier key using setValue(), or NULL if
+no value has been set. This dictionary-style functionality is actually provided by the superclass of
+GenomicElementType, SLiMEidosDictionary, although that fact is not presently visible in Eidos
+since superclasses are not introspectable.
+– (void)setMutationFractions(io<MutationType> mutationTypes, numeric proportions)
+Set the mutation type fractions contributing to a genomic element type. The mutationTypes vector
+should supply the mutation types used by the genomic element (either as MutationType objects or as
+integer identifiers), and the proportions vector should be of equal length, specifying the relative
+proportion of mutations that will be drawn from each corresponding type (see section 1.5.4). This is
+normally a constant in simulations, so be sure you know what you are doing.
+– (void)setMutationMatrix(float mutationMatrix)
+Sets a new nucleotide mutation matrix for the genomic element type. This replaces the mutation
+matrix originally set by initializeGenomicElementType(). This method may only be called in
+nucleotide-based models.
+– (void)setValue(string$ key, + value)
+Sets a value for the dictionary entry identifier key. The value, which may be of any type other than
+object, can be fetched later using getValue(). This dictionary-style functionality is actually
+provided by the superclass of GenomicElementType, SLiMEidosDictionary, although that fact is
+not presently visible in Eidos since superclasses are not introspectable.

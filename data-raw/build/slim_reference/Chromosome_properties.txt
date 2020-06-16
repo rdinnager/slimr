@@ -1,0 +1,140 @@
+colorSubstitution <–> (string$)
+The color used to display substitutions in SLiMgui when both mutations and substitutions are being
+displayed in the chromosome view. Outside of SLiMgui, this property still exists, but is not used by
+SLiM. Colors may be specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see
+the Eidos manual). If colorSubstitution is the empty string, "", SLiMgui will defer to the color
+scheme of each MutationType, just as it does when only substitutions are being displayed. The
+default, "3333FF", causes all substitutions to be shown as dark blue when displayed in conjunction
+with mutations, to prevent the view from becoming too noisy. Note that when substitutions are
+displayed without mutations also being displayed, this value is ignored by SLiMgui and the
+substitutions use the color scheme of each MutationType.
+geneConversionEnabled => (logical$)
+When gene conversion has been enabled by calling initializeGeneConversion(), switching to the
+DSB recombination model, this property is T; otherwise, when using the crossover breakpoints model,
+it is F.
+geneConversionGCBias => (float$)
+The gene conversion bias coefficient, which expresses a bias in the resolution of heteroduplex
+mismatches in complex gene conversion tracts. When gene conversion has not been enabled by
+calling initializeGeneConversion(), this property will be unavailable.
+geneConversionNonCrossoverFraction => (float$)
+The fraction of double-stranded breaks that result in non-crossover events. When gene conversion has
+not been enabled by calling initializeGeneConversion(), this property will be unavailable.
+geneConversionMeanLength => (float$)
+The mean length of a gene conversion tract (in base positions). When gene conversion has not been
+enabled by calling initializeGeneConversion(), this property will be unavailable.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 473
+geneConversionSimpleConversionFraction => (float$)
+The fraction of gene conversion tracts that are “simple” (i.e., not involving resolution of heteroduplex
+mismatches); the remainder will be “complex”. When gene conversion has not been enabled by
+calling initializeGeneConversion(), this property will be unavailable.
+genomicElements => (object<GenomicElement>)
+All of the GenomicElement objects that comprise the chromosome.
+hotspotEndPositions => (integer)
+The end positions for hotspot map regions along the chromosome. Each hotspot map region is
+assumed to start at the position following the end of the previous hotspot map region; in other words,
+the regions are assumed to be contiguous. When using sex-specific hotspot maps, this property will
+unavailable; see hotspotEndPositionsF and hotspotEndPositionsM.
+hotspotEndPositionsF => (integer)
+The end positions for hotspot map regions for females, when using sex-specific hotspot maps;
+unavailable otherwise. See hotspotEndPositions for further explanation.
+hotspotEndPositionsM => (integer)
+The end positions for hotspot map regions for males, when using sex-specific hotspot maps;
+unavailable otherwise. See hotspotEndPositions for further explanation.
+hotspotMultipliers => (float)
+The hotspot multiplier for each of the hotspot map regions specified by hotspotEndPositions.
+When using sex-specific hotspot maps, this property will be unavailable; see hotspotMultipliersF
+and hotspotMultipliersM.
+hotspotMultipliersF => (float)
+The hotspot multiplier for each of the hotspot map regions specified by hotspotEndPositionsF,
+when using sex-specific hotspot maps; unavailable otherwise.
+hotspotMultipliersM => (float)
+The hotspot multiplier for each of the hotspot map regions specified by hotspotEndPositionsM,
+when using sex-specific hotspot maps; unavailable otherwise.
+lastPosition => (integer$)
+The last valid position in the chromosome; its length, essentially.
+mutationEndPositions => (integer)
+The end positions for mutation rate regions along the chromosome. Each mutation rate region is
+assumed to start at the position following the end of the previous mutation rate region; in other words,
+the regions are assumed to be contiguous. When using sex-specific mutation rate maps, this property
+will unavailable; see mutationEndPositionsF and mutationEndPositionsM.
+This property is unavailable in nucleotide-based models.
+mutationEndPositionsF => (integer)
+The end positions for mutation rate regions for females, when using sex-specific mutation rate maps;
+unavailable otherwise. See mutationEndPositions for further explanation.
+This property is unavailable in nucleotide-based models.
+mutationEndPositionsM => (integer)
+The end positions for mutation rate regions for males, when using sex-specific mutation rate maps;
+unavailable otherwise. See mutationEndPositions for further explanation.
+This property is unavailable in nucleotide-based models.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 474
+mutationRates => (float)
+The mutation rate for each of the mutation rate regions specified by mutationEndPositions. When
+using sex-specific mutation rate maps, this property will be unavailable; see mutationRatesF and
+mutationRatesM.
+This property is unavailable in nucleotide-based models.
+mutationRatesF => (float)
+The mutation rate for each of the mutation rate regions specified by mutationEndPositionsF, when
+using sex-specific mutation rate maps; unavailable otherwise.
+This property is unavailable in nucleotide-based models.
+mutationRatesM => (float)
+The mutation rate for each of the mutation rate regions specified by mutationEndPositionsM, when
+using sex-specific mutation rate maps; unavailable otherwise.
+This property is unavailable in nucleotide-based models.
+overallMutationRate => (float$)
+The overall mutation rate across the whole chromosome determining the overall number of mutation
+events that will occur anywhere in the chromosome, as calculated from the individual mutation
+ranges and rates as well as the coverage of the chromosome by genomic elements (since mutations are
+only generated within genomic elements, regardless of the mutation rate map). When using sexspecific
+mutation rate maps, this property will unavailable; see overallMutationRateF and
+overallMutationRateM.
+This property is unavailable in nucleotide-based models.
+overallMutationRateF => (float$)
+The overall mutation rate for females, when using sex-specific mutation rate maps; unavailable
+otherwise. See overallMutationRate for further explanation.
+This property is unavailable in nucleotide-based models.
+overallMutationRateM => (float$)
+The overall mutation rate for males, when using sex-specific mutation rate maps; unavailable
+otherwise. See overallMutationRate for further explanation.
+This property is unavailable in nucleotide-based models.
+overallRecombinationRate => (float$)
+The overall recombination rate across the whole chromosome determining the overall number of
+recombination events that will occur anywhere in the chromosome, as calculated from the individual
+recombination ranges and rates. When using sex-specific recombination maps, this property will
+unavailable; see overallRecombinationRateF and overallRecombinationRateM.
+overallRecombinationRateF => (float$)
+The overall recombination rate for females, when using sex-specific recombination maps; unavailable
+otherwise. See overallRecombinationRate for further explanation.
+overallRecombinationRateM => (float$)
+The overall recombination rate for males, when using sex-specific recombination maps; unavailable
+otherwise. See overallRecombinationRate for further explanation.
+recombinationEndPositions => (integer)
+The end positions for recombination regions along the chromosome. Each recombination region is
+assumed to start at the position following the end of the previous recombination region; in other
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 475
+words, the regions are assumed to be contiguous. When using sex-specific recombination maps, this
+property will unavailable; see recombinationEndPositionsF and recombinationEndPositionsM.
+recombinationEndPositionsF => (integer)
+The end positions for recombination regions for females, when using sex-specific recombination
+maps; unavailable otherwise. See recombinationEndPositions for further explanation.
+recombinationEndPositionsM => (integer)
+The end positions for recombination regions for males, when using sex-specific recombination maps;
+unavailable otherwise. See recombinationEndPositions for further explanation.
+recombinationRates => (float)
+The recombination rate for each of the recombination regions specified by
+recombinationEndPositions. When using sex-specific recombination maps, this property will
+unavailable; see recombinationRatesF and recombinationRatesM.
+recombinationRatesF => (float)
+The recombination rate for each of the recombination regions specified by
+recombinationEndPositionsF, when using sex-specific recombination maps; unavailable
+otherwise.
+recombinationRatesM => (float)
+The recombination rate for each of the recombination regions specified by
+recombinationEndPositionsM, when using sex-specific recombination maps; unavailable
+otherwise.
+tag <–> (integer$)
+A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read
+it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value
+prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.

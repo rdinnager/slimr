@@ -1,4 +1,3 @@
-^R\\slim_run_script\.R$
 ^slimr\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
@@ -15,3 +14,4 @@
 ^\notes$
 ^doc$
 ^Meta$
+^slim_man$

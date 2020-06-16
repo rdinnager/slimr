@@ -1,0 +1,1199 @@
+3.1 Math functions
+The math functions in Eidos are pattered closely upon those in C++, and are typically
+implemented by calling a C++ function of the same name, as described below when applicable.
+(numeric)abs(numeric x)
+Returns the absolute value of x. If x is integer, the C++ function llabs() is used and an integer
+vector is returned; if x is float, the C++ function fabs() is used and a float vector is returned.
+(float)acos(numeric x)
+Returns the arc cosine of x using the C++ function acos().
+(float)asin(numeric x)
+Returns the arc sine of x using the C++ function asin().
+(float)atan(numeric x)
+Returns the arc tangent of x using the C++ function atan().
+(float)atan2(numeric x, numeric y)
+Returns the arc tangent of y/x using the C++ function atan2(), which uses the signs of both x and y
+to determine the correct quadrant for the result.
+(float)ceil(float x)
+Returns the ceiling of x: the smallest integral value greater than or equal to x. Note that the return
+value is float even though integral values are guaranteed, because values could be outside of the
+range representable by integer.
+(float)cos(numeric x)
+Returns the cosine of x using the C++ function cos().
+51
+(numeric)cumProduct(numeric x)
+Returns the cumulative product of x: a vector of equal length as x, in which the element at index i is
+equal to the product of the elements of x across the range 0:i. The return type will match the type of
+x. If x is of type integer, but all of the values of the cumulative product vector cannot be
+represented in that type, an error condition will result.
+(numeric)cumSum(numeric x)
+Returns the cumulative sum of x: a vector of equal length as x, in which the element at index i is
+equal to the sum of the elements of x across the range 0:i. The return type will match the type of x.
+If x is of type integer, but all of the values of the cumulative sum vector cannot be represented in
+that type, an error condition will result.
+(float)exp(numeric x)
+Returns the base-e exponential of x, ex, using the C++ function exp(). This may be somewhat faster
+than E^x for large vectors.
+(float)floor(float x)
+Returns the floor of x: the largest integral value less than or equal to x. Note that the return value is
+float even though integral values are guaranteed, because values could be outside of the range
+representable by integer.
+(integer)integerDiv(integer x, integer y)
+Returns the result of integer division of x by y. The / operator in Eidos always produces a float
+result; if you want an integer result you may use this function instead. If any value of y is 0, an error
+will result. The parameters x and y must either be of equal length, or one of the two must be a
+singleton. The precise behavior of integer division, in terms of how rounding and negative values
+are handled, may be platform dependent; it will be whatever the C++ behavior of integer division is
+on the given platform. Eidos does not guarantee any particular behavior, so use this function with
+caution.
+(integer)integerMod(integer x, integer y)
+Returns the result of integer modulo of x by y. The % operator in Eidos always produces a float
+result; if you want an integer result you may use this function instead. If any value of y is 0, an error
+will result. The parameters x and y must either be of equal length, or one of the two must be a
+singleton. The precise behavior of integer modulo, in terms of how rounding and negative values
+are handled, may be platform dependent; it will be whatever the C++ behavior of integer modulo is
+on the given platform. Eidos does not guarantee any particular behavior, so use this function with
+caution.
+(logical)isFinite(float x)
+Returns the finiteness of x: T if x is not INF or NAN, F if x is INF or NAN. INF and NAN are defined only
+for type float, so x is required to be a float. Note that isFinite() is not the opposite of
+isInfinite(), because NAN is considered to be neither finite nor infinite.
+(logical)isInfinite(float x)
+Returns the infiniteness of x: T if x is INF, F otherwise. INF is defined only for type float, so x is
+required to be a float. Note that isInfinite() is not the opposite of isFinite(), because NAN is
+considered to be neither finite nor infinite.
+(logical)isNAN(float x)
+Returns the undefinedness of x: T if x is not NAN, F if x is NAN. NAN is defined only for type float, so x
+is required to be a float.
+(float)log(numeric x)
+Returns the base-e logarithm of x using the C++ function log().
+52
+(float)log10(numeric x)
+Returns the base-10 logarithm of x using the C++ function log10().
+(float)log2(numeric x)
+Returns the base-2 logarithm of x using the C++ function log2().
+(numeric$)product(numeric x)
+Returns the product of x: the result of multiplying all of the elements of x together. If x is float, the
+result will be float. If x is integer, things are a bit more complex; the result will be integer if it
+can fit into the integer type without overflow issues (including during intermediate stages of the
+computation), otherwise it will be float.
+(float)round(float x)
+Returns the round of x: the integral value nearest to x, rounding half-way cases away from 0 (different
+from the rounding policy of R, which rounds halfway cases toward the nearest even number). Note
+that the return value is float even though integral values are guaranteed, because values could be
+outside of the range representable by integer.
+(*)setDifference(* x, * y)
+Returns the set-theoretic (asymmetric) difference of x and y, denoted x ∖ y: a vector containing all
+elements that are in x but are not in y. Duplicate elements will be stripped out, in the same manner
+as the unique() function. The order of elements in the returned vector is arbitrary and should not be
+relied upon. The returned vector will be of the same type as x and y, and x and y must be of the same
+type.
+The operation performed by this function can be represented graphically using a Venn diagram, where
+the left circle is x and the right circle is y:
+(*)setIntersection(* x, * y)
+Returns the set-theoretic intersection of x and y, denoted x ∩ y: a vector containing all elements that
+are in both x and y (but not in only x or y). Duplicate elements will be stripped out, in the same
+manner as the unique() function. The order of elements in the returned vector is arbitrary and should
+not be relied upon. The returned vector will be of the same type as x and y, and x and y must be of
+the same type.
+The operation performed by this function can be represented graphically using a Venn diagram, where
+the left circle is x and the right circle is y:
+53
+(*)setSymmetricDifference(* x, * y)
+Returns the set-theoretic symmetric difference of x and y, denoted x Δ y: a vector containing all
+elements that are in x or y, but not in both. Duplicate elements will be stripped out, in the same
+manner as the unique() function. The order of elements in the returned vector is arbitrary and should
+not be relied upon. The returned vector will be of the same type as x and y, and x and y must be of
+the same type.
+The operation performed by this function can be represented graphically using a Venn diagram, where
+the left circle is x and the right circle is y:
+(*)setUnion(* x, * y)
+Returns the set-theoretic union of x and y, denoted x ∪ y: a vector containing all elements that are in
+x and/or y. Duplicate elements will be stripped out, in the same manner as the unique() function.
+This function is therefore roughly equivalent to unique(c(x, y)), but this function will probably be
+faster. The order of elements in the returned vector is arbitrary and should not be relied upon. The
+returned vector will be of the same type as x and y, and x and y must be of the same type.
+The operation performed by this function can be represented graphically using a Venn diagram, where
+the left circle is x and the right circle is y:
+(float)sin(numeric x)
+Returns the sine of x using the C++ function sin().
+(float)sqrt(numeric x)
+Returns the square root of x using the C++ function sqrt(). This may be somewhat faster than x^0.5
+for large vectors.
+(numeric$)sum(lif x)
+Returns the sum of x: the result of adding all of the elements of x together. The unusual parameter
+type signature lif indicates that x can be logical, integer, or float. If x is float, the result will
+be float. If x is logical, the result will be integer (the number of T values in x, since the integer
+values of T and F are 1 and 0 respectively). If x is integer, things are a bit more complex; in this
+case, the result will be integer if it can fit into the integer type without overflow issues (including
+during intermediate stages of the computation), otherwise it will be float. Note that floating-point
+roundoff issues can cause this function to return inexact results when x is float type; this is rarely an
+issue, but see the sumExact() function for an alternative.
+54
+(float$)sumExact(float x)
+Returns the exact sum of x: the exact result of adding all of the elements of x together. Unlike the
+sum() function, sumExact() accepts only type float, since the sum() function is already exact for
+other types. When summing floating-point values – particularly values that vary across many orders of
+magnitude – the precision limits of floating-point numbers can lead to roundoff errors that cause the
+sum() function to return an inexact result. This function does additional work to ensure that the final
+result is exact within the possible limits of the float type; some roundoff may still inevitably occur, in
+other words, but a more exact result could not be represented with a value of type float. The
+disadvantage of using this function instead of sum() is that it is much slower – about 35 times slower,
+according to one test on Mac OS X 10.2.5, but that will vary across operating systems and hardware.
+This function is rarely truly needed, but apart from the performance consequences there is no
+disadvantage to using it.
+(float)tan(numeric x)
+Returns the tangent of x using the C++ function tan().
+(float)trunc(float x)
+Returns the truncation of x: the integral value nearest to, but no larger in magnitude than, x. Note
+that the return value is float even though integral values are guaranteed, because values could be
+outside of the range representable by integer.
+3.2 Statistics functions
+(float$)cor(numeric x, numeric y)
+Returns the sample Pearson’s correlation coefficient between x and y, usually denoted r. The sizes of
+x and y must be identical. If x and y have a size of 0 or 1, the return value will be NULL. At present it
+is illegal to call cor() with a matrix or array argument, because the desired behavior in that case has
+not yet been implemented.
+(float$)cov(numeric x, numeric y)
+Returns the corrected sample covariance between x and y. The sizes of x and y must be identical. If
+x and y have a size of 0 or 1, the return value will be NULL. At present it is illegal to call cov() with a
+matrix or array argument, because the desired behavior in that case has not yet been implemented.
+(+$)max(+ x, ...)
+Returns the maximum of x and the other arguments supplied: the single greatest value contained by
+all of them. All of the arguments must be the same type as x, and the return type will match that of x.
+If all of the arguments have a size of 0, the return value will be NULL; note that this means that
+max(x, max(y)) may produce an error, if max(y) is NULL, in cases where max(x, y) does not.
+(float$)mean(lif x)
+Returns the arithmetic mean of x: the sum of x divided by the number of values in x. If x has a size of
+0, the return value will be NULL. The unusual parameter type signature lif indicates that x can be
+logical, integer, or float; if x is logical, it is coerced to integer internally (with F being 0 and
+T being 1, as always), allowing mean() to calculate the average truth value of a logical vector.
+(+$)min(+ x, ...)
+Returns the minimum of x and the other arguments supplied: the single smallest value contained by
+all of them. All of the arguments must be the same type as x, and the return type will match that of x.
+If all of the arguments have a size of 0, the return value will be NULL; note that this means that
+min(x, min(y)) may produce an error, if min(y) is NULL, in cases where min(x, y) does not.
+55
+(+)pmax(+ x, + y)
+Returns the parallel maximum of x and y: the element-wise maximum for each corresponding pair of
+elements in x and y. The type of x and y must match, and the returned value will have the same type.
+In one usage pattern the size of x and y match, in which case the returned value will have the same
+size. In the other usage pattern either x and y is a singleton, in which case the returned value will
+match the size of the non-singleton argument, and pairs of elements for comparison will be formed
+between the singleton’s element and each of the elements in the non-singleton.
+(+)pmin(+ x, + y)
+Returns the parallel minimum of x and y: the element-wise minimum for each corresponding pair of
+elements in x and y. The type of x and y must match, and the returned value will have the same type.
+In one usage pattern the size of x and y match, in which case the returned value will have the same
+size. In the other usage pattern either x and y is a singleton, in which case the returned value will
+match the size of the non-singleton argument, and pairs of elements for comparison will be formed
+between the singleton’s element and each of the elements in the non-singleton.
+(numeric)range(numeric x, ...)
+Returns the range of x and the other arguments supplied: a vector of length 2 composed of the
+minimum and maximum values contained by all of them, at indices 0 and 1 respectively. All of the
+arguments must be the same type as x, and the return type will match that of x. If all of the arguments
+have a size of 0, the return value will be NULL; note that this means that range(x, range(y)) may
+produce an error, if range(y) is NULL, in cases where range(x, y) does not.
+(float$)sd(numeric x)
+Returns the corrected sample standard deviation of x. If x has a size of 0 or 1, the return value will
+be NULL.
+(float$)ttest(float x, [Nf y = NULL], [Nf$ mu = NULL])
+Returns the p-value resulting from running a t-test with the supplied data. Two types of t-tests can be
+performed. If x and y are supplied (i.e., y is non-NULL), a two-sample unpaired two-sided Welch’s ttest
+is conducted using the samples in x and y, each of which must contain at least two elements. The
+null hypothesis for this test is that the two samples are drawn from populations with the same mean.
+Other options, such as pooled-variance t-tests, paired t-tests, and one-sided t-tests, are not presently
+available. If x and mu are supplied (i.e., mu is non-NULL), a one-sample t-test is conducted in which
+the null hypothesis is that the sample is drawn from a population with mean mu.
+Note that the results from this function are substantially different from those produced by R. The Eidos
+ttest() function uses uncorrected sample statistics, which means they will be biased for small
+sample sizes, whereas R probably uses corrected, unbiased sample statistics. This is an Eidos bug, and
+might be fixed if anyone complains. If large sample sizes are used, however, the bias is likely to be
+small, and uncorrected statistics are simpler and faster to compute.
+(float$)var(numeric x)
+Returns the corrected sample variance of x. If x has a size of 0 or 1, the return value will be NULL.
+This is the square of the standard deviation calculated by sd(). At present it is illegal to call var()
+with a matrix or array argument, because the desired behavior in that case has not yet been
+implemented.
+3.3 Distribution drawing and density functions
+These functions for drawing from various distributions, and for calculating probability density
+function values for various distributions, are all based upon algorithms in the GNU Scientific
+Library (GSL). The distributions supported are those which are presently expected to be useful for
+users of Eidos; adding further distributions to Eidos on request is trivial as long as they are
+supported by the GSL, so feel free to make requests.
+56
+Draws are obtained using the standard Eidos random number generator, which might be shared
+with the Context; generating draws may therefore change the state of the Context. (In SLiM, for
+example, generating draws will alter the future of your simulation, since the random number
+sequence used by SLiM will be changed as a side effect.)
+(float)dmvnorm(float x, numeric mu, numeric sigma)
+Returns a vector of probability densities for a k-dimensional multivariate normal distribution with a
+length k mean vector mu and a k × k variance-covariance matrix sigma. The mu and sigma parameters
+are used for all densities. The quantile values, x, should be supplied as a matrix with one row per
+vector of quantile values and k columns (one column per dimension); for convenience, a single
+quantile may be supplied as a vector rather than a matrix with just one row. The number of
+dimensions k must be at least two; for k=1, use dnorm().
+Cholesky decomposition of the variance-covariance matrix sigma is involved as an internal step, and
+this requires that sigma be positive-definite; if it is not, an error will result. When more than one
+density is needed, it is much more efficient to call dmvnorm() once to generate all of the densities,
+since the Cholesky decomposition of sigma can then be done just once.
+(float)dbeta(float x, numeric alpha, numeric beta)
+Returns a vector of probability densities for a beta distribution at quantiles x with parameters alpha
+and beta. The alpha and beta parameters may either be singletons, specifying a single value to be
+used for all of the draws, or they may be vectors of the same length as x, specifying a value for each
+density computation. The probability density function is P(s | α,β) = [Γ(α+β)/Γ(α)Γ(β)]sα−1(1−s)β−1,
+where α is alpha and β is beta. Both parameters must be greater than 0.
+(float)dexp(float x, [numeric mu = 1])
+Returns a vector of probability densities for an exponential distribution at quantiles x with mean mu
+(i.e. rate 1/mu). The mu parameter may either be a singleton, specifying a single value to be used for
+all of the draws, or they may be vectors of the same length as x, specifying a value for each density
+computation.
+(float)dgamma(float x, numeric mean, numeric shape)
+Returns a vector of probability densities for a gamma distribution at quantiles x with mean mean and
+shape parameter shape. The mean and shape parameters may either be singletons, specifying a single
+value to be used for all of the draws, or they may be vectors of the same length as x, specifying a value
+for each density computation. The probability density function is P(s | α,β) = [Γ(α)βα]−1sα−1exp(−s/β),
+where α is the shape parameter shape, and the mean of the distribution given by mean is equal to αβ.
+(float)dnorm(float x, [numeric mean = 0], [numeric sd = 1])
+Returns a vector of probability densities for a normal distribution at quantiles x with mean mean and
+standard deviation sd. The mean and sd parameters may either be singletons, specifying a single value
+to be used for all of the densities, or they may be vectors of the same length as x, specifying a value
+for each density computation.
+(float)pnorm(float q, [numeric mean = 0], [numeric sd = 1])
+Returns a vector of cumulative distribution function values for a normal distribution at quantiles q
+with mean mean and standard deviation sd. The mean and sd parameters may either be singletons,
+specifying a single value to be used for all of the quantiles, or they may be vectors of the same length
+as q, specifying a value for each quantile.
+(float)qnorm(float p, [numeric mean = 0], [numeric sd = 1])
+Returns a vector of quantiles for a normal distribution with lower tail probabilities less than p, with
+mean mean and standard deviation sd. The mean and sd parameters may either be singletons,
+specifying a single value to be used for all of the quantiles, or they may be vectors of the same length
+as p, specifying a value for each quantile computation.
+57
+(float)rbeta(integer$ n, numeric alpha, numeric beta)
+Returns a vector of n random draws from a beta distribution with parameters alpha and beta. The
+alpha and beta parameters may either be singletons, specifying a single value to be used for all of the
+draws, or they may be vectors of length n, specifying a value for each draw. Draws are made from a
+beta distribution with probability density P(s | α,β) = [Γ(α+β)/Γ(α)Γ(β)]sα−1(1−s)β−1, where α is alpha
+and β is beta. Both parameters must be greater than 0. The values drawn are in the interval [0, 1].
+(integer)rbinom(integer$ n, integer size, float prob)
+Returns a vector of n random draws from a binomial distribution with a number of trials specified by
+size and a probability of success specified by prob. The size and prob parameters may either be
+singletons, specifying a single value to be used for all of the draws, or they may be vectors of length n,
+specifying a value for each draw.
+(float)rcauchy(integer$ n, [numeric location = 0], [numeric scale = 1])
+Returns a vector of n random draws from a Cauchy distribution with location location and scale
+scale. The location and scale parameters may either be singletons, specifying a single value to be
+used for all of the draws, or they may be vectors of length n, specifying a value for each draw.
+(integer)rdunif(integer$ n, [integer min = 0], [integer max = 1])
+Returns a vector of n random draws from a discrete uniform distribution from min to max, inclusive.
+The min and max parameters may either be singletons, specifying a single value to be used for all of
+the draws, or they may be vectors of length n, specifying a value for each draw. See runif() for
+draws from a continuous uniform distribution.
+(float)rexp(integer$ n, [numeric mu = 1])
+Returns a vector of n random draws from an exponential distribution with mean mu (i.e. rate 1/mu).
+The mu parameter may either be a singleton, specifying a single value to be used for all of the draws,
+or it may be a vector of length n, specifying a value for each draw.
+(float)rgamma(integer$ n, numeric mean, numeric shape)
+Returns a vector of n random draws from a gamma distribution with mean mean and shape parameter
+shape. The mean and shape parameters may either be singletons, specifying a single value to be used
+for all of the draws, or they may be vectors of length n, specifying a value for each draw. Draws are
+made from a gamma distribution with probability density P(s | α,β) = [Γ(α)βα]−1sα−1exp(−s/β), where α is
+the shape parameter shape, and the mean of the distribution given by mean is equal to αβ. Values of
+mean less than zero are allowed, and are equivalent (in principle) to the negation of a draw from a
+gamma distribution with the same shape parameter and the negation of the mean parameter.
+(integer)rgeom(integer$ n, float p)
+Returns a vector of n random draws from a geometric distribution with parameter p. The p parameter
+may either be a singleton, specifying a single value to be used for all of the draws, or it may be a
+vector of length n, specifying a value for each draw. Eidos follows R in using the geometric
+distribution with support on the set {0, 1, 2, …}, where the drawn value indicates the number of
+failures prior to success. There is an alternative definition, based upon the number of trial required to
+get one success, so beware.
+(float)rlnorm(integer$ n, [numeric meanlog = 0], [numeric sdlog = 1])
+Returns a vector of n random draws from a lognormal distribution with mean meanlog and standard
+deviation sdlog, specified on the log scale. The meanlog and sdlog parameters may either be
+singletons, specifying a single value to be used for all of the draws, or they may be vectors of length n,
+specifying a value for each draw.
+(float)rmvnorm(integer$ n, numeric mu, numeric sigma)
+Returns a matrix of n random draws from a k-dimensional multivariate normal distribution with a
+length k mean vector mu and a k × k variance-covariance matrix sigma. The mu and sigma parameters
+58
+are used for all n draws. The draws are returned as a matrix with n rows (one row per draw) and k
+columns (one column per dimension). The number of dimensions k must be at least two; for k=1, use
+rnorm().
+Cholesky decomposition of the variance-covariance matrix sigma is involved as an internal step, and
+this requires that sigma be positive-definite; if it is not, an error will result. When more than one draw
+is needed, it is much more efficient to call rmvnorm() once to generate all of the draws, since the
+Cholesky decomposition of sigma can then be done just once.
+(float)rnorm(integer$ n, [numeric mean = 0], [numeric sd = 1])
+Returns a vector of n random draws from a normal distribution with mean mean and standard
+deviation sd. The mean and sd parameters may either be singletons, specifying a single value to be
+used for all of the draws, or they may be vectors of length n, specifying a value for each draw.
+(integer)rpois(integer$ n, numeric lambda)
+Returns a vector of n random draws from a Poisson distribution with parameter lambda (not to be
+confused with the language concept of a “lambda”; lambda here is just the name of a parameter,
+because the symbol typically used for the parameter of a Poisson distribution is the Greek letter λ).
+The lambda parameter may either be a singleton, specifying a single value to be used for all of the
+draws, or it may be a vector of length n, specifying a value for each draw.
+(float)runif(integer$ n, [numeric min = 0], [numeric max = 1])
+Returns a vector of n random draws from a continuous uniform distribution from min to max,
+inclusive. The min and max parameters may either be singletons, specifying a single value to be used
+for all of the draws, or they may be vectors of length n, specifying a value for each draw. See
+rdunif() for draws from a discrete uniform distribution.
+(float)rweibull(integer$ n, numeric lambda, numeric k)
+Returns a vector of n random draws from a Weibull distribution with scale parameter lambda and
+shape parameter k, both greater than zero. The lambda and k parameters may either be singletons,
+specifying a single value to be used for all of the draws, or they may be vectors of length n, specifying
+a value for each draw. Draws are made from a Weibull distribution with probability distribution P(s |
+λ,k) = (k / λk) sk−1 exp(-(s/λ)k).
+3.4 Vector construction functions
+(*)c(...)
+Returns the concatenation of all of its parameters into a single vector, stripped of all matrix/array
+dimensions (see rbind() and cbind() for concatenation that does not strip this information). The
+parameters will be promoted to the highest type represented among them, and that type will be the
+return type. NULL values are ignored; they have no effect on the result.
+(float)float(integer$ length)
+Returns a new float vector of the length specified by length, filled with 0.0 values. This can be
+useful for pre-allocating a vector which you then fill with values by subscripting.
+(integer)integer(integer$ length, [integer$ fill1 = 0], [integer$ fill2 = 1],
+[Ni fill2Indices = NULL])
+Returns a new integer vector of the length specified by length, filled with 0 values by default. This
+can be useful for pre-allocating a vector which you then fill with values by subscripting.
+If a value is supplied for fill1, the new vector will be filled with that value instead of the default of 0.
+Additionally, if a non-NULL vector is supplied for fill2Indices, the indices specified by
+fill2Indices will be filled with the value provided by fill2. For example, given the default values
+of 0 and 1 for fill1 and fill2, the returned vector will contain 1 at all positions specified by
+fill2Indices, and will contain 0 at all other positions.
+59
+(logical)logical(integer$ length)
+Returns a new logical vector of the length specified by length, filled with F values. This can be
+useful for pre-allocating a vector which you then fill with values by subscripting.
+(object<undefined>)object(void)
+Returns a new empty object vector. Unlike float(), integer(), logical(), and string(), a
+length cannot be specified and the new vector contains no elements. This is because there is no
+default value for the object type. Adding to such a vector is typically done with c(). Note that the
+return value is of type object<undefined>; this method creates an object vector that does not know
+what element type it contains. Such object vectors may be mixed freely with other object vectors
+in c() and similar contexts; the result of such mixing will take its object-element type from the
+object vector with a defined object-element type (if any).
+(*)rep(* x, integer$ count)
+Returns the repetition of x: the entirety of x is repeated count times. The return type matches the type
+of x.
+(*)repEach(* x, integer count)
+Returns the repetition of elements of x: each element of x is repeated. If count is a singleton, it
+specifies the number of times that each element of x will be repeated. Otherwise, the length of count
+must be equal to the length of x; in this case, each element of x is repeated a number of times
+specified by the corresponding value of count.
+(*)sample(* x, integer$ size, [logical$ replace = F], [Nif weights = NULL])
+Returns a vector of size containing a sample from the elements of x. If replace is T, sampling is
+conducted with replacement (the same element may be drawn more than once); if it is F (the default),
+then sampling is done without replacement. A vector of weights may be supplied in the optional
+parameter weights; if not NULL, it must be equal in size to x, all weights must be non-negative, and
+the sum of the weights must be greater than 0. If weights is NULL (the default), then equal weights
+are used for all elements of x. An error occurs if sample() runs out of viable elements from which to
+draw; most notably, if sampling is done without replacement then size must be at most equal to the
+size of x, but if weights of zero are supplied then the restriction on size will be even more stringent.
+The draws are obtained from the standard Eidos random number generator, which might be shared
+with the Context.
+(numeric)seq(numeric$ from, numeric$ to, [Nif$ by = NULL], [Ni$ length = NULL])
+Returns a sequence, starting at from and proceeding in the direction of to until the next value in the
+sequence would fall beyond to. If the optional parameters by and length are both NULL (the default),
+the sequence steps by values of 1 or -1 (as needed to proceed in the direction of to). A different step
+value may be supplied with by, but must have the necessary sign. Alternatively, a sequence length
+may be supplied in length, in which case the step magnitude will be chosen to produce a sequence
+of the requested length (with the necessary sign, as before). If from and to are both integer then the
+return type will be integer when possible (but this may not be possible, depending upon values
+supplied for by or length), otherwise it will be float.
+(integer)seqAlong(* x)
+Returns an index sequence along x, from 0 to size(x) - 1, with a step of 1. This is a convenience
+function for easily obtaining a set of indices to address or iterate through a vector. Any matrix/array
+dimension information is ignored; the index sequence is suitable for indexing into x as a vector.
+(integer)seqLen(integer$ length)
+Returns an index sequence of length, from 0 to length - 1, with a step of 1; if length is 0 the
+sequence will be zero-length. This is a convenience function for easily obtaining a set of indices to
+address or iterate through a vector. Note that when length is 0, using the sequence operator with 0:
+(length-1) will produce 0 -1, and calling seq(a, b, length=length) will raise an error, but
+60
+seqLen(length) will return integer(0), making seqLen() particularly useful for generating a
+sequence of a given length that might be zero.
+(string)string(integer$ length)
+Returns a new string vector of the length specified by length, filled with "" values. This can be
+useful for pre-allocating a vector which you then fill with values by subscripting.
+3.5 Value inspection & manipulation functions
+(logical$)all(logical x, ...)
+Returns T if all values are T in x and in any other arguments supplied; if any value is F, returns F. All
+arguments must be of logical type. If all arguments are zero-length, T is returned.
+(logical$)any(logical x, ...)
+Returns T if any value is T in x or in any other arguments supplied; if all values are F, returns F. All
+arguments must be of logical type. If all arguments are zero-length, F is returned.
+(void)cat(* x, [string$ sep = " "])
+Concatenates output to Eidos’s output stream, joined together by sep. The value x that is output may
+be of any type. A newline is not appended to the output, unlike the behavior of print(); if a trailing
+newline is desired, you can use "\n" (or use the catn() function). Also unlike print(), cat() tends
+to emit very literal output; print(logical(0)) will emit “logical(0)”, for example – showing a
+semantic interpretation of the value – whereas cat(logical(0)) will emit nothing at all, since there
+are no elements in the value (it is zero-length). Similarly, print(NULL) will emit “NULL”, but
+cat(NULL) will emit nothing.
+(void)catn([* x = ""], [string$ sep = " "])
+Concatenates output (with a trailing newline) to Eidos’s output stream, joined together by sep. The
+behavior of catn() is identical to that of cat(), except that a final newline character is appended to
+the output for convenience. For catn() a default value of "" is supplied for x, to allow a simple
+catn() call with no parameters to emit a newline.
+(string)format(string$ format, numeric x)
+Returns a vector of formatted strings generated from x, based upon the formatting string format. The
+format parameter may be any string value, but must contain exactly one escape sequence
+beginning with the % character. This escape sequence specifies how to format a single value from the
+vector x. The returned vector contains one string value for each element of x; each string value is
+identical to the string supplied in format, except with a formatted version of the corresponding value
+from x substituted in place of the escape sequence.
+The syntax for format is a subset of the standard C/C++ printf()-style format strings (available in
+many places online, such as http://en.cppreference.com/w/c/io/fprintf). The escape sequence used to
+format each value of x is composed of several elements:
+– A % character at the beginning, initiating the escape sequence (if an actual % character is desired,
+rather than an escape sequence, %% may be used)
+– Optional flags that modify the style of formatting:
+• - : The value is left-justified with the field (as opposed to the default of right-justification).
+• + : The sign of the value is always prepended, even if the value is positive (as opposed to
+the default of appending the sign only if the value is negative).
+• space : The value is prepended by a space when a sign is not prepended. This is ignored if the
++ flag is present, since values are then always prepended by a sign.
+61
+• # : An alternative format is used. For %o, at least one leading zero is always produced.
+For %x and %X, 0x or 0X (respectively) is prepended if the value is nonzero. For %f, %F,
+%e, %E, %g, and %G, a decimal point is forced even if no zeros follow.
+• 0 : The value is left-justified with the field (as opposed to the default of right-justification)
+– An optional minimum field width, specified as an integer value. Fields will be padded out to this
+minimum width. Padding will be done with space characters by default (or with zeros, if the 0
+flag is used), on the left by default (or on the right, if the - flag is used).
+– An optional precision, given as an integer value preceded by a . character. If no integer value
+follows the . character, a precision of zero will be used. For integer values of x (formatted with
+%d, %i, %o, %x, or %X) the precision specifies the minimum number of digits that will appear (with
+extra zeros on the left if necessary), with a default precision of 1. For float values of x formatted
+with %f, %F, %e, %E, %g, or %G, the precision specifies the minimum number of digits that will
+appear to the right of the decimal point (with extra zeros on the right if necessary), with a default
+precision of 6.
+– A format specifier. For integer values, this may be %d or %i (producing base-10 output; there is
+no difference between the two), %o (producing base-8 or octal output), %x (producing base-16
+hexadecimal output using lowercase letters), or %X (producing base-16 hexadecimal output using
+uppercase letters). For float values, this may be %f or %F to produce decimal notation (of the
+form [−]ddd.ddd; there is no difference between the two), %e or %E to produce scientific notation
+(of the form [−]d.ddde±dd or [−]d.dddE±dd, respectively), or %g or %G to produce either
+decimal notation or scientific notation (using the formatting of %f / %e or %F / %E, respectively) on
+a per-value basis, depending upon the range of the value.
+Note that relative to the standard C/C++ printf()-style behavior, there are a few differences: (1) only
+a single escape sequence may be present in the format string, (2) the use of * to defer field width and
+precision values to a passed parameter is not supported, (3) only integer and float values of x are
+supported, (4) only the %d, %i, %o, %x, %X, %f, %F, %e, %E, %g, and %G format specifiers are supported,
+and (5) no length modifiers may be supplied, since Eidos does not support different sizes of the
+integer and float types. Note also that the Eidos conventions of emitting INF and NAN for infinities
+and Not-A-Number values respectively is not honored by this function; the strings generated for such
+values are platform-dependent, following the implementation definition of the C++ compiler used to
+build Eidos, since format() calls through to snprintf() to assemble the final string values.
+For example, format("A number: %+7.2f", c(-4.1, 15.375, 8)) will produce a vector with
+three elements: "A number: -4.10" "A number: +15.38" "A number: +8.00". The
+precision of .2 results in two digits after the decimal point, the minimum field width of 7 results in
+padding of the values on the left (with spaces) to a minimum of seven characters, the flag + causes a
+sign to be shown on positive values as well as negative values, and the format specifier f leads to the
+float values of x being formatted in base-10 decimal. One string value is produced in the result
+vector for each value in the parameter x. These values could then be merged into a single string with
+paste(), for example, or printed with print() or cat().
+(logical$)identical(* x, * y)
+Returns a logical value indicating whether two values are identical. If x and y have exactly the
+same type and size, and all of their corresponding elements are exactly the same, and (for matrices
+and arrays) their dimensions are identical, this will return T, otherwise it will return F. The test here is
+for exact equality; an integer value of 1 is not considered identical to a float value of 1.0, for
+example. Elements in object values must be literally the same element, not simply identical in all of
+their properties. Type promotion is never done. For testing whether two values are the same, this is
+generally preferable to the use of operator == or operator !=; see the discussion at section 2.5.1. Note
+that identical(NULL,NULL) is T.
+62
+(*)ifelse(logical test, * trueValues, * falseValues)
+Returns the result of a vector conditional operation: a vector composed of values from trueValues,
+for indices where test is T, and values from falseValues, for indices where test is F. The lengths
+of trueValues and falseValues must either be equal to 1 or to the length of test; however,
+trueValues and falseValues don’t need to be the same length as each other. Furthermore, the type
+of trueValues and falseValues must be the same (including, if they are object type, their element
+type). The return will be of the same length as test, and of the same type as trueValues and
+falseValues. Each element of the return vector will be taken from the corresponding element of
+trueValues if the corresponding element of test is T, or from the corresponding element of
+falseValues if the corresponding element of test is F; if the vector from which the value is to be
+taken (i.e., trueValues or falseValues) has a length of 1, that single value is used repeatedly,
+recycling the vector. If test, trueValues, and/or falseValues are matrices or arrays, that will be
+ignored by ifelse() except that the result will be of the same dimensionality as test.
+This is quite similar to a function in R of the same name; note, however, that Eidos evaluates all
+arguments to functions calls immediately, so trueValues and falseValues will be evaluated fully
+regardless of the values in test, unlike in R. Value expressions without side effects are therefore
+recommended.
+(integer$)length(* x)
+Returns the size (e.g., length) of x: the number of elements contained in x. Note that length() is a
+synonym for size().
+(integer)match(* x, * table)
+Returns a vector of the positions of (first) matches of x in table. Type promotion is not performed; x
+and table must be of the same type. For each element of x, the corresponding element in the result
+will give the position of the first match for that element of x in table; if the element has no match in
+table, the element in the result vector will be -1. The result is therefore a vector of the same length
+as x. If a logical result is desired, with T indicating that a match was found for the corresponding
+element of x, use (match(x, table) >= 0).
+(integer)nchar(string x)
+Returns a vector of the number of characters in the string-elements of x.
+(integer)order(+ x, [logical$ ascending = T])
+Returns a vector of sorting indices for x: a new integer vector of the same length as x, containing
+the indices into x that would sort x. In other words, x[order(x)]==sort(x). This can be useful for
+more complex sorting problems, such as sorting several vectors in parallel by a sort order determined
+by one of the vectors. If the optional logical parameter ascending is T (the default), then the sorted
+order will be ascending; if it is F, the sorted order will be descending. The ordering is determined
+according to the same logic as the < and > operators in Eidos. To easily sort vectors in a single step,
+use sort() or sortBy(), for non-object and object vectors respectively.
+(string$)paste(* x, [string$ sep = " "])
+Returns a joined string composed from the string representations of the elements of x, joined
+together by sep. Although this function is based upon the R function of the same name, note that it is
+much simpler and less powerful; in particular, only the elements of a single vector may be joined,
+rather than the var-args functionality of the R paste(). The string representation used by paste() is
+the same as that emitted by cat().
+(string$)paste0(* x)
+Returns a joined string composed from the string representations of the elements of x, joined
+together with no separator. This function is identical to paste(), except that no separator is used.
+63
+(void)print(* x)
+Prints output to Eidos’s output stream. The value x that is output may be of any type. A newline is
+appended to the output. See cat() for a discussion of the differences between print() and cat().
+(*)rev(* x)
+Returns the reverse of x: a new vector with the same elements as x, but in the opposite order.
+(integer$)size(* x)
+Returns the size of x: the number of elements contained in x. Note that length() is a synonym for
+size().
+(+)sort(+ x, [logical$ ascending = T])
+Returns a sorted copy of x: a new vector with the same elements as x, but in sorted order. If the
+optional logical parameter ascending is T (the default), then the sorted order will be ascending; if it
+is F, the sorted order will be descending. The ordering is determined according to the same logic as
+the < and > operators in Eidos. To sort an object vector, use sortBy(). To obtain indices for sorting,
+use order().
+(object)sortBy(object x, string$ property, [logical$ ascending = T])
+Returns a sorted copy of x: a new vector with the same elements as x, but in sorted order. If the
+optional logical parameter ascending is T (the default), then the sorted order will be ascending; if it
+is F, the sorted order will be descending. The ordering is determined according to the same logic as
+the < and > operators in Eidos. The property argument gives the name of the property within the
+elements of x according to which sorting should be done. This must be a simple property name; it
+cannot be a property path. For example, to sort a Mutation vector by the selection coefficients of the
+mutations, you would simply pass "selectionCoeff", including the quotes, for property. To sort a
+non-object vector, use sort(). To obtain indices for sorting, use order().
+(void)str(* x)
+Prints the structure of x: a summary of its type and the values it contains. If x is an object, note that
+str() produces different results from the str() method of x; the str() function prints the external
+structure of x (the fact that it is an object, and the number and type of its elements), whereas the
+str() method prints the internal structure of x (the external structure of all the properties contained
+by x).
+(string)strsplit(string$ x, [string$ sep = " "])
+Returns substrings of x that were separated by the separator string sep. Every substring defined by an
+occurrence of the separator is included, and thus zero-length substrings may be returned. For
+example, strsplit(".foo..bar.", ".") returns a string vector containing "", "foo", "", "bar",
+"". In that example, the empty string between "foo" and "bar" in the returned vector is present
+because there were two periods between foo and bar in the input string – the empty string is the
+substring between those two separators. If sep is "", a vector of single characters will be returned,
+resulting from splitting x at every position. Note that paste() performs the inverse operation of
+strsplit().
+(string)substr(string x, integer first, [Ni last = NULL])
+Returns substrings extracted from the elements of x, spanning character position first to character
+position last (inclusive). Character positions are numbered from 0 to nchar(x)-1. Positions that fall
+outside of that range are legal; a substring range that encompasses no characters will produce an
+empty string. If first is greater than last, an empty string will also result. If last is NULL (the
+default), then the substring will extend to the end of the string. The parameters first and last may
+either be singletons, specifying a single value to be used for all of the substrings, or they may be
+vectors of the same length as x, specifying a value for each substring.
+64
+(*)unique(* x, [logical$ preserveOrder = T])
+Returns the unique values in x. In other words, for each value k in x that occurs at least once, the
+vector returned will contain k exactly once. If preserveOrder is T (the default), the order of values in
+x is preserved, taking the first instance of each value; this is relatively slow, with O(n2) performance. If
+preserveOrder if F instead, the order of values in x is not preserved, and no particular ordering
+should be relied upon; this is relatively fast, with O(n log n) performance. This performance difference
+will only matter for large vectors, however; for most applications the default behavior can be retained
+whether the order of the result matters or not.
+(integer)which(logical x)
+Returns the indices of T values in x. In other words, if an index k in x is T, then the vector returned
+will contain k; if index k in x is F, the vector returned will omit k. One way to look at this is that it
+converts from a logical subsetting vector to an integer (index-based) subsetting vector, without
+changing which subset positions would be selected.
+(integer$)whichMax(+ x)
+Returns the index of the (first) maximum value in x. In other words, if k is equal to the maximum
+value in x, then the vector returned will contain the index of the first occurrence of k in x. If the
+maximum value is unique, the result is the same as (but more efficient than) the expression
+which(x==max(x)), which returns the indices of all of the occurrences of the maximum value in x.
+(integer$)whichMin(+ x)
+Returns the index of the (first) minimum value in x. In other words, if k is equal to the minimum
+value in x, then the vector returned will contain the index of the first occurrence of k in x. If the
+minimum value is unique, the result is the same as (but more efficient than) the expression
+which(x==min(x)), which returns the indices of all of the occurrences of the minimum value in x.
+3.6 Value type testing and coercion functions
+(float)asFloat(+ x)
+Returns the conversion to float of x. If x is string and cannot be converted to float, Eidos will
+throw an error.
+(integer)asInteger(+ x)
+Returns the conversion to integer of x. If x is of type string or float and cannot be converted to
+integer, Eidos will throw an error.
+(logical)asLogical(+ x)
+Returns the conversion to logical of x. Recall that in Eidos the empty string "" is considered F,
+and all other string values are considered T. Converting INF or -INF to logical yields T (since
+those values are not equal to zero); converting NAN to logical throws an error.
+(string)asString(+ x)
+Returns the conversion to string of x. Note that asString(NULL) returns "NULL" even though NULL
+is zero-length.
+(string$)elementType(* x)
+Returns the element type of x, as a string. For the non-object types, the element type is the same
+as the type: "NULL", "logical", "integer", "float", or "string". For object type, however,
+elementType() returns the name of the type of element contained by the object, such as "SLiMSim"
+or "Mutation" in the Context of SLiM. Contrast this with type().
+(logical$)isFloat(* x)
+Returns T if x is float type, F otherwise.
+65
+(logical$)isInteger(* x)
+Returns T if x is integer type, F otherwise.
+(logical$)isLogical(* x)
+Returns T if x is logical type, F otherwise.
+(logical$)isNULL(* x)
+Returns T if x is NULL type, F otherwise.
+(logical$)isObject(* x)
+Returns T if x is object type, F otherwise.
+(logical$)isString(* x)
+Returns T if x is string type, F otherwise.
+(string$)type(* x)
+Returns the type of x, as a string: "NULL", "logical", "integer", "float", "string", or
+"object". Contrast this with elementType().
+3.7 Matrix and array functions
+(*)apply(* x, integer margin, string$ lambdaSource)
+Prior to Eidos 1.6 / SLiM 2.6, sapply() was named apply(), and this function did not yet exist
+Applies a block of Eidos code to margins of x. This function is essentially an extension of sapply()
+for use with matrices and arrays; it is recommended that you fully understand sapply() before
+tackling this function. As with sapply(), the lambda specified by lambdaSource will be executed for
+subsets of x, and the results will be concatenated together with type-promotion in the style of c() to
+produce a result. Unlike sapply(), however, the subsets of x used might be rows, columns, or
+higher-dimensional slices of x, rather than just single elements, depending upon the value of margin.
+For apply(), x must be a matrix or array (see section 2.9). The apply() function in Eidos is patterned
+directly after the apply() function in R, and should behave identically, except that dimension indices
+in Eidos are zero-based whereas in R they are one-based.
+The margin parameter gives the indices of dimensions of x that will be iterated over when assembling
+values to supply to lambdaSource. If x is a matrix it has two dimensions: rows, of dimension index 0,
+and columns, of dimension index 1. These are the indices of the dimension sizes returned by dim();
+dim(x)[0] gives the number of rows of x, and dim(x)[1] gives the number of columns. These
+dimension indices are also apparent when subsetting x; a subset index in position 0, such as x[m,],
+gives row m of x, whereas a subset index in position 1, such as x[,n], gives column n of x. In the
+same manner, supplying 0 for margin specifies that subsets of x from x[0,] to x[m,] should be
+“passed” to lambdaSource, through the applyValue “parameter”; dimension 0 is iterated over,
+whereas dimension 1 is taken in aggregate since it is not included in margin. The final effect of this is
+that whole rows of x are passed to lambdaSource through applyValue. Similarly, margin=1 would
+specify that subsets of x from x[,0] to x[,n] should be passed to lambdaSource, resulting in whole
+columns being passed. Specifying margin=c(0,1) would indicate that dimensions 0 and 1 should
+both be iterated over (dimension 0 more rapidly), so for a matrix each each individual value of x
+would be passed to lambdaSource. Specifying margin=c(1,0) would similarly iterate over both
+dimensions, but dimension 1 more rapidly; the traversal order would therefore be different, and the
+dimensionality of the result would also differ (see below). For higher-dimensional arrays dimension
+indices beyond 1 exist, and so margin=c(0,1) or margin=c(1,0) would provide slices of x to
+lambdaSource, each slice having a specific row and column index. Slices are generated by
+subsetting in the same way as operator [], but additionally, redundant dimensions are dropped as by
+drop().
+66
+The return value from apply() is built up from the type-promoted concatenated results, as if by the
+c() function, from the iterated execution of lambdaSource; the only question is what dimensional
+structure is imposed upon that vector of values. If the results from lambdaSource are not of a
+consistent length, or are of length zero, then the concatenated results are returned as a plain vector. If
+all results are of length n > 1, the return value is an array of dimensions c(n, dim(x)[margin]); in
+other words, each n-vector provides the lowest dimension of the result, and the sizes of the marginal
+dimensions are imposed upon the data above that. If all results are of length n == 1, then if a single
+margin was specified the result is a vector (of length equal to the size of that marginal dimension), or if
+more than one margin was specified the result is an array of dimension dim(x)[margin]; in other
+words, the sizes of the marginal dimensions are imposed upon the data. Since apply() iterates over
+the marginal dimensions in the same manner, these structures follows the structure of the data.
+The above explanation may not be entirely clear, so let’s look at an example. If x is a matrix with two
+rows and three columns, such as defined by x = matrix(1:6, nrow=2);, then executing
+apply(x, 0, "sum(applyValue);"); would cause each row of x to be supplied to the lambda
+through applyValue, and the values in each row would thus be summed to produce 9 12 as a result.
+The call apply(x, 1, "sum(applyValue);"); would instead sum columns of x, producing 3 7 11
+as a result. Now consider using range() rather than sum() in the lambda, thus producing two values
+for each row or column. The call apply(x, 0, "range(applyValue);"); produces a result of
+matrix(c(1,5,2,6), nrow=2), with the range of the first row of x, 1–5, in the first column of the
+result, and the range of the second row of x, 2–6, in the second column. Although visualization
+becomes more difficult, these same patterns extend to higher dimensions and arbitrary margins of x.
+(*)array(* data, integer dim)
+Creates a new array from the data specified by data, with the dimension sizes specified by dim. The
+first dimension size in dim is the number of rows, and the second is the number of columns; further
+entries specify the sizes of higher-order dimensions. As many dimensions may be specified as desired,
+but with a minimum of two dimensions. An array with two dimensions is a matrix (by definition); note
+that matrix() may provide a more convenient way to make a new matrix. Each dimension must be
+of size 1 or greater; 0-size dimensions are not allowed.
+The elements of data are used to populate the new array; the size of data must therefore be equal to
+the size of the new array, which is the product of all the values in dim. The new array will be filled in
+dimension order: one element in each row until a column is filled, then on to the next column in the
+same manner until all columns are filled, and then onward into the higher-order dimensions in the
+same manner.
+(*)cbind(...)
+Combines vectors or matrices by column to produce a single matrix. The parameters must be vectors
+(which are interpreted by cbind() as if they were one-column matrices) or matrices. They must be of
+the same type, of the same class if they are of type object, and have the same number of rows. If
+these conditions are met, the result is a single matrix with the parameters joined together, left to right.
+Parameters may instead be NULL, in which case they are ignored; or if all parameters are NULL, the
+result is NULL. A sequence of vectors, matrices, and NULLs may thus be concatenated with the NULL
+values removed, analogous to c(). Calling cbind(x) is an easy way to create a one-column matrix
+from a vector.
+To combine vectors or matrices by row instead, see rbind().
+(integer)dim(* x)
+Returns the dimensions of matrix or array x. The first dimension value is the number of rows, the
+second is the number of columns, and further values indicate the sizes of higher-order dimensions,
+identically to how dimensions are supplied to array(). NULL is returned if x is not a matrix or array.
+67
+(*)drop(* x)
+Returns the result of dropping redundant dimensions from matrix or array x. Redundant dimensions
+are those with a size of exactly 1. Non-redundant dimensions are retained. If only one nonredundant
+dimension is present, the result is a vector; if more than one non-redundant dimension is
+present, the result will be a matrix or array. If x is not a matrix or array, it is returned unmodified.
+(*)matrix(* data, [Ni$ nrow = NULL], [Ni$ ncol = NULL], [logical$ byrow = F])
+Creates a new matrix from the data specified by data. By default this creates a one-column matrix.
+If non-NULL values are supplied for nrow and/or ncol, a matrix will be made with the requested
+number of rows and/or columns if possible; if the length of data is not compatible with the requested
+dimensions, an error will result. By default, values from data will populate the matrix by columns,
+filling each column sequentially before moving on to the next column; if byrow is T the matrix will be
+populated by rows instead.
+(numeric)matrixMult(numeric x, numeric y)
+Returns the result of matrix multiplication of x with y. In Eidos (as in R), with two matrices A and B
+the simple product A * B multiplies the corresponding elements of the matrices; in other words, if X is
+the result of A * B, then Xij = Aij * Bij. This is parallel to the definition of other operators; A + B adds
+the corresponding elements of the matrices (Xij = Aij + Bij), etc. In R, true matrix multiplication is
+achieved with a special operator, %*%; in Eidos, the matrixMult() function is used instead.
+Both x and y must be matrices, and must be conformable according to the standard definition of
+matrix multiplication (i.e., if x is an n × m matrix then y must be a m × p matrix, and the result will be
+a n × p matrix). Vectors will not be promoted to matrices by this function, even if such promotion
+would lead to a conformable matrix.
+(integer$)ncol(* x)
+Returns the number of columns in matrix or array x. For vector x, ncol() returns NULL; size()
+should be used. An equivalent of R’s NCOL() function, which treats vectors as 1-column matrices, is
+not provided but would be trivial to implement as a user-defined function.
+(integer$)nrow(* x)
+Returns the number of rows in matrix or array x. For vector x, nrow() returns NULL; size() should
+be used. An equivalent of R’s NROW() function, which treats vectors as 1-column matrices, is not
+provided but would be trivial to implement as a user-defined function.
+(*)rbind(...)
+Combines vectors or matrices by row to produce a single matrix. The parameters must be vectors
+(which are interpreted by rbind() as if they were one-row matrices) or matrices. They must be of the
+same type, of the same class if they are of type object, and have the same number of columns. If
+these conditions are met, the result is a single matrix with the parameters joined together, top to
+bottom. Parameters may instead be NULL, in which case they are ignored; or if all parameters are
+NULL, the result is NULL. A sequence of vectors, matrices, and NULLs may thus be concatenated with
+the NULL values removed, analogous to c(). Calling rbind(x) is an easy way to create a one-row
+matrix from a vector.
+To combine vectors or matrices by column instead, see cbind().
+(*)t(* x)
+Returns the transpose of x, which must be a matrix. This is the matrix reflected across its diagonal; or
+alternatively, the matrix with its columns written out instead as rows in the same order.
+68
+3.8 Filesystem access functions
+(logical$)createDirectory(string$ path)
+Creates a new filesystem directory at the path specified by path and returns a logical value
+indicating if the creation succeeded (T) or failed (F). If the path already exists, createDirectory()
+will do nothing to the filesystem, will emit a warning, and will return T to indicate success if the
+existing path is a directory, or F to indicate failure if the existing path is not a directory.
+(logical$)deleteFile(string$ filePath)
+Deletes the file specified by filePath and returns a logical value indicating if the deletion
+succeeded (T) or failed (F).
+(logical$)fileExists(string$ filePath)
+Checks the existence of the file specified by filePath and returns a logical value indicating if it
+exists (T) or does not exist (F). This also works for directories.
+(string)filesAtPath(string$ path, [logical$ fullPaths = F])
+Returns a string vector containing the names of all files in a directory specified by path. If the
+optional parameter fullPaths is T, full filesystem paths are returned for each file; if fullPaths is F
+(the default), then only the filenames relative to the specified directory are returned. This list includes
+directories (i.e. subfolders), including the "." and ".." directories on Un*x systems. The list also
+includes invisible files, such as those that begin with a "." on Un*x systems. This function does not
+descend recursively into subdirectories. If an error occurs during the read, NULL will be returned.
+(string$)getwd(void)
+Gets the current filesystem working directory. The filesystem working directory is the directory
+which will be used as a base path for relative filesystem paths. For example, if the working directory
+is "~/Desktop" (the Desktop subdirectory within the current user’s home directory, as represented by
+~), then the filename "foo.txt" would correspond to the filesystem path "~/Desktop/foo.txt",
+and the relative path "bar/baz/" would correspond to the filesystem path “~/Desktop/bar/baz/“.
+Note that the path returned may not be identical to the path previously set with setwd(), if for
+example symbolic links are involved; but it ought to refer to the same actual directory in the
+filesystem.
+The initial working directory is – as is generally the case on Un*x – simply the directory given to the
+running Eidos process by its parent process (the operating system, a shell, a job scheduler, a debugger,
+or whatever the case may be). If you launch Eidos (or SLiM) from the command line in a Un*x shell, it
+is typically the current directory in that shell. Before relative filesystem paths are used, you may
+therefore wish check what the initial working directory is on your platform, with getwd(), if you are
+not sure. Alternatively, you can simply use setwd() to set the working directory to a known path.
+(string)readFile(string$ filePath)
+Reads in the contents of a file specified by filePath and returns a string vector containing the
+lines (separated by \n and \r characters) of the file. Reading files other than text files is not presently
+supported. If an error occurs during the read, NULL will be returned.
+(string$)setwd(string$ path)
+Sets the current filesystem working directory. The filesystem working directory is the directory which
+will be used as a base path for relative filesystem paths (see getwd() for further discussion). An error
+will result if the working directory cannot be set to the given path.
+The current working directory prior to the change will be returned as an invisible string value; the
+value returned is identical to the value that would have been returned by getwd(), apart from its
+invisibility.
+See getwd() for discussion regarding the initial working directory, before it is set with setwd().
+69
+(logical$)writeFile(string$ filePath, string contents, [logical$ append = F],
+[logical$ compress = F])
+Writes or appends to a file specified by filePath with contents specified by contents, a string
+vector of lines. If append is T, the write will be appended to the existing file (if any) at filePath; if it
+is F (the default), then the write will replace an existing file at that path. If the write is successful, T
+will be returned; if not, F will be returned.
+If compress is T, the contents will be compressed with zlib as they are written, and the standard .gz
+extension for gzip-compressed files will be appended to the filename in filePath if it is not already
+present. If the compress option is used in conjunction with append==T, Eidos will accumulate data
+to append and flush it to the file in a delayed fashion (for performance reasons), and so appended data
+may not be visible in the file until later – potentially not until the process ends (i.e., the end of the
+SLiM simulation, for example). The compress option was added in Eidos 2.4 (SLiM 3.4). Note that
+readFile() does not currently support reading in compressed data.
+Note that newline characters will be added at the ends of the lines in contents. If you do not wish to
+have newlines added, you should use paste() to assemble the elements of contents together into a
+singleton string.
+(string$)writeTempFile(string$ prefix, string$ suffix, string contents,
+[logical$ compress = F])
+Writes to a unique temporary file with contents specified by contents, a string vector of lines. The
+filename used will begin with prefix and end with suffix, and will contain six random characters
+in between; for example, if prefix is "plot1_" and suffix is ".pdf", the generated filename might
+look like "plot1_r5Mq0t.pdf". It is legal for prefix, suffix, or both to be the empty string, "",
+but supplying a file extension is usually advisable at minimum. The file will be created inside the /
+tmp/ directory of the system, which is provided by Un*x systems as a standard location for temporary
+files; the /tmp/ directory should not be specified as part of prefix (nor should any other directory
+information). The filename generated is guaranteed not to already exist in /tmp/. The file is created
+with Un*x permissions 0600, allowing reading and writing only by the user for security. If the write is
+successful, the full path to the temporary file will be returned; if not, "" will be returned.
+If compress is T, the contents will be compressed with zlib as they are written, and the standard .gz
+extension for gzip-compressed files will be appended to the filename suffix in suffix if it is not
+already present. The compress option was added in Eidos 2.4 (SLiM 3.4). Note that readFile()
+does not currently support reading in compressed data.
+Note that newline characters will be added at the ends of the lines in contents. If you do not wish to
+have newlines added, you should use paste() to assemble the elements of contents together into a
+singleton string.
+3.9 Color manipulation functions
+(string)cmColors(integer$ n)
+Generate colors in a “cyan-magenta” color palette. The number of colors desired is passed in n, and
+the returned vector will contain n color strings. The color sequence begins with cyan, passes through
+white, and then ramps to magenta. See rainbow(), heatColors(), and terrainColors() for other
+color palettes.
+(float)color2rgb(string color)
+Converts a color string to RGB. The color string specified in color may be either a named color (see
+chapter 6) or a color in hexadecimal format such as "#007FC0". The equivalent RGB color is returned
+as a float vector of length three (red, green, blue). Returned RGB values will be in the interval [0, 1].
+This function can also be called with a non-singleton vector of color strings in color. In this case, the
+returned float value will be a matrix of RGB values, with three columns (red, green, blue) and one
+row per element of color.
+70
+(string)heatColors(integer$ n)
+Generate colors in a “heat map” color palette. The number of colors desired is passed in n, and the
+returned vector will contain n color strings. The color sequence begins with red, passes through
+orange to yellow, and then fades up to white. See rainbow(), cmColors(), and terrainColors()
+for other color palettes.
+(float)hsv2rgb(float hsv)
+Converts an HSV color to RGB. The HSV color is specified in hsv as a float vector of length three
+(hue, saturation, value), and the equivalent RGB color is returned as a float vector of length three
+(red, green, blue). HSV values will be clamped to the interval [0, 1], and returned RGB values will
+also be in the interval [0, 1].
+This function can also be called with a matrix of HSV values, with three columns (hue, saturation,
+value). In this case, the returned float value will be a matrix of RGB values, with three columns (red,
+green, blue) and one row per row of hsv.
+(string)rainbow(integer$ n, [float$ s = 1], [float$ v = 1], [float$ start = 0],
+[Nf$ end = NULL], [logical$ ccw = T])
+Generate colors in a “rainbow” color palette. The number of colors desired is passed in n, and the
+returned vector will contain n color strings. Parameters s and v control the saturation and value of the
+rainbow colors generated. The color sequence begins with the hue start, and ramps to the hue end,
+in a counter-clockwise direction around the standard HSV color wheel if ccw is T (the default,
+following R), otherwise in a clockwise direction. If end is NULL (the default), a value of (n-1)/n is
+used, producing a complete rainbow around the color wheel when start is also the default value of
+0. See cmColors(), heatColors(), and terrainColors() for other color palettes.
+(string)rgb2color(float rgb)
+Converts an RGB color to a color string. The RGB color is specified in rgb as a float vector of
+length three (red, green, blue). The equivalent color string is returned as singleton string specifying
+the color in the format "#RRGGBB", such as "#007FC0". RGB values will be clamped to the interval
+[0, 1].
+This function can also be called with a matrix of RGB values, with three columns (red, green, blue). In
+this case, the returned string value will be a vector of color strings, with one element per row of
+rgb.
+(float)rgb2hsv(float rgb)
+Converts an RGB color to HSV. The RGB color is specified in rgb as a float vector of length three
+(red, green, blue), and the equivalent HSV color is returned as a float vector of length three (hue,
+saturation, value). RGB values will be clamped to the interval [0, 1], and returned HSV values will
+also be in the interval [0, 1].
+This function can also be called with a matrix of RGB values, with three columns (red, green, blue). In
+this case, the returned float value will be a matrix of HSV values, with three columns (hue,
+saturation, value) and one row per row of rgb.
+(string)terrainColors(integer$ n)
+Generate colors in a “terrain” color palette. The number of colors desired is passed in n, and the
+returned vector will contain n color strings. The color sequence begins with forest green, passes
+through dark orange, and then ramps to off-white. See rainbow(), cmColors(), and heatColors()
+for other color palettes.
+71
+3.10 Miscellaneous functions
+(void)beep([Ns$ soundName = NULL])
+Plays a sound or beeps. On Mac OS X in a GUI environment (i.e., in EidosScribe or SLiMgui), the
+optional parameter soundName can be the name of a sound file to play; in other cases (if soundName is
+NULL, or at the command line, or on platforms other than OS X) soundName is ignored and a standard
+system beep is played.
+When soundName is not NULL, a sound file in a supported format (such as .aiff or .mp3) is searched
+for sequentially in four standard locations, in this order: ~/Library/Sounds, /Library/Sounds, /
+Network/Library/Sounds, and finally /System/Library/Sounds. Standard OS X sounds located
+in /System/Library/Sounds include "Basso", "Blow", "Bottle", "Frog", "Funk", "Glass",
+"Hero", "Morse", "Ping", "Pop", "Purr", "Sosumi", "Submarine", and "Tink". Do not include
+the file extension, such as .aiff or .mp3, in soundName.
+CAUTION: When not running in EidosScribe or SLiMgui, it is often the case that the only simple
+means available to play a beep is to send a BEL character (ASCII 7) to the standard output.
+Unfortunately, when this is the case, it means that (1) no beep will be audible if output is being
+redirected into a file, and (2) a control character, ^G, will occur in the output at the point when the
+beep was requested. It is therefore recommended that beep() be used only when doing interactive
+work in a terminal shell (or in a GUI, on OS X), not when producing output files. However, this issue
+is platform-specific; on some platforms beep() may result in a beep, and no emitted ^G, even when
+output is redirected. When a ^G must be emitted to the standard output to generate the beep, a
+warning message will also be emitted to make any associated problems easier to diagnose.
+(void)citation(void)
+Prints citation information for Eidos to Eidos’s output stream.
+(float$)clock([string$ type = "cpu"])
+Returns the value of a system clock. If type is "cpu", this returns the current value of the CPU usage
+clock. This is the amount of CPU time used by the current process, in seconds; it is unrelated to the
+current time of day (for that, see the time() function). This is useful mainly for determining how
+much processor time a given section of code takes; clock() can be called before and after a block of
+code, and the end clock minus the start clock gives the elapsed CPU time consumed in the execution
+of the block of code. See also the timed parameter of executeLambda(), which automates this
+procedure. Note that if multiple cores are utilized by the process, the CPU usage clock will be the
+sum of the CPU usage across all cores, and may therefore run faster than the wall clock.
+If type is "mono", this returns the value of the system’s monotonic clock. This represents userperceived
+(“wall clock”) elapsed time from some arbitrary timebase (which will not change during the
+execution of the program), but it will not jump if the time zone or the wall clock time are changed for
+the system. This clock is useful for measuring user-perceived elapsed time, as described above, and
+may provide a more useful metric for performance than CPU time if multiple cores are being utilized.
+(string$)date(void)
+Returns a standard date string for the current date in the local time of the executing machine. The
+format is %d-%m-%Y (day in two digits, then month in two digits, then year in four digits, zero-padded
+and separated by dashes) regardless of the localization of the executing machine, for predictability
+and consistency.
+(void)defineConstant(string$ symbol, + value)
+Defines a new constant with the name symbol and the value specified by value. The value may be
+any non-object value at all. The name cannot previously be defined in any way (i.e., as either a
+variable or a constant). The defined constant acts identically to intrinsic Eidos constants such as T,
+NAN, and PI, and will remain defined for as long as the Eidos context lives even if it is defined inside a
+block being executed by executeLambda(), apply(), sapply(), or a Context-defined script block.
+72
+(vNlifso)doCall(string$ functionName, ...)
+Returns the results from a call to a specified function. The function named by the parameter
+functionName is called, and the remaining parameters to doCall() are forwarded on to that function
+verbatim. This can be useful for calling one of a set of similar functions, such as sin(), cos(), etc.,
+to perform a math function determined at runtime, or one of the as...() family of functions to
+convert to a type determined at runtime. Note that named arguments and default arguments, beyond
+the functionName argument, are not supported by doCall(); all arguments to the target function
+must be specified explicitly, without names.
+(vNlifso)executeLambda(string$ lambdaSource, [ls$ timed = F])
+Executes a block of Eidos code defined by lambdaSource. Eidos allows you to execute lambdas:
+blocks of Eidos code which can be called directly within the same scope as the caller. Eidos lambdas
+do not take arguments; for this reason, they are not first-class functions. (Since they share the scope of
+the caller, however, you may effectively pass values in and out of a lambda using global variables.)
+The string argument lambdaSource may contain one or many Eidos statements as a single string
+value. Lambdas are represented, to the caller, only as the source code string lambdaSource; the
+executable code is not made available programmatically. If an error occurs during the tokenization,
+parsing, or execution of the lambda, that error is raised as usual; executing code inside a lambda does
+not provide any additional protection against exceptions raised. The return value produced by the
+code in the lambda is returned by executeLambda(). If the optional parameter timed is T, the total
+(CPU clock) execution time for the lambda will be printed after the lambda has completed (see
+clock()); if it is F (the default), no timing information will be printed. The timed parameter may also
+be "cpu" or "mono" to specifically request timing with the CPU clock (which will count the usage
+across all cores, and may thus run faster than wall clock time if multiple cores are being utilized) or
+the monotonic clock (which will correspond, more or less, to elapsed wall clock time regardless of
+multithreading); see the documentation for clock() for further discussion of these timing options.
+The current implementation of executeLambda() caches a tokenized and parsed version of
+lambdaSource, so calling executeLambda() repeatedly on a single source string is much more
+efficient than calling executeLambda() with a newly constructed string each time. If you can use a
+string literal for lambdaSource, or reuse a constructed source string stored in a variable, that will
+improve performance considerably.
+(logical)exists(string symbol)
+Returns a logical vector indicating whether symbols exist. If a symbol has been defined as an
+intrinsic Eidos constant like T, INF, and PI, or as a Context-defined constant like sim in SLiM, or as a
+user-defined constant using defineConstant(), or as a variable by assignment, this function returns
+T. Otherwise, the symbol has not been defined, and exists() returns F. This is commonly used to
+check whether a user-defined constant already exists, with the intention of defining the constant if it
+has not already been defined. A vector of symbols may be passed, producing a vector of
+corresponding results.
+(void)functionSignature([Ns$ functionName = NULL])
+Prints function signatures for all functions (if functionName is NULL, the default), or for the function
+named by functionName, to Eidos’s output stream. See section 2.7.4 for more information.
+(integer$)getSeed(void)
+Returns the random number seed. This is the last seed value set using setSeed(); if setSeed() has
+not been called, it will be a seed value chosen based on the process-id and the current time when
+Eidos was initialized, unless the Context has set a different seed value.
+(void)license(void)
+Prints Eidos’s license terms to Eidos’s output stream.
+73
+(void)ls(void)
+Prints all currently defined variables to Eidos’s output stream. See section 2.4.1 for more information.
+(void)rm([Ns variableNames = NULL], [logical$ removeConstants = F])
+Removes global variables from the Eidos namespace; in other words, it causes the variables to become
+undefined. Variables are specified by their string name in the variableNames parameter. If the
+optional variableNames parameter is NULL (the default), all variables will be removed (be careful!). If
+the optional parameter removeConstants is F (the default), then attempting to remove a constant is
+an error; if removeConstants is T, constants defined with defineConstant() may be removed, but
+attempting to remove intrinsic Eidos constants is still an error.
+(*)sapply(* x, string$ lambdaSource, [string$ simplify = "vector"])
+Named apply() prior to Eidos 1.6 / SLiM 2.6
+Applies a block of Eidos code to the elements of x. This function is sort of a hybrid between c() and
+executeLambda(); it might be useful to consult the documentation for both of those functions to
+better understand what sapply() does. For each element in x, the lambda defined by lambdaSource
+will be called. For the duration of that callout, a variable named applyValue will be defined to have
+as its value the element of x currently being processed. The expectation is that the lambda will use
+applyValue in some way, and will return either NULL or a new value (which need not be a singleton,
+and need not be of the same type as x). The return value of sapply() is generated by concatenating
+together all of the individual vectors returned by the lambda, in exactly the same manner as the c()
+function (including the possibility of type promotion).
+Since this function can be hard to understand at first, here is an example:
+sapply(1:10, "if (applyValue % 2) applyValue ^ 2;");
+This produces the output 1 9 25 49 81. The sapply() operation begins with the vector 1:10. For
+each element of that vector, the lambda is called and applyValue is defined with the element value.
+In this respect, sapply() is actually very much like a for loop. If applyValue is even (as evaluated
+by the modulo operator, %), the condition of the if statement is F and so NULL is implicitly returned by
+the lambda (since the if has no else clause). If applyValue is odd, on the other hand, the lambda
+returns its square (as calculated by the exponential operator, ^). Just as with the c() function, NULL
+values are dropped during concatenation, so the final result contains only the squares of the odd
+values.
+This example illustrates that the lambda can “drop” values by returning NULL, so sapply() can be
+used to select particular elements of a vector that satisfy some condition, much like the subscript
+operator, []. The example also illustrates that input and result types do not have to match; the vector
+passed in is integer, whereas the result vector is float.
+Beginning in Eidos 1.6, a new optional parameter named simplify allows the result of sapply() to
+be a matrix or array in certain cases, better organizing the elements of the result. If the simplify
+parameter is "vector", the concatenated result value is returned as a plain vector in all cases; this is
+the default behavior, for backward compatibility. Two other possible values for simplify are
+presently supported. If simplify is "matrix", the concatenated result value will be turned into a
+matrix with one column for each non-NULL value returned by the lambda, as if the values were joined
+together with cbind(), as long as all of the lambda’s return values are either (a) NULL or (b) the same
+length as the other non-NULL values returned. If simplify is "match", the concatenated result value
+will be turned into a vector, matrix, or array that exactly matches the dimensions as x, with a one-toone
+correspondence between x and the elements of the return value just like a unary operator, as long
+as all of the lambda’s return values are singletons (with no NULL values). Both "matrix" and "match"
+will raise an error if their preconditions are not met, to avoid unexpected behavior, so care should be
+taken that the preconditions are always met when these options are used.
+74
+As with executeLambda(), all defined variables are accessible within the lambda, and changes made
+to variables inside the lambda will persist beyond the end of the sapply() call; the lambda is
+executing in the same scope as the rest of your code.
+The sapply() function can seem daunting at first, but it is an essential tool in the Eidos toolbox. It
+combines the iteration of a for loop, the ability to select elements like operator [], and the ability to
+assemble results of mixed type together into a single vector like c(), all with the power of arbitrary
+Eidos code execution like executeLambda(). It is relatively fast, compared to other ways of
+achieving similar results such as a for loop that accumulates results with c(). Like
+executeLambda(), sapply() is most efficient if it is called multiple times with a single string script
+variable, rather than with a newly constructed string for lambdaSource each time.
+Prior to Eidos 1.6 (SLiM 2.6), sapply() was instead named apply(); it was renamed to sapply() in
+order to more closely match the naming of functions in R. This renaming allowed a new apply()
+function to be added to Eidos that operates on the margins of matrices and arrays, similar to the
+apply() function of R (see apply(), above).
+(void)setSeed(integer$ seed)
+Set the random number seed. Future random numbers will be based upon the seed value set, and the
+random number sequence generated from a particular seed value is guaranteed to be reproducible.
+The last seed set can be recovered with the getSeed() function.
+(void)source(string$ filePath)
+Executes the contents of an Eidos source file found at the filesystem path filePath. This is
+essentially shorthand for calling readFile(), joining the read lines with newlines to form a single
+string using paste(), and then passing that string to executeLambda(). The source file must consist
+of complete Eidos statements. Regardless of what the last executed source line evaluates to,
+source() has no return value.
+(void)stop([Ns$ message = NULL])
+Stops execution of Eidos (and of the Context, such as the running SLiM simulation, if applicable), in
+the event of an error. If the optional message parameter is not NULL, it will be printed to Eidos’s
+output stream prior to stopping.
+(logical$)suppressWarnings(logical$ suppress)
+Turns suppression of warning messages on or off. The suppress flag indicates whether suppression
+of warnings should be enabled (T) or disabled (F). The previous warning-suppression value is returned
+by suppressWarnings(), making it easy to suppress warnings from a given call and then return to
+the previous suppression state afterwards. It is recommended that warnings be suppressed only
+around short blocks of code (not all the time), so that unexpected but perhaps important warnings are
+not missed. And of course warnings are generally emitted for good reasons; before deciding to
+disregard a given warning, make sure that you understand exactly why it is being issued, and are
+certain that it does not represent a serious problem.
+(string)system(string$ command, [string args = ""], [string input = ""],
+[logical$ stderr = F], [logical$ wait = T])
+Runs a Un*x command in a /bin/sh shell with optional arguments and input, and returns the result
+as a vector of output lines. The args parameter may contain a vector of arguments to command; they
+will be passed directly to the shell without any quoting, so applying the appropriate quoting as needed
+by /bin/sh is the caller’s responsibility. The arguments are appended to command, separated by
+spaces, and the result is passed to the shell as a single command string, so arguments may simply be
+given as part of command instead, if preferred. By default no input is supplied to command; if input is
+non-empty, however, it will be written to a temporary file (one line per string element) and the
+standard input of command will be redirected to that temporary file (using standard /bin/sh
+redirection with <, appended to the command string passed to the shell). By default, output sent to
+standard error will not be captured (and thus may end up in the output of the SLiM process, or may be
+75
+lost); if stderr is T, however, the standard error stream will be redirected into standard out (using
+standard /bin/sh redirection with 2>&1, appended to the command string passed to the shell).
+Arbitrary command strings involving multiple commands, pipes, redirection, etc., may be used with
+system(), but may be incompatible with the way that args, input, and stderr are handled by this
+function, so in this case supplying the whole command string in command may be the simplest course.
+You may redirect standard error into standard output yourself in command with 2>&1. Supplying input
+to a complex command line can often be facilitated by the use of parentheses to create a subshell; for
+example,
+system("(wc -l | sed 's/ //g')", input=c('foo', 'bar', 'baz'));
+will supply the input lines to wc courtesy of the subshell started for the () operator. If this strategy
+doesn’t work for the command line you want to execute, you can always write a temporary file
+yourself using writeFile() or writeTempFile() and redirect that file to standard input in command
+with <.
+If wait is T (the default), system() will wait for the command to finish, and return the output
+generated as a string vector, as described above. If wait is F, system() will instead append " &"
+to the end of the command line to request that it be run in the background, and it will not collect and
+return the output from the command; instead it will return string(0) immediately. If the output from
+the command is needed, it could be redirected to a file, and that file could be checked periodically in
+Eidos for some indication that the command had completed; if output is not redirected to a file, it may
+appear in SLiM’s output stream. If the final command line executed by system() ends in " &", the
+behavior of system() should be just as if wait=T had been supplied, but it is recommended to use
+wait=T instead to ensure that the command line is correctly assembled.
+(string$)time(void)
+Returns a standard time string for the current time in the local time of the executing machine. The
+format is %H:%M:%S (hour in two digits, then minute in two digits, then seconds in two digits, zeropadded
+and separated by dashes) regardless of the localization of the executing machine, for
+predictability and consistency. The 24-hour clock time is used (i.e., no AM/PM).
+(float$)usage([logical$ peak = F])
+Returns the current (or peak) memory usage. This is the amount of memory used by the current
+process, in MB (megabytes); multiply by 1024*1024 to get the usage in bytes. If peak is F (the
+default), the current memory usage is returned; if peak is T, the maximum memory usage over the
+history of the process is returned. Memory usage is a surprisingly complex topic; the particular metric
+reported by usage() is the resident set size, or RSS, which includes memory usage from shared
+libraries, but does not include memory that is swapped out or has never been used. For most
+purposes, RSS is a useful metric of memory usage from a practical perspective. On some platforms
+(AIX, BSD, Solaris) the memory usage reported may be zero, but it should be correct on both Mac OS
+X and Linux platforms.
+This function can be useful for documenting the memory usage of long runs as they are in progress; in
+SLiM, it could also be used to trigger tree-sequence simplification with a call to treeSeqSimplify(),
+to reduce memory usage when it becomes too large, but keep in mind that the simplification process
+itself may cause a substantial spike in memory usage.
+When running under SLiM, other tools for monitoring memory usage include the slim command-line
+options -m[em] and -M[emhist], and the outputUsage() method of SLiMSim; see the SLiM manual
+for more information.
+(float)version([logical$ print = T])
+Get Eidos’s version. There are two ways to use this function. If print is T, the default, then the
+version number is printed to the Eidos output stream in a formatted manner, like “Eidos version
+2.1”. If Eidos is attached to a Context that provides a version number, that is also printed, like “SLiM
+version 3.1”. In this case, the Eidos version number, and the Context version number if available,
+76
+are returned as an invisible float vector. This is most useful when using Eidos interactively. If print
+is F, on the other hand, nothing is printed, but the returned float vector of version numbers is not
+invisible. This is useful for scripts that need to test the Eidos or Context version they are running
+against.
+In both cases, in the float version numbers returned, a version like 2.4.2 would be returned as 2.42;
+this would not scale well to subversions greater than nine, so that will be avoided in our versioning.
+3.11 Built-in methods
+These methods are built into Eidos, although Eidos has no object classes of its own. All objects
+defined by the Context will automatically inherit these methods.
++ (integer$)length(void)
+Returns the size (e.g., length) of the receiving object. This is equivalent to the length() (or size())
+function; in other words, for any object x, the return value of the function call length(x) equals the
+return value of the class method call x.length(). This method is provided solely for syntactic
+convenience. Note that +length() is a synonym for +size().
++ (void)methodSignature([Ns$ methodName = NULL])
+Prints the method signature for the method specified by methodName, or for all methods supported by
+the receiving object if methodName is NULL (the default).
++ (void)propertySignature([Ns$ propertyName = NULL])
+Prints the property signature for the property specified by propertyName, or for all properties
+supported by the receiving object if propertyName is NULL (the default).
++ (integer$)size(void)
+Returns the size of the receiving object. This is equivalent to the size() (or length()) function; in
+other words, for any object x, the return value of the function call size(x) equals the return value of
+the class method call x.size(). This method is provided solely for syntactic convenience. Note that
++length() is a synonym for +size().
+– (void)str(void)
+Prints the internal property structure of the receiving object; in particular, the element type of the
+object is printed, followed, on successive lines, by all of the properties supported by the object, their
+types, and a sample of their values.

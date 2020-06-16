@@ -1,0 +1,231 @@
+– (float)distance(object<Individual> individuals1,
+[No<Individual> individuals2 = NULL])
+Returns a vector containing distances between individuals in individuals1 and individuals2. At
+least one of individuals1 or individuals2 must be singleton, so that the distances evaluated are
+either from one individual to many, or from many to one (which are equivalent, in fact); evaluating
+distances for many to many individuals cannot be done in a single call. (There is one exception: if
+both individuals1 and individuals2 are zero-length or NULL, a zero-length float vector will be
+returned.) If individuals2 is NULL (the default), then individuals1 must be singleton, and a vector
+of the distances from that individual to all individuals in its subpopulation (including itself) is returned;
+this case may be handled differently internally, for greater speed, so supplying NULL is preferable to
+supplying the vector of all individuals in the subpopulation explicitly even though that should produce
+identical results. If the InteractionType is non-spatial, this method may not be called.
+Importantly, distances are calculated according to the spatiality of the InteractionType (as declared
+in initializeInteractionType()), not the dimensionality of the model as a whole (as declared in
+initializeSLiMOptions()). The distances returned are therefore the distances that would be used
+to calculate interaction strengths. However, distance() will return finite distances for all pairs of
+individuals, even if the individuals are non-interacting; the distance() between an individual and
+itself will thus be 0. See interactionDistance() for an alternative distance definition.
+– (float)distanceToPoint(object<Individual> individuals1, float point)
+Returns a vector containing distances between individuals in individuals1 and the point given by
+the spatial coordinates in point. The point vector is interpreted as providing coordinates precisely as
+specified by the spatiality of the interaction type; if the interaction type’s spatiality is "xz", for
+example, then point[0] is assumed to be an x value, and point[1] is assumed to be a z value. Be
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 495
+careful; this means that in general it is not safe to pass an individual’s spatialPosition property for
+point, for example (although it is safe if the spatiality of the interaction matches the dimensionality of
+the simulation). A coordinate for a periodic spatial dimension must be within the spatial bounds for
+that dimension, since coordinates outside of periodic bounds are meaningless (pointPeriodic()
+may be used to ensure this); coordinates for non-periodic spatial dimensions are not restricted.
+Importantly, distances are calculated according to the spatiality of the InteractionType (as declared
+in initializeInteractionType()) not the dimensionality of the model as a whole (as declared in
+initializeSLiMOptions()). The distances are therefore interaction distances: the distances that are
+used to calculate interaction strengths. If the InteractionType is non-spatial, this method may not
+be called. The vector point must be exactly as long as the spatiality of the InteractionType.
+– (object<Individual>)drawByStrength(object<Individual>$ individual,
+[integer$ count = 1])
+Returns up to count individuals drawn from the subpopulation of individual. The probability of
+drawing particular individuals is proportional to the strength of interaction they exert upon
+individual. This method may be used with either spatial or non-spatial interactions, but will be
+more efficient with spatial interactions that set a short maximum interaction distance. Draws are done
+with replacement, so the same individual may be drawn more than once; sometimes using unique()
+on the result of this call is therefore desirable. If more than one draw will be needed, it is much more
+efficient to use a single call to drawByStrength(), rather than drawing individuals one at a time.
+Note that if no individuals exert a non-zero interaction upon individual, the vector returned will be
+zero-length; it is important to consider this possibility.
+If the needed interaction strengths have already been calculated, those cached values are simply used.
+Otherwise, calling this method triggers evaluation of the needed interactions, including calls to any
+applicable interaction() callbacks.
+– (void)evaluate([No<Subpopulation> subpops = NULL], [logical$ immediate = F])
+Triggers evaluation of the interaction for the subpopulations specified by subpops (or for all
+subpopulations, if subpops is NULL). By default, the effects of this may be limited, however, since the
+underlying implementation may choose to postpone some computations lazily. At a minimum, is it
+guaranteed that this method will discard all previously cached data for the subpopulation(s), and will
+cache the current spatial positions of all individuals (so that individuals may then move without
+disturbing the state of the interaction at the moment of evaluation). Notably, interaction()
+callbacks may not be called in response to this method; instead, their evaluation may be deferred until
+required to satisfy queries (at which point the generation counter may have advanced by one, so be
+careful with the generation ranges used in defining such callbacks).
+If T is passed for immediate, the interaction will immediately and synchronously evaluate all
+interactions between all individuals in the subpopulation(s), calling any applicable interaction()
+callbacks as necessary – if the interaction is spatial (see below). However, depending upon what
+queries are later executed, this may represent considerable wasted computation. Immediate
+evaluation usually generates only a slight performance improvement even if the interactions between
+all pairs of individuals are eventually accessed; the main reason to choose immediate evaluation,
+then, is that deferred calculation of interactions would lead to incorrect results due to changes in
+model state. For non-spatial interactions, distances and interaction strengths are never cached since
+such caching would require O(N2) memory and time, which is deemed unacceptable in general; for
+non-spatial interactions, the immediate parameter is therefore ignored.
+You must explicitly call evaluate() at an appropriate time in the life cycle before the interaction is
+used, but after any relevant changes have been made to the population. SLiM will invalidate any
+existing interactions after any portion of the generation cycle in which new individuals have been
+born or existing individuals have died. In a WF model, these events occur just before late() events
+execute (see the WF generation cycle diagram in chapter 21), so late() events are often the
+appropriate place to put evaluate() calls, but early() events can work too if the interaction is not
+needed until that point in the generation cycle anyway. In nonWF models, on the other hand, new
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 496
+offspring are produced just before early() events and then individuals die just before late() events
+(see the nonWF generation cycle diagram in chapter 22), so interactions will be invalidated twice
+during each generation cycle. This means that in a nonWF model, an interaction that influences
+reproduction should usually be evaluated in a late() event, while an interaction that influences
+fitness or mortality should usually be evaluated in an early() event (and an interaction that affects
+both may need to be evaluated at both times).
+If an interaction is never evaluated for a given subpopulation, it is guaranteed that there will be
+essentially no memory or computational overhead associated with the interaction for that
+subpopulation. Furthermore, attempting to query an interaction for an individual in a subpopulation
+that has not been evaluated is guaranteed to raise an error.
+– (+)getValue(string$ key)
+Returns the value previously set for the dictionary entry identifier key using setValue(), or NULL if
+no value has been set. This dictionary-style functionality is actually provided by the superclass of
+InteractionType, SLiMEidosDictionary, although that fact is not presently visible in Eidos since
+superclasses are not introspectable.
+– (integer)interactingNeighborCount(object<Individual> individuals)
+Returns the number of interacting individuals for each individual in individuals, within the
+maximum interaction distance according to the distance metric of the InteractionType. More
+specifically, this method counts the number of individuals which can exert an interaction upon each
+focal individual; it does not count individuals which only feel an interaction from a focal individual.
+This method is similar to nearestInteractingNeighbors() (when passed a large count so as to
+guarantee that all interacting individuals are returned), but this method returns only a count of the
+interacting individuals, not a vector containing the individuals. This method may also be called in a
+vectorized fashion, with a non-singleton vector of individuals, unlike
+nearestInteractingNeighbors().
+Note that this method uses interaction eligibility as a criterion; it will not count neighbors that cannot
+exert an interaction upon a focal individual (due to sex-segregation, e.g.). (It also does not count a
+focal individual as a neighbor of itself.)
+– (float)interactionDistance(object<Individual>$ receiver,
+[No<Individual> exerters = NULL])
+Returns a vector containing interaction-dependent distances between receiver and individuals in
+exerters that exert an interaction strength upon receiver. If exerters is NULL (the default), then a
+vector of the interaction-dependent distances from receiver to all individuals in its subpopulation
+(including receiver itself) is returned; this case may be handled much more efficiently than if a
+vector of all individuals in the subpopulation is explicitly provided. If the InteractionType is nonspatial,
+this method may not be called.
+Importantly, distances are calculated according to the spatiality of the InteractionType (as declared
+in initializeInteractionType()), not the dimensionality of the model as a whole (as declared in
+initializeSLiMOptions()). The distances returned are therefore the distances that would be used
+to calculate interaction strengths. In addition, interactionDistance() will return INF as the
+distance between receiver and any individual which does not exert an interaction upon receiver;
+the interactionDistance() between an individual and itself will thus be INF, and likewise for pairs
+excluded from interacting by the sex segregation or max distance of the interaction type. See
+distance() for an alternative distance definition.
+– (object<Individual>)nearestInteractingNeighbors(object<Individual>$ individual,
+[integer$ count = 1])
+Returns up to count interacting individuals that are spatially closest to individual, according to the
+distance metric of the InteractionType. More specifically, this method returns only individuals
+which can exert an interaction upon the focal individual; it does not include individuals that only feel
+an interaction from the focal individual. To obtain all of the interacting individuals within the
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 497
+maximum interaction distance of individual, simply pass a value for count that is greater than or
+equal to the size of individual’s subpopulation. Note that if fewer than count interacting
+individuals are within the maximum interaction distance, the vector returned may be shorter than
+count, or even zero-length; it is important to check for this possibility even when requesting a single
+neighbor. If only the number of interacting individuals is needed, use
+interactingNeighborCount() instead.
+Note that this method uses interaction eligibility as a criterion; it will not return neighbors that cannot
+exert an interaction upon the focal individual (due to sex-segregation, e.g.). (It will also never return
+the focal individual as a neighbor of itself.) To find all neighbors of the focal individual, whether they
+can interact with it or not, use nearestNeighbors().
+– (object<Individual>)nearestNeighbors(object<Individual>$ individual,
+[integer$ count = 1])
+Returns up to count individuals that are spatially closest to individual, according to the distance
+metric of the InteractionType. To obtain all of the individuals within the maximum interaction
+distance of individual, simply pass a value for count that is greater than or equal to the size of
+individual’s subpopulation. Note that if fewer than count individuals are within the maximum
+interaction distance, the vector returned may be shorter than count, or even zero-length; it is
+important to check for this possibility even when requesting a single neighbor.
+Note that this method does not use interaction eligibility as a criterion; it will return neighbors that
+could not interact with the focal individual due to sex-segregation. (It will never return the focal
+individual as a neighbor of itself, however.) To find only neighbors that are eligible to exert an
+interaction upon the focal individual, use nearestInteractingNeighbors().
+– (object<Individual>)nearestNeighborsOfPoint(object<Subpopulation>$ subpop,
+float point, [integer$ count = 1])
+Returns up to count individuals in subpop that are spatially closest to point, according to the
+distance metric of the InteractionType. To obtain all of the individuals within the maximum
+interaction distance of point, simply pass a value for count that is greater than or equal to the size of
+subpop. Note that if fewer than count individuals are within the maximum interaction distance, the
+vector returned may be shorter than count, or even zero-length; it is important to check for this
+possibility even when requesting a single neighbor.
+– (void)setInteractionFunction(string$ functionType, ...)
+Set the function used to translate spatial distances into interaction strengths for an interaction type.
+The functionType may be "f", in which case the ellipsis ... should supply a numeric$ fixed
+interaction strength; "l", in which case the ellipsis should supply a numeric$ maximum strength for a
+linear function; "e", in which case the ellipsis should supply a numeric$ maximum strength and a
+numeric$ lambda (shape) parameter for a negative exponential function; "n", in which case the
+ellipsis should supply a numeric$ maximum strength and a numeric$ sigma (standard deviation)
+parameter for a Gaussian function; or "c", in which case the ellipsis should supply a numeric$
+maximum strength and a numeric$ scale parameter for a Cauchy distribution function. See section
+23.7 above for discussions of these interaction functions. Non-spatial interactions must use function
+type "f", since no distance values are available in that case.
+The interaction function for an interaction type is normally a constant in simulations; in any case, it
+cannot be changed when an interaction has already been evaluated for a given generation of
+individuals.
+– (void)setValue(string$ key, + value)
+Sets a value for the dictionary entry identifier key. The value, which may be of any type other than
+object, can be fetched later using getValue(). This dictionary-style functionality is actually
+provided by the superclass of InteractionType, SLiMEidosDictionary, although that fact is not
+presently visible in Eidos since superclasses are not introspectable.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 498
+– (float)strength(object<Individual>$ receiver, [No<Individual> exerters = NULL])
+Returns a vector containing the interaction strengths exerted upon receiver by the individuals in
+exerters. If exerters is NULL (the default), then a vector of the interaction strengths exerted by all
+individuals in the subpopulation of receiver (including receiver itself) is returned; this case may be
+handled much more efficiently than if a vector of all individuals in the subpopulation is explicitly
+provided.
+If the strengths of interactions exerted by a single individual upon multiple individuals is needed
+instead (the inverse of what this method provides), multiple calls to this method will be necessary, one
+per pairwise interaction queried; the interaction engine is not optimized for the inverse case, and so it
+will likely be quite slow to compute. If the interaction is reciprocal and sex-symmetric, the opposite
+query should provide identical results in a single efficient call (because then the interactions exerted
+are equal to the interactions received); otherwise, the best approach might be to define a second
+interaction type representing the inverse interaction that you wish to be able to query efficiently.
+If the needed interaction strengths have already been calculated, those cached values are simply
+returned. Otherwise, calling this method triggers evaluation of the needed interactions, including
+calls to any applicable interaction() callbacks.
+– (float)totalOfNeighborStrengths(object<Individual> individuals)
+Returns a vector of the total interaction strength felt by each individual in individuals, which does
+not need to be a singleton; indeed, it can be a vector of all of the individuals in a given subpopulation.
+However, all of the individuals in individuals must be in the same subpopulation.
+For one individual, this is essentially the same as calling nearestNeighbors() with a large count so
+as to obtain the complete vector of all neighbors, calling strength() for each of those interactions to
+get each interaction strength, and adding those interaction strengths together with sum(). This method
+is much faster than that implementation, however, since all of that work is done as a single operation.
+Also, totalOfNeighborStrengths() can total up interactions for more than one focal individual in
+a single call.
+Similarly, for one individual this is essentially the same as calling strength() to get the interaction
+strengths between the focal individual and all other individuals, and then calling sum(). Again, this
+method should be much faster, since this algorithm looks only at neighbors, whereas calling
+strength() directly assesses interaction strengths with all other individuals. This will make a
+particularly large difference when the subpopulation size is large and the maximum distance of the
+InteractionType is small.
+If the needed interaction strengths have already been calculated, those cached values are simply used.
+Otherwise, calling this method triggers evaluation of the needed interactions, including calls to any
+applicable interaction() callbacks.
+– (void)unevaluate(void)
+Discards all evaluation of this interaction, for all subpopulations. The state of the InteractionType
+is reset to a state prior to evaluation. This can be useful if the model state has changed in such a way
+that the evaluation already conducted is no longer valid. For example, if the maximum distance or the
+interaction function of the InteractionType need to be changed with immediate effect, or if the data
+used by an interaction() callback has changed in such a way that previously calculated interaction
+strengths are no longer correct, unevaluate() allows the interaction to begin again from scratch.
+In WF models, all interactions are automatically reset to an unevaluated state at the moment when the
+new offspring generation becomes the parental generation (at step 4 in the generation cycle; see
+section 21.4).
+In nonWF models, all interactions are automatically reset to an unevaluated state twice per
+generation: immediately after reproduction() callbacks have completed (after step 1 in the
+generation cycle; see section 22.1), and immediately before viability/survival selection (before step 4
+in the generation cycle; see section 22.4).
+Given this automatic invalidation, most simulations have no reason to call unevaluate().

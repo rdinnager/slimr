@@ -1,0 +1,10 @@
+– (+)getValue(string$ key)
+Returns the value previously set for the dictionary entry identifier key using setValue(), or NULL if
+no value has been set. This dictionary-style functionality is actually provided by the superclass of
+Substitution, SLiMEidosDictionary, although that fact is not presently visible in Eidos since
+superclasses are not introspectable.
+– (void)setValue(string$ key, + value)
+Sets a value for the dictionary entry identifier key. The value, which may be of any type other than
+object, can be fetched later using getValue(). This dictionary-style functionality is actually
+provided by the superclass of Substitution, SLiMEidosDictionary, although that fact is not
+presently visible in Eidos since superclasses are not introspectable.

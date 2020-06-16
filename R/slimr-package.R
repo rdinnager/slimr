@@ -1,6 +1,31 @@
-.slim_settings <- new.env(parent = emptyenv())
-.slim_assets <- new.env(parent = emptyenv())
-if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
+.slim_settings <- new.env()
+.slim_assets <- new.env()
+.resources <- new.env()
+if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
+                                                        ".G",
+                                                        ".GE",
+                                                        ".GET",
+                                                        ".I",
+                                                        ".IT",
+                                                        ".M",
+                                                        ".MT",
+                                                        ".P",
+                                                        ".S",
+                                                        ".SB",
+                                                        ".SS",
+                                                        ".c",
+                                                        ".Init",
+                                                        ".x",
+                                                        "slimr_template_attr",
+                                                        "sim.generation",
+                                                        "catn",
+                                                        "slimr_output_attr",
+                                                        "initialize",
+                                                        "m1",
+                                                        "g1",
+                                                        "sim.addSubpop",
+                                                        "sim.simulationFinished"
+                                                        ))
 
 .onAttach <- function(libname, pkgname) {
 
@@ -56,7 +81,22 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
   .slim_assets$slim_recipes <- slim_recipes
 
 
-}
+  ## load slim language objects
+  utils::data(slim_classes, package = pkgname,
+              envir = parent.env(environment()))
+  .resources$classes_regex <- paste0("(", paste(c(slim_classes$class_name, slim_classes$class_abbr),
+                                                collapse = "|"), ")")
 
-#' @import slimrlang
-NULL
+  ## create temporary variables
+
+  .resources$temp_slimr_template <- list()
+  .resources$temp_slimr_template$var_name <- list()
+  .resources$temp_slimr_template$default <- list()
+  .resources$temp_slimr_template$unquote <- list()
+  .resources$temp_slimr_input <- list()
+  .resources$temp_slimr_output <- list()
+  .resources$temp_slimr_output$code_for_slim <- list()
+  .resources$temp_slimr_output$output_name <- list()
+  .resources$temp_slimr_output$code_for_display <- list()
+
+}

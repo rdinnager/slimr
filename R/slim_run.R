@@ -212,6 +212,55 @@ setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(
 
 }
 
+slim_process_output <- function(out, data_only = FALSE) {
+
+  out_all <- paste(out, collapse = "\n")
+
+  dat <- stringr::str_match_all(out_all,
+                                stringr::regex("<slimr_out:start>(.*?)<slimr_out:end>",
+                                               dotall = TRUE))[[1]][ , 2]
+
+  if(length(dat) > 0) {
+    df <- readr::read_csv(dat,
+                          col_names = c("generation", "name", "expression", "data"),
+                          quote = "\'",
+                          col_types = "iccc")
+  } else {
+    df <- NULL
+  }
+
+  if(!data_only) {
+
+    pre <- stringr::str_match_all(out_all,
+                                  stringr::regex("^((?:(?!<slimr_out:start>).)*)<slimr_out:start>",
+                                                 dotall = TRUE))[[1]][ , 2] %>%
+      stringr::str_split("\n") %>%
+      purrr::flatten_chr()
+
+
+    inter <- stringr::str_match_all(out_all,
+                                    stringr::regex("<slimr_out:end>(.*?)<slimr_out:start>",
+                                                   dotall = TRUE))[[1]][ , 2] %>%
+      stringr::str_split("\n") %>%
+      purrr::flatten_chr()
+
+    post <- stringr::str_match_all(out_all,
+                                   stringr::regex("<slimr_out:end>((?:(?!<slimr_out:end>).)*)$",
+                                                  dotall = TRUE))[[1]][ , 2] %>%
+      stringr::str_split("\n") %>%
+      purrr::flatten_chr()
+
+    return(list(data = df, leftovers = post, extra_out = c(pre, inter)))
+
+  } else {
+
+    return(df)
+
+  }
+
+}
+
+
 slim_update_progress <- function(output_list, pb, show_output, simple_pb, end_gen) {
   if(simple_pb) {
     pb <- progress::progress_bar$new("[:bar] :spin Generation: :current/:total (:percent) Estimated time to completion: :eta",

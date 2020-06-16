@@ -1,0 +1,34 @@
+– (+)getValue(string$ key)
+Returns the value previously set for the dictionary entry identifier key using setValue(), or NULL if
+no value has been set. This dictionary-style functionality is actually provided by the superclass of
+Mutation, SLiMEidosDictionary, although that fact is not presently visible in Eidos since
+superclasses are not introspectable.
+– (void)setMutationType(io<MutationType>$ mutType)
+Set the mutation type of the mutation to mutType (which may be specified as either an integer
+identifier or a MutationType object). This implicitly changes the dominance coefficient of the
+mutation to that of the new mutation type, since the dominance coefficient is a property of the
+mutation type. On the other hand, the selection coefficient of the mutation is not changed, since it is
+a property of the mutation object itself; it can be changed explicitly using the setSelectionCoeff()
+method if so desired.
+The mutation type of a mutation is normally a constant in simulations, so be sure you know what you
+are doing. Changing this will normally affect the fitness values calculated at the end of the current
+generation; if you want current fitness values to be affected, you can call SLiMSim’s method
+recalculateFitness() – but see the documentation of that method for caveats.
+In nucleotide-based models, a restriction applies: nucleotide-based mutations may not be changed to
+a non-nucleotide-based mutation type, and non-nucleotide-based mutations may not be changed to a
+nucleotide-based mutation type.
+– (void)setSelectionCoeff(float$ selectionCoeff)
+Set the selection coefficient of the mutation to selectionCoeff. The selection coefficient will be
+changed for all individuals that possess the mutation, since they all share a single Mutation object
+(note that the dominance coefficient will remain unchanged, as it is determined by the mutation type).
+This is normally a constant in simulations, so be sure you know what you are doing; often setting up a
+fitness() callback (see section 24.2) is preferable, in order to modify the selection coefficient in a
+more limited and controlled fashion (see section 10.5 for further discussion of this point). Changing
+this will normally affect the fitness values calculated at the end of the current generation; if you want
+current fitness values to be affected, you can call SLiMSim’s method recalculateFitness() – but
+see the documentation of that method for caveats.
+– (void)setValue(string$ key, + value)
+Sets a value for the dictionary entry identifier key. The value, which may be of any type other than
+object, can be fetched later using getValue(). This dictionary-style functionality is actually
+provided by the superclass of Mutation, SLiMEidosDictionary, although that fact is not presently
+visible in Eidos since superclasses are not introspectable.

@@ -1,0 +1,511 @@
+– (No<Individual>$)addCloned(object<Individual>$ parent)
+Generates a new offspring individual from the given parent by clonal reproduction, queues it for
+addition to the target subpopulation, and returns it. The new offspring will not be visible as a member
+of the target subpopulation until the end of the offspring generation life cycle stage. The
+subpopulation of parent will be used to locate applicable mutation() and modifyChild()
+callbacks governing the generation of the offspring individual.
+Note that this method is only for use in nonWF models. See addCrossed() for further general notes
+on the addition of new offspring individuals.
+– (No<Individual>$)addCrossed(object<Individual>$ parent1,
+object<Individual>$ parent2, [Nfs$ sex = NULL])
+Generates a new offspring individual from the given parents by biparental sexual reproduction, queues
+it for addition to the target subpopulation, and returns it. The new offspring will not be visible as a
+member of the target subpopulation until the end of the offspring generation life cycle stage.
+Attempting to use a newly generated offspring individual as a mate, or to reference it as a member of
+the target subpopulation in any other way, will result in an error. In most models the returned
+individual is not used, but it is provided for maximal generality and flexibility.
+The new offspring individual is generated from parent1 and parent2 by crossing them. In sexual
+models parent1 must be female and parent2 must be male; in hermaphroditic models, parent1 and
+parent2 are unrestricted. If parent1 and parent2 are the same individual in a hermaphroditic
+model, that parent self-fertilizes, or “selfs”, to generate the offspring sexually (note this is not the same
+as clonal reproduction). Such selfing is considered “incidental” by addCrossed(), however; if the
+preventIncidentalSelfing flag of initializeSLiMOptions() is T, supplying the same individual
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 519
+for parent1 and parent2 is an error (you must check for and prevent incidental selfing if you set that
+flag in a nonWF model). If non-incidental selfing is desired, addSelfed() should be used instead.
+The sex parameter specifies the sex of the offspring. A value of NULL means “make the default
+choice”; in non-sexual models it is the only legal value for sex, and does nothing, whereas in sexual
+models it causes male or female to be chosen with equal probability. A value of "M" or "F" for sex
+specifies that the offspring should be male or female, respectively. Finally, a float value from 0.0 to
+1.0 for sex provides the probability that the offspring will be male; a value of 0.0 will produce a
+female, a value of 1.0 will produce a male, and for intermediate values SLiM will draw the sex of the
+offspring randomly according to the specified probability. Unless you wish the bias the sex ratio of
+offspring, the default value of NULL should generally be used.
+Note that any defined, active, and applicable recombination(), mutation(), and modifyChild()
+callbacks will be called as a side effect of calling this method, before this method even returns. For
+recombination() and mutation() callbacks, the subpopulation of the parent that is generating a
+given gamete is used; for modifyChild() callbacks the situation is more complex. In most biparental
+mating events, parent1 and parent2 will belong to the same subpopulation, and modifyChild()
+callbacks for that subpopulation will be used, just as in WF models. In certain models (such as
+models of pollen flow and broadcast spawning), however, biparental mating may occur between
+parents that are not from the same subpopulation; that is legal in nonWF models, and in that case,
+modifyChild() callbacks for the subpopulation of parent1 are used (since that is the maternal
+parent).
+If the modifyChild() callback process results in rejection of the proposed child (see section 24.4), a
+new offspring individual will not be generated, and this method will return NULL. To force the
+generation of an offspring individual from a given pair of parents, you could loop until addCrossed()
+succeeds, but note that if your modifyChild() callback rejects all proposed children from those
+particular parents, your model will then hang, so care must be taken with this approach. Usually,
+nonWF models do not force generation of offspring in this manner; rejection of a proposed offspring
+by a modifyChild() callback typically represents a phenomenon such as post-mating reproductive
+isolation or lethal genetic incompatibilities that would reduce the expected litter size, so the default
+behavior is typically desirable.
+Note that this method is only for use in nonWF models, in which offspring generation is managed
+manually by the model script; in such models, addCrossed() must be called only from
+reproduction() callbacks, and may not be called at any other time. In WF models, offspring
+generation is managed automatically by the SLiM core.
+– (No<Individual>$)addEmpty([Nfs$ sex = NULL])
+Generates a new offspring individual with empty genomes (i.e., containing no mutations), queues it
+for addition to the target subpopulation, and returns it. The new offspring will not be visible as a
+member of the target subpopulation until the end of the offspring generation life cycle stage. No
+recombination() or mutation() callbacks will be called. The target subpopulation will be used to
+locate applicable modifyChild() callbacks governing the generation of the offspring individual
+(unlike the other addX() methods, because there is no parental individual to reference). The offspring
+is considered to have no parents for the purposes of pedigree tracking. The sex parameter is treated as
+in addCrossed().
+Note that this method is only for use in nonWF models. See addCrossed() for further general notes
+on the addition of new offspring individuals.
+– (No<Individual>$)addRecombinant(No<Genome>$ strand1, No<Genome>$ strand2,
+Ni breaks1, No<Genome>$ strand3, No<Genome>$ strand4, Ni breaks2,
+[Nfs$ sex = NULL])
+Generates a new offspring individual from the given parental genomes with the specified crossover
+breakpoints, queues it for addition to the target subpopulation, and returns it. The new offspring will
+not be visible as a member of the target subpopulation until the end of the offspring generation life
+cycle stage. The target subpopulation will be used to locate applicable mutation() and
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 520
+modifyChild() callbacks governing the generation of the offspring individual (unlike the other
+addX() methods, because there are potentially up to four parental individuals to reference);
+recombination() callbacks will not be called by this method. This method is an advanced feature;
+most models will use addCrossed(), addSelfed(), or addCloned() instead.
+This method supports several possible configurations for strand1, strand2, and breaks1 (and the
+same applies for strand3, strand4, and breaks2). If strand1 and strand2 are both NULL, the
+corresponding genome in the generated offspring will be empty, as from addEmpty(), with no
+parental genomes and no added mutations; in this case, breaks1 must be NULL or zero-length. If
+strand1 is non-NULL but strand2 is NULL, the corresponding genome in the generated offspring will
+be a clonal copy of strand1 with mutations added, as from addCloned(); in this case, breaks1 must
+similarly be NULL or zero-length. If strand1 and strand2 are both non-NULL, the corresponding
+genome in the generated offspring will result from recombination between strand1 and strand2
+with mutations added, as from addCrossed(), with strand1 being the initial copy strand; copying
+will switch between strands at each breakpoint in breaks1, which must be non-NULL but need not be
+sorted or uniqued (SLiM will sort and unique the supplied breakpoints internally). (It is not currently
+legal for strand1 to be NULL and strand2 non-NULL; that variant may be assigned some meaning in
+future.) Again, this discussion applies equally to strand3, strand4, and breaks2, mutatis mutandis.
+Note that when new mutations are generated by addRecombinant(), their subpopID property will be
+the id of the offspring’s subpopulation, since the parental subpopulation is ambiguous in the general
+case; this behavior differs from the other add...() methods.
+The sex parameter is interpreted exactly as in addCrossed(); see that method for discussion. If the
+offspring sex is specified in any way (i.e., if sex is non-NULL), the strands provided must be compatible
+with the sex chosen. If the offspring sex is not specified (i.e., if sex is NULL), the sex will be inferred
+from the strands provided where possible (when modeling an X or Y chromosome), or will be chosen
+randomly otherwise (when modeling autosomes); it will not be inferred from the sex of the individuals
+possessing the parental strands, even when the reproductive mode is essentially clonal from a single
+parent, since such inference would be ambiguous in the general case. Similarly, the offspring is
+considered to have no parents for the purposes of pedigree tracking, since there may be more than
+two “parents” in the general case. When modeling the X or Y, strand1 and strand2 must be X
+genomes (or NULL), and strand3 and strand4 must both be X genomes or both be Y genomes (or
+NULL).
+These semantics allow several uses for addRecombinant(). When all strands are non-NULL, it is
+similar to addCrossed() except that the recombination breakpoints are specified explicitly, allowing
+very precise offspring generation without having to override SLiM’s breakpoint generation with a
+recombination() callback. When only strand1 and strand3 are supplied, it is very similar to
+addCloned(), creating a clonal offspring, except that the two parental genomes need not belong to
+the same individual (whatever that might mean biologically). Supplying only strand1 is useful for
+modeling clonally reproducing haploids; the second genome of every offspring will be kept empty and
+will not receive new mutations. For a model of clonally reproducing haploids that undergo horizontal
+gene transfer (HGT), supplying only strand1 and strand2 will allow HGT from strand2 to replace
+segments of an otherwise clonal copy of strand1, while the second genome of the generated
+offspring will again be kept empty; this could be useful for modeling bacterial conjugation, for
+example. Other variations are also possible.
+Note that gene conversion tracts are not explicitly supported by this method; the breaks vectors
+provide crossover breakpoints, which may be used to implement crossovers or simple gene conversion
+tracts. There is no way to specify complex gene conversion tracts with heteroduplex mismatch repair.
+Note that this method is only for use in nonWF models. See addCrossed() for further general notes
+on the addition of new offspring individuals.
+– (No<Individual>$)addSelfed(object<Individual>$ parent)
+Generates a new offspring individual from the given parent by selfing, queues it for addition to the
+target subpopulation, and returns it. The new offspring will not be visible as a member of the target
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 521
+subpopulation until the end of the offspring generation life cycle stage. The subpopulation of parent
+will be used to locate applicable mutation(), recombination(), and modifyChild() callbacks
+governing the generation of the offspring individual.
+Since selfing requires that parent act as a source of both a male and a female gamete, this method
+may be called only in hermaphroditic models; calling it in sexual models will result in an error. This
+method represents a non-incidental selfing event, so the preventIncidentalSelfing flag of
+initializeSLiMOptions() has no effect on this method (in contrast to the behavior of
+addCrossed(), where selfing is assumed to be incidental).
+Note that this method is only for use in nonWF models. See addCrossed() for further general notes
+on the addition of new offspring individuals.
+– (float)cachedFitness(Ni indices)
+The fitness values calculated for the individuals at the indices given are returned. If NULL is passed,
+fitness values for all individuals in the subpopulation are returned. The fitness values returned are
+cached values; fitness() callbacks are therefore not called as a side effect of this method. It is
+always an error to call cachedFitness() from inside a fitness() callback, since fitness values are
+in the middle of being set up. In WF models, it is also an error to call cachedFitness() from a
+late() event, because fitness values for the new offspring generation have not yet been calculated
+and are undefined. In nonWF models, the population may be a mixture of new and old individuals,
+so instead, NAN will be returned as the fitness of any new individuals whose fitness has not yet been
+calculated. When new subpopulations are first created with addSubpop() or addSubpopSplit(),
+the fitness of all of the newly created individuals is considered to be 1.0 until fitness values are
+recalculated.
+– (void)configureDisplay([Nf center = NULL], [Nf$ scale = NULL],
+[Ns$ color = NULL])
+This method customizes the display of the subpopulation in SLiMgui’s Population Visualization graph.
+When this method is called by a model running outside SLiMgui, it will do nothing except typechecking
+and bounds-checking its arguments. When called by a model running in SLiMgui, the
+position, size, and color of the subpopulation’s displayed circle can be controlled as specified below.
+The center parameter sets the coordinates of the center of the subpopulation’s displayed circle; it
+must be a float vector of length two, such that center[0] provides the x-coordinate and center[1]
+provides the y-coordinate. The square central area of the Population Visualization occupies scaled
+coordinates in [0,1] for both x and y, so the values in center must be within those bounds. If a value
+of NULL is provided, SLiMgui’s default center will be used (which currently arranges subpopulations in
+a circle).
+The scale parameter sets a scaling factor to be applied to the radius of the subpopulation’s displayed
+circle. The default radius used by SLiMgui is a function of the subpopulation’s number of individuals;
+this default radius is then multiplied by scale. If a value of NULL is provided, the default radius will
+be used; this is equivalent to supplying a scale of 1.0. Typically the same scale value should be
+used by all subpopulations, to scale all of their circles up or down uniformly, but that is not required.
+The color parameter sets the color to be used for the displayed subpopulation’s circle. Colors may be
+specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see the Eidos manual). If
+color is NULL or the empty string, "", SLiMgui’s default (fitness-based) color will be used.
+– (void)defineSpatialMap(string$ name, string$ spatiality, Ni gridSize,
+numeric values, [logical$ interpolate = F], [Nif valueRange = NULL],
+[Ns colors = NULL])
+Defines a spatial map for the subpopulation. The map will henceforth be identified by name. The map
+uses the spatial dimensions referenced by spatiality, which must be a subset of the dimensions defined
+for the simulation in initializeSLiMOptions(). Spatiality "x" is permitted for dimensionality "x";
+spatiality "x", "y", or "xy" for dimensionality "xy"; and spatiality "x", "y", "z", "xy", "yz", "xz",
+or "xyz" for dimensionality "xyz". The spatial map is defined by a grid of values of a size specified
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 522
+by gridSize, which must have one value per spatial dimension (or gridSize may be NULL; see
+below); for a spatiality of "xz", for example, gridSize must be of length 2, specifying the size of the
+values grid in the x and z dimensions. The parameter values then gives the values of the grid; it must
+be of length equal to the product of the gridSize elements, and specifies values varying first (i.e.,
+fastest) in the x dimension, then in y, then in z.
+Beginning in SLiM 2.6, the values parameter may be a matrix/array with the number of dimensions
+appropriate for the declared spatiality of the map; for example, a map with spatiality "xy" would
+require a (two-dimensional) matrix, whereas a map with spatiality of "xyz" would require a threedimensional
+array. (See the Eidos manual for discussion of matrices and arrays.) If a matrix/array
+argument is supplied for values, gridSize must either be NULL, or (for backward compatibility) may
+match the dimensions of values as they would be given by dim(values). The data in values is
+interpreted just as is described above for the vector case: varying first in x, then in y, then in z.
+BEWARE: since the values in Eidos matrices and arrays are stored in column-first order (following the
+convention established by R), this means that for a map with spatiality "xy" each column of the
+values matrix will provide map data as x varies and y remains constant. This will be confusing if you
+think of matrix columns as being “x” and matrix rows as being “y”, so try not to think that way; the
+opposite is true. This behavior is actually simple, self-consistent, and backward-compatible; if you
+before created a spatial map with a vector values before and a gridSize of c(x, y) specifying the
+dimensions of that vector, you can now supply matrix(values, nrow=x) for values to get exactly
+the same spatial map, and you can still supply the same value of c(x, y) for gridSize if you wish
+(or you may supply NULL). If, however, you are looking at a matrix as printed in the Eidos console,
+and want that matrix to be used as a spatial map in SLiM in the same orientation, you should use the
+transpose of the matrix, as supplied by the t() function. Actually, since matrices are printed in the
+console with each successive row having a larger index, whereas in Cartesian (x, y) coordinates yvalues
+increase as you go upward, you may also wish to reverse the order of rows in your matrix prior
+to transposing (or the order of columns after transposing), with an expression such as
+t(map[(nrow(map)-1):0,]), in order to make the spatial map display in SLiMgui as you expect
+(since SLiMgui displays everything in Cartesian coordinates). Apologies if this is confusing; it would
+be nice if matrix notation, programming languages, and Descartes all agreed on such things, but they
+do not, so be very careful that your spatial maps are oriented as you wish them to be!
+Moving on to the other parameters of defineSpatialMap(): if interpolate is F, values across the
+spatial map are not interpolated; the value at a given point is equal to the nearest value defined by the
+grid of values specified. If interpolate is T, values across the spatial map will be interpolated (using
+linear, bilinear, or trilinear interpolation as appropriate) to produce spatially continuous variation in
+values. In either case, the corners of the value grid are exactly aligned with the corners of the spatial
+boundaries of the subpopulation as specified by setSpatialBoundary(), and the value grid is then
+stretched across the spatial extent of the subpopulation in such a manner as to produce equal spacing
+between the values along each dimension. The setting of interpolation only affects how values
+between these grid points are calculated: by nearest-neighbor, or by linear interpolation. Interpolation
+of spatial maps with periodic boundaries is not handled specially; to ensure that the edges of a
+periodic spatial map join smoothly, simply ensure that the grid values at the edges of the map are
+identical, since they will be coincident after periodic wrapping.
+The valueRange and colors parameters travel together; either both are unspecified, or both are
+specified. They control how map values will be transformed into colors, by SLiMgui and by the
+spatialMapColor() method. The valueRange parameter establishes the color-mapped range of
+spatial map values, as a vector of length two specifying a minimum and maximum; this does not need
+to match the actual range of values in the map. The colors parameter then establishes the
+corresponding colors for values within the interval defined by valueRange: values less than or equal
+to valueRange[0] will map to colors[0], values greater than or equal to valueRange[1] will map
+to the last colors value, and intermediate values will shade continuously through the specified vector
+of colors, with interpolation between adjacent colors to produce a continuous spectrum. This is much
+simpler than it sounds in this description; see the recipes in chapter 15 for an illustration of its use.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 523
+Note that at present, SLiMgui will only display spatial maps of spatiality "x", "y", or "xy"; the colormapping
+parameters will simply be ignored by SLiMgui for other spatiality values (even if the spatiality
+is a superset of these values; SLiMgui will not attempt to display an "xyz" spatial map, for example,
+since it has no way to choose which 2D slice through the xyz space it ought to display). The
+spatialMapColor() method will return translated color strings for any spatial map, however, even if
+SLiMgui is unable to display the spatial map. If there are multiple spatial maps with color-mapping
+parameters defined, SLiMgui will choose just one for display; it will prefer an "xy" map if one is
+available, but beyond that heuristic its choice will be arbitrary.
+– (+)getValue(string$ key)
+Returns the value previously set for the dictionary entry identifier key using setValue(), or NULL if
+no value has been set. This dictionary-style functionality is actually provided by the superclass of
+Subpopulation, SLiMEidosDictionary, although that fact is not presently visible in Eidos since
+superclasses are not introspectable.
+– (void)outputMSSample(integer$ sampleSize, [logical$ replace = T],
+[string$ requestedSex = "*"], [Ns$ filePath = NULL], [logical$ append = F],
+[logical$ filterMonomorphic = F])
+Output a random sample from the subpopulation in MS format (see section 25.2.2 for output format
+details). Positions in the output will span the interval [0,1]. A sample of genomes (not entire
+individuals, note) of size sampleSize from the subpopulation will be output. The sample may be
+done either with or without replacement, as specified by replace; the default is to sample with
+replacement. A particular sex of individuals may be requested for the sample, for simulations in
+which sex is enabled, by passing "M" or "F" for requestedSex; passing "*", the default, indicates
+that genomes from individuals should be selected randomly, without respect to sex. If the sampling
+options provided by this method are not adequate, see the outputMS() method of Genome for a more
+flexible low-level option.
+If the optional parameter filePath is NULL (the default), output will be sent to Eidos’s output stream
+(see section 4.2.1). Otherwise, output will be sent to the filesystem path specified by filePath,
+overwriting that file if append if F, or appending to the end of it if append is T.
+If filterMonomorphic is F (the default), all mutations that are present in the sample will be included
+in the output. This means that some mutations may be included that are actually monomorphic within
+the sample (i.e., that exist in every sampled genome, and are thus apparently fixed). These may be
+filtered out with filterMonomorphic = T if desired; note that this option means that some mutations
+that do exist in the sampled genomes might not be included in the output, simply because they exist
+in every sampled genome.
+See outputSample() and outputVCFSample() for other output formats. Output is generally done in
+a late() event, so that the output reflects the state of the simulation at the end of a generation.
+– (void)outputSample(integer$ sampleSize, [logical$ replace = T],
+[string$ requestedSex = "*"], [Ns$ filePath = NULL], [logical$ append = F])
+Output a random sample from the subpopulation in SLiM’s native format (see section 25.2.1 for output
+format details). A sample of genomes (not entire individuals, note) of size sampleSize from the
+subpopulation will be output. The sample may be done either with or without replacement, as
+specified by replace; the default is to sample with replacement. A particular sex of individuals may
+be requested for the sample, for simulations in which sex is enabled, by passing "M" or "F" for
+requestedSex; passing "*", the default, indicates that genomes from individuals should be selected
+randomly, without respect to sex. If the sampling options provided by this method are not adequate,
+see the output() method of Genome for a more flexible low-level option.
+If the optional parameter filePath is NULL (the default), output will be sent to Eidos’s output stream
+(see section 4.2.1). Otherwise, output will be sent to the filesystem path specified by filePath,
+overwriting that file if append if F, or appending to the end of it if append is T.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 524
+See outputMSSample() and outputVCFSample() for other output formats. Output is generally done
+in a late() event, so that the output reflects the state of the simulation at the end of a generation.
+– (void)outputVCFSample(integer$ sampleSize, [logical$ replace = T],
+[string$ requestedSex = "*"], [logical$ outputMultiallelics = T],
+[Ns$ filePath = NULL], [logical$ append = F],
+[logical$ simplifyNucleotides = F], [logical$ outputNonnucleotides = T])
+Output a random sample from the subpopulation in VCF format (see sections 25.2.3 and 25.2.4 for
+output format details). A sample of individuals (not genomes, note – unlike the outputSample() and
+outputMSSample() methods) of size sampleSize from the subpopulation will be output. The sample
+may be done either with or without replacement, as specified by replace; the default is to sample
+with replacement. A particular sex of individuals may be requested for the sample, for simulations in
+which sex is enabled, by passing "M" or "F" for requestedSex; passing "*", the default, indicates
+that genomes from individuals should be selected randomly, without respect to sex. If the sampling
+options provided by this method are not adequate, see the outputVCF() method of Genome for a
+more flexible low-level option.
+If the optional parameter filePath is NULL (the default), output will be sent to Eidos’s output stream
+(see section 4.2.1). Otherwise, output will be sent to the filesystem path specified by filePath,
+overwriting that file if append if F, or appending to the end of it if append is T.
+The parameters outputMultiallelics, simplifyNucleotides, and outputNonnucleotides affect
+the format of the output produced; see sections 25.2.3 and 25.2.4 for further discussion.
+See outputMSSample() and outputSample() for other output formats. Output is generally done in a
+late() event, so that the output reflects the state of the simulation at the end of a generation.
+– (logical)pointInBounds(float point)
+Returns T if point is inside the spatial boundaries of the subpopulation, F otherwise. For example, for
+a simulation with "xy" dimensionality, if point contains exactly two values constituting an (x,y) point,
+the result will be T if and only if ((point[0]>=x0) & (point[0]<=x1) & (point[1]>=y0) &
+(point[1]<=y1)) given spatial bounds (x0, y0, x1, y1). This method is useful for implementing
+absorbing or reprising boundary conditions. This may only be called in simulations for which
+continuous space has been enabled with initializeSLiMOptions().
+The length of point must be an exact multiple of the dimensionality of the simulation; in other words,
+point may contain values comprising more than one point. In this case, a logical vector will be
+returned in which each element is T if the corresponding point in point is inside the spatial
+boundaries of the subpopulation, F otherwise.
+– (float)pointPeriodic(float point)
+Returns a revised version of point that has been brought inside the periodic spatial boundaries of the
+subpopulation (as specified by the periodicity parameter of initializeSLiMOptions()) by
+wrapping around periodic spatial boundaries. In brief, if a coordinate of point lies beyond a periodic
+spatial boundary, that coordinate is wrapped around the boundary, so that it lies inside the spatial
+extent by the same magnitude that it previously lay outside, but on the opposite side of the space; in
+effect, the two edges of the periodic spatial boundary are seamlessly joined. This is done iteratively
+until all coordinates lie inside the subpopulation’s periodic boundaries. Note that non-periodic spatial
+boundaries are not enforced by this method; they should be enforced using pointReflected(),
+pointStopped(), or some other means of enforcing boundary constraints (which can be used after
+pointPeriodic() to bring the remaining coordinates into bounds; coordinates already brought into
+bounds by pointPeriodic() will be unaffected by those calls). This method is useful for
+implementing periodic boundary conditions. This may only be called in simulations for which
+continuous space and at least one periodic spatial dimension have been enabled with
+initializeSLiMOptions().
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 525
+The length of point must be an exact multiple of the dimensionality of the simulation; in other words,
+point may contain values comprising more than one point. In this case, each point will be processed
+as described above and a new vector containing all of the processed points will be returned.
+– (float)pointReflected(float point)
+Returns a revised version of point that has been brought inside the spatial boundaries of the
+subpopulation by reflection. In brief, if a coordinate of point lies beyond a spatial boundary, that
+coordinate is reflected across the boundary, so that it lies inside the boundary by the same magnitude
+that it previously lay outside the boundary. This is done iteratively until all coordinates lie inside the
+subpopulation’s boundaries. This method is useful for implementing reflecting boundary conditions.
+This may only be called in simulations for which continuous space has been enabled with
+initializeSLiMOptions().
+The length of point must be an exact multiple of the dimensionality of the simulation; in other words,
+point may contain values comprising more than one point. In this case, each point will be processed
+as described above and a new vector containing all of the processed points will be returned.
+– (float)pointStopped(float point)
+Returns a revised version of point that has been brought inside the spatial boundaries of the
+subpopulation by clamping. In brief, if a coordinate of point lies beyond a spatial boundary, that
+coordinate is set to exactly the position of the boundary, so that it lies on the edge of the spatial
+boundary. This method is useful for implementing stopping boundary conditions. This may only be
+called in simulations for which continuous space has been enabled with initializeSLiMOptions().
+The length of point must be an exact multiple of the dimensionality of the simulation; in other words,
+point may contain values comprising more than one point. In this case, each point will be processed
+as described above and a new vector containing all of the processed points will be returned.
+– (float)pointUniform([integer$ n = 1])
+Returns a new point (or points, for n > 1) generated from uniform draws for each coordinate, within
+the spatial boundaries of the subpopulation. The returned vector will contain n points, each
+comprised of a number of coordinates equal to the dimensionality of the simulation, so it will be of
+total length n*dimensionality. This may only be called in simulations for which continuous space has
+been enabled with initializeSLiMOptions().
+– (void)removeSubpopulation(void)
+Removes this subpopulation from the model. The subpopulation is immediately removed from the list
+of active subpopulations, and the symbol representing the subpopulation is undefined. The
+subpopulation object itself remains unchanged until children are next generated (at which point it is
+deallocated), but it is no longer part of the simulation and should not be used.
+Note that this method is only for use in nonWF models, in which there is a distinction between a
+subpopulation being empty and a subpopulation being removed from the simulation; an empty
+subpopulation may be re-colonized by migrants, whereas as a removed subpopulation no longer
+exists at all. WF models do not make this distinction; when a subpopulation is empty it is
+automatically removed. WF models should therefore call setSubpopulationSize(0) instead of this
+method; setSubpopulationSize() is the standard way for WF models to change the subpopulation
+size, including to a size of 0.
+– (object<Individual>)sampleIndividuals(integer$ size, [logical$ replace = F],
+[No<Individual>$ exclude = NULL], [Ns$ sex = NULL],[Ni$ tag = NULL],
+[Ni$ minAge = NULL], [Ni$ maxAge = NULL], [Nl$ migrant = NULL])
+Returns a vector of individuals, of size less than or equal to parameter size, sampled from the
+individuals in the target subpopulation. Sampling is done without replacement if replace is F (the
+default), or with replacement if replace is T. The remaining parameters specify constraints upon the
+pool of individuals that will be considered candidates for the sampling. Parameter exclude, if non-
+NULL, may specify a specific individual that should not be considered a candidate (typically the focal
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 526
+individual in some operation). Parameter sex, if non-NULL, may specify a sex ("M" or "F") for the
+individuals to be drawn, in sexual models. Parameter tag, if non-NULL, may specify a tag value for the
+individuals to be drawn; only individuals whose tag property matches this value will be candidates.
+Parameters minAge and maxAge, if non-NULL, may specify a minimum or maximum age for the
+individuals to be drawn, in nonWF models. Parameter migrant, if non-NULL, may specify a required
+value for the migrant property of the individuals to be drawn (so T will require that individuals be
+migrants, F will require that they not be). If the candidate pool is smaller than the requested sample
+size, all eligible candidates will be returned (in randomized order); the result will be a zero-length
+vector if no eligible candidates exist (unlike sample()).
+This method is similar to getting the individuals property of the subpopulation, using operator [] to
+select only individuals with the desired properties, and then using sample() to sample from that
+candidate pool. However, besides being much simpler than the equivalent Eidos code, it is also much
+faster, and it does not fail if less than the full sample size is available. See subsetIndividuals() for
+a similar method that returns a full subset, rather than a sample.
+– (void)setCloningRate(numeric rate)
+Set the cloning rate of this subpopulation. The rate is changed to rate, which should be between 0.0
+and 1.0, inclusive. Clonal reproduction can be enabled in both non-sexual (i.e. hermaphroditic) and
+sexual simulations. In non-sexual simulations, rate must be a singleton value representing the overall
+clonal reproduction rate for the subpopulation. In sexual simulations, rate may be either a singleton
+(specifying the clonal reproduction rate for both sexes) or a vector containing two numeric values (the
+female and male cloning rates specified separately, at indices 0 and 1 respectively). During mating
+and offspring generation, the probability that any given offspring individual will be generated by
+cloning – by asexual reproduction without gametes or meiosis – will be equal to the cloning rate (for
+its sex, in sexual simulations) set in the parental (not the offspring!) subpopulation.
+– (void)setMigrationRates(io<Subpopulation> sourceSubpops, numeric rates)
+Set the migration rates to this subpopulation from the subpopulations in sourceSubpops to the
+corresponding rates specified in rates; in other words, rates gives the expected fractions of the
+children in this subpopulation that will subsequently be generated from parents in the subpopulations
+sourceSubpops (see section 21.2.1). This method will only set the migration fractions from the
+subpopulations given; migration rates from other subpopulations will be left unchanged (explicitly set
+a zero rate to turn off migration from a given subpopulation). The type of sourceSubpops may be
+either integer, specifying subpopulations by identifier, or object, specifying subpopulations directly.
+– (void)setSelfingRate(numeric$ rate)
+Set the selfing rate of this subpopulation. The rate is changed to rate, which should be between 0.0
+and 1.0, inclusive. Selfing can only be enabled in non-sexual (i.e. hermaphroditic) simulations.
+During mating and offspring generation, the probability that any given offspring individual will be
+generated by selfing – by self-fertilization via gametes produced by meiosis by a single parent – will be
+equal to the selfing rate set in the parental (not the offspring!) subpopulation (see section 21.2.1).
+– (void)setSexRatio(float$ sexRatio)
+Set the sex ratio of this subpopulation to sexRatio. As defined in SLiM, this is actually the fraction of
+the subpopulation that is male; in other words, the M:(M+F) ratio. This will take effect when children
+are next generated; it does not change the current subpopulation state. Unlike the selfing rate, the
+cloning rate, and migration rates, the sex ratio is deterministic: SLiM will generate offspring that
+exactly satisfy the requested sex ratio (within integer roundoff limits). See section 21.2.1 for further
+details.
+– (void)setSpatialBounds(numeric bounds)
+Set the spatial boundaries of the subpopulation to bounds. This method may be called only for
+simulations in which continuous space has been enabled with initializeSLiMOptions(). The
+length of bounds must be double the spatial dimensionality, so that it supplies both minimum and
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 527
+maximum values for each coordinate. More specifically, for a dimensionality of "x", bounds should
+supply (x0, x1) values; for dimensionality "xy" it should supply (x0, y0, x1, y1) values; and for
+dimensionality "xyz" it should supply (x0, y0, z0, x1, y1, z1) (in that order). These
+boundaries will be used by SLiMgui to calibrate the display of the subpopulation, and will be used by
+methods such as pointInBounds(), pointReflected(), pointStopped(), and pointUniform().
+The default spatial boundaries for all subpopulations span the interval [0,1] in each dimension.
+Spatial dimensions that are periodic (as established with the periodicity parameter to
+initializeSLiMOptions()) must have a minimum coordinate value of 0.0 (a restriction that allows
+the handling of periodicity to be somewhat more efficient). The current spatial bounds for the
+subpopulation may be obtained through the spatialBounds property.
+– (void)setSubpopulationSize(integer$ size)
+Set the size of this subpopulation to size individuals. This will take effect when children are next
+generated; it does not change the current subpopulation state. Setting a subpopulation to a size of 0
+does have some immediate effects that serve to disconnect it from the simulation: the subpopulation is
+removed from the list of active subpopulations, the subpopulation is removed as a source of migration
+for all other subpopulations, and the symbol representing the subpopulation is undefined. In this
+case, the subpopulation itself remains unchanged until children are next generated (at which point it is
+deallocated), but it is no longer part of the simulation and should not be used.
+– (void)setValue(string$ key, + value)
+Sets a value for the dictionary entry identifier key. The value, which may be of any type other than
+object, can be fetched later using getValue(). This dictionary-style functionality is actually
+provided by the superclass of Subpopulation, SLiMEidosDictionary, although that fact is not
+presently visible in Eidos since superclasses are not introspectable.
+– (string)spatialMapColor(string$ name, numeric value)
+Looks up the spatial map indicated by name, and uses its color-translation machinery (as defined by
+the valueRange and colors parameters to defineSpatialMap()) to translate each element of value
+into a corresponding color string. If the spatial map does not have color-translation capabilities, an
+error will result. See the documentation for defineSpatialMap() for information regarding the
+details of color translation. See the Eidos manual for further information on color strings.
+– (float)spatialMapValue(string$ name, float point)
+Looks up the spatial map indicated by name, and uses its mapping machinery (as defined by the
+gridSize, values, and interpolate parameters to defineSpatialMap()) to translate the
+coordinates of point into a corresponding map value. The length of point must be equal to the
+spatiality of the spatial map; in other words, for a spatial map with spatiality "xz", point must be of
+length 2, specifying the x and z coordinates of the point to be evaluated. Interpolation will
+automatically be used if it was enabled for the spatial map. Point coordinates are clamped into the
+range defined by the spatial boundaries, even if the spatial boundaries are periodic; use
+pointPeriodic() to wrap the point coordinates first if desired. See the documentation for
+defineSpatialMap() for information regarding the details of value mapping.
+Beginning in SLiM 3.3, point may contain more than one point to be looked up. In this case, the
+length of point must be an exact multiple of the spatiality of the spatial map; for a spatial map with
+spatiality "xz", for example, the length of point must be an exact multiple of 2, and successive pairs
+of elements from point (elements 0 and 1, then elements 2 and 3, etc.) will be taken as the x and z
+coordinates of the points to be evaluated. This allows spatialMapValue() to be used in a vectorized
+fashion.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 528
+– (object<Individual>)subsetIndividuals([No<Individual>$ exclude = NULL],
+[Ns$ sex = NULL],[Ni$ tag = NULL], [Ni$ minAge = NULL], [Ni$ maxAge = NULL],
+[Nl$ migrant = NULL])
+Returns a vector of individuals subset from the individuals in the target subpopulation. The parameters
+specify constraints upon the subset of individuals that will be returned. Parameter exclude, if non-
+NULL, may specify a specific individual that should not be included (typically the focal individual in
+some operation). Parameter sex, if non-NULL, may specify a sex ("M" or "F") for the individuals to be
+returned, in sexual models. Parameter tag, if non-NULL, may specify a tag value for the individuals to
+be returned; only individuals whose tag property matches this value will be returned. Parameters
+minAge and maxAge, if non-NULL, may specify a minimum or maximum age for the individuals to be
+returned, in nonWF models. Parameter migrant, if non-NULL, may specify a required value for the
+migrant property of the individuals to be returned (so T will require that individuals be migrants, F
+will require that they not be).
+This method is shorthand for getting the individuals property of the subpopulation, and then using
+operator [] to select only individuals with the desired properties; besides being much simpler than the
+equivalent Eidos code, it is also much faster. See sampleIndividuals() for a similar method that
+returns a sample taken from a chosen subset of individuals.
+– (void)takeMigrants(object<Individual> migrants)
+Immediately moves the individuals in migrants to the target subpopulation (removing them from
+their previous subpopulation). Individuals in migrants that are already in the target subpopulation
+are unaffected. Note that the indices and order of individuals and genomes in both the target and
+source subpopulations will change unpredictably as a side effect of this method.
+Note that this method is only for use in nonWF models, in which migration is managed manually by
+the model script. In WF models, migration is managed automatically by the SLiM core based upon
+the migration rates set for each subpopulation with setMigrationRates().

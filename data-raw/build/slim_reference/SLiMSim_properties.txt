@@ -1,0 +1,59 @@
+chromosome => (object<Chromosome>$)
+The Chromosome object used by the simulation.
+chromosomeType => (string$)
+The type of chromosome being simulated; this will be one of "A", "X", or "Y".
+dimensionality => (string$)
+The spatial dimensionality of the simulation, as specified in initializeSLiMOptions(). This will be
+"" (the empty string) for non-spatial simulations (the default), or "x", "xy", or "xyz", for simulations
+using those spatial dimensions respectively.
+dominanceCoeffX <–> (float$)
+The dominance coefficient value used to modify the selection coefficients of mutations present on the
+single X chromosome of an XY male (see the SLiM documentation for details). Used only when
+simulating an X chromosome; setting a value for this property in other circumstances is an error.
+Changing this will normally affect the fitness values calculated at the end of the current generation; if
+you want current fitness values to be affected, you can call SLiMSim’s method
+recalculateFitness() – but see the documentation of that method for caveats.
+generation <–> (integer$)
+The current generation number.
+genomicElementTypes => (object<GenomicElementType>)
+The GenomicElementType objects being used in the simulation.
+inSLiMgui => (logical$)
+This property has been deprecated, and may be removed in a future release of SLiM. In SLiM 3.2.1
+and later, use exists("slimgui") instead.
+If T, the simulation is presently running inside SLiMgui; if F, it is running at the command line. In
+general simulations should not care where they are running, but in special circumstances such as
+opening plot windows it may be necessary to know the runtime environment.
+interactionTypes => (object<InteractionType>)
+The InteractionType objects being used in the simulation.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 507
+modelType => (string$)
+The type of model being simulated, as specified in initializeSLiMModelType(). This will be "WF"
+for WF models (Wright–Fisher models, the default), or "nonWF" for nonWF models (non-Wright–Fisher
+models; see section 1.6 for discussion).
+mutationTypes => (object<MutationType>)
+The MutationType objects being used in the simulation.
+mutations => (object<Mutation>)
+The Mutation objects that are currently active in the simulation.
+nucleotideBased => (logical$)
+If T, the model is nucleotide-based; if F, it is not. See the discussion of the nucleotideBased
+parameter to initializeSLiMOptions() for discussion.
+periodicity => (string$)
+The spatial periodicity of the simulation, as specified in initializeSLiMOptions(). This will be
+"" (the empty string) for non-spatial simulations and simulations with no periodic spatial dimensions
+(the default). Otherwise, it will be a string representing the subset of spatial dimensions that have
+been declared to be periodic, as specified to initializeSLiMOptions().
+scriptBlocks => (object<SLiMEidosBlock>)
+All registered SLiMEidosBlock objects in the simulation.
+sexEnabled => (logical$)
+If T, sex is enabled in the simulation; if F, individuals are hermaphroditic.
+subpopulations => (object<Subpopulation>)
+The Subpopulation instances currently defined in the simulation.
+substitutions => (object<Substitution>)
+A vector of Substitution objects, representing all mutations that have been fixed.
+tag <–> (integer$)
+A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read
+it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value
+prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.
+See also the getValue() and setValue() methods, for another way of attaching state to the
+simulation.

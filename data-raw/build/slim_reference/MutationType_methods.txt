@@ -1,0 +1,27 @@
+– (float)drawSelectionCoefficient([integer$ n = 1])
+Draws and returns a vector of n selection coefficients using the currently defined distribution of fitness
+effects (DFE) for the target mutation type. See section 23.9 above for discussion of the supported
+distributions and their uses. If the DFE is type "s", this method will result in synchronous execution
+of the DFE’s script.
+– (+)getValue(string$ key)
+Returns the value previously set for the dictionary entry identifier key using setValue(), or NULL if
+no value has been set. This dictionary-style functionality is actually provided by the superclass of
+MutationType, SLiMEidosDictionary, although that fact is not presently visible in Eidos since
+superclasses are not introspectable.
+– (void)setDistribution(string$ distributionType, ...)
+Set the distribution of fitness effects for a mutation type. The distributionType may be "f", in
+which case the ellipsis ... should supply a numeric$ fixed selection coefficient; "e", in which case
+the ellipsis should supply a numeric$ mean selection coefficient for the exponential distribution; "g",
+in which case the ellipsis should supply a numeric$ mean selection coefficient and a numeric$ alpha
+shape parameter for a gamma distribution; "n", in which case the ellipsis should supply a numeric$
+mean selection coefficient and a numeric$ sigma (standard deviation) parameter for a normal
+distribution; "w", in which case the ellipsis should supply a numeric$ λ scale parameter and a
+numeric$ k shape parameter for a Weibull distribution; or "s", in which case the ellipsis should
+supply a string$ Eidos script parameter. See section 23.9 above for discussions of these distributions
+and their uses. The DFE for a mutation type is normally a constant in simulations, so be sure you
+know what you are doing.
+– (void)setValue(string$ key, + value)
+Sets a value for the dictionary entry identifier key. The value, which may be of any type other than
+object, can be fetched later using getValue(). This dictionary-style functionality is actually
+provided by the superclass of MutationType, SLiMEidosDictionary, although that fact is not
+presently visible in Eidos since superclasses are not introspectable.

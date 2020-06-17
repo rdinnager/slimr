@@ -67,7 +67,7 @@ initialize()
 So how would we write this script in `slimrlang`? Like this:
 
 ```{r first_script}
-library(slimrlang)
+library(slimr)
 
 slim_script(
   slim_block(initialize(),
@@ -450,4 +450,5 @@ if(require("slimr", quietly = TRUE)) {
   out$output_data
 }
 
+which(!1:1000 %in% out$output_data$generation)
 ```

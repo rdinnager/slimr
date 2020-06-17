@@ -163,6 +163,12 @@ slim_run_script <- function(script_txt,
     }
   }
 
+  final_output <- slim_process_output(leftovers)
+  output_data[[data_i + 1L]] <- final_output$data
+  if(capture_output) {
+    all_output[[out_i + 1L]] <- final_output$extra_out
+  }
+
 
   exit <- slim_p$get_exit_status()
 

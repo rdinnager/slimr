@@ -2384,7 +2384,7 @@ make_slim_output_sim <- function(data) {
       data_to_send <- "finished"
       finished <<- FALSE
     } else {
-      end_line <- line + n_lines
+      end_line <- line + n_lines - 1L
       if(end_line > tot_lines) {
         end_line <- tot_lines
       }

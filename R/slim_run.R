@@ -232,7 +232,7 @@ slim_process_output <- function(out, data_only = FALSE) {
   if(!data_only) {
 
     pre <- stringr::str_match_all(out_all,
-                                  stringr::regex("^((?:(?!<slimr_out:start>).)*)<slimr_out:start>",
+                                  stringr::regex("^((?:(?!<slimr_out:end>).)*)<slimr_out:start>",
                                                  dotall = TRUE))[[1]][ , 2] %>%
       stringr::str_split("\n") %>%
       purrr::flatten_chr()
@@ -245,12 +245,18 @@ slim_process_output <- function(out, data_only = FALSE) {
       purrr::flatten_chr()
 
     post <- stringr::str_match_all(out_all,
-                                   stringr::regex("<slimr_out:end>((?:(?!<slimr_out:end>).)*)$",
-                                                  dotall = TRUE))[[1]][ , 2] %>%
+                                   stringr::regex("<slimr_out:start>((?:(?!<slimr_out:end>).)*)$",
+                                                  dotall = TRUE))[[1]][ , 1] %>%
       stringr::str_split("\n") %>%
       purrr::flatten_chr()
 
-    return(list(data = df, leftovers = post, extra_out = c(pre, inter)))
+    hangers <- stringr::str_match_all(out_all,
+                                      stringr::regex("<slimr_out:end>((?:(?!<slimr_out:start>).)*)$",
+                                                     dotall = TRUE))[[1]][ , 2] %>%
+      stringr::str_split("\n") %>%
+      purrr::flatten_chr()
+
+    return(list(data = df, leftovers = post, extra_out = c(pre, inter, hangers)))
 
   } else {
 

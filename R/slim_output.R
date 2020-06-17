@@ -20,3 +20,16 @@ slim_extract_output_data <- function(output) {
   slim_process_output(output, data_only = TRUE)
 
 }
+
+extract_output_data <- function(dat) {
+  if(length(dat) )
+  df <- readr::read_csv(dat,
+                        col_names = c("generation", "name", "expression", "data"),
+                        quote = "\'",
+                        col_types = "iccc")
+
+  readr::read_csv(paste(leftovers, collapse = "\n"),
+                  col_names = c("generation", "name", "expression", "data"),
+                  quote = "\'",
+                  col_types = "iccc")
+}

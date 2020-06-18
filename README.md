@@ -5,16 +5,12 @@
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.org/rdinnager/slimr.svg?branch=master)](https://travis-ci.org/rdinnager/slimr)
-[![AppVeyor build
-status](https://ci.appveyor.com/api/projects/status/github/rdinnager/slimr?branch=master&svg=true)](https://ci.appveyor.com/project/rdinnager/slimr)
+[![R build
+status](https://github.com/rdinnager/slimr/workflows/R-CMD-check/badge.svg)](https://github.com/rdinnager/slimr/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/rdinnager/slimr/branch/master/graph/badge.svg)](https://codecov.io/gh/rdinnager/slimr?branch=master)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![R build
-status](https://github.com/rdinnager/slimr/workflows/R-CMD-check/badge.svg)](https://github.com/rdinnager/slimr/actions)
 <!-- badges: end -->
 
 The goal of slimr is to run SLiM population genetics forward simulations
@@ -32,4 +28,62 @@ You can install the development version from
 devtools::install_github("rdinnager/slimr")
 ```
 
-## Example
+## Writing SLiM Scripts in R
+
+Using `slimr`, this is how you write the first example script (or
+recipe) from the (excellent) [SLiM](https://messerlab.org/slim/) manual:
+
+``` r
+library(slimr)
+#> Welcome to the slimr package for forward population genetics simulation in SLiM. For more information on SLiM please visit https://messerlab.org/slim/ .
+
+slim_script(
+  slim_block(initialize(),
+             {
+               ## set the overall mutation rate
+               initializeMutationRate(1e-7); 
+               ## m1 mutation type: neutral
+               initializeMutationType("m1", 0.5, "f", 0.0);
+               ## g1 genomic element type: uses m1 for all mutations
+               initializeGenomicElementType("g1", m1, 1.0);
+               ## uniform chromosome of length 100 kb
+               initializeGenomicElement(g1, 0, 99999);
+               ## uniform recombination along the chromosome
+               initializeRecombinationRate(1e-8);
+             }),
+  slim_block(1,
+             {
+               sim.addSubpop("p1", 500);
+             }),
+  slim_block(10000,
+             {
+               sim.simulationFinished();
+             })
+) -> script_1
+
+script_1
+#> <slimr_script[3]>
+#> block_init:initialize() {
+#>     initializeMutationRate(1e-07);
+#>     initializeMutationType("m1", 0.5, "f", 0);
+#>     initializeGenomicElementType("g1", m1, 1);
+#>     initializeGenomicElement(g1, 0, 99999);
+#>     initializeRecombinationRate(1e-08);
+#> }
+#> 
+#> block_2:1 early() {
+#>     sim.addSubpop("p1", 500);
+#> }
+#> 
+#> block_3:10000 early() {
+#>     sim.simulationFinished();
+#> }
+```
+
+You can output this script to text to run in a standalone SLiM
+installation, or you can run it in SLiM directly from R.
+
+You can also do fancy stuff like make the above script or another script
+into a template that you can dynamically fill-in with parameters
+generated in R. You can also make SLiM generate R-friendly input. See
+the vignettes for details of these features and how to use them.

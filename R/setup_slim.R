@@ -13,7 +13,7 @@
 #' @export
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' slim_setup()
 #' }
 slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE) {

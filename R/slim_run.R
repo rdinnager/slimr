@@ -112,26 +112,33 @@ slim_run_script <- function(script_txt,
 
   while(slim_p$is_alive() || not_finished) {
 
-    if(!slim_p$is_alive()) {
+    if(slim_p$is_alive()) {
+
+      slim_p$poll_io(10000)
+      out_lines <- c(leftovers, slim_p$read_output_lines())
+
+    } else {
+
       not_finished <- FALSE
+      out_lines <- c(leftovers, slim_p$read_all_output_lines())
+
     }
-
-    slim_p$poll_io(10000)
-
-    out_lines <- c(leftovers, slim_p$read_output_lines())
 
     leftovers <- NULL
 
     if(simple_run) {
       pb$tick(0)
       if(length(out_lines) > 0) {
+
         if(show_output) {
           pb$message(paste(out_lines, collapse = "\n"))
         }
+
         if(capture_output) {
           out_i <- out_i + 1L
           all_output[[out_i]] <- out_lines
         }
+
       }
       pb$tick()
     } else {

@@ -413,16 +413,15 @@ script_w_out
 
 Now if you happen to have `slimr` installed and setup you can run this script through slim and see what that output looks like. We will first convert our `slimr_script` object into text and then send that to run in SLiM.
 
-```{r test_output_in_slim}
+```{r test_output_in_slim, eval=FALSE}
 
 script_txt <- as_slim_text(script_w_out)
 
 cat(script_txt)
 
-if(require("slimr", quietly = TRUE)) {
-  out <- slim_run(script_txt, simple_run = TRUE, capture_output = TRUE)
-  head(out$output, n = 50L)
-}
+out <- slim_run(script_txt, simple_run = TRUE, capture_output = TRUE)
+head(out$output, n = 50L)
+
 
 
 

@@ -423,18 +423,14 @@ out <- slim_run(script_txt, simple_run = TRUE, capture_output = TRUE)
 head(out$output, n = 50L)
 
 
-
-
 ```
 You can see how standard output from SLiM ("Another successful round of evolution completed"), is interleaved in the output, but the tags added by `slimrlang` make it easy to filter this out later. `slimr` also provides a suite of handy functions to get this output data into a `data.frame` or `tibble`
 
 ```{r tests, eval=FALSE}
-if(require("slimr", quietly = TRUE)) {
 
-  out_dat <- slim_extract_output_data(out$output)
-  print(out_dat)
+out_dat <- slim_extract_output_data(out$output)
+print(out_dat)
   
-} 
 ```
 
 Running the script from the `slimr_script` object directly gives us more information about how the simulation is proceeding. We will increase the number of generations first.
@@ -443,11 +439,9 @@ Running the script from the `slimr_script` object directly gives us more informa
 
 modify(script_w_out, "end_gen", 3) <- 1000
 
-if(require("slimr", quietly = TRUE)) {
-  out <- slim_run(script_w_out, show_output = FALSE)
-  head(out$output, n = 20L)
-  out$output_data
-}
+out <- slim_run(script_w_out, show_output = FALSE)
+head(out$output, n = 20L)
+out$output_data
 
 which(!1:1000 %in% out$output_data$generation)
 ```

@@ -21,7 +21,7 @@ environmental variable to tell slimr where to find your slim installation.}
 Note that on Windows, you must have Windows subsystem for linux installed, which requires at least Windows 10.
 }
 \examples{
-\donttest{
+\dontrun{
 slim_setup()
 }
 }

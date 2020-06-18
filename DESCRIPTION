@@ -2,13 +2,28 @@ Package: slimr
 Title: Create, Run and Post-Process SLiM Population Genetics Forward Simulations
 Version: 0.0.0.9001
 Authors@R: 
-    person(given = "Russell",
-           family = "Dinnage",
-           role = c("aut", "cre"),
-           email = "russell.dinnage@gmail.com",
-           comment = c(ORCID = "0000-0003-0846-2819"))
+    c(person(given = "Russell",
+             family = "Dinnage",
+             role = c("aut", "cre"),
+             email = "russell.dinnage@gmail.com",
+             comment = c(ORCID = "0000-0003-0846-2819")),
+      person(given = "Stephen",
+             family = "Sarre",
+             role = "aut"),
+      person(given = "Bernd",
+             family = "Gruber",
+             role = "aut"),
+      person(given = "Richard",
+             family = "Duncan",
+             role = "aut"),
+      person(given = "Benjamin",
+             family = "Haller",
+             role = "ctb"),
+      person(given = "Philip",
+             family = "Messer",
+             role = "ctb"))
 Description: An R package that lets you write SLiM scripts using your 
-    favourite R IDE, using a syntax as cose as possible to the original 
+    favourite R IDE, using a syntax as close as possible to the original 
     SLiM language. It offer many tools to manipulate those scripts, as well 
     as run them in the SLiM software from R, as well as capture and post-process
     their output, while simulations are running.

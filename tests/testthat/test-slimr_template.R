@@ -40,14 +40,5 @@ test_that("templating works", {
   verify_output(test_path("slimr_template_output_test_list_w_missing.txt"),
                 script_partial)
 
-  skip_if_not_installed("crayon")
-
-  verify_output(test_path("slimr_template_output_test_unrendered_ansi.txt"),
-                script_temp,
-                crayon = TRUE)
-
-  verify_output(test_path("slimr_template_output_test_list_w_missing_ansi.txt"),
-                script_partial,
-                crayon = TRUE)
 
 })

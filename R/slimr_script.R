@@ -396,7 +396,7 @@ end_gen <- function(x) {
 }
 
 #' @export
-`modify<-` <- function(x, ..., value) {
+`modify<-` <- function(x, value, ...) {
   UseMethod("modify<-", x)
 }
 

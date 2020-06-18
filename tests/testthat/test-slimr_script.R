@@ -26,11 +26,6 @@ test_that("slimr_script output is correct", {
   verify_output(test_path("slimr_script_output_test.txt"),
                 script_1)
 
-  skip_if_not_installed("crayon")
-  verify_output(test_path("slimr_script_output_test_ansi.txt"),
-                script_1,
-                crayon = TRUE)
-
 })
 
 test_that("slimr_script objects concatenate correctly", {
@@ -95,10 +90,5 @@ initialize()
 
   expect_s3_class(to_script, "slimr_script")
 
-  skip_if_not_installed("crayon")
-
-  verify_output(test_path("slimr_script_conversion_test_ansi.txt"),
-                to_script,
-                crayon = TRUE)
 
 })

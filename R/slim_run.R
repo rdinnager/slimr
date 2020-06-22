@@ -155,7 +155,7 @@ slim_run_script <- function(script_txt,
           output_data[[data_i]] <- output_list$data
           if(!is.null(callbacks)) {
             purrr::walk(callbacks,
-                        .x(data = dplyr::bind_rows(output_data)))
+                        ~.x(data = dplyr::bind_rows(output_data)))
           }
           pb <- slim_update_progress(output_list, pb, show_output, simple_pb, end_gen)
           if(simple_pb) {

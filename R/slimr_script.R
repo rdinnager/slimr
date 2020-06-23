@@ -245,15 +245,15 @@ obj_print_footer.slimr_script <- function(x, ...) {
 
     if (requireNamespace("crayon", quietly = TRUE)) {
       template_text <- glue::glue("This slimr_script has templating in block(s)
-      {crayon::bold$bgCyan(paste(unique(slimr_template_attr$block_name[blocks_w_template],
-      collapse = ' and ')))} for variables
+      {paste(crayon::bold$bgCyan(unique(slimr_template_attr$block_name[blocks_w_template])),
+      collapse = ' and ')} for variables
       {paste(crayon::green(slimr_template_attr$var_names[blocks_w_template]),
                                   collapse = ' and ')}.\n") %>%
       stringr::str_wrap()
     } else {
       template_text <- glue::glue("This slimr_script has templating in block(s)
-      {paste(unique(slimr_template_attr$block_name[blocks_w_template],
-      collapse = ' and '))} for variables
+      {paste(unique(slimr_template_attr$block_name[blocks_w_template]),
+      collapse = ' and ')} for variables
       {paste(slimr_template_attr$var_names[blocks_w_template],
                                   collapse = ' and ')}.\n") %>%
         stringr::str_wrap()

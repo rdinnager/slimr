@@ -40,6 +40,7 @@ slim_run <- function(x, slim_path = NULL,
                      capture_output = TRUE,
                      show_output = !capture_output,
                      callbacks = NULL,
+                     cb_args = NULL,
                      new_grdev = FALSE,
                      ...) {
   UseMethod("slim_run", x)
@@ -75,8 +76,8 @@ slim_run_script <- function(script_txt,
                             capture_output = TRUE,
                             show_output = FALSE,
                             end_gen = NULL,
-                            vis_callbacks = NULL,
                             callbacks = NULL,
+                            cb_args = NULL,
                             ...) {
 
   platform <- get_os()
@@ -155,7 +156,8 @@ slim_run_script <- function(script_txt,
           output_data[[data_i]] <- output_list$data
           if(!is.null(callbacks)) {
             purrr::walk(callbacks,
-                        ~.x(data = dplyr::bind_rows(output_data)))
+                        ~do.call(.x, c(list(data = dplyr::bind_rows(output_data)),
+                                       cb_args)))
           }
           pb <- slim_update_progress(output_list, pb, show_output, simple_pb, end_gen)
           if(simple_pb) {
@@ -236,7 +238,7 @@ slim_process_output <- function(out, data_only = FALSE) {
   out_all <- paste(out, collapse = "\n")
 
   dat <- stringr::str_match_all(out_all,
-                                stringr::regex("<slimr_out:start>(.*?)<slimr_out:end>",
+                                stringr::regex("<slimr_out:start>(?:(.*?))<slimr_out:end>",
                                                dotall = TRUE))[[1]][ , 2]
 
   if(length(dat) > 0) {

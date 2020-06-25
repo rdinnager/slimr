@@ -3,6 +3,8 @@
 
 # slimr
 
+<https://rdinnager.github.io/slimr/>
+
 <!-- badges: start -->
 
 [![R build

@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Attempt to install and / or setup SLiM for use with slimr — slim_setup" />
-<meta property="og:description" content="slim_setup() will attempt to determine the user's OS and install SLiM automatically.
+<meta property="og:description" content="`slim_setup()` will attempt to determine the user's OS and install SLiM automatically.
 Note that on Windows, you must have Windows subsystem for linux installed, which requires at least Windows 10." />
 
 
@@ -73,7 +73,7 @@ Note that on Windows, you must have Windows subsystem for linux installed, which
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9001</span>
       </span>
     </div>
 
@@ -96,9 +96,15 @@ Note that on Windows, you must have Windows subsystem for linux installed, which
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/slimr_intro.html">Introduction to Population Genetics modelling in slimr</a>
+      <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimrlang: Writing SLiM scripts from R</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -127,18 +133,18 @@ Note that on Windows, you must have Windows subsystem for linux installed, which
     </div>
 
     <div class="ref-description">
-    <p><code>slim_setup()</code> will attempt to determine the user's OS and install SLiM automatically.
+    <p>`slim_setup()` will attempt to determine the user's OS and install SLiM automatically.
 Note that on Windows, you must have Windows subsystem for linux installed, which requires at least Windows 10.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>slim_setup</span>(<span class='kw'>install_dir</span> <span class='kw'>=</span> <span class='st'>"~/slim"</span>, <span class='kw'>test_slim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>slim_setup</span>(<span class='kw'>install_dir</span> <span class='kw'>=</span> <span class='st'>"~/slim"</span>, <span class='kw'>test_slim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>install_dir</th>
-      <td><p>Directory to install SLiM to. If "default" <code>slim_setup()</code> will install in the default
+      <td><p>Directory to install SLiM to. If "default" `slim_setup()` will install in the default
 directory. Be carefult to make sure you have write and execution permissions for the installation folder
 you specify. We recommend using the default directory "~/slim", in which case you will not have to set an
 environmental variable to tell slimr where to find your slim installation.</p></td>
@@ -147,13 +153,17 @@ environmental variable to tell slimr where to find your slim installation.</p></
       <th>test_slim</th>
       <td><p>Should SLiM be tested once installation is complete?</p></td>
     </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Whether to print out progress of the installation.</p></td>
+    </tr>
     </table>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'>setup_slim</span>()</div><div class='output co'>#&gt; <span class='error'>Error in setup_slim(): could not find function "setup_slim"</span></div><div class='input'># }
-</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>slim_setup</span>()
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -165,7 +175,7 @@ environmental variable to tell slimr where to find your slim installation.</p></
 
       <footer>
       <div class="copyright">
-  <p>Developed by Russell Dinnage.</p>
+  <p>Developed by Russell Dinnage, Stephen Sarre, Bernd Gruber, Richard Duncan.</p>
 </div>
 
 <div class="pkgdown">

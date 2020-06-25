@@ -1,0 +1,157 @@
+---
+title: "Custom Live Plotting for SLiM"
+author: "Russell Dinnage"
+date: "22/06/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r color, echo = FALSE, results='asis'}
+# crayon needs to be explicitly activated in Rmd
+options(crayon.enabled = TRUE)
+# Hooks needs to be set to deal with outputs
+# thanks to fansi logic
+if(requireNamespace("fansi", quietly = TRUE)) {
+  old_hooks <- fansi::set_knit_hooks(knitr::knit_hooks, 
+                                     which = c("output", "message", "error"))
+}
+```
+
+## Custom Live Plots
+
+This document describes how to make a custom visualization of SLiM simulation results that can be used to monitor the output of simulation while they are running. This takes advantage of the custom callbacks feature of `slim_run()`. As an example we will implements a genome visualization using 'Hilbert  curves' to visualize the spatial distribution of mutation in a simulation of genome evolution.
+
+# Hilbert Curves
+
+Hilbert curves are one example of a "space-filling curve". Space-filling curves are a way of "folding" a one-dimensional sequence into a two dimensional (or higher) space, in such a way that local spatial structure is maintained (in other words, parts of the sequence that are close together in one dimension also tend to be close together in two dimensions). These are a handy way to visualize a linear sequence (such as a genome) in a more space efficient way, taking advantage of the two dimensions available to us in standard media. An R package for plotting genomic data on Hilbert curves is available (the HilbertCurve package from Bioconductor). We will use a Hilbert curve to visualize the distribution on mutations in a simple genome evolution simulation. We will start be writing our SLiM model using `slimr` syntax, and using `slimr_output()` to output the mutations along our simulated genome in our simulated population. This script is based on recipe 6.1.14 from the SLiM manual. It sets up a simulation with three effective "chromosomes" with low recombination within each chromosome. This is the original SLiM script, which we then specify in `slimr`:
+
+```
+
+initialize() {
+  initializeMutationRate(1e-7);
+  initializeMutationType("m1", 0.5, "f", 0.0);
+  initializeMutationType("m2", 0.5, "f", 0.1);
+  initializeGenomicElementType("g1", c(m1,m2), c(10000,1));
+  initializeGenomicElement(g1, 0, 2999999);
+  rates = c(1e-9, 0.5, 1e-9, 0.5, 1e-9);
+  ends = c(999999, 1000000, 1999999, 2000000, 2999999);
+  initializeRecombinationRate(rates, ends);
+}
+
+1 { sim.addSubpop("p1", 500); }
+
+1:10000 late() { sim.outputFULL(); }
+
+```
+
+```{r libs, message=FALSE}
+library(slimr, quietly = TRUE)
+library(HilbertCurve, quietly = TRUE)
+```
+
+```{r specify_slim_model}
+
+chromosome_sim <- slim_script(
+  
+  slim_block(initialize(), {
+    initializeMutationRate( slimr_template("mut_rate", 1e-7) );
+    initializeMutationType("m1", 0.5, "f", 0.0);
+    initializeMutationType("m2", 0.5, "f", 0.1);
+    initializeGenomicElementType("g1", c(m1, m2), c(10000, 1));
+    initializeGenomicElement(g1, 0, 262142);
+    rates = c(1e-9, 0.5, 1e-9, 0.5, 1e-9);
+    ends = c(87381, 87382, 174762, 174763, 262143);
+    initializeRecombinationRate(rates, ends);
+  }),
+  
+  slim_block(1, {
+    sim.addSubpop("p1", slimr_template("N", 500));
+  }),
+  
+  slim_block(1, 1000, late(), {
+    slimr_output( sim.outputFull() , "fix_mut", do_every = 5);
+  })
+  
+)
+
+chromosome_sim
+
+```
+
+I've added a few `slimr_template()` calls to make it easier to quickly change parameters in the script for exploration.
+
+In order to make a custom visualization for this script we can provide a custom callback function. This is a function which takes as its first argument a dataset named `data`, which is dynamically constructed while SLiM is running based on the `slimr_output()` call in the script. To get an example dataset we can use to test our callback function, we can just run the script with `capture_output = TRUE`, which will capture the data and output it in the final results. This will tell us what the data will look like during the SLiM run. Since we just need it for testing purposes, we can just run the simulation for a small number of generations and on a small number of individuals (just enough to accumulate a few mutations to test the visualization).
+
+```{r run_script_test}
+chromosome_sim_test <- slimr_script_render(chromosome_sim,
+                                           template = list(N = 100))
+output_test <- slim_run(chromosome_sim_test)
+output_test$output_data
+```
+
+So now we can write a function that takes the outputted `tibble` and make the desired plot. The first thing we need to do is extract the relevant information from the full output. In this case we only need the information on mutations: their position, and their prevalance in the population. We can use the handy `slimr` function `slim_outputFull_extract(type = "mutation")` for this. This function extracts various pieces of the SLiM `outputFull()` function, which contains all information about a population in a SLiM simulation. In this case, we only need the information for the latest generation. Let's test it:
+
+```{r test_data_extract}
+mut_dat <- slim_outputFull_extract(output_test$output_data[nrow(output_test$output_data), ],
+                                   "mutations")
+mut_dat
+```
+
+Okay, so now we are ready to make our callback function. First we will create a little function to plot the Hilbert Curve. This uses a trick from the `grDevices` package to hold the display until each plot is finished drawing. This gives the animation produced while running the simulation a smoother appearance, but is not strictly necessary.
+
+```{r make_callback}
+## specify chromosome ranges for plotting
+chrs <- IRanges::IRanges(start = c(0, 87382, 174763),
+                         end = c(87382, 174763, 262143))
+
+bg <- IRanges::IRanges(start = 0, end = 262143)
+
+plot_HC <- function(positions, prevalence, chrs, bg, max_prev) {
+  prevalence <- prevalence / max_prev
+  cols <- colourvalues::color_values(c(0, prevalence, 1))[c(-1, -length(prevalence))]
+  grDevices::dev.hold()
+  hc = HilbertCurve(0, 262143, level = 4, reference = TRUE, arrow = FALSE)
+  hc_polygon(hc, chrs)
+  hc_points(hc, bg, np = 4, gp = gpar(fill = colourvalues::color_values(0)))
+  hc_points(hc, x1 = positions, gp = gpar(fill = cols), np = 4, mean_mode = "weighted")
+  invisible(grDevices::dev.flush())
+}
+
+#grDevices::dev.new(noRStudioGD = TRUE)
+plot_HC(mut_dat$chrome_pos, mut_dat$prevalence, chrs, bg, max_prev = 200)
+
+```
+
+Now the final callback function:
+
+```{r finally_callback}
+make_hilbert <- function(data, max_prev) {
+  mutation_data <- slim_outputFull_extract(data[nrow(data), ], "mutations")
+  plot_HC(mutation_data$chrome_pos, mutation_data$prevalence, chrs, bg, max_prev)
+  invisible(NULL)
+}
+```
+
+Let's try it out!
+
+```{r run_sim_w_callback, eval=FALSE}
+## change mutation rate and increase pop size
+chromosome_sim_1 <- slimr_script_render(chromosome_sim,
+                                           template = list(N = 500,
+                                                           mut_rate = 1e-6))
+
+## increase generations
+modify(chromosome_sim_1, "end_gen", 3) <- 10000
+
+## open a non-rstudio graphics device (faster and support holding)
+grDevices::dev.new(noRStudioGD = TRUE)
+sim_results <- slim_run(chromosome_sim_1, 
+                        callbacks = list(make_hilbert), 
+                        cb_args = list(max_prev = 1000))
+
+```
+
+![](figures/HC_callback_vis_demo.gif)

@@ -57,7 +57,7 @@
       <a href="../../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../../articles/slimrlang_intro.html">Introduction to slimrlang: Writing SLiM scripts from R</a>
+      <a href="../../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -188,7 +188,7 @@ initialize() {
 ## 
 ## Simulation finished with exit status: 0</code></pre>
 <div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">output_test</span>$<span class="no">output_data</span></pre></body></html></div>
-<pre class="fansi fansi-output"><code>## <span style="color: #555555;"># A tibble: 198 x 4</span><span>
+<pre class="fansi fansi-output"><code>## <span style="color: #555555;"># A tibble: 200 x 4</span><span>
 ##    generation name    expression    data                                        
 ##         </span><span style="color: #555555;font-style: italic;">&lt;int&gt;</span><span> </span><span style="color: #555555;font-style: italic;">&lt;chr&gt;</span><span>   </span><span style="color: #555555;font-style: italic;">&lt;chr&gt;</span><span>         </span><span style="color: #555555;font-style: italic;">&lt;chr&gt;</span><span>                                       
 ## </span><span style="color: #555555;"> 1</span><span>          5 fix_mut sim.outputFu~ </span><span style="color: #555555;">"</span><span>#OUT: 5 A\nVersion: 3\nPopulations:\np1 10~
@@ -201,26 +201,26 @@ initialize() {
 ## </span><span style="color: #555555;"> 8</span><span>         40 fix_mut sim.outputFu~ </span><span style="color: #555555;">"</span><span>#OUT: 40 A\nVersion: 3\nPopulations:\np1 1~
 ## </span><span style="color: #555555;"> 9</span><span>         45 fix_mut sim.outputFu~ </span><span style="color: #555555;">"</span><span>#OUT: 45 A\nVersion: 3\nPopulations:\np1 1~
 ## </span><span style="color: #555555;">10</span><span>         50 fix_mut sim.outputFu~ </span><span style="color: #555555;">"</span><span>#OUT: 50 A\nVersion: 3\nPopulations:\np1 1~
-## </span><span style="color: #555555;"># ... with 188 more rows</span><span>
+## </span><span style="color: #555555;"># ... with 190 more rows</span><span>
 </span></code></pre>
 <p>So now we can write a function that takes the outputted <code>tibble</code> and make the desired plot. The first thing we need to do is extract the relevant information from the full output. In this case we only need the information on mutations: their position, and their prevalance in the population. We can use the handy <code>slimr</code> function <code><a href="../../reference/slim_outputFull_extract.html">slim_outputFull_extract(type = "mutation")</a></code> for this. This function extracts various pieces of the SLiM <code><a href="../../reference/outputFull.html">outputFull()</a></code> function, which contains all information about a population in a SLiM simulation. In this case, we only need the information for the latest generation. Let’s test it:</p>
 <div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">mut_dat</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/slim_outputFull_extract.html">slim_outputFull_extract</a></span>(<span class="no">output_test</span>$<span class="no">output_data</span>[<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="no">output_test</span>$<span class="no">output_data</span>), ],
                                    <span class="st">"mutations"</span>)
 <span class="no">mut_dat</span></pre></body></html></div>
-<pre class="fansi fansi-output"><code>## <span style="color: #555555;"># A tibble: 68 x 11</span><span>
+<pre class="fansi fansi-output"><code>## <span style="color: #555555;"># A tibble: 64 x 11</span><span>
 ##    generation    id unique_id mut_type chrome_pos selection dominance subpop
 ##         </span><span style="color: #555555;font-style: italic;">&lt;int&gt;</span><span> </span><span style="color: #555555;font-style: italic;">&lt;int&gt;</span><span>     </span><span style="color: #555555;font-style: italic;">&lt;int&gt;</span><span> </span><span style="color: #555555;font-style: italic;">&lt;chr&gt;</span><span>         </span><span style="color: #555555;font-style: italic;">&lt;int&gt;</span><span>     </span><span style="color: #555555;font-style: italic;">&lt;dbl&gt;</span><span>     </span><span style="color: #555555;font-style: italic;">&lt;dbl&gt;</span><span> </span><span style="color: #555555;font-style: italic;">&lt;chr&gt;</span><span> 
-## </span><span style="color: #555555;"> 1</span><span>        990    29      </span><span style="text-decoration: underline;">1</span><span>169 m1           </span><span style="text-decoration: underline;">144</span><span>771         0       0.5 p1    
-## </span><span style="color: #555555;"> 2</span><span>        990     1      </span><span style="text-decoration: underline;">1</span><span>201 m1           </span><span style="text-decoration: underline;">131</span><span>667         0       0.5 p1    
-## </span><span style="color: #555555;"> 3</span><span>        990     0      </span><span style="text-decoration: underline;">1</span><span>691 m1           </span><span style="text-decoration: underline;">120</span><span>338         0       0.5 p1    
-## </span><span style="color: #555555;"> 4</span><span>        990    24      </span><span style="text-decoration: underline;">2</span><span>472 m1            </span><span style="text-decoration: underline;">94</span><span>405         0       0.5 p1    
-## </span><span style="color: #555555;"> 5</span><span>        990    25      </span><span style="text-decoration: underline;">2</span><span>735 m1            </span><span style="text-decoration: underline;">96</span><span>431         0       0.5 p1    
-## </span><span style="color: #555555;"> 6</span><span>        990    26      </span><span style="text-decoration: underline;">3</span><span>081 m1           </span><span style="text-decoration: underline;">107</span><span>929         0       0.5 p1    
-## </span><span style="color: #555555;"> 7</span><span>        990    28      </span><span style="text-decoration: underline;">3</span><span>831 m1           </span><span style="text-decoration: underline;">136</span><span>347         0       0.5 p1    
-## </span><span style="color: #555555;"> 8</span><span>        990    27      </span><span style="text-decoration: underline;">3</span><span>872 m1           </span><span style="text-decoration: underline;">128</span><span>901         0       0.5 p1    
-## </span><span style="color: #555555;"> 9</span><span>        990     3      </span><span style="text-decoration: underline;">4</span><span>334 m1           </span><span style="text-decoration: underline;">228</span><span>378         0       0.5 p1    
-## </span><span style="color: #555555;">10</span><span>        990     4      </span><span style="text-decoration: underline;">4</span><span>373 m1             </span><span style="text-decoration: underline;">7</span><span>937         0       0.5 p1    
-## </span><span style="color: #555555;"># ... with 58 more rows, and 3 more variables: first_gen </span><span style="color: #555555;font-style: italic;">&lt;int&gt;</span><span style="color: #555555;">,</span><span>
+## </span><span style="color: #555555;"> 1</span><span>       </span><span style="text-decoration: underline;">1</span><span>000    22      </span><span style="text-decoration: underline;">2</span><span>578 m1           </span><span style="text-decoration: underline;">173</span><span>998         0       0.5 p1    
+## </span><span style="color: #555555;"> 2</span><span>       </span><span style="text-decoration: underline;">1</span><span>000     3      </span><span style="text-decoration: underline;">2</span><span>798 m1            </span><span style="text-decoration: underline;">88</span><span>811         0       0.5 p1    
+## </span><span style="color: #555555;"> 3</span><span>       </span><span style="text-decoration: underline;">1</span><span>000    21      </span><span style="text-decoration: underline;">3</span><span>174 m1           </span><span style="text-decoration: underline;">153</span><span>812         0       0.5 p1    
+## </span><span style="color: #555555;"> 4</span><span>       </span><span style="text-decoration: underline;">1</span><span>000     5      </span><span style="text-decoration: underline;">3</span><span>541 m1           </span><span style="text-decoration: underline;">141</span><span>857         0       0.5 p1    
+## </span><span style="color: #555555;"> 5</span><span>       </span><span style="text-decoration: underline;">1</span><span>000    35      </span><span style="text-decoration: underline;">3</span><span>625 m1            </span><span style="text-decoration: underline;">54</span><span>667         0       0.5 p1    
+## </span><span style="color: #555555;"> 6</span><span>       </span><span style="text-decoration: underline;">1</span><span>000    36      </span><span style="text-decoration: underline;">3</span><span>638 m1            </span><span style="text-decoration: underline;">63</span><span>448         0       0.5 p1    
+## </span><span style="color: #555555;"> 7</span><span>       </span><span style="text-decoration: underline;">1</span><span>000    32      </span><span style="text-decoration: underline;">3</span><span>798 m1             </span><span style="text-decoration: underline;">9</span><span>969         0       0.5 p1    
+## </span><span style="color: #555555;"> 8</span><span>       </span><span style="text-decoration: underline;">1</span><span>000     2      </span><span style="text-decoration: underline;">3</span><span>844 m1            </span><span style="text-decoration: underline;">42</span><span>839         0       0.5 p1    
+## </span><span style="color: #555555;"> 9</span><span>       </span><span style="text-decoration: underline;">1</span><span>000     6      </span><span style="text-decoration: underline;">4</span><span>413 m1           </span><span style="text-decoration: underline;">142</span><span>887         0       0.5 p1    
+## </span><span style="color: #555555;">10</span><span>       </span><span style="text-decoration: underline;">1</span><span>000    10      </span><span style="text-decoration: underline;">4</span><span>430 m1           </span><span style="text-decoration: underline;">216</span><span>454         0       0.5 p1    
+## </span><span style="color: #555555;"># ... with 54 more rows, and 3 more variables: first_gen </span><span style="color: #555555;font-style: italic;">&lt;int&gt;</span><span style="color: #555555;">,</span><span>
 ## </span><span style="color: #555555;">#   prevalence </span><span style="color: #555555;font-style: italic;">&lt;int&gt;</span><span style="color: #555555;">, nucleotide </span><span style="color: #555555;font-style: italic;">&lt;chr&gt;</span><span>
 </span></code></pre>
 <p>Okay, so now we are ready to make our callback function. First we will create a little function to plot the Hilbert Curve. This uses a trick from the <code>grDevices</code> package to hold the display until each plot is finished drawing. This gives the animation produced while running the simulation a smoother appearance, but is not strictly necessary.</p>

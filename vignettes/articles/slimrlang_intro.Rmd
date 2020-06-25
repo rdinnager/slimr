@@ -1,8 +1,8 @@
 ---
-title: "Introduction to slimrlang: Writing SLiM scripts from R"
+title: "Introduction to slimr: Writing SLiM scripts from R"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to slimrlang: Writing SLiM scripts from R}
+  %\VignetteIndexEntry{Introduction to slimr: Writing SLiM scripts from R}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -27,13 +27,11 @@ if(requireNamespace("fansi", quietly = TRUE)) {
 }
 ```
 
-This vignette introduces the `slimrlang` package. `slimrlang` has the goal of making it easy to write scripts for the population genetics simulation software and programming language [SLiM](https://messerlab.org/slim/). In addition `slimrlang` offers tools to get R objects and generated model parameters into SLiM, as well as to help SLiM generate R friendly output for post-simulation analysis. 
+This vignette introduces the `slimr` package. `slimr` has the goal of making it easy to write scripts for the population genetics simulation software and programming language [SLiM](https://messerlab.org/slim/). `slimr` offers tools to get R objects and generated model parameters into SLiM, as well as to help SLiM generate R friendly output for post-simulation analysis. It also provides tools for working with existing SLiM scripts as well as running, monitoring, and visualising SLiM simulations in realtime and directly from R, as well as post-processing in R.
 
-`slimrlang` works best in conjunction with the [`slimr`](https://github.com/rdinnager/slimr) package, which imports `slimrlang` and provides tools with working with existing SLiM scripts as well as running, monitoring, and visualising SLiM simulations in realtime and directly from R, as well as post-processing in R.
+# Writing SLiM Scripts
 
-#Writing SLiM Scripts
-
-To write a SLiM script in `slimrlang` you must wrap your SLiM code in `slim_block` function calls, which are then nested in a `slim_script` function call. The API for `slimrlang` has been designed to mimic as close as possible the way that scripts are written in SLiM itself. To get you started we will use an example. SLiM has an extremely extensive manual that includes a large number (around 150!) of example scripts to help users learn the language. We will take advantage of this resource and try to write a few of the manual's scripts using the `slimrlang` approach.
+To write a SLiM script in `slimr` you must wrap your SLiM code in `slim_block` function calls, which are then nested in a `slim_script` function call. The API for `slimr` has been designed to mimic as close as possible the way that scripts are written in SLiM itself. To get you started we will use an example. SLiM has an extremely extensive manual that includes a large number (around 150!) of example scripts to help users learn the language. We will take advantage of this resource and try to write a few of the manual's scripts using the `slimr` approach.
 
 This is the first SLiM script (referred to as 'recipes') in the SLiM manual:
 
@@ -64,7 +62,7 @@ initialize()
 }
 ```
 
-So how would we write this script in `slimrlang`? Like this:
+So how would we write this script in `slimr`? Like this:
 
 ```{r first_script}
 library(slimr)
@@ -96,11 +94,11 @@ slim_script(
 script_1
 ```
 
-It is as simple as that at its most basic. `slim_script` returns a `slim_script` object which has a print method that prints out the final SLiM script in a pretty fashion. You can see that the output above is quite similar to the original SLiM code from the manual recipe. The one difference is the block names, highlighted in cyan. These are added internally by `slimrlang` to keep track of code blocks. These names can be used in some `slimr` functions, for example, to refer to particular code blocks for modification. You can also add block 'ids' inside of SLiM code, which can be referred to within SLiM code. These are also fully supported by `slimrlang` and are kept track of alongside the `slimrlang` code block names. More on this later.
+It is as simple as that at its most basic. `slim_script` returns a `slimr_script` object which has a print method that prints out the final SLiM script in a pretty fashion. You can see that the output above is quite similar to the original SLiM code from the manual recipe. The one difference is the block names, highlighted in cyan. These are added internally by `slimr` to keep track of code blocks. These names can be used in some other `slimr` functions, for example, to refer to particular code blocks for modification. You can also add block 'ids' inside of SLiM code, which can be referred to within SLiM code. These are also fully supported by `slimr` and are kept track of alongside the `slimr` code block names. More on this later.
 
-The SLiM language is similar enough to R that most of it works out of the box without any modification. However, there are a few places that SLiM is different enough that `slimrlang` has had to put in some slight modifications. We will learn about these differences throughout this vignette. At the moment however, let's go through the typical structure of a SLiM script and the `slimrlang` version of it. 
+The SLiM language is similar enough to R that most of it works out of the box without any modification. However, there are a few places that SLiM is different enough that `slimr` has had to put in some slight modifications. We will learn about these differences throughout this vignette. At the moment however, let's go through the typical structure of a SLiM script and the `slimr` version of it. 
 
-Now, the script above is just the simplest way to write a SLiM script in R, which is mostly just verbatim using the SLiM language syntax. However, if you write your script this way, you will have to be very familiar with the SLiM language, something which I personally am not yet. In order to make it easier to write SLiM scripts in R, `slimrlang` offers real-time code completion and SLiM function documentation. In order to make this work within R however, you will need to code your SLiM scripts slightly differently. This is a consequence of the object-oriented approach of SLiM, which makes heavy use of classes, methods and properties. Because R does not know the classes of object which will only be determined after the script is run within SLiM, you, the user, must specify what class an object is in order for R to know what functions and properties are available to that class, to enable autocompletion. To do this you can make use of the special operator `%.%`, which mimics the `.` operator within SLiM. SLiM, like Python, uses the `.` operator to specify that a method or property after the `.` belongs to the object before the `.`. It plays a similar role to that of `$` in R. An example of this in the above script is these lines:
+Now, the script above is just the simplest way to write a SLiM script in R, which is mostly just verbatim using the SLiM language syntax. However, if you write your script this way, you will have to be very familiar with the SLiM language, something which I personally am not yet. In order to make it easier to write SLiM scripts in R, `slimr` offers real-time code completion and SLiM function documentation. In order to make this work within R however, you will need to code your SLiM scripts slightly differently. This is a consequence of the object-oriented approach of SLiM, which makes heavy use of classes, methods and properties. Because R does not know the classes of object which will only be determined after the script is run within SLiM, you, the user, must specify what class an object is in order for R to know what functions and properties are available to that class, to enable autocompletion. To do this you can make use of the special operator `%.%`, which mimics the `.` operator within SLiM. SLiM, like Python, uses the `.` operator to specify that a method or property after the `.` belongs to the object before the `.`. It plays a similar role to that of `$` in R. An example of this in the above script is these lines:
 
 ```
 sim.addSubpop("p1", 500);
@@ -112,9 +110,9 @@ and
 sim.simulationFinished()
 ```
 
-In SLiM, `sim` is a global object of class `SLiMSim`, which has a number of methods and properties associated with it. You can rewrite the above statements in `slimrlang` in the following way, which will then allow you to use autocompletion:
+In SLiM, `sim` is a global object of class `SLiMSim`, which has a number of methods and properties associated with it. You can rewrite the above statements in `slimr` in the following way, which will then allow you to use autocompletion:
 
-```{r slimrlang_version1, eval=FALSE}
+```{r slimr_version1, eval=FALSE}
 
 sim%.%SLiMSim$addSubpop("p1", 500);
 
@@ -122,19 +120,19 @@ sim%.%SLiMSim$addSubpop("p1", 500);
 
 and
 
-```{r slimrlang_version2, eval=FALSE}
+```{r slimr_version2, eval=FALSE}
 
 sim%.%SLiMSim$simulationFinished();
 
 ```
 
-Simply replace the `.` with `%.%`, then specify the class of object, in this case `SLiMSim`, followed by the `$` operator for R. The `SLiMSim` object contains all the available methods and properties for its class. There is a similar object for all SLiM classes. Note also that all SLiM class objects in `slimrlang` have an abbreviated alias to save typing. For `SLiMSim` this is `.SS`, so you could type instead `sim%.%.SS$simulationFinished();` for example. Using this way of coding let's you use autocomplete. Try typing just `sim%.%.SS` for example and (if using RStudio) you should see this:
+Simply replace the `.` with `%.%`, then specify the class of object, in this case `SLiMSim`, followed by the `$` operator for R. The `SLiMSim` object contains all the available methods and properties for its class. There is a similar object for all SLiM classes. Note also that all SLiM class objects in `slimr` have an abbreviated alias to save typing. For `SLiMSim` this is `.SS`, so you could type instead `sim%.%.SS$simulationFinished();` for example. Using this way of coding let's you use autocomplete. Try typing just `sim%.%.SS` for example and (if using RStudio) you should see this:
 
-![Autocomplete for .SS class object](autocomplete_SS_1.png)
+![Autocomplete for .SS class object](figures/autocomplete_SS_1.png)
 
 The popup gives you a list of all methods (and properties further down) of the class. If you begin typing this list will be narrowed down further. Once you've chosen a method to use, you can press the `tab` key to bring up the arguments that the method accepts, like this:
 
-![Autocomplete for .SS class object arguments](autocomplete_SS_2.png)
+![Autocomplete for .SS class object arguments](figures/autocomplete_SS_2.png)
 
 To get help on this method, including full descriptions of the arguments, in RStudio, place you cursor over the function text and press the `F1` key. You can also simply run the function with no arguments or type `?.SS$addSubpop` or `help(".SS$addSubPop")`, all of which will bring up the documentation for this SLiM function.
 
@@ -148,9 +146,9 @@ help(".SS$addSubpop")
 
 
 
-There is also two special classes which are not actually classes in SLiM iteself, but they are used in `slimrlang` to keep particular types of SLiM function together. These are `Initialize` (or `.Init`) and `SLiMBuiltin` (or `.SB`). The `Initialize` object contains SLiM functions that can only be used in the `initialize()` block of SLiM code (more on this later). `SLiMBuiltin` contains miscellaneous functions built in to SLiM which are not part of any SLiM class. 
+There is also two special classes which are not actually classes in SLiM iteself, but they are used in `slimr` to keep particular types of SLiM function together. These are `Initialize` (or `.Init`) and `SLiMBuiltin` (or `.SB`). The `Initialize` object contains SLiM functions that can only be used in the `initialize()` block of SLiM code (more on this later). `SLiMBuiltin` contains miscellaneous functions built in to SLiM which are not part of any SLiM class. 
 
-Admittedly, using these extra R objects in the code does make it look somewhat less elegant, and also makes it no longer directly valid SLiM code. But don't worry, `slimrlang` knows how to transform this syntax back into proper SLiM code, which you can see by printing out the resulting `slim_script` object.
+Admittedly, using these extra R objects in the code does make it look somewhat less elegant, and also makes it no longer directly valid SLiM code. But don't worry, `slimr` knows how to transform this syntax back into proper SLiM code, which you can see by printing out the resulting `slim_script` object.
 
 ```{r print_slim_again}
 slim_script(
@@ -373,7 +371,7 @@ Now we get two `slimr_script`s with correct SLiM syntax!
 
 # Generating R-friendly Output
 
-We can also use special `slimrlang` functions to make SLiM generate output that can easily be read back into R as data. This works best in conjunction with `slimr`, which can run SLiM and pull any output into R while it is running. To do this, use the `slimr_output` function inside the `slimrlang` code to wrap any parts of it you want outputted. `slimr_output` is context-aware; if you wrap a SLiM object, the object will be converted into a string (using SLiM's `paste` function) and then sent to the output stream; if you wrap a SLiM output function (such as `outputFull` or `outputVCF`), its output will be sent directly to the output stream without conversion (since it is already output strings). Let's try adding some output to our SLiM script.
+We can also use special `slimr` functions to make SLiM generate output that can easily be read back into R as data. This works best in conjunction with `slimr`, which can run SLiM and pull any output into R while it is running. To do this, use the `slimr_output` function inside the `slimr` code to wrap any parts of it you want outputted. `slimr_output` is context-aware; if you wrap a SLiM object, the object will be converted into a string (using SLiM's `paste` function) and then sent to the output stream; if you wrap a SLiM output function (such as `outputFull` or `outputVCF`), its output will be sent directly to the output stream without conversion (since it is already output strings). Let's try adding some output to our SLiM script.
 
 ```{r add_output}
 
@@ -424,7 +422,7 @@ head(out$output, n = 50L)
 
 
 ```
-You can see how standard output from SLiM ("Another successful round of evolution completed"), is interleaved in the output, but the tags added by `slimrlang` make it easy to filter this out later. `slimr` also provides a suite of handy functions to get this output data into a `data.frame` or `tibble`
+You can see how standard output from SLiM ("Another successful round of evolution completed"), is interleaved in the output, but the tags added by `slimr` make it easy to filter this out later. `slimr` also provides a suite of handy functions to get this output data into a `data.frame` or `tibble`
 
 ```{r tests, eval=FALSE}
 

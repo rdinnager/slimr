@@ -7,11 +7,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Introduction to slimr: Writing SLiM scripts from R • slimr</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../../bootstrap-toc.css">
+<script src="../../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to slimr: Writing SLiM scripts from R">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
+<script src="../../pkgdown.js"></script><meta property="og:title" content="Introduction to slimr: Writing SLiM scripts from R">
 <meta property="og:description" content="slimr">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -30,7 +30,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">slimr</a>
+        <a class="navbar-link" href="../../index.html">slimr</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9001</span>
       </span>
     </div>
@@ -38,13 +38,13 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
+  <a href="../../index.html">
     <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="../../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -54,15 +54,15 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
+      <a href="../../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="../../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -88,7 +88,7 @@
       <h1 data-toc-skip>Introduction to slimr: Writing SLiM scripts from R</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/rdinnager/slimr/blob/master/vignettes/slimrlang_intro.Rmd"><code>vignettes/slimrlang_intro.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rdinnager/slimr/blob/master/vignettes/articles/slimrlang_intro.Rmd"><code>vignettes/articles/slimrlang_intro.Rmd</code></a></small>
       <div class="hidden name"><code>slimrlang_intro.Rmd</code></div>
 
     </div>
@@ -132,25 +132,25 @@ initialize()
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">slimr</span>)
 <span class="co">#&gt; Welcome to the slimr package for forward population genetics simulation in SLiM. For more information on SLiM please visit https://messerlab.org/slim/ .</span>
 
-<span class="fu"><a href="../reference/slim_script.html">slim_script</a></span>(
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fu">initialize</span>(),
+<span class="fu"><a href="../../reference/slim_script.html">slim_script</a></span>(
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fu">initialize</span>(),
              {
                <span class="co">## set the overall mutation rate</span>
-               <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span>(<span class="fl">1e-7</span>);
+               <span class="fu"><a href="../../reference/initializeMutationRate.html">initializeMutationRate</a></span>(<span class="fl">1e-7</span>);
                <span class="co">## m1 mutation type: neutral</span>
-               <span class="fu"><a href="../reference/initializeMutationType.html">initializeMutationType</a></span>(<span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span>);
+               <span class="fu"><a href="../../reference/initializeMutationType.html">initializeMutationType</a></span>(<span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span>);
                <span class="co">## g1 genomic element type: uses m1 for all mutations</span>
-               <span class="fu"><a href="../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span>(<span class="st">"g1"</span>, <span class="no">m1</span>, <span class="fl">1.0</span>);
+               <span class="fu"><a href="../../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span>(<span class="st">"g1"</span>, <span class="no">m1</span>, <span class="fl">1.0</span>);
                <span class="co">## uniform chromosome of length 100 kb</span>
-               <span class="fu"><a href="../reference/initializeGenomicElement.html">initializeGenomicElement</a></span>(<span class="no">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span>);
+               <span class="fu"><a href="../../reference/initializeGenomicElement.html">initializeGenomicElement</a></span>(<span class="no">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span>);
                <span class="co">## uniform recombination along the chromosome</span>
-               <span class="fu"><a href="../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span>(<span class="fl">1e-8</span>);
+               <span class="fu"><a href="../../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span>(<span class="fl">1e-8</span>);
              }),
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fl">1</span>,
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fl">1</span>,
              {
                <span class="fu">sim.addSubpop</span>(<span class="st">"p1"</span>, <span class="fl">500</span>);
              }),
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fl">10000</span>,
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fl">10000</span>,
              {
                <span class="fu">sim.simulationFinished</span>();
              })
@@ -176,17 +176,17 @@ initialize()
 </span></code></pre>
 <p>It is as simple as that at its most basic. <code>slim_script</code> returns a <code>slimr_script</code> object which has a print method that prints out the final SLiM script in a pretty fashion. You can see that the output above is quite similar to the original SLiM code from the manual recipe. The one difference is the block names, highlighted in cyan. These are added internally by <code>slimr</code> to keep track of code blocks. These names can be used in some other <code>slimr</code> functions, for example, to refer to particular code blocks for modification. You can also add block ‘ids’ inside of SLiM code, which can be referred to within SLiM code. These are also fully supported by <code>slimr</code> and are kept track of alongside the <code>slimr</code> code block names. More on this later.</p>
 <p>The SLiM language is similar enough to R that most of it works out of the box without any modification. However, there are a few places that SLiM is different enough that <code>slimr</code> has had to put in some slight modifications. We will learn about these differences throughout this vignette. At the moment however, let’s go through the typical structure of a SLiM script and the <code>slimr</code> version of it.</p>
-<p>Now, the script above is just the simplest way to write a SLiM script in R, which is mostly just verbatim using the SLiM language syntax. However, if you write your script this way, you will have to be very familiar with the SLiM language, something which I personally am not yet. In order to make it easier to write SLiM scripts in R, <code>slimr</code> offers real-time code completion and SLiM function documentation. In order to make this work within R however, you will need to code your SLiM scripts slightly differently. This is a consequence of the object-oriented approach of SLiM, which makes heavy use of classes, methods and properties. Because R does not know the classes of object which will only be determined after the script is run within SLiM, you, the user, must specify what class an object is in order for R to know what functions and properties are available to that class, to enable autocompletion. To do this you can make use of the special operator <code><a href="../reference/grapes-.-grapes.html">%.%</a></code>, which mimics the <code>.</code> operator within SLiM. SLiM, like Python, uses the <code>.</code> operator to specify that a method or property after the <code>.</code> belongs to the object before the <code>.</code>. It plays a similar role to that of <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> in R. An example of this in the above script is these lines:</p>
+<p>Now, the script above is just the simplest way to write a SLiM script in R, which is mostly just verbatim using the SLiM language syntax. However, if you write your script this way, you will have to be very familiar with the SLiM language, something which I personally am not yet. In order to make it easier to write SLiM scripts in R, <code>slimr</code> offers real-time code completion and SLiM function documentation. In order to make this work within R however, you will need to code your SLiM scripts slightly differently. This is a consequence of the object-oriented approach of SLiM, which makes heavy use of classes, methods and properties. Because R does not know the classes of object which will only be determined after the script is run within SLiM, you, the user, must specify what class an object is in order for R to know what functions and properties are available to that class, to enable autocompletion. To do this you can make use of the special operator <code><a href="../../reference/grapes-.-grapes.html">%.%</a></code>, which mimics the <code>.</code> operator within SLiM. SLiM, like Python, uses the <code>.</code> operator to specify that a method or property after the <code>.</code> belongs to the object before the <code>.</code>. It plays a similar role to that of <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> in R. An example of this in the above script is these lines:</p>
 <pre><code>sim.addSubpop("p1", 500);</code></pre>
 <p>and</p>
 <pre><code>sim.simulationFinished()</code></pre>
 <p>In SLiM, <code>sim</code> is a global object of class <code>SLiMSim</code>, which has a number of methods and properties associated with it. You can rewrite the above statements in <code>slimr</code> in the following way, which will then allow you to use autocompletion:</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r">
-<span class="no">sim</span><span class="kw">%.%</span><span class="no">SLiMSim</span>$<span class="fu"><a href="../reference/addSubpop.html">addSubpop</a></span>(<span class="st">"p1"</span>, <span class="fl">500</span>);</pre></body></html></div>
+<span class="no">sim</span><span class="kw">%.%</span><span class="no">SLiMSim</span>$<span class="fu"><a href="../../reference/addSubpop.html">addSubpop</a></span>(<span class="st">"p1"</span>, <span class="fl">500</span>);</pre></body></html></div>
 <p>and</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r">
-<span class="no">sim</span><span class="kw">%.%</span><span class="no">SLiMSim</span>$<span class="fu"><a href="../reference/simulationFinished.html">simulationFinished</a></span>();</pre></body></html></div>
-<p>Simply replace the <code>.</code> with <code><a href="../reference/grapes-.-grapes.html">%.%</a></code>, then specify the class of object, in this case <code>SLiMSim</code>, followed by the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> operator for R. The <code>SLiMSim</code> object contains all the available methods and properties for its class. There is a similar object for all SLiM classes. Note also that all SLiM class objects in <code>slimr</code> have an abbreviated alias to save typing. For <code>SLiMSim</code> this is <code>.SS</code>, so you could type instead <code>sim%.%.SS$simulationFinished();</code> for example. Using this way of coding let’s you use autocomplete. Try typing just <code>sim%.%.SS</code> for example and (if using RStudio) you should see this:</p>
+<span class="no">sim</span><span class="kw">%.%</span><span class="no">SLiMSim</span>$<span class="fu"><a href="../../reference/simulationFinished.html">simulationFinished</a></span>();</pre></body></html></div>
+<p>Simply replace the <code>.</code> with <code><a href="../../reference/grapes-.-grapes.html">%.%</a></code>, then specify the class of object, in this case <code>SLiMSim</code>, followed by the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> operator for R. The <code>SLiMSim</code> object contains all the available methods and properties for its class. There is a similar object for all SLiM classes. Note also that all SLiM class objects in <code>slimr</code> have an abbreviated alias to save typing. For <code>SLiMSim</code> this is <code>.SS</code>, so you could type instead <code>sim%.%.SS$simulationFinished();</code> for example. Using this way of coding let’s you use autocomplete. Try typing just <code>sim%.%.SS</code> for example and (if using RStudio) you should see this:</p>
 <div class="figure">
 <img src="figures/autocomplete_SS_1.png" alt=""><p class="caption">Autocomplete for .SS class object</p>
 </div>
@@ -282,27 +282,27 @@ Benjamin C Haller (<a href="mailto:bhaller@benhaller.com">bhaller@benhaller.com<
 </div>
 <p>There is also two special classes which are not actually classes in SLiM iteself, but they are used in <code>slimr</code> to keep particular types of SLiM function together. These are <code>Initialize</code> (or <code>.Init</code>) and <code>SLiMBuiltin</code> (or <code>.SB</code>). The <code>Initialize</code> object contains SLiM functions that can only be used in the <code>initialize()</code> block of SLiM code (more on this later). <code>SLiMBuiltin</code> contains miscellaneous functions built in to SLiM which are not part of any SLiM class.</p>
 <p>Admittedly, using these extra R objects in the code does make it look somewhat less elegant, and also makes it no longer directly valid SLiM code. But don’t worry, <code>slimr</code> knows how to transform this syntax back into proper SLiM code, which you can see by printing out the resulting <code>slim_script</code> object.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../reference/slim_script.html">slim_script</a></span>(
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fu">initialize</span>(),
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="../../reference/slim_script.html">slim_script</a></span>(
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fu">initialize</span>(),
              {
                <span class="co">## set the overall mutation rate</span>
-               <span class="no">.Init</span>$<span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span>(<span class="fl">1e-7</span>);
+               <span class="no">.Init</span>$<span class="fu"><a href="../../reference/initializeMutationRate.html">initializeMutationRate</a></span>(<span class="fl">1e-7</span>);
                <span class="co">## m1 mutation type: neutral</span>
-               <span class="no">.Init</span>$<span class="fu"><a href="../reference/initializeMutationType.html">initializeMutationType</a></span>(<span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span>);
+               <span class="no">.Init</span>$<span class="fu"><a href="../../reference/initializeMutationType.html">initializeMutationType</a></span>(<span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span>);
                <span class="co">## g1 genomic element type: uses m1 for all mutations</span>
-               <span class="no">.Init</span>$<span class="fu"><a href="../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span>(<span class="st">"g1"</span>, <span class="no">m1</span>, <span class="fl">1.0</span>);
+               <span class="no">.Init</span>$<span class="fu"><a href="../../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span>(<span class="st">"g1"</span>, <span class="no">m1</span>, <span class="fl">1.0</span>);
                <span class="co">## uniform chromosome of length 100 kb</span>
-               <span class="no">.Init</span>$<span class="fu"><a href="../reference/initializeGenomicElement.html">initializeGenomicElement</a></span>(<span class="no">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span>);
+               <span class="no">.Init</span>$<span class="fu"><a href="../../reference/initializeGenomicElement.html">initializeGenomicElement</a></span>(<span class="no">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span>);
                <span class="co">## uniform recombination along the chromosome</span>
-               <span class="no">.Init</span>$<span class="fu"><a href="../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span>(<span class="fl">1e-8</span>);
+               <span class="no">.Init</span>$<span class="fu"><a href="../../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span>(<span class="fl">1e-8</span>);
              }),
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fl">1</span>,
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fl">1</span>,
              {
-               <span class="no">sim</span><span class="kw">%.%</span><span class="no">.SS</span>$<span class="fu"><a href="../reference/addSubpop.html">addSubpop</a></span>(<span class="st">"p1"</span>, <span class="fl">500</span>);
+               <span class="no">sim</span><span class="kw">%.%</span><span class="no">.SS</span>$<span class="fu"><a href="../../reference/addSubpop.html">addSubpop</a></span>(<span class="st">"p1"</span>, <span class="fl">500</span>);
              }),
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fl">10000</span>,
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fl">10000</span>,
              {
-               <span class="no">sim</span><span class="kw">%.%</span><span class="no">.SS</span>$<span class="fu"><a href="../reference/simulationFinished.html">simulationFinished</a></span>();
+               <span class="no">sim</span><span class="kw">%.%</span><span class="no">.SS</span>$<span class="fu"><a href="../../reference/simulationFinished.html">simulationFinished</a></span>();
              })
 ) <span class="kw">-&gt;</span> <span class="no">script_2</span>
 
@@ -330,25 +330,25 @@ Benjamin C Haller (<a href="mailto:bhaller@benhaller.com">bhaller@benhaller.com<
 <h1 class="hasAnchor">
 <a href="#templating" class="anchor"></a>Templating</h1>
 <p>This is the simplest to get a SLiM script which has elements that can be filled in later with a templating mechanism. So, how does that work? Well, anywhere we want something in the SLiM script to be ‘in-fillable’, that is, to contain a variable section of the script that we can subsitute data into later, you can use the <code>slimr_template</code> function in place of what was formerly a hard-coded value. Here is an example using the same recipe as above, but in this case we want to be able to fill-in the genome size and the muation rate later:</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="../reference/slim_script.html">slim_script</a></span>(
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fu">initialize</span>(),
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="../../reference/slim_script.html">slim_script</a></span>(
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fu">initialize</span>(),
              {
                <span class="co">## set the overall mutation rate (default = 1e-7)</span>
-               <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span>( <span class="fu">slimr_template</span>(<span class="st">"mut_rate"</span>, <span class="fl">1e-7</span>) );
+               <span class="fu"><a href="../../reference/initializeMutationRate.html">initializeMutationRate</a></span>( <span class="fu">slimr_template</span>(<span class="st">"mut_rate"</span>, <span class="fl">1e-7</span>) );
                <span class="co">## m1 mutation type: neutral</span>
-               <span class="fu"><a href="../reference/initializeMutationType.html">initializeMutationType</a></span>(<span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span>);
+               <span class="fu"><a href="../../reference/initializeMutationType.html">initializeMutationType</a></span>(<span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span>);
                <span class="co">## g1 genomic element type: uses m1 for all mutations</span>
-               <span class="fu"><a href="../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span>(<span class="st">"g1"</span>, <span class="no">m1</span>, <span class="fl">1.0</span>);
+               <span class="fu"><a href="../../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span>(<span class="st">"g1"</span>, <span class="no">m1</span>, <span class="fl">1.0</span>);
                <span class="co">## uniform chromosome of length "genome_size" (default = 99999)</span>
-               <span class="fu"><a href="../reference/initializeGenomicElement.html">initializeGenomicElement</a></span>(<span class="no">g1</span>, <span class="fl">0</span>, <span class="fu">slimr_template</span>(<span class="st">"genome_size"</span>, <span class="fl">99999</span>) );
+               <span class="fu"><a href="../../reference/initializeGenomicElement.html">initializeGenomicElement</a></span>(<span class="no">g1</span>, <span class="fl">0</span>, <span class="fu">slimr_template</span>(<span class="st">"genome_size"</span>, <span class="fl">99999</span>) );
                <span class="co">## uniform recombination along the chromosome</span>
-               <span class="fu"><a href="../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span>(<span class="fl">1e-8</span>);
+               <span class="fu"><a href="../../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span>(<span class="fl">1e-8</span>);
              }),
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fl">1</span>,
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fl">1</span>,
              {
                <span class="fu">sim.addSubpop</span>(<span class="st">"p1"</span>, <span class="fl">500</span>);
              }),
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fl">10000</span>,
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fl">10000</span>,
              {
                <span class="fu">sim.simulationFinished</span>();
              })
@@ -375,7 +375,7 @@ Benjamin C Haller (<a href="mailto:bhaller@benhaller.com">bhaller@benhaller.com<
 #&gt; variables </span><span style="color: #00BB00;">mut_rate</span><span> and </span><span style="color: #00BB00;">genome_size</span><span>.
 </span></code></pre>
 <p>The first argument to <code>slimr_template</code> provides a name for the variable that will later be used to label values for replacement. The second argument provides a default value. Anytime this script is used without providing values for the templated variables, the default values will be used. This argument is optional, and if not provided, an error will be thrown if any variables have no values provided when later using this script. The above printed script shows that it is templated by printing a message describing the details below it, as well as inserting the templated variables in the script with green <code>..x..</code>, where <code>x</code> is the name of the variable. Replacing values is now as simple as running <code>slimr_script_render</code>.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">single_script</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/slimr_script_render.html">slimr_script_render</a></span>(<span class="no">script_temp</span>,
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">single_script</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/slimr_script_render.html">slimr_script_render</a></span>(<span class="no">script_temp</span>,
                                      <span class="kw">template</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">mut_rate</span> <span class="kw">=</span> <span class="fl">1e-6</span>, <span class="kw">genome_size</span> <span class="kw">=</span> <span class="fl">1999</span>))
 
 <span class="no">single_script</span></pre></body></html></div>
@@ -397,7 +397,7 @@ Benjamin C Haller (<a href="mailto:bhaller@benhaller.com">bhaller@benhaller.com<
 #&gt; </span><span style="color: #BBBB00;">}</span><span>
 </span></code></pre>
 <p>So we can see that we now have a <code>slimr_script</code> object where our templated variables have been replaced! <code>slimr_script_render</code> can also render multiple different values for the templated variables at the same time. To do this we can just pass in a list of lists (or a data.frame), where each element at the top level has a different set of values, and <code>slimr_script_render</code> will return a <code>slimr_script_coll</code> object, which stands for a slimr script collection. Let’s try it.</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">multi_script</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/slimr_script_render.html">slimr_script_render</a></span>(<span class="no">script_temp</span>,
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">multi_script</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/slimr_script_render.html">slimr_script_render</a></span>(<span class="no">script_temp</span>,
                                     <span class="kw">template</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
                                         <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">mut_rate</span> <span class="kw">=</span> <span class="fl">1e-5</span>, <span class="kw">genome_size</span> <span class="kw">=</span> <span class="fl">1999</span>),
                                         <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">mut_rate</span> <span class="kw">=</span> <span class="fl">1e-6</span>, <span class="kw">genome_size</span> <span class="kw">=</span> <span class="fl">2999</span>),
@@ -461,7 +461,7 @@ Benjamin C Haller (<a href="mailto:bhaller@benhaller.com">bhaller@benhaller.com<
 #&gt; </span><span style="color: #BBBB00;">}</span><span>
 </span></code></pre>
 <p>To save typing you can also just include <code>..x..</code> specifications in the SLiM code and this will be recognized as a templated variable. The disadvantage of this though is that you cannot specify a default value, which can be pretty handy. Default values are useful if, for example, you want to prototype a templated script, the default values can serve as “test” values that will be filled in automatically every time you want to test the script. Another potential use is so that you only have to specify some of your variables in your call to <code>slimr_script_render</code>, in which case, anything you don’t specify will take their default values. Additionally <code>slimr_script_render</code> has an argument that allows you to use the default values in the case of a missing value in the data you supply (such as in the data.frame style specification). Let’s look at an example of both of these scenarios.</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">script_partial</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/slimr_script_render.html">slimr_script_render</a></span>(<span class="no">script_temp</span>,
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">script_partial</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/slimr_script_render.html">slimr_script_render</a></span>(<span class="no">script_temp</span>,
                                     <span class="kw">template</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
                                         <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">mut_rate</span> <span class="kw">=</span> <span class="fl">1e-5</span>),
                                         <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">genome_size</span> <span class="kw">=</span> <span class="fl">2999</span>)
@@ -507,7 +507,7 @@ Benjamin C Haller (<a href="mailto:bhaller@benhaller.com">bhaller@benhaller.com<
 </span></code></pre>
 <p>Warnings are generated to help prevent unexpected behaviour. For example if you simply misspelled one of the templated variable names in the template, this would be replaced by the default value. And without the above warnings you would never know that it happened. If you intended to specify all templated variables but you get this warning, check that the template you specified is correct! As we mentioned above, using a <code>data.frame</code> as a template is also possible. Here is an example.</p>
 <div class="sourceCode" id="cb13"><html><body><pre class="r">
-<span class="no">script_temp_df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/slimr_script_render.html">slimr_script_render</a></span>(<span class="no">script_temp</span>,
+<span class="no">script_temp_df</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/slimr_script_render.html">slimr_script_render</a></span>(<span class="no">script_temp</span>,
                                       <span class="kw">template</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(
                                         <span class="kw">mut_rate</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1e-5</span>, <span class="fl">NA</span>, <span class="fl">1e-6</span>, <span class="fl">1e-7</span>),
                                         <span class="kw">genome_size</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2000</span>, <span class="fl">3000</span>, <span class="fl">NA</span>, <span class="fl">5000</span>)
@@ -577,7 +577,7 @@ Benjamin C Haller (<a href="mailto:bhaller@benhaller.com">bhaller@benhaller.com<
 </span></code></pre>
 <p>So in this case the default settings are to not replace NAs, because in some cases NA may be a valid value you want to insert in a SLiM script (rarely). You can change this behaviour by setting <code>replace_NAs = TRUE</code>.</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r">
-<span class="no">script_temp_df2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/slimr_script_render.html">slimr_script_render</a></span>(<span class="no">script_temp</span>,
+<span class="no">script_temp_df2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/slimr_script_render.html">slimr_script_render</a></span>(<span class="no">script_temp</span>,
                                       <span class="kw">template</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(
                                         <span class="kw">mut_rate</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1e-5</span>, <span class="fl">NA</span>, <span class="fl">1e-6</span>, <span class="fl">1e-7</span>),
                                         <span class="kw">genome_size</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2000</span>, <span class="fl">3000</span>, <span class="fl">NA</span>, <span class="fl">5000</span>)
@@ -684,8 +684,8 @@ Benjamin C Haller (<a href="mailto:bhaller@benhaller.com">bhaller@benhaller.com<
 #&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
 #&gt; </span><span style="color: #BBBB00;">}</span><span>
 </span></code></pre>
-<p>If you want to check what the template settings for a <code>slimr_script</code> are, use <code><a href="../reference/slimr_template_info.html">slimr_template_info()</a></code>.</p>
-<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="../reference/slimr_template_info.html">slimr_template_info</a></span>(<span class="no">script_temp</span>)
+<p>If you want to check what the template settings for a <code>slimr_script</code> are, use <code><a href="../../reference/slimr_template_info.html">slimr_template_info()</a></code>.</p>
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="../../reference/slimr_template_info.html">slimr_template_info</a></span>(<span class="no">script_temp</span>)
 <span class="co">#&gt; $block_init</span>
 <span class="co">#&gt; $block_init$mut_rate</span>
 <span class="co">#&gt; [1] 1e-07</span>
@@ -693,29 +693,29 @@ Benjamin C Haller (<a href="mailto:bhaller@benhaller.com">bhaller@benhaller.com<
 <span class="co">#&gt; $block_init$genome_size</span>
 <span class="co">#&gt; [1] 99999</span></pre></body></html></div>
 <p>There is one additional argument to <code>slimr_template</code> that we haven’t talked about yet, which is called <code>unquote_strings</code>. This option allows you to insert unquoted string values in a template. The default value, which is <code>FALSE</code>, means that <code>slimr_template</code> assumes that any variables of class “character” to be inserted are meant to be quoted in the SLiM script, so they will be treated as literal strings by SLiM. However, in some cases you may wish to use character values to insert references to SLiM objects themselves, in which case, they must be unquoted. As an example, perhaps you want to refer to different Subpopulations in a SLiM script dynamically using templating. To do this we can set <code>unquote_strings = TRUE</code>. As an example if we want to refer to a Subpopulation dynamically, and we don’t use <code>unquote_strings = TRUE</code>:</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="../reference/slim_script.html">slim_script</a></span>(
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fu">initialize</span>(),
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="../../reference/slim_script.html">slim_script</a></span>(
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fu">initialize</span>(),
              {
                <span class="co">## set the overall mutation rate (default = 1e-7)</span>
-               <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span>(<span class="fl">1e-7</span>);
+               <span class="fu"><a href="../../reference/initializeMutationRate.html">initializeMutationRate</a></span>(<span class="fl">1e-7</span>);
                <span class="co">## m1 mutation type: neutral</span>
-               <span class="fu"><a href="../reference/initializeMutationType.html">initializeMutationType</a></span>(<span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span>);
+               <span class="fu"><a href="../../reference/initializeMutationType.html">initializeMutationType</a></span>(<span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span>);
                <span class="co">## g1 genomic element type: uses m1 for all mutations</span>
-               <span class="fu"><a href="../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span>(<span class="st">"g1"</span>, <span class="no">m1</span>, <span class="fl">1.0</span>);
+               <span class="fu"><a href="../../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span>(<span class="st">"g1"</span>, <span class="no">m1</span>, <span class="fl">1.0</span>);
                <span class="co">## uniform chromosome of length "genome_size" (default = 99999)</span>
-               <span class="fu"><a href="../reference/initializeGenomicElement.html">initializeGenomicElement</a></span>(<span class="no">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span>);
+               <span class="fu"><a href="../../reference/initializeGenomicElement.html">initializeGenomicElement</a></span>(<span class="no">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span>);
                <span class="co">## uniform recombination along the chromosome</span>
-               <span class="fu"><a href="../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span>(<span class="fl">1e-8</span>);
+               <span class="fu"><a href="../../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span>(<span class="fl">1e-8</span>);
              }),
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fl">1</span>,
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fl">1</span>,
              {
                <span class="fu">sim.addSubpop</span>(<span class="st">"p1"</span>, <span class="fl">500</span>);
                <span class="fu">sim.addSubpop</span>(<span class="st">"p2"</span>, <span class="fl">200</span>);
              }),
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fl">1</span>, <span class="no">..</span>, <span class="fu">late</span>(), {
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fl">1</span>, <span class="no">..</span>, <span class="fu">late</span>(), {
                <span class="fu">slimr_template</span>(<span class="st">"subpop"</span>, <span class="st">"p1"</span>)<span class="kw">%.%</span><span class="no">.P</span>$<span class="no">fitnessScaling</span> <span class="kw">=</span> <span class="fl">0.5</span>
              }),
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fl">10000</span>,
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fl">10000</span>,
              {
                <span class="fu">sim.simulationFinished</span>();
              })
@@ -748,42 +748,42 @@ Benjamin C Haller (<a href="mailto:bhaller@benhaller.com">bhaller@benhaller.com<
 </span></code></pre>
 <p>If we try and replace the Subpopulation now, we will get invalid SLiM code:</p>
 <div class="sourceCode" id="cb18"><html><body><pre class="r">
-<span class="fu"><a href="../reference/slimr_script_render.html">slimr_script_render</a></span>(<span class="no">script_q</span>, <span class="kw">template</span> <span class="kw">=</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">tibble</a></span>(<span class="kw">subpop</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"p1"</span>, <span class="st">"p2"</span>)))
+<span class="fu"><a href="../../reference/slimr_script_render.html">slimr_script_render</a></span>(<span class="no">script_q</span>, <span class="kw">template</span> <span class="kw">=</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">tibble</a></span>(<span class="kw">subpop</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"p1"</span>, <span class="st">"p2"</span>)))
 <span class="co">#&gt; &lt;slimr_script_coll[2]&gt;</span>
 <span class="co">#&gt; Error in parse(text = code, keep.source = TRUE): &lt;text&gt;:2:9: unexpected symbol</span>
 <span class="co">#&gt; 1: {</span>
 <span class="co">#&gt; 2:     "p1".fitnessScaling</span>
 <span class="co">#&gt;            ^</span></pre></body></html></div>
 <p>Since this is also invalid R code, we get a parsing error. Now, if we use <code>unquote_strings = TRUE</code>:</p>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="fu"><a href="../reference/slim_script.html">slim_script</a></span>(
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fu">initialize</span>(),
+<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="fu"><a href="../../reference/slim_script.html">slim_script</a></span>(
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fu">initialize</span>(),
              {
                <span class="co">## set the overall mutation rate (default = 1e-7)</span>
-               <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span>(<span class="fl">1e-7</span>);
+               <span class="fu"><a href="../../reference/initializeMutationRate.html">initializeMutationRate</a></span>(<span class="fl">1e-7</span>);
                <span class="co">## m1 mutation type: neutral</span>
-               <span class="fu"><a href="../reference/initializeMutationType.html">initializeMutationType</a></span>(<span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span>);
+               <span class="fu"><a href="../../reference/initializeMutationType.html">initializeMutationType</a></span>(<span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span>);
                <span class="co">## g1 genomic element type: uses m1 for all mutations</span>
-               <span class="fu"><a href="../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span>(<span class="st">"g1"</span>, <span class="no">m1</span>, <span class="fl">1.0</span>);
+               <span class="fu"><a href="../../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span>(<span class="st">"g1"</span>, <span class="no">m1</span>, <span class="fl">1.0</span>);
                <span class="co">## uniform chromosome of length "genome_size" (default = 99999)</span>
-               <span class="fu"><a href="../reference/initializeGenomicElement.html">initializeGenomicElement</a></span>(<span class="no">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span>);
+               <span class="fu"><a href="../../reference/initializeGenomicElement.html">initializeGenomicElement</a></span>(<span class="no">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span>);
                <span class="co">## uniform recombination along the chromosome</span>
-               <span class="fu"><a href="../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span>(<span class="fl">1e-8</span>);
+               <span class="fu"><a href="../../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span>(<span class="fl">1e-8</span>);
              }),
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fl">1</span>,
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fl">1</span>,
              {
                <span class="fu">sim.addSubpop</span>(<span class="st">"p1"</span>, <span class="fl">500</span>);
                <span class="fu">sim.addSubpop</span>(<span class="st">"p2"</span>, <span class="fl">200</span>);
              }),
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fl">1</span>, <span class="no">..</span>, <span class="fu">late</span>(), {
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fl">1</span>, <span class="no">..</span>, <span class="fu">late</span>(), {
                <span class="fu">slimr_template</span>(<span class="st">"subpop"</span>, <span class="st">"p1"</span>, <span class="kw">unquote_strings</span> <span class="kw">=</span> <span class="fl">TRUE</span>)<span class="kw">%.%</span><span class="no">.P</span>$<span class="no">fitnessScaling</span> <span class="kw">=</span> <span class="fl">0.5</span>
              }),
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fl">10000</span>,
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fl">10000</span>,
              {
                <span class="fu">sim.simulationFinished</span>();
              })
 ) <span class="kw">-&gt;</span> <span class="no">script_uq</span>
 
-<span class="fu"><a href="../reference/slimr_script_render.html">slimr_script_render</a></span>(<span class="no">script_uq</span>, <span class="kw">template</span> <span class="kw">=</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">tibble</a></span>(<span class="kw">subpop</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"p1"</span>, <span class="st">"p2"</span>)))</pre></body></html></div>
+<span class="fu"><a href="../../reference/slimr_script_render.html">slimr_script_render</a></span>(<span class="no">script_uq</span>, <span class="kw">template</span> <span class="kw">=</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">tibble</a></span>(<span class="kw">subpop</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"p1"</span>, <span class="st">"p2"</span>)))</pre></body></html></div>
 <pre class="fansi fansi-output"><code>#&gt; &lt;slimr_script_coll[2]&gt;
 #&gt; &lt;1&gt;
 #&gt; 
@@ -838,32 +838,32 @@ Benjamin C Haller (<a href="mailto:bhaller@benhaller.com">bhaller@benhaller.com<
 <a href="#generating-r-friendly-output" class="anchor"></a>Generating R-friendly Output</h1>
 <p>We can also use special <code>slimr</code> functions to make SLiM generate output that can easily be read back into R as data. This works best in conjunction with <code>slimr</code>, which can run SLiM and pull any output into R while it is running. To do this, use the <code>slimr_output</code> function inside the <code>slimr</code> code to wrap any parts of it you want outputted. <code>slimr_output</code> is context-aware; if you wrap a SLiM object, the object will be converted into a string (using SLiM’s <code>paste</code> function) and then sent to the output stream; if you wrap a SLiM output function (such as <code>outputFull</code> or <code>outputVCF</code>), its output will be sent directly to the output stream without conversion (since it is already output strings). Let’s try adding some output to our SLiM script.</p>
 <div class="sourceCode" id="cb20"><html><body><pre class="r">
-<span class="fu"><a href="../reference/slim_script.html">slim_script</a></span>(
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fu">initialize</span>(),
+<span class="fu"><a href="../../reference/slim_script.html">slim_script</a></span>(
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fu">initialize</span>(),
              {
                <span class="co">## set the overall mutation rate</span>
-               <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span>(<span class="fl">1e-7</span>);
+               <span class="fu"><a href="../../reference/initializeMutationRate.html">initializeMutationRate</a></span>(<span class="fl">1e-7</span>);
                <span class="co">## m1 mutation type: neutral</span>
-               <span class="fu"><a href="../reference/initializeMutationType.html">initializeMutationType</a></span>(<span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span>);
+               <span class="fu"><a href="../../reference/initializeMutationType.html">initializeMutationType</a></span>(<span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span>);
                <span class="co">## g1 genomic element type: uses m1 for all mutations</span>
-               <span class="fu"><a href="../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span>(<span class="st">"g1"</span>, <span class="no">m1</span>, <span class="fl">1.0</span>);
+               <span class="fu"><a href="../../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span>(<span class="st">"g1"</span>, <span class="no">m1</span>, <span class="fl">1.0</span>);
                <span class="co">## uniform chromosome of length 100 kb</span>
-               <span class="fu"><a href="../reference/initializeGenomicElement.html">initializeGenomicElement</a></span>(<span class="no">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span>);
+               <span class="fu"><a href="../../reference/initializeGenomicElement.html">initializeGenomicElement</a></span>(<span class="no">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span>);
                <span class="co">## uniform recombination along the chromosome</span>
-               <span class="fu"><a href="../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span>(<span class="fl">1e-8</span>);
+               <span class="fu"><a href="../../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span>(<span class="fl">1e-8</span>);
              }),
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fl">1</span>,
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fl">1</span>,
              {
                <span class="fu">sim.addSubpop</span>(<span class="st">"p1"</span>, <span class="fl">500</span>);
              }),
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fl">1</span>, <span class="no">..</span>, <span class="fu">late</span>(),
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fl">1</span>, <span class="no">..</span>, <span class="fu">late</span>(),
              {
                <span class="co">## output sample of 10 individuals' genomes in VCF format</span>
-               <span class="fu"><a href="../reference/slimr_output.html">slimr_output</a></span>(<span class="no">p1</span><span class="kw">%.%</span><span class="no">.P</span>$<span class="fu"><a href="../reference/outputVCFSample.html">outputVCFSample</a></span>(<span class="kw">sampleSize</span> <span class="kw">=</span> <span class="fl">10</span>), <span class="kw">name</span> <span class="kw">=</span> <span class="st">"VCF"</span>);
+               <span class="fu"><a href="../../reference/slimr_output.html">slimr_output</a></span>(<span class="no">p1</span><span class="kw">%.%</span><span class="no">.P</span>$<span class="fu"><a href="../../reference/outputVCFSample.html">outputVCFSample</a></span>(<span class="kw">sampleSize</span> <span class="kw">=</span> <span class="fl">10</span>), <span class="kw">name</span> <span class="kw">=</span> <span class="st">"VCF"</span>);
                <span class="fu">catn</span>(<span class="st">"Another successful round of evolution completed!"</span>)
 
               }),
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span>(<span class="fl">100</span>,
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span>(<span class="fl">100</span>,
              {
                <span class="fu">sim.simulationFinished</span>();
              })
@@ -903,17 +903,17 @@ Benjamin C Haller (<a href="mailto:bhaller@benhaller.com">bhaller@benhaller.com<
 
 <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="no">script_txt</span>)
 
-<span class="no">out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/slim_run.html">slim_run</a></span>(<span class="no">script_txt</span>, <span class="kw">simple_run</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">capture_output</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="no">out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/slim_run.html">slim_run</a></span>(<span class="no">script_txt</span>, <span class="kw">simple_run</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">capture_output</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">out</span>$<span class="no">output</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fl">50L</span>)</pre></body></html></div>
 <p>You can see how standard output from SLiM (“Another successful round of evolution completed”), is interleaved in the output, but the tags added by <code>slimr</code> make it easy to filter this out later. <code>slimr</code> also provides a suite of handy functions to get this output data into a <code>data.frame</code> or <code>tibble</code></p>
 <div class="sourceCode" id="cb22"><html><body><pre class="r">
-<span class="no">out_dat</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/slim_extract_output_data.html">slim_extract_output_data</a></span>(<span class="no">out</span>$<span class="no">output</span>)
+<span class="no">out_dat</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/slim_extract_output_data.html">slim_extract_output_data</a></span>(<span class="no">out</span>$<span class="no">output</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="no">out_dat</span>)</pre></body></html></div>
 <p>Running the script from the <code>slimr_script</code> object directly gives us more information about how the simulation is proceeding. We will increase the number of generations first.</p>
 <div class="sourceCode" id="cb23"><html><body><pre class="r">
 <span class="fu">modify</span>(<span class="no">script_w_out</span>, <span class="st">"end_gen"</span>, <span class="fl">3</span>) <span class="kw">&lt;-</span> <span class="fl">1000</span>
 
-<span class="no">out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/slim_run.html">slim_run</a></span>(<span class="no">script_w_out</span>, <span class="kw">show_output</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<span class="no">out</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/slim_run.html">slim_run</a></span>(<span class="no">script_w_out</span>, <span class="kw">show_output</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">out</span>$<span class="no">output</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fl">20L</span>)
 <span class="no">out</span>$<span class="no">output_data</span>
 

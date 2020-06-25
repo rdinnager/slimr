@@ -14,6 +14,7 @@ slim_run(
   capture_output = TRUE,
   show_output = !capture_output,
   callbacks = NULL,
+  cb_args = NULL,
   new_grdev = FALSE,
   ...
 )

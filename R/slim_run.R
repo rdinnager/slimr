@@ -12,7 +12,7 @@
 #' @param slim_path
 #' @param callbacks A list of functions to be called during the SLiM run. This can be used to
 #' dynamically transform or visualise output from the simulation while it is running. It should
-#' be of the form \code{function(data, ...) \{do something..\}}. If using \code{\link[slimrlang]{slimr_output}}
+#' be of the form \code{function(data, ...) \{do something..\}}. If using \code{\link{slimr_output}}
 #' to get formatted data output from SLiM, data will be a four column \code{tibble}
 #' containing output from the current iteration of the simulation. Columns are:
 #' \describe{
@@ -21,7 +21,9 @@
 #' \item{expression}{The SLiM expression used to generate the output}
 #' \item{data}{The raw data output from SLiM as a character vector}
 #' }
-#' @param vis_callbacks
+#' @param new_grdev Should a new graphics device window  be opened on RStudio? This is mainly useful if you are using
+#' custom callbacks that generate live figures, and want a faster plotting experience. This is because the
+#' default plot viewer in RStudio can be quite slow.
 #' @param ... Additional arguments to be passed to any callback functions.
 #'
 #' @return A \code{slimr_results} object which has the following components:
@@ -38,7 +40,8 @@ slim_run <- function(x, slim_path = NULL,
                      capture_output = TRUE,
                      show_output = !capture_output,
                      callbacks = NULL,
-                     vis_callbacks = NULL,
+                     cb_args = NULL,
+                     new_grdev = FALSE,
                      ...) {
   UseMethod("slim_run", x)
 }
@@ -73,8 +76,8 @@ slim_run_script <- function(script_txt,
                             capture_output = TRUE,
                             show_output = FALSE,
                             end_gen = NULL,
-                            vis_callbacks = NULL,
                             callbacks = NULL,
+                            cb_args = NULL,
                             ...) {
 
   platform <- get_os()
@@ -151,6 +154,11 @@ slim_run_script <- function(script_txt,
         if(!is.null(output_list$data)) {
           data_i <- data_i + 1L
           output_data[[data_i]] <- output_list$data
+          if(!is.null(callbacks)) {
+            purrr::walk(callbacks,
+                        ~do.call(.x, c(list(data = dplyr::bind_rows(output_data)),
+                                       cb_args)))
+          }
           pb <- slim_update_progress(output_list, pb, show_output, simple_pb, end_gen)
           if(simple_pb) {
             simple_pb <- FALSE
@@ -230,7 +238,7 @@ slim_process_output <- function(out, data_only = FALSE) {
   out_all <- paste(out, collapse = "\n")
 
   dat <- stringr::str_match_all(out_all,
-                                stringr::regex("<slimr_out:start>(.*?)<slimr_out:end>",
+                                stringr::regex("<slimr_out:start>(?:(.*?))<slimr_out:end>",
                                                dotall = TRUE))[[1]][ , 2]
 
   if(length(dat) > 0) {
@@ -252,7 +260,7 @@ slim_process_output <- function(out, data_only = FALSE) {
 
 
     inter <- stringr::str_match_all(out_all,
-                                    stringr::regex("<slimr_out:end>(.*?)<slimr_out:start>",
+                                    stringr::regex("<slimr_out:end>(?:(.*?))<slimr_out:start>",
                                                    dotall = TRUE))[[1]][ , 2] %>%
       stringr::str_split("\n") %>%
       purrr::flatten_chr()
@@ -282,7 +290,7 @@ slim_process_output <- function(out, data_only = FALSE) {
 
 slim_update_progress <- function(output_list, pb, show_output, simple_pb, end_gen) {
   if(simple_pb) {
-    pb <- progress::progress_bar$new("[:bar] :spin Generation: :current/:total (:percent) Estimated time to completion: :eta",
+    pb <- progress::progress_bar$new("[:bar] :spin Gen::current/:total(:percent) Time: past::elapsedfull|left::eta",
                                      total = end_gen,
                                      clear = FALSE,
                                      show_after = 0)

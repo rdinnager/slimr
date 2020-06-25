@@ -15,6 +15,8 @@ knitr::opts_chunk$set(
 
 # slimr
 
+[https://rdinnager.github.io/slimr/](https://rdinnager.github.io/slimr/)
+
 <!-- badges: start -->
 [![R build status](https://github.com/rdinnager/slimr/workflows/R-CMD-check/badge.svg)](https://github.com/rdinnager/slimr/actions)
 [![Codecov test coverage](https://codecov.io/gh/rdinnager/slimr/branch/master/graph/badge.svg)](https://codecov.io/gh/rdinnager/slimr?branch=master)

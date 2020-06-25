@@ -14,7 +14,7 @@ slim_run(
   capture_output = TRUE,
   show_output = !capture_output,
   callbacks = NULL,
-  vis_callbacks = NULL,
+  new_grdev = FALSE,
   ...
 )
 
@@ -25,7 +25,7 @@ slim_run(
 \arguments{
 \item{callbacks}{A list of functions to be called during the SLiM run. This can be used to
 dynamically transform or visualise output from the simulation while it is running. It should
-be of the form \code{function(data, ...) \{do something..\}}. If using \code{\link[slimrlang]{slimr_output}}
+be of the form \code{function(data, ...) \{do something..\}}. If using \code{\link{slimr_output}}
 to get formatted data output from SLiM, data will be a four column \code{tibble}
 containing output from the current iteration of the simulation. Columns are:
 \describe{
@@ -34,6 +34,10 @@ containing output from the current iteration of the simulation. Columns are:
 \item{expression}{The SLiM expression used to generate the output}
 \item{data}{The raw data output from SLiM as a character vector}
 }}
+
+\item{new_grdev}{Should a new graphics device window  be opened on RStudio? This is mainly useful if you are using
+custom callbacks that generate live figures, and want a faster plotting experience. This is because the
+default plot viewer in RStudio can be quite slow.}
 
 \item{...}{Additional arguments to be passed to any callback functions.}
 }

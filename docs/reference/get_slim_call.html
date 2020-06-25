@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get SLiM call — get_slim_call • slimr</title>
+<title>Get the call information for running SLiM. Doubles as a check for SLiM availability. — get_slim_call • slimr</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Get SLiM call — get_slim_call" />
-<meta property="og:description" content="Get SLiM call" />
+<meta property="og:title" content="Get the call information for running SLiM. Doubles as a check for SLiM availability. — get_slim_call" />
+<meta property="og:description" content="Function to test if SLiM is available on user's system." />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9001</span>
       </span>
     </div>
 
@@ -95,9 +95,15 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/slimr_intro.html">Introduction to Population Genetics modelling in slimr</a>
+      <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimrlang: Writing SLiM scripts from R</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -120,13 +126,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get SLiM call</h1>
+    <h1>Get the call information for running SLiM. Doubles as a check for SLiM availability.</h1>
     <small class="dont-index">Source: <a href='https://github.com/rdinnager/slimr/blob/master/R/setup_slim.R'><code>R/setup_slim.R</code></a></small>
     <div class="hidden name"><code>get_slim_call.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Get SLiM call</p>
+    <p>Function to test if SLiM is available on user's system.</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_slim_call</span>()</pre>
@@ -134,7 +140,9 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Character with call to run SLiM</p>
+    
+
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -147,7 +155,7 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Russell Dinnage.</p>
+  <p>Developed by Russell Dinnage, Stephen Sarre, Bernd Gruber, Richard Duncan.</p>
 </div>
 
 <div class="pkgdown">

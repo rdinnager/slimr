@@ -441,5 +441,4 @@ out <- slim_run(script_w_out, show_output = FALSE)
 head(out$output, n = 20L)
 out$output_data
 
-which(!1:1000 %in% out$output_data$generation)
 ```

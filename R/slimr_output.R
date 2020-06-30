@@ -30,19 +30,19 @@ slimr_output <- function(slimr_expr, name, do_every = 1) {
   if(slimr_code_detect_output(expr_txt)) {
     new_code <- rlang::exprs(
       if(sim.generation %% !!do_every == 0) {
-        cat("<slimr_out:start>" + paste(sim.generation) + ",'" +
+        cat("\n<slimr_out:start>\n" + paste(sim.generation) + ",'" +
               !!name + "','" + !!expr_txt + "','")
         !!slimr_expr
-        cat("'<slimr_out:end>")
+        cat("'\n<slimr_out:end>\n")
       }
     )
   } else {
     new_code <- rlang::exprs(
       if(sim.generation %% !!do_every == 0) {
-        cat("<slimr_out:start>" + paste(sim.generation) + ",'" +
+        cat("\n<slimr_out:start>\n" + paste(sim.generation) + ",'" +
               !!name + "','" + !!expr_txt + "','")
         rlang::exprs(catn(paste(!!slimr_expr)))
-        cat("'<slimr_out:end>")
+        cat("'\n<slimr_out:end>\n")
     })
   }
 

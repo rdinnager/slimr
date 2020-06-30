@@ -110,20 +110,50 @@ slim_script <- function(...) {
   script
 }
 
+
 #' Setup a SLiM code block
+#'
+#' \code{slim_block} sets up and Eidos event code block. See details for how to specify the arguments correctly.
 #'
 #' @param ... A list of arguments corresponding to elements in SLiM code blocks.
 #' See details for more information on how to specify these arguments.
+#'
+#' @details  An Eidos event is a block of Eidos code that
+#' is executed every generation, within a generation range, to perform a desired task. The syntax of an
+#' Eidos event declaration in \code{slimr} mimics that of the Eidos (e.g. SLiM) language itself (see SLiM manual).
+#' It looks like this:
+#'   \code{slim_block(\[id,\] \[start_gen, \[end_gen,\]\], \[slim_callback,\] \{ ... \})}
+#'   where \[\] specifies that the code is optional.
+#' The minimum required is a single argument containing Eidos code. This will be run in every generation
+#' with slim_callback \code{early()}, the default for Eidos events. You can also optionally specify an id
+#' for the SLiM code block, which will be the first argument. This is optionally followed by a starting
+#' generation (start_gen). If only a starting generation is specified, the event will run only in that generation. Next
+#' comes an optional end generation (end_gen), which, if specified, will tell SLiM to run the event every generation
+#' between start_gen and end_gen. The special value of \code{..} can be used for end_gen instead, which is shorthand for
+#' the last generation (in other words, run the event every generation between start_gen and the last generation used else
+#' where in the script). After end_gen is an optional callback, which corresponds to an Eidos callback. The following are
+#' valid Eidos callbacks:
+#' \itemize{
+#' \item{\code{early()}}
+#' \item{\code{late()}}
+#' \item{\code{initialize()}}
+#' \item{\code{fitness(mut_type_id, subpop_id)}}
+#' \item{\code{mateChoice(subpop_id)}}
+#' \item{\code{modifyChild(subpop_id)}}
+#' \item{\code{recombination(subpop_id)}}
+#' \item{\code{interaction(int_type_id, subpop_id)}}
+#' \item{\code{reproduction(subpop_id, sex)}}
+#' }
 #'
 #' @return A slimr_block object. This is of little use outside a \code{\link{slim_script}}
 #' function call.
 #' @export
 #'
 #' @examples
-#' slim_script(slim_block({print("Hello World!")}))
+#' slim_script(slim_block("s1", 1, 10000, late(), {print("Hello World!")}))
 slim_block <- function(...) {
 
-  args <- eval(substitute(alist(...)))
+  args <- rlang::enexprs(...)
 
   n_args <- length(args)
 

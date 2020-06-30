@@ -28,19 +28,19 @@ test_that("simulated slimr_output is parsed correctly", {
   extra_out <- out_tr$extra_out %>%
     purrr::flatten_chr()
 
-  expect_true(all(1:99 %in% out_df$generation))
+  expect_true(all(1:80 %in% out_df$generation))
   expect_identical(extra_out[1:12], c("// Initial random seed:",
-                                       "1591987827743",
-                                       "",
-                                       "// RunInitializeCallbacks():",
-                                       "initializeMutationRate(1e-07);",
-                                       "initializeMutationType(1, 0.5, \"f\", 0);",
-                                       "initializeGenomicElementType(1, m1, 1);",
-                                       "initializeGenomicElement(g1, 0, 99999);",
-                                       "initializeRecombinationRate(1e-08);",
-                                       "",
-                                       "// Starting run at generation <start>:",
-                                       "1"))
+                                      "1593628773993",
+                                      "",
+                                      "// RunInitializeCallbacks():",
+                                      "initializeMutationRate(1e-07);",
+                                      "initializeMutationType(1, 0.5, \"f\", 0);",
+                                      "initializeGenomicElementType(1, m1, 1);",
+                                      "initializeGenomicElement(g1, 0, 99999);",
+                                      "initializeRecombinationRate(1e-08);",
+                                      "",
+                                      "// Starting run at generation <start>:",
+                                      "1"))
 
   expect_true(all(extra_out[13:length(extra_out)] %in%
                     c("", "Another successful round of evolution completed!")))

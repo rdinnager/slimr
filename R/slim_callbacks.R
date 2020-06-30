@@ -20,7 +20,7 @@ callbacks$late <- function() {
 
 callbacks$fitness <- function(mut_type_id, subpop_id) {
 
-  argus <- rlang::enexprs(subpop_id)
+  argus <- rlang::enexprs(mut_type_id, subpop_id)
 
   argus <- argus[!purrr::map_lgl(argus, rlang::is_missing)]
 

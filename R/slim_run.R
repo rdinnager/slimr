@@ -134,7 +134,8 @@ slim_run_script <- function(script_txt,
       if(length(out_lines) > 0) {
 
         if(show_output) {
-          pb$message(paste(out_lines, collapse = "\n"))
+          cat("\r                                               \r")
+          cat(out_lines, sep = "\n")
         }
 
         if(capture_output) {
@@ -233,51 +234,61 @@ setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(
 
 }
 
+
 slim_process_output <- function(out, data_only = FALSE) {
 
-  out_all <- paste(out, collapse = "\n")
+  starts <- stringr::str_which(out,
+                               "<slimr_out:start>")
+  ends <- stringr::str_which(out,
+                             "<slimr_out:end>")
 
-  dat <- stringr::str_match_all(out_all,
-                                stringr::regex("<slimr_out:start>(?:(.*?))<slimr_out:end>",
-                                               dotall = TRUE))[[1]][ , 2]
+  df <- NULL
+  if(length(starts) > 0) {
+    if(length(ends) > 0) {
+      dat <- purrr::map2(starts[1:length(ends)], ends,
+                            ~out[(.x + 1L):(.y - 1L)]) %>%
+        purrr::flatten_chr()
 
-  if(length(dat) > 0) {
-    df <- readr::read_csv(dat,
-                          col_names = c("generation", "name", "expression", "data"),
-                          quote = "\'",
-                          col_types = "iccc")
-  } else {
-    df <- NULL
+      df <- readr::read_csv(dat,
+                            col_names = c("generation", "name", "expression", "data"),
+                            quote = "\'",
+                            col_types = "iccc")
+    }
   }
 
   if(!data_only) {
 
-    pre <- stringr::str_match_all(out_all,
-                                  stringr::regex("^((?:(?!<slimr_out:end>).)*)<slimr_out:start>",
-                                                 dotall = TRUE))[[1]][ , 2] %>%
-      stringr::str_split("\n") %>%
-      purrr::flatten_chr()
+    if(length(starts) > 0 & length(ends) > 0) {
+
+      if(starts[1] > 1) {
+        pre <- out[1:(starts[1] - 1L)]
+      } else {
+        pre = character(0)
+      }
+
+      if(length(ends) > 1) {
+      inter <- purrr::map2(ends[1:(length(starts) - 1)], starts[2:length(starts)],
+                           ~out[(.x + 1L):(.y - 1L)]) %>%
+        purrr::flatten_chr()
+      } else {
+        inter <- character(0)
+      }
+
+      if(ends[length(ends)] < length(out)) {
+        post <- out[(ends[length(ends)] + 1L):length(out)]
+      } else {
+        post <- character(0)
+      }
+
+      return(list(data = df, leftovers = post, extra_out = c(pre, inter)))
+
+    } else {
+
+      return(list(data = NULL, leftovers = out, extra_out = character(0)))
+
+    }
 
 
-    inter <- stringr::str_match_all(out_all,
-                                    stringr::regex("<slimr_out:end>(?:(.*?))<slimr_out:start>",
-                                                   dotall = TRUE))[[1]][ , 2] %>%
-      stringr::str_split("\n") %>%
-      purrr::flatten_chr()
-
-    post <- stringr::str_match_all(out_all,
-                                   stringr::regex("<slimr_out:start>((?:(?!<slimr_out:end>).)*)$",
-                                                  dotall = TRUE))[[1]][ , 1] %>%
-      stringr::str_split("\n") %>%
-      purrr::flatten_chr()
-
-    hangers <- stringr::str_match_all(out_all,
-                                      stringr::regex("<slimr_out:end>((?:(?!<slimr_out:start>).)*)$",
-                                                     dotall = TRUE))[[1]][ , 2] %>%
-      stringr::str_split("\n") %>%
-      purrr::flatten_chr()
-
-    return(list(data = df, leftovers = post, extra_out = c(pre, inter, hangers)))
 
   } else {
 

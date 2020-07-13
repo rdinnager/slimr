@@ -74,8 +74,10 @@ slim_script <- function(...) {
 
   code <- vec_unchop(script$code)
 
-  ## process forcing operators
-  code <- process_forcing(code)
+  ## process inlining
+  c(code, slimr_inline_attr) %<-% process_inline(code, block_names)
+
+  code <- new_slimr_code(code)
 
   ## process for template
   c(code, slimr_template_attr) %<-% process_template(code, block_names)
@@ -102,6 +104,7 @@ slim_script <- function(...) {
                              end_gen = script$end_gen,
                              callback = script$callback,
                              code = code,
+                             slimr_inline = slimr_inline_attr,
                              slimr_output = slimr_output_attr,
                              slimr_template = slimr_template_attr,
                              slimrlang_orig = .call,

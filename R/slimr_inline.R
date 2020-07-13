@@ -1,6 +1,102 @@
-slimr_inline <- function(r_expr, unquote_strings = FALSE) {
+slimr_inline <- function(object) {
+
+  if(!is.array(object)) {
+    object <- unclass(object)
+
+    if(length(object) > 1) {
+      code_for_slim <- rlang::expr(c(!!!object))
+      code_for_display <- paste0("c(", paste(stringr::str_split(code_for_display, " ")[[1]][c(-1:-3)], collapse = ", "), ")")
+    } else {
+      code_for_slim <- rlang::expr(!!object)
+      code_for_display <- rlang::expr_text(code_for_slim)
+    }
+  } else {
+    code_for_display <- capture.output(str(as.vector(object)))
+    if(is.matrix(object)) {
+      code_for_slim <- rlang::expr(matrix(!!as.vector(object), nrow = !!nrow(object), ncol = !!ncol(object)))
+      code_for_display <- paste0("matrix(c(", paste(stringr::str_split(code_for_display, " ")[[1]][c(-1:-3)], collapse = ", "),
+                                 "), nrow = ", nrow(object), ", ncol = ", ncol(object), ")")
+    } else {
+      code_for_slim <- rlang::expr(array(!!as.vector(object), dim = !!dim(object)))
+      code_for_display <- paste0("array(c(", paste(stringr::str_split(code_for_display, " ")[[1]][c(-1:-3)], collapse = ", "),
+                                 "), dim = c(", paste(dim(object), collapse = ", "), "))")
+    }
+  }
+
+
+
+  code_for_display <- paste0("{. <- ", code_for_display, "}")
+
+
+
+  .resources$temp_slimr_inline$code_for_slim <- c(.resources$temp_slimr_inline$code_for_slim,
+                                                  rlang::expr_text(code_for_slim, width = 500L))
+  .resources$temp_slimr_inline$code_for_display <- c(.resources$temp_slimr_inline$code_for_display,
+                                                     code_for_display)
+
+
+  code_for_slim
 
 }
+
+sinln <- function(object) {
+  slimr_inline(object)
+}
+
+inline_replace <- function(code) {
+  code <- stringr::str_replace_all(code, "slimr_inline", "!!slimr_inline")
+  code <- stringr::str_replace_all(code, "sinln", "!!sinln")
+  code_expr <- rlang::parse_exprs(paste(code, collapse = "\n"))
+  code <- purrr::map(code_expr, ~rlang::expr_interp(.x)) %>%
+    unlist()
+  code <- purrr::map(code,
+                     ~rlang::expr_text(.x, width = 500L))
+
+  if(any(purrr::map_lgl(code, ~inherits(.x, "list")))) {
+    code <- code %>%
+      purrr::flatten()
+  }
+  code
+}
+
+gather_inline_one <- function(code_one) {
+  .resources$temp_slimr_inline$code_for_slim <- list()
+  .resources$temp_slimr_inline$code_for_display <- list()
+
+  code_one <- inline_replace(code_one)
+  inline_info <- list(code_for_slim = .resources$temp_slimr_inline$code_for_slim,
+                      code_for_display = .resources$temp_slimr_inline$code_for_display)
+  list(new_code = code_one, inline_info = inline_info)
+}
+
+gather_inline <- function(code) {
+  res <- purrr::map(code,
+                    ~gather_inline_one(.x))
+  res
+}
+
+process_inline <- function(code, block_names) {
+  inline_processed <- gather_inline(as.character(code)) %>%
+    purrr::transpose()
+
+  slimr_inline_attr <- purrr::transpose(inline_processed$inline_info) %>%
+    dplyr::as_tibble() %>%
+    dplyr::mutate("block_name" := block_names) %>%
+    tidyr::unnest(c("code_for_slim", "code_for_display"),
+                  keep_empty = TRUE) %>%
+    dplyr::mutate_at(c("code_for_slim", "code_for_display"),
+                     ~purrr::map(.,
+                                 ~ purrr::`%||%`(.x, NA))) %>%
+    dplyr::mutate_at(c("code_for_slim", "code_for_display"),
+                     ~vec_unchop(.))
+
+  new_code <- purrr::map(inline_processed$new_code,
+                         ~unlist(.x))
+
+  list(new_code, slimr_inline_attr)
+}
+
+
 
 #' Convert a string to a SLiM object name
 #'

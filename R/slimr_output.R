@@ -46,11 +46,12 @@ slimr_output <- function(slimr_expr, name, do_every = 1) {
     })
   }
 
+  code_for_display <- paste0("{", rlang::expr_text(slimr_expr), " -> ", name, "}")
 
   .resources$temp_slimr_output$code_for_slim <- c(.resources$temp_slimr_output$code_for_slim,
                                                   paste(new_code, collapse = "\n"))
   .resources$temp_slimr_output$code_for_display <- c(.resources$temp_slimr_output$code_for_display,
-                                                     paste(expr_txt, collapse = "\n"))
+                                                     code_for_display)
   .resources$temp_slimr_output$output_name <- c(.resources$temp_slimr_output$output_name,
                                                 name)
 
@@ -69,7 +70,7 @@ out_replace <- function(code) {
   code <- purrr::map(code_expr, ~rlang::expr_interp(.x)) %>%
     unlist()
   code <- purrr::map(code,
-                     ~rlang::expr_deparse(.x))
+                     ~rlang::expr_deparse(.x, width = 500L))
 
   if(any(purrr::map_lgl(code, ~inherits(.x, "list")))) {
     code <- code %>%

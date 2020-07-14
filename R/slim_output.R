@@ -142,3 +142,7 @@ slim_outputFull_extract_one <- function(string, type) {
 
   dat
 }
+
+slim_output_genlight <- function(output) {
+
+}

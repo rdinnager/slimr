@@ -4,12 +4,23 @@
 #' This function runs a SLiM script, specified as a \code{slimr_script} object,
 #' a character vector, or a text file.
 #'
-#' @param x
-#' @param script_file
-#' @param simple_run
-#' @param capture_output
-#' @param show_output
-#' @param slim_path
+#' @param x Object containing script to run (e.g. a character vector or a slimr_script object)
+#' @param script_file If the script you want to run is in a text file, you can add the pather here. If this is
+#' argument is not \code{NULL} argument \code{x} will be ignored
+#' @param simple_run Whether to do a "simple run", which just runs the script, capturing all output is \code{capture_output}
+#' is \code{TRUE} and additionally sending all output to the R console if \code{show_output} is \code{TRUE}
+#' the script to the R console if show_output is TRUE
+#' @param capture_output If \code{TRUE}, output from the script will be captured and included in the returned object. Unless
+#' \code{keep_all_output} is \code{TRUE}, only non-data output will be kept (e.g. output not produced by a \code{slimr_output}
+#' call)
+#' @param keep_all_output If there is data produced by \code{slimr_output} calls, should it be captured as well? Ignored if
+#' \code{capture_output} is not \code{TRUE}
+#' @param show_output Should output from the script be sent to the R console? Note that SLiM scripts can sometimes produce a
+#' large amount of output, which could overwhelm the console if you are not careful, potentially locking it up. Be careful
+#' with this option if you are using any of SLiM's output functions that output genomic data. This can be handy though
+#' for simply status print outs..
+#' @param slim_path Path to the SLiM executable. If left \code{NULL} \code{slimr} will attempt to automatically determine
+#' it, typically by examining environmental variables.
 #' @param callbacks A list of functions to be called during the SLiM run. This can be used to
 #' dynamically transform or visualise output from the simulation while it is running. It should
 #' be of the form \code{function(data, ...) \{do something..\}}. If using \code{\link{slimr_output}}
@@ -21,7 +32,7 @@
 #' \item{expression}{The SLiM expression used to generate the output}
 #' \item{data}{The raw data output from SLiM as a character vector}
 #' }
-#' @param new_grdev Should a new graphics device window  be opened on RStudio? This is mainly useful if you are using
+#' @param new_grdev Should a new graphics device window be opened on RStudio? This is mainly useful if you are using
 #' custom callbacks that generate live figures, and want a faster plotting experience. This is because the
 #' default plot viewer in RStudio can be quite slow.
 #' @param ... Additional arguments to be passed to any callback functions.
@@ -38,6 +49,7 @@ slim_run <- function(x, slim_path = NULL,
                      script_file = NULL,
                      simple_run = FALSE,
                      capture_output = TRUE,
+                     keep_all_output = FALSE,
                      show_output = !capture_output,
                      callbacks = NULL,
                      cb_args = NULL,
@@ -74,13 +86,32 @@ slim_run_script <- function(script_txt,
                             script_file = NULL,
                             simple_run = FALSE,
                             capture_output = TRUE,
+                            keep_all_output = FALSE,
                             show_output = FALSE,
                             end_gen = NULL,
                             callbacks = NULL,
                             cb_args = NULL,
+                            new_grdev,
                             ...) {
 
   platform <- get_os()
+
+  if(new_grdev) {
+    assert_package("grDevices")
+    grDevices::dev.new(noRStudioGD = TRUE)
+  }
+
+  file_out <- FALSE
+  if(is.character(capture_output)) {
+    conn <- capture_output
+    capture_output <- TRUE
+    if(conn != "|") {
+      file_out <- TRUE
+      if(conn == "file") {
+        conn <- tempfile(fileext = ".txt")
+      }
+    }
+  }
 
   if(is.null(script_file)) {
     script_file <- tempfile(fileext = ".txt")
@@ -92,7 +123,7 @@ slim_run_script <- function(script_txt,
     script_file <- convert_to_wsl_path(script_file)
   }
 
-  slim_p <- setup_slim_process(script_file, slim_path, platform, simple_run)
+  slim_p <- setup_slim_process(script_file, slim_path, platform, simple_run, conn = conn)
 
   on.exit({
     try(slim_p$kill(), silent = TRUE)
@@ -113,17 +144,32 @@ slim_run_script <- function(script_txt,
   data_i <- 0L
   not_finished <- TRUE
 
+  if(file_out) {
+    curr_line <- 1L
+  }
+
   while(slim_p$is_alive() || not_finished) {
 
     if(slim_p$is_alive()) {
 
       slim_p$poll_io(10000)
-      out_lines <- c(leftovers, slim_p$read_output_lines())
+
+      if(file_out) {
+        out_lines <- readr::read_lines(conn, skip = curr_line - 1L)
+        curr_line <- curr_line + length(out_lines)
+      } else {
+        out_lines <- c(leftovers, slim_p$read_output_lines())
+      }
 
     } else {
 
       not_finished <- FALSE
-      out_lines <- c(leftovers, slim_p$read_all_output_lines())
+      if(file_out) {
+        out_lines <- readr::read_lines(conn, skip = curr_line - 1L)
+        curr_line <- curr_line + length(out_lines)
+      } else {
+        out_lines <- c(leftovers, slim_p$read_all_output_lines())
+      }
 
     }
 
@@ -142,7 +188,7 @@ slim_run_script <- function(script_txt,
           out_i <- out_i + 1L
           all_output[[out_i]] <- out_lines
         }
-
+        out_lines <- NULL
       }
       pb$tick()
     } else {
@@ -167,26 +213,36 @@ slim_run_script <- function(script_txt,
         }
 
         if(capture_output) {
-          if(length(output_list$extra_out) > 0) {
+
+          if(keep_all_output) {
             out_i <- out_i + 1L
-            all_output[[out_i]] <- output_list$extra_out
+            all_output[[out_i]] <- out_lines
+          } else {
+            if(length(output_list$extra_out) > 0) {
+              out_i <- out_i + 1L
+              all_output[[out_i]] <- output_list$extra_out
+            }
           }
         }
 
         leftovers <- output_list$leftovers
+        out_lines <- NULL
 
       }
     }
   }
 
-  final_output <- slim_process_output(leftovers)
-  output_data[[data_i + 1L]] <- final_output$data
-  if(capture_output) {
-    all_output[[out_i + 1L]] <- final_output$extra_out
+  if(!simple_run) {
+    final_output <- slim_process_output(leftovers)
+    output_data[[data_i + 1L]] <- final_output$data
+    if(capture_output) {
+      all_output[[out_i + 1L]] <- final_output$extra_out
+    }
   }
 
 
   exit <- slim_p$get_exit_status()
+  error <- slim_p$read_all_error_lines()
 
   slim_cleanup(slim_p, pb = pb, simple_pb)
 
@@ -196,12 +252,18 @@ slim_run_script <- function(script_txt,
   res$output <- do.call(c, all_output)
   res$exit_status <- exit
   res$output_data <- dplyr::bind_rows(output_data)
+  res$process <- slim_p
+  res$error <- error
+
+  if(file_out) {
+    res$output_file <- conn
+  }
 
   invisible(res)
 
 }
 
-setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(), simple_run = FALSE) {
+setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(), simple_run = FALSE, conn = "|") {
   if(is.null(slim_path)) {
     slim_call <- get_slim_call()
   } else {
@@ -219,13 +281,13 @@ setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(
   if(simple_run) {
 
     slim_p <- processx::process$new(slim_call$call, slim_call$args,
-                                    stdout = "|", stderr = "2>&1",
+                                    stdout = conn, stderr = "2>&1",
                                     windows_verbatim_args = TRUE,
                                     windows_hide_window = TRUE)
 
   } else {
     slim_p <- processx::process$new(slim_call$call, slim_call$args,
-                                    stdout = "|", stderr = "|",
+                                    stdout = conn, stderr = "|",
                                     windows_verbatim_args = TRUE,
                                     windows_hide_window = TRUE)
   }

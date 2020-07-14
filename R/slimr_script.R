@@ -192,6 +192,9 @@ as.character.slimr_script <- function(x, for_script = FALSE, ...) {
     purrr::map(~stringr::str_split(.x, "\n")[[1]])
 
   code <- SLiMify_all(new_code, for_script = for_script)
+
+  code <- fix_integers(code)
+
   string <- paste0(ifelse(is.na(field(x, "block_id")), "", paste0(field(x, "block_id"), " ")),
                    ifelse(is.na(field(x, "start_gen")), "", field(x, "start_gen")),
                    ifelse(is.na(field(x, "end_gen")), "", paste0(":", field(x, "end_gen"))),

@@ -132,9 +132,9 @@ slim_script(
     disp_mat = slimr_inline(disp_mat)
     
     for (line in seqLen(nrow(disp_mat))) {
-      i = asInteger(disp_mat[line, 1]);
-      j = asInteger(disp_mat[line, 2]);
-      m = asFloat(disp_mat[line, 3]);
+      i = asInteger(disp_mat[line, 0]);
+      j = asInteger(disp_mat[line, 1]);
+      m = asFloat(disp_mat[line, 2]);
       if (i != j) {
         p_i = subpops[subpops.id == i];
         p_j = subpops[subpops.id == j];
@@ -143,7 +143,7 @@ slim_script(
     }
   }),
   slim_block(10000, late(), {
-    slimr_output(sim.outputFull(), "final_output");
+    slimr_output(sim.subpopulations.genomes%.%.G$outputVCF(), "final_output");
   })
 ) -> script_2
 
@@ -154,4 +154,12 @@ We can see that the whole matrix has been embedded in the SLiM script by running
 
 ```{r show_script}
 cat(as_slim_text(script_2))
+```
+
+Now let's see if we can run it.
+
+```{r run_script}
+tfile <- tempfile()
+results <- slim_run(script_2, capture_output = "tempfile")
+
 ```

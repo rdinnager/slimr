@@ -1,3 +1,21 @@
+#' Create a templated variable
+#'
+#' Create a templated variable inside a SLiM script. This function can be used directly inside a \code{slim_block} function call,
+#' to generate a placemarker that can be replaced with different values dynamically using \code{\link{slimr_script_render}}.
+#'
+#' @param var_name Name to use as a placemarker for the variable. This name will be used for replacing values later.
+#' @param default A default value to be inserted during script rendering if a value is not otherwise provided.
+#' @param unquote_strings If the value being inserted is of class character, should it be 'unquoted', that is,
+#' should double quotes around the value be removed? This is useful when you want to refer to a SLiM object, e.g.
+#' to insert \code{p1.setMigrationRate(...)} instead of \code{"p1".setMigrationRate(...)}, the latter of which is not
+#' valid SLiM code.
+#'
+#' @return Returns the placemarker if used outside
+#' @export
+#'
+#' @details Note that this function is only designed to be used inside a \code{\link{slim_block}} function call. If run in any other
+#' situation, it won't really do anything, just returning a reference to the placemarker that would have been inserted if run in
+#' its correct context.
 slimr_template <- function(var_name, default = NULL, unquote_strings = FALSE) {
   .resources$temp_slimr_template$var_name <- c(.resources$temp_slimr_template$var_name,
                                                var_name)

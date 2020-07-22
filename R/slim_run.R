@@ -48,36 +48,142 @@
 slim_run <- function(x, slim_path = NULL,
                      script_file = NULL,
                      simple_run = FALSE,
-                     capture_output = TRUE,
+                     capture_output = "file",
                      keep_all_output = FALSE,
-                     show_output = !capture_output,
+                     show_output = FALSE,
                      callbacks = NULL,
                      cb_args = NULL,
                      new_grdev = FALSE,
+                     parallel = FALSE,
+                     progress = TRUE,
                      ...) {
   UseMethod("slim_run", x)
 }
 
 #' @describeIn slim_run Run a SLiM script from character vector
 #' @export
-slim_run.character <- function(x, ...) {
+slim_run.character <- function(x, slim_path = NULL,
+                               script_file = NULL,
+                               simple_run = FALSE,
+                               capture_output = "file",
+                               keep_all_output = FALSE,
+                               show_output = FALSE,
+                               callbacks = NULL,
+                               cb_args = NULL,
+                               new_grdev = FALSE,
+                               parallel = FALSE,
+                               progress = TRUE,
+                               ...) {
 
   if(length(x) > 1) {
     warning("Input has more than one element. Concatenating them with newline separators...")
     x <- paste(x, collapse = "\n")
   }
 
-  slim_run_script(x, ...)
+  slim_run_script(x, slim_path = slim_path,
+                  script_file = script_file,
+                  simple_run = simple_run,
+                  capture_output = capture_output,
+                  keep_all_output = keep_all_output,
+                  show_output = show_output,
+                  callbacks = callbacks,
+                  cb_args = cb_args,
+                  new_grdev = new_grdev,
+                  parallel = parallel,
+                  progress = progress,
+                  ...)
 
 }
 
 #' @describeIn slim_run Run a SLiM script from slimr_script object
 #' @export
-slim_run.slimr_script <- function(x, ...) {
+slim_run.slimr_script <- function(x, slim_path = NULL,
+                                  script_file = NULL,
+                                  simple_run = FALSE,
+                                  capture_output = "file",
+                                  keep_all_output = FALSE,
+                                  show_output = FALSE,
+                                  callbacks = NULL,
+                                  cb_args = NULL,
+                                  new_grdev = FALSE,
+                                  parallel = FALSE,
+                                  progress = TRUE,
+                                  ...) {
 
   script <- as_slim_text(x)
   end_gen <- attr(x, "script_info")$end_gen
-  slim_run_script(script, end_gen = end_gen, ...)
+  slim_run_script(script, end_gen = end_gen,
+                  slim_path = slim_path,
+                  script_file = script_file,
+                  simple_run = simple_run,
+                  capture_output = capture_output,
+                  keep_all_output = keep_all_output,
+                  show_output = show_output,
+                  callbacks = callbacks,
+                  cb_args = cb_args,
+                  new_grdev = new_grdev,
+                  parallel = parallel,
+                  progress = progress,
+                  ...)
+
+}
+
+#' @describeIn slim_run Run a SLiM script from slimr_script object
+#' @export
+slim_run.slimr_script_coll <- function(x, slim_path = NULL,
+                                       script_file = NULL,
+                                       simple_run = FALSE,
+                                       capture_output = "file",
+                                       keep_all_output = FALSE,
+                                       show_output = FALSE,
+                                       callbacks = NULL,
+                                       cb_args = NULL,
+                                       new_grdev = FALSE,
+                                       parallel = FALSE,
+                                       progress = TRUE,
+                                       ...) {
+
+  assert_package("future")
+  assert_package("furrr")
+
+
+  if(parallel) {
+    all_results <- furrr::future_map(x,
+                                     ~suppressMessages(slim_run(.x,
+                                               slim_path = slim_path,
+                                               script_file = script_file,
+                                               simple_run = simple_run,
+                                               capture_output = capture_output,
+                                               keep_all_output = keep_all_output,
+                                               show_output = show_output,
+                                               callbacks = callbacks,
+                                               cb_args = cb_args,
+                                               new_grdev = new_grdev,
+                                               parallel = parallel,
+                                               progress = FALSE,
+                                               ...)),
+                                     .progress = progress,
+                                     .options = furrr::future_options(globals = FALSE,
+                                                                      lazy = TRUE))
+  } else {
+    all_results <- purrr::map(x,
+                               ~suppressMessages(slim_run(.x,
+                                         slim_path = slim_path,
+                                         script_file = script_file,
+                                         simple_run = simple_run,
+                                         capture_output = capture_output,
+                                         keep_all_output = keep_all_output,
+                                         show_output = show_output,
+                                         callbacks = callbacks,
+                                         cb_args = cb_args,
+                                         new_grdev = new_grdev,
+                                         parallel = parallel,
+                                         progress = progress,
+                                         ...)))
+  }
+
+  class(all_results) <- "slimr_results_coll"
+  all_results
 
 }
 
@@ -85,13 +191,15 @@ slim_run_script <- function(script_txt,
                             slim_path = NULL,
                             script_file = NULL,
                             simple_run = FALSE,
-                            capture_output = TRUE,
+                            capture_output = "file",
                             keep_all_output = FALSE,
                             show_output = FALSE,
                             end_gen = NULL,
                             callbacks = NULL,
                             cb_args = NULL,
-                            new_grdev,
+                            new_grdev = FALSE,
+                            parallel = FALSE,
+                            progress = !parallel,
                             ...) {
 
   platform <- get_os()
@@ -111,6 +219,10 @@ slim_run_script <- function(script_txt,
         conn <- tempfile(fileext = ".txt")
       }
     }
+  } else {
+    if(capture_output) {
+      conn <- "|"
+    }
   }
 
   if(is.null(script_file)) {
@@ -129,11 +241,13 @@ slim_run_script <- function(script_txt,
     try(slim_p$kill(), silent = TRUE)
   }, add = TRUE)
 
-  pb <- progress::progress_bar$new(format = ":spin SLiM running.. Time Elapsed: :elapsedfull",
-                                   clear = FALSE,
-                                   total = NA,
-                                   width = 60,
-                                   show_after = 0)
+  if(progress) {
+    pb <- progress::progress_bar$new(format = ":spin SLiM running.. Time Elapsed: :elapsedfull",
+                                     clear = FALSE,
+                                     total = NA,
+                                     width = 60,
+                                     show_after = 0)
+  }
 
   simple_pb <- TRUE
 
@@ -176,7 +290,9 @@ slim_run_script <- function(script_txt,
     leftovers <- NULL
 
     if(simple_run) {
-      pb$tick(0)
+      if(progress) {
+        pb$tick(0)
+      }
       if(length(out_lines) > 0) {
 
         if(show_output) {
@@ -190,7 +306,9 @@ slim_run_script <- function(script_txt,
         }
         out_lines <- NULL
       }
-      pb$tick()
+      if(progress) {
+        pb$tick()
+      }
     } else {
 
 
@@ -206,7 +324,9 @@ slim_run_script <- function(script_txt,
                         ~do.call(.x, c(list(data = dplyr::bind_rows(output_data)),
                                        cb_args)))
           }
-          pb <- slim_update_progress(output_list, pb, show_output, simple_pb, end_gen)
+          if(progress) {
+            pb <- slim_update_progress(output_list, pb, show_output, simple_pb, end_gen)
+          }
           if(simple_pb) {
             simple_pb <- FALSE
           }
@@ -244,7 +364,7 @@ slim_run_script <- function(script_txt,
   exit <- slim_p$get_exit_status()
   error <- slim_p$read_all_error_lines()
 
-  slim_cleanup(slim_p, pb = pb, simple_pb)
+  slim_cleanup(slim_p, pb = pb, simple_pb, progress)
 
   message("\n\nSimulation finished with exit status: ", exit)
 
@@ -259,11 +379,14 @@ slim_run_script <- function(script_txt,
     res$output_file <- conn
   }
 
+  class(res) <- "slimr_results"
+
   invisible(res)
 
 }
 
 setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(), simple_run = FALSE, conn = "|") {
+
   if(is.null(slim_path)) {
     slim_call <- get_slim_call()
   } else {
@@ -276,7 +399,7 @@ setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(
   }
 
   slim_call$args <- purrr::map_chr(slim_call$args,
-                                   ~glue::glue(.x))
+                                   ~glue::glue(.x, .envir = list(script_file = script_file)))
 
   if(simple_run) {
 
@@ -306,7 +429,7 @@ slim_process_output <- function(out, data_only = FALSE) {
 
   df <- NULL
   if(length(starts) > 0) {
-    if(length(ends) > 0) {
+    if(length(ends) > 0 && length(ends) <= length(starts)) {
       dat <- purrr::map2(starts[1:length(ends)], ends,
                             ~out[(.x + 1L):(.y - 1L)]) %>%
         purrr::flatten_chr()
@@ -320,7 +443,7 @@ slim_process_output <- function(out, data_only = FALSE) {
 
   if(!data_only) {
 
-    if(length(starts) > 0 & length(ends) > 0) {
+    if((length(starts) > 0 & length(ends) > 0)) {
 
       if(starts[1] > 1) {
         pre <- out[1:(starts[1] - 1L)]
@@ -384,15 +507,17 @@ slim_update_progress <- function(output_list, pb, show_output, simple_pb, end_ge
 
 }
 
-slim_cleanup <- function(slim_p, pb, simple_pb) {
+slim_cleanup <- function(slim_p, pb, simple_pb, progress) {
 
-  if(!simple_pb) {
-    if(!pb$finished) {
-      pb$update(1)
+  if(progress) {
+    if(!simple_pb) {
+      if(!pb$finished) {
+        pb$update(1)
+      }
     }
-  }
 
-  pb$terminate()
+    pb$terminate()
+  }
 
   slim_p$kill()
 

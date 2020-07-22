@@ -41,7 +41,7 @@ slimr_output <- function(slimr_expr, name, do_every = 1) {
       if(sim.generation %% !!do_every == 0) {
         cat("\n<slimr_out:start>\n" + paste(sim.generation) + ",'" +
               !!name + "','" + !!expr_txt + "','")
-        rlang::exprs(catn(paste(!!slimr_expr)))
+        catn(paste(!!slimr_expr))
         cat("'\n<slimr_out:end>\n")
     })
   }

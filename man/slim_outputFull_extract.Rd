@@ -6,7 +6,10 @@
 \usage{
 slim_outputFull_extract(
   output_full,
-  type = c("mutations", "individuals", "genomes", "coordinates", "sexes", "ages")
+  type = c("mutations", "individuals", "genomes", "coordinates", "sexes", "ages",
+    "full_individual"),
+  join = TRUE,
+  expand_mutations = FALSE
 )
 }
 \arguments{
@@ -15,6 +18,12 @@ call to \code{outputFull()} in SLiM}
 
 \item{type}{Which type of data to return: "mutations", "individuals", "genomes", "coordinates",
 "sexes", or "ages"}
+
+\item{join}{If asking for multiple output type, should they be joined into one tibble (\code{join = TRUE})
+or left as separate tibbles return in a list (\code{join = FALSE})?}
+
+\item{expand_mutations}{If asking for "genomes" output, should mutations be expanded into their own column (\code{expand_mutations = TRUE})
+or left as a vector of mutation ids in a list column (\code{expand_mutations = FALSE})?}
 }
 \value{
 A tibble

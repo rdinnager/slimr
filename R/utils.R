@@ -131,3 +131,13 @@ convert_to_wsl_path <- function(windows_path) {
   stringr::str_c(a, b, sep = "\n")
 }
 
+fix_integers <- function(code) {
+
+  purrr::map(code,
+             ~stringr::str_replace_all(.x,
+             "([:digit:]+)L",
+             "\\1"))
+
+}
+
+

@@ -41,16 +41,17 @@ slimr_output <- function(slimr_expr, name, do_every = 1) {
       if(sim.generation %% !!do_every == 0) {
         cat("\n<slimr_out:start>\n" + paste(sim.generation) + ",'" +
               !!name + "','" + !!expr_txt + "','")
-        rlang::exprs(catn(paste(!!slimr_expr)))
+        catn(paste(!!slimr_expr))
         cat("'\n<slimr_out:end>\n")
     })
   }
 
+  code_for_display <- paste0("{", rlang::expr_text(slimr_expr), " -> ", name, "}")
 
   .resources$temp_slimr_output$code_for_slim <- c(.resources$temp_slimr_output$code_for_slim,
                                                   paste(new_code, collapse = "\n"))
   .resources$temp_slimr_output$code_for_display <- c(.resources$temp_slimr_output$code_for_display,
-                                                     paste(expr_txt, collapse = "\n"))
+                                                     code_for_display)
   .resources$temp_slimr_output$output_name <- c(.resources$temp_slimr_output$output_name,
                                                 name)
 
@@ -69,7 +70,7 @@ out_replace <- function(code) {
   code <- purrr::map(code_expr, ~rlang::expr_interp(.x)) %>%
     unlist()
   code <- purrr::map(code,
-                     ~rlang::expr_deparse(.x))
+                     ~rlang::expr_deparse(.x, width = 500L))
 
   if(any(purrr::map_lgl(code, ~inherits(.x, "list")))) {
     code <- code %>%

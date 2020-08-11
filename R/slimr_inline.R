@@ -1,3 +1,16 @@
+#' Insert R objects into SLiM scripts
+#'
+#' By calling this function inside a \code{\link{slim_block}} function call you can insert R objects
+#' into the script using direct inlining. This function should generally only be used within a
+#' \code{\link{slim_block}} call
+#'
+#' @param object R object to inline into the SLiM script.
+#'
+#' @return A character vector with the code generated for inlining.
+#' @export
+#'
+#' @details Currently supported R objects include all atomic vectors, matrices and arrays. Non-atomic vectors like factors are
+#' currently not supported and neither are any other special object types, though we plan to support some in the future.
 slimr_inline <- function(object) {
 
   if(!is.array(object)) {

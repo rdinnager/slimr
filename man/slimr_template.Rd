@@ -21,7 +21,7 @@ Returns the placemarker if used outside
 }
 \description{
 Create a templated variable inside a SLiM script. This function can be used directly inside a \code{slim_block} function call,
-to generate a placemarker that can be replaced with different values dynamically using \code{\link{slim_script_render}}.
+to generate a placemarker that can be replaced with different values dynamically using \code{\link{slimr_script_render}}.
 }
 \details{
 Note that this function is only designed to be used inside a \code{\link{slim_block}} function call. If run in any other

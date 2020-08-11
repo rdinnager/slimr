@@ -260,7 +260,7 @@ script_list
 This function returns a `slimr_script_coll` object, or a slimr script collection. We can now use `slim_run` on this object, which will run every script in the collection, one after the other, and collect the results. We can specify a `parallel = TRUE` argument to run the scripts in parallel. `slimr` uses the `future` package for parallelization. This means that the user must specify a future `plan` prior to running `slim_run` which will setup the workers to be used by `slimr`. If you want to use parallelization with `slimr`, we recommend you familiarize yourself with the `future` package. If in doubt `future::plan(future::multisession)` is the most general purpose specification which should work well on all platforms (and is the recommended plan by future for best stability of parallelization). You must also ensure the `future` and `furrr` packages are installed for this functionality to work. Let's try running these:
 
 ```{r run_all_scripts}
-
+start_time <- Sys.time()
 if(requireNamespace("furrr", quietly = TRUE)) {
   
   future::plan(future::multisession)
@@ -312,6 +312,12 @@ if(length(errored) > 0) {
 all_fsts <- furrr::future_map_dbl(all_gl,
                                   ~dartR::gl.fst.pop(.x, nboots = 1)[2, 1],
                                   .progress = TRUE)
+
+end_time <- Sys.time()
+
+end_time - start_time
+
+cat("Total Duration:", end_time - start_time)
 ```
 
 Firstly, negative values of Fst are incorrect, and usually reflect numerical inaccuracy around zero, so we will set negative Fst values to zero. Then let's look at the distribution.

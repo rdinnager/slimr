@@ -321,7 +321,7 @@ slim_run_script <- function(script_txt,
           output_data[[data_i]] <- output_list$data
           if(!is.null(callbacks)) {
             purrr::walk(callbacks,
-                        ~do.call(.x, c(list(data = dplyr::bind_rows(output_data)),
+                        ~do.call(.x, c(list(data = output_data[[data_i]]),
                                        cb_args)))
           }
           if(progress) {
@@ -362,7 +362,11 @@ slim_run_script <- function(script_txt,
 
 
   exit <- slim_p$get_exit_status()
-  error <- slim_p$read_all_error_lines()
+  if(!simple_run) {
+    error <- slim_p$read_all_error_lines()
+  } else {
+    error <- NULL
+  }
 
   slim_cleanup(slim_p, pb = pb, simple_pb, progress)
 

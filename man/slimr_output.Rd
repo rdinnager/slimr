@@ -4,7 +4,14 @@
 \alias{slimr_output}
 \title{Tell SLiM to produce easily parseable output}
 \usage{
-slimr_output(slimr_expr, name, do_every = 1)
+slimr_output(
+  slimr_expr,
+  name,
+  do_every = 1,
+  send_to = c("data", "file"),
+  file_name = tempfile(fileext = ".txt"),
+  format = c("csv", "fst")
+)
 }
 \arguments{
 \item{slimr_expr}{A SLiM expression to generate output. This can either be

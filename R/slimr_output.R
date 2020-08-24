@@ -22,7 +22,18 @@
 #' @export
 #'
 #' @examples
-slimr_output <- function(slimr_expr, name, do_every = 1) {
+slimr_output <- function(slimr_expr, name, do_every = 1,
+                         send_to = c("data", "file"),
+                         file_name = tempfile(fileext = ".txt"),
+                         format = c("csv", "fst")) {
+
+  send_to = match.arg(send_to)
+  format = match.arg(format)
+
+  if(send_to == "file" & format == "fst") {
+    assert_package("fst")
+  }
+
   slimr_expr <- rlang::enexpr(slimr_expr)
 
   expr_txt <- rlang::expr_deparse(slimr_expr)
@@ -55,12 +66,28 @@ slimr_output <- function(slimr_expr, name, do_every = 1) {
   .resources$temp_slimr_output$output_name <- c(.resources$temp_slimr_output$output_name,
                                                 name)
 
+  if(send_to == "file") {
+    .resources$temp_slimr_output$file_name <- c(.resources$temp_slimr_output$file_name,
+                                                file_name)
+    .resources$temp_slimr_output$format <- c(.resources$temp_slimr_output$format,
+                                                format)
+  } else {
+    .resources$temp_slimr_output$file_name <- c(.resources$temp_slimr_output$file_name,
+                                                NA)
+    .resources$temp_slimr_output$format <- c(.resources$temp_slimr_output$format,
+                                                NA)
+  }
+
   new_code
 
 }
 
-sout <- function(slimr_expr, name, do_every = NULL) {
-  slimr_output(slimr_expr, name, do_every)
+sout <- function(slimr_expr, name, do_every = NULL,
+                 send_to = c("data", "file"),
+                 file_name = tempfile(fileext = ".txt"),
+                 format = c("csv", "fst")) {
+  slimr_output(slimr_expr, name, do_every,
+               send_to, file_name, format)
 }
 
 out_replace <- function(code) {
@@ -83,11 +110,15 @@ gather_out_one <- function(code_one) {
   .resources$temp_slimr_output$code_for_slim <- list()
   .resources$temp_slimr_output$output_name <- list()
   .resources$temp_slimr_output$code_for_display <- list()
+  .resources$temp_slimr_output$file_name <- list()
+  .resources$temp_slimr_output$format <- list()
 
   code_one <- out_replace(code_one)
   output_info <- list(code_for_slim = .resources$temp_slimr_output$code_for_slim,
                       code_for_display = .resources$temp_slimr_output$code_for_display,
-                      output_name = .resources$temp_slimr_output$output_name)
+                      output_name = .resources$temp_slimr_output$output_name,
+                      file_name = .resources$temp_slimr_output$file_name,
+                      format = .resources$temp_slimr_output$format)
   list(new_code = code_one, output_info = output_info)
 }
 
@@ -104,12 +135,15 @@ process_output <- function(code, block_names) {
   slimr_output_attr <- purrr::transpose(output_processed$output_info) %>%
     dplyr::as_tibble() %>%
     dplyr::mutate("block_name" := block_names) %>%
-    tidyr::unnest(c("code_for_slim", "code_for_display", "output_name"),
+    tidyr::unnest(c("code_for_slim", "code_for_display", "output_name",
+                    "file_name", "format"),
                   keep_empty = TRUE) %>%
-    dplyr::mutate_at(c("code_for_slim", "code_for_display", "output_name"),
+    dplyr::mutate_at(c("code_for_slim", "code_for_display", "output_name",
+                       "file_name", "format"),
                      ~purrr::map(.,
                                  ~ purrr::`%||%`(.x, NA))) %>%
-    dplyr::mutate_at(c("code_for_slim", "code_for_display", "output_name"),
+    dplyr::mutate_at(c("code_for_slim", "code_for_display", "output_name",
+                       "file_name", "format"),
                      ~vec_unchop(.))
 
   #new_code <- SLiMify_all(output_processed$new_code)

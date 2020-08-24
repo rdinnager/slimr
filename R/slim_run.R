@@ -112,6 +112,16 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
 
   script <- as_slim_text(x)
   end_gen <- attr(x, "script_info")$end_gen
+  output_info <- attr(x, "slimr_output")
+
+  if(any(!is.na(output_info$file_name))) {
+    save_to_file <- output_info %>%
+      dplyr::select(output_name, file_name, format) %>%
+      tidyr::drop_na(file_name)
+  } else {
+    save_to_file <- NULL
+  }
+
   slim_run_script(script, end_gen = end_gen,
                   slim_path = slim_path,
                   script_file = script_file,
@@ -124,6 +134,7 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
                   new_grdev = new_grdev,
                   parallel = parallel,
                   progress = progress,
+                  save_to_file = save_to_file,
                   ...)
 
 }
@@ -200,6 +211,7 @@ slim_run_script <- function(script_txt,
                             new_grdev = FALSE,
                             parallel = FALSE,
                             progress = !parallel,
+                            save_to_file = NULL,
                             ...) {
 
   platform <- get_os()
@@ -316,8 +328,21 @@ slim_run_script <- function(script_txt,
 
         output_list <- slim_process_output(out_lines)
 
+        ## save results so far to file
+        if(!is.null(output_list$data) & !is.null(save_to_file)) {
+          dat_to_save <- output_list$data %>%
+            dplyr::filter(name %in% save_to_file$output_name)
+          output_list$data <- output_list$data %>%
+            dplyr::filter(!name %in% save_to_file$output_name)
+          slim_save_data(dat_to_save, save_to_file)
+          if(nrow(output_list$data) == 0) {
+            output_list$data <- NULL
+          }
+        }
+
         if(!is.null(output_list$data)) {
           data_i <- data_i + 1L
+
           output_data[[data_i]] <- output_list$data
           if(!is.null(callbacks)) {
             purrr::walk(callbacks,
@@ -500,7 +525,9 @@ slim_update_progress <- function(output_list, pb, show_output, simple_pb, end_ge
 
   current_gen <- max(output_list$data$generation)
 
-  pb$update(current_gen / end_gen)
+  if(!pb$finished) {
+    pb$update(current_gen / end_gen)
+  }
 
 
   if(show_output) {
@@ -526,4 +553,22 @@ slim_cleanup <- function(slim_p, pb, simple_pb, progress) {
   slim_p$kill()
 
   invisible()
+}
+
+slim_save_data <- function(dat_to_save, save_to_file) {
+  purrr:::pwalk(save_to_file,
+                ~slim_save_data_one(dat_to_save %>%
+                                      dplyr::filter(name == ..1),
+                                    ..2,
+                                    ..3))
+}
+
+slim_save_data_one <- function(df, file_name, format) {
+  if(format == "csv") {
+    readr::write_csv(df, file_name, append = TRUE)
+  } else {
+    fst::write_fst(fst::read_fst(file_name) %>%
+                     dplyr::bind_rows(df),
+                   file_name)
+  }
 }

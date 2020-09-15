@@ -11,7 +11,7 @@ assert_package <- function (pkg, version = NULL, install = "install.packages") {
     is_too_old <- utils::compareVersion(installed_version, version) < 0
     if (is_too_old) {
       stop("This function package requires the ", pkg, " package to be version ",
-           version, " or heigher. ", "Found version ",
+           version, " or higher. ", "Found version ",
            version, " installed.", "Update it with ",
            install, "(\"", pkg, "\").",
            call. = FALSE)

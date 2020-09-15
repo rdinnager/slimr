@@ -18,6 +18,8 @@ slim_run(
   callbacks = NULL,
   cb_args = NULL,
   new_grdev = FALSE,
+  record_graphics = "",
+  rec_args = NULL,
   parallel = FALSE,
   progress = TRUE,
   ...
@@ -34,6 +36,8 @@ slim_run(
   callbacks = NULL,
   cb_args = NULL,
   new_grdev = FALSE,
+  record_graphics = "",
+  rec_args = NULL,
   parallel = FALSE,
   progress = TRUE,
   ...
@@ -50,6 +54,8 @@ slim_run(
   callbacks = NULL,
   cb_args = NULL,
   new_grdev = FALSE,
+  record_graphics = "",
+  rec_args = NULL,
   parallel = FALSE,
   progress = TRUE,
   ...
@@ -66,6 +72,8 @@ slim_run(
   callbacks = NULL,
   cb_args = NULL,
   new_grdev = FALSE,
+  record_graphics = "",
+  rec_args = NULL,
   parallel = FALSE,
   progress = TRUE,
   ...
@@ -110,7 +118,15 @@ containing output from the current iteration of the simulation. Columns are:
 
 \item{new_grdev}{Should a new graphics device window be opened on RStudio? This is mainly useful if you are using
 custom callbacks that generate live figures, and want a faster plotting experience. This is because the
-default plot viewer in RStudio can be quite slow.}
+default plot viewer in RStudio can be quite slow. Setting this to \code{TRUE} also allows \code{record_graphics} to work.}
+
+\item{record_graphics}{An optional character string specifying a file to record video output from the graphics device.
+If you have custom graphics output for the simulation this lets you record that output live, saving the trouble of producing
+separate animations after the simulation is complete (also allowing you to save memory because you don't need to keep the
+entire simulation output to make a post-hoc animation).}
+
+\item{rec_args}{An optional list containing named arguments to be passed to \code{\link[av]{av_capture_graphics}} for graphics recording.
+Ignored if \code{record_graphics} is not \code{TRUE}.}
 
 \item{...}{Additional arguments to be passed to any callback functions.}
 }

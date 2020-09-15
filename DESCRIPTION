@@ -69,5 +69,6 @@ Suggests:
     adegenet,
     methods,
     furrr,
-    fst
+    fst,
+    av
 VignetteBuilder: knitr

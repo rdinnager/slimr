@@ -14,8 +14,8 @@
 slimr_inline <- function(object) {
 
   if(!is.array(object)) {
-    object <- unclass(object)
-
+    object <- unname(unclass(object))
+    code_for_display <- capture.output(str(as.vector(object)))
     if(length(object) > 1) {
       code_for_slim <- rlang::expr(c(!!!object))
       code_for_display <- paste0("c(", paste(stringr::str_split(code_for_display, " ")[[1]][c(-1:-3)], collapse = ", "), ")")

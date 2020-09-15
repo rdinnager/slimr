@@ -34,7 +34,13 @@
 #' }
 #' @param new_grdev Should a new graphics device window be opened on RStudio? This is mainly useful if you are using
 #' custom callbacks that generate live figures, and want a faster plotting experience. This is because the
-#' default plot viewer in RStudio can be quite slow.
+#' default plot viewer in RStudio can be quite slow. Setting this to \code{TRUE} also allows \code{record_graphics} to work.
+#' @param record_graphics An optional character string specifying a file to record video output from the graphics device.
+#' If you have custom graphics output for the simulation this lets you record that output live, saving the trouble of producing
+#' separate animations after the simulation is complete (also allowing you to save memory because you don't need to keep the
+#' entire simulation output to make a post-hoc animation).
+#' @param rec_args An optional list containing named arguments to be passed to \code{\link[av]{av_capture_graphics}} for graphics recording.
+#' Ignored if \code{record_graphics} is not \code{TRUE}.
 #' @param ... Additional arguments to be passed to any callback functions.
 #'
 #' @return A \code{slimr_results} object which has the following components:
@@ -54,6 +60,8 @@ slim_run <- function(x, slim_path = NULL,
                      callbacks = NULL,
                      cb_args = NULL,
                      new_grdev = FALSE,
+                     record_graphics = "",
+                     rec_args = NULL,
                      parallel = FALSE,
                      progress = TRUE,
                      ...) {
@@ -71,6 +79,8 @@ slim_run.character <- function(x, slim_path = NULL,
                                callbacks = NULL,
                                cb_args = NULL,
                                new_grdev = FALSE,
+                               record_graphics = "",
+                               rec_args = NULL,
                                parallel = FALSE,
                                progress = TRUE,
                                ...) {
@@ -89,6 +99,8 @@ slim_run.character <- function(x, slim_path = NULL,
                   callbacks = callbacks,
                   cb_args = cb_args,
                   new_grdev = new_grdev,
+                  record_graphics = record_graphics,
+                  rec_args = rec_args,
                   parallel = parallel,
                   progress = progress,
                   ...)
@@ -106,6 +118,8 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
                                   callbacks = NULL,
                                   cb_args = NULL,
                                   new_grdev = FALSE,
+                                  record_graphics = "",
+                                  rec_args = NULL,
                                   parallel = FALSE,
                                   progress = TRUE,
                                   ...) {
@@ -132,6 +146,8 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
                   callbacks = callbacks,
                   cb_args = cb_args,
                   new_grdev = new_grdev,
+                  record_graphics = record_graphics,
+                  rec_args = rec_args,
                   parallel = parallel,
                   progress = progress,
                   save_to_file = save_to_file,
@@ -150,6 +166,8 @@ slim_run.slimr_script_coll <- function(x, slim_path = NULL,
                                        callbacks = NULL,
                                        cb_args = NULL,
                                        new_grdev = FALSE,
+                                       record_graphics = "",
+                                       rec_args = NULL,
                                        parallel = FALSE,
                                        progress = TRUE,
                                        ...) {
@@ -157,8 +175,26 @@ slim_run.slimr_script_coll <- function(x, slim_path = NULL,
   assert_package("future")
   assert_package("furrr")
 
+  # arg_list <- dplyr::tibble(x = x,
+  #                           slim_path = slim_path,
+  #                           script_file = script_file,
+  #                           simple_run = simple_run,
+  #                           capture_output = capture_output,
+  #                           keep_all_output = keep_all_output,
+  #                           show_output = show_output,
+  #                           callbacks = callbacks,
+  #                           cb_args = cb_args,
+  #                           new_grdev = new_grdev,
+  #                           parallel = parallel,
+  #                           progress = FALSE) %>%
+  #   purrr::transpose()
 
   if(parallel) {
+    # all_results <- furrr::future_map(arg_list,
+    #                                  ~suppressMessages(do.call(slim_run, .x)),
+    #                                  .progress = progress,
+    #                                  .options = furrr::future_options(globals = FALSE,
+    #                                                                   lazy = TRUE))
     all_results <- furrr::future_map(x,
                                      ~suppressMessages(slim_run(.x,
                                                slim_path = slim_path,
@@ -170,6 +206,8 @@ slim_run.slimr_script_coll <- function(x, slim_path = NULL,
                                                callbacks = callbacks,
                                                cb_args = cb_args,
                                                new_grdev = new_grdev,
+                                               record_graphics = record_graphics,
+                                               rec_args = rec_args,
                                                parallel = parallel,
                                                progress = FALSE,
                                                ...)),
@@ -188,6 +226,8 @@ slim_run.slimr_script_coll <- function(x, slim_path = NULL,
                                          callbacks = callbacks,
                                          cb_args = cb_args,
                                          new_grdev = new_grdev,
+                                         record_graphics = record_graphics,
+                                         rec_args = rec_args,
                                          parallel = parallel,
                                          progress = progress,
                                          ...)))
@@ -209,6 +249,8 @@ slim_run_script <- function(script_txt,
                             callbacks = NULL,
                             cb_args = NULL,
                             new_grdev = FALSE,
+                            record_graphics = "",
+                            rec_args = NULL,
                             parallel = FALSE,
                             progress = !parallel,
                             save_to_file = NULL,
@@ -219,6 +261,19 @@ slim_run_script <- function(script_txt,
   if(new_grdev) {
     assert_package("grDevices")
     grDevices::dev.new(noRStudioGD = TRUE)
+    disp_dev <- grDevices::dev.cur()
+    if(record_graphics != "") {
+      assert_package("av")
+      callbacks <- purrr::map(callbacks,
+                              ~make_graphics_callback(.x,
+                                                      recorded = TRUE,
+                                                      disp_dev = disp_dev,
+                                                      video_file = record_graphics,
+                                                      rec_args = rec_args))
+    } else {
+      callbacks <- purrr::map(callbacks,
+                              ~make_graphics_callback(.x, recorded = FALSE))
+    }
   }
 
   file_out <- FALSE
@@ -269,6 +324,10 @@ slim_run_script <- function(script_txt,
   out_i <- 0L
   data_i <- 0L
   not_finished <- TRUE
+  data_bound <- dplyr::tibble(NULL)
+  cb_every <- 1L
+  last_bound <- 0L
+  gen_past <- 0
 
   if(file_out) {
     curr_line <- 1L
@@ -344,11 +403,20 @@ slim_run_script <- function(script_txt,
           data_i <- data_i + 1L
 
           output_data[[data_i]] <- output_list$data
-          if(!is.null(callbacks)) {
-            purrr::walk(callbacks,
-                        ~do.call(.x, c(list(data = output_data[[data_i]]),
-                                       cb_args)))
+
+          gen_curr <- max(output_data[[data_i]]$generation)
+          gens_past <- gen_curr - gen_past
+          if(gens_past > cb_every) {
+            data_bound <- dplyr::bind_rows(output_data[(last_bound + 1L):data_i])
+            last_bound <- data_i
+            gen_past <- gen_curr
+            if(!is.null(callbacks)) {
+              purrr::walk(callbacks,
+                          ~do.call(.x, c(list(data = data_bound),
+                                         cb_args)))
+            }
           }
+
           if(progress) {
             pb <- slim_update_progress(output_list, pb, show_output, simple_pb, end_gen)
           }
@@ -396,6 +464,13 @@ slim_run_script <- function(script_txt,
   slim_cleanup(slim_p, pb = pb, simple_pb, progress)
 
   message("\n\nSimulation finished with exit status: ", exit)
+
+  if(exit == 0) {
+    message("\nSuccess!")
+  } else {
+    warning("\nFailed! Error:\n")
+    warning(error)
+  }
 
   res <- list()
   res$output <- do.call(c, all_output)
@@ -464,9 +539,9 @@ slim_process_output <- function(out, data_only = FALSE) {
         purrr::flatten_chr()
 
       df <- readr::read_csv(dat,
-                            col_names = c("generation", "name", "expression", "data"),
+                            col_names = c("generation", "name", "expression", "type", "data"),
                             quote = "\'",
-                            col_types = "iccc")
+                            col_types = "icccc")
     }
   }
 
@@ -572,3 +647,40 @@ slim_save_data_one <- function(df, file_name, format) {
                    file_name)
   }
 }
+
+make_graphics_callback <- function(callback, recorded = FALSE, disp_dev = NULL, video_file = NULL, rec_args = NULL) {
+  if(recorded) {
+    if(is.null(disp_dev)) {
+      stop("You must specify a display device for simultaneous display and recording..")
+    }
+    function(...) {
+      cb_args2 <- list(...)
+      args <- c(list(expr = rlang::expr({
+        do.call(callback, cb_args2)
+        grDevices::dev.copy(which = disp_dev)
+        grDevices::dev.flush()
+        grDevices::dev.set(grDevices::dev.prev())
+      }),
+      output = video_file),
+      rec_args)
+
+      do.call(av::av_capture_graphics, args)
+
+      # grDevices::dev.hold()
+      # av::av_capture_graphics({
+      #   callback(...)
+      #   grDevices::dev.copy(which = disp_dev)
+      #   grDevices::dev.flush()
+      #   grDevices::dev.set(grDevices::dev.prev())
+      # },
+      # video_file)
+    }
+  } else {
+    function(...) {
+      grDevices::dev.hold()
+      callback(...)
+      grDevices::dev.flush()
+    }
+  }
+}
+

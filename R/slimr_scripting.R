@@ -337,6 +337,44 @@ slim_block <- function(...) {
 
 }
 
+#' Specify an Eidos function to be included in the SLiM script
+#'
+#' @param ... List of arguments specified using Eidos's argument syntax (which includes type specification; see details)
+#' @param name Name of function being created.
+#' @param return_type Type of the functions return, using Eidos' type syntax (see details)
+#' @param body SLiM / Eidos code to be executed in the body of the function.
+#'
+#' @return A \code{slimr_block} object (only useful with the context of a \code{\link{slim_script}}) call.
+#' @export
+slim_function <- function(..., name, return_type = "f$", body) {
+  args <- list(...)
+
+  body <- rlang::enexpr(body)
+
+  if(!is.call(body)) {
+    stop("body argument of slim_block should be a valid slimr_code block expression.")
+  }
+
+  code <- deparse(body, width.cutoff = 500, control = NULL)
+
+  if(code[1] == "{") {
+    code <- code[2:(length(code) - 1L)]
+  }
+
+  code <- new_slimr_code(list(code))
+
+  block_row <- list(block_id = "function",
+                    start_gen = NA_character_,
+                    end_gen = NA_character_,
+                    callback = paste0(paste0("(", return_type, ")"),
+                                      name,
+                                      paste0("(", paste(args, collapse = ", "), ")")),
+                    code = code)
+  class(block_row) <- "slimr_block"
+
+  block_row
+}
+
 #' slimrlang stub for the SLiM '.' operator
 #'
 #' Use this in place of '.' from SLiM to specify a method or a property coming from a
@@ -434,7 +472,13 @@ slim_block <- function(...) {
 slimr_script_render <- function(slimr_script, template = NULL, replace_NAs = FALSE) {
   list_length_1 <- FALSE
   slimr_template_attr <- attr(slimr_script, "slimr_template")
-  if(any(!is.na(slimr_template_attr$var_names))) {
+  slimr_output_attr <- attr(slimr_script, "slimr_output")
+  if(any(!is.na(slimr_output_attr$file_name))) {
+    output_templating <- any(stringr::str_detect(slimr_output_attr$file_name, "..(.*?).."))
+  } else {
+    output_templating <- FALSE
+  }
+  if(any(!is.na(slimr_template_attr$var_names)) | output_templating) {
     if(is.null(template)) {
       stop("This slimr_script has templating.. You must provide a template argument, which can be a list, a data.frame, or an environment")
     }
@@ -456,11 +500,22 @@ slimr_script_render <- function(slimr_script, template = NULL, replace_NAs = FAL
                                                    .x,
                                                    slimr_template_attr = slimr_template_attr,
                                                    replace_NAs = replace_NAs))
+
+    ## templating in output?
+    if(output_templating) {
+      file_names <- purrr::map(template,
+                               ~slimr_replace_file_names(.x, slimr_output_attr$file_name))
+      new_scripts <- purrr::map2(new_scripts, file_names,
+                                ~{attr(.x, "slimr_output")$file_name <- dplyr::na_if(.y, "NA"); .x})
+    }
+
     if(list_length_1) {
       new_scripts <- new_scripts[[1]]
     }
 
   }
+
+
 
   if(!list_length_1) {
     new_scripts <- new_slimr_script_coll(new_scripts)
@@ -468,6 +523,15 @@ slimr_script_render <- function(slimr_script, template = NULL, replace_NAs = FAL
 
   new_scripts
 
+}
+
+slimr_replace_file_names <- function(template, file_name) {
+  purrr::map_chr(file_name,
+             ~glue::glue(.x,
+                         .envir = template,
+                         .open = "..",
+                         .close = "..",
+                         .na = NA_character_))
 }
 
 

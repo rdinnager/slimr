@@ -124,12 +124,12 @@ replace_double_dots <- function(slimr_script, envir = parent.frame(), slimr_temp
     }
   }
 
-  char_vars <- purrr::map_lgl(envir,
-                              ~inherits(.x, "character"))
+  char_vars <- names(envir)[purrr::map_lgl(envir,
+                              ~inherits(.x, "character"))]
 
-  if(any(char_vars)) {
-    unquote <- slimr_template_attr$unquote
-    names(unquote) <- slimr_template_attr$var_names
+  if(length(char_vars) > 0) {
+    unquote <- slimr_template_attr$unquote[slimr_template_attr$var_names %in% char_vars]
+    names(unquote) <- slimr_template_attr$var_names[slimr_template_attr$var_names %in% char_vars]
     envir[names(unquote)[!unquote]] <- paste0("\"", envir[names(unquote)[!unquote]], "\"")
   }
 

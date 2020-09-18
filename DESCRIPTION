@@ -68,7 +68,5 @@ Suggests:
     crayon,
     adegenet,
     methods,
-    furrr,
-    fst,
-    av
+    furrr
 VignetteBuilder: knitr

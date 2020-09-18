@@ -261,19 +261,6 @@ slim_run_script <- function(script_txt,
   if(new_grdev) {
     assert_package("grDevices")
     grDevices::dev.new(noRStudioGD = TRUE)
-    disp_dev <- grDevices::dev.cur()
-    if(record_graphics != "") {
-      assert_package("av")
-      callbacks <- purrr::map(callbacks,
-                              ~make_graphics_callback(.x,
-                                                      recorded = TRUE,
-                                                      disp_dev = disp_dev,
-                                                      video_file = record_graphics,
-                                                      rec_args = rec_args))
-    } else {
-      callbacks <- purrr::map(callbacks,
-                              ~make_graphics_callback(.x, recorded = FALSE))
-    }
   }
 
   file_out <- FALSE
@@ -642,45 +629,8 @@ slim_save_data_one <- function(df, file_name, format) {
   if(format == "csv") {
     readr::write_csv(df, file_name, append = TRUE)
   } else {
-    fst::write_fst(fst::read_fst(file_name) %>%
-                     dplyr::bind_rows(df),
-                   file_name)
+    stop("Only csv format is currently supported")
   }
 }
 
-make_graphics_callback <- function(callback, recorded = FALSE, disp_dev = NULL, video_file = NULL, rec_args = NULL) {
-  if(recorded) {
-    if(is.null(disp_dev)) {
-      stop("You must specify a display device for simultaneous display and recording..")
-    }
-    function(...) {
-      cb_args2 <- list(...)
-      args <- c(list(expr = rlang::expr({
-        do.call(callback, cb_args2)
-        grDevices::dev.copy(which = disp_dev)
-        grDevices::dev.flush()
-        grDevices::dev.set(grDevices::dev.prev())
-      }),
-      output = video_file),
-      rec_args)
-
-      do.call(av::av_capture_graphics, args)
-
-      # grDevices::dev.hold()
-      # av::av_capture_graphics({
-      #   callback(...)
-      #   grDevices::dev.copy(which = disp_dev)
-      #   grDevices::dev.flush()
-      #   grDevices::dev.set(grDevices::dev.prev())
-      # },
-      # video_file)
-    }
-  } else {
-    function(...) {
-      grDevices::dev.hold()
-      callback(...)
-      grDevices::dev.flush()
-    }
-  }
-}
 

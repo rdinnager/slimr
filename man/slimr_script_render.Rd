@@ -10,9 +10,9 @@ slimr_script_render(slimr_script, template = NULL, replace_NAs = FALSE)
 \item{slimr_script}{The \code{slimr_script} object to be rendered}
 
 \item{template}{A list or data.frame containing values for any templated variables. If a list,
-it must be named, where the names correspond to the variables. If a list of lists, the internal
-lists must be names with the variable names, and \code{slimr_script_render} will render a
-separate \code{slimr_script} for each top-level lsit element and return it as a \code{slimr_script_coll}
+it must be named, where the names correspond to the variables. If a list of lists, the inner
+lists must be named with the variable names, and \code{slimr_script_render} will render a
+separate \code{slimr_script} for each top-level list element and return it as a \code{slimr_script_coll}
 object. If a \code{data.frame} (or \code{tibble}), then the column names should match the templated
 variables, and \code{slimr_script_render} will render a separate \code{slimr_script} for each row
 and return it as a \code{slimr_script_coll} object.}
@@ -24,7 +24,6 @@ and return it as a \code{slimr_script_coll} object.}
 }
 \description{
 If your \code{slimr_script} object has made use of special \code{slimrlang}
-syntax such as \code{\link{slimr_template}}, \code{\link{slimr_input}},
-or \code{\link{slimr_output}}, this function will 'render' the \code{slimr_script}
+syntax \code{\link{slimr_template}}, this function will 'render' the \code{slimr_script}
 into valid SLiM syntax, ready to be run with SLiM or \code{\link{slim_run}}
 }

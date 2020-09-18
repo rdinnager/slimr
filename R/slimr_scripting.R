@@ -74,8 +74,10 @@ slim_script <- function(...) {
 
   code <- vec_unchop(script$code)
 
-  ## process forcing operators
-  code <- process_forcing(code)
+  ## process inlining
+  c(code, slimr_inline_attr) %<-% process_inline(code, block_names)
+
+  code <- new_slimr_code(code)
 
   ## process for template
   c(code, slimr_template_attr) %<-% process_template(code, block_names)
@@ -102,6 +104,7 @@ slim_script <- function(...) {
                              end_gen = script$end_gen,
                              callback = script$callback,
                              code = code,
+                             slimr_inline = slimr_inline_attr,
                              slimr_output = slimr_output_attr,
                              slimr_template = slimr_template_attr,
                              slimrlang_orig = .call,
@@ -110,20 +113,50 @@ slim_script <- function(...) {
   script
 }
 
+
 #' Setup a SLiM code block
+#'
+#' \code{slim_block} sets up and Eidos event code block. See details for how to specify the arguments correctly.
 #'
 #' @param ... A list of arguments corresponding to elements in SLiM code blocks.
 #' See details for more information on how to specify these arguments.
+#'
+#' @details  An Eidos event is a block of Eidos code that
+#' is executed every generation, within a generation range, to perform a desired task. The syntax of an
+#' Eidos event declaration in \code{slimr} mimics that of the Eidos (e.g. SLiM) language itself (see SLiM manual).
+#' It looks like this:
+#'   \code{slim_block(\[id,\] \[start_gen, \[end_gen,\]\], \[slim_callback,\] \{ ... \})}
+#'   where \[\] specifies that the code is optional.
+#' The minimum required is a single argument containing Eidos code. This will be run in every generation
+#' with slim_callback \code{early()}, the default for Eidos events. You can also optionally specify an id
+#' for the SLiM code block, which will be the first argument. This is optionally followed by a starting
+#' generation (start_gen). If only a starting generation is specified, the event will run only in that generation. Next
+#' comes an optional end generation (end_gen), which, if specified, will tell SLiM to run the event every generation
+#' between start_gen and end_gen. The special value of \code{..} can be used for end_gen instead, which is shorthand for
+#' the last generation (in other words, run the event every generation between start_gen and the last generation used else
+#' where in the script). After end_gen is an optional callback, which corresponds to an Eidos callback. The following are
+#' valid Eidos callbacks:
+#' \itemize{
+#' \item{\code{early()}}
+#' \item{\code{late()}}
+#' \item{\code{initialize()}}
+#' \item{\code{fitness(mut_type_id, subpop_id)}}
+#' \item{\code{mateChoice(subpop_id)}}
+#' \item{\code{modifyChild(subpop_id)}}
+#' \item{\code{recombination(subpop_id)}}
+#' \item{\code{interaction(int_type_id, subpop_id)}}
+#' \item{\code{reproduction(subpop_id, sex)}}
+#' }
 #'
 #' @return A slimr_block object. This is of little use outside a \code{\link{slim_script}}
 #' function call.
 #' @export
 #'
 #' @examples
-#' slim_script(slim_block({print("Hello World!")}))
+#' slim_script(slim_block("s1", 1, 10000, late(), {print("Hello World!")}))
 slim_block <- function(...) {
 
-  args <- eval(substitute(alist(...)))
+  args <- rlang::enexprs(...)
 
   n_args <- length(args)
 
@@ -304,6 +337,44 @@ slim_block <- function(...) {
 
 }
 
+#' Specify an Eidos function to be included in the SLiM script
+#'
+#' @param ... List of arguments specified using Eidos's argument syntax (which includes type specification; see details)
+#' @param name Name of function being created.
+#' @param return_type Type of the functions return, using Eidos' type syntax (see details)
+#' @param body SLiM / Eidos code to be executed in the body of the function.
+#'
+#' @return A \code{slimr_block} object (only useful with the context of a \code{\link{slim_script}}) call.
+#' @export
+slim_function <- function(..., name, return_type = "f$", body) {
+  args <- list(...)
+
+  body <- rlang::enexpr(body)
+
+  if(!is.call(body)) {
+    stop("body argument of slim_block should be a valid slimr_code block expression.")
+  }
+
+  code <- deparse(body, width.cutoff = 500, control = NULL)
+
+  if(code[1] == "{") {
+    code <- code[2:(length(code) - 1L)]
+  }
+
+  code <- new_slimr_code(list(code))
+
+  block_row <- list(block_id = "function",
+                    start_gen = NA_character_,
+                    end_gen = NA_character_,
+                    callback = paste0(paste0("(", return_type, ")"),
+                                      name,
+                                      paste0("(", paste(args, collapse = ", "), ")")),
+                    code = code)
+  class(block_row) <- "slimr_block"
+
+  block_row
+}
+
 #' slimrlang stub for the SLiM '.' operator
 #'
 #' Use this in place of '.' from SLiM to specify a method or a property coming from a
@@ -381,15 +452,14 @@ slim_block <- function(...) {
 #' Render a SLiM script with special slimrlang formatting
 #'
 #' If your \code{slimr_script} object has made use of special \code{slimrlang}
-#' syntax such as \code{\link{slimr_template}}, \code{\link{slimr_input}},
-#' or \code{\link{slimr_output}}, this function will 'render' the \code{slimr_script}
+#' syntax \code{\link{slimr_template}}, this function will 'render' the \code{slimr_script}
 #' into valid SLiM syntax, ready to be run with SLiM or \code{\link{slim_run}}
 #'
 #' @param slimr_script The \code{slimr_script} object to be rendered
 #' @param template A list or data.frame containing values for any templated variables. If a list,
-#' it must be named, where the names correspond to the variables. If a list of lists, the internal
-#' lists must be names with the variable names, and \code{slimr_script_render} will render a
-#' separate \code{slimr_script} for each top-level lsit element and return it as a \code{slimr_script_coll}
+#' it must be named, where the names correspond to the variables. If a list of lists, the inner
+#' lists must be named with the variable names, and \code{slimr_script_render} will render a
+#' separate \code{slimr_script} for each top-level list element and return it as a \code{slimr_script_coll}
 #' object. If a \code{data.frame} (or \code{tibble}), then the column names should match the templated
 #' variables, and \code{slimr_script_render} will render a separate \code{slimr_script} for each row
 #' and return it as a \code{slimr_script_coll} object.
@@ -402,7 +472,13 @@ slim_block <- function(...) {
 slimr_script_render <- function(slimr_script, template = NULL, replace_NAs = FALSE) {
   list_length_1 <- FALSE
   slimr_template_attr <- attr(slimr_script, "slimr_template")
-  if(any(!is.na(slimr_template_attr$var_names))) {
+  slimr_output_attr <- attr(slimr_script, "slimr_output")
+  if(any(!is.na(slimr_output_attr$file_name))) {
+    output_templating <- any(stringr::str_detect(slimr_output_attr$file_name, "..(.*?).."))
+  } else {
+    output_templating <- FALSE
+  }
+  if(any(!is.na(slimr_template_attr$var_names)) | output_templating) {
     if(is.null(template)) {
       stop("This slimr_script has templating.. You must provide a template argument, which can be a list, a data.frame, or an environment")
     }
@@ -424,11 +500,22 @@ slimr_script_render <- function(slimr_script, template = NULL, replace_NAs = FAL
                                                    .x,
                                                    slimr_template_attr = slimr_template_attr,
                                                    replace_NAs = replace_NAs))
+
+    ## templating in output?
+    if(output_templating) {
+      file_names <- purrr::map(template,
+                               ~slimr_replace_file_names(.x, slimr_output_attr$file_name))
+      new_scripts <- purrr::map2(new_scripts, file_names,
+                                ~{attr(.x, "slimr_output")$file_name <- dplyr::na_if(.y, "NA"); .x})
+    }
+
     if(list_length_1) {
       new_scripts <- new_scripts[[1]]
     }
 
   }
+
+
 
   if(!list_length_1) {
     new_scripts <- new_slimr_script_coll(new_scripts)
@@ -436,6 +523,15 @@ slimr_script_render <- function(slimr_script, template = NULL, replace_NAs = FAL
 
   new_scripts
 
+}
+
+slimr_replace_file_names <- function(template, file_name) {
+  purrr::map_chr(file_name,
+             ~glue::glue(.x,
+                         .envir = template,
+                         .open = "..",
+                         .close = "..",
+                         .na = NA_character_))
 }
 
 

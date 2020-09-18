@@ -4,6 +4,7 @@
 \alias{slim_run}
 \alias{slim_run.character}
 \alias{slim_run.slimr_script}
+\alias{slim_run.slimr_script_coll}
 \title{Run a SLiM script from R}
 \usage{
 slim_run(
@@ -11,19 +12,98 @@ slim_run(
   slim_path = NULL,
   script_file = NULL,
   simple_run = FALSE,
-  capture_output = TRUE,
-  show_output = !capture_output,
+  capture_output = "file",
+  keep_all_output = FALSE,
+  show_output = FALSE,
   callbacks = NULL,
   cb_args = NULL,
   new_grdev = FALSE,
+  record_graphics = "",
+  rec_args = NULL,
+  parallel = FALSE,
+  progress = TRUE,
   ...
 )
 
-\method{slim_run}{character}(x, ...)
+\method{slim_run}{character}(
+  x,
+  slim_path = NULL,
+  script_file = NULL,
+  simple_run = FALSE,
+  capture_output = "file",
+  keep_all_output = FALSE,
+  show_output = FALSE,
+  callbacks = NULL,
+  cb_args = NULL,
+  new_grdev = FALSE,
+  record_graphics = "",
+  rec_args = NULL,
+  parallel = FALSE,
+  progress = TRUE,
+  ...
+)
 
-\method{slim_run}{slimr_script}(x, ...)
+\method{slim_run}{slimr_script}(
+  x,
+  slim_path = NULL,
+  script_file = NULL,
+  simple_run = FALSE,
+  capture_output = "file",
+  keep_all_output = FALSE,
+  show_output = FALSE,
+  callbacks = NULL,
+  cb_args = NULL,
+  new_grdev = FALSE,
+  record_graphics = "",
+  rec_args = NULL,
+  parallel = FALSE,
+  progress = TRUE,
+  ...
+)
+
+\method{slim_run}{slimr_script_coll}(
+  x,
+  slim_path = NULL,
+  script_file = NULL,
+  simple_run = FALSE,
+  capture_output = "file",
+  keep_all_output = FALSE,
+  show_output = FALSE,
+  callbacks = NULL,
+  cb_args = NULL,
+  new_grdev = FALSE,
+  record_graphics = "",
+  rec_args = NULL,
+  parallel = FALSE,
+  progress = TRUE,
+  ...
+)
 }
 \arguments{
+\item{x}{Object containing script to run (e.g. a character vector or a slimr_script object)}
+
+\item{slim_path}{Path to the SLiM executable. If left \code{NULL} \code{slimr} will attempt to automatically determine
+it, typically by examining environmental variables.}
+
+\item{script_file}{If the script you want to run is in a text file, you can add the pather here. If this is
+argument is not \code{NULL} argument \code{x} will be ignored}
+
+\item{simple_run}{Whether to do a "simple run", which just runs the script, capturing all output is \code{capture_output}
+is \code{TRUE} and additionally sending all output to the R console if \code{show_output} is \code{TRUE}
+the script to the R console if show_output is TRUE}
+
+\item{capture_output}{If \code{TRUE}, output from the script will be captured and included in the returned object. Unless
+\code{keep_all_output} is \code{TRUE}, only non-data output will be kept (e.g. output not produced by a \code{slimr_output}
+call)}
+
+\item{keep_all_output}{If there is data produced by \code{slimr_output} calls, should it be captured as well? Ignored if
+\code{capture_output} is not \code{TRUE}}
+
+\item{show_output}{Should output from the script be sent to the R console? Note that SLiM scripts can sometimes produce a
+large amount of output, which could overwhelm the console if you are not careful, potentially locking it up. Be careful
+with this option if you are using any of SLiM's output functions that output genomic data. This can be handy though
+for simply status print outs..}
+
 \item{callbacks}{A list of functions to be called during the SLiM run. This can be used to
 dynamically transform or visualise output from the simulation while it is running. It should
 be of the form \code{function(data, ...) \{do something..\}}. If using \code{\link{slimr_output}}
@@ -36,9 +116,17 @@ containing output from the current iteration of the simulation. Columns are:
 \item{data}{The raw data output from SLiM as a character vector}
 }}
 
-\item{new_grdev}{Should a new graphics device window  be opened on RStudio? This is mainly useful if you are using
+\item{new_grdev}{Should a new graphics device window be opened on RStudio? This is mainly useful if you are using
 custom callbacks that generate live figures, and want a faster plotting experience. This is because the
-default plot viewer in RStudio can be quite slow.}
+default plot viewer in RStudio can be quite slow. Setting this to \code{TRUE} also allows \code{record_graphics} to work.}
+
+\item{record_graphics}{An optional character string specifying a file to record video output from the graphics device.
+If you have custom graphics output for the simulation this lets you record that output live, saving the trouble of producing
+separate animations after the simulation is complete (also allowing you to save memory because you don't need to keep the
+entire simulation output to make a post-hoc animation).}
+
+\item{rec_args}{An optional list containing named arguments to be passed to \code{\link[av]{av_capture_graphics}} for graphics recording.
+Ignored if \code{record_graphics} is not \code{TRUE}.}
 
 \item{...}{Additional arguments to be passed to any callback functions.}
 }
@@ -58,5 +146,7 @@ a character vector, or a text file.
 \item \code{character}: Run a SLiM script from character vector
 
 \item \code{slimr_script}: Run a SLiM script from slimr_script object
+
+\item \code{slimr_script_coll}: Run a SLiM script from slimr_script object
 }}
 

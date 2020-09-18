@@ -30,9 +30,9 @@ Description: An R package that lets you write SLiM scripts using your
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-URL: https://github.com/rdinnager/slimr
+URL: https://rdinnager.github.io/slimr/index.html
 BugReports: https://github.com/rdinnager/slimr/issues
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Language: en-GB
 Depends: 
     R (>= 2.10)
@@ -65,5 +65,10 @@ Suggests:
     fansi,
     printr,
     rstudioapi,
-    crayon
+    crayon,
+    adegenet,
+    methods,
+    furrr,
+    fst,
+    av
 VignetteBuilder: knitr

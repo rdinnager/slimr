@@ -6,7 +6,8 @@ SLiMify <- function(code, for_script = FALSE) {
 
   if(for_script) {
     code <- slimr_code_replace_ternary(code) %>%
-      slimr_code_replace_modulus()
+      slimr_code_replace_modulus() %>%
+      slimr_code_replace_returns()
   }
 
   code
@@ -23,7 +24,7 @@ SLiMify_all <- function(code, for_script = FALSE) {
 
 slimr_code_add_semicolons <- function(code_one) {
   brace_lines <- stringr::str_detect(code_one,
-                                     "(\\{$|\\}|\\+$)")
+                                     "(\\{|\\}|\\+|\\,|\\-|\\*|\\/)$")
   code_one[!brace_lines] <- paste0(code_one[!brace_lines], ";")
   code_one
 }
@@ -58,6 +59,13 @@ slimr_code_replace_modulus <- function(code_one) {
   stringr::str_replace_all(code_one,
                            "([^.])%%([^.])",
                            "\\1%\\2")
+}
+
+slimr_code_replace_returns <- function(code_one) {
+  ## turn R's return(...) syntax nack into SLiM's return ...; syntax.
+  stringr::str_replace_all(code_one,
+                           "return\\((.*)\\)[:blank:]*(;| else)",
+                           "return \\1\\2")
 }
 
 

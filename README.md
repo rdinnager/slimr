@@ -89,3 +89,10 @@ You can also do fancy stuff like make the above script or another script
 into a template that you can dynamically fill-in with parameters
 generated in R. You can also make SLiM generate R-friendly input. See
 the vignettes for details of these features and how to use them.
+
+## Code of Conduct
+
+Please note that the slimr project is released with a [Contributor Code
+of
+Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.

@@ -66,3 +66,58 @@ slim_output_process <- function(slim_output) {
     dplyr::group_modify(~dplyr::bind_cols(.$tibbles))
 
 }
+
+
+# slim_process_output <- function(out, data_only = FALSE) {
+#
+#   out_all <- paste(out, collapse = "\n")
+#
+#   dat <- stringr::str_match_all(out_all,
+#                                 stringr::regex("<slimr_out:start>(?:(.*?))<slimr_out:end>",
+#                                                dotall = TRUE))[[1]][ , 2]
+#
+#   if(length(dat) > 0) {
+#     df <- readr::read_csv(dat,
+#                           col_names = c("generation", "name", "expression", "data"),
+#                           quote = "\'",
+#                           col_types = "iccc")
+#   } else {
+#     df <- NULL
+#   }
+#
+#   if(!data_only) {
+#
+#     pre <- stringr::str_match_all(out_all,
+#                                   stringr::regex("^((?:(?!<slimr_out:end>).)*)<slimr_out:start>",
+#                                                  dotall = TRUE))[[1]][ , 2] %>%
+#       stringr::str_split("\n") %>%
+#       purrr::flatten_chr()
+#
+#
+#     inter <- stringr::str_match_all(out_all,
+#                                     stringr::regex("<slimr_out:end>(?:(.*?))<slimr_out:start>",
+#                                                    dotall = TRUE))[[1]][ , 2] %>%
+#       stringr::str_split("\n") %>%
+#       purrr::flatten_chr()
+#
+#     post <- stringr::str_match_all(out_all,
+#                                    stringr::regex("<slimr_out:start>((?:(?!<slimr_out:end>).)*)$",
+#                                                   dotall = TRUE))[[1]][ , 1] %>%
+#       stringr::str_split("\n") %>%
+#       purrr::flatten_chr()
+#
+#     hangers <- stringr::str_match_all(out_all,
+#                                       stringr::regex("<slimr_out:end>((?:(?!<slimr_out:start>).)*)$",
+#                                                      dotall = TRUE))[[1]][ , 2] %>%
+#       stringr::str_split("\n") %>%
+#       purrr::flatten_chr()
+#
+#     return(list(data = df, leftovers = post, extra_out = c(pre, inter, hangers)))
+#
+#   } else {
+#
+#     return(df)
+#
+#   }
+#
+# }

@@ -66,7 +66,7 @@ new_slimr_script <- function(block_name = character(),
                              callback = character(),
                              code = new_slimr_code(),
                              slimr_output = NULL,
-                             slimr_input = NULL,
+                             slimr_inline = NULL,
                              slimr_template = NULL,
                              slimrlang_orig = NULL,
                              script_info = NULL) {
@@ -85,7 +85,7 @@ new_slimr_script <- function(block_name = character(),
                 callback = callback,
                 code = code),
            slimr_output = slimr_output,
-           slimr_input = slimr_input,
+           slimr_inline = slimr_inline,
            slimr_template = slimr_template,
            slimrlang_orig = slimrlang_orig,
            script_info = script_info,
@@ -101,8 +101,8 @@ vec_ptype2.slimr_script.slimr_script <- function(x, y, ...) {
   slimr_output <- dplyr::bind_rows(attr(x, "slimr_output"),
                                    attr(y, "slimr_output"))
 
-  slimr_input <- dplyr::bind_rows(attr(x, "slimr_input"),
-                                  attr(y, "slimr_input"))
+  slimr_inline <- dplyr::bind_rows(attr(x, "slimr_inline"),
+                                  attr(y, "slimr_inline"))
 
   slimr_template <- dplyr::bind_rows(attr(x, "slimr_template"),
                                      attr(y, "slimr_template"))
@@ -120,7 +120,7 @@ vec_ptype2.slimr_script.slimr_script <- function(x, y, ...) {
                    callback = field(x, "callback"),
                    code = field(x, "code"),
                    slimr_output = slimr_output,
-                   slimr_input = slimr_input,
+                   slimr_inline = slimr_inline,
                    slimr_template = slimr_template,
                    slimrlang_orig = slimrlang_orig,
                    script_info = script_info)
@@ -131,8 +131,8 @@ vec_cast.slimr_script.slimr_script <- function(x, to, ...) {
   slimr_output <- dplyr::bind_rows(attr(x, "slimr_output"),
                                    attr(to, "slimr_output"))
 
-  slimr_input <- dplyr::bind_rows(attr(x, "slimr_input"),
-                                  attr(to, "slimr_input"))
+  slimr_inline <- dplyr::bind_rows(attr(x, "slimr_inline"),
+                                  attr(to, "slimr_inline"))
 
   slimr_template <- dplyr::bind_rows(attr(x, "slimr_template"),
                                   attr(to, "slimr_template"))
@@ -150,7 +150,7 @@ vec_cast.slimr_script.slimr_script <- function(x, to, ...) {
                    callback = field(x, "callback"),
                    code = field(x, "code"),
                    slimr_output = slimr_output,
-                   slimr_input = slimr_input,
+                   slimr_inline = slimr_inline,
                    slimr_template = slimr_template,
                    slimrlang_orig = slimrlang_orig,
                    script_info = script_info)
@@ -158,7 +158,43 @@ vec_cast.slimr_script.slimr_script <- function(x, to, ...) {
 
 #' @export
 as.character.slimr_script <- function(x, for_script = FALSE, ...) {
-  code <- SLiMify_all(as.character(code(x), as_list = TRUE), for_script = for_script)
+
+
+  new_code <- as.character(code(x), as_list = TRUE) %>%
+    purrr::map(~paste(.x, collapse = "\n"))
+
+  if(!for_script) {
+    atts <- attributes(x)
+    if(any(!is.na(atts$slimr_inline$code_for_slim))) {
+      new_code <- purrr::map(new_code,
+                             ~ stringr::str_replace_all(.x,
+                                                        stringr::fixed(na.omit(atts$slimr_inline$code_for_slim)),
+                                                        na.omit(atts$slimr_inline$code_for_display))
+      )
+    }
+
+    code_for_slim <- purrr::map_chr(na.omit(atts$slimr_output$code_for_slim),
+                                    ~.x %>%
+                                      rlang::parse_expr() %>%
+                                      rlang::expr_deparse(width = 500L) %>%
+                                      paste(collapse = "\n"))
+
+    if(any(!is.na(atts$slimr_output$code_for_slim))) {
+      new_code <- purrr::map(new_code,
+                             ~ stringr::str_replace_all(.x,
+                                                        stringr::fixed(code_for_slim),
+                                                        na.omit(atts$slimr_output$code_for_display))
+      )
+    }
+  }
+
+  new_code <- new_code %>%
+    purrr::map(~stringr::str_split(.x, "\n")[[1]])
+
+  code <- SLiMify_all(new_code, for_script = for_script)
+
+  code <- fix_integers(code)
+
   string <- paste0(ifelse(is.na(field(x, "block_id")), "", paste0(field(x, "block_id"), " ")),
                    ifelse(is.na(field(x, "start_gen")), "", field(x, "start_gen")),
                    ifelse(is.na(field(x, "end_gen")), "", paste0(":", field(x, "end_gen"))),
@@ -168,6 +204,8 @@ as.character.slimr_script <- function(x, for_script = FALSE, ...) {
                    purrr::map_chr(code, ~paste(.x, collapse = "\n    ")),
                    "\n}\n") %>%
     stringr::str_trim("left")
+
+
   string
 }
 

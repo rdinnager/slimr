@@ -4,10 +4,20 @@
 \alias{slimr_inline}
 \title{Insert R objects into SLiM scripts}
 \usage{
-slimr_inline(object)
+slimr_inline(object, delay = FALSE)
 }
 \arguments{
 \item{object}{R object to inline into the SLiM script.}
+
+\item{delay}{By default \code{slimr_inline} will insert the
+value of \code{object} into the script when the script is
+created (e.g. when \code{\link{slimr_script}} is called).
+However, setting \code{delay = TRUE} will delay the evaluation
+of \code{object} until the script is rendered instead (e.g. when
+\code{\link{slim_script_render}} is called). This allows you to
+write a \code{slimr_script} before you have an object available
+to be inlined (e.g. it allows you to have a 'placeholder'
+for an object you plan to generate in R later).}
 }
 \value{
 A character vector with the code generated for inlining.

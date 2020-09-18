@@ -5,13 +5,27 @@
 #' \code{\link{slim_block}} call
 #'
 #' @param object R object to inline into the SLiM script.
+#' @param delay By default \code{slimr_inline} will insert the
+#' value of \code{object} into the script when the script is
+#' created (e.g. when \code{\link{slimr_script}} is called).
+#' However, setting \code{delay = TRUE} will delay the evaluation
+#' of \code{object} until the script is rendered instead (e.g. when
+#' \code{\link{slim_script_render}} is called). This allows you to
+#' write a \code{slimr_script} before you have an object available
+#' to be inlined (e.g. it allows you to have a 'placeholder'
+#' for an object you plan to generate in R later).
 #'
 #' @return A character vector with the code generated for inlining.
 #' @export
 #'
 #' @details Currently supported R objects include all atomic vectors, matrices and arrays. Non-atomic vectors like factors are
 #' currently not supported and neither are any other special object types, though we plan to support some in the future.
-slimr_inline <- function(object) {
+slimr_inline <- function(object, delay = FALSE) {
+
+  if(delay) {
+    object <- rlang::enexpr(object)
+    return(rlang::expr(slimr_inline(!!object)))
+  }
 
   if(!is.array(object)) {
     object <- unname(unclass(object))

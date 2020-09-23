@@ -573,6 +573,7 @@ reprocess_script <- function(script) {
   slimr_output_attr <- attr(script, "slimr_output")
   slimr_template_attr <- attr(script, "slimr_template")
   slimr_lang_orig <- attr(script, "slimr_lang_orig")
+  script_info <- attr(script, "script_info")
 
   script <- new_slimr_script(block_name = block_names,
                              block_id = block_id,
@@ -584,7 +585,7 @@ reprocess_script <- function(script) {
                              slimr_output = slimr_output_attr,
                              slimr_template = slimr_template_attr,
                              slimrlang_orig = slimr_lang_orig,
-                             script_info = list(end_gen = as.numeric(end_gen)))
+                             script_info = script_info)
 
   script
 

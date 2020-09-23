@@ -374,7 +374,8 @@ slim_output_genlight_tibble_full <- function(output_full) {
     dplyr::select(pop_id, ind_id, unique_mut_id) %>%
     dplyr::mutate(present = 1) %>%
     dplyr::group_by(pop_id, ind_id, unique_mut_id) %>%
-    dplyr::summarise(count = sum(present), .groups = "drop")
+    dplyr::summarise(count = sum(present), .groups = "drop") %>%
+    dplyr::sample_frac()
 
   mut_dat <- alleles %>%
     dplyr::select(unique_mut_id) %>%

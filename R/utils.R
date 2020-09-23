@@ -108,6 +108,25 @@ convert_to_wsl_path <- function(windows_path) {
   stringr::str_replace(windows_path, drive_letter[ , 1], paste0("/mnt/", tolower(drive_letter[ , 2])))
 }
 
+#' Make sure a filename is compatable with using in a SLiM script.
+#'
+#' This generally only need to be used if you are using Windows, where
+#' this function will convert the file name into a path that can be accessed
+#' inside Windows Subsystem for Linux (WSL).
+#'
+#' @param file_name The name of the file to convert
+#'
+#' @return The converted filename that will ensure SLiM can access the file.
+#' @export
+slim_file <- function(file_name) {
+  os <- get_os()
+  if(os == "windows") {
+    return(convert_to_wsl_path(file_name))
+  } else {
+    return(file_name)
+  }
+}
+
 
 #' Glue two strings together.
 #'

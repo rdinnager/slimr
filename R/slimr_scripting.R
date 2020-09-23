@@ -72,7 +72,7 @@ slim_script <- function(...) {
                               ~glue::glue(.x, .na = NULL) %>%
                                 as.character())
 
-  code <- vec_unchop(script$code)
+  code <- vctrs::vec_unchop(script$code)
 
   ## process inlining
   c(code, slimr_inline_attr) %<-% process_inline(code, block_names)
@@ -480,13 +480,17 @@ slimr_script_render <- function(slimr_script, template = NULL, replace_NAs = FAL
   }
   if(any(!is.na(slimr_template_attr$var_names)) | output_templating) {
     if(is.null(template)) {
-      stop("This slimr_script has templating.. You must provide a template argument, which can be a list, a data.frame, or an environment")
-    }
-    if(inherits(template, "data.frame")) {
-      template <- purrr::transpose(template)
+      not_all_defaults <- any(is.na(unlist(slimr_template_attr$defaults)[!is.na(slimr_template_attr$var_names)]))
+      if(not_all_defaults) {
+        stop("This slimr_script has templating, but not all templated variables have defaults.. You must provide a template argument, which can be a list, a data.frame, or an environment")
+      }
     } else {
-      if(!inherits(template, "list")) {
-        stop("The template argument must be a list or inherit from a data.frame")
+      if(inherits(template, "data.frame")) {
+        template <- purrr::transpose(template)
+      } else {
+        if(!inherits(template, "list")) {
+          stop("The template argument must be a list or inherit from a data.frame")
+        }
       }
     }
 
@@ -508,6 +512,9 @@ slimr_script_render <- function(slimr_script, template = NULL, replace_NAs = FAL
       new_scripts <- purrr::map2(new_scripts, file_names,
                                 ~{attr(.x, "slimr_output")$file_name <- dplyr::na_if(.y, "NA"); .x})
     }
+
+    new_scripts <- purrr::map(new_scripts,
+                              ~reprocess_script(.x))
 
     if(list_length_1) {
       new_scripts <- new_scripts[[1]]
@@ -534,4 +541,52 @@ slimr_replace_file_names <- function(template, file_name) {
                          .na = NA_character_))
 }
 
+reprocess_script <- function(script) {
 
+  code <- code(script)
+
+  block_names <- vctrs::field(script, "block_name")
+
+  ## process inlining
+  c(code, slimr_inline_attr) %<-% process_inline(code, block_names)
+
+  code <- new_slimr_code(code)
+
+  ## process for template
+  c(code, slimr_template_attr) %<-% process_template(code, block_names)
+
+  code <- new_slimr_code(code)
+
+## process for output
+
+  c(code, slimr_output_attr) %<-% process_output(code, block_names)
+
+  code <- purrr::map(code,
+                     ~unlist(.x))
+
+  code <- new_slimr_code(code)
+
+  block_id <- vctrs::field(script, "block_id")
+  start_gen <- vctrs::field(script, "start_gen")
+  end_gen <- vctrs::field(script, "end_gen")
+  callback <- vctrs::field(script, "callback")
+  slimr_output_attr <- attr(script, "slimr_output")
+  slimr_template_attr <- attr(script, "slimr_template")
+  slimr_lang_orig <- attr(script, "slimr_lang_orig")
+  script_info <- attr(script, "script_info")
+
+  script <- new_slimr_script(block_name = block_names,
+                             block_id = block_id,
+                             start_gen = start_gen,
+                             end_gen = end_gen,
+                             callback = callback,
+                             code = code,
+                             slimr_inline = slimr_inline_attr,
+                             slimr_output = slimr_output_attr,
+                             slimr_template = slimr_template_attr,
+                             slimrlang_orig = slimr_lang_orig,
+                             script_info = script_info)
+
+  script
+
+}

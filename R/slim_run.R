@@ -456,7 +456,7 @@ slim_run_script <- function(script_txt,
     message("\nSuccess!")
   } else {
     warning("\nFailed! Error:\n")
-    warning(error)
+    cat(error, sep = "\n")
   }
 
   res <- list()

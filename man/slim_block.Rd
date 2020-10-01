@@ -22,8 +22,8 @@ An Eidos event is a block of Eidos code that
 is executed every generation, within a generation range, to perform a desired task. The syntax of an
 Eidos event declaration in \code{slimr} mimics that of the Eidos (e.g. SLiM) language itself (see SLiM manual).
 It looks like this:
-  \code{slim_block(\[id,\] \[start_gen, \[end_gen,\]\], \[slim_callback,\] \{ ... \})}
-  where \[\] specifies that the code is optional.
+  \code{slim_block([id,] [start_gen, [end_gen,]], [slim_callback,] \{ ... \})}
+  where [ ] specifies that the code is optional.
 The minimum required is a single argument containing Eidos code. This will be run in every generation
 with slim_callback \code{early()}, the default for Eidos events. You can also optionally specify an id
 for the SLiM code block, which will be the first argument. This is optionally followed by a starting

@@ -61,8 +61,10 @@ slimr_inline <- function(object, delay = FALSE) {
   .resources$temp_slimr_inline$code_for_display <- c(.resources$temp_slimr_inline$code_for_display,
                                                      code_for_display)
 
-
-  code_for_slim
+  rlang::sym(paste0(".__slmr_inline_object_",
+                    length(.resources$temp_slimr_inline$code_for_slim),
+                    "___"))
+  #code_for_slim
 
 }
 

@@ -163,29 +163,72 @@ as.character.slimr_script <- function(x, for_script = FALSE, ...) {
   new_code <- as.character(code(x), as_list = TRUE) %>%
     purrr::map(~paste(.x, collapse = "\n"))
 
-  if(!for_script) {
-    atts <- attributes(x)
-    if(any(!is.na(atts$slimr_inline$code_for_slim))) {
-      new_code <- purrr::map(new_code,
-                             ~ stringr::str_replace_all(.x,
-                                                        stringr::fixed(na.omit(atts$slimr_inline$code_for_slim)),
-                                                        na.omit(atts$slimr_inline$code_for_display))
-      )
+  block_names <- vctrs::field(x, "block_name")
+
+  atts <- attributes(x)
+
+  if(any(!is.na(atts$slimr_inline$code_for_slim))) {
+
+    inline_df <- atts$slimr_inline %>%
+      dplyr::group_by(block_name)
+
+    inline_list <- inline_df %>%
+      dplyr::group_split()
+
+    names(inline_list) <- dplyr::group_keys(inline_df) %>%
+      dplyr::pull(block_name)
+
+    inline_list <- inline_list[block_names]
+
+
+    if(!for_script) {
+      replacements <- purrr::map(inline_list,
+                                 ~stringr::fixed(.x$code_for_display) %>%
+                                   setNames(paste0(".__slmr_inline_object_", seq_along(.x$code_for_display),
+                                                   "___")))
+    } else {
+      replacements <- purrr::map(inline_list,
+                                 ~stringr::fixed(.x$code_for_slim) %>%
+                                   setNames(paste0(".__slmr_inline_object_", seq_along(.x$code_for_display),
+                                                   "___")))
     }
 
-    code_for_slim <- purrr::map_chr(na.omit(atts$slimr_output$code_for_slim),
-                                    ~.x %>%
-                                      rlang::parse_expr() %>%
-                                      rlang::expr_deparse(width = 500L) %>%
-                                      paste(collapse = "\n"))
 
-    if(any(!is.na(atts$slimr_output$code_for_slim))) {
-      new_code <- purrr::map(new_code,
-                             ~ stringr::str_replace_all(.x,
-                                                        stringr::fixed(code_for_slim),
-                                                        na.omit(atts$slimr_output$code_for_display))
-      )
+    new_code <- purrr::map2(new_code, replacements,
+                            ~ stringr::str_replace_all(.x, .y))
+
+  }
+
+  if(any(!is.na(atts$slimr_output$code_for_slim))) {
+
+    output_df <- atts$slimr_output %>%
+      dplyr::group_by(block_name)
+
+    output_list <- output_df %>%
+      dplyr::group_split()
+
+    names(output_list) <- dplyr::group_keys(output_df) %>%
+      dplyr::pull(block_name)
+
+    output_list <- output_list[block_names]
+
+
+    if(!for_script) {
+      replacements <- purrr::map(output_list,
+                                 ~stringr::fixed(.x$code_for_display) %>%
+                                   setNames(paste0(".__slmr_output_object_", seq_along(.x$code_for_display),
+                                                   "___")))
+    } else {
+      replacements <- purrr::map(output_list,
+                                 ~stringr::fixed(.x$code_for_slim) %>%
+                                   setNames(paste0(".__slmr_output_object_", seq_along(.x$code_for_display),
+                                                   "___")))
     }
+
+
+    new_code <- purrr::map2(new_code, replacements,
+                            ~ stringr::str_replace_all(.x, .y))
+
   }
 
   new_code <- new_code %>%

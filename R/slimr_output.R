@@ -42,7 +42,7 @@ slimr_output <- function(slimr_expr, name, do_every = 1,
     new_code <- rlang::expr(
       if(sim.generation %% !!do_every == 0) {
         cat("\n<slimr_out:start>\n" + paste(sim.generation) + ",'" +
-              !!name + "','" + !!expr_txt + "','" + "','")
+              !!name + "','" + !!expr_txt + "','" + "slim_output','")
         !!slimr_expr
         cat("'\n<slimr_out:end>\n")
       }

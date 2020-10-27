@@ -470,6 +470,9 @@ slim_run_script <- function(script_txt,
     res$output_file <- conn
   }
 
+  class(res$output_data) <- c("slimr_output_data",
+                              class(res$output_data))
+
   class(res) <- "slimr_results"
 
   invisible(res)

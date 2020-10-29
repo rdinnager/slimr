@@ -75,7 +75,11 @@ slim_script <- function(...) {
   code <- vctrs::vec_unchop(script$code)
 
   ## process inlining
-  c(code, slimr_inline_attr) %<-% process_inline(code, block_names)
+  c(code, slimr_inline_attr) %<-% process_inline(code, block_names,
+                                                 slimr_inline_attr =
+                                                   dplyr::tibble(block_name = block_names,
+                                                                 code_for_slim = NA,
+                                                                 code_for_display = NA))
 
   code <- new_slimr_code(code)
 
@@ -108,7 +112,8 @@ slim_script <- function(...) {
                              slimr_output = slimr_output_attr,
                              slimr_template = slimr_template_attr,
                              slimrlang_orig = .call,
-                             script_info = list(end_gen = as.numeric(end_gen)))
+                             script_info = list(end_gen = as.numeric(end_gen),
+                                                rendered = FALSE))
 
   script
 }
@@ -470,6 +475,11 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #'
 #' @examples
 slimr_script_render <- function(slimr_script, template = NULL, replace_NAs = FALSE) {
+
+  if(attr(slimr_script, "script_info")$rendered) {
+    stop("This script has already been rendered. Rendering twice is not supported. To create a new version of the script rerender the unrendered script.")
+  }
+
   list_length_1 <- FALSE
   slimr_template_attr <- attr(slimr_script, "slimr_template")
   slimr_output_attr <- attr(slimr_script, "slimr_output")
@@ -520,13 +530,17 @@ slimr_script_render <- function(slimr_script, template = NULL, replace_NAs = FAL
       new_scripts <- new_scripts[[1]]
     }
 
+  } else {
+
+    new_scripts <- slimr_script
+
   }
-
-
 
   if(!list_length_1) {
     new_scripts <- new_slimr_script_coll(new_scripts)
   }
+
+  attr(new_scripts, "script_info")$rendered <- TRUE
 
   new_scripts
 
@@ -548,7 +562,9 @@ reprocess_script <- function(script) {
   block_names <- vctrs::field(script, "block_name")
 
   ## process inlining
-  c(code, slimr_inline_attr) %<-% process_inline(code, block_names)
+  c(code, slimr_inline_attr) %<-% process_inline(code, block_names,
+                                                 slimr_inline_attr =
+                                                   attr(script, "slimr_inline"))
 
   code <- new_slimr_code(code)
 

@@ -61,8 +61,10 @@ slimr_inline <- function(object, delay = FALSE) {
   .resources$temp_slimr_inline$code_for_display <- c(.resources$temp_slimr_inline$code_for_display,
                                                      code_for_display)
 
-
-  code_for_slim
+  rlang::sym(paste0(".__slmr_inline_object_",
+                    length(.resources$temp_slimr_inline$code_for_slim),
+                    "___"))
+  #code_for_slim
 
 }
 
@@ -86,24 +88,38 @@ inline_replace <- function(code) {
   code
 }
 
-gather_inline_one <- function(code_one) {
-  .resources$temp_slimr_inline$code_for_slim <- list()
-  .resources$temp_slimr_inline$code_for_display <- list()
+gather_inline_one <- function(code_one, slimr_inline_attr) {
+  .resources$temp_slimr_inline$code_for_slim <- na.omit(slimr_inline_attr$code_for_slim)
+  .resources$temp_slimr_inline$code_for_display <- na.omit(slimr_inline_attr$code_for_display)
 
   code_one <- inline_replace(code_one)
-  inline_info <- list(code_for_slim = .resources$temp_slimr_inline$code_for_slim,
-                      code_for_display = .resources$temp_slimr_inline$code_for_display)
+  inline_info <- list(code_for_slim = na.omit(.resources$temp_slimr_inline$code_for_slim),
+                      code_for_display = na.omit(.resources$temp_slimr_inline$code_for_display))
   list(new_code = code_one, inline_info = inline_info)
 }
 
-gather_inline <- function(code) {
-  res <- purrr::map(code,
-                    ~gather_inline_one(.x))
+gather_inline <- function(code, slimr_inline_attr) {
+  res <- purrr::map2(code, slimr_inline_attr,
+                    ~gather_inline_one(.x, .y))
   res
 }
 
-process_inline <- function(code, block_names) {
-  inline_processed <- gather_inline(as.character(code)) %>%
+process_inline <- function(code, block_names, slimr_inline_attr) {
+
+  slimr_inline_attr <- slimr_inline_attr %>%
+    dplyr::group_by(block_name)
+
+  slimr_inline_attr_blocks <- slimr_inline_attr %>%
+    dplyr::group_split()
+
+  names(slimr_inline_attr_blocks) <- slimr_inline_attr %>%
+    dplyr::group_keys() %>%
+    dplyr::pull(block_name)
+
+  slimr_inline_attr_blocks <- slimr_inline_attr_blocks[block_names]
+
+  inline_processed <- gather_inline(as.character(code),
+                                    slimr_inline_attr_blocks) %>%
     purrr::transpose()
 
   slimr_inline_attr <- purrr::transpose(inline_processed$inline_info) %>%

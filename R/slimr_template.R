@@ -162,6 +162,7 @@ replace_double_dots <- function(slimr_script, envir = parent.frame(), slimr_temp
                                    code = new_code,
                                    slimr_template = slimr_template_attr,
                                    slimr_output = attr(slimr_script, "slimr_output"),
+                                   slimr_inline = attr(slimr_script, "slimr_inline"),
                                    slimrlang_orig = attr(slimr_script, "slimrlang_orig"),
                                    script_info = attr(slimr_script, "script_info"))
   slimr_script

@@ -42,7 +42,7 @@ slimr_output <- function(slimr_expr, name, do_every = 1,
     new_code <- rlang::expr(
       if(sim.generation %% !!do_every == 0) {
         cat("\n<slimr_out:start>\n" + paste(sim.generation) + ",'" +
-              !!name + "','" + !!expr_txt + "','" + "','")
+              !!name + "','" + !!expr_txt + "','" + "slim_output','")
         !!slimr_expr
         cat("'\n<slimr_out:end>\n")
       }
@@ -59,10 +59,11 @@ slimr_output <- function(slimr_expr, name, do_every = 1,
     })
   }
 
-  code_for_display <- paste0("{", rlang::expr_text(slimr_expr), " -> ", name, "}")
+  code_for_display <- paste0("{", rlang::expr_text(slimr_expr, width = 500),
+                             " -> ", name, "}")
 
   .resources$temp_slimr_output$code_for_slim <- c(.resources$temp_slimr_output$code_for_slim,
-                                                  rlang::expr_text(new_code))
+                                                  rlang::expr_text(new_code, width = 500))
   .resources$temp_slimr_output$code_for_display <- c(.resources$temp_slimr_output$code_for_display,
                                                      code_for_display)
   .resources$temp_slimr_output$output_name <- c(.resources$temp_slimr_output$output_name,
@@ -80,7 +81,10 @@ slimr_output <- function(slimr_expr, name, do_every = 1,
                                                 NA)
   }
 
-  new_code
+  rlang::sym(paste0(".__slmr_output_object_",
+                    length(.resources$temp_slimr_output$code_for_slim),
+                    "___"))
+  #new_code
 
 }
 

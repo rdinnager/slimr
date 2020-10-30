@@ -24,7 +24,7 @@ SLiMify_all <- function(code, for_script = FALSE) {
 
 slimr_code_add_semicolons <- function(code_one) {
   brace_lines <- stringr::str_detect(code_one,
-                                     "(\\{|\\}|\\+|\\,|\\-|\\*|\\/)$")
+                                     "(\\{|\\}|\\+|\\,|\\-|\\*|\\/)[:blank:]*$")
   code_one[!brace_lines] <- paste0(code_one[!brace_lines], ";")
   code_one
 }

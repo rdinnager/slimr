@@ -160,10 +160,12 @@ slim_outputFull_extract <- function(output_full, type = c("mutations", "individu
   if(join) {
     dat <- purrr::reduce(dat,
                          ~dplyr::left_join(.x, .y))
-    class(dat) <- "slimr_outputFull_joined"
+    class(dat) <- c("slimr_outputFull_joined",
+                    class(dat))
   } else {
     names(dat) <- type
-    class(dat) <- "slimr_outputFull_list"
+    class(dat) <- c("slimr_outputFull_list",
+                    class(dat))
   }
 
   if(length(dat) == 1) {

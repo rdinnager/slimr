@@ -636,4 +636,34 @@ slim_save_data_one <- function(df, file_name, format) {
   }
 }
 
+#' Title
+#'
+#' @param slimr_script A slimr_script object to open in SLiMGUI
+#' (or QtSLiM if on Linux or Windows)
+#' @param slim_gui_path Full path to SLiMGUI or QtSLiM executable
+#'
+#' @return Invisibly return the process object used to launch the
+#' GUI (for debugging purposes)
+#'
+#' @export
+slim_open <- function(slimr_script,
+                      slim_gui_path = Sys.getenv("slim_gui_path")) {
+
+
+  platform <- get_os()
+
+  script_text <- as_slim_text(slimr_script)
+  suppressWarnings(script_file <- tempfile(fileext = ".txt"))
+  slimr_write(script_text, script_file)
+
+  if(platform == "windows") {
+    script_file <- convert_to_wsl_path(script_file)
+  }
+
+  proc <- processx::run(slim_gui_path, script_file,
+                        windows_verbatim_args = TRUE)
+  invisible(proc)
+
+}
+
 

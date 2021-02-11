@@ -252,11 +252,10 @@ slim_outputFull_extract_one <- function(string, type, expand_mutations, generati
                                       names_to = "genome_num",
                                       values_to = "gen_id"),
 
-                genomes = suppressWarnings(readr::read_delim(dat,
-                                                             delim = " ",
-                                                             col_types = "ccc",
-                                                             col_names = c("gen_id", "gen_type",
-                                                                           "mut_list"))) %>%
+                genomes = suppressWarnings(read_with_excess(dat,
+                                                            col_types = "ccc",
+                                                            col_names = c("gen_id", "gen_type",
+                                                                          "mut_list"))) %>%
                   dplyr::mutate(mut_list = stringr::str_split(mut_list, " ")),
 
                 NULL
@@ -387,11 +386,10 @@ slim_outputGS_extract_one <- function(string, type, expand_mutations, generation
                                                                                 "prevalence",
                                                                                 "nucleotide"))),
 
-                  genomes = suppressWarnings(readr::read_delim(dat,
-                                                               delim = " ",
-                                                               col_types = "ccc",
-                                                               col_names = c("gen_id", "gen_type",
-                                                                             "mut_list"))) %>%
+                  genomes = suppressWarnings(read_with_excess(dat,
+                                                              col_types = "ccc",
+                                                              col_names = c("gen_id", "gen_type",
+                                                                            "mut_list"))) %>%
                     dplyr::mutate(mut_list = stringr::str_split(mut_list, " ")),
 
                   NULL
@@ -412,11 +410,10 @@ slim_outputGS_extract_one <- function(string, type, expand_mutations, generation
                                             "prevalence" = NA,
                                             "nucleotide" = NA),
 
-                  genomes = suppressWarnings(readr::read_delim(dat,
-                                                               delim = " ",
-                                                               col_types = "ccc",
-                                                               col_names = c("gen_id", "gen_type",
-                                                                             "mut_list"))) %>%
+                  genomes = suppressWarnings(read_with_excess(dat,
+                                                              col_types = "ccc",
+                                                              col_names = c("gen_id", "gen_type",
+                                                                            "mut_list"))) %>%
                     dplyr::mutate(mut_list = stringr::str_split(mut_list, " ")),
 
                   NULL
@@ -722,10 +719,11 @@ slim_output_genlight_tibble_GS <- function(output_GS) {
                                 join = TRUE,
                                 expand_mutations = TRUE)
 
-  n_inds <- nrow(inds) / 2
+  ind_df <- dplyr::tibble(gen_id = unique(inds$gen_id)) %>%
+    dplyr::mutate(ind_id = rep(1:(n() / 2), each = 2))
 
   inds <- inds %>%
-    dplyr::mutate(ind_id = rep(1:n_inds, each = 2))
+    dplyr::left_join(ind_df)
 
   muts <- slim_outputGS_extract(output_GS,
                                 "mutations")
@@ -756,4 +754,15 @@ slim_output_genlight_tibble_GS <- function(output_GS) {
 
 }
 
+read_with_excess <- function(string, col_names, col_types) {
 
+  txt <- readr::read_lines(string)
+  ncol <- length(col_names)
+  split_it <- stringr::str_split_fixed(txt, " ", ncol) %>%
+    as.data.frame() %>%
+    setNames(col_names) %>%
+    readr::type_convert(col_types)
+
+  return(split_it)
+
+}

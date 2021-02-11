@@ -64,6 +64,7 @@ slim_run <- function(x, slim_path = NULL,
                      rec_args = NULL,
                      parallel = FALSE,
                      progress = TRUE,
+                     throw_error = FALSE,
                      ...) {
   UseMethod("slim_run", x)
 }
@@ -83,6 +84,7 @@ slim_run.character <- function(x, slim_path = NULL,
                                rec_args = NULL,
                                parallel = FALSE,
                                progress = TRUE,
+                               throw_error = FALSE,
                                ...) {
 
   if(length(x) > 1) {
@@ -103,6 +105,7 @@ slim_run.character <- function(x, slim_path = NULL,
                   rec_args = rec_args,
                   parallel = parallel,
                   progress = progress,
+                  throw_error = throw_error,
                   ...)
 
 }
@@ -122,6 +125,7 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
                                   rec_args = NULL,
                                   parallel = FALSE,
                                   progress = TRUE,
+                                  throw_error = FALSE,
                                   ...) {
 
   script <- as_slim_text(x)
@@ -151,6 +155,7 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
                   parallel = parallel,
                   progress = progress,
                   save_to_file = save_to_file,
+                  throw_error = throw_error,
                   ...)
 
 }
@@ -170,6 +175,7 @@ slim_run.slimr_script_coll <- function(x, slim_path = NULL,
                                        rec_args = NULL,
                                        parallel = FALSE,
                                        progress = TRUE,
+                                       throw_error = FALSE,
                                        ...) {
 
   assert_package("future")
@@ -210,6 +216,7 @@ slim_run.slimr_script_coll <- function(x, slim_path = NULL,
                                                rec_args = rec_args,
                                                parallel = parallel,
                                                progress = FALSE,
+                                               throw_error = throw_error,
                                                ...)),
                                      .progress = progress,
                                      .options = furrr::future_options(globals = FALSE,
@@ -230,6 +237,7 @@ slim_run.slimr_script_coll <- function(x, slim_path = NULL,
                                          rec_args = rec_args,
                                          parallel = parallel,
                                          progress = progress,
+                                         throw_error = throw_error,
                                          ...)))
   }
 
@@ -254,6 +262,7 @@ slim_run_script <- function(script_txt,
                             parallel = FALSE,
                             progress = !parallel,
                             save_to_file = NULL,
+                            throw_error = FALSE,
                             ...) {
 
   platform <- get_os()
@@ -327,7 +336,7 @@ slim_run_script <- function(script_txt,
       slim_p$poll_io(10000)
 
       if(file_out) {
-        out_lines <- readr::read_lines(conn, skip = curr_line - 1L)
+        out_lines <- c(leftovers, readr::read_lines(conn, skip = curr_line - 1L))
         curr_line <- curr_line + length(out_lines)
       } else {
         out_lines <- c(leftovers, slim_p$read_output_lines())
@@ -337,7 +346,7 @@ slim_run_script <- function(script_txt,
 
       not_finished <- FALSE
       if(file_out) {
-        out_lines <- readr::read_lines(conn, skip = curr_line - 1L)
+        out_lines <- c(leftovers, readr::read_lines(conn, skip = curr_line - 1L))
         curr_line <- curr_line + length(out_lines)
       } else {
         out_lines <- c(leftovers, slim_p$read_all_output_lines())
@@ -456,7 +465,11 @@ slim_run_script <- function(script_txt,
     message("\nSuccess!")
   } else {
     warning("\nFailed! Error:\n")
-    cat(error, sep = "\n")
+    if(throw_error) {
+      stop(paste(error, collapse = "\n"))
+    } else {
+      cat(error, sep = "\n")
+    }
   }
 
   res <- list()

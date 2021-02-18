@@ -77,7 +77,8 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
     dplyr::group_by(pop) %>%
     dplyr::summarise(size = n(),
                      sim_sex = ifelse(sex[1] == "H", "H", "S"),
-                     sex_ratio = table(sex)[1] / size)
+                     sex_ratio = table(sex)[1] / size,
+                     .groups = "drop")
   if(pops$sim_sex[1] == "H") {
     pops <- pops %>%
       dplyr::select(-sex_ratio)
@@ -140,12 +141,14 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
   muts_txt <- readr::read_lines(tmp) %>%
     paste(collapse = "\n")
 
-  all_gens <- paste(rep(pops$pop, times = pops$size * 2),
-                    sequence(pops$size * 2) - 1L,
-                    sep = ":") %>%
-    matrix(nrow = n_inds, byrow = TRUE) %>%
-    dplyr::as_tibble(.name_repair = "universal") %>%
-    dplyr::mutate(pop = rep(pops$pop, times = pops$size))
+  suppressMessages(
+    all_gens <- paste(rep(pops$pop, times = pops$size * 2),
+                      sequence(pops$size * 2) - 1L,
+                      sep = ":") %>%
+      matrix(nrow = n_inds, byrow = TRUE) %>%
+      dplyr::as_tibble(.name_repair = "universal") %>%
+      dplyr::mutate(pop = rep(pops$pop, times = pops$size))
+  )
 
   inds <- dplyr::tibble(pop = ind_pops,
                         sex = ind_sex) %>%

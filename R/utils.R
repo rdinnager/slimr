@@ -103,7 +103,7 @@ sets_equal <- function(actual, expected) {
 #' @return The modified path.
 #' @noRd
 convert_to_wsl_path <- function(windows_path) {
-  windows_path <- normalizePath(windows_path, winslash = "/")
+  windows_path <- suppressWarnings(normalizePath(windows_path, winslash = "/"))
   drive_letter <- stringr::str_match(windows_path, "^([A-Za-z]):")
   stringr::str_replace(windows_path, drive_letter[ , 1], paste0("/mnt/", tolower(drive_letter[ , 2])))
 }

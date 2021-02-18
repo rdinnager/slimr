@@ -4,7 +4,12 @@
 \alias{slimr_script_render}
 \title{Render a SLiM script with special slimrlang formatting}
 \usage{
-slimr_script_render(slimr_script, template = NULL, replace_NAs = FALSE)
+slimr_script_render(
+  slimr_script,
+  template = NULL,
+  replace_NAs = TRUE,
+  reps = 1
+)
 }
 \arguments{
 \item{slimr_script}{The \code{slimr_script} object to be rendered}
@@ -18,6 +23,9 @@ variables, and \code{slimr_script_render} will render a separate \code{slimr_scr
 and return it as a \code{slimr_script_coll} object.}
 
 \item{replace_NAs}{Should \code{NA} values in the template be replaced by their default values?}
+
+\item{reps}{Should the rendered script be replicated? If greater than 1, a \code{slimr_script_coll}
+will be returned.}
 }
 \value{
 

@@ -469,12 +469,15 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #' variables, and \code{slimr_script_render} will render a separate \code{slimr_script} for each row
 #' and return it as a \code{slimr_script_coll} object.
 #' @param replace_NAs Should \code{NA} values in the template be replaced by their default values?
+#' @param reps Should the rendered script be replicated? If greater than 1, a \code{slimr_script_coll}
+#' will be returned.
 #'
 #' @return
 #' @export
 #'
 #' @examples
-slimr_script_render <- function(slimr_script, template = NULL, replace_NAs = FALSE) {
+slimr_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE,
+                                reps = 1) {
 
   if(attr(slimr_script, "script_info")$rendered) {
     stop("This script has already been rendered. Rendering twice is not supported. To create a new version of the script rerender the unrendered script.")
@@ -538,6 +541,11 @@ slimr_script_render <- function(slimr_script, template = NULL, replace_NAs = FAL
 
   if(!list_length_1) {
     new_scripts <- new_slimr_script_coll(new_scripts)
+  }
+
+  if(reps > 1) {
+    new_scripts <- replicate(reps, new_scripts, simplify = FALSE) %>%
+      new_slimr_script_coll()
   }
 
   attr(new_scripts, "script_info")$rendered <- TRUE

@@ -158,8 +158,13 @@ slim_outputFull_extract <- function(output_full, type = c("mutations", "individu
                     ~get_one(.x, output_full$data, output_full$generation))
 
   if(join) {
-    dat <- purrr::reduce(dat,
-                         ~dplyr::left_join(.x, .y))
+    ## not the ideal solution but I don't have time to check which
+    ## variable name to join by for every join in the code right now
+    ## it is on my to do list though
+    suppressMessages(
+      dat <- purrr::reduce(dat,
+                           ~dplyr::left_join(.x, .y))
+    )
     class(dat) <- c("slimr_outputFull_joined",
                     class(dat))
   } else {
@@ -327,8 +332,10 @@ slim_outputGS_extract <- function(output, type = c("mutations",
                     ~get_one(.x, output$data, output$generation))
 
   if(join) {
-    dat <- purrr::reduce(dat,
-                         ~dplyr::left_join(.x, .y))
+    suppressMessages(
+      dat <- purrr::reduce(dat,
+                           ~dplyr::left_join(.x, .y))
+    )
     class(dat) <- c("slimr_genome_output_joined",
                     class(dat))
   } else {
@@ -544,6 +551,16 @@ slim_output_genlight <- function(x, ...) {
 }
 
 #' @export
+slim_output_genlight.slimr_results_coll <- function(x, name = NULL, by = NULL, ...) {
+  if(is.null(names(x))) {
+    names(x) <- paste0("rep_", seq_along(x))
+  }
+  furrr::future_imap_dfr(x, ~ slim_output_genlight(.x, name = name, by = by, ...) %>%
+                       dplyr::mutate(rep = .y),
+                       .options = furrr::furrr_options(seed = TRUE))
+}
+
+#' @export
 slim_output_genlight.slimr_results <- function(x, name = NULL, by = NULL, ...) {
 
   assert_package("adegenet")
@@ -686,22 +703,26 @@ slim_output_genlight_tibble_full <- function(output_full) {
   muts <- slim_outputFull_extract(output_full,
                                   "mutations")
 
-  alleles <- inds %>%
-    dplyr::left_join(muts %>% dplyr::select(mut_id, unique_mut_id)) %>%
-    dplyr::select(pop_id, ind_id, unique_mut_id) %>%
-    dplyr::mutate(present = 1) %>%
-    dplyr::group_by(pop_id, ind_id, unique_mut_id) %>%
-    dplyr::summarise(count = sum(present), .groups = "drop") %>%
-    dplyr::sample_frac()
+  suppressMessages(
+    alleles <- inds %>%
+      dplyr::left_join(muts %>% dplyr::select(mut_id, unique_mut_id)) %>%
+      dplyr::select(pop_id, ind_id, unique_mut_id) %>%
+      dplyr::mutate(present = 1) %>%
+      dplyr::group_by(pop_id, ind_id, unique_mut_id) %>%
+      dplyr::summarise(count = sum(present), .groups = "drop") %>%
+      dplyr::sample_frac()
+  )
 
-  mut_dat <- alleles %>%
-    dplyr::select(unique_mut_id) %>%
-    dplyr::distinct() %>%
-    dplyr::left_join(muts %>%
-                       dplyr::select(unique_mut_id,
-                                     chrome_pos,
-                                     mut_type,
-                                     prevalence))
+  suppressMessages(
+    mut_dat <- alleles %>%
+      dplyr::select(unique_mut_id) %>%
+      dplyr::distinct() %>%
+      dplyr::left_join(muts %>%
+                         dplyr::select(unique_mut_id,
+                                       chrome_pos,
+                                       mut_type,
+                                       prevalence))
+  )
   alleles <- alleles %>%
     tidyr::pivot_wider(id_cols = c(pop_id, ind_id),
                        names_from = unique_mut_id,
@@ -720,30 +741,36 @@ slim_output_genlight_tibble_GS <- function(output_GS) {
                                 expand_mutations = TRUE)
 
   ind_df <- dplyr::tibble(gen_id = unique(inds$gen_id)) %>%
-    dplyr::mutate(ind_id = rep(1:(n() / 2), each = 2))
+    dplyr::mutate(ind_id = rep(1:(dplyr::n() / 2), each = 2))
 
-  inds <- inds %>%
-    dplyr::left_join(ind_df)
+  suppressMessages(
+    inds <- inds %>%
+      dplyr::left_join(ind_df)
+  )
 
   muts <- slim_outputGS_extract(output_GS,
                                 "mutations")
 
-  alleles <- inds %>%
-    dplyr::left_join(muts %>% dplyr::select(mut_id, unique_mut_id)) %>%
-    dplyr::select(ind_id, unique_mut_id) %>%
-    dplyr::mutate(present = 1) %>%
-    dplyr::group_by(ind_id, unique_mut_id) %>%
-    dplyr::summarise(count = sum(present), .groups = "drop") %>%
-    dplyr::sample_frac()
+  suppressMessages(
+    alleles <- inds %>%
+      dplyr::left_join(muts %>% dplyr::select(mut_id, unique_mut_id)) %>%
+      dplyr::select(ind_id, unique_mut_id) %>%
+      dplyr::mutate(present = 1) %>%
+      dplyr::group_by(ind_id, unique_mut_id) %>%
+      dplyr::summarise(count = sum(present), .groups = "drop") %>%
+      dplyr::sample_frac()
+  )
 
-  mut_dat <- alleles %>%
-    dplyr::select(unique_mut_id) %>%
-    dplyr::distinct() %>%
-    dplyr::left_join(muts %>%
-                       dplyr::select(unique_mut_id,
-                                     chrome_pos,
-                                     mut_type,
-                                     prevalence))
+  suppressMessages(
+    mut_dat <- alleles %>%
+      dplyr::select(unique_mut_id) %>%
+      dplyr::distinct() %>%
+      dplyr::left_join(muts %>%
+                         dplyr::select(unique_mut_id,
+                                       chrome_pos,
+                                       mut_type,
+                                       prevalence))
+  )
   alleles <- alleles %>%
     tidyr::pivot_wider(id_cols = c(ind_id),
                        names_from = unique_mut_id,

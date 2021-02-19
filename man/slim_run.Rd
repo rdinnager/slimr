@@ -22,6 +22,7 @@ slim_run(
   rec_args = NULL,
   parallel = FALSE,
   progress = TRUE,
+  throw_error = FALSE,
   ...
 )
 
@@ -40,6 +41,7 @@ slim_run(
   rec_args = NULL,
   parallel = FALSE,
   progress = TRUE,
+  throw_error = FALSE,
   ...
 )
 
@@ -58,6 +60,7 @@ slim_run(
   rec_args = NULL,
   parallel = FALSE,
   progress = TRUE,
+  throw_error = FALSE,
   ...
 )
 
@@ -76,6 +79,7 @@ slim_run(
   rec_args = NULL,
   parallel = FALSE,
   progress = TRUE,
+  throw_error = FALSE,
   ...
 )
 }

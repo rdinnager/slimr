@@ -219,8 +219,9 @@ slim_run.slimr_script_coll <- function(x, slim_path = NULL,
                                                throw_error = throw_error,
                                                ...)),
                                      .progress = progress,
-                                     .options = furrr::future_options(globals = FALSE,
-                                                                      lazy = TRUE))
+                                     .options = furrr::furrr_options(globals = FALSE,
+                                                                     lazy = TRUE,
+                                                                     seed = TRUE))
   } else {
     all_results <- purrr::map(x,
                                ~suppressMessages(slim_run(.x,

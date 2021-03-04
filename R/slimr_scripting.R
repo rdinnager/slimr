@@ -115,6 +115,11 @@ slim_script <- function(...) {
                              script_info = list(end_gen = as.numeric(end_gen),
                                                 rendered = FALSE))
 
+  if(!any(stringr::str_detect(as.character(code), "slimr_inline")) &
+     !any(!is.na(slimr_template_attr$var_names))) {
+    attr(script, "script_info")$rendered <- TRUE
+  }
+
   script
 }
 
@@ -177,7 +182,8 @@ slim_block <- function(...) {
     stop("The last argument of slim_block should be a valid slimr_code block expression.")
   }
 
-  code <- deparse(args[[n_args]], width.cutoff = 500, control = NULL)
+  #code <- deparse(args[[n_args]], width.cutoff = 500, control = NULL)
+  code <- rlang::expr_deparse(args[[n_args]], width = 500)
 
   if(code[1] == "{") {
     code <- code[2:(length(code) - 1L)]
@@ -348,13 +354,19 @@ slim_block <- function(...) {
 #' @param name Name of function being created.
 #' @param return_type Type of the functions return, using Eidos' type syntax (see details)
 #' @param body SLiM / Eidos code to be executed in the body of the function.
+#' Can also be an R function, in which case the body of the R function is
+#' used.
 #'
 #' @return A \code{slimr_block} object (only useful with the context of a \code{\link{slim_script}}) call.
 #' @export
 slim_function <- function(..., name, return_type = "f$", body) {
   args <- list(...)
 
-  body <- rlang::enexpr(body)
+  if(inherits(body, "function")) {
+    body <- rlang::fn_body(body)
+  } else {
+    body <- rlang::enexpr(body)
+  }
 
   if(!is.call(body)) {
     stop("body argument of slim_block should be a valid slimr_code block expression.")
@@ -613,4 +625,10 @@ reprocess_script <- function(script) {
 
   script
 
+}
+
+#' @export
+print.slimr_block <- function(x, ...) {
+  cat("A slimr_block:\n")
+  print(suppressWarnings(slim_script(x)))
 }

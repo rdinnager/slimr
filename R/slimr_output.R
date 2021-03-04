@@ -25,7 +25,9 @@
 slimr_output <- function(slimr_expr, name, do_every = 1,
                          send_to = c("data", "file"),
                          file_name = tempfile(fileext = ".txt"),
-                         format = c("csv", "fst")) {
+                         format = c("csv", "fst"),
+                         type = NULL,
+                         expression = NULL) {
 
   send_to = match.arg(send_to)
   format = match.arg(format)
@@ -36,27 +38,48 @@ slimr_output <- function(slimr_expr, name, do_every = 1,
 
   slimr_expr <- rlang::enexpr(slimr_expr)
 
-  expr_txt <- rlang::expr_deparse(slimr_expr)
+  if(is.null(expression)) {
+    expr_txt <- rlang::expr_deparse(slimr_expr)
+  } else {
+    expr_txt <- expression
+  }
 
-  if(slimr_code_detect_output(expr_txt)) {
+
+  if(!is.null(type)) {
+
     new_code <- rlang::expr(
       if(sim.generation %% !!do_every == 0) {
         cat("\n<slimr_out:start>\n" + paste(sim.generation) + ",'" +
-              !!name + "','" + !!expr_txt + "','" + "slim_output','")
-        !!slimr_expr
+              !!name + "','" + !!expr_txt + "','" + !!type + "','")
+        cat(!!slimr_expr)
         cat("'\n<slimr_out:end>\n")
       }
     )
+
   } else {
-    new_code <- rlang::expr(
-      if(sim.generation %% !!do_every == 0) {
-        cat("\n<slimr_out:start>\n" + paste(sim.generation) + ",'" +
-              !!name + "','" + !!expr_txt + "','")
-        str(!!slimr_expr)
-        cat("','")
-        cat(paste(!!slimr_expr))
-        cat("'\n<slimr_out:end>\n")
-    })
+
+    if(slimr_code_detect_output(expr_txt)) {
+      new_code <- rlang::expr(
+        if(sim.generation %% !!do_every == 0) {
+          cat("\n<slimr_out:start>\n" + paste(sim.generation) + ",'" +
+                !!name + "','" + !!expr_txt + "','" + "slim_output','")
+          !!slimr_expr
+          cat("'\n<slimr_out:end>\n")
+        }
+      )
+    } else {
+
+      new_code <- rlang::expr(
+        if(sim.generation %% !!do_every == 0) {
+          cat("\n<slimr_out:start>\n" + paste(sim.generation) + ",'" +
+                !!name + "','" + !!expr_txt + "','")
+          str(!!slimr_expr)
+          cat("','")
+          cat(paste(!!slimr_expr))
+          cat("'\n<slimr_out:end>\n")
+        })
+
+    }
   }
 
   code_for_display <- paste0("{", rlang::expr_text(slimr_expr, width = 500),
@@ -162,4 +185,60 @@ process_output <- function(code, block_names) {
 
 slimr_output_full <- function(name = "full_output") {
   slimr_output(sim.outputFull(), name)
+}
+
+
+#' Utility function to tell SLiM to output Nucleotides
+#'
+#' @param name Name of data column to hold sequences
+#' @param subpops Should the subpopulation of each sequence be outputted as well?
+#' @export
+slimr_output_nucleotides <- function(name = "seqs", subpops = FALSE, ...) {
+  if(subpops) {
+    out1 <- slimr_output(paste(sim.subpopulations.individuals.genome1.nucleotides()),
+                 name, type = "slim_nucleotides",
+                 expression = "slimr_output_nucleotides()",
+                 ...)
+    out2 <- slimr_output(paste(sim.subpopulations.individuals.subpopulation),
+                 paste0(name, "_subpops"), type = "slim_nucleotides",
+                 expression = "slimr_output_nucleotides()",
+                 ...)
+    return(list(out1, out2))
+  } else {
+    slimr_output(paste(sim.subpopulations.individuals.genome1.nucleotides()),
+                 name, type = "slim_nucleotides",
+                 expression = "slimr_output_nucleotides()",
+                 ...)
+  }
+}
+
+#' @export
+slimr_output_coords <- function(dimensionality = c("x", "xy", "xyz"),
+                                ...) {
+
+  out <- slimr_output(sim.subpopulations.individuals.x,
+               "x", ...)
+
+  if(dimensionality %in% c("xy", "xyz")) {
+    y_out <- slimr_output(sim.subpopulations.individuals.y,
+                          "y", ...)
+    out <- list(out, y_out)
+  }
+
+  if(dimensionality %in% c("xyz")) {
+    z_out <- slimr_output(sim.subpopulations.individuals.z,
+                          "z", ...)
+    out <- c(out, list(z_out))
+  }
+
+  return(out)
+
+}
+
+#' @export
+slimr_output_sex <- function(name = "sex", ...) {
+
+  slimr_output(sim.subpopulations.individuals.sex,
+               name, ...)
+
 }

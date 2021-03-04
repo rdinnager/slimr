@@ -13,7 +13,9 @@ slim_function(..., name, return_type = "f$", body)
 
 \item{return_type}{Type of the functions return, using Eidos' type syntax (see details)}
 
-\item{body}{SLiM / Eidos code to be executed in the body of the function.}
+\item{body}{SLiM / Eidos code to be executed in the body of the function.
+Can also be an R function, in which case the body of the R function is
+used.}
 }
 \value{
 A \code{slimr_block} object (only useful with the context of a \code{\link{slim_script}}) call.

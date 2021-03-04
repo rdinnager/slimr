@@ -128,6 +128,11 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
                                   throw_error = FALSE,
                                   ...) {
 
+  if(!attr(x, "script_info")$rendered) {
+    message("slimr_script is unrendered. Trying to render now...")
+    x <- slimr_script_render(x)
+  }
+
   script <- as_slim_text(x)
   end_gen <- attr(x, "script_info")$end_gen
   output_info <- attr(x, "slimr_output")
@@ -327,7 +332,7 @@ slim_run_script <- function(script_txt,
   gen_past <- 0
 
   if(file_out) {
-    curr_line <- 1L
+    curr_line <- 0L
   }
 
   while(slim_p$is_alive() || not_finished) {
@@ -337,8 +342,7 @@ slim_run_script <- function(script_txt,
       slim_p$poll_io(10000)
 
       if(file_out) {
-        out_lines <- c(leftovers, readr::read_lines(conn, skip = curr_line - 1L))
-        curr_line <- curr_line + length(out_lines)
+        out_lines <- readr::read_lines(conn, skip = curr_line)
       } else {
         out_lines <- c(leftovers, slim_p$read_output_lines())
       }
@@ -347,8 +351,7 @@ slim_run_script <- function(script_txt,
 
       not_finished <- FALSE
       if(file_out) {
-        out_lines <- c(leftovers, readr::read_lines(conn, skip = curr_line - 1L))
-        curr_line <- curr_line + length(out_lines)
+        out_lines <- readr::read_lines(conn, skip = curr_line)
       } else {
         out_lines <- c(leftovers, slim_p$read_all_output_lines())
       }
@@ -384,8 +387,12 @@ slim_run_script <- function(script_txt,
 
         output_list <- slim_process_output(out_lines)
 
+        if(!is.null(output_list$last_line)) {
+          curr_line <- curr_line + output_list$last_line
+        }
+
         ## save results so far to file
-        if(!is.null(output_list$data) & !is.null(save_to_file)) {
+        if(nrow(output_list$data) > 0 & !is.null(save_to_file)) {
           dat_to_save <- output_list$data %>%
             dplyr::filter(name %in% save_to_file$output_name)
           output_list$data <- output_list$data %>%
@@ -396,7 +403,7 @@ slim_run_script <- function(script_txt,
           }
         }
 
-        if(!is.null(output_list$data)) {
+        if(nrow(output_list$data) > 0) {
           data_i <- data_i + 1L
 
           output_data[[data_i]] <- output_list$data
@@ -528,6 +535,75 @@ setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(
 }
 
 
+# slim_process_output <- function(out, data_only = FALSE) {
+#
+#   starts <- stringr::str_which(out,
+#                                "<slimr_out:start>")
+#   ends <- stringr::str_which(out,
+#                              "<slimr_out:end>")
+#
+#   df <- NULL
+#   if(length(starts) > 0) {
+#     if(length(ends) > 0 && length(ends) <= length(starts)) {
+#       dat <- purrr::map2(starts[1:length(ends)], ends,
+#                             ~out[(.x + 1L):(.y - 1L)]) %>%
+#         purrr::flatten_chr()
+#
+#       ## fixes issue with read_csv not working with literal data if of length one
+#       if(length(dat) == 1) {
+#         dat <- paste0(dat, "\n")
+#       }
+#
+#       df <- readr::read_csv(dat,
+#                             col_names = c("generation", "name", "expression", "type", "data"),
+#                             quote = "\'",
+#                             col_types = "icccc")
+#     }
+#   }
+#
+#   if(!data_only) {
+#
+#     if((length(starts) > 0 & length(ends) > 0)) {
+#
+#       if(starts[1] > 1) {
+#         pre <- out[1:(starts[1] - 1L)]
+#       } else {
+#         pre = character(0)
+#       }
+#
+#       if(length(ends) > 1) {
+#         inter <- purrr::map2(ends[1:(length(starts) - 1)], starts[2:length(starts)],
+#                              ~out[(.x + 1L):(.y - 1L)]) %>%
+#           purrr::flatten_chr()
+#       } else {
+#         inter <- character(0)
+#       }
+#
+#       if(ends[length(ends)] < length(out)) {
+#         post <- out[(ends[length(ends)] + 1L):length(out)]
+#       } else {
+#         post <- character(0)
+#       }
+#
+#       return(list(data = df, leftovers = post, extra_out = c(pre, inter)))
+#
+#     } else {
+#
+#       return(list(data = NULL, leftovers = out, extra_out = character(0)))
+#
+#     }
+#
+#
+#
+#   } else {
+#
+#     return(df)
+#
+#   }
+#
+# }
+
+
 slim_process_output <- function(out, data_only = FALSE) {
 
   starts <- stringr::str_which(out,
@@ -535,61 +611,66 @@ slim_process_output <- function(out, data_only = FALSE) {
   ends <- stringr::str_which(out,
                              "<slimr_out:end>")
 
-  df <- NULL
   if(length(starts) > 0) {
-    if(length(ends) > 0 && length(ends) <= length(starts)) {
-      dat <- purrr::map2(starts[1:length(ends)], ends,
-                            ~out[(.x + 1L):(.y - 1L)]) %>%
-        purrr::flatten_chr()
+    ends <- ends[ends > starts[1]]
+    if(length(ends) > 0) {
+      starts <- starts[1:length(ends)]
+      line_mat <- cbind(starts, ends)
+      data_lines <- purrr::map(purrr::array_branch(line_mat, 1),
+                               ~(.x[1] + 1L):(.x[2] - 1L)) %>%
+        purrr::flatten_int()
+      dat <- out[data_lines]
+
+      ## fixes issue with read_csv not working with literal data if of length one
+      if(length(dat) == 1) {
+        dat <- paste0(dat, "\n")
+      }
 
       df <- readr::read_csv(dat,
                             col_names = c("generation", "name", "expression", "type", "data"),
                             quote = "\'",
                             col_types = "icccc")
-    }
-  }
 
-  if(!data_only) {
+      end_data <- max(data_lines)
+      last_line <- end_data + 1L
 
-    if((length(starts) > 0 & length(ends) > 0)) {
+      if(!data_only) {
 
-      if(starts[1] > 1) {
-        pre <- out[1:(starts[1] - 1L)]
+        extra_out <- out[1:end_data]
+        extra_out <- extra_out[-data_lines]
+        if((end_data + 1L) < length(out)) {
+          leftovers <- out[(end_data + 2L):length(out)]
+        } else {
+          leftovers <- character(0)
+        }
+
       } else {
-        pre = character(0)
-      }
 
-      if(length(ends) > 1) {
-      inter <- purrr::map2(ends[1:(length(starts) - 1)], starts[2:length(starts)],
-                           ~out[(.x + 1L):(.y - 1L)]) %>%
-        purrr::flatten_chr()
-      } else {
-        inter <- character(0)
-      }
+        extra_out <- character(0)
+        leftovers <- character(0)
 
-      if(ends[length(ends)] < length(out)) {
-        post <- out[(ends[length(ends)] + 1L):length(out)]
-      } else {
-        post <- character(0)
       }
-
-      return(list(data = df, leftovers = post, extra_out = c(pre, inter)))
 
     } else {
-
-      return(list(data = NULL, leftovers = out, extra_out = character(0)))
-
+      df <- dplyr::tibble()
+      extra_out <- character(0)
+      leftovers <- character(0)
+      last_line <- NULL
     }
 
-
-
   } else {
-
-    return(df)
-
+    df <- dplyr::tibble()
+    extra_out <- character(0)
+    leftovers <- character(0)
+    last_line <- NULL
   }
 
+  return(list(data = df, extra_out = extra_out,
+              leftovers = leftovers,
+              last_line = last_line))
+
 }
+
 
 
 slim_update_progress <- function(output_list, pb, show_output, simple_pb, end_gen) {

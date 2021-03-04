@@ -10,7 +10,9 @@ slimr_output(
   do_every = 1,
   send_to = c("data", "file"),
   file_name = tempfile(fileext = ".txt"),
-  format = c("csv", "fst")
+  format = c("csv", "fst"),
+  type = NULL,
+  expression = NULL
 )
 }
 \arguments{

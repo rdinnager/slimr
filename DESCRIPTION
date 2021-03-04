@@ -68,5 +68,7 @@ Suggests:
     crayon,
     adegenet,
     methods,
-    furrr
+    furrr,
+    Biostrings,
+    raster
 VignetteBuilder: knitr

@@ -28,6 +28,7 @@ into the script using direct inlining. This function should generally only be us
 \code{\link{slim_block}} call
 }
 \details{
-Currently supported R objects include all atomic vectors, matrices and arrays. Non-atomic vectors like factors are
-currently not supported and neither are any other special object types, though we plan to support some in the future.
+Currently supported R objects include all atomic vectors, matrices and arrays and \code{RasterLayer} objects.
+Non-atomic vectors like factors are currently not supported and neither are any other special object types, though we
+plan to support some in the future.
 }

@@ -111,7 +111,11 @@ vec_ptype2.slimr_script.slimr_script <- function(x, y, ...) {
 
   script_info <- list()
   script_info$end_gen <- max(as.numeric(attr(x, "script_info")$end_gen),
-                             as.numeric(attr(y, "script_info")$end_gen))
+                             as.numeric(attr(y, "script_info")$end_gen),
+                             na.rm = TRUE)
+
+  script_info$rendered <- all(attr(x, "script_info")$rendered,
+                              attr(y, "script_info")$rendered)
 
   new_slimr_script(block_name = field(x, "block_name"),
                    block_id = field(x, "block_id"),
@@ -443,7 +447,8 @@ as_slimr_script <- function(slim_script_text) {
                              end_gen = end_nums,
                              callback = callbacks,
                              code = code,
-                             script_info = list(end_gen = max_num))
+                             script_info = list(end_gen = max_num,
+                                                rendered = FALSE))
 
   script
 

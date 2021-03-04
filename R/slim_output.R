@@ -99,6 +99,34 @@ slim_output_to_data <- function(dat, type) {
 
   dat <- dat %>%
     dplyr::mutate(data = res)
+
+  if(type == "slim_nucleotides") {
+    assert_package("Biostrings", install = "BiocManager::install")
+    if(any(stringr::str_detect(dat$name, "_subpops"))) {
+      name_name <- dat$name[stringr::str_which(dat$name, "_subpops")][1]
+      seq_name <- stringr::str_remove(name_name, "_subpops")
+      subpops <- dat %>%
+        dplyr::filter(name == name_name) %>%
+        dplyr::pull(data)
+    } else {
+      seq_name <- dat$name[1]
+      subpops <- rep("1", length(dat$data[1]))
+    }
+
+    seq_dat <- dat %>%
+      dplyr::filter(name == seq_name)
+
+    dna <- purrr::map(seq_dat %>%
+                        dplyr::pull(data),
+                      ~ Biostrings::DNAStringSet(.x))
+
+    dat <- seq_dat %>%
+      dplyr::mutate(data = dna,
+                    subpops = subpops)
+
+  }
+
+  dat
 }
 
 slim_to_Rob <- function(dat, type) {
@@ -145,7 +173,7 @@ slim_outputFull_extract <- function(output_full, type = c("mutations", "individu
     type <- type[type != "full_individual"]
   }
 
-  type[type %in% c("coordinates", "sexes", "ages")] <- "individuals"
+  #type[type %in% c("coordinates", "sexes", "ages")] <- "individuals"
 
 
   get_one <- function(type, data, generation) {
@@ -189,7 +217,13 @@ slim_outputFull_extract_one <- function(string, type, expand_mutations, generati
     ancs <- FALSE
   }
 
-  dat <- switch(type,
+  if(type %in% c("coordinates", "sexes", "ages")) {
+    new_type <- "individuals"
+  } else {
+    new_type <- type
+  }
+
+  dat <- switch(new_type,
 
                 metadat = stringr::str_match(string,
                                              stringr::regex("^(?:(.*?))\nPopulations:",
@@ -257,6 +291,13 @@ slim_outputFull_extract_one <- function(string, type, expand_mutations, generati
                                       names_to = "genome_num",
                                       values_to = "gen_id"),
 
+                coordinates = suppressWarnings(readr::read_table2(dat,
+                                                                  col_types = "ccccddd",
+                                                                  col_names = c("unique_ind_id", "sex",
+                                                                                "gen_id_1", "gen_id_2",
+                                                                                "x", "y", "z"))) %>%
+                  tidyr::separate(unique_ind_id, c("pop_id", "ind_id"), sep = ":", remove = FALSE),
+
                 genomes = suppressWarnings(read_with_excess(dat,
                                                             col_types = "ccc",
                                                             col_names = c("gen_id", "gen_type",
@@ -272,7 +313,8 @@ slim_outputFull_extract_one <- function(string, type, expand_mutations, generati
         tidyr::unnest_longer(col = mut_list,
                              values_to = "mut_id",
                              indices_include = FALSE) %>%
-        dplyr::mutate(mut_id = as.integer(mut_id))
+        dplyr::mutate(mut_id = as.integer(mut_id)) %>%
+        tidyr::drop_na(mut_id)
     }
   } else {
     if(type == "genomes") {

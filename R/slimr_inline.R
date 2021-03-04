@@ -18,13 +18,19 @@
 #' @return A character vector with the code generated for inlining.
 #' @export
 #'
-#' @details Currently supported R objects include all atomic vectors, matrices and arrays. Non-atomic vectors like factors are
-#' currently not supported and neither are any other special object types, though we plan to support some in the future.
+#' @details Currently supported R objects include all atomic vectors, matrices and arrays and \code{RasterLayer} objects.
+#' Non-atomic vectors like factors are currently not supported and neither are any other special object types, though we
+#' plan to support some in the future.
 slimr_inline <- function(object, delay = FALSE) {
 
   if(delay) {
     object <- rlang::enexpr(object)
     return(rlang::expr(slimr_inline(!!object)))
+  }
+
+  if(inherits(object, "RasterLayer")) {
+    assert_package("raster")
+    object <- raster::as.matrix(object)
   }
 
   if(!is.array(object)) {

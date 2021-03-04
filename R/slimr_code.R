@@ -62,7 +62,7 @@ slimr_code_replace_modulus <- function(code_one) {
 }
 
 slimr_code_replace_returns <- function(code_one) {
-  ## turn R's return(...) syntax nack into SLiM's return ...; syntax.
+  ## turn R's return(...) syntax back into SLiM's return ...; syntax.
   stringr::str_replace_all(code_one,
                            "return\\((.*)\\)[:blank:]*(;| else)",
                            "return \\1\\2")
@@ -186,4 +186,9 @@ assert_valid_code <- function(code_txt) {
 slimr_code_detect_output <- function(code) {
   any(stringr::str_detect(code,
                           "(output|cat\\(|catn\\()"))
+}
+
+slimr_code_detect_nucleotides <- function(code) {
+  any(stringr::str_detect(code,
+                          "nucleotide"))
 }

@@ -154,6 +154,10 @@ replace_double_dots <- function(slimr_script, envir = parent.frame(), slimr_temp
                          ~unlist(.x))
 
   new_code <- new_slimr_code(new_code)
+
+  script_info <- attr(slimr_script, "script_info")
+  script_info$rendered <- TRUE
+
   slimr_script <- new_slimr_script(block_name = block_names,
                                    block_id = field(slimr_script, "block_id"),
                                    start_gen = field(slimr_script, "start_gen"),
@@ -164,7 +168,7 @@ replace_double_dots <- function(slimr_script, envir = parent.frame(), slimr_temp
                                    slimr_output = attr(slimr_script, "slimr_output"),
                                    slimr_inline = attr(slimr_script, "slimr_inline"),
                                    slimrlang_orig = attr(slimr_script, "slimrlang_orig"),
-                                   script_info = attr(slimr_script, "script_info"))
+                                   script_info = script_info)
   slimr_script
 }
 

@@ -8,6 +8,13 @@
 
 <title>SLiM method initializeMutationRate — initializeMutationRate • slimr</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -48,6 +55,7 @@ anything useful when used inside a slim_block function further
 nested in a slim_script
 function call, where it will be translated into valid SLiM code as part of a
 full SLiM script." />
+<meta property="og:image" content="/logo.png" />
 
 
 
@@ -87,7 +95,7 @@ full SLiM script." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -107,6 +115,9 @@ full SLiM script." />
     <li>
       <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
+    <li>
+      <a href="../articles/simple_example.html">simple_example</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -116,7 +127,7 @@ full SLiM script." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rdinnager/slimr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -149,7 +160,7 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>initializeMutationRate</span>(<span class='no'>rates</span>, <span class='no'>ends</span>, <span class='no'>sex</span>)</pre>
+    <pre class="usage"><span class='fu'>initializeMutationRate</span><span class='op'>(</span><span class='va'>rates</span>, <span class='va'>ends</span>, <span class='va'>sex</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,7 +177,7 @@ See details for description.</p></td>
     <tr>
       <th>sex</th>
       <td><p>An object of type string. Must be of length 1 (a singleton). The
-default value is <code><a href='https://rdrr.io/r/base/Arithmetic.html'>"*"</a></code>. See details for description.</p></td>
+default value is <code>"*"</code>. See details for description.</p></td>
     </tr>
     </table>
 
@@ -231,6 +242,10 @@ documentation is
 Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer
+(<a href='mailto:messer@cornell.edu'>messer@cornell.edu</a>)</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -247,7 +262,7 @@ on the official website: <a href='https://messerlab.org/slim/'>https://messerlab
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

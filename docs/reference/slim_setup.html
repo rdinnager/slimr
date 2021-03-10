@@ -8,6 +8,13 @@
 
 <title>Attempt to install and / or setup SLiM for use with slimr — slim_setup • slimr</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -42,6 +49,7 @@
 <meta property="og:title" content="Attempt to install and / or setup SLiM for use with slimr — slim_setup" />
 <meta property="og:description" content="`slim_setup()` will attempt to determine the user's OS and install SLiM automatically.
 Note that on Windows, you must have Windows subsystem for linux installed, which requires at least Windows 10." />
+<meta property="og:image" content="/logo.png" />
 
 
 
@@ -81,7 +89,7 @@ Note that on Windows, you must have Windows subsystem for linux installed, which
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -101,6 +109,9 @@ Note that on Windows, you must have Windows subsystem for linux installed, which
     <li>
       <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
+    <li>
+      <a href="../articles/simple_example.html">simple_example</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -110,7 +121,7 @@ Note that on Windows, you must have Windows subsystem for linux installed, which
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rdinnager/slimr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -137,7 +148,7 @@ Note that on Windows, you must have Windows subsystem for linux installed, which
 Note that on Windows, you must have Windows subsystem for linux installed, which requires at least Windows 10.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>slim_setup</span>(<span class='kw'>install_dir</span> <span class='kw'>=</span> <span class='st'>"~/slim"</span>, <span class='kw'>test_slim</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>slim_setup</span><span class='op'>(</span>install_dir <span class='op'>=</span> <span class='st'>"~/slim"</span>, test_slim <span class='op'>=</span> <span class='cn'>TRUE</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -161,9 +172,10 @@ environmental variable to tell slimr where to find your slim installation.</p></
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>slim_setup</span>()
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>slim_setup</span><span class='op'>(</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -179,7 +191,7 @@ environmental variable to tell slimr where to find your slim installation.</p></
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

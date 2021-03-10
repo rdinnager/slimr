@@ -8,6 +8,13 @@
 
 <title>Run a SLiM script from R — slim_run • slimr</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -42,6 +49,7 @@
 <meta property="og:title" content="Run a SLiM script from R — slim_run" />
 <meta property="og:description" content="This function runs a SLiM script, specified as a slimr_script object,
 a character vector, or a text file." />
+<meta property="og:image" content="/logo.png" />
 
 
 
@@ -81,7 +89,7 @@ a character vector, or a text file." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -101,6 +109,9 @@ a character vector, or a text file." />
     <li>
       <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
+    <li>
+      <a href="../articles/simple_example.html">simple_example</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -110,7 +121,7 @@ a character vector, or a text file." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rdinnager/slimr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -137,34 +148,133 @@ a character vector, or a text file." />
 a character vector, or a text file.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>slim_run</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>slim_path</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>script_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>simple_run</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>capture_output</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>show_output</span> <span class='kw'>=</span> !<span class='no'>capture_output</span>,
-  <span class='kw'>callbacks</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>new_grdev</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
-)
+    <pre class="usage"><span class='fu'>slim_run</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  slim_path <span class='op'>=</span> <span class='cn'>NULL</span>,
+  script_file <span class='op'>=</span> <span class='cn'>NULL</span>,
+  simple_run <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  capture_output <span class='op'>=</span> <span class='st'>"file"</span>,
+  keep_all_output <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  show_output <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  callbacks <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cb_args <span class='op'>=</span> <span class='cn'>NULL</span>,
+  new_grdev <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  record_graphics <span class='op'>=</span> <span class='st'>""</span>,
+  rec_args <span class='op'>=</span> <span class='cn'>NULL</span>,
+  parallel <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  progress <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  throw_error <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for character</span>
-<span class='fu'>slim_run</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>slim_run</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  slim_path <span class='op'>=</span> <span class='cn'>NULL</span>,
+  script_file <span class='op'>=</span> <span class='cn'>NULL</span>,
+  simple_run <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  capture_output <span class='op'>=</span> <span class='st'>"file"</span>,
+  keep_all_output <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  show_output <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  callbacks <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cb_args <span class='op'>=</span> <span class='cn'>NULL</span>,
+  new_grdev <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  record_graphics <span class='op'>=</span> <span class='st'>""</span>,
+  rec_args <span class='op'>=</span> <span class='cn'>NULL</span>,
+  parallel <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  progress <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  throw_error <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for slimr_script</span>
-<span class='fu'>slim_run</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>slim_run</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  slim_path <span class='op'>=</span> <span class='cn'>NULL</span>,
+  script_file <span class='op'>=</span> <span class='cn'>NULL</span>,
+  simple_run <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  capture_output <span class='op'>=</span> <span class='st'>"file"</span>,
+  keep_all_output <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  show_output <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  callbacks <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cb_args <span class='op'>=</span> <span class='cn'>NULL</span>,
+  new_grdev <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  record_graphics <span class='op'>=</span> <span class='st'>""</span>,
+  rec_args <span class='op'>=</span> <span class='cn'>NULL</span>,
+  parallel <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  progress <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  throw_error <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
+
+<span class='co'># S3 method for slimr_script_coll</span>
+<span class='fu'>slim_run</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  slim_path <span class='op'>=</span> <span class='cn'>NULL</span>,
+  script_file <span class='op'>=</span> <span class='cn'>NULL</span>,
+  simple_run <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  capture_output <span class='op'>=</span> <span class='st'>"file"</span>,
+  keep_all_output <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  show_output <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  callbacks <span class='op'>=</span> <span class='cn'>NULL</span>,
+  cb_args <span class='op'>=</span> <span class='cn'>NULL</span>,
+  new_grdev <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  record_graphics <span class='op'>=</span> <span class='st'>""</span>,
+  rec_args <span class='op'>=</span> <span class='cn'>NULL</span>,
+  parallel <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  progress <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  throw_error <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>Object containing script to run (e.g. a character vector or a slimr_script object)</p></td>
+    </tr>
+    <tr>
+      <th>slim_path</th>
+      <td><p>Path to the SLiM executable. If left <code>NULL</code> <code>slimr</code> will attempt to automatically determine
+it, typically by examining environmental variables.</p></td>
+    </tr>
+    <tr>
+      <th>script_file</th>
+      <td><p>If the script you want to run is in a text file, you can add the pather here. If this is
+argument is not <code>NULL</code> argument <code>x</code> will be ignored</p></td>
+    </tr>
+    <tr>
+      <th>simple_run</th>
+      <td><p>Whether to do a "simple run", which just runs the script, capturing all output is <code>capture_output</code>
+is <code>TRUE</code> and additionally sending all output to the R console if <code>show_output</code> is <code>TRUE</code>
+the script to the R console if show_output is TRUE</p></td>
+    </tr>
+    <tr>
+      <th>capture_output</th>
+      <td><p>If <code>TRUE</code>, output from the script will be captured and included in the returned object. Unless
+<code>keep_all_output</code> is <code>TRUE</code>, only non-data output will be kept (e.g. output not produced by a <code>slimr_output</code>
+call)</p></td>
+    </tr>
+    <tr>
+      <th>keep_all_output</th>
+      <td><p>If there is data produced by <code>slimr_output</code> calls, should it be captured as well? Ignored if
+<code>capture_output</code> is not <code>TRUE</code></p></td>
+    </tr>
+    <tr>
+      <th>show_output</th>
+      <td><p>Should output from the script be sent to the R console? Note that SLiM scripts can sometimes produce a
+large amount of output, which could overwhelm the console if you are not careful, potentially locking it up. Be careful
+with this option if you are using any of SLiM's output functions that output genomic data. This can be handy though
+for simply status print outs..</p></td>
+    </tr>
     <tr>
       <th>callbacks</th>
       <td><p>A list of functions to be called during the SLiM run. This can be used to
 dynamically transform or visualise output from the simulation while it is running. It should
 be of the form <code>function(data, ...) {do something..}</code>. If using <code><a href='slimr_output.html'>slimr_output</a></code>
 to get formatted data output from SLiM, data will be a four column <code>tibble</code>
-containing output from the current iteration of the simulation. Columns are:</p><dl'>
+containing output from the current iteration of the simulation. Columns are:</p><dl>
 <dt>generation</dt><dd><p>A vector of generations processed in the current iteration</p></dd>
 <dt>name</dt><dd><p>Names of the output data.</p></dd>
 <dt>expression</dt><dd><p>The SLiM expression used to generate the output</p></dd>
@@ -174,9 +284,21 @@ containing output from the current iteration of the simulation. Columns are:</p>
     </tr>
     <tr>
       <th>new_grdev</th>
-      <td><p>Should a new graphics device window  be opened on RStudio? This is mainly useful if you are using
+      <td><p>Should a new graphics device window be opened on RStudio? This is mainly useful if you are using
 custom callbacks that generate live figures, and want a faster plotting experience. This is because the
-default plot viewer in RStudio can be quite slow.</p></td>
+default plot viewer in RStudio can be quite slow. Setting this to <code>TRUE</code> also allows <code>record_graphics</code> to work.</p></td>
+    </tr>
+    <tr>
+      <th>record_graphics</th>
+      <td><p>An optional character string specifying a file to record video output from the graphics device.
+If you have custom graphics output for the simulation this lets you record that output live, saving the trouble of producing
+separate animations after the simulation is complete (also allowing you to save memory because you don't need to keep the
+entire simulation output to make a post-hoc animation).</p></td>
+    </tr>
+    <tr>
+      <th>rec_args</th>
+      <td><p>An optional list containing named arguments to be passed to <code><a href='https://docs.ropensci.org/av/reference/capturing.html'>av_capture_graphics</a></code> for graphics recording.
+Ignored if <code>record_graphics</code> is not <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -186,7 +308,7 @@ default plot viewer in RStudio can be quite slow.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>slimr_results</code> object which has the following components:</p><dl'>
+    <p>A <code>slimr_results</code> object which has the following components:</p><dl>
 <dt>output</dt><dd><p>A character vector of raw output. Will be NULL if <code>capture_output is <code>FALSE</code></code></p></dd>
 <dt>exit_status</dt><dd><p>The exit status code returned by the SLiM process. 0 means success.</p></dd>
 
@@ -198,6 +320,7 @@ default plot viewer in RStudio can be quite slow.</p></td>
 <ul>
 <li><p><code>character</code>: Run a SLiM script from character vector</p></li>
 <li><p><code>slimr_script</code>: Run a SLiM script from slimr_script object</p></li>
+<li><p><code>slimr_script_coll</code>: Run a SLiM script from slimr_script object</p></li>
 </ul>
 
   </div>
@@ -215,7 +338,7 @@ default plot viewer in RStudio can be quite slow.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

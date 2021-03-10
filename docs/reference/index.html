@@ -8,6 +8,13 @@
 
 <title>Function reference • slimr</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -40,6 +47,7 @@
 
 
 <meta property="og:title" content="Function reference" />
+<meta property="og:image" content="/logo.png" />
 
 
 
@@ -79,7 +87,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -99,6 +107,9 @@
     <li>
       <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
+    <li>
+      <a href="../articles/simple_example.html">simple_example</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -108,7 +119,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rdinnager/slimr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -913,9 +924,33 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="slimr_block_init_minimal.html">slimr_block_init_minimal()</a></code> </p>
+        </td>
+        <td><p>Generate minimal initialize() block</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="slimr_block_progress.html">slimr_block_progress()</a></code> </p>
+        </td>
+        <td><p>Insert slim_block to track progress when using slim_run</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="slimr_clip_original.html">slimr_clip_original()</a></code> </p>
         </td>
         <td><p>Copy original slimrlang code used to create a slimr_script object to the clipboard</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="slimr_inline.html">slimr_inline()</a></code> </p>
+        </td>
+        <td><p>Insert R objects into SLiM scripts</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="slimr_name.html">slimr_name()</a></code> </p>
+        </td>
+        <td><p>Convert a string to a SLiM object name</p></td>
       </tr><tr>
         
         <td>
@@ -931,9 +966,21 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="slimr_output_nucleotides.html">slimr_output_nucleotides()</a></code> </p>
+        </td>
+        <td><p>Utility function to tell SLiM to output Nucleotides</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="slimr_script_render.html">slimr_script_render()</a></code> </p>
         </td>
         <td><p>Render a SLiM script with special slimrlang formatting</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="slimr_template.html">slimr_template()</a></code> </p>
+        </td>
+        <td><p>Create a templated variable</p></td>
       </tr><tr>
         
         <td>
@@ -985,9 +1032,21 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="slim_file.html">slim_file()</a></code> </p>
+        </td>
+        <td><p>Make sure a filename is compatable with using in a SLiM script.</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="slim_find_block_starting_at.html">slim_find_block_starting_at()</a></code> </p>
         </td>
         <td><p>Title</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="slim_function.html">slim_function()</a></code> </p>
+        </td>
+        <td><p>Specify an Eidos function to be included in the SLiM script</p></td>
       </tr><tr>
         
         <td>
@@ -1015,9 +1074,27 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="slim_make_pop_input.html">slim_make_pop_input()</a></code> </p>
+        </td>
+        <td><p>Create a file to initialise a population in SliM</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="slim_open.html">slim_open()</a></code> </p>
+        </td>
+        <td><p>Title</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="slim_outputFull_extract.html">slim_outputFull_extract()</a></code> </p>
         </td>
         <td><p>Extract Elements from SLiM's outputFull()</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="slim_outputGS_extract.html">slim_outputGS_extract()</a></code> </p>
+        </td>
+        <td><p>Extract Elements from SLiM's output() for genomes</p></td>
       </tr><tr>
         
         <td>
@@ -1027,9 +1104,21 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="slim_output_genlight.html">slim_output_genlight()</a></code> </p>
+        </td>
+        <td><p>Extract data into a genlight object</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="slim_register_event_code.html">slim_register_event_code()</a></code> </p>
         </td>
         <td><p>Title</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="slim_results_to_data.html">slim_results_to_data()</a></code> </p>
+        </td>
+        <td><p>Convert output data from a slimr_results object to a tibble</p></td>
       </tr><tr>
         
         <td>
@@ -1048,6 +1137,18 @@
           <p><code><a href="slim_script_add_code.html">slim_script_add_code()</a></code> </p>
         </td>
         <td><p>Add code into a block in a slim_script.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="slim_script_change_duration.html">slim_script_change_duration()</a></code> </p>
+        </td>
+        <td><p>Function to change a slimr_script object's duration</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="slim_script_duration.html">slim_script_duration()</a></code> </p>
+        </td>
+        <td><p>Set the duration of a slimr_script</p></td>
       </tr><tr>
         
         <td>
@@ -1169,7 +1270,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

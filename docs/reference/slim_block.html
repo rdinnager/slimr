@@ -8,6 +8,13 @@
 
 <title>Setup a SLiM code block — slim_block • slimr</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -40,7 +47,8 @@
 
 
 <meta property="og:title" content="Setup a SLiM code block — slim_block" />
-<meta property="og:description" content="Setup a SLiM code block" />
+<meta property="og:description" content="slim_block sets up and Eidos event code block. See details for how to specify the arguments correctly." />
+<meta property="og:image" content="/logo.png" />
 
 
 
@@ -80,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -100,6 +108,9 @@
     <li>
       <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
+    <li>
+      <a href="../articles/simple_example.html">simple_example</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -109,7 +120,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rdinnager/slimr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -132,10 +143,10 @@
     </div>
 
     <div class="ref-description">
-    <p>Setup a SLiM code block</p>
+    <p><code>slim_block</code> sets up and Eidos event code block. See details for how to specify the arguments correctly.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>slim_block</span>(<span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>slim_block</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,14 +162,43 @@ See details for more information on how to specify these arguments.</p></td>
 
     <p>A slimr_block object. This is of little use outside a <code><a href='slim_script.html'>slim_script</a></code>
 function call.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>An Eidos event is a block of Eidos code that
+is executed every generation, within a generation range, to perform a desired task. The syntax of an
+Eidos event declaration in <code>slimr</code> mimics that of the Eidos (e.g. SLiM) language itself (see SLiM manual).
+It looks like this:
+  <code>slim_block([id,] [start_gen, [end_gen,]], [slim_callback,] { ... })</code>
+  where [ ] specifies that the code is optional.
+The minimum required is a single argument containing Eidos code. This will be run in every generation
+with slim_callback <code>early()</code>, the default for Eidos events. You can also optionally specify an id
+for the SLiM code block, which will be the first argument. This is optionally followed by a starting
+generation (start_gen). If only a starting generation is specified, the event will run only in that generation. Next
+comes an optional end generation (end_gen), which, if specified, will tell SLiM to run the event every generation
+between start_gen and end_gen. The special value of <code>..</code> can be used for end_gen instead, which is shorthand for
+the last generation (in other words, run the event every generation between start_gen and the last generation used else
+where in the script). After end_gen is an optional callback, which corresponds to an Eidos callback. The following are
+valid Eidos callbacks:</p><ul>
+<li><p><code>early()</code></p></li>
+<li><p><code>late()</code></p></li>
+<li><p><code>initialize()</code></p></li>
+<li><p><code>fitness(mut_type_id, subpop_id)</code></p></li>
+<li><p><code>mateChoice(subpop_id)</code></p></li>
+<li><p><code>modifyChild(subpop_id)</code></p></li>
+<li><p><code>recombination(subpop_id)</code></p></li>
+<li><p><code><a href='https://rdrr.io/r/base/interaction.html'>interaction(int_type_id, subpop_id)</a></code></p></li>
+<li><p><code>reproduction(subpop_id, sex)</code></p></li>
+</ul>
+
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='slim_script.html'>slim_script</a></span>(<span class='fu'>slim_block</span>({<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='st'>"Hello World!"</span>)}))</div><div class='output co'>#&gt; <span class='warning'>Warning: The arguments do not include an initialize block (use an initialize()</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='slim_script.html'>slim_script</a></span><span class='op'>(</span><span class='fu'>slim_block</span><span class='op'>(</span><span class='st'>"s1"</span>, <span class='fl'>1</span>, <span class='fl'>10000</span>, <span class='fu'>late</span><span class='op'>(</span><span class='op'>)</span>, <span class='op'>{</span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"Hello World!"</span><span class='op'>)</span><span class='op'>}</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: The arguments do not include an initialize block (use an initialize()</span>
 #&gt; <span class='warning'>            callback to create one) and so the resulting script will not be a valid SLiM</span>
 #&gt; <span class='warning'>            script. You can add an initialize block later through concatenation (using c())</span></div><div class='output co'>#&gt; &lt;slimr_script[1]&gt;
-#&gt; block_1:1:1 early() {
-#&gt;     print("Hello World!");
-#&gt; }</div></pre>
+#&gt; <span style='background-color: #00BBBB;font-weight: bold;'>block_1:</span><span>s1 1:10000 late() </span><span style='color: #BBBB00;'>{</span><span>
+#&gt;     </span><span style='color: #00BBBB;'>print</span><span style='color: #0000BB;'>(</span><span style='color: #BBBB00;'>"Hello World!"</span><span style='color: #0000BB;'>)</span><span>;
+#&gt; </span><span style='color: #BBBB00;'>}</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -174,7 +214,7 @@ function call.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

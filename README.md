@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# slimr
+# slimr <img src='man/figures/logo.png' align="right" height="278" />
 
 <https://rdinnager.github.io/slimr/>
 

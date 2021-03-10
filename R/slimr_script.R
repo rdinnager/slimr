@@ -503,6 +503,26 @@ end_gen <- function(x) {
   x
 }
 
+#' Set the duration of a slimr_script
+#'
+#' @param x slimr_script object to set the duration of
+#' @param duration Final generation number to run for this simulation
+#'
+#' @return A \code{slimr_script} object with new duration
+#' @export
+#'
+#' @examples
+slim_script_duration <- function(x, duration) {
+  start_gens <- as.numeric(vctrs::field(x, "start_gen"))
+  end_gens <- as.numeric(end_gen(x))
+  start_gens[start_gens > duration] <- duration
+  end_gens[end_gens > duration] <- duration
+  vctrs::field(x, "start_gen") <- as.character(start_gens)
+  vctrs::field(x, "end_gen") <- as.character(end_gens)
+  x
+
+}
+
 #' @export
 as_slim_text <- function(x, ...) {
   UseMethod("as_slim_text", x)

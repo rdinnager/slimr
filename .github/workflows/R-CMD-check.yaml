@@ -83,8 +83,10 @@ jobs:
           path: check
 
   test-coverage:
-    runs-on: ubuntu-16.04-latest
+    runs-on: ubuntu-16.04
     env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      _R_CHECK_FORCE_SUGGESTS_: false
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2

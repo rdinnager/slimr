@@ -38,6 +38,14 @@ slim_find_block_starting_at <- function(slim_script, start_gen) {
   block_1
 }
 
+#' Function to change a slimr_script object's duration
+#'
+#' @param slim_script slimr_script object to change the duration of
+#'
+#' @param duration New duration for the script, in terms of the last generation that
+#' should be run.
+#'
+#' @export
 slim_script_change_duration <- function(slim_script,
                                         duration) {
   last_gen <- max(as.numeric(c(slim_script$start, slim_script$end)), na.rm = TRUE)

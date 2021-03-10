@@ -1,8 +1,9 @@
 pandoc: 2.7.3
-pkgdown: 1.5.1
+pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  Custom_vis: articles/Custom_vis.html
-  slimrlang_intro: articles/slimrlang_intro.html
-last_built: 2020-06-25T01:23Z
+  articles/Custom_vis: Custom_vis.html
+  articles/slimrlang_intro: slimrlang_intro.html
+  simple_example: simple_example.html
+last_built: 2021-03-10T08:18Z
 

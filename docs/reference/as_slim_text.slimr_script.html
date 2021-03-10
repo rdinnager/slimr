@@ -8,6 +8,13 @@
 
 <title>Convert a slimr_script to a length 1 character vector — as_slim_text.slimr_script • slimr</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -41,6 +48,7 @@
 
 <meta property="og:title" content="Convert a slimr_script to a length 1 character vector — as_slim_text.slimr_script" />
 <meta property="og:description" content="Convert a slimr_script to a length 1 character vector" />
+<meta property="og:image" content="/logo.png" />
 
 
 
@@ -80,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -100,6 +108,9 @@
     <li>
       <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
+    <li>
+      <a href="../articles/simple_example.html">simple_example</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -109,7 +120,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rdinnager/slimr/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -136,7 +147,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for slimr_script</span>
-<span class='fu'>as_slim_text</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>as_slim_text</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -156,25 +167,26 @@
     <p>A length 1 character vector</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='slim_script.html'>slim_script</a></span>(
-   <span class='fu'><a href='slim_block.html'>slim_block</a></span>(<span class='fu'>initialize</span>(),
-          {
-            <span class='fu'><a href='initializeMutationRate.html'>initializeMutationRate</a></span>(<span class='fl'>1e-7</span>);
-            <span class='fu'><a href='initializeMutationType.html'>initializeMutationType</a></span>(<span class='st'>"m1"</span>, <span class='fl'>0.5</span>, <span class='st'>"f"</span>, <span class='fl'>0.0</span>);
-            <span class='fu'><a href='initializeGenomicElementType.html'>initializeGenomicElementType</a></span>(<span class='st'>"g1"</span>, <span class='no'>m1</span>, <span class='fl'>1.0</span>);
-            <span class='fu'><a href='initializeGenomicElement.html'>initializeGenomicElement</a></span>(<span class='no'>g1</span>, <span class='fl'>0</span>, <span class='fl'>99999</span>);
-            <span class='fu'><a href='initializeRecombinationRate.html'>initializeRecombinationRate</a></span>(<span class='fl'>1e-8</span>);
-          }),
-   <span class='fu'><a href='slim_block.html'>slim_block</a></span>(<span class='fl'>1</span>,
-          {
-            <span class='fu'>sim.addSubpop</span>(<span class='st'>"p1"</span>, <span class='fl'>500</span>);
-          }),
-   <span class='fu'><a href='slim_block.html'>slim_block</a></span>(<span class='fl'>10000</span>,
-          {
-            <span class='fu'>sim.simulationFinished</span>();
-          })
-) <span class='kw'>-&gt;</span> <span class='no'>script</span>
-<span class='fu'>as_slim_text</span>(<span class='no'>script</span>)</div><div class='output co'>#&gt; [1] "initialize() {\n    initializeMutationRate(1e-07);\n    initializeMutationType(\"m1\", 0.5, \"f\", 0);\n    initializeGenomicElementType(\"g1\", m1, 1);\n    initializeGenomicElement(g1, 0, 99999);\n    initializeRecombinationRate(1e-08);\n}\n\n1 early() {\n    sim.addSubpop(\"p1\", 500);\n}\n\n10000 early() {\n    sim.simulationFinished();\n}\n"</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='slim_script.html'>slim_script</a></span><span class='op'>(</span>
+   <span class='fu'><a href='slim_block.html'>slim_block</a></span><span class='op'>(</span><span class='fu'>initialize</span><span class='op'>(</span><span class='op'>)</span>,
+          <span class='op'>{</span>
+            <span class='fu'><a href='initializeMutationRate.html'>initializeMutationRate</a></span><span class='op'>(</span><span class='fl'>1e-7</span><span class='op'>)</span>;
+            <span class='fu'><a href='initializeMutationType.html'>initializeMutationType</a></span><span class='op'>(</span><span class='st'>"m1"</span>, <span class='fl'>0.5</span>, <span class='st'>"f"</span>, <span class='fl'>0.0</span><span class='op'>)</span>;
+            <span class='fu'><a href='initializeGenomicElementType.html'>initializeGenomicElementType</a></span><span class='op'>(</span><span class='st'>"g1"</span>, <span class='va'>m1</span>, <span class='fl'>1.0</span><span class='op'>)</span>;
+            <span class='fu'><a href='initializeGenomicElement.html'>initializeGenomicElement</a></span><span class='op'>(</span><span class='va'>g1</span>, <span class='fl'>0</span>, <span class='fl'>99999</span><span class='op'>)</span>;
+            <span class='fu'><a href='initializeRecombinationRate.html'>initializeRecombinationRate</a></span><span class='op'>(</span><span class='fl'>1e-8</span><span class='op'>)</span>;
+          <span class='op'>}</span><span class='op'>)</span>,
+   <span class='fu'><a href='slim_block.html'>slim_block</a></span><span class='op'>(</span><span class='fl'>1</span>,
+          <span class='op'>{</span>
+            <span class='fu'>sim.addSubpop</span><span class='op'>(</span><span class='st'>"p1"</span>, <span class='fl'>500</span><span class='op'>)</span>;
+          <span class='op'>}</span><span class='op'>)</span>,
+   <span class='fu'><a href='slim_block.html'>slim_block</a></span><span class='op'>(</span><span class='fl'>10000</span>,
+          <span class='op'>{</span>
+            <span class='fu'>sim.simulationFinished</span><span class='op'>(</span><span class='op'>)</span>;
+          <span class='op'>}</span><span class='op'>)</span>
+<span class='op'>)</span> <span class='op'>-&gt;</span> <span class='va'>script</span>
+<span class='fu'>as_slim_text</span><span class='op'>(</span><span class='va'>script</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "initialize() {\n    initializeMutationRate(1e-07);\n    initializeMutationType(\"m1\", 0.5, \"f\", 0);\n    initializeGenomicElementType(\"g1\", m1, 1);\n    initializeGenomicElement(g1, 0, 99999);\n    initializeRecombinationRate(1e-08);\n}\n\n1 early() {\n    sim.addSubpop(\"p1\", 500);\n}\n\n10000 early() {\n    sim.simulationFinished();\n}\n"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -190,7 +202,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

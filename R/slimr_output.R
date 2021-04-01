@@ -39,7 +39,7 @@ slimr_output <- function(slimr_expr, name, do_every = 1,
   slimr_expr <- rlang::enexpr(slimr_expr)
 
   if(is.null(expression)) {
-    expr_txt <- rlang::expr_deparse(slimr_expr)
+    expr_txt <- expr_deparse_fast(slimr_expr)
   } else {
     expr_txt <- expression
   }
@@ -126,7 +126,7 @@ out_replace <- function(code) {
   code <- purrr::map(code_expr, ~rlang::expr_interp(.x)) %>%
     unlist()
   code <- purrr::map(code,
-                     ~rlang::expr_deparse(.x, width = 500L))
+                     ~expr_deparse_fast(.x))
 
   if(any(purrr::map_lgl(code, ~inherits(.x, "list")))) {
     code <- code %>%

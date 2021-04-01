@@ -25,7 +25,12 @@ SLiMify_all <- function(code, for_script = FALSE) {
 slimr_code_add_semicolons <- function(code_one) {
   brace_lines <- stringr::str_detect(code_one,
                                      "(\\{|\\}|\\+|\\,|\\-|\\*|\\/)[:blank:]*$")
-  code_one[!brace_lines] <- paste0(code_one[!brace_lines], ";")
+  # if_lines <- stringr::str_detect(code_one,
+  #                                 "if[:blank:]*\\((.*?)\\)[:blank:]*$")
+  #
+  # get_semi <- which(!brace_lines & !if_lines)
+  get_semi <- which(!brace_lines)
+  code_one[get_semi] <- paste0(code_one[get_semi], ";")
   code_one
 }
 
@@ -134,7 +139,8 @@ slimr_code_from_text_whiles <- function(code) {
 
 slimr_code_from_text_style <- function(code) {
   rlang::parse_exprs(code) %>%
-    purrr::map_chr(~rlang::expr_deparse(.x))
+    purrr::map_chr(~expr_deparse_fast(.x) %>%
+                     paste(collapse = "\n"))
 }
 
 slimr_code_from_text_style_all <- function(code) {

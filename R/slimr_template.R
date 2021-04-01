@@ -37,7 +37,7 @@ tmplt_replace <- function(code) {
   code_expr <- rlang::parse_exprs(paste(code, collapse = ""))
 
   code <- purrr::map(code_expr, ~rlang::expr_interp(.x) %>%
-                       rlang::expr_deparse(width = 500L))
+                       expr_deparse_fast())
 
   if(any(purrr::map_lgl(code, ~inherits(.x, "list")))) {
     code <- code %>%

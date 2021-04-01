@@ -183,7 +183,7 @@ slim_block <- function(...) {
   }
 
   #code <- deparse(args[[n_args]], width.cutoff = 500, control = NULL)
-  code <- rlang::expr_deparse(args[[n_args]], width = 500)
+  code <- expr_deparse_fast(args[[n_args]])
 
   if(code[1] == "{") {
     code <- code[2:(length(code) - 1L)]

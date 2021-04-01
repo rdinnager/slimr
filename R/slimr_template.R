@@ -188,14 +188,14 @@ slimr_template_info <- function(script_temp) {
   slimr_template_attr <- attr(script_temp, "slimr_template")
   if(any(!is.na(slimr_template_attr$var_names))) {
     info_group <- slimr_template_attr %>%
-      dplyr::group_by(!! rlang::sym("block_name"))
+      dplyr::group_by(.data$block_name)
 
     temp_split <- dplyr::group_split(info_group)
     temp_names <- dplyr::group_keys(info_group)
 
     temp_info <- purrr::map(temp_split,
                             ~.x$defaults %>%
-                              setNames(.x$var_names))
+                              stats::setNames(.x$var_names))
 
     names(temp_info) <- temp_names$block_name
 

@@ -174,13 +174,13 @@ as.character.slimr_script <- function(x, for_script = FALSE, ...) {
   if(any(!is.na(atts$slimr_inline$code_for_slim))) {
 
     inline_df <- atts$slimr_inline %>%
-      dplyr::group_by(block_name)
+      dplyr::group_by(.data$block_name)
 
     inline_list <- inline_df %>%
       dplyr::group_split()
 
     names(inline_list) <- dplyr::group_keys(inline_df) %>%
-      dplyr::pull(block_name)
+      dplyr::pull(.data$block_name)
 
     inline_list <- inline_list[block_names]
 
@@ -188,12 +188,12 @@ as.character.slimr_script <- function(x, for_script = FALSE, ...) {
     if(!for_script) {
       replacements <- purrr::map(inline_list,
                                  ~stringr::fixed(.x$code_for_display) %>%
-                                   setNames(paste0(".__slmr_inline_object_", seq_along(.x$code_for_display),
+                                   stats::setNames(paste0(".__slmr_inline_object_", seq_along(.x$code_for_display),
                                                    "___")))
     } else {
       replacements <- purrr::map(inline_list,
                                  ~stringr::fixed(.x$code_for_slim) %>%
-                                   setNames(paste0(".__slmr_inline_object_", seq_along(.x$code_for_display),
+                                   stats::setNames(paste0(".__slmr_inline_object_", seq_along(.x$code_for_display),
                                                    "___")))
     }
 
@@ -206,13 +206,13 @@ as.character.slimr_script <- function(x, for_script = FALSE, ...) {
   if(any(!is.na(atts$slimr_output$code_for_slim))) {
 
     output_df <- atts$slimr_output %>%
-      dplyr::group_by(block_name)
+      dplyr::group_by(.data$block_name)
 
     output_list <- output_df %>%
       dplyr::group_split()
 
     names(output_list) <- dplyr::group_keys(output_df) %>%
-      dplyr::pull(block_name)
+      dplyr::pull(.data$block_name)
 
     output_list <- output_list[block_names]
 
@@ -220,12 +220,12 @@ as.character.slimr_script <- function(x, for_script = FALSE, ...) {
     if(!for_script) {
       replacements <- purrr::map(output_list,
                                  ~stringr::fixed(.x$code_for_display) %>%
-                                   setNames(paste0(".__slmr_output_object_", seq_along(.x$code_for_display),
+                                   stats::setNames(paste0(".__slmr_output_object_", seq_along(.x$code_for_display),
                                                    "___")))
     } else {
       replacements <- purrr::map(output_list,
                                  ~stringr::fixed(.x$code_for_slim) %>%
-                                   setNames(paste0(".__slmr_output_object_", seq_along(.x$code_for_display),
+                                   stats::setNames(paste0(".__slmr_output_object_", seq_along(.x$code_for_display),
                                                    "___")))
     }
 

@@ -20,12 +20,26 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
                                                         "sim.generation",
                                                         "catn",
                                                         "slimr_output_attr",
+                                                        "slimr_inline_attr",
                                                         "initialize",
                                                         "m1",
                                                         "g1",
                                                         "sim.addSubpop",
-                                                        "sim.simulationFinished"
+                                                        "sim.simulationFinished",
+                                                        "str",
+                                                        "alleles",
+                                                        "mut_dat",
+                                                        "sim.outputFull",
+                                                        "sim.subpopulations.individuals.genome1.nucleotides",
+                                                        "sim.subpopulations.individuals.sex",
+                                                        "sim.subpopulations.individuals.subpopulation",
+                                                        "sim.subpopulations.individuals.x",
+                                                        "sim.subpopulations.individuals.y",
+                                                        "sim.subpopulations.individuals.z"
                                                         ))
+
+
+
 
 .onAttach <- function(libname, pkgname) {
 

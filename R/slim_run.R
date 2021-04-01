@@ -139,8 +139,8 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
 
   if(any(!is.na(output_info$file_name))) {
     save_to_file <- output_info %>%
-      dplyr::select(output_name, file_name, format) %>%
-      tidyr::drop_na(file_name)
+      dplyr::select(.data$output_name, .data$file_name, .data$format) %>%
+      tidyr::drop_na(.data$file_name)
   } else {
     save_to_file <- NULL
   }
@@ -394,9 +394,9 @@ slim_run_script <- function(script_txt,
         ## save results so far to file
         if(nrow(output_list$data) > 0 & !is.null(save_to_file)) {
           dat_to_save <- output_list$data %>%
-            dplyr::filter(name %in% save_to_file$output_name)
+            dplyr::filter(.data$name %in% save_to_file$output_name)
           output_list$data <- output_list$data %>%
-            dplyr::filter(!name %in% save_to_file$output_name)
+            dplyr::filter(!.data$name %in% save_to_file$output_name)
           slim_save_data(dat_to_save, save_to_file)
           if(nrow(output_list$data) == 0) {
             output_list$data <- NULL
@@ -716,9 +716,9 @@ slim_cleanup <- function(slim_p, pb, simple_pb, progress) {
 }
 
 slim_save_data <- function(dat_to_save, save_to_file) {
-  purrr:::pwalk(save_to_file,
+  purrr::pwalk(save_to_file,
                 ~slim_save_data_one(dat_to_save %>%
-                                      dplyr::filter(name == ..1),
+                                      dplyr::filter(.data$name == ..1),
                                     ..2,
                                     ..3))
 }

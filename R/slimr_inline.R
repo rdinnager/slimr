@@ -35,7 +35,7 @@ slimr_inline <- function(object, delay = FALSE) {
 
   if(!is.array(object)) {
     object <- unname(unclass(object))
-    code_for_display <- capture.output(str(as.vector(object)))
+    code_for_display <- utils::capture.output(utils::str(as.vector(object)))
     if(length(object) > 1) {
       code_for_slim <- rlang::expr(c(!!!object))
       code_for_display <- paste0("c(", paste(stringr::str_split(code_for_display, " ")[[1]][c(-1:-3)], collapse = ", "), ")")
@@ -44,7 +44,7 @@ slimr_inline <- function(object, delay = FALSE) {
       code_for_display <- rlang::expr_text(code_for_slim)
     }
   } else {
-    code_for_display <- capture.output(str(as.vector(object)))
+    code_for_display <- utils::capture.output(utils::str(as.vector(object)))
     if(is.matrix(object)) {
       code_for_slim <- rlang::expr(matrix(!!as.vector(object), nrow = !!nrow(object), ncol = !!ncol(object)))
       code_for_display <- paste0("matrix(c(", paste(stringr::str_split(code_for_display, " ")[[1]][c(-1:-3)], collapse = ", "),
@@ -95,12 +95,12 @@ inline_replace <- function(code) {
 }
 
 gather_inline_one <- function(code_one, slimr_inline_attr) {
-  .resources$temp_slimr_inline$code_for_slim <- na.omit(slimr_inline_attr$code_for_slim)
-  .resources$temp_slimr_inline$code_for_display <- na.omit(slimr_inline_attr$code_for_display)
+  .resources$temp_slimr_inline$code_for_slim <- stats::na.omit(slimr_inline_attr$code_for_slim)
+  .resources$temp_slimr_inline$code_for_display <- stats::na.omit(slimr_inline_attr$code_for_display)
 
   code_one <- inline_replace(code_one)
-  inline_info <- list(code_for_slim = na.omit(.resources$temp_slimr_inline$code_for_slim),
-                      code_for_display = na.omit(.resources$temp_slimr_inline$code_for_display))
+  inline_info <- list(code_for_slim = stats::na.omit(.resources$temp_slimr_inline$code_for_slim),
+                      code_for_display = stats::na.omit(.resources$temp_slimr_inline$code_for_display))
   list(new_code = code_one, inline_info = inline_info)
 }
 
@@ -113,14 +113,14 @@ gather_inline <- function(code, slimr_inline_attr) {
 process_inline <- function(code, block_names, slimr_inline_attr) {
 
   slimr_inline_attr <- slimr_inline_attr %>%
-    dplyr::group_by(block_name)
+    dplyr::group_by(.data$block_name)
 
   slimr_inline_attr_blocks <- slimr_inline_attr %>%
     dplyr::group_split()
 
   names(slimr_inline_attr_blocks) <- slimr_inline_attr %>%
     dplyr::group_keys() %>%
-    dplyr::pull(block_name)
+    dplyr::pull(.data$block_name)
 
   slimr_inline_attr_blocks <- slimr_inline_attr_blocks[block_names]
 

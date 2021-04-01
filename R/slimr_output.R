@@ -242,3 +242,8 @@ slimr_output_sex <- function(name = "sex", ...) {
                name, ...)
 
 }
+
+
+slimr_output_SNPs <- function(name = "SNPs", ...) {
+
+}

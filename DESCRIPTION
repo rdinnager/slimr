@@ -50,7 +50,8 @@ Imports:
     vctrs,
     tidyr,
     zeallot,
-    utils
+    utils,
+    stats
 Suggests: 
     covr,
     testthat (>= 2.1.0),

@@ -7,12 +7,12 @@ library(stringr)
 library(unglue)
 library(purrr)
 
-man_txt <- pdf_text("inst/slim_man/SLiM_Manual.pdf") %>%
+man_txt <- pdf_text("slim_man/SLiM_Manual.pdf") %>%
   paste(collapse = "\n") %>%
   str_split("\n") %>%
   .[[1]]
 
-toc <- pdf_toc("inst/slim_man/SLiM_Manual.pdf")
+toc <- pdf_toc("slim_man/SLiM_Manual.pdf")
 
 toc_txt <- unlist(toc)
 
@@ -51,6 +51,7 @@ methods <- map(array_branch(method_sections, 1),
   map_chr(~paste(man_txt[.x[1]:(.x[2] - 1)], collapse = "\n"))
 
 init_mention <- str_which(toc_txt, "initialize")
+toc_txt[init_mention]
 
 
 

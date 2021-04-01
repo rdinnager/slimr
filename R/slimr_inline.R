@@ -85,7 +85,7 @@ inline_replace <- function(code) {
   code <- purrr::map(code_expr, ~rlang::expr_interp(.x)) %>%
     unlist()
   code <- purrr::map(code,
-                     ~rlang::expr_text(.x, width = 500L))
+                     ~expr_deparse_fast(.x))
 
   if(any(purrr::map_lgl(code, ~inherits(.x, "list")))) {
     code <- code %>%

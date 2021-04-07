@@ -303,7 +303,9 @@ get_slim_dir <- function() {
   }
 }
 
-is_slim_available <- function() {
+is_slim_avail <- function() {
+  os <- get_os()
+  test <- slimr_which("slim", os)
   .slim_settings$slim_avail
 }
 

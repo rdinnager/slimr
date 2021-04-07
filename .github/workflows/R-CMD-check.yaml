@@ -75,8 +75,24 @@ jobs:
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
-      - name: Install SLiM
+      - name: Install SLiM on Windows
+        if: runner.os == 'Windows'
         shell: wsl-bash {0}
+        run: |
+          sudo apt-get install unzip
+          sudo apt-get install build-essential
+          sudo apt-get install cmake
+          wget http://benhaller.com/slim/SLiM.zip
+          unzip -o SLiM.zip
+          mkdir SLiM_build
+          cd SLiM_build
+          cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
+          make
+          make install
+          sudo make install slim
+
+      - name: Install SLiM on non-Windows
+        if: runner.os != 'Windows'
         run: |
           wget http://benhaller.com/slim/SLiM.zip
           unzip -o SLiM.zip

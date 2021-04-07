@@ -79,17 +79,21 @@ jobs:
         if: runner.os == 'Windows'
         shell: wsl-bash {0}
         run: |
-          sudo apt-get install unzip
-          sudo apt-get install build-essential
-          sudo apt-get install cmake
+          sudo apt update
+          sudo apt-get -y install unzip
+          sudo apt-get -y install build-essential
+          sudo apt-get -y install cmake
+          cd ~
           wget http://benhaller.com/slim/SLiM.zip
           unzip -o SLiM.zip
           mkdir SLiM_build
           cd SLiM_build
           cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
           make
-          make install
-          sudo make install slim
+          sudo make install
+          rm -r ../SLiM_build
+          rm -r ../SLiM
+          rm SLiM.zip
 
       - name: Install SLiM on non-Windows
         if: runner.os != 'Windows'
@@ -100,8 +104,10 @@ jobs:
           cd SLiM_build
           cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
           make
-          make install
-          sudo make install slim
+          sudo make install
+          rm -r ../SLiM_build
+          rm -r ../SLiM
+          rm SLiM.zip
 
       - name: Check
         env:

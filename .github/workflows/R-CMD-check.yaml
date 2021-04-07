@@ -33,6 +33,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install WSL
+        if: runner.os == "Windows"
+      - uses: Vampire/setup-wsl@v1
+        with:
+          distribution: Ubuntu-18.04
+
       - uses: r-lib/actions/setup-r@master
         with:
           r-version: ${{ matrix.config.r }}
@@ -68,6 +74,18 @@ jobs:
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
+
+      - name: Install SLiM
+        shell: wsl-bash {0}
+        run: |
+          wget http://benhaller.com/slim/SLiM.zip
+          unzip -o SLiM.zip
+          mkdir SLiM_build
+          cd SLiM_build
+          cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
+          make
+          make install
+          sudo make install slim
 
       - name: Check
         env:

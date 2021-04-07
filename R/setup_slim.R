@@ -268,10 +268,11 @@ get_slim_call <- function() {
 
     slim_dir <- get_slim_dir()
 
-    slim_path <- slimr_which(file.path(slim_dir, "bin", "slim"), platform)
+    slim_path <- slimr_which(file.path(slim_dir, "slim"), platform)
     if(slim_path == "") {
       slim_path <- slimr_which("slim", platform)
     }
+
     if(slim_path == "") {
       slim_call <- NULL
     } else {
@@ -297,7 +298,7 @@ get_slim_dir <- function() {
     if(Sys.getenv("SLIMR_SLIM_DIR") != "") {
       return(Sys.getenv("SLIMR_SLIM_DIR"))
     } else {
-      return("~/slim")
+      return("~/slim/bin")
     }
   }
 }

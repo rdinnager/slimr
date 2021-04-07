@@ -91,8 +91,9 @@ jobs:
           cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
           make
           sudo make install
-          rm -r ../SLiM_build
-          rm -r ../SLiM
+          cd ..
+          rm -r SLiM_build
+          rm -r SLiM
           rm SLiM.zip
 
       - name: Install SLiM on non-Windows
@@ -105,8 +106,9 @@ jobs:
           cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
           make
           sudo make install
-          rm -r ../SLiM_build
-          rm -r ../SLiM
+          cd ..
+          rm -r SLiM_build
+          rm -r SLiM
           rm SLiM.zip
 
       - name: Check

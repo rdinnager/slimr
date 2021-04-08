@@ -153,7 +153,7 @@ fix_integers <- function(code) {
 
   purrr::map(code,
              ~stringr::str_replace_all(.x,
-             "([:digit:]+)L",
+             "([:digit:]+)L[^\\.[:alnum:]]",
              "\\1"))
 
 }

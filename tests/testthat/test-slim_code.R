@@ -24,4 +24,6 @@ test_that("loading and unloading slim globals works", {
   expect_false(exists("p1", where = rlang::global_env()))
   expect_false(exists("self", where = rlang::global_env()))
 
+  slim_unload_globals()
+
 })

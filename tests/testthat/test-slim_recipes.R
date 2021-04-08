@@ -8,7 +8,7 @@ test_that("All SLiM recipes can be converted to slimr_script objects properly", 
 
   for(i in seq_along(slim_recipes)) {
     #print(i)
-    expect_snapshot_output(print(as_slimr_script(slim_recipes[[!!i]])))
+    expect_snapshot_output(print(as_slimr_script(slim_recipes[[i]])))
     #expect_s3_class(slim_scripts[[!!i]], "slimr_script")
   }
   # slim_scripts <- purrr::map(slim_scripts,

@@ -642,6 +642,8 @@ slim_output_genlight.slimr_output_data <- function(x, ...) {
 
   assert_package("adegenet")
 
+  alleles <- mut_dat <- NULL
+
   output_full <- x %>%
     dplyr::filter(stringr::str_detect(expression, "outputFull"))
 

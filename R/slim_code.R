@@ -272,7 +272,7 @@ slim_code_SLiMify <- function(code_snippet, prettycode = FALSE) {
 #'
 #' @return
 #' @export
-#' @examples load_slim_globals(c(p = 4, g = 2))
+#' @examples slim_load_globals(c(p = 4, g = 2))
 slim_load_globals <- function(max = 10, sim = TRUE, self = TRUE) {
 
   if(sim) {
@@ -371,7 +371,7 @@ slim_load_globals <- function(max = 10, sim = TRUE, self = TRUE) {
 #'
 #' @examples
 #' slim_load_globals(p = 1)
-#' slim_unload_globals
+#' slim_unload_globals()
 slim_unload_globals <- function() {
   rm(list = .resources$loaded_globals, pos = rlang::global_env())
   .resources$loaded_globals <- NULL

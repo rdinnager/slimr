@@ -31,6 +31,9 @@
 #'           })
 #')
 slim_script <- function(...) {
+
+  slimr_template_attr <- slimr_inline_attr <- slimr_output_attr <- NULL
+
   script_list <- list(...)
 
   classes <- purrr::map_lgl(script_list,

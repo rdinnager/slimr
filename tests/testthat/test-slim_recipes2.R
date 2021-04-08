@@ -16,7 +16,7 @@ test_that("All slim recipes work", {
 
   test_scripts <- list()
   for(i in seq_along(slim_scripts)[1:length(slim_scripts)]) {
-    #print(i)
+    print(i)
     if(i %in% c(77, 86, 88, 115, 129, 132, 133, 139, 140, 141, 142, 143, 144, 145, 156, 157)) next
     expect_identical(suppressMessages(slim_run(slim_scripts[[!!i]], progress = FALSE,
                                                throw_error = TRUE))$exit_status, 0L)

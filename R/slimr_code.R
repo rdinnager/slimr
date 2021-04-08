@@ -7,7 +7,8 @@ SLiMify <- function(code, for_script = FALSE) {
   if(for_script) {
     code <- slimr_code_replace_ternary(code) %>%
       slimr_code_replace_modulus() %>%
-      slimr_code_replace_returns()
+      slimr_code_replace_returns() %>%
+      slimr_code_remove_slimr_special()
   }
 
   code
@@ -25,11 +26,13 @@ SLiMify_all <- function(code, for_script = FALSE) {
 slimr_code_add_semicolons <- function(code_one) {
   brace_lines <- stringr::str_detect(code_one,
                                      "(\\{|\\}|\\+|\\,|\\-|\\*|\\/)[:blank:]*$")
+  do_lines <- stringr::str_detect(code_one,
+                                  "do$")
   # if_lines <- stringr::str_detect(code_one,
   #                                 "if[:blank:]*\\((.*?)\\)[:blank:]*$")
   #
   # get_semi <- which(!brace_lines & !if_lines)
-  get_semi <- which(!brace_lines)
+  get_semi <- which(!brace_lines & !do_lines)
   code_one[get_semi] <- paste0(code_one[get_semi], ";")
   code_one
 }
@@ -60,6 +63,11 @@ slimr_code_replace_dots <- function(code_one, for_script = FALSE) {
 slimr_code_remove_special_classes <- function(code_one) {
   stringr::str_remove_all(code_one,
                            "(\\.Init|Initialize|\\.SS|SLiMBuiltin)\\$")
+}
+
+slimr_code_remove_slimr_special <- function(code_one) {
+  stringr::str_remove_all(code_one,
+                          "slimr_special__")
 }
 
 slimr_code_replace_ternary <- function(code_one) {
@@ -137,8 +145,12 @@ slimr_code_from_text_returns <- function(code) {
 
 slimr_code_from_text_dots <- function(code) {
   ## replace . with %.% (shim operator)
+  # stringr::str_replace_all(code,
+  #                          "([^[:digit:]%])\\.([^[:digit:]%])",
+  #                          "\\1%.%\\2")
+
   stringr::str_replace_all(code,
-                           "([^[:digit:]%])\\.([^[:digit:]%])",
+                           "([\\]\\)])\\.([:alnum:])",
                            "\\1%.%\\2")
 }
 

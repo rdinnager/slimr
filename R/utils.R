@@ -160,7 +160,7 @@ fix_integers <- function(code) {
 
 expr_deparse_fast <- function(expr) {
   ini <- rlang::expr_text(expr, width = 500L) %>%
-    stringr::str_replace_all("(if[:blank:]*\\((.*?)\\)[:blank:]*)\n[:blank:]*",
+    stringr::str_replace_all("[^[:alnum:]](if[:blank:]*\\((.*?)\\)[:blank:]*)\n[:blank:]*",
                              " \\1")
   stringr::str_split(ini, "\n")[[1]]
 }

@@ -116,5 +116,10 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
   .resources$temp_slimr_output$code_for_display <- list()
   .resources$temp_slimr_output$file_name <- list()
   .resources$temp_slimr_output$format <- list()
+  .resources$loaded_globals <- NULL
 
+}
+
+.onUnload <- function(libname, pkgname) {
+  slim_unload_globals()
 }

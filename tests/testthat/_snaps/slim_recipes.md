@@ -1,0 +1,3040 @@
+# All SLiM recipes can be converted to slimr_script objects properly
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+
+---
+
+    <slimr_script[3]>
+    block_init:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        si.addSubpop("p1", 500);
+    }
+    
+    block_3:10000 early() {
+        si.simulationFinished();
+    }
+

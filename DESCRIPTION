@@ -73,3 +73,4 @@ Suggests:
     Biostrings,
     raster
 VignetteBuilder: knitr
+Config/testthat/edition: 3

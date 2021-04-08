@@ -1,7 +1,7 @@
 
 SLiMify <- function(code, for_script = FALSE) {
   code <- slimr_code_add_semicolons(code) %>%
-    slimr_code_replace_dots() %>%
+    slimr_code_replace_dots(for_script = for_script) %>%
     slimr_code_remove_special_classes()
 
   if(for_script) {
@@ -35,14 +35,26 @@ slimr_code_add_semicolons <- function(code_one) {
 }
 
 
-slimr_code_replace_dots <- function(code_one) {
-  code <- stringr::str_replace_all(code_one,
-                                   glue::glue(" \\%\\.\\% {.resources$classes_regex}\\$"),
-                                   ".")
+slimr_code_replace_dots <- function(code_one, for_script = FALSE) {
 
-  stringr::str_replace_all(code,
-                           " \\%\\.\\% ",
-                           ".")
+  if(for_script) {
+    code <- stringr::str_replace_all(code_one,
+                                     glue::glue(" \\%\\.\\% {.resources$classes_regex}\\$"),
+                                     ".")
+    code <- stringr::str_replace_all(code,
+                             " \\%\\.\\% ",
+                             ".")
+  } else {
+    code <- stringr::str_replace_all(code_one,
+                                     glue::glue("[^\\]\\)] \\%\\.\\% {.resources$classes_regex}\\$"),
+                                     ".")
+    code <- stringr::str_replace_all(code,
+                             "[^\\]\\)] \\%\\.\\% ",
+                             ".")
+  }
+
+  code
+
 }
 
 slimr_code_remove_special_classes <- function(code_one) {
@@ -147,6 +159,7 @@ slimr_code_from_text_style_all <- function(code) {
   purrr::map(code,
              ~slimr_code_from_text_style(.x))
 }
+
 
 #' Rify some SLiM code
 #'

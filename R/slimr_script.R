@@ -351,22 +351,7 @@ obj_print_footer.slimr_script <- function(x, ...) {
   invisible(template_text)
 }
 
-
-#' Convert a character vector into a slim_script object
-#'
-#' @param slim_script_text A character vector giving the full SLiM script to
-#' convert to a \code{slimr_script} object. Character vectors with length greater than
-#' 1 will be concatenated with newline separators
-#'
-#' @return A \code{slimr_script} object
-#' @export
-#'
-#' @examples
-as_slimr_script <- function(slim_script_text) {
-
-  if(!inherits(slim_script_text, "character")) {
-    stop("as_slimr_script only accepts character arguments")
-  }
+process_code_blocks <- function(slim_script_text) {
 
   if(length(slim_script_text) > 1) {
     slim_script_text <- paste(slim_script_text,
@@ -411,8 +396,8 @@ as_slimr_script <- function(slim_script_text) {
   end_nums <- ifelse(has_colon & is.na(end_nums), as.character(max_num), end_nums)
 
   block_names <- paste0("block_", stringr::str_pad(seq_along(blocks),
-                                                  nchar(trunc(n_blocks)),
-                                                  pad = "0"))
+                                                   nchar(trunc(n_blocks)),
+                                                   pad = "0"))
 
   block_names[heads == "initialize()"] <- "block_init"
 
@@ -426,6 +411,33 @@ as_slimr_script <- function(slim_script_text) {
 
   callbacks[callbacks == ""] <- "early()"
 
+  list(block_names = block_names,
+       block_ids = block_ids,
+       start_nums = start_nums,
+       end_nums = end_nums,
+       callbacks = callbacks,
+       blocks = blocks,
+       max_num = max_num)
+}
+
+#' Convert a character vector into a slim_script object
+#'
+#' @param slim_script_text A character vector giving the full SLiM script to
+#' convert to a \code{slimr_script} object. Character vectors with length greater than
+#' 1 will be concatenated with newline separators
+#'
+#' @return A \code{slimr_script} object
+#' @export
+#'
+#' @examples
+as_slimr_script <- function(slim_script_text) {
+
+  if(!inherits(slim_script_text, "character")) {
+    stop("as_slimr_script only accepts character arguments")
+  }
+
+  c(block_names, block_ids, start_nums, end_nums, callbacks, blocks, max_num) %<-%
+    process_code_blocks(slim_script_text)
 
   ## make code parseable
 
@@ -436,7 +448,8 @@ as_slimr_script <- function(slim_script_text) {
   code <- purrr::map(code,
                      ~paste(.x, collapse = "\n"))
 
-  code <- slimr_code_Rify_all(code) %>%
+  code <- purrr::map(code,
+                     ~slimr_code_from_text_else_overhang(.x)) %>%
     stringr::str_split(stringr::fixed("\n"))
 
   code <- new_slimr_code(code)
@@ -448,7 +461,7 @@ as_slimr_script <- function(slim_script_text) {
                              callback = callbacks,
                              code = code,
                              script_info = list(end_gen = max_num,
-                                                rendered = FALSE))
+                                                rendered = TRUE))
 
   script
 

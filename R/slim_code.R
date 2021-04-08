@@ -252,3 +252,127 @@ slim_code_SLiMify <- function(code_snippet, prettycode = FALSE) {
 
 }
 
+#' Load SLiM Globals into R Global environment
+#'
+#' This function loads R objects to stand in for standard Globals used in SLiM.
+#' These will be available in the global environment and can be used to aid in
+#' autocompletion and help retrieval, saving typing of this pattern: \code{p1%.%Subpopulation$setSubpopulationSize(N)} --
+#' instead one can just type: \code{p1$setSubpopulationSize(N)}: this will be replaced by correct SLiM code:
+#' \code{p1.setSubpopulationSize(N)}
+#'
+#' By default this will load ten of each of the standard SLiM Globals (e.g. objects prefixed with "p",
+#' "m", "i", "g", and "s"), as well as the "sim" and "self" singular Globals. Note: be careful with
+#' this function. If you have any objects in your R session's global environment with these names
+#' they will be overwritten.
+#'
+#' @param max A single integer values indicating how many of
+#' each numbered Globals to load, or a named integer vector where the names
+#' refer to different Global types (see details for more information), and the value
+#' refers to how many of that Global type to load.
+#'
+#' @return
+#' @export
+#' @examples load_slim_globals(c(p = 4, g = 2))
+slim_load_globals <- function(max = 10, sim = TRUE, self = TRUE) {
+
+  if(sim) {
+    rlang::env_bind_lazy(rlang::global_env(),
+                         sim = SLiMSim)
+  }
+
+  if(self) {
+    rlang::env_bind_lazy(rlang::global_env(),
+                         self = SLiMEidosBlock)
+  }
+
+  if(!rlang::is_named(max)) {
+    if(length(max) > 1) {
+      rlang::abort("Argument max must be named if it has length > 1")
+    }
+    if(max == 0) {
+      max <- NULL
+    } else {
+      max <- c(g = max, i = max, m = max, p = max, s = max)
+    }
+  } else {
+    if(all(max == 0)) {
+      max <- NULL
+    } else {
+      if(any(max == 0)) {
+        max <- max[max != 0]
+      }
+    }
+  }
+
+  if(!is.null(max)) {
+    types <- names(max)
+    obs <- list(g = GenomicElementType,
+                i = InteractionType,
+                m = MutationType,
+                p = Subpopulation,
+                s = SLiMEidosBlock)
+
+    class_obs <- purrr::imap(max,
+                             ~ replicate(.x, obs[[.y]], simplify = FALSE) %>%
+                               setNames(paste0(.y, seq_len(.x))))
+
+    ob_names_all <- purrr::map(class_obs,
+                           ~names(.x))
+
+    class_obs <- class_obs %>%
+      purrr::flatten()
+
+    do.call(rlang::env_bind_lazy,
+            c(list(.env = rlang::global_env()),
+              class_obs),
+            envir = rlang::global_env())
+
+    ob_names <- purrr::map_chr(ob_names_all,
+                               ~paste(.x, collapse = ", ")) %>%
+      unname()
+
+  } else {
+    ob_names <- NULL
+    ob_names_all <- NULL
+  }
+
+  if(sim) {
+    ob_names <- c(ob_names, "sim")
+    ob_names_all <- c(ob_names_all, "sim")
+  }
+
+  if(self) {
+    ob_names <- c(ob_names, "self")
+    ob_names_all <- c(ob_names_all, "self")
+  }
+
+  .resources$loaded_globals <- union(.resources$loaded_globals,
+                                     as.list(ob_names_all) %>%
+                                       purrr::flatten_chr())
+
+  rlang::warn(paste0("slim_load_globals modifies the global environment so please be careful when using this function!\n",
+                    "It has assigned values to the following names:\n\n",
+                    rlang::format_error_bullets(ob_names),
+                    "\n\nIf there were already objects with any of these names in the global environment\nthen their values have been replaced.\n",
+                    "Use slim_unload_globals() to remove them."),
+              .frequency = "once",
+              .frequency_id = "load_slim_globals")
+
+  }
+
+
+#' Unload SLiM Globals from R Global environment
+#'
+#' This will remove any objects added to the global environment by
+#' \code{\link{slim_load_globals}}
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' slim_load_globals(p = 1)
+#' slim_unload_globals
+slim_unload_globals <- function() {
+  rm(list = .resources$loaded_globals, pos = rlang::global_env())
+  .resources$loaded_globals <- NULL
+}

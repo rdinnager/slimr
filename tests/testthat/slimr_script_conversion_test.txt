@@ -9,10 +9,10 @@ block_1:initialize() {
 }
 
 block_2:1 early() {
-    sim.addSubpop("p1", 500);
+    si.addSubpop("p1", 500);
 }
 
 block_3:10000 early() {
-    sim.simulationFinished();
+    si.simulationFinished();
 }
 

@@ -17,3 +17,9 @@ test_that("SLiM executable can be found (if SLiM is available on system)", {
   expect_type(slim_call$args, "character")
 
 })
+
+test_that("Windows WSL can find SLiM", {
+  skip_on_os(c("mac", "linux", "solaris"))
+  system2("bash", c("-c", "test", "-e", "/usr/local/bin/slim"))
+  print(slim_is_avail())
+})

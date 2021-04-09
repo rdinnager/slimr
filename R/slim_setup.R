@@ -266,11 +266,13 @@ get_slim_call <- function() {
 
     platform <- get_os()
 
-    slim_dir <- get_slim_dir()
+    test <- slimr_which("slim", platform)
 
-    slim_path <- slimr_which(file.path(slim_dir, "slim"), platform)
-    if(slim_path == "") {
-      slim_path <- slimr_which("slim", platform)
+    if(test != "") {
+      slim_path <- test
+    } else {
+      slim_dir <- get_slim_dir()
+      slim_path <- slimr_which(file.path(slim_dir, "slim"), platform)
     }
 
     if(slim_path == "") {
@@ -303,10 +305,23 @@ get_slim_dir <- function() {
   }
 }
 
-is_slim_avail <- function() {
+slim_is_avail <- function() {
   os <- get_os()
   test <- slimr_which("slim", os)
-  .slim_settings$slim_avail
+  if(test == "") {
+    slim_dir <- get_slim_dir()
+    test <- slimr_which(file.path(slim_dir, "slim"), os)
+    if(test != "") {
+      avail <- TRUE
+    } else {
+      avail <- FALSE
+    }
+  } else {
+    avail <- TRUE
+  }
+
+  avail
+
 }
 
 slim_test <- function() {

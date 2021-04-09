@@ -1,3 +1,17 @@
+# Retrieving SLiM recipes works
+
+    // Keywords: 
+    
+    initialize() {
+    	initializeMutationRate(1e-7);
+    	initializeMutationType("m1", 0.5, "f", 0.0);
+    	initializeGenomicElementType("g1", m1, 1.0);
+    	initializeGenomicElement(g1, 0, 99999);
+    	initializeRecombinationRate(1e-8);
+    }
+    1 { sim.addSubpop("p1", 500); }
+    10000 late() { sim.outputFull(); }
+
 # All SLiM recipes can be converted to slimr_script objects properly
 
     <slimr_script[3]>

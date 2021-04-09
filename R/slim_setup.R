@@ -4,7 +4,7 @@
 #' Note that on Windows, you must have Windows subsystem for linux installed, which requires at least Windows 10.
 #'
 #' @param install_dir Directory to install SLiM to. If "default" `slim_setup()` will install in the default
-#' directory. Be carefult to make sure you have write and execution permissions for the installation folder
+#' directory. Be careful to make sure you have write and execution permissions for the installation folder
 #' you specify. We recommend using the default directory "~/slim", in which case you will not have to set an
 #' environmental variable to tell slimr where to find your slim installation.
 #' @param test_slim Should SLiM be tested once installation is complete?

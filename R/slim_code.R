@@ -143,7 +143,7 @@ slim_register_event_code <- function(code_snippet, start_gen = 1, last_gen = NUL
 
 #' Rify some SLiM code
 #'
-#' Utility code to convert SliM code into a form that can be parsed by R
+#' Utility code to convert SLiM code into a form that can be parsed by R
 #' (e.g. in \code{styler} or \code{prettycode}). Don't forget to re-SLiMify
 #' afterwards (via \code{\link(slim_code_SLiMify))!
 #'

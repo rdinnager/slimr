@@ -14,6 +14,6 @@ This will remove any objects added to the global environment by
 \code{\link{slim_load_globals}}
 }
 \examples{
-slim_load_globals(p = 1)
+slim_load_globals(c(p = 1))
 slim_unload_globals()
 }

@@ -25,5 +25,5 @@ this function. If you have any objects in your R session's global environment wi
 they will be overwritten.
 }
 \examples{
-load_slim_globals(c(p = 4, g = 2))
+slim_load_globals(c(p = 4, g = 2))
 }

@@ -1,18 +1,12 @@
 ---
-title: "simple_example"
-output: hrbrthemes::ipsum
-
+title: "simple_example_using_migration_and_fst"
 ---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  cache = TRUE,
-  autodep = TRUE,
-  cache.path = "knitr_cache",
   comment = "#>"
 )
-
 ```
 
 ```{r color, echo = FALSE, results='asis'}

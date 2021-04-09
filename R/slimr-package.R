@@ -103,6 +103,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
                                                                                  paste0('\"[^"]*\\Q', basename(.y), '\\E\"'), ## some handy regex here
                                                                                  paste0('"', .y, '"')))
   .slim_assets$slim_recipes <- slim_recipes
+  .slim_assets$recipes_using_resources <- recipes_using_resources
 
 
   ## load slim language objects

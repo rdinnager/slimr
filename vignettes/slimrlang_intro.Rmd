@@ -146,7 +146,7 @@ help(".SS$addSubpop")
 
 
 
-There is also two special classes which are not actually classes in SLiM iteself, but they are used in `slimr` to keep particular types of SLiM function together. These are `Initialize` (or `.Init`) and `SLiMBuiltin` (or `.SB`). The `Initialize` object contains SLiM functions that can only be used in the `initialize()` block of SLiM code (more on this later). `SLiMBuiltin` contains miscellaneous functions built in to SLiM which are not part of any SLiM class. 
+There is also two special classes which are not actually classes in SLiM itself, but they are used in `slimr` to keep particular types of SLiM function together. These are `Initialize` (or `.Init`) and `SLiMBuiltin` (or `.SB`). The `Initialize` object contains SLiM functions that can only be used in the `initialize()` block of SLiM code (more on this later). `SLiMBuiltin` contains miscellaneous functions built in to SLiM which are not part of any SLiM class. 
 
 Admittedly, using these extra R objects in the code does make it look somewhat less elegant, and also makes it no longer directly valid SLiM code. But don't worry, `slimr` knows how to transform this syntax back into proper SLiM code, which you can see by printing out the resulting `slim_script` object.
 
@@ -409,36 +409,4 @@ slim_script(
 script_w_out
 ```
 
-Now if you happen to have `slimr` installed and setup you can run this script through slim and see what that output looks like. We will first convert our `slimr_script` object into text and then send that to run in SLiM.
-
-```{r test_output_in_slim, eval=FALSE}
-
-script_txt <- as_slim_text(script_w_out)
-
-cat(script_txt)
-
-out <- slim_run(script_txt, simple_run = TRUE, capture_output = TRUE)
-head(out$output, n = 50L)
-
-
-```
-You can see how standard output from SLiM ("Another successful round of evolution completed"), is interleaved in the output, but the tags added by `slimr` make it easy to filter this out later. `slimr` also provides a suite of handy functions to get this output data into a `data.frame` or `tibble`
-
-```{r tests, eval=FALSE}
-
-out_dat <- slim_extract_output_data(out$output)
-print(out_dat)
-  
-```
-
-Running the script from the `slimr_script` object directly gives us more information about how the simulation is proceeding. We will increase the number of generations first.
-
-```{r slimr_script_run, eval=FALSE}
-
-modify(script_w_out, "end_gen", 3) <- 1000
-
-out <- slim_run(script_w_out, show_output = FALSE)
-head(out$output, n = 20L)
-out$output_data
-
-```
+Now if you happen to have `slimr` installed and setup you can run this script through slim and see what that output looks like. To see examples of using `slim_run`, see the vignette titles "Simple Example using Migration and F~st~". 

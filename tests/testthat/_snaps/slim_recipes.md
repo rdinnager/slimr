@@ -560,39 +560,6 @@
 
 ---
 
-    <slimr_script[3]>
-    block_1:initialize() {
-        initializeMutationRate(1e-07);
-        initializeMutationType("m1", 0.5, "f", 0);
-        initializeGenomicElementType("g1", m1, 1);
-        initializeGenomicElement(g1, 0, 99999);
-        initializeRecombinationRate(1e-08);
-    }
-    
-    block_2:1 early() {
-        for (i in 1:3) sim.addSubpop(i, 1000);
-        subpops = sim.subpopulations;
-        lines = readFile("/mnt/d/Projects/slimr/inst/extdata/recipe_resources/migration.csv");
-        lines = lines[substr(lines, 0, 1) != "//"];
-        for (line in lines) {
-            fields = strsplit(line, ",");
-            i = asInteger(fields[0]);
-            j = asInteger(fields[1]);
-            m = asFloat(fields[2]);
-            if (i != j) {
-                p_i = subpops[subpops.id == i];
-                p_j = subpops[subpops.id == j];
-                p_j.setMigrationRates(p_i, m);
-            }
-        }
-    }
-    
-    block_3:10000 late() {
-        sim.outputFull();
-    }
-
----
-
     <slimr_script[7]>
     block_1:initialize() {
         initializeMutationRate(2.36e-08);
@@ -704,35 +671,6 @@
         initializeGenomicElement(g1, 0, 99999);
         ends = c(sort(sample(0:99998, 999)), 99999);
         rates = runif(1000, 1e-09, 1e-07);
-        initializeRecombinationRate(rates, ends);
-    }
-    
-    block_2:1 early() {
-        sim.addSubpop("p1", 500);
-    }
-    
-    block_3:10000 early() {
-        sim.simulationFinished();
-    }
-
----
-
-    <slimr_script[3]>
-    block_1:initialize() {
-        initializeMutationRate(1e-07);
-        initializeMutationType("m1", 0.5, "f", 0);
-        initializeGenomicElementType("g1", m1, 1);
-        initializeGenomicElement(g1, 0, 23011543);
-        lines = readFile("/mnt/d/Projects/slimr/inst/extdata/recipe_resources/Comeron_100kb_chr2L.txt");
-        rates = NULL;
-        ends = NULL;
-        for (line in lines) {
-            components = strsplit(line, "\t");
-            ends = c(ends, asInteger(components[0]));
-            rates = c(rates, asFloat(components[1]));
-        }
-        ends = c(ends[1:(size(ends) - 1)] - 2, 23011543);
-        rates = rates * 1e-08;
         initializeRecombinationRate(rates, ends);
     }
     
@@ -3699,63 +3637,6 @@
 
 ---
 
-    <slimr_script[6]>
-    block_1:initialize() {
-        initializeSLiMOptions(dimensionality = "xy");
-        initializeMutationRate(1e-07);
-        initializeMutationType("m1", 0.5, "f", 0);
-        initializeGenomicElementType("g1", m1, 1);
-        initializeGenomicElement(g1, 0, 99999);
-        initializeRecombinationRate(1e-08);
-        initializeInteractionType(1, "xy", reciprocal = T, maxDistance = 30);
-        i1.setInteractionFunction("n", 5, 10);
-        initializeInteractionType(2, "xy", reciprocal = T, maxDistance = 30);
-        i2.setInteractionFunction("n", 1, 10);
-    }
-    
-    block_2:1 late() {
-        sim.addSubpop("p1", 1000);
-        p1.setSpatialBounds(c(0, 0, 540, 217));
-        mapLines = rev(readFile("/mnt/d/Projects/slimr/inst/extdata/recipe_resources/world_map_540x217.txt"));
-        mapLines = sapply(mapLines, "strsplit(applyValue, '') == '#';");
-        mapValues = asFloat(mapLines);
-        p1.defineSpatialMap("world", "xy", c(540, 217), mapValues, valueRange = c(0, 1), colors = c("#0000CC", "#55FF22"));
-        for (ind in p1.individuals) {
-            ind.x = rnorm(1, 300, 1);
-            ind.y = rnorm(1, 100, 1);
-        }
-    }
-    
-    block_3:1:2000 late() {
-        i1.evaluate();
-        inds = sim.subpopulations.individuals;
-        competition = i1.totalOfNeighborStrengths(inds)/size(inds);
-        competition = pmin(competition, 0.99);
-        inds.fitnessScaling = 1 - competition;
-        i2.evaluate();
-    }
-    
-    block_4:1:2000 mateChoice() {
-        return(i2.strength(individual));
-    }
-    
-    block_5:modifyChild() {
-        do
-        {
-            pos = parent1.spatialPosition + rnorm(2, 0, 2);
-        }
-        while (!p1.pointInBounds(pos)) slimr_special__;
-        if (p1.spatialMapValue("world", pos) == 0) return(F);
-        child.setSpatialPosition(pos);
-        return(T);
-    }
-    
-    block_6:2000 late() {
-        sim.outputFixedMutations();
-    }
-
----
-
     <slimr_script[7]>
     block_1:initialize() {
         defineConstant("sigma_C", 0.1);
@@ -5090,26 +4971,6 @@
         initializeAncestralNucleotides(randomNucleotides(L));
         initializeMutationTypeNuc("m1", 0.5, "f", 0);
         initializeGenomicElementType("g1", m1, 1, mmJukesCantor(1e-07));
-        initializeGenomicElement(g1, 0, L - 1);
-        initializeRecombinationRate(1e-08);
-    }
-    
-    block_2:1 early() {
-        sim.addSubpop("p1", 500);
-    }
-    
-    block_3:2000 late() {
-        sim.outputFixedMutations();
-    }
-
----
-
-    <slimr_script[3]>
-    block_1:initialize() {
-        initializeSLiMOptions(nucleotideBased = T);
-        defineConstant("L", initializeAncestralNucleotides("/mnt/d/Projects/slimr/inst/extdata/recipe_resources/FASTA.txt"));
-        initializeMutationTypeNuc("m1", 0.5, "f", 0);
-        initializeGenomicElementType("g1", m1, 1, mmKimura(1.8e-07, 6e-08));
         initializeGenomicElement(g1, 0, L - 1);
         initializeRecombinationRate(1e-08);
     }

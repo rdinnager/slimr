@@ -370,7 +370,7 @@ slim_load_globals <- function(max = 10, sim = TRUE, self = TRUE) {
 #' @export
 #'
 #' @examples
-#' slim_load_globals(p = 1)
+#' slim_load_globals(c(p = 1))
 #' slim_unload_globals()
 slim_unload_globals <- function() {
   rm(list = .resources$loaded_globals, pos = rlang::global_env())

@@ -157,6 +157,20 @@ jobs:
           remotes::install_cran("covr")
         shell: Rscript {0}
 
+      - name: Install SLiM on non-Windows
+        run: |
+          wget http://benhaller.com/slim/SLiM.zip
+          unzip -o SLiM.zip
+          mkdir SLiM_build
+          cd SLiM_build
+          cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
+          make
+          sudo make install
+          cd ..
+          rm -r SLiM_build
+          rm -r SLiM
+          rm SLiM.zip
+
       - name: Test coverage
         run: covr::codecov()
         shell: Rscript {0}

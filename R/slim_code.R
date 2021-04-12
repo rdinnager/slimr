@@ -143,7 +143,7 @@ slim_register_event_code <- function(code_snippet, start_gen = 1, last_gen = NUL
 
 #' Rify some SLiM code
 #'
-#' Utility code to convert SliM code into a form that can be parsed by R
+#' Utility code to convert SLiM code into a form that can be parsed by R
 #' (e.g. in \code{styler} or \code{prettycode}). Don't forget to re-SLiMify
 #' afterwards (via \code{\link(slim_code_SLiMify))!
 #'
@@ -272,7 +272,7 @@ slim_code_SLiMify <- function(code_snippet, prettycode = FALSE) {
 #'
 #' @return
 #' @export
-#' @examples load_slim_globals(c(p = 4, g = 2))
+#' @examples slim_load_globals(c(p = 4, g = 2))
 slim_load_globals <- function(max = 10, sim = TRUE, self = TRUE) {
 
   if(sim) {
@@ -370,8 +370,8 @@ slim_load_globals <- function(max = 10, sim = TRUE, self = TRUE) {
 #' @export
 #'
 #' @examples
-#' slim_load_globals(p = 1)
-#' slim_unload_globals
+#' slim_load_globals(c(p = 1))
+#' slim_unload_globals()
 slim_unload_globals <- function() {
   rm(list = .resources$loaded_globals, pos = rlang::global_env())
   .resources$loaded_globals <- NULL

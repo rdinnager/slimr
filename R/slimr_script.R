@@ -432,6 +432,8 @@ process_code_blocks <- function(slim_script_text) {
 #' @examples
 as_slimr_script <- function(slim_script_text) {
 
+  block_names <- block_ids <- start_nums <- end_nums <- callbacks <- blocks <- max_num <- NULL
+
   if(!inherits(slim_script_text, "character")) {
     rlang::abort("as_slimr_script only accepts character arguments")
   }

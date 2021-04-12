@@ -1,18 +1,12 @@
 ---
-title: "simple_example"
-output: hrbrthemes::ipsum
-
+title: "simple_example_using_migration_and_fst"
 ---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  cache = TRUE,
-  autodep = TRUE,
-  cache.path = "knitr_cache",
   comment = "#>"
 )
-
 ```
 
 ```{r color, echo = FALSE, results='asis'}
@@ -207,7 +201,7 @@ overall_mig_rates
 plot(as.vector(overall_mig_rates), as.vector(p_fst))
 ```
 
-We can see generally the populations with the lowest migration rates also has the highest pairwise Fst, suggesting population with low migration have differentiated the most, which makes sense. In this particular example, the Fst seems to reach a minimum soon after, such that the two higher migration pairs don't differ much in their pairwise Fsts. This could be a result of stochasticity. if we really want to know whether migration rate effects Fst under a simple neutral model of evolution, we should run many simulations and look at the average effect. `slimr` makes this easy to do using templating. Let's simplify this model a little to just look at two populations at a time, and then set it up to run many times with diiferent migration rates between them. Ww can also vary population size as it seems like this should be an important mediator of any effects, given it will effect the relative strength of drift in the populations.
+We can see generally the populations with the lowest migration rates also has the highest pairwise Fst, suggesting population with low migration have differentiated the most, which makes sense. In this particular example, the Fst seems to reach a minimum soon after, such that the two higher migration pairs don't differ much in their pairwise Fsts. This could be a result of stochasticity. if we really want to know whether migration rate effects Fst under a simple neutral model of evolution, we should run many simulations and look at the average effect. `slimr` makes this easy to do using templating. Let's simplify this model a little to just look at two populations at a time, and then set it up to run many times with different migration rates between them. Ww can also vary population size as it seems like this should be an important mediator of any effects, given it will effect the relative strength of drift in the populations.
 
 ```{r templated}
 

@@ -1,4 +1,4 @@
-#' Create a file to initialise a population in SliM
+#' Create a file to initialise a population in SLiM
 #'
 #' Make a SLiM file in the style of \code{outputFull()} which can be read by SLiM. This is useful to
 #' start a simulation with a particular population state that you define in R

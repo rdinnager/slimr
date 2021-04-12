@@ -21,13 +21,19 @@ test_that("SLiM executable can be found (if SLiM is available on system)", {
 test_that("Windows WSL can find SLiM", {
   skip_on_os(c("mac", "linux", "solaris"))
   expect_identical(system2("bash", c("-c", "'test -e /usr/local/bin/slim'"),
-          stdout = TRUE, stderr = TRUE),
-          "blah")
+                           stdout = TRUE, stderr = TRUE),
+                   "blah")
   expect_identical(system2("bash", c("-c", "'ls /usr/local/bin'"),
                            stdout = TRUE, stderr = TRUE),
-          "blah")
+                   "blah")
   expect_identical(system2("bash", c("-c", "'echo $PATH'"),
                            stdout = TRUE, stderr = TRUE),
-          "blah")
+                   "blah")
   expect_identical(slim_is_avail(), "blah")
+  expect_identical(system2("bash", c("-c", "'slim --test'"),
+                           stdout = TRUE, stderr = TRUE),
+                   "blah")
+  expect_identical(processx::run("bash", c("-c", "'slim --test'"),
+                           stderr_to_stdout = TRUE)$stdout,
+                   "blah")
 })

@@ -53,7 +53,7 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
   snps <- snps[ , nas]
 
   if(ncol(snps) == 0) {
-    stop("no snps left after removing positions with missing value")
+    rlang::abort("no snps left after removing positions with missing value")
   }
 
   first_line <- glue::glue("#OUT {sim_gen} A")

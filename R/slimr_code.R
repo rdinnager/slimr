@@ -197,7 +197,7 @@ slimr_code_Rify_all <- function(code) {
 assert_valid_code <- function(code_txt) {
   code <- try(parse(text = code_txt))
   if(inherits(code, "try-error")) {
-    stop(paste("Not valid R code; something went wrong in translation.", "error:", code))
+    rlang::abort(paste("Not valid R code; something went wrong in translation.", "error:", code))
   }
   code_txt
 }

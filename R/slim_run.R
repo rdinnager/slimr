@@ -727,7 +727,7 @@ slim_save_data_one <- function(df, file_name, format) {
   if(format == "csv") {
     readr::write_csv(df, file_name, append = TRUE)
   } else {
-    stop("Only csv format is currently supported")
+    rlang::abort("Only csv format is currently supported")
   }
 }
 

@@ -433,7 +433,7 @@ process_code_blocks <- function(slim_script_text) {
 as_slimr_script <- function(slim_script_text) {
 
   if(!inherits(slim_script_text, "character")) {
-    stop("as_slimr_script only accepts character arguments")
+    rlang::abort("as_slimr_script only accepts character arguments")
   }
 
   c(block_names, block_ids, start_nums, end_nums, callbacks, blocks, max_num) %<-%

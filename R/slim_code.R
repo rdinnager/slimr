@@ -89,7 +89,7 @@ slim_gen_output_code <- function(output_type = c("individuals", "genomes", "coor
     }
   } else {
     if(any(output_type == "genomes")) {
-      stop("I'm afraid slimr currently only allows outputting genomes by themselves.")
+      rlang::abort("I'm afraid slimr currently only allows outputting genomes by themselves.")
     }
     setup_code <- glue::glue("ps = <<subpops>>; inds = ps.individuals; nsamp = min(<<output_sample>>, size(inds)); samp = sample(inds, nsamp);",
                              .open = "<<", .close = ">>")

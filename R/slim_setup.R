@@ -23,12 +23,12 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE)
   if(!is_slim_available()){
     platform <- get_os()
     if(!platform %in% c("windows", "linux", "osx")) {
-      stop("Sorry, we don't recognize that platform. Valid options are \"windows\", \"unix\", or \"osx\"")
+      rlang::abort("Sorry, we don't recognize that platform. Valid options are \"windows\", \"unix\", or \"osx\"")
     }
 
     if(platform == "windows") {
       if(Sys.which("wsl.exe") == "") {
-        stop("It appears your Windows system does not have a working Windows subsystem for linux (WSL). Please make
+        rlang::abort("It appears your Windows system does not have a working Windows subsystem for linux (WSL). Please make
              sure you setup and install WSL before proceeding. Note WSL is only available for Windows 10 and above.
              See https://docs.microsoft.com/en-us/windows/wsl/install-win10 for installation instructions")
       }
@@ -47,7 +47,7 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE)
                         ignore.stdout = suppress_out,
                         ignore.stderr = suppress_out)
         if(unzip != 0) {
-          stop("Unzipping of SLiM archive failed. Make sure you have unzip installed on your WSL distro. e.g.
+          rlang::abort("Unzipping of SLiM archive failed. Make sure you have unzip installed on your WSL distro. e.g.
                for Ubuntu run `sudo apt-get install unzip`.")
         }
 
@@ -90,7 +90,7 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE)
                  ignore.stdout = suppress_out,
                  ignore.stderr = suppress_out)
 
-          stop("It looks like installation failed at compiling time. Make sure you have cmake and gcc (or build-essential)
+          rlang::abort("It looks like installation failed at compiling time. Make sure you have cmake and gcc (or build-essential)
                installed in your WSL distro and that they are accessible (e.g. in the PATH)")
         }
 
@@ -142,7 +142,7 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE)
                         ignore.stdout = suppress_out,
                         ignore.stderr = suppress_out)
         if(unzip != 0) {
-          stop("Unzipping of SLiM archive failed. Make sure you have unzip installed on your WSL distro. e.g.
+          rlang::abort("Unzipping of SLiM archive failed. Make sure you have unzip installed on your platform. e.g.
                for Ubuntu run `sudo apt-get install unzip`.")
         }
 
@@ -184,7 +184,7 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE)
                  ignore.stdout = suppress_out,
                  ignore.stderr = suppress_out)
 
-          stop("It looks like installation failed at compiling time. Make sure you have cmake and gcc (or build-essential)
+          rlang::abort("It looks like installation failed at compiling time. Make sure you have cmake and gcc (or build-essential)
                installed in your linux distro and that they are accessible (e.g. in the PATH)")
         }
 

@@ -37,7 +37,7 @@ slim_script <- function(...) {
                                  ~inherits(.x, "slimr_block"))
 
   if(!any(classes)) {
-    stop("slim_script only accepts arguments that are slim_block function calls or their results.")
+    rlang::abort("slim_script only accepts arguments that are slim_block function calls or their results.")
   }
 
   .call <- sys.call()
@@ -171,15 +171,15 @@ slim_block <- function(...) {
   n_args <- length(args)
 
   if(n_args > 5) {
-    stop("You've provided too many arguments. There shouldn't be more than 5 at max (block id, start generation, end generation, callback function, and slimr_code block expression)")
+    rlang::abort("You've provided too many arguments. There shouldn't be more than 5 at max (block id, start generation, end generation, callback function, and slimr_code block expression)")
   }
 
   if(n_args < 1) {
-    stop("slim_block requires at least one argument")
+    rlang::abort("slim_block requires at least one argument")
   }
 
   if(!is.call(args[[n_args]])) {
-    stop("The last argument of slim_block should be a valid slimr_code block expression.")
+    rlang::abort("The last argument of slim_block should be a valid slimr_code block expression.")
   }
 
   #code <- deparse(args[[n_args]], width.cutoff = 500, control = NULL)
@@ -198,7 +198,7 @@ slim_block <- function(...) {
 
     ddots <- unlist(lapply(other_args, function(x) class(x) == "name" & x == ".."))
     if(sum(ddots) > 1) {
-      stop(".. can only be used once in a slim_block function call")
+      rlang::abort(".. can only be used once in a slim_block function call")
     }
 
     if(sum(ddots) == 1) {
@@ -214,7 +214,7 @@ slim_block <- function(...) {
 
     if(any(unlist(arg_signature) == "name")) {
       if(any(unlist(arg_signature)[unlist(arg_signature) == "name"] != "")) {
-        stop(paste0("Invalid use of a name in arguments. Problem argument(s) are ",
+        rlang::abort(paste0("Invalid use of a name in arguments. Problem argument(s) are ",
                     paste(which(unlist(arg_signature)[unlist(arg_signature) == "name"] != ".."))))
       }
     }
@@ -334,7 +334,7 @@ slim_block <- function(...) {
   }
 
   if(all(sapply(block_row, is.na))) {
-    stop("You have input an invalid combination of arguments, please see documentation of slim_block for details on how to specify its arguments.")
+    rlang::abort("You have input an invalid combination of arguments, please see documentation of slim_block for details on how to specify its arguments.")
   }
 
   if(block_row$callback == "initialize()") {
@@ -369,7 +369,7 @@ slim_function <- function(..., name, return_type = "f$", body) {
   }
 
   if(!is.call(body)) {
-    stop("body argument of slim_block should be a valid slimr_code block expression.")
+    rlang::abort("body argument of slim_block should be a valid slimr_code block expression.")
   }
 
   code <- deparse(body, width.cutoff = 500, control = NULL)
@@ -492,7 +492,7 @@ slimr_script_render <- function(slimr_script, template = NULL, replace_NAs = TRU
                                 reps = 1) {
 
   if(attr(slimr_script, "script_info")$rendered) {
-    stop("This script has already been rendered. Rendering twice is not supported. To create a new version of the script rerender the unrendered script.")
+    rlang::abort("This script has already been rendered. Rendering twice is not supported. To create a new version of the script rerender the unrendered script.")
   }
 
   list_length_1 <- FALSE
@@ -507,14 +507,14 @@ slimr_script_render <- function(slimr_script, template = NULL, replace_NAs = TRU
     if(is.null(template)) {
       not_all_defaults <- any(is.na(unlist(slimr_template_attr$defaults)[!is.na(slimr_template_attr$var_names)]))
       if(not_all_defaults) {
-        stop("This slimr_script has templating, but not all templated variables have defaults.. You must provide a template argument, which can be a list, a data.frame, or an environment")
+        rlang::abort("This slimr_script has templating, but not all templated variables have defaults.. You must provide a template argument, which can be a list, a data.frame, or an environment")
       }
     } else {
       if(inherits(template, "data.frame")) {
         template <- purrr::transpose(template)
       } else {
         if(!inherits(template, "list")) {
-          stop("The template argument must be a list or inherit from a data.frame")
+          rlang::abort("The template argument must be a list or inherit from a data.frame")
         }
       }
     }

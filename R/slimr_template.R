@@ -101,7 +101,7 @@ replace_double_dots <- function(slimr_script, envir = parent.frame(), slimr_temp
                                        ~is.na(.x))
 
     if(any(missing_defaults)) {
-      stop("Some templated variables have not been fully specified in template, and no default was provided")
+      rlang::abort("Some templated variables have not been fully specified in template, and no default was provided")
     } else {
       new_envir <- defaults
       names(new_envir) <- templated_vars[not_specified]

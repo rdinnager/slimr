@@ -48,7 +48,7 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
 
   nas <- apply(snps, 2, function(x) !any(!is.finite(x)))
   if(any(!nas)) {
-    warning("snp matrix has missing values.. snp positions with missing values have been removed.")
+    rlang::warn("snp matrix has missing values.. snp positions with missing values have been removed.")
   }
   snps <- snps[ , nas]
 

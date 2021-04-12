@@ -88,7 +88,7 @@ slim_run.character <- function(x, slim_path = NULL,
                                ...) {
 
   if(length(x) > 1) {
-    warning("Input has more than one element. Concatenating them with newline separators...")
+    rlang::warn("Input has more than one element. Concatenating them with newline separators...")
     x <- paste(x, collapse = "\n")
   }
 
@@ -129,7 +129,7 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
                                   ...) {
 
   if(!attr(x, "script_info")$rendered) {
-    message("slimr_script is unrendered. Trying to render now...")
+    rlang::inform("slimr_script is unrendered. Trying to render now...")
     x <- slimr_script_render(x)
   }
 
@@ -467,15 +467,15 @@ slim_run_script <- function(script_txt,
 
   slim_cleanup(slim_p, pb = pb, simple_pb, progress)
 
-  message("\n\nSimulation finished with exit status: ", exit)
+  rlang::inform("\n\nSimulation finished with exit status: ", exit)
 
   if(exit == 0) {
-    message("\nSuccess!")
+    rlang::inform("\nSuccess!")
   } else {
-    warning("\nFailed! Error:\n")
     if(throw_error) {
       stop(paste(error, collapse = "\n"))
     } else {
+      rlang::warn("\nFailed! Error:\n")
       cat(error, sep = "\n")
     }
   }

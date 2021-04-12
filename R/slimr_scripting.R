@@ -60,7 +60,7 @@ slim_script <- function(...) {
                        block_names)
 
   if(!"block_init" %in% block_names) {
-    warning("The arguments do not include an initialize block (use an initialize()
+    rlang::warn("The arguments do not include an initialize block (use an initialize()
             callback to create one) and so the resulting script will not be a valid SLiM
             script. You can add an initialize block later through concatenation (using c())")
   }

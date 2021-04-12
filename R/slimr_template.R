@@ -106,7 +106,7 @@ replace_double_dots <- function(slimr_script, envir = parent.frame(), slimr_temp
       new_envir <- defaults
       names(new_envir) <- templated_vars[not_specified]
       envir <- c(envir, new_envir)
-      warning("Warning: A templated variable was not specified in the template and has been replaced by its default value.\n")
+      rlang::warn("Warning: A templated variable was not specified in the template and has been replaced by its default value.\n")
     }
 
   }
@@ -118,9 +118,9 @@ replace_double_dots <- function(slimr_script, envir = parent.frame(), slimr_temp
       the_defaults <- slimr_template_attr$defaults[templated]
       names(the_defaults) <- templated_vars
       envir[missing_dat] <- the_defaults[names(envir)[missing_dat]]
-      warning("Warning: There are missing values in template and replace_NAs = TRUE, so they will be replaced by their defaults\n")
+      rlang::warn("Warning: There are missing values in template and replace_NAs = TRUE, so they will be replaced by their defaults\n")
     } else {
-      warning("Warning: There are missing values in template and replace_NAs = FALSE, so the rendered script will have NA values\n")
+      rlang::warn("Warning: There are missing values in template and replace_NAs = FALSE, so the rendered script will have NA values\n")
     }
   }
 

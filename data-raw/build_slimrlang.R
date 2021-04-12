@@ -186,6 +186,10 @@ all_methods_data <- purrr::map(slim_lang_methods_txt,
                                ~extract_methods(.x, init = FALSE))
 names(all_methods_data) <- stringr::str_remove(names(all_methods_data), "_methods.txt")
 
+all_methods_data2 <- purrr::map(methods,
+                               ~extract_methods(.x, init = FALSE))
+names(all_methods_data) <- stringr::str_remove(names(all_methods_data), "_methods.txt")
+
 all_methods_data <- c(list(initialize_methods_data),
                       all_methods_data)
 

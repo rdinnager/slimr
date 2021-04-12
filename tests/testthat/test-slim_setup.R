@@ -42,13 +42,17 @@ test_that("Windows WSL can find SLiM", {
   expect_identical(processx::run("bash", c("-c", "'echo $PATH'"),
                                  stderr_to_stdout = TRUE,
                                  windows_verbatim_args = TRUE,
-                                 env = c(TEST = "blahblah"))$stdout,
+                                 env = character())$stdout,
                    "blah")
+
+  expect_identical(Sys.getenv(), list(blah = "blah"))
+  expect_identical(getwd(), "blah")
 
   expect_identical(processx::run("bash", c("-c", '"slim -testSLiM"'),
                                  stderr_to_stdout = TRUE,
                                  windows_verbatim_args = TRUE,
-                                 env = c(TEST = "blahblah"))$stdout,
+                                 env = character(),
+                                 echo_cmd = TRUE)$stdout,
                    "blah")
 
   expect_identical(processx::run("bash", c("-c", "'ls /usr/local/bin'"),

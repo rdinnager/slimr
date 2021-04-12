@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{slim_file}
 \alias{slim_file}
-\title{Make sure a filename is compatable with using in a SLiM script.}
+\title{Make sure a file name is compatible with using in a SLiM script.}
 \usage{
 slim_file(file_name)
 }

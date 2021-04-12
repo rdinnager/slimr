@@ -30,10 +30,10 @@ test_that("Windows WSL can find SLiM", {
                            stdout = TRUE, stderr = TRUE),
                    "blah")
   expect_identical(slim_is_avail(), "blah")
-  expect_identical(system2("bash", c("-c", "'slim --test'"),
+  expect_identical(system2("bash", c("-c", "'slim -testSLiM'"),
                            stdout = TRUE, stderr = TRUE),
                    "blah")
-  expect_identical(processx::run("bash", c("-c", "'slim --test'"),
+  expect_identical(processx::run("bash", c("-c", "'slim -testSLiM'"),
                            stderr_to_stdout = TRUE)$stdout,
                    "blah")
 })

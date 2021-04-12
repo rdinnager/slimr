@@ -2,7 +2,7 @@
 % Please edit documentation in R/slim_input.R
 \name{slim_make_pop_input}
 \alias{slim_make_pop_input}
-\title{Create a file to initialise a population in SliM}
+\title{Create a file to initialise a population in SLiM}
 \usage{
 slim_make_pop_input(
   snps,

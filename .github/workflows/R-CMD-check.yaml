@@ -80,7 +80,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: wsl-bash {0}
         run: |
-          cd `wslpath - a '${{ github.workspace }}'`
+          cd `wslpath -a '${{ github.workspace }}'`
           wget http://benhaller.com/slim/SLiM.zip
 
       - name: Download SLiM on non-Windows

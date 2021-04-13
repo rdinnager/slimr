@@ -18,13 +18,17 @@
 #' }
 slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE) {
 
-  if(verbose) {
-    suppress_out <- ""
-  } else {
-    suppress_out <- FALSE
-  }
+  on.exit({
+    rlang::inform("Deleting installation files...")
+    rm_zip <- processx::run("rm", c("-f", "SLiM.zip"), wd = install_dir)
+    rm_install_dir <- processx::run("rm", c("-f", "-r", "SLiM"), wd = install_dir)
+    rm_build_dir <- processx::run("rm", c("-f", "-r", "SLiM_build"), wd = install_dir)
+  }, add = TRUE)
 
   if(!slim_is_avail()){
+
+    mk_install_dir <- processx::run("mkdir", "-p", install_dir)
+
     platform <- get_os()
     if(!platform %in% c("windows", "linux", "osx")) {
       rlang::abort("Sorry, we don't recognize that platform. Valid options are \"windows\", \"unix\", or \"osx\"")
@@ -43,21 +47,24 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE)
 
         rlang::inform("Attempting to install slim using Window subsystem for linux (WSL)")
 
-        system2("wsl", c("--cd", "~", "wget", "http://benhaller.com/slim/SLiM.zip"),
-                stdout = suppress_out,
-                stderr = suppress_out)
+        wget_it <- processx::run("wsl", c("--cd", "~", "wget", "http://benhaller.com/slim/SLiM.zip"),
+                echo = verbose,
+                wd = install_dir)
 
-        unzip <- system2("wsl", c("--cd", "~", "unzip", "-o", "SLiM.zip"),
-                                  stdout = suppress_out,
-                                  stderr = suppress_out)
-        if(unzip != 0) {
+        if(wget_it$status != 0) {
+          rlang::abort("Downloading the SLiM package failed. Are you connected to the internet?")
+        }
+
+        unzip <- processx::run("wsl", c("--cd", "~", "unzip", "-o", "SLiM.zip"),
+                               echo = verbose)
+        if(unzip$status != 0) {
           rlang::abort("Unzipping of SLiM archive failed. Make sure you have unzip installed on your WSL distro. e.g.
                for Ubuntu run `sudo apt-get install unzip`.")
         }
 
-        system('bash -c "mkdir SLiM_build"',
-               ignore.stdout = suppress_out,
-               ignore.stderr = suppress_out)
+        mk_slim_build <- processx::run("wsl", c("mkdir", "-p", "SLiM_build"),
+                                       echo = verbose,
+                                       wd = install_dir)
 
         if(install_dir == "default") {
           compile <- system('bash -c "cd SLiM_build \
@@ -283,9 +290,8 @@ get_slim_call <- function() {
       slim_call <- NULL
     } else {
       if(platform == "windows") {
-        slim_call <- list(call = "bash",
-                          args = c("-c", paste0('"', slim_path,
-                                                ' {script_file}"')))
+        slim_call <- list(call = "wsl",
+                          args = c(slim_path, "{script_file}"))
       } else {
         slim_call <- list(call = slim_path,
                           args = "{script_file}")

@@ -467,7 +467,7 @@ slim_run_script <- function(script_txt,
 
   slim_cleanup(slim_p, pb = pb, simple_pb, progress)
 
-  rlang::inform("\n\nSimulation finished with exit status: ", exit)
+  rlang::inform(paste0("\n\nSimulation finished with exit status: ", exit))
 
   if(exit == 0) {
     rlang::inform("\nSuccess!")
@@ -506,8 +506,7 @@ setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(
     slim_call <- get_slim_call()
   } else {
     if(platform == "windows") {
-      slim_call <- list(call = "bash", args = c("-c", paste0('"', slim_path,
-                                                             ' {script_file}"')))
+      slim_call <- list(call = "wsl", args = c(slim_path, "{script_file}"))
     } else {
       slim_call <- list(call = slim_path, args = "{script_file}")
     }

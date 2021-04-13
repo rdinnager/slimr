@@ -80,13 +80,13 @@ jobs:
         if: runner.os == 'Windows'
         shell: wsl-bash {0}
         run: |
-          cd ~
+          cd ${{ github.workspace }}
           wget http://benhaller.com/slim/SLiM.zip
 
       - name: Download SLiM on non-Windows
         if: runner.os != 'Windows'
         run: |
-          cd ~
+          cd ${{ github.workspace }}
           wget http://benhaller.com/slim/SLiM.zip
 
       - name: Cache SLiM
@@ -96,7 +96,7 @@ jobs:
           path: |
             /usr/local/bin/slim
             /usr/local/bin/eidos
-          key: ${{ runner.os }}-build-SLiM-${{ hashFiles('~/SLiM.zip') }}
+          key: ${{ runner.os }}-build-SLiM-${{ hashFiles('SLiM.zip') }}
 
       - name: Install SLiM on Windows
         if: runner.os == 'Windows' && steps.cache-slim.outputs.cache-hit != 'true'
@@ -106,7 +106,7 @@ jobs:
           sudo apt-get -y install unzip
           sudo apt-get -y install build-essential
           sudo apt-get -y install cmake
-          cd ~
+          cd ${{ github.workspace }}
           unzip -o SLiM.zip
           mkdir SLiM_build
           cd SLiM_build
@@ -121,7 +121,7 @@ jobs:
       - name: Install SLiM on non-Windows
         if: runner.os != 'Windows' && steps.cache-slim.outputs.cache-hit != 'true'
         run: |
-          cd ~
+          cd ${{ github.workspace }}
           unzip -o SLiM.zip
           mkdir SLiM_build
           cd SLiM_build

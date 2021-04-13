@@ -18,9 +18,13 @@
 #' }
 slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE) {
 
-  suppress_out <- !verbose
+  if(verbose) {
+    suppress_out <- ""
+  } else {
+    suppress_out <- FALSE
+  }
 
-  if(!is_slim_available()){
+  if(!slim_is_avail()){
     platform <- get_os()
     if(!platform %in% c("windows", "linux", "osx")) {
       rlang::abort("Sorry, we don't recognize that platform. Valid options are \"windows\", \"unix\", or \"osx\"")
@@ -39,13 +43,13 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE)
 
         rlang::inform("Attempting to install slim using Window subsystem for linux (WSL)")
 
-        system('bash -c "wget http://benhaller.com/slim/SLiM.zip"',
-               ignore.stdout = suppress_out,
-               ignore.stderr = suppress_out)
+        system2("wsl", c("--cd", "~", "wget", "http://benhaller.com/slim/SLiM.zip"),
+                stdout = suppress_out,
+                stderr = suppress_out)
 
-        unzip <- system('bash -c "unzip -o SLiM.zip"',
-                        ignore.stdout = suppress_out,
-                        ignore.stderr = suppress_out)
+        unzip <- system2("wsl", c("--cd", "~", "unzip", "-o", "SLiM.zip"),
+                                  stdout = suppress_out,
+                                  stderr = suppress_out)
         if(unzip != 0) {
           rlang::abort("Unzipping of SLiM archive failed. Make sure you have unzip installed on your WSL distro. e.g.
                for Ubuntu run `sudo apt-get install unzip`.")
@@ -130,7 +134,7 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE)
 
 
 
-      if(!is_slim_available()) {
+      if(slim_is_avail()) {
 
         rlang::inform("Attempting to install slim on linux...")
 

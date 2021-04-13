@@ -80,7 +80,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: wsl-bash {0}
         run: |
-          cd ${{ github.workspace }}
+          cd `wslpath - a '${{ github.workspace }}'`
           wget http://benhaller.com/slim/SLiM.zip
 
       - name: Download SLiM on non-Windows
@@ -106,7 +106,7 @@ jobs:
           sudo apt-get -y install unzip
           sudo apt-get -y install build-essential
           sudo apt-get -y install cmake
-          cd ${{ github.workspace }}
+          cd `wslpath -a '${{ github.workspace }}'`
           unzip -o SLiM.zip
           mkdir SLiM_build
           cd SLiM_build

@@ -94,7 +94,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ${{ github.workspace }}\SLiM_build
+            SLiM_build
           key: ${{ runner.os }}-build-SLiM-${{ hashFiles('SLiM.zip') }}
 
       - name: Install SLiM on Windows Part 1
@@ -116,7 +116,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: wsl-bash {0}
         run: |
-          cd ${{ github.workspace }}\SLiM_build
+          cd ${{ github.workspace }}/SLiM_build
           sudo make install
           cd ..
           rm -r SLiM_build
@@ -136,7 +136,7 @@ jobs:
       - name: Install SLiM on non-Windows Part 2
         if: runner.os != 'Windows'
         run: |
-          cd ${{ github.workspace }}\SLiM_build
+          cd ${{ github.workspace }}/SLiM_build
           sudo make install
           cd ..
           rm -r SLiM_build

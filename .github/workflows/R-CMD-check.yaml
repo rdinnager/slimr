@@ -94,7 +94,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ github.workspace }}/SLiM_build
-          key: ${{ runner.os }}-build-SLiM-${{ hashFiles('SLiM.zip') }}
+          key: ${{ runner.os }}-build_SLiM-${{ hashFiles('SLiM.zip') }}
 
       - name: Install SLiM on Windows Part 1
         if: runner.os == 'Windows' && steps.cache-slim.outputs.cache-hit != 'true'
@@ -118,7 +118,6 @@ jobs:
           cd `wslpath -a '${{ github.workspace }}/SLiM_build'`
           sudo make install
           cd ..
-          rm -r SLiM_build
           rm -r SLiM
           rm SLiM.zip
 
@@ -138,7 +137,6 @@ jobs:
           cd ${{ github.workspace }}/SLiM_build
           sudo make install
           cd ..
-          rm -r SLiM_build
           rm -r SLiM
           rm SLiM.zip
 
@@ -198,7 +196,6 @@ jobs:
           make
           sudo make install
           cd ..
-          rm -r SLiM_build
           rm -r SLiM
           rm SLiM.zip
 
@@ -209,7 +206,8 @@ jobs:
           {
           dir.create("coverage_results")
           file.copy(list.files(tempdir(), full.names = TRUE), coverage_results, recursive = TRUE)
-          stop(codecovr_try)
+          error(codecovr_try)
+          quit(status = 1)
           }
         shell: Rscript {0}
 

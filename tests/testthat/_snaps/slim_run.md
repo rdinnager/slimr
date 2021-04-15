@@ -11,7 +11,7 @@
       }), slim_block(1, {
         sim.addSubpop("p1", 100)
       }), slim_block(1, 100, {
-        slimr_output(p1.outputMSSample(sampleSize = 10), name = "VCF", do_every = 10)
+        slimr_output(p1.outputMSSample(sampleSize = 10), name = "MS", do_every = 10)
       }), slim_block(100, {
         sim.simulationFinished()
       })) %>% slim_run()

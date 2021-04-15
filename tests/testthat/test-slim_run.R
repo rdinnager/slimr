@@ -64,7 +64,7 @@ test_that("slim_run works on slimr_script_coll objects", {
 
   expect_length(run_3_times, 3L)
   expect_s3_class(run_3_times, "slimr_results_coll")
-  expect_identical(purrr::map_int(run_3_times, "status"), c(1L, 1L, 1L))
+  expect_identical(purrr::map_int(run_3_times, "exit_status"), c(0L, 0L, 0L))
 
 })
 
@@ -95,6 +95,6 @@ test_that("slim_run works in parallel", {
 
   expect_length(run_3_times, 3L)
   expect_s3_class(run_3_times, "slimr_results_coll")
-  expect_identical(purrr::map_int(run_3_times, "status"), c(1L, 1L, 1L))
+  expect_identical(purrr::map_int(run_3_times, "exit_status"), c(0L, 0L, 0L))
 
 })

@@ -186,14 +186,33 @@ jobs:
           remotes::install_cran("covr")
         shell: Rscript {0}
 
-      - name: Install SLiM on non-Windows
+      - name: Download SLiM
         run: |
+          cd ${{ github.workspace }}
           wget http://benhaller.com/slim/SLiM.zip
+
+      - name: Cache SLiM
+        id: cache-slim
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ github.workspace }}/SLiM_build
+            ${{ github.workspace }}/SLiM
+          key: ${{ runner.os }}test-coverage-build_SLiM-${{ hashFiles('SLiM.zip') }}
+
+      - name: Install SLiM Part 1
+        if: steps.cache-slim.outputs.cache-hit != 'true'
+        run: |
+          cd ${{ github.workspace }}
           unzip -o SLiM.zip
           mkdir SLiM_build
           cd SLiM_build
           cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
           make
+
+      - name: Install SLiM Part 2
+        run: |
+          cd ${{ github.workspace }}/SLiM_build
           sudo make install
           cd ..
           rm SLiM.zip

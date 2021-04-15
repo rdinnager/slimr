@@ -201,7 +201,7 @@ jobs:
       - name: Test coverage
         run: |
           codecovr_try <- try(covr::codecov(quiet = FALSE, clean = FALSE))
-          if(inherits(codecovr_try, "try_error"))
+          if(inherits(codecovr_try, "try-error"))
           {
           dir.create("coverage_results")
           file.copy(list.files(tempdir(), full.names = TRUE), coverage_results, recursive = TRUE)

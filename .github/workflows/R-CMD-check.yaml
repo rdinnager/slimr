@@ -93,7 +93,9 @@ jobs:
         id: cache-slim
         uses: actions/cache@v2
         with:
-          path: ${{ github.workspace }}/SLiM_build
+          path: |
+            ${{ github.workspace }}/SLiM_build
+            ${{ github.workspace }}/SLiM
           key: ${{ runner.os }}-build_SLiM-${{ hashFiles('SLiM.zip') }}
 
       - name: Install SLiM on Windows Part 1
@@ -118,7 +120,6 @@ jobs:
           cd `wslpath -a '${{ github.workspace }}/SLiM_build'`
           sudo make install
           cd ..
-          rm -r SLiM
           rm SLiM.zip
 
       - name: Install SLiM on non-Windows Part 1
@@ -137,7 +138,6 @@ jobs:
           cd ${{ github.workspace }}/SLiM_build
           sudo make install
           cd ..
-          rm -r SLiM
           rm SLiM.zip
 
       - name: Check
@@ -196,7 +196,6 @@ jobs:
           make
           sudo make install
           cd ..
-          rm -r SLiM
           rm SLiM.zip
 
       - name: Test coverage

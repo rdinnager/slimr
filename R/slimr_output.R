@@ -16,12 +16,44 @@
 #' as an integer saying how many generations to run before producing output.
 #' e.g. \code{do_every = 10} means to output every 10 generations of the
 #' simulation.
+#' @param send_to \strong{*deprecated*} Where to send the output? This could be used
+#' to send the output to be stored in the results object ("data"), or to an external file ("file").
+#' This will no longer be available in future versions in favour of an option to have the results
+#' stored as a pointer to an external file (to save memory).
+#' @param file_name \strong{*deprecated*} The file name to save output to if \code{send_to = "file"}
+#' @param format \strong{*deprecated*} The file format to save data if \code{send_to = "file"}, Only "csv" is implemented
+#' but there are plans to support "fst" and "disk.frame".
+#' @param type Provide a custom type to the output. Used mostly for internal purposes.
+#' @param expression Provide a custom expression to be included with the output.
+#' Used mostly for internal purposes.
 #'
 #' @return An expression with the code to be run in SLiM.
 #'
 #' @export
 #'
 #' @examples
+#' slim_script(
+#'   slim_block(initialize(),
+#'              {
+#'                initializeMutationRate(1e-7);
+#'                initializeMutationType("m1", 0.5, "f", 0.0);
+#'                initializeGenomicElementType("g1", m1, 1.0);
+#'                initializeGenomicElement(g1, 0, 99999);
+#'                initializeRecombinationRate(1e-8);
+#'              }),
+#'   slim_block(1,
+#'              {
+#'                sim.addSubpop("p1", 100);
+#'              }),
+#'   slim_block(100,
+#'              {
+#'                slimr_output(p1.outputVCFSample(sampleSize = 10), name = "VCF");
+#'                sim.simulationFinished();
+#'              })
+#' ) %>%
+#' slim_run() -> run_w_out
+#'
+#' cat(run_w_out$output_data$data[[1]])
 slimr_output <- function(slimr_expr, name, do_every = 1,
                          send_to = c("data", "file"),
                          file_name = tempfile(fileext = ".txt"),
@@ -192,6 +224,7 @@ slimr_output_full <- function(name = "full_output") {
 #'
 #' @param name Name of data column to hold sequences
 #' @param subpops Should the subpopulation of each sequence be outputted as well?
+#' @param ... Other arguments to be passed to \code{\link{slimr_output}}
 #' @export
 slimr_output_nucleotides <- function(name = "seqs", subpops = FALSE, ...) {
   if(subpops) {

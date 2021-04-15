@@ -122,11 +122,14 @@ slim_output_every_code <- function(code_snippet, output_every, auto_bracket = TR
   glue::glue("if(sim.generation % <<output_every>> == 0) <<code_snippet>>", .open = "<<", .close = ">>")
 }
 
-#' Title
+#' Register a (late) event with SLiM
 #'
-#' @param code_snippet
-#' @param start_gen
-#' @param last_gen
+#' Experimental function for running events using SLiM's internal event registration.
+#'
+#' @param code_snippet Code for event to be registered. Should be a character vector of length one.
+#' @param start_gen Generation to start running the event.
+#' @param last_gen Generation to end running the event
+#' @param auto_bracket Should the code in \code{code_snippet} be bracketed?
 #'
 #' @return
 #' @export

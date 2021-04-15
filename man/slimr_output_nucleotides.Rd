@@ -10,6 +10,8 @@ slimr_output_nucleotides(name = "seqs", subpops = FALSE, ...)
 \item{name}{Name of data column to hold sequences}
 
 \item{subpops}{Should the subpopulation of each sequence be outputted as well?}
+
+\item{...}{Other arguments to be passed to \code{\link{slimr_output}}}
 }
 \description{
 Utility function to tell SLiM to output Nucleotides

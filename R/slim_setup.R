@@ -6,9 +6,14 @@
 #' @param install_dir Directory to install SLiM to. If "default" `slim_setup()` will install in the default
 #' directory. Be careful to make sure you have write and execution permissions for the installation folder
 #' you specify. We recommend using the default directory "~/slim", in which case you will not have to set an
-#' environmental variable to tell slimr where to find your slim installation.
+#' environmental variable to tell slimr where to find your slim installation. Note that for Windows, this
+#' refers to a linux path from the perspective of your Windows Subsystem for Linux (WSL) distribution, not a
+#' Windows path.
 #' @param test_slim Should SLiM be tested once installation is complete?
 #' @param verbose Whether to print out progress of the installation.
+#' @param force If \code{FALSE} (the default) \code{slim_setup} will not install SLiM if it is already
+#' installed and can be found. If you want to force an installation, even if SLiM is already installed
+#' (perhaps to install a newer version), then use \code{force=TRUE}.
 #'
 #' @export
 #'
@@ -16,7 +21,7 @@
 #' \dontrun{
 #' slim_setup()
 #' }
-slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE) {
+slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE, force = FALSE) {
 
   on.exit({
     rlang::inform("Deleting installation files...")
@@ -43,7 +48,7 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE)
 
       ## check if slim is already installed
 
-      if(!.slim_settings$slim_avail) {
+      if((!.slim_settings$slim_avail) | force) {
 
         rlang::inform("Attempting to install slim using Window subsystem for linux (WSL)")
 
@@ -66,173 +71,145 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE)
                                        echo = verbose,
                                        wd = install_dir)
 
+        build_dir <- file.path(install_dir, "SLiM_build")
+
         if(install_dir == "default") {
-          compile <- system('bash -c "cd SLiM_build \
-                            cmake -DCMAKE_BUILD_TYPE=Release ../SLiM \
-                            make \
-                            make install"',
-                            ignore.stdout = suppress_out,
-                            ignore.stderr = suppress_out)
+
+          compile <- processx::run("wsl", c("cmake", "-DCMAKE_BUILD_TYPE=Release", "../SLiM"),
+                                   echo = verbose,
+                                   wd = build_dir)
+
+          compile <- processx::run("wsl", c("make"),
+                                   echo = verbose,
+                                   wd = build_dir)
+
+          compile <- processx::run("wsl", c("make", "install"),
+                                   echo = verbose,
+                                   wd = build_dir)
+
         } else {
 
-          system(paste0('bash -c "mkdir -p ', install_dir, '"'),
-                 ignore.stdout = suppress_out,
-                 ignore.stderr = suppress_out)
+          compile <- processx::run("wsl", c("cmake",
+                                            "-DCMAKE_BUILD_TYPE=Release",
+                                            paste0("-DCMAKE_INSTALL_PREFIX=",
+                                                   install_dir),
+                                            "../SLiM"),
+                                   echo = verbose,
+                                   wd = build_dir)
 
-          compile <- system(stringr::str_replace('bash -c "cd SLiM_build \
-  cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/path/to/install ../SLiM \
-  make \
-                            make install"',
-                                                 "/path/to/install",
-                                                 install_dir),
-                            ignore.stdout = suppress_out,
-                            ignore.stderr = suppress_out)
+          compile <- processx::run("wsl", c("make"),
+                                   echo = verbose,
+                                   wd = build_dir)
+
+          compile <- processx::run("wsl", c("make", "install"),
+                                   echo = verbose,
+                                   wd = build_dir)
+
         }
 
-        if(compile != 0) {
-
-          system('bash -c "rm SLiM.zip"',
-                 ignore.stdout = suppress_out,
-                 ignore.stderr = suppress_out)
-          system('bash -c "rm -r SLiM"',
-                 ignore.stdout = suppress_out,
-                 ignore.stderr = suppress_out)
-          system('bash -c "rm -r SLiM_build"',
-                 ignore.stdout = suppress_out,
-                 ignore.stderr = suppress_out)
+        if(compile$status != 0) {
 
           rlang::abort("It looks like installation failed at compiling time. Make sure you have cmake and gcc (or build-essential)
                installed in your WSL distro and that they are accessible (e.g. in the PATH)")
+
         }
 
-        system('bash -c "rm SLiM.zip"',
-               ignore.stdout = suppress_out,
-               ignore.stderr = suppress_out)
-        system('bash -c "rm -r SLiM"',
-               ignore.stdout = suppress_out,
-               ignore.stderr = suppress_out)
-        system('bash -c "rm -r SLiM_build"',
-               ignore.stdout = suppress_out,
-               ignore.stderr = suppress_out)
 
-        rlang::inform("SLiM installed! Running a test now...")
 
-        # test <- system('bash -c "slim -testSLiM"', intern = TRUE)
-        #
-        # if(any(grepl("SUCCESS", test))) {
-        #   message("SLiM test successful. You should now be able to use `slimr`")
-        # }
+        rlang::inform("SLiM installed!")
+
 
       } else {
-        rlang::inform("Looks like SLiM is already installed. Running a test now...")
 
-        # test <- system('bash -c "slim -testSLiM"', intern = TRUE)
-        #
-        # if(any(grepl("SUCCESS", test))) {
-        #   message("SLiM test successful. You should now be able to use `slimr`")
-        # }
+        rlang::inform("Looks like SLiM is already installed. If you want to reinstall use force=TRUE.")
+
       }
 
-      #slim_settings$slim_call <- 'bash -c "slim {slim_options}"'
 
     } else {
 
       ## check if slim is already installed
 
-
-
-      if(slim_is_avail()) {
+      if((!.slim_settings$slim_avail) | force) {
 
         rlang::inform("Attempting to install slim on linux...")
 
-        system("wget http://benhaller.com/slim/SLiM.zip",
-               ignore.stdout = suppress_out,
-               ignore.stderr = suppress_out)
+        wget_it <- processx::run("wget", c("http://benhaller.com/slim/SLiM.zip"),
+                                 echo = verbose,
+                                 wd = install_dir)
 
-        unzip <- system("unzip -o SLiM.zip",
-                        ignore.stdout = suppress_out,
-                        ignore.stderr = suppress_out)
-        if(unzip != 0) {
+        if(wget_it$status != 0) {
+          rlang::abort("Downloading the SLiM package failed. Are you connected to the internet?")
+        }
+
+        unzip <- processx::run("unzip", c("-o", "SLiM.zip"),
+                               echo = verbose,
+                               wd = install_dir)
+
+        if(unzip$status != 0) {
           rlang::abort("Unzipping of SLiM archive failed. Make sure you have unzip installed on your platform. e.g.
                for Ubuntu run `sudo apt-get install unzip`.")
         }
 
-        system("mkdir SLiM_build",
-               ignore.stdout = suppress_out,
-               ignore.stderr = suppress_out)
+        mk_slim_build <- processx::run("mkdir", c("-p", "SLiM_build"),
+                                       echo = verbose,
+                                       wd = install_dir)
+
+        build_dir <- file.path(install_dir, "SLiM_build")
 
         if(install_dir == "default") {
-          compile <- system("cd SLiM_build \
-                            cmake -DCMAKE_BUILD_TYPE=Release ../SLiM \
-                            make \
-                            make install",
-                            ignore.stdout = suppress_out,
-                            ignore.stderr = suppress_out)
-        } else {
-          if(!dir.exists(install_dir)) {
-            dir.create(install_dir)
-          }
 
-          compile <- system(stringr::str_replace("cd SLiM_build \
-  cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/path/to/install ../SLiM \
-  make \
-                            make install",
-                                                 "/path/to/install",
-                                                 install_dir),
-                            ignore.stdout = suppress_out,
-                            ignore.stderr = suppress_out)
+          compile <- processx::run("cmake", c("-DCMAKE_BUILD_TYPE=Release", "../SLiM"),
+                                   echo = verbose,
+                                   wd = build_dir)
+
+          compile <- processx::run("make",
+                                   echo = verbose,
+                                   wd = build_dir)
+
+          compile <- processx::run("make", c("install"),
+                                   echo = verbose,
+                                   wd = build_dir)
+
+        } else {
+
+          compile <- processx::run("cmake",
+                                   c("-DCMAKE_BUILD_TYPE=Release",
+                                     paste0("-DCMAKE_INSTALL_PREFIX=",
+                                            install_dir),
+                                     "../SLiM"),
+                                   echo = verbose,
+                                   wd = build_dir)
+
+          compile <- processx::run("make",
+                                   echo = verbose,
+                                   wd = build_dir)
+
+          compile <- processx::run("make", c("install"),
+                                   echo = verbose,
+                                   wd = build_dir)
+
         }
 
         if(compile != 0) {
 
-          system("rm SLiM.zip",
-                 ignore.stdout = suppress_out,
-                 ignore.stderr = suppress_out)
-          system("rm -r SLiM",
-                 ignore.stdout = suppress_out,
-                 ignore.stderr = suppress_out)
-          system("rm -r SLiM_build",
-                 ignore.stdout = suppress_out,
-                 ignore.stderr = suppress_out)
-
           rlang::abort("It looks like installation failed at compiling time. Make sure you have cmake and gcc (or build-essential)
                installed in your linux distro and that they are accessible (e.g. in the PATH)")
-        }
-
-        system("rm SLiM.zip",
-               ignore.stdout = suppress_out,
-               ignore.stderr = suppress_out)
-        system("rm -r SLiM",
-               ignore.stdout = suppress_out,
-               ignore.stderr = suppress_out)
-        system("rm -r SLiM_build",
-               ignore.stdout = suppress_out,
-               ignore.stderr = suppress_out)
-
-        rlang::inform("\n")
-        rlang::inform("SLiM installed! Running a test now...")
-        rlang::inform("\n")
-
-
-        # test <- system("slim -testSLiM", intern = TRUE)
-        #
-        # if(any(grepl("SUCCESS", test))) {
-        #   message("SLiM test successful. You should now be able to use `slimr`")
-        # }
-
-        } else {
-          rlang::inform("Looks like SLiM is already installed. Running a test now...")
-
-          # test <- system('bash -c "slim -testSLiM"', intern = TRUE)
-          #
-          # if(any(grepl("SUCCESS", test))) {
-          #   message("SLiM test successful. You should now be able to use `slimr`")
-          # }
-        }
-
-
 
         }
+
+
+        rlang::inform("\nSLiM installed!\n")
+
+      } else {
+
+        rlang::inform("Looks like SLiM is already installed. If you want to reinstall use force=TRUE.")
+
+      }
+
+
+
+    }
 
     .slim_settings$slim_dir <- install_dir
 
@@ -242,7 +219,7 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE)
     Sys.setenv(SLIMR_SLIM_DIR = install_dir)
 
     if(install_dir != "~/slim") {
-      rlang::inform("\n")
+
       if (requireNamespace("crayon", quietly = TRUE)) {
         rlang::inform(stringr::str_wrap(glue::glue("It looks like you didn't use the default installation directory for SLiM. If you want slimr to find your SLiM installation in subsequent R sessions, please either make sure the slim executable is on the path, or set the SLIMR_SLIM_DIR evironmental variable to '{install_dir}'. We recommend adding this to your .RProfile file. This is most easily done by using {crayon::green('usethis::edit_r_environ()')}, and copying in the following line:\n{crayon::blue('SLIMR_SLIM_DIR=')}'{crayon::green(install_dir)}'\n"),
                 exdent = 2))
@@ -250,10 +227,10 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE)
         rlang::inform(stringr::str_wrap(glue::glue("It looks like you didn't use the default installation directory for SLiM. If you want slimr to find your SLiM installation in subsequent R sessions, please either make sure the slim executable is on the path, or set the SLIMR_SLIM_DIR evironmental variable to '{install_dir}'. We recommend adding this to your .RProfile file. This is most easily done by using {crayon::green('usethis::edit_r_environ()')}, and copying in the following line:\nSLIMR_SLIM_DIR=install_dir\n"),
                                   exdent = 2))
       }
-      rlang::inform("\n")
+
       if (requireNamespace("clipr", quietly = TRUE)) {
         clipr::write_clip(glue::glue("SLIMR_SLIM_DIR='{install_dir}'"))
-        rlang::inform("This snippet has been copied to the clipboard.")
+        rlang::inform("\nThis snippet has been copied to the clipboard.")
       }
     }
 

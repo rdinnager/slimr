@@ -1,6 +1,7 @@
 #' Insert slim_block to track progress when using slim_run
 #'
-#' @param update_every
+#' @param update_every How often to update progress, expressed as the number
+#' of generations after which an update should be tracked.
 #'
 #' @return
 #' @export

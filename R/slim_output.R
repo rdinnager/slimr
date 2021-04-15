@@ -672,16 +672,18 @@ slim_output_genlight.slimr_output_data <- function(x, ...) {
     dat_gen_full <- NULL
   }
   if(nrow(output_VCF) > 0) {
-    dat_VCF <- slim_output_genlight_tibble_VCF(output_VCF)
-    dat_gen_VCF <- methods::new("genlight", gen = alleles %>%
-                                  dplyr::select(-.data$pop_id, -.data$ind_id) %>%
-                                  as.matrix(),
-                                position = mut_dat$chrome_pos,
-                                loc.names = mut_dat$unique_mut_id,
-                                ind.names = paste0(alleles$pop_id, ":", alleles$ind_id),
-                                other = mut_dat %>%
-                                  dplyr::select(.data$mut_type, .data$prevalence))
-    adegenet::pop(dat_gen_VCF) <- alleles$pop_id
+
+    rlang::abort("Sorry, VCF output not yet supported.")
+    #dat_VCF <- slim_output_genlight_tibble_VCF(output_VCF)
+    # dat_gen_VCF <- methods::new("genlight", gen = alleles %>%
+    #                               dplyr::select(-.data$pop_id, -.data$ind_id) %>%
+    #                               as.matrix(),
+    #                             position = mut_dat$chrome_pos,
+    #                             loc.names = mut_dat$unique_mut_id,
+    #                             ind.names = paste0(alleles$pop_id, ":", alleles$ind_id),
+    #                             other = mut_dat %>%
+    #                               dplyr::select(.data$mut_type, .data$prevalence))
+    # adegenet::pop(dat_gen_VCF) <- alleles$pop_id
   } else {
     dat_gen_VCF <- NULL
   }

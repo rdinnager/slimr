@@ -497,12 +497,12 @@ end_gen <- function(x) {
 }
 
 #' @export
-`modify<-` <- function(x, value, ...) {
+`modify<-` <- function(x, ..., value) {
   UseMethod("modify<-", x)
 }
 
 #' @export
-`modify<-.slimr_script` <- function(x, value, field, position) {
+`modify<-.slimr_script` <- function(x, field, position, value) {
   if(field == "end_gen") {
     old_end_gen <- attr(x, "script_info")$end_gen
   }

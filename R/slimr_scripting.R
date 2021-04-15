@@ -485,7 +485,8 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #' and return it as a \code{slimr_script_coll} object.
 #' @param replace_NAs Should \code{NA} values in the template be replaced by their default values?
 #' @param reps Should the rendered script be replicated? If greater than 1, a \code{slimr_script_coll}
-#' will be returned.
+#' will be returned. This can also be used with a \code{slimr_script} object that has already been
+#' rendered, in which case it will just repeat the rendered script in the result.
 #'
 #' @return
 #' @export
@@ -495,7 +496,13 @@ slimr_script_render <- function(slimr_script, template = NULL, replace_NAs = TRU
                                 reps = 1) {
 
   if(attr(slimr_script, "script_info")$rendered) {
-    rlang::abort("This script has already been rendered. Rendering twice is not supported. To create a new version of the script rerender the unrendered script.")
+    if(reps > 1) {
+      new_scripts <- replicate(reps, slimr_script, simplify = FALSE) %>%
+        new_slimr_script_coll()
+      return(new_scripts)
+    } else {
+      rlang::abort("This script has already been rendered. Rendering twice is not supported. To create a new version of the script rerender the unrendered script.")
+    }
   }
 
   list_length_1 <- FALSE
@@ -579,6 +586,8 @@ slimr_replace_file_names <- function(template, file_name) {
 }
 
 reprocess_script <- function(script) {
+
+  slimr_inline_attr <- NULL
 
   code <- code(script)
 

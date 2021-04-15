@@ -116,7 +116,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: wsl-bash {0}
         run: |
-          cd ${{ github.workspace }}/SLiM_build
+          cd `wslpath -a '${{ github.workspace }}/SLiM_build'`
           sudo make install
           cd ..
           rm -r SLiM_build
@@ -204,5 +204,15 @@ jobs:
           rm SLiM.zip
 
       - name: Test coverage
-        run: covr::codecov()
+        run: |
+          covr::codecov(quiet = FALSE, clean = FALSE)
+          dir.create("coverage_results")
+          file.copy(list.files(tempdir(), full.names = TRUE), coverage_results, recursive = TRUE)
         shell: Rscript {0}
+
+      - name: Upload coverage results
+        if: failure()
+        uses: actions/upload-artifact@master
+        with:
+          name: coverage-results
+          path: coverage_results

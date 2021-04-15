@@ -46,7 +46,7 @@ test_that("slimr_script objects concatenate correctly", {
   expect_s3_class(test_script_2_1, "slimr_script")
 })
 
-test_that("incompatable types throw error", {
+test_that("incompatible types throw error", {
   suppressWarnings(test_script_1 <- slim_script(slim_block(1,
                                                            {
                                                              sim.addSubpop("p1", 500);

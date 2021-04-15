@@ -140,7 +140,7 @@ slim_script_set_wd <- function(slim_script, slim_wd) {
     if(any(stringr::str_detect(s, glue::glue("({out_key}[a-zA-Z]*\\(\")(.*\\/)(.*?)(\",*)")))) {
       file_match <- stringr::str_match(s,
                                        glue::glue("({out_key}[a-zA-Z]*\\(\")(.*\\/)(.*?)(\",*)")) %>%
-        na.omit()
+        stats::na.omit()
 
       if(nrow(file_match) > 0) {
         for(i in 1:nrow(file_match)) {
@@ -161,7 +161,7 @@ slim_script_set_wd <- function(slim_script, slim_wd) {
 
       file_match <- stringr::str_match(s,
                                        glue::glue("({out_key}[a-zA-Z]*\\(\")(.*?)(\",*)")) %>%
-        na.omit()
+        stats::na.omit()
 
       if(nrow(file_match) > 0) {
         for(i in 1:nrow(file_match)) {

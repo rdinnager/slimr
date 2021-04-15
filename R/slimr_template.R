@@ -37,7 +37,7 @@ tmplt_replace <- function(code) {
   code_expr <- rlang::parse_exprs(paste(code, collapse = ""))
 
   code <- purrr::map(code_expr, ~rlang::expr_interp(.x) %>%
-                       rlang::expr_deparse(width = 500L))
+                       expr_deparse_fast())
 
   if(any(purrr::map_lgl(code, ~inherits(.x, "list")))) {
     code <- code %>%
@@ -101,12 +101,12 @@ replace_double_dots <- function(slimr_script, envir = parent.frame(), slimr_temp
                                        ~is.na(.x))
 
     if(any(missing_defaults)) {
-      stop("Some templated variables have not been fully specified in template, and no default was provided")
+      rlang::abort("Some templated variables have not been fully specified in template, and no default was provided")
     } else {
       new_envir <- defaults
       names(new_envir) <- templated_vars[not_specified]
       envir <- c(envir, new_envir)
-      warning("Warning: A templated variable was not specified in the template and has been replaced by its default value.\n")
+      rlang::warn("Warning: A templated variable was not specified in the template and has been replaced by its default value.\n")
     }
 
   }
@@ -118,9 +118,9 @@ replace_double_dots <- function(slimr_script, envir = parent.frame(), slimr_temp
       the_defaults <- slimr_template_attr$defaults[templated]
       names(the_defaults) <- templated_vars
       envir[missing_dat] <- the_defaults[names(envir)[missing_dat]]
-      warning("Warning: There are missing values in template and replace_NAs = TRUE, so they will be replaced by their defaults\n")
+      rlang::warn("Warning: There are missing values in template and replace_NAs = TRUE, so they will be replaced by their defaults\n")
     } else {
-      warning("Warning: There are missing values in template and replace_NAs = FALSE, so the rendered script will have NA values\n")
+      rlang::warn("Warning: There are missing values in template and replace_NAs = FALSE, so the rendered script will have NA values\n")
     }
   }
 
@@ -188,14 +188,14 @@ slimr_template_info <- function(script_temp) {
   slimr_template_attr <- attr(script_temp, "slimr_template")
   if(any(!is.na(slimr_template_attr$var_names))) {
     info_group <- slimr_template_attr %>%
-      dplyr::group_by(!! rlang::sym("block_name"))
+      dplyr::group_by(.data$block_name)
 
     temp_split <- dplyr::group_split(info_group)
     temp_names <- dplyr::group_keys(info_group)
 
     temp_info <- purrr::map(temp_split,
                             ~.x$defaults %>%
-                              setNames(.x$var_names))
+                              stats::setNames(.x$var_names))
 
     names(temp_info) <- temp_names$block_name
 

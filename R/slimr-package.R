@@ -3,29 +3,53 @@
 .resources <- new.env()
 if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
                                                         ".G",
+                                                        "Genome",
                                                         ".GE",
+                                                        "GenomicElement",
                                                         ".GET",
+                                                        "GenomicElementType",
                                                         ".I",
+                                                        "Individual",
                                                         ".IT",
+                                                        "InteractionType",
                                                         ".M",
+                                                        "Mutation",
                                                         ".MT",
+                                                        "MutationType",
                                                         ".P",
+                                                        "Subpopulation",
                                                         ".S",
+                                                        "Substitution",
                                                         ".SB",
+                                                        "SLiMBuiltin",
                                                         ".SS",
+                                                        "SLiMSim",
                                                         ".c",
+                                                        "Chromosome",
                                                         ".Init",
+                                                        "Initialize",
+                                                        ".SEB",
+                                                        "SLiMEidosBlock",
                                                         ".x",
-                                                        "slimr_template_attr",
                                                         "sim.generation",
                                                         "catn",
-                                                        "slimr_output_attr",
                                                         "initialize",
                                                         "m1",
                                                         "g1",
                                                         "sim.addSubpop",
-                                                        "sim.simulationFinished"
+                                                        "sim.simulationFinished",
+                                                        "str",
+                                                        "sim.outputFull",
+                                                        "sim.subpopulations.individuals.genome1.nucleotides",
+                                                        "sim.subpopulations.individuals.sex",
+                                                        "sim.subpopulations.individuals.subpopulation",
+                                                        "sim.subpopulations.individuals.x",
+                                                        "sim.subpopulations.individuals.y",
+                                                        "sim.subpopulations.individuals.z"
                                                         ))
+
+
+
 
 .onAttach <- function(libname, pkgname) {
 
@@ -79,6 +103,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
                                                                                  paste0('\"[^"]*\\Q', basename(.y), '\\E\"'), ## some handy regex here
                                                                                  paste0('"', .y, '"')))
   .slim_assets$slim_recipes <- slim_recipes
+  .slim_assets$recipes_using_resources <- recipes_using_resources
 
 
   ## load slim language objects
@@ -102,5 +127,10 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
   .resources$temp_slimr_output$code_for_display <- list()
   .resources$temp_slimr_output$file_name <- list()
   .resources$temp_slimr_output$format <- list()
+  .resources$loaded_globals <- NULL
 
+}
+
+.onUnload <- function(libname, pkgname) {
+  slim_unload_globals()
 }

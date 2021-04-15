@@ -10,6 +10,7 @@ test_that("get_os returns a valid platform", {
 # })
 
 test_that("%+% and %+n% work as expected", {
+
   new_string <- "skleepsers" %+% "spleenmatrix"
   new_string2 <- "calamity" %+n% "strain"
   expect_type(new_string, "character")

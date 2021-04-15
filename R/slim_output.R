@@ -55,16 +55,16 @@ slim_results_to_data <- function(dat, generations = NULL) {
       generations <- max(dat$generation, na.rm = TRUE)
     }
     dat <- dat %>%
-      dplyr::filter(generation %in% generations)
+      dplyr::filter(.data$generation %in% generations)
   }
 
   res_dat <- dat %>%
-    dplyr::mutate(ord = seq_len(dplyr::n())) %>%
-    dplyr::group_by(type, expression) %>%
+    dplyr::mutate("ord" := seq_len(dplyr::n())) %>%
+    dplyr::group_by(.data$type, .data$expression) %>%
     dplyr::group_modify(~slim_output_to_data(.x, unlist(.y$type[1]))) %>%
     dplyr::ungroup() %>%
-    dplyr::arrange(ord) %>%
-    dplyr::select(-ord)
+    dplyr::arrange(.data$ord) %>%
+    dplyr::select(-.data$ord)
 
   return(res_dat)
 
@@ -98,7 +98,7 @@ slim_output_to_data <- function(dat, type) {
   #print(dplyr::glimpse(res))
 
   dat <- dat %>%
-    dplyr::mutate(data = res)
+    dplyr::mutate("data" := res)
 
   if(type == "slim_nucleotides") {
     assert_package("Biostrings", install = "BiocManager::install")
@@ -106,23 +106,23 @@ slim_output_to_data <- function(dat, type) {
       name_name <- dat$name[stringr::str_which(dat$name, "_subpops")][1]
       seq_name <- stringr::str_remove(name_name, "_subpops")
       subpops <- dat %>%
-        dplyr::filter(name == name_name) %>%
-        dplyr::pull(data)
+        dplyr::filter(.data$name == name_name) %>%
+        dplyr::pull(.data$data)
     } else {
       seq_name <- dat$name[1]
       subpops <- rep("1", length(dat$data[1]))
     }
 
     seq_dat <- dat %>%
-      dplyr::filter(name == seq_name)
+      dplyr::filter(.data$name == seq_name)
 
     dna <- purrr::map(seq_dat %>%
-                        dplyr::pull(data),
+                        dplyr::pull(.data$data),
                       ~ Biostrings::DNAStringSet(.x))
 
     dat <- seq_dat %>%
-      dplyr::mutate(data = dna,
-                    subpops = subpops)
+      dplyr::mutate("data" := dna,
+                    "subpops" = subpops)
 
   }
 
@@ -179,7 +179,7 @@ slim_outputFull_extract <- function(output_full, type = c("mutations", "individu
   get_one <- function(type, data, generation) {
     purrr::map2_dfr(data, generation,
                     ~slim_outputFull_extract_one(.x, type, expand_mutations, generation = .y)) %>%
-      dplyr::select(generation, dplyr::everything())
+      dplyr::select(.data$generation, dplyr::everything())
   }
 
   dat <- purrr::map(type,
@@ -285,8 +285,8 @@ slim_outputFull_extract_one <- function(string, type, expand_mutations, generati
                                                                   col_names = c("unique_ind_id", "sex",
                                                                                 "gen_id_1", "gen_id_2",
                                                                                 "extra"))) %>%
-                  tidyr::separate(unique_ind_id, c("pop_id", "ind_id"), sep = ":", remove = FALSE) %>%
-                  tidyr::pivot_longer(c(gen_id_1, gen_id_2),
+                  tidyr::separate("unique_ind_id", c("pop_id", "ind_id"), sep = ":", remove = FALSE) %>%
+                  tidyr::pivot_longer(c("gen_id_1", "gen_id_2"),
                                       names_prefix = "gen_id_",
                                       names_to = "genome_num",
                                       values_to = "gen_id"),
@@ -296,13 +296,13 @@ slim_outputFull_extract_one <- function(string, type, expand_mutations, generati
                                                                   col_names = c("unique_ind_id", "sex",
                                                                                 "gen_id_1", "gen_id_2",
                                                                                 "x", "y", "z"))) %>%
-                  tidyr::separate(unique_ind_id, c("pop_id", "ind_id"), sep = ":", remove = FALSE),
+                  tidyr::separate("unique_ind_id", c("pop_id", "ind_id"), sep = ":", remove = FALSE),
 
                 genomes = suppressWarnings(read_with_excess(dat,
                                                             col_types = "ccc",
                                                             col_names = c("gen_id", "gen_type",
                                                                           "mut_list"))) %>%
-                  dplyr::mutate(mut_list = stringr::str_split(mut_list, " ")),
+                  dplyr::mutate("mut_list" := stringr::str_split(.data$mut_list, " ")),
 
                 NULL
   )
@@ -310,22 +310,22 @@ slim_outputFull_extract_one <- function(string, type, expand_mutations, generati
   if(expand_mutations) {
     if(type == "genomes") {
       dat <- dat %>%
-        tidyr::unnest_longer(col = mut_list,
+        tidyr::unnest_longer(col = "mut_list",
                              values_to = "mut_id",
                              indices_include = FALSE) %>%
-        dplyr::mutate(mut_id = as.integer(mut_id)) %>%
-        tidyr::drop_na(mut_id)
+        dplyr::mutate("mut_id" := as.integer(.data$mut_id)) %>%
+        tidyr::drop_na(.data$mut_id)
     }
   } else {
     if(type == "genomes") {
       dat <- dat %>%
-        dplyr::mutate(mut_list = purrr::map(mut_list,
+        dplyr::mutate("mut_list" := purrr::map(.data$mut_list,
                                           as.integer))
     }
   }
 
   dat %>%
-    dplyr::mutate(generation = generation)
+    dplyr::mutate("generation" := generation)
 }
 
 
@@ -367,7 +367,7 @@ slim_outputGS_extract <- function(output, type = c("mutations",
   get_one <- function(type, data, generation) {
     purrr::map2_dfr(data, generation,
                     ~slim_outputGS_extract_one(.x, type, expand_mutations, generation = .y)) %>%
-      dplyr::select(generation, dplyr::everything())
+      dplyr::select(.data$generation, dplyr::everything())
   }
 
   dat <- purrr::map(type,
@@ -439,7 +439,7 @@ slim_outputGS_extract_one <- function(string, type, expand_mutations, generation
                                                               col_types = "ccc",
                                                               col_names = c("gen_id", "gen_type",
                                                                             "mut_list"))) %>%
-                    dplyr::mutate(mut_list = stringr::str_split(mut_list, " ")),
+                    dplyr::mutate("mut_list" := stringr::str_split(.data$mut_list, " ")),
 
                   NULL
     )
@@ -463,7 +463,7 @@ slim_outputGS_extract_one <- function(string, type, expand_mutations, generation
                                                               col_types = "ccc",
                                                               col_names = c("gen_id", "gen_type",
                                                                             "mut_list"))) %>%
-                    dplyr::mutate(mut_list = stringr::str_split(mut_list, " ")),
+                    dplyr::mutate("mut_list" := stringr::str_split(.data$mut_list, " ")),
 
                   NULL
     )
@@ -472,21 +472,21 @@ slim_outputGS_extract_one <- function(string, type, expand_mutations, generation
   if(expand_mutations) {
     if(type == "genomes") {
       dat <- dat %>%
-        tidyr::unnest_longer(col = mut_list,
+        tidyr::unnest_longer(col = "mut_list",
                              values_to = "mut_id",
                              indices_include = FALSE) %>%
-        dplyr::mutate(mut_id = as.integer(mut_id))
+        dplyr::mutate("mut_id" := as.integer(.data$mut_id))
     }
   } else {
     if(type == "genomes") {
       dat <- dat %>%
-        dplyr::mutate(mut_list = purrr::map(mut_list,
-                                          as.integer))
+        dplyr::mutate("mut_list" := purrr::map(.data$mut_list,
+                                               as.integer))
     }
   }
 
   dat %>%
-    dplyr::mutate(generation = generation)
+    dplyr::mutate("generation" := generation)
 }
 
 
@@ -501,14 +501,14 @@ slim_output_individuals <- function(output_data, format = c("genlight", "tibble"
 
   dat <- purrr::pmap_dfr(list(output_data$expression, output_data$data, output_data$generation),
                         ~slim_output_individuals_one(..1, ..2, ..3)) %>%
-    dplyr::select(generation, dplyr::everything())
+    dplyr::select(.data$generation, dplyr::everything())
 
   if(format == "genlight") {
     assert_package("adegenet")
 
     alleles <- dat %>%
-      dplyr::select(ind_id, mut_id) %>%
-      dplyr::group_by(ind_id, mut_id) %>%
+      dplyr::select(.data$ind_id, .data$mut_id) %>%
+      dplyr::group_by(.data$ind_id, .data$mut_id)
 
     dat_gen <- methods::new("genlight", gen = dat %>%
                    dplyr::select(dplyr::starts_with("i", ignore.case = FALSE)) %>%
@@ -517,7 +517,7 @@ slim_output_individuals <- function(output_data, format = c("genlight", "tibble"
                    position = dat$POS,
                    loc.names = dat$MID,
                    other = dat %>%
-                     dplyr::select(generation, S:MULTIALLELIC))
+                     dplyr::select(.data$generation, .data$S:.data$MULTIALLELIC))
     adegenet::pop(dat_gen) <- dat$pop_id
     dat <- dat_gen
   }
@@ -537,7 +537,7 @@ slim_output_individuals_one <- function(expression, data, generation) {
                                      c("individuals", "genomes", "mutations"),
                                      join = TRUE, expand_mutations = TRUE)
     } else {
-      stop(glue::glue("slimr currently doesn't support extracting individual data produced by {expression}"))
+      rlang::abort(glue::glue("slimr currently doesn't support extracting individual data produced by {expression}"))
     }
   }
 
@@ -566,12 +566,12 @@ read_VCF <- function(string) {
                           ~readr::read_tsv(all_lines[.x[1]:.x[2]]) %>%
                             dplyr::rename_at(dplyr::vars(dplyr::starts_with("i", ignore.case = FALSE)),
                                              function(z) paste0(.y, "_", z))) %>%
-    dplyr::mutate(INFO = purrr::map(INFO,
+    dplyr::mutate("INFO" := purrr::map(.data$INFO,
                                     ~eval(rlang::parse_expr(paste0("c(",
                                                                    stringr::str_replace_all(.x, c(";" = ",", "MULTIALLELIC" = "MULTIALLELIC = 1")),
                                                                    ")"))))) %>%
-    tidyr::unnest_wider(col = INFO) %>%
-    dplyr::mutate(MULTIALLELIC = ifelse(is.na(MULTIALLELIC), 0, MULTIALLELIC)) %>%
+    tidyr::unnest_wider(col = .data$INFO) %>%
+    dplyr::mutate("MULTIALLELIC" := ifelse(is.na(.data$MULTIALLELIC), 0, .data$MULTIALLELIC)) %>%
     dplyr::mutate_at(dplyr::vars(dplyr::starts_with("p", ignore.case = FALSE)),
                      ~stringr::str_split(.x, "\\|", simplify = TRUE) %>%
                        apply(2, as.numeric) %>% rowSums())
@@ -611,7 +611,7 @@ slim_output_genlight.slimr_results <- function(x, name = NULL, by = NULL, ...) {
 
   if(!is.null(name)) {
     output_data <- output_data %>%
-      dplyr::filter(name == !!name)
+      dplyr::filter(.data$name == !!name)
   }
 
   if(!is.null(by)) {
@@ -642,6 +642,8 @@ slim_output_genlight.slimr_output_data <- function(x, ...) {
 
   assert_package("adegenet")
 
+  alleles <- mut_dat <- NULL
+
   output_full <- x %>%
     dplyr::filter(stringr::str_detect(expression, "outputFull"))
 
@@ -652,34 +654,36 @@ slim_output_genlight.slimr_output_data <- function(x, ...) {
     dplyr::filter(stringr::str_detect(expression, "\\.output\\("))
 
   if(nrow(output_full) == 0 && nrow(output_VCF) == 0 && nrow(output_GS) == 0) {
-    stop("You must have output generated by outputFull(), outputVCF(), or output() to extract a genlight object.")
+    rlang::abort("You must have output generated by outputFull(), outputVCF(), or output() to extract a genlight object.")
   }
 
   if(nrow(output_full) > 0) {
     c(alleles, mut_dat) %<-% slim_output_genlight_tibble_full(output_full)
     dat_gen_full <- methods::new("genlight", gen = alleles %>%
-                                   dplyr::select(-pop_id, -ind_id) %>%
+                                   dplyr::select(-.data$pop_id, -.data$ind_id) %>%
                                    as.matrix(),
                                  position = mut_dat$chrome_pos,
                                  loc.names = mut_dat$unique_mut_id,
                                  ind.names = paste0(alleles$pop_id, ":", alleles$ind_id),
                                  other = mut_dat %>%
-                                   dplyr::select(mut_type, prevalence))
+                                   dplyr::select(.data$mut_type, .data$prevalence))
     adegenet::pop(dat_gen_full) <- alleles$pop_id
   } else {
     dat_gen_full <- NULL
   }
   if(nrow(output_VCF) > 0) {
-    dat_VCF <- slim_output_genlight_tibble_VCF(output_VCF)
-    dat_gen_VCF <- methods::new("genlight", gen = alleles %>%
-                                  dplyr::select(-pop_id, -ind_id) %>%
-                                  as.matrix(),
-                                position = mut_dat$chrome_pos,
-                                loc.names = mut_dat$unique_mut_id,
-                                ind.names = paste0(alleles$pop_id, ":", alleles$ind_id),
-                                other = mut_dat %>%
-                                  dplyr::select(mut_type, prevalence))
-    adegenet::pop(dat_gen_VCF) <- alleles$pop_id
+
+    rlang::abort("Sorry, VCF output not yet supported.")
+    #dat_VCF <- slim_output_genlight_tibble_VCF(output_VCF)
+    # dat_gen_VCF <- methods::new("genlight", gen = alleles %>%
+    #                               dplyr::select(-.data$pop_id, -.data$ind_id) %>%
+    #                               as.matrix(),
+    #                             position = mut_dat$chrome_pos,
+    #                             loc.names = mut_dat$unique_mut_id,
+    #                             ind.names = paste0(alleles$pop_id, ":", alleles$ind_id),
+    #                             other = mut_dat %>%
+    #                               dplyr::select(.data$mut_type, .data$prevalence))
+    # adegenet::pop(dat_gen_VCF) <- alleles$pop_id
   } else {
     dat_gen_VCF <- NULL
   }
@@ -687,13 +691,13 @@ slim_output_genlight.slimr_output_data <- function(x, ...) {
   if(nrow(output_GS) > 0) {
     c(alleles, mut_dat) %<-% slim_output_genlight_tibble_GS(output_GS)
     dat_gen_GS <- methods::new("genlight", gen = alleles %>%
-                                   dplyr::select(-ind_id) %>%
+                                   dplyr::select(-.data$ind_id) %>%
                                    as.matrix(),
                                  position = mut_dat$chrome_pos,
                                  loc.names = mut_dat$unique_mut_id,
                                  ind.names = alleles$ind_id,
                                  other = mut_dat %>%
-                                   dplyr::select(mut_type, prevalence))
+                                   dplyr::select(.data$mut_type, .data$prevalence))
   } else {
     dat_gen_GS <- NULL
   }
@@ -747,28 +751,28 @@ slim_output_genlight_tibble_full <- function(output_full) {
 
   suppressMessages(
     alleles <- inds %>%
-      dplyr::left_join(muts %>% dplyr::select(mut_id, unique_mut_id)) %>%
-      dplyr::select(pop_id, ind_id, unique_mut_id) %>%
-      dplyr::mutate(present = 1) %>%
-      dplyr::group_by(pop_id, ind_id, unique_mut_id) %>%
-      dplyr::summarise(count = sum(present), .groups = "drop") %>%
+      dplyr::left_join(muts %>% dplyr::select(.data$mut_id, .data$unique_mut_id)) %>%
+      dplyr::select(.data$pop_id, .data$ind_id, .data$unique_mut_id) %>%
+      dplyr::mutate("present" := 1) %>%
+      dplyr::group_by(.data$pop_id, .data$ind_id, .data$unique_mut_id) %>%
+      dplyr::summarise("count" := sum(.data$present), .groups = "drop") %>%
       dplyr::sample_frac()
   )
 
   suppressMessages(
     mut_dat <- alleles %>%
-      dplyr::select(unique_mut_id) %>%
+      dplyr::select(.data$unique_mut_id) %>%
       dplyr::distinct() %>%
       dplyr::left_join(muts %>%
-                         dplyr::select(unique_mut_id,
-                                       chrome_pos,
-                                       mut_type,
-                                       prevalence))
+                         dplyr::select(.data$unique_mut_id,
+                                       .data$chrome_pos,
+                                       .data$mut_type,
+                                       .data$prevalence))
   )
   alleles <- alleles %>%
-    tidyr::pivot_wider(id_cols = c(pop_id, ind_id),
-                       names_from = unique_mut_id,
-                       values_from = count,
+    tidyr::pivot_wider(id_cols = c("pop_id", "ind_id"),
+                       names_from = "unique_mut_id",
+                       values_from = "count",
                        values_fill = 0)
 
   list(alleles = alleles, mut_dat = mut_dat)
@@ -795,28 +799,28 @@ slim_output_genlight_tibble_GS <- function(output_GS) {
 
   suppressMessages(
     alleles <- inds %>%
-      dplyr::left_join(muts %>% dplyr::select(mut_id, unique_mut_id)) %>%
-      dplyr::select(ind_id, unique_mut_id) %>%
-      dplyr::mutate(present = 1) %>%
-      dplyr::group_by(ind_id, unique_mut_id) %>%
-      dplyr::summarise(count = sum(present), .groups = "drop") %>%
+      dplyr::left_join(muts %>% dplyr::select(.data$mut_id, .data$unique_mut_id)) %>%
+      dplyr::select(.data$ind_id, .data$unique_mut_id) %>%
+      dplyr::mutate("present" := 1) %>%
+      dplyr::group_by(.data$ind_id, .data$unique_mut_id) %>%
+      dplyr::summarise("count" := sum(.data$present), .groups = "drop") %>%
       dplyr::sample_frac()
   )
 
   suppressMessages(
     mut_dat <- alleles %>%
-      dplyr::select(unique_mut_id) %>%
+      dplyr::select(.data$unique_mut_id) %>%
       dplyr::distinct() %>%
       dplyr::left_join(muts %>%
-                         dplyr::select(unique_mut_id,
-                                       chrome_pos,
-                                       mut_type,
-                                       prevalence))
+                         dplyr::select(.data$unique_mut_id,
+                                       .data$chrome_pos,
+                                       .data$mut_type,
+                                       .data$prevalence))
   )
   alleles <- alleles %>%
-    tidyr::pivot_wider(id_cols = c(ind_id),
-                       names_from = unique_mut_id,
-                       values_from = count,
+    tidyr::pivot_wider(id_cols = c("ind_id"),
+                       names_from = "unique_mut_id",
+                       values_from = "count",
                        values_fill = 0)
 
   list(alleles = alleles, mut_dat = mut_dat)
@@ -829,7 +833,7 @@ read_with_excess <- function(string, col_names, col_types) {
   ncol <- length(col_names)
   split_it <- stringr::str_split_fixed(txt, " ", ncol) %>%
     as.data.frame() %>%
-    setNames(col_names) %>%
+    stats::setNames(col_names) %>%
     readr::type_convert(col_types)
 
   return(split_it)

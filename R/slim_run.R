@@ -88,7 +88,7 @@ slim_run.character <- function(x, slim_path = NULL,
                                ...) {
 
   if(length(x) > 1) {
-    warning("Input has more than one element. Concatenating them with newline separators...")
+    rlang::warn("Input has more than one element. Concatenating them with newline separators...")
     x <- paste(x, collapse = "\n")
   }
 
@@ -129,7 +129,7 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
                                   ...) {
 
   if(!attr(x, "script_info")$rendered) {
-    message("slimr_script is unrendered. Trying to render now...")
+    rlang::inform("slimr_script is unrendered. Trying to render now...")
     x <- slimr_script_render(x)
   }
 
@@ -139,8 +139,8 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
 
   if(any(!is.na(output_info$file_name))) {
     save_to_file <- output_info %>%
-      dplyr::select(output_name, file_name, format) %>%
-      tidyr::drop_na(file_name)
+      dplyr::select(.data$output_name, .data$file_name, .data$format) %>%
+      tidyr::drop_na(.data$file_name)
   } else {
     save_to_file <- NULL
   }
@@ -394,9 +394,9 @@ slim_run_script <- function(script_txt,
         ## save results so far to file
         if(nrow(output_list$data) > 0 & !is.null(save_to_file)) {
           dat_to_save <- output_list$data %>%
-            dplyr::filter(name %in% save_to_file$output_name)
+            dplyr::filter(.data$name %in% save_to_file$output_name)
           output_list$data <- output_list$data %>%
-            dplyr::filter(!name %in% save_to_file$output_name)
+            dplyr::filter(!.data$name %in% save_to_file$output_name)
           slim_save_data(dat_to_save, save_to_file)
           if(nrow(output_list$data) == 0) {
             output_list$data <- NULL
@@ -467,15 +467,15 @@ slim_run_script <- function(script_txt,
 
   slim_cleanup(slim_p, pb = pb, simple_pb, progress)
 
-  message("\n\nSimulation finished with exit status: ", exit)
+  rlang::inform(paste0("\n\nSimulation finished with exit status: ", exit))
 
   if(exit == 0) {
-    message("\nSuccess!")
+    rlang::inform("\nSuccess!")
   } else {
-    warning("\nFailed! Error:\n")
     if(throw_error) {
       stop(paste(error, collapse = "\n"))
     } else {
+      rlang::warn("\nFailed! Error:\n")
       cat(error, sep = "\n")
     }
   }
@@ -506,8 +506,7 @@ setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(
     slim_call <- get_slim_call()
   } else {
     if(platform == "windows") {
-      slim_call <- list(call = "bash", args = c("-c", paste0('"', slim_path,
-                                                             ' {script_file}"')))
+      slim_call <- list(call = "wsl", args = c(slim_path, "{script_file}"))
     } else {
       slim_call <- list(call = slim_path, args = "{script_file}")
     }
@@ -716,9 +715,9 @@ slim_cleanup <- function(slim_p, pb, simple_pb, progress) {
 }
 
 slim_save_data <- function(dat_to_save, save_to_file) {
-  purrr:::pwalk(save_to_file,
+  purrr::pwalk(save_to_file,
                 ~slim_save_data_one(dat_to_save %>%
-                                      dplyr::filter(name == ..1),
+                                      dplyr::filter(.data$name == ..1),
                                     ..2,
                                     ..3))
 }
@@ -727,7 +726,7 @@ slim_save_data_one <- function(df, file_name, format) {
   if(format == "csv") {
     readr::write_csv(df, file_name, append = TRUE)
   } else {
-    stop("Only csv format is currently supported")
+    rlang::abort("Only csv format is currently supported")
   }
 }
 

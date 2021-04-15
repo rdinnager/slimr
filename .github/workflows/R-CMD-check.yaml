@@ -28,10 +28,17 @@ jobs:
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       _R_CHECK_FORCE_SUGGESTS_: false
+      GITHUB_PAT: ${{ secrets.INSTALL_GITHUB_PAT }}
       RSPM: ${{ matrix.config.rspm }}
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Install WSL
+        if: runner.os == 'Windows'
+        uses: Vampire/setup-wsl@v1
+        with:
+          distribution: Ubuntu-18.04
 
       - uses: r-lib/actions/setup-r@master
         with:
@@ -69,6 +76,74 @@ jobs:
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
+      - name: Download SLiM on Windows
+        if: runner.os == 'Windows'
+        shell: wsl-bash {0}
+        run: |
+          cd `wslpath -a '${{ github.workspace }}'`
+          wget http://benhaller.com/slim/SLiM.zip
+
+      - name: Download SLiM on non-Windows
+        if: runner.os != 'Windows'
+        run: |
+          cd ${{ github.workspace }}
+          wget http://benhaller.com/slim/SLiM.zip
+
+      - name: Cache SLiM
+        id: cache-slim
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ github.workspace }}/SLiM_build
+            ${{ github.workspace }}/SLiM
+          key: ${{ runner.os }}-build_SLiM-${{ hashFiles('SLiM.zip') }}
+
+      - name: Install SLiM on Windows Part 1
+        if: runner.os == 'Windows' && steps.cache-slim.outputs.cache-hit != 'true'
+        shell: wsl-bash {0}
+        run: |
+          sudo apt update
+          sudo apt-get -y install unzip
+          sudo apt-get -y install build-essential
+          sudo apt-get -y install cmake
+          cd `wslpath -a '${{ github.workspace }}'`
+          unzip -o SLiM.zip
+          mkdir SLiM_build
+          cd SLiM_build
+          cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
+          make
+
+      - name: Install SLiM on Windows Part 2
+        if: runner.os == 'Windows'
+        shell: wsl-bash {0}
+        run: |
+          sudo apt update
+          sudo apt-get -y install build-essential
+          sudo apt-get -y install cmake
+          cd `wslpath -a '${{ github.workspace }}'`
+          cd SLiM_build
+          sudo make install
+          cd ..
+          rm SLiM.zip
+
+      - name: Install SLiM on non-Windows Part 1
+        if: runner.os != 'Windows' && steps.cache-slim.outputs.cache-hit != 'true'
+        run: |
+          cd ${{ github.workspace }}
+          unzip -o SLiM.zip
+          mkdir SLiM_build
+          cd SLiM_build
+          cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
+          make
+
+      - name: Install SLiM on non-Windows Part 2
+        if: runner.os != 'Windows'
+        run: |
+          cd ${{ github.workspace }}/SLiM_build
+          sudo make install
+          cd ..
+          rm SLiM.zip
+
       - name: Check
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
@@ -87,7 +162,7 @@ jobs:
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       _R_CHECK_FORCE_SUGGESTS_: false
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_PAT: ${{ secrets.INSTALL_GITHUB_PAT }}
     steps:
       - uses: actions/checkout@v2
 
@@ -115,6 +190,52 @@ jobs:
           remotes::install_cran("covr")
         shell: Rscript {0}
 
+      - name: Download SLiM
+        run: |
+          cd ${{ github.workspace }}
+          wget http://benhaller.com/slim/SLiM.zip
+
+      - name: Cache SLiM
+        id: cache-slim
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ github.workspace }}/SLiM_build
+            ${{ github.workspace }}/SLiM
+          key: ${{ runner.os }}test-coverage-build_SLiM-${{ hashFiles('SLiM.zip') }}
+
+      - name: Install SLiM Part 1
+        if: steps.cache-slim.outputs.cache-hit != 'true'
+        run: |
+          cd ${{ github.workspace }}
+          unzip -o SLiM.zip
+          mkdir SLiM_build
+          cd SLiM_build
+          cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
+          make
+
+      - name: Install SLiM Part 2
+        run: |
+          cd ${{ github.workspace }}/SLiM_build
+          sudo make install
+          cd ..
+          rm SLiM.zip
+
       - name: Test coverage
-        run: covr::codecov()
+        run: |
+          codecovr_try <- try(covr::codecov(quiet = FALSE, clean = FALSE))
+          if(inherits(codecovr_try, "try-error"))
+          {
+          dir.create("coverage_results")
+          file.copy(list.files(tempdir(), full.names = TRUE), "coverage_results", recursive = TRUE)
+          print(codecovr_try)
+          quit(status = 1L)
+          }
         shell: Rscript {0}
+
+      - name: Upload coverage results
+        if: failure()
+        uses: actions/upload-artifact@master
+        with:
+          name: coverage-results
+          path: coverage_results

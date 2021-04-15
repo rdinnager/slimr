@@ -2,7 +2,7 @@
 assert_package <- function (pkg, version = NULL, install = "install.packages") {
 
   if (!requireNamespace(pkg, quietly = TRUE)) {
-    stop("This function requires the ", pkg, " package, which is not installed. Install with ",
+    rlang::abort("This function requires the ", pkg, " package, which is not installed. Install with ",
          install, "(\"", pkg, "\").", call. = FALSE)
   }
   if (!is.null(version)) {
@@ -10,7 +10,7 @@ assert_package <- function (pkg, version = NULL, install = "install.packages") {
     installed_version <- as.character(utils::packageVersion(pkg))
     is_too_old <- utils::compareVersion(installed_version, version) < 0
     if (is_too_old) {
-      stop("This function package requires the ", pkg, " package to be version ",
+      rlang::abort("This function package requires the ", pkg, " package to be version ",
            version, " or higher. ", "Found version ",
            version, " installed.", "Update it with ",
            install, "(\"", pkg, "\").",
@@ -44,7 +44,7 @@ get_os <- function(){
   os <- tolower(os)
 
   if(!os %in% c("windows", "linux", "osx")) {
-    stop("Couldn't detect OS.")
+    rlang::abort("Couldn't detect OS.")
   }
 
   os
@@ -57,16 +57,15 @@ get_os <- function(){
 #' @return The full path to the executable as a character, or "" if not found.
 #' @noRd
 slimr_which <- function(slim_path, os = c("linux", "osx", "windows")) {
+
   if(missing(os)) {
     os <- get_os()
   }
   if(os == "windows") {
-    # exe <- processx::run("bash", c("-c", glue::glue('"which -a {slim_path}"')),
-    #                      windows_verbatim_args = TRUE, error_on_status = FALSE)
 
-    exe <- system(glue::glue('bash -c "which -a {slim_path}"'),
-                  intern = TRUE,
-                  show.output.on.console = FALSE)
+    suppressWarnings(exe <- system(glue::glue('bash -c "which -a {slim_path}"'),
+                                   intern = TRUE,
+                                   show.output.on.console = FALSE))
     if(is.null(attr(exe, "status"))) {
       here_it_is <- stringr::str_remove_all(exe, "\n")
     } else {
@@ -108,7 +107,7 @@ convert_to_wsl_path <- function(windows_path) {
   stringr::str_replace(windows_path, drive_letter[ , 1], paste0("/mnt/", tolower(drive_letter[ , 2])))
 }
 
-#' Make sure a filename is compatable with using in a SLiM script.
+#' Make sure a file name is compatible with using in a SLiM script.
 #'
 #' This generally only need to be used if you are using Windows, where
 #' this function will convert the file name into a path that can be accessed
@@ -154,9 +153,16 @@ fix_integers <- function(code) {
 
   purrr::map(code,
              ~stringr::str_replace_all(.x,
-             "([:digit:]+)L",
+             "([:digit:]+)L[^\\.[:alnum:]]",
              "\\1"))
 
+}
+
+expr_deparse_fast <- function(expr) {
+  ini <- rlang::expr_text(expr, width = 500L) %>%
+    stringr::str_replace_all("[^[:alnum:]](if[:blank:]*\\((.*?)\\)[:blank:]*)\n[:blank:]*",
+                             " \\1")
+  stringr::str_split(ini, "\n")[[1]]
 }
 
 

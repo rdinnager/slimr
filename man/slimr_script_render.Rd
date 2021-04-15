@@ -25,7 +25,8 @@ and return it as a \code{slimr_script_coll} object.}
 \item{replace_NAs}{Should \code{NA} values in the template be replaced by their default values?}
 
 \item{reps}{Should the rendered script be replicated? If greater than 1, a \code{slimr_script_coll}
-will be returned.}
+will be returned. This can also be used with a \code{slimr_script} object that has already been
+rendered, in which case it will just repeat the rendered script in the result.}
 }
 \value{
 

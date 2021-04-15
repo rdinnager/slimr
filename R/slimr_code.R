@@ -1,13 +1,14 @@
 
 SLiMify <- function(code, for_script = FALSE) {
   code <- slimr_code_add_semicolons(code) %>%
-    slimr_code_replace_dots() %>%
+    slimr_code_replace_dots(for_script = for_script) %>%
     slimr_code_remove_special_classes()
 
   if(for_script) {
     code <- slimr_code_replace_ternary(code) %>%
       slimr_code_replace_modulus() %>%
-      slimr_code_replace_returns()
+      slimr_code_replace_returns() %>%
+      slimr_code_remove_slimr_special()
   }
 
   code
@@ -25,24 +26,48 @@ SLiMify_all <- function(code, for_script = FALSE) {
 slimr_code_add_semicolons <- function(code_one) {
   brace_lines <- stringr::str_detect(code_one,
                                      "(\\{|\\}|\\+|\\,|\\-|\\*|\\/)[:blank:]*$")
-  code_one[!brace_lines] <- paste0(code_one[!brace_lines], ";")
+  do_lines <- stringr::str_detect(code_one,
+                                  "do$")
+  # if_lines <- stringr::str_detect(code_one,
+  #                                 "if[:blank:]*\\((.*?)\\)[:blank:]*$")
+  #
+  # get_semi <- which(!brace_lines & !if_lines)
+  get_semi <- which(!brace_lines & !do_lines)
+  code_one[get_semi] <- paste0(code_one[get_semi], ";")
   code_one
 }
 
 
-slimr_code_replace_dots <- function(code_one) {
-  code <- stringr::str_replace_all(code_one,
-                                   glue::glue(" \\%\\.\\% {.resources$classes_regex}\\$"),
-                                   ".")
+slimr_code_replace_dots <- function(code_one, for_script = FALSE) {
 
-  stringr::str_replace_all(code,
-                           " \\%\\.\\% ",
-                           ".")
+  if(for_script) {
+    code <- stringr::str_replace_all(code_one,
+                                     glue::glue(" \\%\\.\\% {.resources$classes_regex}\\$"),
+                                     ".")
+    code <- stringr::str_replace_all(code,
+                             " \\%\\.\\% ",
+                             ".")
+  } else {
+    code <- stringr::str_replace_all(code_one,
+                                     glue::glue("[^\\]\\)] \\%\\.\\% {.resources$classes_regex}\\$"),
+                                     ".")
+    code <- stringr::str_replace_all(code,
+                             "[^\\]\\)] \\%\\.\\% ",
+                             ".")
+  }
+
+  code
+
 }
 
 slimr_code_remove_special_classes <- function(code_one) {
   stringr::str_remove_all(code_one,
                            "(\\.Init|Initialize|\\.SS|SLiMBuiltin)\\$")
+}
+
+slimr_code_remove_slimr_special <- function(code_one) {
+  stringr::str_remove_all(code_one,
+                          "slimr_special__")
 }
 
 slimr_code_replace_ternary <- function(code_one) {
@@ -120,8 +145,12 @@ slimr_code_from_text_returns <- function(code) {
 
 slimr_code_from_text_dots <- function(code) {
   ## replace . with %.% (shim operator)
+  # stringr::str_replace_all(code,
+  #                          "([^[:digit:]%])\\.([^[:digit:]%])",
+  #                          "\\1%.%\\2")
+
   stringr::str_replace_all(code,
-                           "([^[:digit:]%])\\.([^[:digit:]%])",
+                           "([\\]\\)])\\.([:alnum:])",
                            "\\1%.%\\2")
 }
 
@@ -134,7 +163,8 @@ slimr_code_from_text_whiles <- function(code) {
 
 slimr_code_from_text_style <- function(code) {
   rlang::parse_exprs(code) %>%
-    purrr::map_chr(~rlang::expr_deparse(.x))
+    purrr::map_chr(~expr_deparse_fast(.x) %>%
+                     paste(collapse = "\n"))
 }
 
 slimr_code_from_text_style_all <- function(code) {
@@ -142,9 +172,10 @@ slimr_code_from_text_style_all <- function(code) {
              ~slimr_code_from_text_style(.x))
 }
 
+
 #' Rify some SLiM code
 #'
-#' Utility code to convert SliM code into a form that can be parsed by R
+#' Utility code to convert SLiM code into a form that can be parsed by R
 #' (e.g. in \code{styler} or \code{prettycode}). Don't forget to re-SLiMify
 #' afterwards (via \code{\link(slim_code_SLiMify))!
 #'
@@ -178,7 +209,7 @@ slimr_code_Rify_all <- function(code) {
 assert_valid_code <- function(code_txt) {
   code <- try(parse(text = code_txt))
   if(inherits(code, "try-error")) {
-    stop(paste("Not valid R code; something went wrong in translation.", "error:", code))
+    rlang::abort(paste("Not valid R code; something went wrong in translation.", "error:", code))
   }
   code_txt
 }

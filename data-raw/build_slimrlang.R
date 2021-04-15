@@ -1,6 +1,59 @@
 ## code to prepare `build_slimrlang` dataset goes here
 
+######### attempt to use pdftools #############
+library(pdftools)
 library(dplyr)
+library(stringr)
+library(unglue)
+library(purrr)
+
+man_txt <- pdf_text("slim_man/SLiM_Manual.pdf") %>%
+  paste(collapse = "\n") %>%
+  str_split("\n") %>%
+  .[[1]]
+
+toc <- pdf_toc("slim_man/SLiM_Manual.pdf")
+
+toc_txt <- unlist(toc)
+
+classes <- c("Chromosome",
+             "Genome",
+             "GenomicElement",
+             "GenomicElementType",
+             "Individual",
+             "InteractionType",
+             "Mutation",
+             "MutationType",
+             "SLiMEidosBlock",
+             "Subpopulation",
+             "Substitution")
+
+first_mention <- map_int(classes, ~str_which(toc_txt, regex(paste0("Class ", .x, "$"),
+                                                       multiline = TRUE)))
+
+intro_sections <- cbind(toc_txt[first_mention], toc_txt[first_mention + 1])
+properties_sections <- cbind(toc_txt[first_mention + 1], toc_txt[first_mention + 2])
+method_sections <- cbind(toc_txt[first_mention + 2], toc_txt[first_mention + 3])
+
+intros <- map(array_branch(intro_sections, 1),
+            ~c(str_which(man_txt, fixed(.x[1]))[2],
+               str_which(man_txt, fixed(.x[2]))[2])) %>%
+  map_chr(~paste(man_txt[.x[1]:(.x[2] - 1)], collapse = "\n"))
+
+properties <- map(array_branch(properties_sections, 1),
+              ~c(str_which(man_txt, fixed(.x[1]))[2],
+                 str_which(man_txt, fixed(.x[2]))[2])) %>%
+  map_chr(~paste(man_txt[.x[1]:(.x[2] - 1)], collapse = "\n"))
+
+methods <- map(array_branch(method_sections, 1),
+              ~c(str_which(man_txt, fixed(.x[1]))[2],
+                 str_which(man_txt, fixed(.x[2]))[2])) %>%
+  map_chr(~paste(man_txt[.x[1]:(.x[2] - 1)], collapse = "\n"))
+
+init_mention <- str_which(toc_txt, "initialize")
+toc_txt[init_mention]
+
+
 
 slim_lang_txtfiles <- list.files("data-raw/build/slim_reference", full.names = TRUE)
 
@@ -130,6 +183,10 @@ builtin_methods_data <- extract_methods(builtin_txt, init = TRUE)
 slim_lang_methods_txt <- slim_lang_methods_txt[-which(names(slim_lang_methods_txt) == "SLiMBuiltin_methods.txt")]
 
 all_methods_data <- purrr::map(slim_lang_methods_txt,
+                               ~extract_methods(.x, init = FALSE))
+names(all_methods_data) <- stringr::str_remove(names(all_methods_data), "_methods.txt")
+
+all_methods_data2 <- purrr::map(methods,
                                ~extract_methods(.x, init = FALSE))
 names(all_methods_data) <- stringr::str_remove(names(all_methods_data), "_methods.txt")
 

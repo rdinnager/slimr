@@ -7,7 +7,8 @@
 slimr_block_progress(update_every = 1)
 }
 \arguments{
-\item{update_every}{}
+\item{update_every}{How often to update progress, expressed as the number
+of generations after which an update should be tracked.}
 }
 \value{
 

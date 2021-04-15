@@ -2,7 +2,7 @@
 % Please edit documentation in R/slim_code.R
 \name{slim_register_event_code}
 \alias{slim_register_event_code}
-\title{Title}
+\title{Register a (late) event with SLiM}
 \usage{
 slim_register_event_code(
   code_snippet,
@@ -12,11 +12,17 @@ slim_register_event_code(
 )
 }
 \arguments{
-\item{last_gen}{}
+\item{code_snippet}{Code for event to be registered. Should be a character vector of length one.}
+
+\item{start_gen}{Generation to start running the event.}
+
+\item{last_gen}{Generation to end running the event}
+
+\item{auto_bracket}{Should the code in \code{code_snippet} be bracketed?}
 }
 \value{
 
 }
 \description{
-Title
+Experimental function for running events using SLiM's internal event registration.
 }

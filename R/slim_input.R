@@ -1,4 +1,4 @@
-#' Create a file to initialise a population in SliM
+#' Create a file to initialise a population in SLiM
 #'
 #' Make a SLiM file in the style of \code{outputFull()} which can be read by SLiM. This is useful to
 #' start a simulation with a particular population state that you define in R
@@ -48,12 +48,12 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
 
   nas <- apply(snps, 2, function(x) !any(!is.finite(x)))
   if(any(!nas)) {
-    warning("snp matrix has missing values.. snp positions with missing values have been removed.")
+    rlang::warn("snp matrix has missing values.. snp positions with missing values have been removed.")
   }
   snps <- snps[ , nas]
 
   if(ncol(snps) == 0) {
-    stop("no snps left after removing positions with missing value")
+    rlang::abort("no snps left after removing positions with missing value")
   }
 
   first_line <- glue::glue("#OUT {sim_gen} A")
@@ -74,14 +74,14 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
   }
 
   pops <- dplyr::tibble(pop = ind_pops, sex = ind_sex) %>%
-    dplyr::group_by(pop) %>%
-    dplyr::summarise(size = n(),
-                     sim_sex = ifelse(sex[1] == "H", "H", "S"),
-                     sex_ratio = table(sex)[1] / size,
+    dplyr::group_by(.data$pop) %>%
+    dplyr::summarise("size" := dplyr::n(),
+                     "sim_sex" := ifelse(.data$sex[1] == "H", "H", "S"),
+                     "sex_ratio" := table(.data$sex)[1] / .data$size,
                      .groups = "drop")
   if(pops$sim_sex[1] == "H") {
     pops <- pops %>%
-      dplyr::select(-sex_ratio)
+      dplyr::select(-.data$sex_ratio)
   }
   tmp <-tempfile()
   readr::write_delim(pops, tmp, " ", col_names = FALSE)
@@ -111,7 +111,7 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
   if(is.null(mut_pop)) {
     mut_pop <- rep("p1", n_mut)
   } else {
-    mut_pop <- mut_type[real_pop]
+    mut_pop <- mut_type[real_snps]
   }
   if(is.null(mut_gen)) {
     mut_gen <- rep(1, n_mut)
@@ -134,7 +134,7 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
                         mut_prev = mut_prev)
   if(!is.null(mut_nuc)) {
     muts <- muts %>%
-      dplyr::mutate(mut_nuc = mut_nuc[real_snps])
+      dplyr::mutate("mut_nuc" := .data$mut_nuc[real_snps])
   }
 
   readr::write_delim(muts, tmp, " ", col_names = FALSE)
@@ -147,29 +147,29 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
                       sep = ":") %>%
       matrix(nrow = n_inds, byrow = TRUE) %>%
       dplyr::as_tibble(.name_repair = "universal") %>%
-      dplyr::mutate(pop = rep(pops$pop, times = pops$size))
+      dplyr::mutate("pop" := rep(pops$pop, times = pops$size))
   )
 
   inds <- dplyr::tibble(pop = ind_pops,
                         sex = ind_sex) %>%
-    dplyr::group_by(pop) %>%
-    dplyr::mutate(ind_num = 0:(n() - 1L),
-                  ind = paste0("i", ind_num),
-                  gen_1 = (ind_num) * 2,
-                  gen_2 = (ind_num) * 2 + 1L) %>%
+    dplyr::group_by(.data$pop) %>%
+    dplyr::mutate("ind_num" := 0:(dplyr::n() - 1L),
+                  "ind" := paste0("i", .data$ind_num),
+                  "gen_1" := (.data$ind_num) * 2,
+                  "gen_2" = (.data$ind_num) * 2 + 1L) %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(pop_ind = paste(pop, ind, sep = ":"),
-                  genome_1 = paste(pop, gen_1, sep = ":"),
-                  genome_2 = paste(pop, gen_2, sep = ":")) %>%
-    dplyr::select(pop_ind, sex, genome_1, genome_2)
+    dplyr::mutate("pop_ind" := paste(.data$pop, .data$ind, sep = ":"),
+                  "genome_1" := paste(.data$pop, .data$gen_1, sep = ":"),
+                  "genome_2" := paste(.data$pop, .data$gen_2, sep = ":")) %>%
+    dplyr::select(.data$pop_ind, .data$sex, .data$genome_1, .data$genome_2)
   if(!is.null(ind_coord)) {
     inds <- inds %>%
-      dplyr::mutate(coords = ind_coords)
+      dplyr::mutate("coords" := ind_coord)
   }
 
   if(!is.null(ind_age)) {
     inds <- inds %>%
-      dplyr::mutate(age = ind_age)
+      dplyr::mutate("age" := ind_age)
   }
 
   readr::write_delim(inds, tmp, " ", col_names = FALSE)
@@ -182,7 +182,7 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
                            ~which(.x == 2) - 1L)
 
   make_gen <- function(ind, gen_type, one, two) {
-    one_muts <- sample(one, rbinom(1, length(one), 0.5))
+    one_muts <- sample(one, stats::rbinom(1, length(one), 0.5))
     two_muts <- setdiff(one, one_muts)
     one_muts <- c(one_muts, two)
     two_muts <- c(two_muts, two)
@@ -195,7 +195,7 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
     gen_type <- matrix(rep("A", n_gen), nrow = n_inds, byrow = TRUE)
   }
   gens_txt <- purrr::pmap_chr(list(purrr::array_branch(inds %>%
-                                                     dplyr::select(-pop_ind, -sex) %>%
+                                                     dplyr::select(-.data$pop_ind, -.data$sex) %>%
                                                      as.matrix(), 1),
                                purrr::array_branch(gen_type, 1),
                                one_genome,

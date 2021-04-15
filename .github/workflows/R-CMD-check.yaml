@@ -94,11 +94,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            /usr/local/bin/slim
-            /usr/local/bin/eidos
+            ${{ github.workspace }}\SLiM_build
           key: ${{ runner.os }}-build-SLiM-${{ hashFiles('SLiM.zip') }}
 
-      - name: Install SLiM on Windows
+      - name: Install SLiM on Windows Part 1
         if: runner.os == 'Windows' && steps.cache-slim.outputs.cache-hit != 'true'
         shell: wsl-bash {0}
         run: |
@@ -112,13 +111,19 @@ jobs:
           cd SLiM_build
           cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
           make
+
+      - name: Install SLiM on Windows Part 2
+        if: runner.os == 'Windows'
+        shell: wsl-bash {0}
+        run: |
+          cd ${{ github.workspace }}\SLiM_build
           sudo make install
           cd ..
           rm -r SLiM_build
           rm -r SLiM
           rm SLiM.zip
 
-      - name: Install SLiM on non-Windows
+      - name: Install SLiM on non-Windows Part 1
         if: runner.os != 'Windows' && steps.cache-slim.outputs.cache-hit != 'true'
         run: |
           cd ${{ github.workspace }}
@@ -127,6 +132,11 @@ jobs:
           cd SLiM_build
           cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
           make
+
+      - name: Install SLiM on non-Windows Part 2
+        if: runner.os != 'Windows'
+        run: |
+          cd ${{ github.workspace }}\SLiM_build
           sudo make install
           cd ..
           rm -r SLiM_build

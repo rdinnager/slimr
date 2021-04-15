@@ -204,7 +204,7 @@ jobs:
           if(inherits(codecovr_try, "try-error"))
           {
           dir.create("coverage_results")
-          file.copy(list.files(tempdir(), full.names = TRUE), coverage_results, recursive = TRUE)
+          file.copy(list.files(tempdir(), full.names = TRUE), "coverage_results", recursive = TRUE)
           print(codecovr_try)
           quit(status = 1L)
           }

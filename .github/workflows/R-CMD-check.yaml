@@ -206,8 +206,8 @@ jobs:
           {
           dir.create("coverage_results")
           file.copy(list.files(tempdir(), full.names = TRUE), coverage_results, recursive = TRUE)
-          error(codecovr_try)
-          quit(status = 1)
+          print(codecovr_try)
+          quit(status = 1L)
           }
         shell: Rscript {0}
 

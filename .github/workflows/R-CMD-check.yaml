@@ -93,8 +93,7 @@ jobs:
         id: cache-slim
         uses: actions/cache@v2
         with:
-          path: |
-            SLiM_build
+          path: ${{ github.workspace }}/SLiM_build
           key: ${{ runner.os }}-build-SLiM-${{ hashFiles('SLiM.zip') }}
 
       - name: Install SLiM on Windows Part 1
@@ -205,9 +204,13 @@ jobs:
 
       - name: Test coverage
         run: |
-          covr::codecov(quiet = FALSE, clean = FALSE)
+          codecovr_try <- try(covr::codecov(quiet = FALSE, clean = FALSE))
+          if(inherits(codecovr_try), "try_error")
+          {
           dir.create("coverage_results")
           file.copy(list.files(tempdir(), full.names = TRUE), coverage_results, recursive = TRUE)
+          stop(codecovr_try)
+          }
         shell: Rscript {0}
 
       - name: Upload coverage results

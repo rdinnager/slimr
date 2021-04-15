@@ -27,7 +27,7 @@ test_that("slim_run works with output", {
         sim.addSubpop("p1", 100);
       }),
       slim_block(1, 100, {
-        slimr_output(p1.outputMSSample(sampleSize = 10), name = "VCF", do_every = 10);
+        slimr_output(p1.outputMSSample(sampleSize = 10), name = "MS", do_every = 10); #nocov
       }),
       slim_block(100, {
         sim.simulationFinished();
@@ -64,6 +64,7 @@ test_that("slim_run works on slimr_script_coll objects", {
 
   expect_length(run_3_times, 3L)
   expect_s3_class(run_3_times, "slimr_results_coll")
+  expect_identical(purrr::map_int(run_3_times, "status"), c(1L, 1L, 1L))
 
 })
 
@@ -94,5 +95,6 @@ test_that("slim_run works in parallel", {
 
   expect_length(run_3_times, 3L)
   expect_s3_class(run_3_times, "slimr_results_coll")
+  expect_identical(purrr::map_int(run_3_times, "status"), c(1L, 1L, 1L))
 
 })

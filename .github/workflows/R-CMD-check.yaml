@@ -117,7 +117,8 @@ jobs:
         if: runner.os == 'Windows'
         shell: wsl-bash {0}
         run: |
-          cd `wslpath -a '${{ github.workspace }}\SLiM_build'`
+          cd `wslpath -a '${{ github.workspace }}'`
+          cd SLiM_build
           sudo make install
           cd ..
           rm SLiM.zip

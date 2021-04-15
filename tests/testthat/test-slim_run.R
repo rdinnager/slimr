@@ -13,6 +13,8 @@ test_that("slim_run can run a SLiM script", {
 
 test_that("slim_run works with output", {
 
+  skip_on_covr()
+
   expect_snapshot({
     slim_script(
       slim_block(initialize(), {
@@ -27,7 +29,7 @@ test_that("slim_run works with output", {
         sim.addSubpop("p1", 100);
       }),
       slim_block(1, 100, {
-        slimr_output(p1.outputMSSample(sampleSize = 10), name = "MS", do_every = 10); #nocov
+        slimr_output(p1.outputMSSample(sampleSize = 10), name = "MS", do_every = 10);
       }),
       slim_block(100, {
         sim.simulationFinished();

@@ -11,7 +11,8 @@ initializeTreeSeq(
   simplificationRatio,
   simplificationInterval,
   checkCoalescence,
-  runCrosschecks
+  runCrosschecks,
+  retainCoalescentOnly
 )
 }
 \arguments{
@@ -31,6 +32,9 @@ singleton). The default value is \code{F}. See details for description.}
 
 \item{runCrosschecks}{An object of type logical. Must be of length 1 (a
 singleton). The default value is \code{F}. See details for description.}
+
+\item{retainCoalescentOnly}{An object of type logical. Must be of length 1 (a
+singleton). The default value is \code{T}. See details for description.}
 }
 \value{
 An object of type void.
@@ -46,6 +50,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=525}{SLiM manual: page 525}.
+
 Configure options for tree sequence recording. Calling this
 function turns on tree sequence recording, as a side effect, for later
 reconstruction of the simulation’s evolutionary dynamics; if you do not
@@ -98,8 +105,20 @@ and the tree-sequence recording data structures will be conducted. These two
 sets of data structures record much the same thing (mutations in genomes), but
 using completely different representations, so such cross-checks can be useful
 to confirm that the two data structures do indeed represent the same conceptual
-state. This slows down the model considerably, however, and would normally be
-turned on only for debugging purposes, so it is turned off by default.
+state. This slows down the model considerably, however, and would normally
+be turned on only for debugging purposes, so it is turned off by default.
+The retainCoalescentOnly parameter controls how, exactly, simplification of
+the tree-sequence data is performed in SLiM (both for auto-simplification
+and for calls to treeSeqSimplify()). More specifically, this parameter
+controls the behavior of simplification for individuals and genomes that have
+been "retained” by calling treeSeqRememberIndividuals() with the parameter
+permanent=F. The default of retainCoalescentOnly=T helps to keep the number
+of retained individuals relatively small, which is helpful if your simulation
+regularly flags many individuals for retaining. In this case, changing
+retainCoalescentOnly to F may dramatically increase memory usage and runtime,
+in a similar way to permanently remembering all the individuals. See the
+documentation of treeSeqRememberIndividuals() for further discussion (section
+24.13.2).
 }
 \section{Copyright}{
 

@@ -13,8 +13,7 @@ mmJukesCantor(alpha)
 details for description.}
 }
 \value{
-An object of type string or float or float or float or integer or float
-or integer.
+An object of type float.
 }
 \description{
 Documentation for SLiM function \code{mmJukesCantor}, which is a method of the
@@ -27,11 +26,13 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=591}{SLiM manual: page 591}.
+
 Returns a mutation matrix representing a Jukes–Cantor (1969) model with
 mutation rate alpha to each possible alternative nucleotide at a site: This 2×2
 matrix is suitable for use with initializeGenomicElementType(). Note that the
-actual mutation rate produced by this matrix is 3*alpha. 0 α α α α 0 α α α α 0 α
-α α α 0
+actual mutation rate produced by this matrix is 3*alpha.
 }
 \section{Copyright}{
 

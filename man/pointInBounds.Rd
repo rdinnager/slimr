@@ -25,6 +25,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=584}{SLiM manual: page 584}.
+
 Returns T if point is inside the spatial boundaries of the
 subpopulation, F otherwise. For example, for a simulation with "xy"
 dimensionality, if point contains exactly two values constituting an (x,y)

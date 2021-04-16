@@ -29,6 +29,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=550}{SLiM manual: page 550}.
+
 Returns up to count individuals drawn from the subpopulation of
 individual. The probability of drawing particular individuals is proportional
 to the strength of interaction they exert upon individual. This method may be

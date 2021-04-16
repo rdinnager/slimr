@@ -43,6 +43,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=573}{SLiM manual: page 573}.
+
 Register a block of Eidos source code, represented as the string
 singleton source, as an Eidos reproduction() callback in the current simulation,
 with optional subpopulation subpop (which may be an integer identifier, or
@@ -54,9 +57,9 @@ will be given identifier id (specified as an integer, or as a string symbolic
 name such as "s5"); this may be NULL if there is no need to be able to refer
 to the block later. The registered callback is added to the end of the list of
 registered SLiMEidosBlock objects, and is active immediately; it may be eligible
-to execute in the current generation (see section 24.9 for details). The new
+to execute in the current generation (see section 25.9 for details). The new
 SLiMEidosBlock will be defined as a global variable immediately by this method
-(see section 23.10), and will also be returned by this method.
+(see section 24.11), and will also be returned by this method.
 }
 \section{Copyright}{
 

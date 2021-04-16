@@ -41,6 +41,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=539}{SLiM manual: page 539}.
+
 Returns the sum of the selection coefficients of all mutations that
 are of the type specified by mutType, out of all of the mutations in the genome.
 This is often useful in models that use a particular mutation type to represent
@@ -49,6 +52,9 @@ the sum of the additive effects of the QTLs for the given mutation type. This
 method is provided for speed; it is much faster than the corresponding Eidos
 code. Note that this method also exists on Individual, for cases in which the
 sum across both genomes of an individual is desired.
+
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=546}{SLiM manual: page 546}.
 
 Returns the sum of the selection coefficients of all mutations that
 are of the type specified by mutType, out of all of the mutations in the

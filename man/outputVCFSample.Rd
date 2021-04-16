@@ -56,8 +56,11 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=584}{SLiM manual: page 584}.
+
 Output a random sample from the subpopulation in VCF format (see
-sections 25.2.3 and 25.2.4 for output format details). A sample of individuals
+sections 26.2.3 and 26.2.4 for output format details). A sample of individuals
 (not genomes, note – unlike the outputSample() and outputMSSample() methods) of
 size sampleSize from the subpopulation will be output. The sample may be done
 either with or without replacement, as specified by replace; the default is to
@@ -72,7 +75,7 @@ NULL (the default), output will be sent to Eidos’s output stream (see section
 filePath, overwriting that file if append if F, or appending to the end of
 it if append is T. The parameters outputMultiallelics, simplifyNucleotides,
 and outputNonnucleotides affect the format of the output produced; see
-sections 25.2.3 and 25.2.4 for further discussion. See outputMSSample() and
+sections 26.2.3 and 26.2.4 for further discussion. See outputMSSample() and
 outputSample() for other output formats. Output is generally done in a late()
 event, so that the output reflects the state of the simulation at the end of a
 generation.

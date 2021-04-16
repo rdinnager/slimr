@@ -26,6 +26,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=587}{SLiM manual: page 587}.
+
 Set the size of this subpopulation to size individuals. This
 will take effect when children are next generated; it does not change the
 current subpopulation state. Setting a subpopulation to a size of 0 does

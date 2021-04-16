@@ -12,6 +12,8 @@ geneConversionEnabled => (logical$)
 When gene conversion has been enabled by calling initializeGeneConversion(), switching to the
 DSB recombination model, this property is T; otherwise, when using the crossover breakpoints model,
 it is F.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 526
 geneConversionGCBias => (float$)
 The gene conversion bias coefficient, which expresses a bias in the resolution of heteroduplex
 mismatches in complex gene conversion tracts. When gene conversion has not been enabled by
@@ -22,8 +24,6 @@ not been enabled by calling initializeGeneConversion(), this property will be un
 geneConversionMeanLength => (float$)
 The mean length of a gene conversion tract (in base positions). When gene conversion has not been
 enabled by calling initializeGeneConversion(), this property will be unavailable.
-TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 473
 geneConversionSimpleConversionFraction => (float$)
 The fraction of gene conversion tracts that are “simple” (i.e., not involving resolution of heteroduplex
 mismatches); the remainder will be “complex”. When gene conversion has not been enabled by
@@ -52,7 +52,11 @@ hotspotMultipliersM => (float)
 The hotspot multiplier for each of the hotspot map regions specified by hotspotEndPositionsM,
 when using sex-specific hotspot maps; unavailable otherwise.
 lastPosition => (integer$)
-The last valid position in the chromosome; its length, essentially.
+The last valid position in the chromosome; its length, essentially. Note that the chromosome length is
+determined by the maximum of the end of the last genomic element, the end of the last recombination
+region, and the end of the last mutation map region (or hotspot map region).
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 527
 mutationEndPositions => (integer)
 The end positions for mutation rate regions along the chromosome. Each mutation rate region is
 assumed to start at the position following the end of the previous mutation rate region; in other words,
@@ -67,8 +71,6 @@ mutationEndPositionsM => (integer)
 The end positions for mutation rate regions for males, when using sex-specific mutation rate maps;
 unavailable otherwise. See mutationEndPositions for further explanation.
 This property is unavailable in nucleotide-based models.
-TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 474
 mutationRates => (float)
 The mutation rate for each of the mutation rate regions specified by mutationEndPositions. When
 using sex-specific mutation rate maps, this property will be unavailable; see mutationRatesF and
@@ -98,6 +100,8 @@ overallMutationRateM => (float$)
 The overall mutation rate for males, when using sex-specific mutation rate maps; unavailable
 otherwise. See overallMutationRate for further explanation.
 This property is unavailable in nucleotide-based models.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 528
 overallRecombinationRate => (float$)
 The overall recombination rate across the whole chromosome determining the overall number of
 recombination events that will occur anywhere in the chromosome, as calculated from the individual
@@ -112,8 +116,6 @@ otherwise. See overallRecombinationRate for further explanation.
 recombinationEndPositions => (integer)
 The end positions for recombination regions along the chromosome. Each recombination region is
 assumed to start at the position following the end of the previous recombination region; in other
-TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 475
 words, the regions are assumed to be contiguous. When using sex-specific recombination maps, this
 property will unavailable; see recombinationEndPositionsF and recombinationEndPositionsM.
 recombinationEndPositionsF => (integer)

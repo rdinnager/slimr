@@ -25,6 +25,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=575}{SLiM manual: page 575}.
+
 Returns the coalescence state for the recorded tree sequence at
 the last simplification. The returned value is a logical singleton flag,
 T to indicate that full coalescence was observed at the last treesequence

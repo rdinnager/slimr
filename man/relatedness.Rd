@@ -26,17 +26,20 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=545}{SLiM manual: page 545}.
+
 Returns a vector containing the degrees of relatedness between the
 receiver and each of the individuals in individuals. The relatedness between A
 and B is always 1.0 if A and B are actually the same individual; this facility
 works even if SLiM’s optional pedigree tracking is turned off (in which case
-all other relatedness values will be 0.0). Otherwise, if pedigree tracking is
+all other relatedness values will be 0.0. Otherwise, if pedigree tracking is
 turned on with initializeSLiMOptions(keepPedigrees=T), this method will use
-the pedigree information described in section 23.6.1 to construct a relatedness
+the pedigree information described in section 24.6.1 to construct a relatedness
 estimate. More specifically, if information about the grandparental generation
 is available, then each grandparent shared by A and B contributes 0.125 towards
 the total relatedness, for a maximum value of 0.5 with four shared grandparents.
-If grandparental information in unavailable, then if parental information is
+If grandparental information is unavailable, then if parental information is
 available it is used, with each parent shared by A and B contributing 0.25,
 again for a maximum of 0.5. If even parental information is unavailable, then
 the relatedness is assumed to be 0.0. Again, however, if A and B are the same

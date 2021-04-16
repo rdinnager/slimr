@@ -29,6 +29,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=549}{SLiM manual: page 549}.
+
 Returns a vector containing distances between individuals in
 individuals1 and individuals2. At least one of individuals1 or individuals2
 must be singleton, so that the distances evaluated are either from one

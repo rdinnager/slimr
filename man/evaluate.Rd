@@ -29,6 +29,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=550}{SLiM manual: page 550}.
+
 Triggers evaluation of the interaction for the subpopulations specified
 by subpops (or for all subpopulations, if subpops is NULL). By default, the
 effects of this may be limited, however, since the underlying implementation may
@@ -58,12 +61,12 @@ any relevant changes have been made to the population. SLiM will invalidate any
 existing interactions after any portion of the generation cycle in which new
 individuals have been born or existing individuals have died. In a WF model,
 these events occur just before late() events execute (see the WF generation
-cycle diagram in chapter 21), so late() events are often the appropriate place
+cycle diagram in chapter 22), so late() events are often the appropriate place
 to put evaluate() calls, but early() events can work too if the interaction is
 not needed until that point in the generation cycle anyway. In nonWF models,
 on the other hand, new offspring are produced just before early() events
 and then individuals die just before late() events (see the nonWF generation
-cycle diagram in chapter 22), so interactions will be invalidated twice during
+cycle diagram in chapter 23), so interactions will be invalidated twice during
 each generation cycle. This means that in a nonWF model, an interaction that
 influences reproduction should usually be evaluated in a late() event, while an
 interaction that influences fitness or mortality should usually be evaluated in

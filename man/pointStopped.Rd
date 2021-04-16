@@ -25,6 +25,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=585}{SLiM manual: page 585}.
+
 Returns a revised version of point that has been brought inside the
 spatial boundaries of the subpopulation by clamping. In brief, if a coordinate
 of point lies beyond a spatial boundary, that coordinate is set to exactly the

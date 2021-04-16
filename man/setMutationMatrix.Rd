@@ -12,7 +12,7 @@ setMutationMatrix(mutationMatrix)
 \item{mutationMatrix}{An object of type float. See details for description.}
 }
 \value{
-An object of type any but object or void or void or void.
+An object of type void or void.
 }
 \description{
 Documentation for SLiM function \code{setMutationMatrix}, which is a method of
@@ -25,6 +25,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=541}{SLiM manual: page 541}.
+
 Sets a new nucleotide mutation matrix for the genomic
 element type. This replaces the mutation matrix originally set by
 initializeGenomicElementType(). This method may only be called in nucleotide-

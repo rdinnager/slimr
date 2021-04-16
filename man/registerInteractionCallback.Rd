@@ -43,6 +43,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=572}{SLiM manual: page 572}.
+
 Register a block of Eidos source code, represented as the string
 singleton source, as an Eidos interaction() callback in the current simulation,
 with a required interaction type intType (which may be an integer identifier),
@@ -55,7 +58,7 @@ later. The registered callback is added to the end of the list of registered
 SLiMEidosBlock objects, and is active immediately; it will be eligible to
 execute the next time an InteractionType is evaluated. The new SLiMEidosBlock
 will be defined as a global variable immediately by this method (see section
-23.10), and will also be returned by this method.
+24.11), and will also be returned by this method.
 }
 \section{Copyright}{
 

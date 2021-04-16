@@ -10,8 +10,6 @@ still exists, but is not used by SLiM. Colors may be specified by name, or with 
 values of the form "#RRGGBB" (see the Eidos manual). If colorSubstitution is the empty string, "",
 SLiMgui’s default (selection-coefficient–based) color scheme is used; this is the default for new
 MutationType objects.
-TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 502
 convertToSubstitution <–> (logical$)
 This property governs whether mutations of this mutation type will be converted to Substitution
 objects when they reach fixation.
@@ -22,10 +20,12 @@ epistatic relationship between mutations; a mutation epistatically influencing t
 mutations through a fitness() callback would need to continue having that influence even after
 reaching fixation, but if the simulation were to replace the fixed mutation with a Substitution
 object the mutation would no longer be considered in fitness calculations (unless the callback
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 559
 explicitly consulted the list of Substitution objects kept by the simulation). Other script-defined
 behaviors in fitness(), interaction(), mateChoice(), modifyChild(), and recombination()
 callbacks might also necessitate the disabling of substitution for a given mutation type; this is an
-important consideration to keep in mind. See section 21.3 for further discussion of
+important consideration to keep in mind. See section 22.3 for further discussion of
 convertToSubstitution in WF models.
 In contrast, for nonWF models this property is F by default, because even mutations with no epistatis
 or other indirect fitness effects will continue to influence the survival probabilities of individuals. For
@@ -33,7 +33,7 @@ nonWF models, only neutral mutation types with no epistasis or other side effect
 converted to substitutions upon fixation. When such a pure-neutral mutation type is defined in a
 nonWF model, this property should be set to T to tell SLiM that substitution is allowed; this may have
 very large positive effects on performance, so it is important to remember when modeling background
-neutral mutations. See section 22.5 for further discussion of convertToSubstitution in nonWF
+neutral mutations. See section 23.5 for further discussion of convertToSubstitution in nonWF
 models.
 SLiM consults this flag at the end of each generation when deciding whether to substitute each fixed
 mutation. If this flag is T, all eligible fixed mutations will be converted at the end of the current
@@ -44,7 +44,7 @@ distributionParams => (float)
 The parameters that configure the chosen distribution of fitness effects. This will be of type string for
 DFE type "s", and type float for all other DFE types.
 distributionType => (string$)
-The type of distribution of fitness effects; one of "f", "g", "e", "n", "w", or "s" (see section 23.9,
+The type of distribution of fitness effects; one of "f", "g", "e", "n", "w", or "s" (see section 24.10,
 above).
 dominanceCoeff <–> (float$)
 The dominance coefficient used for mutations of this type when heterozygous. Changing this will
@@ -61,8 +61,6 @@ muttype’s dominance coefficient to some number x, muttype.dominanceCoeff==x ma
 floating-point rounding error. Comparisons of floating-point numbers for exact equality is often a bad
 idea, but this is one case where it may fail unexpectedly. Instead, it is recommended to use the id or
 tag properties to identify particular mutation types.
-TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 503
 id => (integer$)
 The identifier for this mutation type; for mutation type m3, for example, this is 3.
 mutationStackGroup <–> (integer$)
@@ -72,6 +70,8 @@ In nucleotide-based models, the stacking group for nucleotide-based mutation typ
 cannot be changed. Non-nucleotide-based mutation types may also be set to share the -1 stacking
 group, if they should participate in the same stacking policy as nucleotide-based mutations, but that
 would be quite unusual.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 560
 mutationStackPolicy <–> (string$)
 This property and the mutationStackGroup property together govern whether mutations of this
 mutation type’s stacking group can “stack” – can occupy the same position in a single individual. A
@@ -110,5 +110,5 @@ tag <–> (integer$)
 A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read
 it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value
 prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.
-See also the getValue() and setValue() methods, for another way of attaching state to mutation
-types.
+See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos
+manual), for another way of attaching state to mutation types.

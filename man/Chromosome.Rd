@@ -15,6 +15,11 @@ Chromosome
 Documentation for Chromosome class from SLiM
 }
 \details{
+This class represents the layout and properties of the chromosome being
+simulated. The
+chromosome currently being simulated is available through the sim.chromosome
+global. Section
+1.5.4 presents an overview of the conceptual role of this class.
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{ancestralNucleotides}}}
@@ -103,8 +108,11 @@ hotspotEndPositionsM, when using sex-specific hotspot maps; unavailable
 otherwise. }
 \item{lastPosition}{A property of type integer. It is of length one
 (a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The last valid position in the chromosome; its
-length, essentially. }
+\strong{Property Description:} The last valid position in the chromosome;
+its length, essentially. Note that the chromosome length is determined by
+the maximum of the end of the last genomic element, the end of the last
+recombination region, and the end of the last mutation map region (or hotspot
+map region). }
 \item{mutationEndPositions}{A property of type integer. This property is a
 constant, so it is not modifiable. \strong{Property Description:} The end
 positions for mutation rate regions along the chromosome. Each mutation rate

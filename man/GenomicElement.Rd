@@ -15,6 +15,11 @@ GenomicElement
 Documentation for GenomicElement class from SLiM
 }
 \details{
+This class represents a genomic element of a particular genomic element
+type, with a start and
+end; the chromosome is composed of a series of such genomic elements. Section
+1.5.4 presents
+an overview of the conceptual role of this class.
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{setGenomicElementType}}}

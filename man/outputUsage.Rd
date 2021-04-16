@@ -25,6 +25,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=569}{SLiM manual: page 569}.
+
 Output the current memory usage of the simulation to Eidos’s output
 stream. The specifics of what is printed, and in what format, should not be
 relied upon as they may change from version to version of SLiM. This method

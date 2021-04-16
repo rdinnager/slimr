@@ -31,6 +31,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=532}{SLiM manual: page 532}.
+
 Set the recombination rate per base position per generation along the
 chromosome. All rates must be in the interval [0.0, 0.5]. There are two ways
 to call this method. If the optional ends parameter is NULL (the default), then

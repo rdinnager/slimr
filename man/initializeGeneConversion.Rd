@@ -41,6 +41,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=517}{SLiM manual: page 517}.
+
 Calling this function switches the recombination model from a "simple
 crossover” model to a "double-stranded break (DSB)” model, and configures
 the details of the gene conversion tracts that will therefore be modeled (see

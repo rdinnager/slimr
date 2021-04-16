@@ -13,8 +13,7 @@ nucleotideFrequencies(sequence)
 description.}
 }
 \value{
-An object of type string or float or float or float or integer or float
-or integer.
+An object of type float.
 }
 \description{
 Documentation for SLiM function \code{nucleotideFrequencies}, which is a method
@@ -27,6 +26,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=591}{SLiM manual: page 591}.
+
 A convenience function that returns a float vector of length four,
 providing the frequencies of occurrences of A / C / G / T nucleotides,
 respectively, in the supplied nucleotide sequence. The parameter sequence may be

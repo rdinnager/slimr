@@ -36,12 +36,31 @@ The identifiers of the particular subpopulations from which immigrants will arri
 generation.
 individualCount => (integer$)
 The number of individuals in the subpopulation; one-half of the number of genomes.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 577
 individuals => (object<Individual>)
 All of the individuals contained by the subpopulation. Each individual is diploid and thus contains
 two Genome objects. See the sampleIndividuals() and subsetIndividuals() for fast ways to get
 a subset of the individuals in a subpopulation.
-TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 518
+lifetimeReproductiveOutput => (integer)
+If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
+lifetimeReproductiveOutput contains the value of the Individual property
+reproductiveOutput for all individuals in the subpopulation that died in the last selection/mortality
+generation cycle stage (or, for WF models, immediately after reproduction). This allows access to the
+lifetime reproductive output of individuals in the subpopulation at the end of their lives. If pedigree
+tracking is not on, this property is unavailable.
+lifetimeReproductiveOutputF => (integer)
+If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
+lifetimeReproductiveOutputF contains the value of the Individual property
+reproductiveOutput for all female individuals in the subpopulation that died in the last selection/
+mortality generation cycle stage (or, for WF models, immediately after reproduction). This property is
+undefined if separate sexes have not been enabled, or if pedigree tracking is not on.
+lifetimeReproductiveOutputM => (integer)
+If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
+lifetimeReproductiveOutputM contains the value of the Individual property
+reproductiveOutput for all male individuals in the subpopulation that died in the last selection/
+mortality generation cycle stage (or, for WF models, immediately after reproduction). This property is
+undefined if separate sexes have not been enabled, or if pedigree tracking is not on.
 selfingRate => (float$)
 The expected value of the fraction of children in the next generation that will be produced by selfing
 (as opposed to biparental mating). Selfing is only possible in non-sexual (i.e. hermaphroditic)
@@ -64,5 +83,5 @@ tag <–> (integer$)
 A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read
 it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value
 prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.
-See also the getValue() and setValue() methods, for another way of attaching state to
-subpopulations.
+See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos
+manual), for another way of attaching state to subpopulations.

@@ -6,11 +6,14 @@
 \alias{.SS$treeSeqRememberIndividuals}
 \title{SLiM method treeSeqRememberIndividuals}
 \usage{
-treeSeqRememberIndividuals(individuals)
+treeSeqRememberIndividuals(individuals, permanent)
 }
 \arguments{
 \item{individuals}{An object of type Individual object. See details for
 description.}
+
+\item{permanent}{An object of type logical. Must be of length 1 (a singleton).
+The default value is \code{T}. See details for description.}
 }
 \value{
 An object of type void.
@@ -26,34 +29,69 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Permanently adds the individuals specified by individuals to the sample
-retained across tree sequence table simplification. This method may only be
-called if tree sequence recording has been turned on with initializeTreeSeq().
-All currently living individuals are always retained across simplification;
-this method does not need to be called, and indeed should not be called, for
-that purpose. Instead, treeSeqRememberIndividuals() is for permanently adding
-particular individuals to the retained sample. Typically this would be used,
-for example, to retain particular individuals that you wanted to be able to
-trace ancestry back to in later analysis. However, this is not the typical usage
-pattern for tree sequence recording; most models will not need to call this
-method. The metadata (age, location, etc) that are stored in the resulting tree
-sequence are those values present at either (a) the final generation, if the
-individual is alive at the end of the simulation, or (b) the last time that the
-individual was remembered, if not. Calling treeSeqRememberIndividuals() on an
-individual that is already remembered will cause the archived information about
-the remembered individual to be updated to reflect the individual’s current
-state. A case where this is particularly important is for the spatial location
-of individuals in continuous-space models. SLiM automatically remembers the
-individuals that comprise the first generation of any new subpopulation created
-with addSubpop(), for easy recapitation and other analysis (see sections 17.2
-and 17.10). However, since these first-generation individuals are remembered
-at the moment they are created, their spatial locations have not yet been
-set up, and will contain garbage – and those garbage values will be archived
-in their remembered state. If you need correct spatial locations of first-
-generation individuals for your post-simulation analysis, you should call
-treeSeqRememberIndividuals() explicitly on the first generation, after setting
-spatial locations, to update the archived information with the correct spatial
-positions.
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=575}{SLiM manual: page 575}.
+
+Mark the individuals specified by individuals to be kept across
+tree sequence table simplification. This method may only be called if tree
+sequence recording has been turned on with initializeTreeSeq(). All currently
+living individuals are always kept across simplification; this method does
+not need to be called, and indeed should not be called, for that purpose.
+Instead, treeSeqRememberIndividuals() allows any individual, including dead
+individuals, to be kept in the final tree sequence. Typically this would be
+used, for example, to keep particular individuals that you wanted to be able
+to trace ancestry back to in later analysis. However, this is not the typical
+usage pattern for tree sequence recording; most models will not need to call
+this method. There are two ways to keep individuals across simplification.
+If permanent is T (the default), then the specified individuals will be
+permanently remembered: their genomes will be added to the current sample,
+and they will always be present in the tree sequence. Permanently remembering
+a large number of individuals will, of course, markedly increase memory usage
+and runtime. Supplying F for permanent will instead mark the individuals only
+for (temporary) retention: their genomes will not be added to the sample, and
+they will appear in the final tree sequence only if one of their genomes is
+retained across simplification. In other words, the rule of thumb for retained
+individuals is simple: if a genome is kept by simplification, the genome’s
+corresponding individual is kept also, if it is retained. Note that permanent
+remembering takes priority; calling this function with permanent=F on an
+individual that has previously been permanently remembered will not remove it
+from the sample. The behavior of simplification for individuals retained with
+permanent=F depends upon the value of the retainCoalescentOnly flag passed
+to initializeTreeSeq(); here we will discuss the behavior of that flag in
+detail. First of all, genomes are always removed by simplification unless they
+are (a) part of the final generation, (b) ancestral to the final generation,
+(c) a genome of a permanently remembered individual, or (d) ancestral to a
+permanently remembered individual. If retainCoalescentOnly is T (the default),
+they are also always removed if they are not a branch point (i.e., a coalescent
+node or most recent common ancestor) in the tree sequence. In some cases it
+may be useful to retain a genome and its associated individual when it is
+simply an intermediate node in the ancestry (i.e., in the middle of a branch).
+This can be enabled by setting retainCoalescentOnly to F in your call to
+initializeTreeSeq(). In this case, ancestral genomes that are intermediate
+("unary nodes”, in tskit parlance) and are within an individual that has been
+retained using the permanent=F flag here are kept, along with the retained
+individual itself. Since setting retainCoalescentOnly to F will prevent the
+unary nodes for retained individuals from being pruned, simplification may
+often be unable to prune very much at all from the tree sequence, and memory
+usage and runtime may increase rapidly. If you are retaining many individuals,
+this setting should therefore be used only with caution; it is not necessary if
+you are purely interested in the most recent common ancestors. See the pyslim
+documentation for further discussion of retaining and remembering individuals
+and the effects of the retainCoalescentOnly flag. The metadata (age, location,
+etc) that are stored in the resulting tree sequence are those values present
+at either (a) the final generation, if the individual is alive at the end of
+the simulation, or (b) the last time that the individual was remembered, if
+not. Calling treeSeqRememberIndividuals() on an individual that is already
+remembered will cause the archived information about the remembered individual
+to be updated to reflect the individual’s current state; care should be taken
+to remember individuals at a point in time when their state is valid. A case
+where this is particularly important is for the spatial location of individuals
+in continuous-space models. SLiM automatically retains the portions of the
+genomes that comprise the first generation of any new subpopulation created with
+addSubpop() that are inherited by extant individuals, for easy recapitation and
+other analysis (see sections 17.2 and 17.10). However, the individuals of the
+first generation are not remembered automatically, only their needed genomic
+information.
 }
 \section{Copyright}{
 

@@ -45,6 +45,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=519}{SLiM manual: page 519}.
+
 Add an interaction type at initialization time. The id must not
 already be used for any interaction type in the simulation. The id parameter
 may be either an integer giving the ID of the new interaction type, or a string
@@ -66,7 +69,7 @@ to reduce the amount of computation necessary by up to a factor of two. If
 reciprocal is F, the interaction is not guaranteed to be reciprocal and each
 interaction will be computed independently. The built-in interaction formulas
 are all reciprocal, but if you implement an interaction() callback (see section
-24.6), you must consider whether the callback you have implemented preserves
+25.6), you must consider whether the callback you have implemented preserves
 reciprocality or not. For this reason, the default is reciprocal=F, so that
 bugs are not inadvertently introduced by an invalid assumption of reciprocality.
 See below for a note regarding reciprocality in sexual simulations when using
@@ -109,7 +112,7 @@ guaranteed to be the same in both directions? By default, the interaction
 strength is 1.0 for all interactions within maxDistance. Often it is desirable
 to change the interaction function using setInteractionFunction(); modifying
 interaction strengths can also be achieved with interaction() callbacks if
-necessary (see section 24.6). In any case, interactions beyond maxDistance
+necessary (see section 25.6). In any case, interactions beyond maxDistance
 always have a strength of 0.0, and the interaction strength of an individual
 with itself is always 0.0, regardless of the interaction function or callbacks.
 The global symbol for the new interaction type is immediately available; the

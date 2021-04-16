@@ -6,7 +6,7 @@
 \alias{.G}
 \title{Genome}
 \format{
-An object of class \code{list} of length 22.
+An object of class \code{list} of length 24.
 }
 \usage{
 Genome
@@ -15,6 +15,12 @@ Genome
 Documentation for Genome class from SLiM
 }
 \details{
+This class represents one full genome of an individual (one of the two
+genomes contained by a
+diploid individual, that is, in the way that SLiM uses the term), composed of
+the mutations carried
+by that individual. Section 1.5.1 presents an overview of the conceptual role of
+this class.
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{addMutations}}}
@@ -23,6 +29,8 @@ This class has the following methods (functions):
 \item{\code{\link{containsMarkerMutation}}}
 \item{\code{\link{containsMutations}}}
 \item{\code{\link{countOfMutationsOfType}}}
+\item{\code{\link{mutationCountsInGenomes}}}
+\item{\code{\link{mutationFrequenciesInGenomes}}}
 \item{\code{\link{mutationsOfType}}}
 \item{\code{\link{nucleotides}}}
 \item{\code{\link{output}}}

@@ -32,9 +32,12 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=581}{SLiM manual: page 581}.
+
 This method customizes the display of the subpopulation in SLiMgui’s
 Population Visualization graph. When this method is called by a model running
-outside SLiMgui, it will do nothing except typechecking and bounds-checking
+outside SLiMgui, it will do nothing except type- checking and bounds-checking
 its arguments. When called by a model running in SLiMgui, the position,
 size, and color of the subpopulation’s displayed circle can be controlled as
 specified below. The center parameter sets the coordinates of the center of

@@ -1,0 +1,7 @@
+This class represents a block of Eidos code registered in a SLiM simulation. All Eidos events and
+Eidos callbacks defined in the SLiM input file of the current simulation are instantiated as
+SLiMEidosBlock objects and are available through the scriptBlocks property of SLiMSim; see
+section 24.13.1. In addition, new script blocks can be created programmatically and registered
+with the simulation, and registered script blocks can be deregistered; see the ‑register...() and
+‑deregisterScriptBlock() methods of SLiMSim in section 24.13.2. The currently executing script
+block is available through the self global; see section 25.9.

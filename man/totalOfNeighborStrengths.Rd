@@ -26,6 +26,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=553}{SLiM manual: page 553}.
+
 Returns a vector of the total interaction strength felt by each
 individual in individuals, which does not need to be a singleton; indeed, it
 can be a vector of all of the individuals in a given subpopulation. However,

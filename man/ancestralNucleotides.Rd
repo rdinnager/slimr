@@ -32,6 +32,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=529}{SLiM manual: page 529}.
+
 Returns the ancestral nucleotide sequence originally supplied
 to initializeAncestralNucleotides(), including any sequence changes due
 to nucleotide mutations that have fixed and substituted. This nucleotide
@@ -58,7 +61,7 @@ is 1, AAG is 2, AAT is 3, ACA is 4, and on upward to TTT which is 63. If the
 nucleotide sequence AACACATTT is requested in codon format, the codon vector 1
 4 63 will therefore be returned. These codon values can be useful in themselves;
 they can also be passed to codonsToAminoAcids() to translate them into the
-corresponding amino acid sequence if desired (see section 23.15.1).
+corresponding amino acid sequence if desired (see section 24.16.1).
 }
 \section{Copyright}{
 

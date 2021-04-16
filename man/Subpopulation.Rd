@@ -6,7 +6,7 @@
 \alias{.P}
 \title{Subpopulation}
 \format{
-An object of class \code{list} of length 43.
+An object of class \code{list} of length 44.
 }
 \usage{
 Subpopulation
@@ -15,6 +15,13 @@ Subpopulation
 Documentation for Subpopulation class from SLiM
 }
 \details{
+This class represents one subpopulation in the simulated population.
+Section 1.5.5 presents an
+overview of the conceptual role of this class. The subpopulations currently
+defined in the
+simulation are defined as global constants with the same names used in the SLiM
+input file – p1,
+p2, and so forth.
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{addCloned}}}
@@ -25,7 +32,6 @@ This class has the following methods (functions):
 \item{\code{\link{cachedFitness}}}
 \item{\code{\link{configureDisplay}}}
 \item{\code{\link{defineSpatialMap}}}
-\item{\code{\link{getValue}}}
 \item{\code{\link{outputMSSample}}}
 \item{\code{\link{outputSample}}}
 \item{\code{\link{outputVCFSample}}}
@@ -42,7 +48,6 @@ This class has the following methods (functions):
 \item{\code{\link{setSexRatio}}}
 \item{\code{\link{setSpatialBounds}}}
 \item{\code{\link{setSubpopulationSize}}}
-\item{\code{\link{setValue}}}
 \item{\code{\link{spatialMapColor}}}
 \item{\code{\link{spatialMapValue}}}
 \item{\code{\link{subsetIndividuals}}}
@@ -109,6 +114,31 @@ constant, so it is not modifiable. \strong{Property Description:} All of the
 individuals contained by the subpopulation. Each individual is diploid and thus
 contains two Genome objects. See the sampleIndividuals() and subsetIndividuals()
 for fast ways to get a subset of the individuals in a subpopulation. }
+\item{lifetimeReproductiveOutput}{A property of type integer. This property
+is a constant, so it is not modifiable. \strong{Property Description:} If
+pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
+lifetimeReproductiveOutput contains the value of the Individual property
+reproductiveOutput for all individuals in the subpopulation that died in the
+last selection/mortality generation cycle stage (or, for WF models, immediately
+after reproduction). This allows access to the lifetime reproductive output of
+individuals in the subpopulation at the end of their lives. If pedigree tracking
+is not on, this property is unavailable. }
+\item{lifetimeReproductiveOutputF}{A property of type integer. This property
+is a constant, so it is not modifiable. \strong{Property Description:} If
+pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
+lifetimeReproductiveOutputF contains the value of the Individual property
+reproductiveOutput for all female individuals in the subpopulation that died
+in the last selection/ mortality generation cycle stage (or, for WF models,
+immediately after reproduction). This property is undefined if separate sexes
+have not been enabled, or if pedigree tracking is not on. }
+\item{lifetimeReproductiveOutputM}{A property of type integer. This property
+is a constant, so it is not modifiable. \strong{Property Description:} If
+pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
+lifetimeReproductiveOutputM contains the value of the Individual property
+reproductiveOutput for all male individuals in the subpopulation that died
+in the last selection/ mortality generation cycle stage (or, for WF models,
+immediately after reproduction). This property is undefined if separate sexes
+have not been enabled, or if pedigree tracking is not on. }
 \item{selfingRate}{A property of type float. It is of length one (a singleton).
 This property is a constant, so it is not modifiable. \strong{Property
 Description:} The expected value of the fraction of children in the next
@@ -139,8 +169,9 @@ A user-defined integer value. The value of tag is initially undefined, and
 it is an error to try to read it; if you wish it to have a defined value, you
 must arrange that yourself by explicitly setting its value prior to using it
 elsewhere in your code. The value of tag is not used by SLiM; it is free for
-you to use. See also the getValue() and setValue() methods, for another way of
-attaching state to subpopulations.}
+you to use. See also the getValue() and setValue() methods (provided by the
+Dictionary class; see the Eidos manual), for another way of attaching state to
+subpopulations.}
 
 }
 }

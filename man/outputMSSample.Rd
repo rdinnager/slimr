@@ -48,8 +48,11 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=583}{SLiM manual: page 583}.
+
 Output a random sample from the subpopulation in MS format (see
-section 25.2.2 for output format details). Positions in the output will span
+section 26.2.2 for output format details). Positions in the output will span
 the interval [0,1]. A sample of genomes (not entire individuals, note) of
 size sampleSize from the subpopulation will be output. The sample may be done
 either with or without replacement, as specified by replace; the default is to

@@ -6,7 +6,7 @@
 \alias{.SB}
 \title{SLiMBuiltin}
 \format{
-An object of class \code{list} of length 7.
+An object of class \code{list} of length 12.
 }
 \usage{
 SLiMBuiltin
@@ -15,6 +15,11 @@ SLiMBuiltin
 Documentation for SLiMBuiltin class from SLiM
 }
 \details{
+SLiM provides a small number of built-in functions, documented here.
+Note that these are
+distinct from the functions built into the Eidos language itself, which are
+documented in the Eidos
+manual.
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{codonsToAminoAcids}}}
@@ -24,6 +29,11 @@ This class has the following methods (functions):
 \item{\code{\link{nucleotideCounts}}}
 \item{\code{\link{nucleotideFrequencies}}}
 \item{\code{\link{nucleotidesToCodons}}}
+\item{\code{\link{calcFST}}}
+\item{\code{\link{calcHeterozygosity}}}
+\item{\code{\link{calcPairHeterozygosity}}}
+\item{\code{\link{calcVA}}}
+\item{\code{\link{calcWattersonsTheta}}}
 }
 This class has the following properties:
 \describe{

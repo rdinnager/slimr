@@ -6,7 +6,7 @@
 \alias{.S}
 \title{Substitution}
 \format{
-An object of class \code{list} of length 12.
+An object of class \code{list} of length 10.
 }
 \usage{
 Substitution
@@ -15,10 +15,25 @@ Substitution
 Documentation for Substitution class from SLiM
 }
 \details{
+This class represents a mutation that has been fixed; Mutation objects
+are converted to
+Substitution objects upon fixation. Its properties are thus very similar to
+those of Mutation.
+Section 1.5.2 presents an overview of the conceptual role of this class.
+Since Substitution objects represent fixation events that occurred in the past,
+they are
+relatively immutable. However, since it may be useful to attach (possibly
+dynamic) state to
+substitutions, their tag and subpopID properties are mutable, and they also
+provide the same
+getValue() / setValue() functionality as Mutation (inherited from the Eidos
+class Dictionary).
+Values set on a Mutation object will carry over to the corresponding
+Substitution object
+automatically upon fixation.
 This class has the following methods (functions):
 \itemize{
-\item{\code{\link{getValue}}}
-\item{\code{\link{setValue}}}
+\item{None. This class has no methods.}
 }
 This class has the following properties:
 \describe{
@@ -59,7 +74,7 @@ from the distribution of fitness effects of its MutationType. }
 This property is a variable, so it is modifiable. \strong{Property Description:}
 The identifier of the subpopulation in which this mutation arose. This value
 is carried over from the Mutation object directly; if a "tag” value was used
-in the Mutation object (see section 23.8.1), that value will carry over to
+in the Mutation object (see section 24.9.1), that value will carry over to
 the corresponding Substitution object. The subpopID in Substitution is a read-
 write property to allow it to be used as a "tag” in the same way, if the origin
 subpopulation identifier is not needed. }

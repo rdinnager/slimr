@@ -25,14 +25,20 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=533}{SLiM manual: page 533}.
+
 Add the existing mutations in mutations to the genome, if they are
 not already present (if they are already present, they will be ignored), and
 if the addition is not prevented by the mutation stacking policy (see the
-mutationStackPolicy property of MutationType, section 23.9.1). Calling this
+mutationStackPolicy property of MutationType, section 24.10.1). Calling this
 will normally affect the fitness values calculated at the end of the current
 generation; if you want current fitness values to be affected, you can call
-SLiMSim’s method recalculateFitness() – but see the documentation of that method
-for caveats.
+SLiMSim’s method recalculateFitness() – but see the documentation of that
+method for caveats. Note that in nonWF models that use tree-sequence recording,
+mutations cannot be added to an individual after the generation in which the
+individual is created (i.e., when the age of the individual is greater than 0),
+to prevent the possibility of inconsistencies in the recorded tree sequence.
 }
 \section{Copyright}{
 

@@ -16,8 +16,7 @@ singleton). See details for description.}
 See details for description.}
 }
 \value{
-An object of type string or float or float or float or integer or float
-or integer.
+An object of type float.
 }
 \description{
 Documentation for SLiM function \code{mmKimura}, which is a method of the SLiM
@@ -30,6 +29,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=591}{SLiM manual: page 591}.
+
 Returns a mutation matrix representing a Kimura (1980) model with
 transition rate alpha and transversion rate beta: This 2×2 matrix is suitable
 for use with initializeGenomicElementType(). Note that the actual mutation rate

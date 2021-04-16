@@ -29,6 +29,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=552}{SLiM manual: page 552}.
+
 Returns a vector containing the interaction strengths exerted upon
 receiver by the individuals in exerters. If exerters is NULL (the default),
 then a vector of the interaction strengths exerted by all individuals in the

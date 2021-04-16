@@ -6,7 +6,7 @@
 \alias{.I}
 \title{Individual}
 \format{
-An object of class \code{list} of length 28.
+An object of class \code{list} of length 27.
 }
 \usage{
 Individual
@@ -15,14 +15,21 @@ Individual
 Documentation for Individual class from SLiM
 }
 \details{
+This class represents a single simulated individual. Individuals in
+SLiM are diploid, and thus
+contain two Genome objects. Most functionality in SLiM is contained in the
+Genome class; the
+Individual class is mostly a convenient way to treat the pairs of genomes
+associated with an
+individual as a single object, and to associate a tag value with individuals.
+Section 1.5.1 presents
+an overview of the conceptual role of this class.
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{containsMutations}}}
 \item{\code{\link{countOfMutationsOfType}}}
-\item{\code{\link{getValue}}}
 \item{\code{\link{relatedness}}}
 \item{\code{\link{setSpatialPosition}}}
-\item{\code{\link{setValue}}}
 \item{\code{\link{sumOfMutationsOfType}}}
 \item{\code{\link{uniqueMutationsOfType}}}
 }
@@ -109,6 +116,20 @@ pedigree tracking is not on, this property is unavailable. Grandparental values
 may be -1 if insufficient generations have elapsed for that information to be
 available (because the simulation just started, or because a subpopulation is
 new). }
+\item{reproductiveOutput}{A property of type integer. It is of length
+one (a singleton). This property is a constant, so it is not modifiable.
+\strong{Property Description:} If pedigree tracking is turned on with
+initializeSLiMOptions(keepPedigrees=T), reproductiveOutput contains the
+number of offspring for which this individual has been a parent. If pedigree
+tracking is not on, this property is unavailable. If an individual is a
+parent by cloning or selfing, or as both parents for a biparental mating,
+this value is incremented by two. Involvement of an individual as a parent
+for an addRecombinant() call does not change this property’s value, since the
+reproductive contribution in that case is unclear; one must conduct separate
+bookkeeping for that case if necessary. This property is only useful in nonWF
+models, since in WF models the parental generation dies immediately after
+reproduction, giving no opportunity to query this property. For WF models (and
+nonWF models, too), see the Subpopulation property lifetimeReproductiveOutput. }
 \item{sex}{A property of type string. It is of length one (a singleton). This
 property is a constant, so it is not modifiable. \strong{Property Description:}
 The sex of the individual. This will be "H" if sex is not enabled in the
@@ -134,33 +155,35 @@ belongs. }
 property is a variable, so it is modifiable. \strong{Property Description:}
 A user-defined integer value (as opposed to tagF, which is of type float).
 The value of tag is initially undefined, and it is an error to try to read
-it; if you wish it to have a defined value, you must arrange that yourself by
-explicitly setting its value prior to using it elsewhere in your code. The value
-of tag is not used by SLiM; it is free for you to use. See also the getValue()
-and setValue() methods, for another way of attaching state to individuals.
-Note that the Individual objects used by SLiM are (conceptually) new with every
-generation, so the tag value of each new offspring generated in each generation
-will be initially undefined. If you set a tag value for an offspring individual
-inside a modifyChild() callback, that tag value will be preserved as the
-offspring individual becomes a parent (across the generation boundary, in other
-words). If you take advantage of this, however, you should be careful to set up
-initial values for the tag values of all offspring, otherwise undefined initial
-values might happen to match the values that you are trying to use to tag
-particular individuals. A rule of thumb in programming: undefined values should
-always be assumed to take on the most inconvenient value possible. }
+it; if you wish it to have a defined value, you must arrange that yourself
+by explicitly setting its value prior to using it elsewhere in your code.
+The value of tag is not used by SLiM; it is free for you to use. See also the
+getValue() and setValue() methods (provided by the Dictionary class; see the
+Eidos manual), for another way of attaching state to individuals. Note that the
+Individual objects used by SLiM are (conceptually) new with every generation,
+so the tag value of each new offspring generated in each generation will be
+initially undefined. If you set a tag value for an offspring individual inside
+a modifyChild() callback, that tag value will be preserved as the offspring
+individual becomes a parent (across the generation boundary, in other words).
+If you take advantage of this, however, you should be careful to set up initial
+values for the tag values of all offspring, otherwise undefined initial values
+might happen to match the values that you are trying to use to tag particular
+individuals. A rule of thumb in programming: undefined values should always be
+assumed to take on the most inconvenient value possible. }
 \item{tagF}{A property of type float. It is of length one (a singleton). This
 property is a variable, so it is modifiable. \strong{Property Description:}
 A user-defined float value (as opposed to tag, which is of type integer).
 The value of tagF is initially undefined, and it is an error to try to read
-it; if you wish it to have a defined value, you must arrange that yourself by
-explicitly setting its value prior to using it elsewhere in your code. The value
-of tagF is not used by SLiM; it is free for you to use. See also the getValue()
-and setValue() methods, for another way of attaching state to individuals.
-Note that at present, although many classes in SLiM have an integer-type tag
-property, only Individual has a float-type tagF property, because attaching
-model state to individuals seems to be particularly common and useful. If a tagF
-property would be helpful on another class, it would be easy to add. See the
-description of the tag property above for additional comments. }
+it; if you wish it to have a defined value, you must arrange that yourself
+by explicitly setting its value prior to using it elsewhere in your code. The
+value of tagF is not used by SLiM; it is free for you to use. See also the
+getValue() and setValue() methods (provided by the Dictionary class; see the
+Eidos manual), for another way of attaching state to individuals. Note that at
+present, although many classes in SLiM have an integer-type tag property, only
+Individual has a float-type tagF property, because attaching model state to
+individuals seems to be particularly common and useful. If a tagF property would
+be helpful on another class, it would be easy to add. See the description of the
+tag property above for additional comments. }
 \item{uniqueMutations}{A property of type Mutation object. This property
 is a constant, so it is not modifiable. \strong{Property Description:}
 All of the Mutation objects present in this individual. Mutations present
@@ -206,9 +229,86 @@ by explicitly setting its value prior to using it elsewhere in your code,
 typically in a modifyChild() callback. The value of z is not used by SLiM unless
 the optional "continuous space” facility is enabled with the dimensionality
 parameter to initializeSLiMOptions(), in which case z will be understood to
-represent the z coordinate of the individual in space (if the dimensionality is
-"xyz"). If continuous space is not enabled, or the dimensionality is not "xyz",
-you may use z as an additional tag value of type float.}
+represent the z coordinate of the individual in space (if the dimensionality
+is "xyz"). If continuous space is not enabled, or the dimensionality is not
+"xyz", you may use z as an additional tag value of type float. 24.6.2 Individual
+methods – (logical)containsMutations(object<Mutation> mutations) Returns a
+logical vector indicating whether each of the mutations in mutations is present
+in the individual (in either of its genomes); each element in the returned
+vector indicates whether the corresponding mutation is present (T) or absent
+(F). This method is provided for speed; it is much faster than the corresponding
+Eidos code. – (integer$)countOfMutationsOfType(io<MutationType>$ mutType)
+Returns the number of mutations that are of the type specified by mutType, out
+of all of the mutations in the individual (in both of its genomes; a mutation
+that is present in both genomes counts twice). If you need a vector of the
+matching Mutation objects, rather than just a count, you should probably use
+uniqueMutationsOfType(). This method is provided for speed; it is much faster
+than the corresponding Eidos code. – (float)relatedness(object<Individual>
+individuals) Returns a vector containing the degrees of relatedness between
+the receiver and each of the individuals in individuals. The relatedness
+between A and B is always 1.0 if A and B are actually the same individual;
+this facility works even if SLiM’s optional pedigree tracking is turned
+off (in which case all other relatedness values will be 0.0. Otherwise, if
+pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
+this method will use the pedigree information described in section 24.6.1 to
+construct a relatedness estimate. More specifically, if information about the
+grandparental generation is available, then each grandparent shared by A and
+B contributes 0.125 towards the total relatedness, for a maximum value of 0.5
+with four shared grandparents. If grandparental information is unavailable,
+then if parental information is available it is used, with each parent shared
+by A and B contributing 0.25, again for a maximum of 0.5. If even parental
+information is unavailable, then the relatedness is assumed to be 0.0. Again,
+however, if A and B are the same individual, the relatedness will be 1.0 in all
+cases. Note that this relatedness is simply pedigree-based relatedness. This
+does not necessarily correspond to genetic relatedness, because of the effects
+of factors like assortment and recombination. + (void)setSpatialPosition(float
+position) Sets the spatial position of the individual (as accessed through
+the spatialPosition property). The length of position (the number of
+coordinates in the spatial position of an individual) depends upon the
+spatial dimensionality declared with initializeSLiMOptions(). If the spatial
+dimensionality is zero (as it is by default), it is an error to call this
+method. The elements of position are set into the values of the x, y, and z
+properties (if those properties are encompassed by the spatial dimensionality
+of the simulation). In other words, if the declared dimensionality is "xy",
+calling individual.setSpatialPosition(c(1.0, 0.5)) property is equivalent
+to individual.x = 1.0; individual.y = 0.5; individual.z is not set (even if
+a third value is supplied in position) since it is not encompassed by the
+simulation’s dimensionality in this example. Note that this is an Eidos class
+method, somewhat unusually, which allows it to work in a special way when
+called on a vector of individuals. When the target vector of individuals is
+non-singleton, this method can do one of two things. If position contains
+just a single point (i.e., is equal in length to the spatial dimensionality of
+the model), the spatial position of all of the target individuals will be set
+to the given point. Alternatively, if position contains one point per target
+individual (i.e., is equal in length to the number of individuals multiplied by
+the spatial dimensionality of the model), the spatial position of each target
+individual will be set to the corresponding point from position (where the
+point data is concatenated, not interleaved, just as it would be returned by
+accessing the spatialPosition property on the vector of target individuals).
+Calling this method with a position vector of any other length is an error.
+– (float$)sumOfMutationsOfType(io<MutationType>$ mutType) Returns the sum of
+the selection coefficients of all mutations that are of the type specified by
+mutType, out of all of the mutations in the genomes of the individual. This is
+often useful in models that use a particular mutation type to represent QTLs
+with additive effects; in that context, sumOfMutationsOfType() will provide the
+sum of the additive effects of the QTLs for the given mutation type. This method
+is provided for speed; it is much faster than the corresponding Eidos code. Note
+that this method also exists on Genome, for cases in which the sum for just one
+genome is desired. – (object<Mutation>)uniqueMutationsOfType(io<MutationType>$
+mutType) Returns an object vector of all the mutations that are of the type
+specified by mutType, out of all of the mutations in the individual. Mutations
+present in both genomes will occur only once in the result of this method,
+and the mutations will be given in sorted order by position, so this method
+is similar to sortBy(unique(individual.genomes.mutationsOfType(mutType)),
+"position"). It is not identical to that call, only because if multiple
+mutations exist at the exact same position, they may be sorted differently
+by this method than they would be by sortBy(). If you just need a count of
+the matching Mutation objects, rather than a vector of the matches, use -
+countOfMutationsOfType(). This method is provided for speed; it is much
+faster than the corresponding Eidos code. Indeed, it is faster than just
+individual.genomes.mutationsOfType(mutType), and gives uniquing and sorting
+on top of that, so it is advantageous unless duplicate entries for homozygous
+mutations are actually needed.}
 
 }
 }

@@ -6,7 +6,7 @@
 \alias{.GET}
 \title{GenomicElementType}
 \format{
-An object of class \code{list} of length 10.
+An object of class \code{list} of length 8.
 }
 \usage{
 GenomicElementType
@@ -15,12 +15,17 @@ GenomicElementType
 Documentation for GenomicElementType class from SLiM
 }
 \details{
+This class represents a type of genomic element, with particular
+mutation types. The genomic
+element types currently defined in the simulation are defined as global
+constants with the same
+names used in the SLiM input file – g1, g2, and so forth. Section 1.5.4 presents
+an overview of the
+conceptual role of this class.
 This class has the following methods (functions):
 \itemize{
-\item{\code{\link{getValue}}}
 \item{\code{\link{setMutationFractions}}}
 \item{\code{\link{setMutationMatrix}}}
-\item{\code{\link{setValue}}}
 }
 This class has the following properties:
 \describe{
@@ -53,8 +58,9 @@ A user-defined integer value. The value of tag is initially undefined, and
 it is an error to try to read it; if you wish it to have a defined value, you
 must arrange that yourself by explicitly setting its value prior to using it
 elsewhere in your code. The value of tag is not used by SLiM; it is free for
-you to use. See also the getValue() and setValue() methods, for another way of
-attaching state to genomic element types.}
+you to use. See also the getValue() and setValue() methods (provided by the
+Dictionary class; see the Eidos manual), for another way of attaching state to
+genomic element types.}
 
 }
 }

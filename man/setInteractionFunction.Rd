@@ -28,6 +28,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=552}{SLiM manual: page 552}.
+
 Set the function used to translate spatial distances into interaction
 strengths for an interaction type. The functionType may be "f", in which case
 the ellipsis ... should supply a numeric$ fixed interaction strength; "l", in
@@ -38,7 +41,7 @@ function; "n", in which case the ellipsis should supply a numeric$ maximum
 strength and a numeric$ sigma (standard deviation) parameter for a Gaussian
 function; or "c", in which case the ellipsis should supply a numeric$ maximum
 strength and a numeric$ scale parameter for a Cauchy distribution function. See
-section 23.7 above for discussions of these interaction functions. Non-spatial
+section 24.7 above for discussions of these interaction functions. Non-spatial
 interactions must use function type "f", since no distance values are available
 in that case. The interaction function for an interaction type is normally a
 constant in simulations; in any case, it cannot be changed when an interaction

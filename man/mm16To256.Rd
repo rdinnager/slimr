@@ -12,8 +12,7 @@ mm16To256(mutationMatrix16)
 \item{mutationMatrix16}{An object of type float. See details for description.}
 }
 \value{
-An object of type string or float or float or float or integer or float
-or integer.
+An object of type float.
 }
 \description{
 Documentation for SLiM function \code{mm16To256}, which is a method of the SLiM
@@ -26,6 +25,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=590}{SLiM manual: page 590}.
+
 Returns a 64×4 mutation matrix that is functionally identical to
 the supplied 4×4 mutation matrix in mutationMatrix16. The mutation rate for
 each of the 64 trinucleotides will depend only upon the central nucleotide
@@ -34,7 +36,7 @@ the same nucleotide in mutationMatrix16. This function can be used to easily
 construct a simple trinucleotide-based mutation matrix which can then be
 modified so that specific trinucleotides sustain a mutation rate that does
 not depend only upon their central nucleotide. See the documentation for
-initializeGenomicElementType() in section 23.1 for further discussion of how
+initializeGenomicElementType() in section 24.1 for further discussion of how
 these 64×4 mutation matrices are interpreted and used.
 }
 \section{Copyright}{

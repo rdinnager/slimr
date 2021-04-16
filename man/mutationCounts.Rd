@@ -29,15 +29,19 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=567}{SLiM manual: page 567}.
+
 Return an integer vector with the frequency counts of all of the
 Mutation objects passed in mutations, within the Subpopulation objects in
 subpops. The subpops argument is required, but you may pass NULL to get
 population-wide frequency counts. If the optional mutations argument is NULL
 (the default), frequency counts will be returned for all of the active Mutation
 objects in the simulation – the same Mutation objects, and in the same order,
-as would be returned by the mutations property of sim, in other words. See the
--mutationFrequencies() method to obtain float frequencies instead of integer
-counts.
+as would be returned by the mutations property of sim, in other words. See
+the -mutationFrequencies() method to obtain float frequencies instead of
+integer counts. See also the Genome methods mutationCountsInGenomes() and
+mutationFrequenciesInGenomes().
 }
 \section{Copyright}{
 

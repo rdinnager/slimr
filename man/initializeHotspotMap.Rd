@@ -31,6 +31,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=519}{SLiM manual: page 519}.
+
 In nucleotide-based models, set the mutation rate multiplier along the
 chromosome. Nucleotidebased models define sequence-based mutation rates that
 are set up with the mutationMatrix parameter to initializeGenomicElementType().

@@ -54,6 +54,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=523}{SLiM manual: page 523}.
+
 Configure options for the simulation. If initializeSLiMOptions()
 is called at all then it must be called before any other initialization
 function (except initializeSLiMModelType()), so that SLiM knows from the
@@ -61,23 +64,26 @@ outset which optional features are enabled and which are not. If keepPedigrees
 is T, SLiM will keep pedigree information for every individual in the
 simulation, tracking the identity of its parents and grandparents. This
 allows individuals to assess their degree of pedigree-based relatedness to
-other individuals (see Individual’s relatedness() method, section 23.6.2), as
+other individuals (see Individual’s relatedness() method, section 24.6.2), as
 well as allowing a model to find "trios” (two parents and an offspring they
-generated) using the pedigree properties of Individual (section 23.6.1). As
-a side effect of keepPedigrees being T, the pedigreeID, pedigreeParentIDs,
-and pedigreeGrandparentIDs properties of Individual will have defined values
-(see section 23.6.1), as will the genomePedigreeID property of Genome (see
-section 23.3.1). Note that pedigree-based relatedness doesn’t necessarily
-correspond to genetic relatedness, due to effects such as assortment and
-recombination. For an overview of other ways of tracking genetic ancestry,
-including true local ancestry at each position on the chromosome, see sections
-1.7 and 14.7. If dimensionality is not "", SLiM will enable its optional
-"continuous space” facility. Three values for dimensionality are presently
-supported: "x", "xy", and "xyz", specifying that continuous space should be
-enabled for one, two, or three dimensions, respectively, using (x), (x, y),
-and (x, y, z) coordinates respectively. This has a number of side effects.
-First of all, it means that the specified properties of Individual (x, y,
-and/or z) will be interpreted by SLiM as spatial positions; in particular,
+generated) using the pedigree properties of Individual (section 24.6.1). As a
+side effect of keepPedigrees being T, the pedigreeID, pedigreeParentIDs, and
+pedigreeGrandparentIDs properties of Individual will have defined values (see
+section 24.6.1), as will the genomePedigreeID property of Genome (see section
+24.3.1). Note that pedigree-based relatedness doesn’t necessarily correspond
+to genetic relatedness, due to effects such as assortment and recombination.
+For an overview of other ways of tracking genetic ancestry, including true
+local ancestry at each position on the chromosome, see sections 1.7 and 14.7.
+Beginning in SLiM 3.5, keepPedigrees=T also enables tracking of individual
+reproductive output, available through the reproductiveOutput property of
+Individual (see section 24.6.1) and the lifetimeReproductiveOutput property
+of Subpopulation (see section 24.14.1). If dimensionality is not "", SLiM will
+enable its optional "continuous space” facility. Three values for dimensionality
+are presently supported: "x", "xy", and "xyz", specifying that continuous
+space should be enabled for one, two, or three dimensions, respectively, using
+(x), (x, y), and (x, y, z) coordinates respectively. This has a number of side
+effects. First of all, it means that the specified properties of Individual (x,
+y, and/or z) will be interpreted by SLiM as spatial positions; in particular,
 SLiMgui will use those properties to display subpopulations spatially. Second,
 it allows spatial interactions to be defined, evaluated, and queried using
 initializeInteractionType() and interaction() callbacks. And third, it enables

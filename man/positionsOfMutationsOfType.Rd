@@ -26,6 +26,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=538}{SLiM manual: page 538}.
+
 Returns the positions of mutations that are of the type specified by
 mutType, out of all of the mutations in the genome. If you need a vector of the
 matching Mutation objects, rather than just positions, use -mutationsOfType().

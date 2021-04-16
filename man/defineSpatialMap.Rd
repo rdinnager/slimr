@@ -6,15 +6,7 @@
 \alias{.P$defineSpatialMap}
 \title{SLiM method defineSpatialMap}
 \usage{
-defineSpatialMap(
-  name,
-  spatiality,
-  gridSize,
-  values,
-  interpolate,
-  valueRange,
-  colors
-)
+defineSpatialMap(name, spatiality, values, interpolate, valueRange, colors)
 }
 \arguments{
 \item{name}{An object of type string. Must be of length 1 (a singleton). See
@@ -22,8 +14,6 @@ details for description.}
 
 \item{spatiality}{An object of type string. Must be of length 1 (a singleton).
 See details for description.}
-
-\item{gridSize}{An object of type null or integer. See details for description.}
 
 \item{values}{An object of type numeric. See details for description.}
 
@@ -50,51 +40,39 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=582}{SLiM manual: page 582}.
+
 Defines a spatial map for the subpopulation. The map will henceforth
 be identified by name. The map uses the spatial dimensions referenced by
 spatiality, which must be a subset of the dimensions defined for the simulation
-in initializeSLiMOptions(). Spatiality "x" is permitted for dimensionality "x";
-spatiality "x", "y", or "xy" for dimensionality "xy"; and spatiality "x", "y",
-"z", "xy", "yz", "xz", or "xyz" for dimensionality "xyz". The spatial map is
-defined by a grid of values of a size specified by gridSize, which must have
-one value per spatial dimension (or gridSize may be NULL; see below); for a
-spatiality of "xz", for example, gridSize must be of length 2, specifying the
-size of the values grid in the x and z dimensions. The parameter values then
-gives the values of the grid; it must be of length equal to the product of the
-gridSize elements, and specifies values varying first (i.e., fastest) in the
-x dimension, then in y, then in z. Beginning in SLiM 2.6, the values parameter
-may be a matrix/array with the number of dimensions appropriate for the declared
-spatiality of the map; for example, a map with spatiality "xy" would require a
-(two-dimensional) matrix, whereas a map with spatiality of "xyz" would require
-a threedimensional array. (See the Eidos manual for discussion of matrices and
-arrays.) If a matrix/array argument is supplied for values, gridSize must either
-be NULL, or (for backward compatibility) may match the dimensions of values as
-they would be given by dim(values). The data in values is interpreted just as
-is described above for the vector case: varying first in x, then in y, then in
-z. BEWARE: since the values in Eidos matrices and arrays are stored in column-
-first order (following the convention established by R), this means that for
-a map with spatiality "xy" each column of the values matrix will provide map
-data as x varies and y remains constant. This will be confusing if you think
-of matrix columns as being "x” and matrix rows as being "y”, so try not to
-think that way; the opposite is true. This behavior is actually simple, self-
-consistent, and backward-compatible; if you before created a spatial map with
-a vector values before and a gridSize of c(x, y) specifying the dimensions of
-that vector, you can now supply matrix(values, nrow=x) for values to get exactly
-the same spatial map, and you can still supply the same value of c(x, y) for
-gridSize if you wish (or you may supply NULL). If, however, you are looking at
-a matrix as printed in the Eidos console, and want that matrix to be used as a
-spatial map in SLiM in the same orientation, you should use the transpose of the
-matrix, as supplied by the t() function. Actually, since matrices are printed in
-the console with each successive row having a larger index, whereas in Cartesian
-(x, y) coordinates yvalues increase as you go upward, you may also wish to
-reverse the order of rows in your matrix prior to transposing (or the order
-of columns after transposing), with an expression such as t(map[(nrow(map)-1):
-0,]), in order to make the spatial map display in SLiMgui as you expect (since
-SLiMgui displays everything in Cartesian coordinates). Apologies if this is
-confusing; it would be nice if matrix notation, programming languages, and
-Descartes all agreed on such things, but they do not, so be very careful that
-your spatial maps are oriented as you wish them to be! Moving on to the other
-parameters of defineSpatialMap(): if interpolate is F, values across the
+in initializeSLiMOptions(). Spatiality "x" is permitted for dimensionality
+"x"; spatiality "x", "y", or "xy" for dimensionality "xy"; and spatiality "x",
+"y", "z", "xy", "yz", "xz", or "xyz" for dimensionality "xyz". The spatial
+map is defined by a grid of values supplied in parameter values. The remaining
+optional parameters are described below. Note that the semantics of this method
+changed in SLiM 3.5; in particular, the gridSize parameter was removed, and
+the interpretation of the values parameter changed as described below. Existing
+code written prior to SLiM 3.5 will produce an error, due to the removed
+gridSize parameter, and must be revised carefully to obtain the same result,
+even if NULL had been passed for gridSize previously. Beginning in SLiM 3.5,
+the values parameter must be a vector/matrix/array with the number of dimensions
+appropriate for the declared spatiality of the map; for example, a map with
+spatiality "x" would require a (one-dimensional) vector, spatiality "xy" would
+require a (two-dimensional) matrix, and a map with spatiality of "xyz" would
+require a three-dimensional array. (See the Eidos manual for discussion of
+vectors, matrices, and arrays.) The data in values is interpreted in such a way
+that a two-dimensional matrix of values, with (0, 0) at upper left and values
+by column, is transformed into the format expected by SLiM, with (0, 0) at
+lower left and values by row; in other words, the twodimensional matrix as it
+prints in the Eidos console will match the appearance of the two-dimensional
+spatial map as seen in SLiMgui. This is a change in behavior from versions
+prior to SLiM 3.5; it ensures that images loaded from disk with the Eidos class
+Image can be used directly as spatial maps, achieving the expected orientation,
+with no need for transposition or flipping. If the spatial map is a three-
+dimensional array, it is read as successive z-axis "planes”, each of which is
+a two-dimensional matrix that is treated as described above. Moving on to the
+other parameters of defineSpatialMap(): if interpolate is F, values across the
 spatial map are not interpolated; the value at a given point is equal to the
 nearest value defined by the grid of values specified. If interpolate is T,
 values across the spatial map will be interpolated (using linear, bilinear,
@@ -129,9 +107,9 @@ not attempt to display an "xyz" spatial map, for example, since it has no
 way to choose which 2D slice through the xyz space it ought to display). The
 spatialMapColor() method will return translated color strings for any spatial
 map, however, even if SLiMgui is unable to display the spatial map. If there are
-multiple spatial maps with color-mapping parameters defined, SLiMgui will choose
-just one for display; it will prefer an "xy" map if one is available, but beyond
-that heuristic its choice will be arbitrary.
+multiple spatial maps that SLiMgui is capable of displaying, it choose one for
+display by default, but other maps may be selected from the context menu on the
+individuals view (with a right-click or control-click).
 }
 \section{Copyright}{
 

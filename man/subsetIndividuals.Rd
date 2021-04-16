@@ -6,14 +6,17 @@
 \alias{.P$subsetIndividuals}
 \title{SLiM method subsetIndividuals}
 \usage{
-subsetIndividuals(exclude, sex, minAge, maxAge, migrant)
+subsetIndividuals(exclude, sex, tag, minAge, maxAge, migrant)
 }
 \arguments{
 \item{exclude}{An object of type null or Individual object. Must be of length 1
 (a singleton). The default value is \code{NULL}. See details for description.}
 
 \item{sex}{An object of type null or string. Must be of length 1 (a singleton).
-The default value is \code{NULL],[Ni$ tag = NULL}. See details for description.}
+The default value is \code{NULL}. See details for description.}
+
+\item{tag}{An object of type null or integer. Must be of length 1 (a singleton).
+The default value is \code{NULL}. See details for description.}
 
 \item{minAge}{An object of type null or integer. Must be of length 1 (a
 singleton). The default value is \code{NULL}. See details for description.}
@@ -38,14 +41,16 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=588}{SLiM manual: page 588}.
+
 Returns a vector of individuals subset from the individuals in the
 target subpopulation. The parameters specify constraints upon the subset
 of individuals that will be returned. Parameter exclude, if non- NULL, may
 specify a specific individual that should not be included (typically the focal
 individual in some operation). Parameter sex, if non-NULL, may specify a sex
 ("M" or "F") for the individuals to be returned, in sexual models. Parameter
-tag, if non-NULL, may specify a tag value for the individuals to be returned;
-only individuals whose tag property matches this value will be returned.
+tag, if non-NULL, may specify a tag value for the individuals to be returned.
 Parameters minAge and maxAge, if non-NULL, may specify a minimum or maximum age
 for the individuals to be returned, in nonWF models. Parameter migrant, if non-
 NULL, may specify a required value for the migrant property of the individuals

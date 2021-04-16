@@ -25,6 +25,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=574}{SLiM manual: page 574}.
+
 Declare the current simulation finished. Normally SLiM ends a
 simulation when, at the end of a generation, there are no script events or
 callbacks registered for any future generation (excluding scripts with no

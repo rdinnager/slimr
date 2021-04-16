@@ -26,6 +26,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=523}{SLiM manual: page 523}.
+
 Configure the type of SLiM model used for the simulation. At present,
 one of two model types may be selected. If modelType is "WF", SLiM will use a
 Wright–Fisher (WF) model; this is the model type that has always been supported

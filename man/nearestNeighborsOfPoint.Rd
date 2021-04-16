@@ -31,6 +31,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=552}{SLiM manual: page 552}.
+
 Returns up to count individuals in subpop that are spatially closest to
 point, according to the distance metric of the InteractionType. To obtain all of
 the individuals within the maximum interaction distance of point, simply pass a

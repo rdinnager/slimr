@@ -13,7 +13,7 @@ drawSelectionCoefficient(n)
 default value is \code{1}. See details for description.}
 }
 \value{
-An object of type float or any but object or void or void.
+An object of type float or void.
 }
 \description{
 Documentation for SLiM function \code{drawSelectionCoefficient}, which is a
@@ -26,9 +26,12 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=561}{SLiM manual: page 561}.
+
 Draws and returns a vector of n selection coefficients using the
 currently defined distribution of fitness effects (DFE) for the target mutation
-type. See section 23.9 above for discussion of the supported distributions
+type. See section 24.10 above for discussion of the supported distributions
 and their uses. If the DFE is type "s", this method will result in synchronous
 execution of the DFE’s script.
 }

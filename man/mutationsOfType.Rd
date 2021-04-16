@@ -41,6 +41,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=536}{SLiM manual: page 536}.
+
 Returns an object vector of all the mutations that are of the type
 specified by mutType, out of all of the mutations in the genome. If you just
 need a count of the matching Mutation objects, rather than a vector of the
@@ -49,6 +52,9 @@ matching Mutation objects, use -positionsOfMutationsOfType(); and if you are
 aiming for a sum of the selection coefficients of matching Mutation objects, use
 -sumOfMutationsOfType(). This method is provided for speed; it is much faster
 than the corresponding Eidos code.
+
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=568}{SLiM manual: page 568}.
 
 Returns an object vector of all the mutations that are of the type
 specified by mutType, out of all of the mutations that are currently active

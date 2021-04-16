@@ -1,0 +1,3 @@
+SLiM provides a small number of built-in functions, documented here. Note that these are
+distinct from the functions built into the Eidos language itself, which are documented in the Eidos
+manual.

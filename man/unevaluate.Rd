@@ -25,6 +25,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=553}{SLiM manual: page 553}.
+
 Discards all evaluation of this interaction, for all subpopulations.
 The state of the InteractionType is reset to a state prior to evaluation. This
 can be useful if the model state has changed in such a way that the evaluation
@@ -35,12 +38,12 @@ in such a way that previously calculated interaction strengths are no longer
 correct, unevaluate() allows the interaction to begin again from scratch. In
 WF models, all interactions are automatically reset to an unevaluated state at
 the moment when the new offspring generation becomes the parental generation
-(at step 4 in the generation cycle; see section 21.4). In nonWF models,
+(at step 4 in the generation cycle; see section 22.4). In nonWF models,
 all interactions are automatically reset to an unevaluated state twice per
 generation: immediately after reproduction() callbacks have completed (after
-step 1 in the generation cycle; see section 22.1), and immediately before
+step 1 in the generation cycle; see section 23.1), and immediately before
 viability/survival selection (before step 4 in the generation cycle; see section
-22.4). Given this automatic invalidation, most simulations have no reason to
+23.4). Given this automatic invalidation, most simulations have no reason to
 call unevaluate().
 }
 \section{Copyright}{

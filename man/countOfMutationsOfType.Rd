@@ -56,11 +56,17 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=536}{SLiM manual: page 536}.
+
 Returns the number of mutations that are of the type specified by
 mutType, out of all of the mutations in the genome. If you need a vector of the
 matching Mutation objects, rather than just a count, use -mutationsOfType().
 This method is provided for speed; it is much faster than the corresponding
 Eidos code.
+
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=545}{SLiM manual: page 545}.
 
 Returns the number of mutations that are of the type specified by
 mutType, out of all of the mutations in the individual (in both of its genomes;
@@ -68,6 +74,9 @@ a mutation that is present in both genomes counts twice). If you need a vector
 of the matching Mutation objects, rather than just a count, you should probably
 use uniqueMutationsOfType(). This method is provided for speed; it is much
 faster than the corresponding Eidos code.
+
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=566}{SLiM manual: page 566}.
 
 Returns the number of mutations that are of the type specified
 by mutType, out of all of the mutations that are currently active in the

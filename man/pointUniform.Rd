@@ -26,6 +26,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=585}{SLiM manual: page 585}.
+
 Returns a new point (or points, for n > 1) generated from uniform draws
 for each coordinate, within the spatial boundaries of the subpopulation. The
 returned vector will contain n points, each comprised of a number of coordinates

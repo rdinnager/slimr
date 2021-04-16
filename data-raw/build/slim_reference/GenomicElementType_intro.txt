@@ -1,0 +1,4 @@
+This class represents a type of genomic element, with particular mutation types. The genomic
+element types currently defined in the simulation are defined as global constants with the same
+names used in the SLiM input file – g1, g2, and so forth. Section 1.5.4 presents an overview of the
+conceptual role of this class.

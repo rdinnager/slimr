@@ -30,6 +30,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=538}{SLiM manual: page 538}.
+
 Read new mutations from the VCF format file at filePath and add
 them to the target genomes. The number of target genomes must match the
 number of genomes represented in the VCF file (i.e., two times the number
@@ -38,12 +41,12 @@ a given subpopulation pN, simply call pN.genomes.readFromVCF(), assuming the
 subpopulation’s size matches that of the VCF file taking ploidy into account.
 A vector containing all of the mutations created by readFromVCF() is returned.
 SLiM’s VCF parsing is quite primitive. The header is parsed only inasmuch as
-SLiM looks to see whether SLiM-specific VCF fields (see sections 25.2.3 and
-25.2.4) are defined or not; the rest of the header information is ignored.
+SLiM looks to see whether SLiM-specific VCF fields (see sections 26.2.3 and
+26.2.4) are defined or not; the rest of the header information is ignored.
 Call lines are assumed to follow the format: #CHROM POS ID REF ALT QUAL FILTER
 INFO FORMAT i0...iN The CHROM, ID, QUAL, FILTER, and FORMAT fields are ignored,
 and information in the genotype fields beyond the GT genotype subfield are
-also ignored. SLiM’s own VCF annotations (see section 25.2.3) are honored; in
+also ignored. SLiM’s own VCF annotations (see section 26.2.3) are honored; in
 particular, mutations will be created using the given values of MID, S, PO, GO,
 and MT if those subfields are present, and DOM, if it is present, must match
 the dominance coefficient of the mutation type. The parameter mutationType (a
@@ -77,7 +80,7 @@ VCF file for that allele will be used. If the mutation type is non-nucleotide-
 based, the nucleotide provided will be ignored. If multiple alleles using the
 same nucleotide at the same position are specified in the VCF file, a separate
 mutation will be created for each, mirroring SLiM’s behavior with independent
-mutational lineages when writing VCF (see section 25.2.4). The MULTIALLELIC flag
+mutational lineages when writing VCF (see section 26.2.4). The MULTIALLELIC flag
 is ignored by readFromVCF(); call lines for mutations at the same base position
 in the same genome will result in stacked mutations whether or not MULTIALLELIC
 is present. The target genomes correspond, in order, to the haploid or diploid

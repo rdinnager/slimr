@@ -29,6 +29,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=538}{SLiM manual: page 538}.
+
 Read new mutations from the MS format file at filePath and add them
 to the target genomes. The number of target genomes must match the number
 of genomes represented in the MS file. To read into all of the genomes in

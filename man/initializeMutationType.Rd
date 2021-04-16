@@ -35,6 +35,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=521}{SLiM manual: page 521}.
+
 Add a mutation type at initialization time. The id must not already
 be used for any mutation type in the simulation. The id parameter may be
 either an integer giving the ID of the new mutation type, or a string giving
@@ -51,19 +54,19 @@ mean selection coefficient and a numeric$ sigma (standard deviation) parameter
 for a normal distribution; "w", in which case the ellipsis should supply a
 numeric$ λ scale parameter and a numeric$ k shape parameter for a Weibull
 distribution; or "s", in which case the ellipsis should supply a string$ Eidos
-script parameter. See section 23.9 for discussion of the various DFEs and their
+script parameter. See section 24.10 for discussion of the various DFEs and their
 uses. The global symbol for the new mutation type is immediately available; the
 return value also provides the new object. Note that by default in WF models,
 all mutations of a given mutation type will be converted into Substitution
 objects when they reach fixation, for efficiency reasons. If you need to disable
 this conversion, to keep mutations of a given type active in the simulation
 even after they have fixed, you can do so by setting the convertToSubstitution
-property of MutationType to T. In contrast, by default in nonWF models mutations
+property of MutationType to F. In contrast, by default in nonWF models mutations
 will not be converted into Substitution objects when they reach fixation;
 convertToSubstitution is F by default in nonWF models. To enable conversion in
 nonWF models for neutral mutation types with no indirect fitness effects, you
-should therefore set convertToSubstitution to T. See sections 21.3, 22.5, and
-23.9.1 for further discussion regarding the convertToSubstitution property.
+should therefore set convertToSubstitution to T. See sections 22.3, 23.5, and
+24.10.1 for further discussion regarding the convertToSubstitution property.
 }
 \section{Copyright}{
 

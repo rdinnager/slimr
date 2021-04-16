@@ -33,6 +33,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=579}{SLiM manual: page 579}.
+
 Generates a new offspring individual from the given parents
 by biparental sexual reproduction, queues it for addition to the target
 subpopulation, and returns it. The new offspring will not be visible as a
@@ -73,7 +76,7 @@ spawning), however, biparental mating may occur between parents that are not
 from the same subpopulation; that is legal in nonWF models, and in that case,
 modifyChild() callbacks for the subpopulation of parent1 are used (since that
 is the maternal parent). If the modifyChild() callback process results in
-rejection of the proposed child (see section 24.4), a new offspring individual
+rejection of the proposed child (see section 25.4), a new offspring individual
 will not be generated, and this method will return NULL. To force the generation
 of an offspring individual from a given pair of parents, you could loop until
 addCrossed() succeeds, but note that if your modifyChild() callback rejects

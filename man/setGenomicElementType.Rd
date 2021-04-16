@@ -26,6 +26,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=540}{SLiM manual: page 540}.
+
 Set the genomic element type used for a genomic element (see section
 1.5.4). The genomicElementType parameter should supply the new genomic element
 type for the element, either as a GenomicElementType object or as an integer

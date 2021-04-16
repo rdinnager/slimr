@@ -28,11 +28,14 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=586}{SLiM manual: page 586}.
+
 Set the migration rates to this subpopulation from the subpopulations
 in sourceSubpops to the corresponding rates specified in rates; in other words,
 rates gives the expected fractions of the children in this subpopulation that
 will subsequently be generated from parents in the subpopulations sourceSubpops
-(see section 21.2.1). This method will only set the migration fractions from
+(see section 22.2.1). This method will only set the migration fractions from
 the subpopulations given; migration rates from other subpopulations will be
 left unchanged (explicitly set a zero rate to turn off migration from a given
 subpopulation). The type of sourceSubpops may be either integer, specifying

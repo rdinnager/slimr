@@ -29,6 +29,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=523}{SLiM manual: page 523}.
+
 Enable and configure sex in the simulation. The argument chromosomeType
 gives the type of chromosome to be simulated; this should be "A", "X", or "Y".
 If the chromosomeType is "X", the optional xDominanceCoeff parameter can supply

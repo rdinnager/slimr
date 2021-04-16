@@ -6,14 +6,20 @@
 \alias{.SS$treeSeqOutput}
 \title{SLiM method treeSeqOutput}
 \usage{
-treeSeqOutput(path, simplify)
+treeSeqOutput(path, simplify, includeModel, metadata)
 }
 \arguments{
-\item{path}{An object of type string or logical. Must be of length 1 (a
-singleton). See details for description.}
+\item{path}{An object of type string. Must be of length 1 (a singleton). See
+details for description.}
 
-\item{simplify}{An object of type string or logical. Must be of length 1 (a
+\item{simplify}{An object of type logical. Must be of length 1 (a singleton).
+The default value is \code{T}. See details for description.}
+
+\item{includeModel}{An object of type logical. Must be of length 1 (a
 singleton). The default value is \code{T}. See details for description.}
+
+\item{metadata}{An object of type null. Must be of length 1 (a singleton). The
+default value is \code{NULL}. See details for description.}
 }
 \value{
 An object of type void.
@@ -29,13 +35,33 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=575}{SLiM manual: page 575}.
+
 Outputs the current tree sequence recording tables to the path
 specified by path. This method may only be called if tree sequence recording
 has been turned on with initializeTreeSeq(). If simplify is T (the default),
 simplification will be done immediately prior to output; this is almost always
-desirable, unless a model wishes to avoid simplification entirely. A binary
-tree sequence file will be written to the specified path; a filename extension
-of .trees is suggested for this type of file.
+desirable, unless a model wishes to avoid simplification entirely. (Note that if
+simplification is not done, then all genomes since the last simplification will
+be marked as samples in the resulting tree sequence.) A binary tree sequence
+file will be written to the specified path; a filename extension of .trees
+is suggested for this type of file. Normally, the full SLiM script used to
+generate the tree sequence is written out to the provenance entry of the tree
+sequence file, to the model subkey of the parameters top-level key. Supplying
+F for includeModel suppresses output of the full script; see section 26.4.6
+for further discussion. A Dictionary object containing user-generated metadata
+may be supplied with the metadata parameter. If present, this dictionary will
+be serialized as JSON and attached to the saved tree sequence under a key
+named user_metadata, within the SLiM key (see section 26.4.5). If pyslim is
+used to read the tree sequence in Python, this metadata will automatically be
+deserialized and made available at ts.metadata["SLiM"]["user_metadata"]. This
+metadata dictionary is not used by SLiM, or by pyslim, tskit, or msprime; you
+may use it for any purpose you wish. Note that metadata may actually be any
+subclass of Dictionary, such as the SLiMSim simulation object sim, or a LogFile
+instance. However, only the keys and values contained by the object’s Dictionary
+superclass state will be serialized into the metadata; properties of the
+subclass will be ignored.
 }
 \section{Copyright}{
 

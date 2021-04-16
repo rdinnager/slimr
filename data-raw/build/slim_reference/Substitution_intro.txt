@@ -1,0 +1,9 @@
+This class represents a mutation that has been fixed; Mutation objects are converted to
+Substitution objects upon fixation. Its properties are thus very similar to those of Mutation.
+Section 1.5.2 presents an overview of the conceptual role of this class.
+Since Substitution objects represent fixation events that occurred in the past, they are
+relatively immutable. However, since it may be useful to attach (possibly dynamic) state to
+substitutions, their tag and subpopID properties are mutable, and they also provide the same
+getValue() / setValue() functionality as Mutation (inherited from the Eidos class Dictionary).
+Values set on a Mutation object will carry over to the corresponding Substitution object
+automatically upon fixation.

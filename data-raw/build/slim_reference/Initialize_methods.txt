@@ -8,12 +8,12 @@ to provide the sequence (if the file contains than one sequence, the first seque
 A/C/G/T nucleotide values may be provided; other symbols, such as those for amino acids, gaps, or
 nucleotides of uncertain identity, are not allowed. The two semantic meanings of sequence that
 TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 463
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 516
 involve a singleton string value are distinguished heuristically; a singleton string that contains only
 the letters ACGT will be assumed to be a nucleotide sequence rather than a filename. The length of
 the ancestral sequence is returned.
 A utility function, randomNucleotides(), is provided by SLiM to assist in generating simple random
-nucleotide sequences; see section 23.15.1.
+nucleotide sequences; see section 24.16.1.
 (void)initializeGeneConversion(numeric$ nonCrossoverFraction, numeric$ meanLength,
 numeric$ simpleConversionFraction, [numeric$ bias = 0])
 Calling this function switches the recombination model from a “simple crossover” model to a
@@ -30,7 +30,8 @@ absolute preference for G/C mutations over A/T mutations, and -1.0 indicating an
 for A/T mutations over G/C mutations. A non-zero bias may only be set in nucleotide-based models
 (see section 1.8). This function, and the way that gene conversion is modeled, fundamentally changed
 in SLiM 3.3; see section 1.5.6 for discussion.
-(object<GenomicElement>)initializeGenomicElement(io<GenomicElementType> genomicElementType, integer start, integer end)
+(object<GenomicElement>)initializeGenomicElement(io<GenomicElementType> genomicElem
+entType, integer start, integer end)
 Add a genomic element to the chromosome at initialization time. The start and end parameters give
 the first and last base positions to be spanned by the new genomic element. The new element will be
 based upon the genomic element type identified by genomicElementType, which can be either an
@@ -60,7 +61,7 @@ integer vector representing the IDs of the desired mutation types, or an object 
 MutationType elements specified directly. The global symbol for the new genomic element type is
 immediately available; the return value also provides the new object.
 TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 464
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 517
 The mutationMatrix parameter is NULL by default, and in non-nucleotide-based models it must be
 NULL. In nucleotide-based models, on the other hand, it must be non-NULL, and therefore must be
 supplied. In that case, mutationMatrix should take one of two standard forms. For sequence-based
@@ -79,15 +80,15 @@ conventions, and so care must be taken when importing such matrices into SLiM.
 For sequence-based mutation rates that depend upon the trinucleotide sequence centered upon a
 mutation site (the adjacent bases to the left and right, in other words, as well as the mutating
 nucleotide itself), mutationMatrix should be a 64×4 float matrix, specifying mutation rates for the
-central nucleotide of an existing trinucleotide sequence (rows from 0–63, representing codons as
-described in the documentation for the ancestralNucleotides() method of Chromosome) to each
-of the four possible derived nucleotide states (columns from 0–3 for A/C/G/T as before):
+central nucleotide of an existing trinucleotide sequence (rows from 0–63, representing trinucleotides
+as described in the documentation for the ancestralNucleotides() method of Chromosome) to
+each of the four possible derived nucleotide states (columns from 0–3 for A/C/G/T as before):
 Note that in every case it is the central nucleotide of the trinucleotide sequence that is mutating, but
 rates can be specified independently based upon the nucleotides in the first and third positions as
 well, with this type of mutation matrix.
 Several helper functions are defined to construct common types of mutation matrices, such as
-mmJukesCantor() to create a mutation matrix for a Jukes–Cantor model; see section 23.15.1. See
-chapter 18 for practical examples of mutation matrices, and section 21.2.3 for further discussion of the
+mmJukesCantor() to create a mutation matrix for a Jukes–Cantor model; see section 24.16.1. See
+chapter 18 for practical examples of mutation matrices, and section 22.2.3 for further discussion of the
 mutational paradigm in nucleotide-based models.
 * PA→C PA→G PA→T
 PC→A * PC→G PC→T
@@ -105,7 +106,7 @@ PTTC→TAC PTTC→TCC PTTC→TGC *
 PTTG→TAG PTTG→TCG PTTG→TGG *
 PTTT→TAT PTTT→TCT PTTT→TGT *
 TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 465
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 518
 (void)initializeHotspotMap(numeric multipliers, [Ni ends = NULL],
 [string$ sex = "*"])
 In nucleotide-based models, set the mutation rate multiplier along the chromosome. Nucleotidebased
@@ -158,11 +159,11 @@ been configured, only non-spatial interactions may be defined.
 The reciprocal flag may be T, in which case the interaction is guaranteed by the user to be
 reciprocal: whatever the interaction strength is for individual B upon individual A, it will be equal (in
 TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 466
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 519
 magnitude and sign) for A upon B. This allows the InteractionType to reduce the amount of
 computation necessary by up to a factor of two. If reciprocal is F, the interaction is not guaranteed
 to be reciprocal and each interaction will be computed independently. The built-in interaction
-formulas are all reciprocal, but if you implement an interaction() callback (see section 24.6), you
+formulas are all reciprocal, but if you implement an interaction() callback (see section 25.6), you
 must consider whether the callback you have implemented preserves reciprocality or not. For this
 reason, the default is reciprocal=F, so that bugs are not inadvertently introduced by an invalid
 assumption of reciprocality. See below for a note regarding reciprocality in sexual simulations when
@@ -198,7 +199,7 @@ interaction strength guaranteed to be the same in both directions?
 By default, the interaction strength is 1.0 for all interactions within maxDistance. Often it is
 desirable to change the interaction function using setInteractionFunction(); modifying
 interaction strengths can also be achieved with interaction() callbacks if necessary (see section
-24.6). In any case, interactions beyond maxDistance always have a strength of 0.0, and the
+25.6). In any case, interactions beyond maxDistance always have a strength of 0.0, and the
 interaction strength of an individual with itself is always 0.0, regardless of the interaction function or
 callbacks.
 The global symbol for the new interaction type is immediately available; the return value also provides
@@ -211,7 +212,7 @@ recombination rate is defined (see initializeRecombinationRate()). The number of
 that actually occurs at a given base position when generating an offspring genome is, in effect, drawn
 from a Poisson distribution with that expected mean (but under the hood SLiM uses a mathematically
 TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 467
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 520
 equivalent but much more efficient strategy). It is possible for this Poisson draw to indicate that two or
 more new mutations have arisen at the same base position, particularly when the mutation rate is very
 high; in this case, the new mutations will be added to the site one at a time, and as always the
@@ -259,20 +260,20 @@ mean selection coefficient and a numeric$ alpha shape parameter for a gamma dist
 which case the ellipsis should supply a numeric$ mean selection coefficient and a numeric$ sigma
 (standard deviation) parameter for a normal distribution; "w", in which case the ellipsis should supply
 a numeric$ λ scale parameter and a numeric$ k shape parameter for a Weibull distribution; or "s",
-in which case the ellipsis should supply a string$ Eidos script parameter. See section 23.9 for
+in which case the ellipsis should supply a string$ Eidos script parameter. See section 24.10 for
 discussion of the various DFEs and their uses. The global symbol for the new mutation type is
 immediately available; the return value also provides the new object.
 TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 468
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 521
 Note that by default in WF models, all mutations of a given mutation type will be converted into
 Substitution objects when they reach fixation, for efficiency reasons. If you need to disable this
 conversion, to keep mutations of a given type active in the simulation even after they have fixed, you
-can do so by setting the convertToSubstitution property of MutationType to T.
+can do so by setting the convertToSubstitution property of MutationType to F.
 In contrast, by default in nonWF models mutations will not be converted into Substitution objects
 when they reach fixation; convertToSubstitution is F by default in nonWF models. To enable
 conversion in nonWF models for neutral mutation types with no indirect fitness effects, you should
 therefore set convertToSubstitution to T.
-See sections 21.3, 22.5, and 23.9.1 for further discussion regarding the convertToSubstitution
+See sections 22.3, 23.5, and 24.10.1 for further discussion regarding the convertToSubstitution
 property.
 (object<MutationType>$)initializeMutationTypeNuc(is$ id, numeric$ dominanceCoeff,
 string$ distributionType, ...)
@@ -315,7 +316,7 @@ recombination rate of 1 centimorgan/Mbp corresponds to a recombination rate of 1
 used by SLiM.
 For example, if the following call is made:
 TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 469
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 522
 initializeRecombinationRate(c(0, 0.5, 0), c(5000, 5001, 9999));
 then the result is that the recombination rates between bases 0 / 1, 1 / 2, ..., 4999 / 5000 will be 0, the
 rate between bases 5000 / 5001 will be 0.5, and the rate between bases 5001 / 5002 onward (up to
@@ -355,19 +356,22 @@ knows from the outset which optional features are enabled and which are not.
 If keepPedigrees is T, SLiM will keep pedigree information for every individual in the simulation,
 tracking the identity of its parents and grandparents. This allows individuals to assess their degree of
 pedigree-based relatedness to other individuals (see Individual’s relatedness() method, section
-23.6.2), as well as allowing a model to find “trios” (two parents and an offspring they generated) using
-the pedigree properties of Individual (section 23.6.1). As a side effect of keepPedigrees being T,
+24.6.2), as well as allowing a model to find “trios” (two parents and an offspring they generated) using
+the pedigree properties of Individual (section 24.6.1). As a side effect of keepPedigrees being T,
 the pedigreeID, pedigreeParentIDs, and pedigreeGrandparentIDs properties of Individual
-will have defined values (see section 23.6.1), as will the genomePedigreeID property of Genome (see
-section 23.3.1). Note that pedigree-based relatedness doesn’t necessarily correspond to genetic
+will have defined values (see section 24.6.1), as will the genomePedigreeID property of Genome (see
+section 24.3.1). Note that pedigree-based relatedness doesn’t necessarily correspond to genetic
 relatedness, due to effects such as assortment and recombination. For an overview of other ways of
 tracking genetic ancestry, including true local ancestry at each position on the chromosome, see
-sections 1.7 and 14.7.
+sections 1.7 and 14.7. Beginning in SLiM 3.5, keepPedigrees=T also enables tracking of individual
+reproductive output, available through the reproductiveOutput property of Individual (see
+section 24.6.1) and the lifetimeReproductiveOutput property of Subpopulation (see section
+24.14.1).
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 523
 If dimensionality is not "", SLiM will enable its optional “continuous space” facility. Three values
 for dimensionality are presently supported: "x", "xy", and "xyz", specifying that continuous space
 should be enabled for one, two, or three dimensions, respectively, using (x), (x, y), and (x, y, z)
-TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 470
 coordinates respectively. This has a number of side effects. First of all, it means that the specified
 properties of Individual (x, y, and/or z) will be interpreted by SLiM as spatial positions; in particular,
 SLiMgui will use those properties to display subpopulations spatially. Second, it allows spatial
@@ -418,11 +422,11 @@ prevented, SLiM will hang if it is unable to find a different second parent; the
 two individuals in the population with non-zero fitness, and mateChoice() and modifyChild()
 callbacks must not absolutely prevent those two individuals from producing viable offspring.
 Enforcement of the prohibition on incidental selfing will occur after mateChoice() callbacks have
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 524
 been called (and thus the default mating weights provided to mateChoice() callbacks will not
 exclude the first parent!), but will occur before modifyChild() callbacks are called (so those
 callbacks may assume that the first and second parents are distinct).
-TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 471
 If nucleotideBased is T, the model will be nucleotide-based. In this case, auto-generated mutations
 (i.e., mutation types used by genomic element types) must be nucleotide-based, and an ancestral
 nucleotide sequence must be supplied with initializeAncestralNucleotides(). Nonnucleotide-
@@ -435,7 +439,8 @@ argument list. Using named arguments with this call is recommended for readabili
 turning on optional features may increase the runtime and memory footprint of SLiM.
 (void)initializeTreeSeq([logical$ recordMutations = T],
 [Nif$ simplificationRatio = NULL], [Ni$ simplificationInterval = NULL],
-[logical$ checkCoalescence = F], [logical$ runCrosschecks = F])
+[logical$ checkCoalescence = F], [logical$ runCrosschecks = F],
+[logical$ retainCoalescentOnly = T])
 Configure options for tree sequence recording. Calling this function turns on tree sequence recording,
 as a side effect, for later reconstruction of the simulation’s evolutionary dynamics; if you do not want
 tree sequence recording to be enabled, do not call this function.
@@ -471,14 +476,23 @@ larger initial interval so that the early part of the model run is not excessive
 simplification.
 The checkCoalescence parameter controls whether a check for full coalescence is conducted after
 each simplification. If a model will call treeSeqCoalesced() to check for coalescence during its
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 525
 execution, checkCoalescence should be set to T. Since the coalescence checks entail a performance
 penalty, the default of F is preferable otherwise. See the documentation for treeSeqCoalesced() for
 further discussion.
-TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 472
 The runCrosschecks parameter controls whether cross-checks between SLiM’s internal data
 structures and the tree-sequence recording data structures will be conducted. These two sets of data
 structures record much the same thing (mutations in genomes), but using completely different
 representations, so such cross-checks can be useful to confirm that the two data structures do indeed
 represent the same conceptual state. This slows down the model considerably, however, and would
 normally be turned on only for debugging purposes, so it is turned off by default.
+The retainCoalescentOnly parameter controls how, exactly, simplification of the tree-sequence
+data is performed in SLiM (both for auto-simplification and for calls to treeSeqSimplify()). More
+specifically, this parameter controls the behavior of simplification for individuals and genomes that
+have been “retained” by calling treeSeqRememberIndividuals() with the parameter permanent=F.
+The default of retainCoalescentOnly=T helps to keep the number of retained individuals relatively
+small, which is helpful if your simulation regularly flags many individuals for retaining. In this case,
+changing retainCoalescentOnly to F may dramatically increase memory usage and runtime, in a
+similar way to permanently remembering all the individuals. See the documentation of
+treeSeqRememberIndividuals() for further discussion (section 24.13.2).

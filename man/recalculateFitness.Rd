@@ -26,6 +26,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=571}{SLiM manual: page 571}.
+
 Force an immediate recalculation of fitness values for all individuals
 in all subpopulations. Normally fitness values are calculated at a fixed
 point in each generation, and those values are cached and used throughout the

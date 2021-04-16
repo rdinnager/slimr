@@ -40,11 +40,17 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=536}{SLiM manual: page 536}.
+
 Returns a logical vector indicating whether each of the mutations
 in mutations is present in the genome; each element in the returned vector
 indicates whether the corresponding mutation is present (T) or absent (F). This
 method is provided for speed; it is much faster than the corresponding Eidos
 code.
+
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=545}{SLiM manual: page 545}.
 
 Returns a logical vector indicating whether each of the mutations in
 mutations is present in the individual (in either of its genomes); each element

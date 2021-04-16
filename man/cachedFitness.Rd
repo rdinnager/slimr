@@ -25,6 +25,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=581}{SLiM manual: page 581}.
+
 The fitness values calculated for the individuals at the indices
 given are returned. If NULL is passed, fitness values for all individuals in
 the subpopulation are returned. The fitness values returned are cached values;

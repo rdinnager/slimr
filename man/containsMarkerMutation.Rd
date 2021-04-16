@@ -33,6 +33,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=535}{SLiM manual: page 535}.
+
 Returns T if the genome contains a mutation of type mutType at
 position, F otherwise (if returnMutation has its default value of F; see
 below). This method is, as its name suggests, intended for checking for

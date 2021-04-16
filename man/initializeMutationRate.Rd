@@ -31,6 +31,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=520}{SLiM manual: page 520}.
+
 Set the mutation rate per base position per generation along the
 chromosome. To be precise, this mutation rate is the expected mean number of
 mutations that will occur per base position per generation (per new offspring

@@ -33,6 +33,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=566}{SLiM manual: page 566}.
+
 Add a new subpopulation with id subpopID and size individuals.
 The subpopID parameter may be either an integer giving the ID of the new
 subpopulation, or a string giving the name of the new subpopulation (such as
@@ -40,7 +43,7 @@ subpopulation, or a string giving the name of the new subpopulation (such as
 initial sex ratio may optionally be specified as sexRatio (as the male fraction,
 M:M+F); if it is not specified, a default of 0.5 is used. The new subpopulation
 will be defined as a global variable immediately by this method (see section
-23.13), and will also be returned by this method. Subpopulations added by this
+24.14), and will also be returned by this method. Subpopulations added by this
 method will initially consist of individuals with empty genomes. In order to
 model subpopulations that split from an already existing subpopulation, use
 addSubpopSplit().

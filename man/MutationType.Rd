@@ -6,7 +6,7 @@
 \alias{.MT}
 \title{MutationType}
 \format{
-An object of class \code{list} of length 15.
+An object of class \code{list} of length 13.
 }
 \usage{
 MutationType
@@ -15,12 +15,78 @@ MutationType
 Documentation for MutationType class from SLiM
 }
 \details{
+This class represents a type of mutation with a particular distribution
+of fitness effects, such as
+neutral mutations or weakly beneficial mutations. Sections 1.5.3 and 1.5.4
+present an overview of
+the conceptual role of this class. The mutation types currently defined in the
+simulation are
+defined as global constants with the same names used in the SLiM input file –
+m1, m2, and so forth.
+There are currently six options for the distribution of fitness effects in SLiM,
+represented by
+single-character codes:
+"f" – A fixed fitness effect. This DFE type has a single parameter, the
+selection coefficient s to
+be used by all mutations of the mutation type.
+"g" – A gamma-distributed fitness effect. This DFE type is specified by two
+parameters, a mean
+value and a shape parameter. The gamma distribution from which mutations are
+drawn is given by
+the probability density function P(s | α,β) = [Γ(α)βα]−1sα−1exp(−s/β), where α
+is the shape parameter,
+and the specified mean for the distribution is equal to αβ. Note that this
+parameterization is the
+same as for the Eidos function rgamma(). A gamma distribution is often used to
+model deleterious
+mutations at functional sites.
+"e" – An exponentially-distributed fitness effect. This DFE type is specified by
+a single
+parameter, the mean of the distribution. The exponential distribution from which
+mutations are
+drawn is given by the probability density function P(s | β) = β−1exp(−s/β),
+where β is the specified
+mean for the distribution. This parameterization is the same as for the Eidos
+function rexp(). An
+exponential distribution is often used to model beneficial mutations.
+"n" – A normally-distributed fitness effect. This DFE type is specified by two
+parameters, a
+mean and a standard deviation. The normal distribution from which mutations are
+drawn is given
+by the probability density function P(s | μ,σ) = (2πσ2)−1/2exp(−(s−μ)2/2σ2),
+where μ is the mean and σ
+is the standard deviation. This parameterization is the same as for the Eidos
+function rnorm(). A
+normal distribution is often used to model mutations that can be either
+beneficial or deleterious,
+since both tails of the distribution are unbounded.
+"w" – A Weibull-distributed fitness effect. This DFE type is specified by a
+scale parameter and a
+shape parameter. The Weibull distribution from which mutations are drawn is
+given by the
+probability density function P(s | λ,k) = (k/λk)sk−1exp(−(s/λ)k), where λ is the
+scale parameter and k is
+the shape parameter. This parameterization is the same as for the Eidos function
+rweibull(). A
+Weibull distribution is often used to model mutations following extreme-value
+theory.
+"s" – A script-based fitness effect. This DFE type is specified by a script
+parameter of type
+string, specifying an Eidos script to be executed to produce each new selection
+coefficient. For
+example, the script "return rbinom(1);" could be used to generate selection
+coefficients drawn
+from a binomial distribution, using the Eidos function rbinom(), even though
+that mutational
+distribution is not supported by SLiM directly. The script must return a
+singleton float or integer.
+Note that these distributions can in principle produce selection coefficients
+smaller than -1.0.
+In that case, the mutations w
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{drawSelectionCoefficient}}}
-\item{\code{\link{getValue}}}
 \item{\code{\link{setDistribution}}}
-\item{\code{\link{setValue}}}
 }
 This class has the following properties:
 \describe{
@@ -61,7 +127,7 @@ calculations (unless the callback explicitly consulted the list of Substitution
 objects kept by the simulation). Other script-defined behaviors in fitness(),
 interaction(), mateChoice(), modifyChild(), and recombination() callbacks might
 also necessitate the disabling of substitution for a given mutation type; this
-is an important consideration to keep in mind. See section 21.3 for further
+is an important consideration to keep in mind. See section 22.3 for further
 discussion of convertToSubstitution in WF models. In contrast, for nonWF models
 this property is F by default, because even mutations with no epistatis or other
 indirect fitness effects will continue to influence the survival probabilities
@@ -70,7 +136,7 @@ or other side effects can safely be converted to substitutions upon fixation.
 When such a pure-neutral mutation type is defined in a nonWF model, this
 property should be set to T to tell SLiM that substitution is allowed; this may
 have very large positive effects on performance, so it is important to remember
-when modeling background neutral mutations. See section 22.5 for further
+when modeling background neutral mutations. See section 23.5 for further
 discussion of convertToSubstitution in nonWF models. SLiM consults this flag
 at the end of each generation when deciding whether to substitute each fixed
 mutation. If this flag is T, all eligible fixed mutations will be converted at
@@ -88,7 +154,7 @@ other DFE types. }
 float or string or float or integer or integer or string or logical or integer.
 It is of length one (a singleton). This property is a constant, so it is not
 modifiable. \strong{Property Description:} The type of distribution of fitness
-effects; one of "f", "g", "e", "n", "w", or "s" (see section 23.9, above). }
+effects; one of "f", "g", "e", "n", "w", or "s" (see section 24.10, above). }
 \item{dominanceCoeff}{A property of type string or string or logical or float
 or string or float or integer or integer or string or logical or integer.
 It is of length one (a singleton). This property is a variable, so it is
@@ -178,8 +244,9 @@ length one (a singleton). This property is a variable, so it is modifiable.
 is initially undefined, and it is an error to try to read it; if you wish it to
 have a defined value, you must arrange that yourself by explicitly setting its
 value prior to using it elsewhere in your code. The value of tag is not used by
-SLiM; it is free for you to use. See also the getValue() and setValue() methods,
-for another way of attaching state to mutation types.}
+SLiM; it is free for you to use. See also the getValue() and setValue() methods
+(provided by the Dictionary class; see the Eidos manual), for another way of
+attaching state to mutation types.}
 
 }
 }

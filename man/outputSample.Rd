@@ -38,8 +38,11 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=583}{SLiM manual: page 583}.
+
 Output a random sample from the subpopulation in SLiM’s native format
-(see section 25.2.1 for output format details). A sample of genomes (not entire
+(see section 26.2.1 for output format details). A sample of genomes (not entire
 individuals, note) of size sampleSize from the subpopulation will be output. The
 sample may be done either with or without replacement, as specified by replace;
 the default is to sample with replacement. A particular sex of individuals may

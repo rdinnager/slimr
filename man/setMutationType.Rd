@@ -13,7 +13,7 @@ setMutationType(mutType)
 length 1 (a singleton). See details for description.}
 }
 \value{
-An object of type any but object or void or void or void.
+An object of type void or void.
 }
 \description{
 Documentation for SLiM function \code{setMutationType}, which is a method of the
@@ -26,6 +26,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=558}{SLiM manual: page 558}.
+
 Set the mutation type of the mutation to mutType (which may be
 specified as either an integer identifier or a MutationType object). This
 implicitly changes the dominance coefficient of the mutation to that of the new

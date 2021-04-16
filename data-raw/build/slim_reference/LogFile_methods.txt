@@ -1,0 +1,76 @@
+– (void)addCustomColumn(string$ columnName, string$ source, [* context = NULL])
+Adds a new data column with its name provided by columnName. The value for the column, when a
+given row is generated, will be produced by the code supplied in source, which is expected to return
+either NULL (which will write out NA), or a singleton value of any non-object type.
+The context parameter will be set up as a pseudo-parameter, named context, when source is
+called, allowing the same source code to be used to generate values for multiple data columns; you
+might, for example, provide the particular Subpopulation object here that you wish source to use
+for its calculations. This is optional; if the default value of NULL is used, then context will be NULL
+when source is called.
+See addMeanSDColumns() for a useful variant.
+– (void)addGeneration(void)
+Adds a new data column that provides the generation number, named generation.
+– (void)addGenerationStage(void)
+Adds a new data column that provides the generation cycle stage, named gen_stage. The stage is
+provided as a string, and will typically be "early", "late", or "end" (the latter used for the point
+in time at which end-of-generation automatic logging occurs). Other possible values are discussed in
+the documentation for the generationStage property of SLiMSim, which this column reflects.
+– (void)addKeysAndValuesFrom(object$ source)
+This Dictionary method has an override in LogFile to make it illegal to call, since LogFile
+manages its Dictionary entries.
+– (void)addMeanSDColumns(string$ columnName, string$ source, [* context = NULL])
+Adds two new data columns with names of columnName_mean and columnName_sd. When a given
+row is generated, the code supplied in source is expected to return either a zero-length vector of any
+type including NULL (which will write out NA to both columns), or a non-zero-length vector of
+integer or float values. In the latter case, the result vector will be summarized in the two columns
+by its mean and standard deviation respectively. If the result vector has exactly one value, the
+standard deviation will be written as NA. The context parameter is set up as a pseudo-parameter
+when source is called, as described in addCustomColumn().
+– (void)addPopulationSexRatio(void)
+Adds a new data column that provides the population sex ratio M:(M+F), named sex_ratio. If the
+model is hermaphroditic, NA will be written.
+– (void)addPopulationSize(void)
+Adds a new data column that provides the total population size, named num_individuals.
+– (void)addSubpopulationSexRatio(io<Subpopulation>$ subpop)
+Adds a new data column that provides the sex ratio M:(M+F) of the subpopulation subpop, named
+pX_sex_ratio. If the subpopulation exists but has a size of zero, NA will be written.
+– (void)addSubpopulationSize(io<Subpopulation>$ subpop)
+Adds a new data column that provides the size of the subpopulation subpop, named
+pX_num_individuals. If the subpopulation exists but has a size of zero, 0 will be written.
+– (void)clearKeysAndValues(void)
+This Dictionary method has an override in LogFile to make it illegal to call, since LogFile
+manages its Dictionary entries.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 555
+– (void)flush(void)
+Flushes all buffered data to the output file, synchronously. This will make the contents of the file on
+disk be up-to-date with the running simulation. Flushing frequently may entail a small performance
+penalty. More importantly, if .gz compression has been requested with compress=T the size of the
+resulting file will be larger – potentially much larger – if flush() is called frequently. Note that
+automatic periodic flushing can be requested with the flushInterval parameter to
+createLogFile().
+– (void)logRow(void)
+This logs a new row of data, by evaluating all of the generators added to the LogFile with add...()
+calls. Note that the new row may be buffered, and thus may not be written out to disk immediately;
+see flush(). This method may be used instead of, or in conjunction with, automatic logging.
+You can get the LogFile instance, in order to call logRow() on it, from sim.logFiles, or you can
+remember it in a global constant with defineConstant().
+– (void)setLogInterval([Ni$ logInterval = NULL])
+Sets the automatic logging interval. A logInterval of NULL stops automatic logging immediately.
+Other values request that a new row should be logged (as if logRow() were called) at the end of every
+logInterval generations (just before the generation count increment, in both WF and nonWF
+models), starting at the end of the generation in which setLogInterval() was called.
+– (void)setFilePath(string$ filePath, [Ns initialContents = NULL],
+[logical$ append = F], [Nl$ compress = NULL], [Ns$ sep = NULL])
+Redirects the LogFile to write new rows to a new filePath. Any rows that have been buffered but
+not flushed will be written to the previous file first, as if flush() had been called. With this call, new
+initialContents may be supplied, which will either replace any existing file or will be appended to
+it, depending upon the value of append. New values may be supplied for compress and sep; the
+meaning of these parameters is identical to their meaning in createLogFile(), except that a value of
+NULL for these means “do not change this setting from its previous value”. In effect, then, this method
+lets you start a completely new log file at a new path, without having to create and configure a new
+LogFile object. The new file will be created (or appended) synchronously, with the specified initial
+contents.
+– (void)setValue(string$ key, * value)
+This Dictionary method has an override in LogFile to make it illegal to call, since LogFile
+manages its Dictionary entries.

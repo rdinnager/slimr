@@ -29,6 +29,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=530}{SLiM manual: page 530}.
+
 Draw recombination breakpoints, using the chromosome’s recombination
 rate map, the current gene conversion parameters, and (in some cases – see
 below) any active and applicable recombination() callbacks. The number of

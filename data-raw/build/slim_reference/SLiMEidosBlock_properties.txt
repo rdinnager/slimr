@@ -6,8 +6,6 @@ used instead of -1 to represent that a block is active; for example, active may 
 make a block execute a fixed number of times in each generation. This value is not cached by SLiM; if
 it is changed, the new value takes effect immediately. For example, a callback might be activated and
 inactivated repeatedly during a single generation.
-TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 505
 end => (integer$)
 The last generation in which the script block is active.
 id => (integer$)
@@ -21,7 +19,9 @@ tag <–> (integer$)
 A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read
 it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value
 prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 562
 type => (string$)
 The type of the script block; this will be "early" or "late" for the two types of Eidos events, or
 "initialize", "fitness", "mateChoice", "modifyChild", or "recombination" for the
-respective types of Eidos callbacks (see section 23.1 and chapter 24).
+respective types of Eidos callbacks (see section 24.1 and chapter 25).

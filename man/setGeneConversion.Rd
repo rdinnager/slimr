@@ -41,12 +41,15 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=531}{SLiM manual: page 531}.
+
 This method switches the recombination model to the "double-stranded
 break (DSB)” model (if it is not already set to that), and configures the
 details of the gene conversion tracts that will therefore be modeled (see
 section 1.5.6 for discussion of the "DSB” recombination model). The meanings
 and effects of the parameters exactly mirror the initializeGeneConversion()
-function; see section 23.1 for details.
+function; see section 24.1 for details.
 }
 \section{Copyright}{
 

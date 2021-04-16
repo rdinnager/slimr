@@ -26,15 +26,18 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=567}{SLiM manual: page 567}.
+
 All SLiMEidosBlock objects specified by scriptBlocks (either with
 SLiMEidosBlock objects or with integer identifiers) will be scheduled for
 deregistration. The deregistered blocks remain valid, and may even still be
-executed in the current stage of the current generation (see section 24.9); the
+executed in the current stage of the current generation (see section 25.9); the
 blocks are not actually deregistered and deallocated until sometime after the
 currently executing script block has completed. To immediately prevent a script
 block from executing, even when it is scheduled to execute in the current stage
 of the current generation, use the active property of the script block (see
-sections 23.10.1 and 24.9).
+sections 24.11.1 and 25.9).
 }
 \section{Copyright}{
 

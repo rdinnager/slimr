@@ -31,14 +31,17 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Output all of the given mutations (see section 25.1.3 for output
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=569}{SLiM manual: page 569}.
+
+Output all of the given mutations (see section 26.1.3 for output
 format details). This can be used to output all mutations of a given mutation
 type, for example. If the optional parameter filePath is NULL (the default),
 output will be sent to Eidos’s output stream (see section 4.2.1). Otherwise,
 output will be sent to the filesystem path specified by filePath, overwriting
 that file if append if F, or appending to the end of it if append is T. In SLiM
 3.3 and later, the output format includes the nucleotides associated with any
-nucleotide-based mutations; see section 25.1.3. Output is generally done in a
+nucleotide-based mutations; see section 26.1.3. Output is generally done in a
 late() event, so that the output reflects the state of the simulation at the end
 of a generation.
 }

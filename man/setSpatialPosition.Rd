@@ -25,6 +25,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=545}{SLiM manual: page 545}.
+
 Sets the spatial position of the individual (as accessed through
 the spatialPosition property). The length of position (the number of
 coordinates in the spatial position of an individual) depends upon the

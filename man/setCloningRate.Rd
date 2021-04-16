@@ -25,6 +25,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=586}{SLiM manual: page 586}.
+
 Set the cloning rate of this subpopulation. The rate is changed to
 rate, which should be between 0.0 and 1.0, inclusive. Clonal reproduction can
 be enabled in both non-sexual (i.e. hermaphroditic) and sexual simulations. In

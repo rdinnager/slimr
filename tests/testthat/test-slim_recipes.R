@@ -26,7 +26,7 @@ test_that("All SLiM recipes can be converted to slimr_script objects properly", 
   #skip_on_covr()
 
   for(i in seq_along(slim_recipes)) {
-    #print(i)
+    print(i)
     slim_scripts[[i]] <-  as_slimr_script(slim_recipes[[i]])
     expect_s3_class(slim_scripts[[!!i]], "slimr_script")
     if(!i %in% recipes_using_files) {

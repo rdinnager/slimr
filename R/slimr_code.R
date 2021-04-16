@@ -95,7 +95,8 @@ slimr_code_replace_returns <- function(code_one) {
 
 
 slimr_code_remove_comments <- function(code_one) {
-  code <- stringr::str_replace_all(code_one, "//([^\"]+?)(\\n|$)", "\n")
+  #code <- stringr::str_replace_all(code_one, "//([^\"]+?)(\\n|$)", "\n")
+  code <- stringr::str_replace_all(code_one, '(?<!")//(.*?)(\\n|$)', "\n")
   stringr::str_remove_all(code, stringr::regex("/\\*(.*?)\\*/", dotall = TRUE))
 
 }

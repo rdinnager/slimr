@@ -7,7 +7,8 @@ zip::unzip("data-raw/recipes.zip") ## doesn't work, had to do it manually with w
 files <- list.files("data-raw/SLiM_Recipes/", full.names = TRUE)
 
 recipes <- files %>%
-  grep("Recipe ", .,  value = TRUE)
+  grep("Recipe ", .,  value = TRUE) %>%
+  grep(".py", .,  value = TRUE, invert = TRUE)
 
 resources <- files[!stringr::str_detect(files, "Recipe ")]
 resources <- resources[resources != "_README.txt"]

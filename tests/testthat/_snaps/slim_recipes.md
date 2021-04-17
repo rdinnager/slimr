@@ -133,6 +133,31 @@
         initializeMutationRate(1e-07);
         initializeMutationType("m1", 0.5, "f", 0);
         initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 999999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        sim.addSubpop("p1", 1000);
+        sim.addSubpop("p2", 1000);
+        p1.setMigrationRates(p2, 0.001);
+        p2.setMigrationRates(p1, 0.001);
+        log = sim.createLogFile("~/Desktop/sim_log.txt", logInterval = 10);
+        log.addGeneration();
+        log.addCustomColumn("FST", "calcFST(p1.genomes, p2.genomes);");
+    }
+    
+    block_3:20000 late() {
+        ;
+    }
+
+---
+
+    <slimr_script[3]>
+    block_1:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
         initializeGenomicElement(g1, 0, 99999);
         initializeRecombinationRate(1e-08);
     }
@@ -147,10 +172,10 @@
         m = sortBy(unique(g.mutations), "position");
         cat("\n\nsegsites: " + size(m) + "\n");
         positions = format("%.6f", m.position/sim.chromosome.lastPosition);
-        cat("positions: " + paste(positions, " ") + "\n");
+        cat("positions: " + paste(positions, sep = " ") + "\n");
         for (genome in g) {
             hasMuts = (match(m, genome.mutations) >= 0);
-            cat(paste(asInteger(hasMuts), "") + "\n");
+            cat(paste(asInteger(hasMuts), sep = "") + "\n");
         }
     }
 
@@ -178,7 +203,7 @@
     }
     
     block_5:10000 late() {
-        sim.outputFull();
+        sim.outputFixedMutations();
     }
 
 ---
@@ -202,7 +227,7 @@
     }
     
     block_4:10000 late() {
-        sim.outputFull();
+        sim.outputFixedMutations();
     }
 
 ---
@@ -226,7 +251,7 @@
     }
     
     block_4:10000 late() {
-        sim.outputFull();
+        sim.outputFixedMutations();
     }
 
 ---
@@ -250,7 +275,7 @@
     }
     
     block_4:10000 late() {
-        sim.outputFull();
+        sim.outputFixedMutations();
     }
 
 ---
@@ -274,7 +299,7 @@
     }
     
     block_4:10000 late() {
-        sim.outputFull();
+        sim.outputFixedMutations();
     }
 
 ---
@@ -298,7 +323,7 @@
     }
     
     block_4:10000 late() {
-        sim.outputFull();
+        sim.outputFixedMutations();
     }
 
 ---
@@ -322,7 +347,7 @@
     }
     
     block_4:10000 late() {
-        sim.outputFull();
+        sim.outputFixedMutations();
     }
 
 ---
@@ -349,7 +374,7 @@
     }
     
     block_4:10000 late() {
-        sim.outputFull();
+        sim.outputFixedMutations();
     }
 
 ---
@@ -372,7 +397,7 @@
     }
     
     block_3:10000 late() {
-        sim.outputFull();
+        sim.outputFixedMutations();
     }
 
 ---
@@ -416,7 +441,7 @@
     }
     
     block_8:10000 late() {
-        sim.outputFull();
+        sim.outputFixedMutations();
     }
 
 ---
@@ -460,7 +485,38 @@
     }
     
     block_8:10000 late() {
-        sim.outputFull();
+        sim.outputFixedMutations();
+    }
+
+---
+
+    <slimr_script[5]>
+    block_1:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        sim.addSubpop("p1", 500);
+        sim.addSubpop("p2", 1000);
+    }
+    
+    block_3:1000 early() {
+        sim.addSubpop("p3", 300);
+        p3.setMigrationRates(c(p1, p2), c(0.75, 0.25));
+    }
+    
+    block_4:1000 late() {
+        p3.setMigrationRates(c(p1, p2), c(0, 0));
+        p1.setSubpopulationSize(0);
+        p2.setSubpopulationSize(0);
+    }
+    
+    block_5:10000 late() {
+        sim.outputFixedMutations();
     }
 
 ---
@@ -482,7 +538,7 @@
     }
     
     block_3:10000 late() {
-        sim.outputFull();
+        sim.outputFixedMutations();
     }
 
 ---
@@ -503,7 +559,7 @@
     }
     
     block_3:10000 late() {
-        sim.outputFull();
+        sim.outputFixedMutations();
     }
 
 ---
@@ -533,7 +589,7 @@
     }
     
     block_3:10000 late() {
-        sim.outputFull();
+        sim.outputFixedMutations();
     }
 
 ---
@@ -569,7 +625,7 @@
     }
     
     block_3:10000 late() {
-        sim.outputFull();
+        sim.outputFixedMutations();
     }
 
 ---
@@ -579,41 +635,88 @@
         initializeMutationRate(2.36e-08);
         initializeMutationType("m1", 0.5, "f", 0);
         initializeGenomicElementType("g1", m1, 1);
-        initializeGenomicElement(g1, 0, 10000);
+        initializeGenomicElement(g1, 0, 9999);
         initializeRecombinationRate(1e-08);
     }
     
     block_2:1 early() {
-        sim.addSubpop("p1", 7310);
+        sim.addSubpop("p1", asInteger(round(7310.37086759523)));
     }
     
-    block_3:52080 early() {
-        p1.setSubpopulationSize(14474);
+    block_3:73105 {
+        p1.setSubpopulationSize(asInteger(round(14474.5460875357)));
     }
     
-    block_4:55960 early() {
-        sim.addSubpopSplit("p2", 1861, p1);
-        p1.setMigrationRates(c(p2), c(0.00015));
-        p2.setMigrationRates(c(p1), c(0.00015));
+    block_4:76968 {
+        sim.addSubpopSplit("p2", asInteger(round(1861.28819002769)), p1);
+        p1.setMigrationRates(c(p2), c(0.0001524422112));
+        p2.setMigrationRates(c(p1), c(0.0001524422112));
     }
     
-    block_5:57080 early() {
-        sim.addSubpopSplit("p3", 554, p2);
-        p2.setSubpopulationSize(1032);
-        p1.setMigrationRates(c(p2, p3), c(2.5e-05, 7.8e-06));
-        p2.setMigrationRates(c(p1, p3), c(2.5e-05, 3.11e-05));
-        p3.setMigrationRates(c(p1, p2), c(7.8e-06, 3.11e-05));
+    block_5:78084 early() {
+        sim.addSubpopSplit("p3", asInteger(round(553.8181989)), p2);
+        p2.setSubpopulationSize(asInteger(round(1032.10469573334)));
+        p1.setMigrationRates(c(p2, p3), c(2.54332678e-05, 7.770583877e-06));
+        p2.setMigrationRates(c(p1, p3), c(2.54332678e-05, 3.115817913e-05));
+        p3.setMigrationRates(c(p1, p2), c(7.770583877e-06, 3.115817913e-05));
     }
     
-    block_6:57080:58000 early() {
-        t = sim.generation - 57080;
-        p2_size = round(1032 * exp(0.0038 * t));
-        p3_size = round(554 * exp(0.0048 * t));
+    block_6:78084:79024 early() {
+        t = sim.generation - 78084;
+        p2_size = round(1032.10469573334 * (1 + 0.003784324268)^t);
+        p3_size = round(553.8181989 * (1 + 0.004780219543)^t);
         p2.setSubpopulationSize(asInteger(p2_size));
         p3.setSubpopulationSize(asInteger(p3_size));
     }
     
-    block_7:58000 late() {
+    block_7:79024 late() {
+        p1.outputSample(216);
+        p2.outputSample(198);
+        p3.outputSample(206);
+    }
+
+---
+
+    <slimr_script[7]>
+    block_1:initialize() {
+        initializeMutationRate(2.36e-08);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 9999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        sim.addSubpop("p1", asInteger(round(7310.37086759523)));
+    }
+    
+    block_3:73105 {
+        p1.setSubpopulationSize(asInteger(round(14474.5460875357)));
+    }
+    
+    block_4:76968 {
+        sim.addSubpopSplit("p2", asInteger(round(1861.28819002769)), p1);
+        p1.setMigrationRates(c(p2), c(0.0001524422112));
+        p2.setMigrationRates(c(p1), c(0.0001524422112));
+    }
+    
+    block_5:78084 early() {
+        sim.addSubpopSplit("p3", asInteger(round(553.8181989)), p2);
+        p2.setSubpopulationSize(asInteger(round(1032.10469573334)));
+        p1.setMigrationRates(c(p2, p3), c(2.54332678e-05, 7.770583877e-06));
+        p2.setMigrationRates(c(p1, p3), c(2.54332678e-05, 3.115817913e-05));
+        p3.setMigrationRates(c(p1, p2), c(7.770583877e-06, 3.115817913e-05));
+    }
+    
+    block_6:78084:79024 early() {
+        t = sim.generation - 78084;
+        p2_size = round(1032.10469573334 * (1 + 0.003784324268)^t);
+        p3_size = round(553.8181989 * (1 + 0.004780219543)^t);
+        p2.setSubpopulationSize(asInteger(p2_size));
+        p3.setSubpopulationSize(asInteger(p3_size));
+    }
+    
+    block_7:79024 late() {
         p1.outputSample(216);
         p2.outputSample(198);
         p3.outputSample(206);
@@ -1197,7 +1300,7 @@
     block_1:initialize() {
         initializeMutationRate(1e-07);
         initializeMutationType("m1", 0.5, "f", 0);
-        initializeMutationType("m2", 1, "f", 0.5);
+        initializeMutationType("m2", 0.45, "f", 0.5);
         initializeGenomicElementType("g1", m1, 1);
         initializeGenomicElement(g1, 0, 99999);
         initializeRecombinationRate(1e-08);
@@ -1243,8 +1346,7 @@
     block_1:initialize() {
         initializeMutationRate(1e-07);
         initializeMutationType("m1", 0.5, "f", 0);
-        initializeMutationType("m2", 1, "f", 0.5);
-        m2.mutationStackPolicy = "f";
+        initializeMutationType("m2", 0.1, "f", 0.5);
         initializeGenomicElementType("g1", m1, 1);
         initializeGenomicElement(g1, 0, 99999);
         initializeRecombinationRate(1e-08);
@@ -1254,22 +1356,23 @@
         sim.addSubpop("p1", 500);
         gens = cumSum(rpois(10, 10));
         gens = gens + (1000 - min(gens));
+        defineConstant("Z", max(gens));
         for (gen in gens) sim.registerLateEvent(NULL, s1.source, gen, gen);
         sim.deregisterScriptBlock(s1);
     }
     
     block_3:s1 1000 late() {
-        sample(p1.genomes, 1) %.% addNewDrawnMutation(m2, 10000);
+        target = sample(p1.genomes, 1);
+        mut = sim.mutationsOfType(m2);
+        if (mut.size() > 0) target.addMutations(mut) else target.addNewDrawnMutation(m2, 10000);
     }
     
     block_4:1:10000 late() {
-        if (all(p1.genomes.countOfMutationsOfType(m2) > 0)) {
-            cat("Frequencies at completion:\n");
-            print(sim.mutationFrequencies(p1, sim.mutationsOfType(m2)));
+        if (any(sim.substitutions.mutationType == m2)) {
+            catn("Sweep completed in generation " + sim.generation + ".");
             sim.simulationFinished();
-        }
-        if ((sim.countOfMutationsOfType(m2) == 0) & (sim.generation > 1100)) {
-            cat("Soft sweep failed to establish.\n");
+        } else if ((sim.countOfMutationsOfType(m2) == 0) & (sim.generation > Z)) {
+            catn("Soft sweep failed to establish.");
             sim.simulationFinished();
         }
     }
@@ -1416,6 +1519,71 @@
         cat("Expected fixations: " + expected + "\n");
         cat("Actual fixations: " + actual + "\n");
         cat("Ratio, actual/expected: " + (actual/expected) + "\n");
+    }
+
+---
+
+    <slimr_script[4]>
+    block_1:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeMutationType("m2", 1, "f", 0.5);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        sim.addSubpop("p1", 500);
+    }
+    
+    block_3:1000 late() {
+        target = sample(p1.genomes, 1);
+        mut = target.addNewDrawnMutation(m2, 10000);
+        defineConstant("SWEEP", mut);
+    }
+    
+    block_4:1000:100000 late() {
+        if (!SWEEP.isSegregating) {
+            cat(ifelse(SWEEP.isFixed, "FIXED\n", "LOST\n"));
+            sim.simulationFinished();
+        }
+    }
+
+---
+
+    <slimr_script[5]>
+    block_1:initialize() {
+        defineConstant("L", 3e+06);
+        initializeMutationRate(1e-06);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeMutationType("m2", 0.8, "f", 0.5);
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, L - 1);
+        initializeRecombinationRate(1e-07);
+    }
+    
+    block_2:1 early() {
+        sim.addSubpop("p1", 500);
+    }
+    
+    block_3:1000 late() {
+        target = sample(p1.genomes, 1);
+        defineConstant("BACKGROUND", target.mutations);
+        mut = target.addNewDrawnMutation(m2, asInteger(L/2));
+        defineConstant("SWEEP", mut);
+    }
+    
+    block_4:1000:1500 late() {
+        if (!SWEEP.isSegregating & !SWEEP.isFixed) stop("LOST");
+    }
+    
+    block_5:1500 late() {
+        nonSeg = BACKGROUND[!BACKGROUND.isSegregating];
+        fixed = nonSeg[nonSeg.isFixed];
+        lost = nonSeg[!nonSeg.isFixed];
+        writeFile("~/Desktop/fixed.txt", paste(fixed.position, sep = ", "));
+        writeFile("~/Desktop/lost.txt", paste(lost.position, sep = ", "));
     }
 
 ---
@@ -1736,19 +1904,37 @@
 
 ---
 
-    <slimr_script[9]>
-    block_1:function (f$)calcFST(o<Subpopulation>$ subpop1, o<Subpopulation>$ subpop2) {
-        p1_p = sim.mutationFrequencies(subpop1);
-        p2_p = sim.mutationFrequencies(subpop2);
-        mean_p = (p1_p + p2_p)/2;
-        H_t = 2 * mean_p * (1 - mean_p);
-        H_s = p1_p * (1 - p1_p) + p2_p * (1 - p2_p);
-        fst = 1 - H_s/H_t;
-        fst = fst[!isNAN(fst)];
-        return(mean(fst));
+    <slimr_script[5]>
+    block_1:initialize() {
+        initializeMutationRate(1e-08);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeMutationType("m2", 0.5, "f", 0.05);
+        initializeGenomicElementType("g1", c(m1, m2), c(1, 0.01));
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
     }
     
-    block_2:initialize() {
+    block_2:1 early() {
+        sim.addSubpop("p1", 500);
+    }
+    
+    block_3:mutation(m2) {
+        mut.setValue("dom", runif(1));
+        return(T);
+    }
+    
+    block_4:fitness(m2) {
+        if (homozygous) return(1 + mut.selectionCoeff) else return(1 + mut.getValue("dom") * mut.selectionCoeff);
+    }
+    
+    block_5:100000 late() {
+        sim.outputFixedMutations();
+    }
+
+---
+
+    <slimr_script[8]>
+    block_1:initialize() {
         initializeMutationRate(1e-07);
         initializeMutationType("m1", 0.5, "f", 0);
         initializeMutationType("m2", 1, "f", 0.5);
@@ -1757,7 +1943,7 @@
         initializeRecombinationRate(1e-08);
     }
     
-    block_3:1 early() {
+    block_2:1 early() {
         sim.setValue("FST", 0);
         sim.addSubpop("p1", 500);
         sim.addSubpop("p2", 500);
@@ -1765,16 +1951,16 @@
         p2.setMigrationRates(p1, 0.1);
     }
     
-    block_4:1000 late() {
+    block_3:1000 late() {
         target = sample(p1.genomes, 1);
         target.addNewDrawnMutation(m2, 10000);
     }
     
-    block_5:fitness(m2, p2) {
+    block_4:fitness(m2, p2) {
         return(0.2);
     }
     
-    block_6:2000:19999 early() {
+    block_5:2000:19999 early() {
         inds = sim.subpopulations.individuals;
         inds.tag = inds.countOfMutationsOfType(m2);
         for (subpop in c(p1, p2)) {
@@ -1784,15 +1970,16 @@
         }
     }
     
-    block_7:2000:19999 mateChoice() {
+    block_6:2000:19999 mateChoice() {
         if (individual.tag > 0) return(weights * sourceSubpop.getValue("weights1")) else return(weights * sourceSubpop.getValue("weights2"));
     }
     
-    block_8:10000:19999 late() {
-        sim.setValue("FST", sim.getValue("FST") + calcFST(p1, p2));
+    block_7:10000:19999 late() {
+        FST = calcFST(p1.genomes, p2.genomes);
+        sim.setValue("FST", sim.getValue("FST") + FST);
     }
     
-    block_9:19999 late() {
+    block_8:19999 late() {
         cat("Mean FST at equilibrium: " + (sim.getValue("FST")/10000));
         sim.simulationFinished();
     }
@@ -2285,8 +2472,9 @@
         V_A = sd(additive)^2;
         V_E = (V_A - h2 * V_A)/h2;
         env = rnorm(size(inds), 0, sqrt(V_E));
-        inds.fitnessScaling = 1 + dnorm(10 - additive, 0, 5);
-        inds.tagF = additive + env;
+        phenotypes = additive + env;
+        inds.fitnessScaling = 1 + dnorm(10 - phenotypes, 0, 5);
+        inds.tagF = phenotypes;
     }
     
     block_4:fitness(m2) {
@@ -2315,96 +2503,192 @@
 
 ---
 
-    <slimr_script[6]>
+    <slimr_script[5]>
     block_1:initialize() {
         initializeMutationRate(1e-07);
         initializeMutationType("m1", 0.5, "f", 0);
-        initializeMutationType("m2", 0.5, "f", 0);
+        initializeMutationType("m2", 0.5, "n", 0, 0.15);
         m2.convertToSubstitution = F;
-        m2.color = "red";
-        initializeGenomicElementType("g1", m1, 1);
-        initializeGenomicElementType("g2", c(m1, m2), c(1, 0.1));
-        initializeGenomicElement(g1, 0, 39999);
-        initializeGenomicElement(g2, 40000, 49999);
-        initializeGenomicElement(g1, 50000, 79999);
-        initializeGenomicElement(g2, 80000, 89999);
-        initializeGenomicElement(g1, 90000, 99999);
+        initializeGenomicElementType("g1", c(m1, m2), c(1, 0.1));
+        initializeGenomicElement(g1, 0, 99999);
         initializeRecombinationRate(1e-08);
-        defineConstant("QTL_mu", c(0, 0));
-        defineConstant("QTL_cov", 0.25);
-        defineConstant("QTL_sigma", matrix(c(1, QTL_cov, QTL_cov, 1), nrow = 2));
-        defineConstant("QTL_optima", c(20, -20));
-        catn("\nQTL DFE means: ");
-        print(QTL_mu);
-        catn("\nQTL DFE variance-covariance matrix: ");
-        print(QTL_sigma);
     }
     
-    block_2:1 late() {
+    block_2:fitness(m2) {
+        return(1);
+    }
+    
+    block_3:1 early() {
         sim.addSubpop("p1", 500);
+        cat("Phenotypes: 0");
     }
     
-    block_3:1 late() {
-        sim.setValue("history", matrix(c(0, 0), nrow = 1));
-        defineConstant("pdfPath", writeTempFile("plot_", ".pdf", ""));
-        if (exists("slimgui")) slimgui.openDocument(pdfPath);
-    }
-    
-    block_4:mutation(m2) {
-        effects = rmvnorm(1, QTL_mu, QTL_sigma);
-        mut.setValue("e0", effects[0]);
-        mut.setValue("e1", effects[1]);
-        old_effects = sim.getValue("all_effects");
-        sim.setValue("all_effects", rbind(old_effects, effects));
-        return(T);
-    }
-    
-    block_5:late() {
-        for (ind in sim.subpopulations.individuals) {
-            muts = ind.genomes.mutationsOfType(m2);
-            phenotype0 = size(muts) %?% sum(muts.getValue("e0")) %else% 0;
-            phenotype1 = size(muts) %?% sum(muts.getValue("e1")) %else% 0;
-            ind.setValue("phenotype0", phenotype0);
-            ind.setValue("phenotype1", phenotype1);
-            effect0 = 1 + dnorm(QTL_optima[0] - phenotype0, 0, 20) * 10;
-            effect1 = 1 + dnorm(QTL_optima[1] - phenotype1, 0, 20) * 10;
-            ind.fitnessScaling = effect0 * effect1;
-        }
-    }
-    
-    block_6:1:1000000 late() {
-        if (sim.generation%%1000 != 0) return;
+    block_4:1:5000 late() {
         inds = sim.subpopulations.individuals;
-        p0_mean = mean(inds.getValue("phenotype0"));
-        p1_mean = mean(inds.getValue("phenotype1"));
-        catn();
-        catn("Generation: " + sim.generation);
-        catn("Mean phenotype 0: " + p0_mean + " (" + QTL_optima[0] + ")");
-        catn("Mean phenotype 1: " + p1_mean + " (" + QTL_optima[1] + ")");
-        history = sim.getValue("history");
-        history = rbind(history, c(p0_mean, p1_mean));
-        sim.setValue("history", history);
-        rstr = paste(c("{", "x <- c(" + paste(history[, 0], sep = ", ") + ")", "y <- c(" + paste(history[, 1], sep = ", ") + ")", "quartz(width=4, height=4, type=\"pdf\", file=\"" + pdfPath + "\")", "par(mar=c(4.0, 4.0, 1.5, 1.5))", "plot(x=c(-10,30), y=c(-30,10), type=\"n\", xlab=\"x\", ylab=\"y\")", "points(x=0,y=0,col=\"red\", pch=19, cex=2)", "points(x=20,y=-20,col=\"green\", pch=19, cex=2)", "points(x=x, y=y, col=\"black\", pch=19, cex=0.5)", "lines(x=x, y=y)", "dev.off()", "}"), sep = "\n");
-        scriptPath = writeTempFile("plot_", ".R", rstr);
-        system("/usr/local/bin/Rscript", args = scriptPath);
-        if ((abs(p0_mean - QTL_optima[0]) > abs(0.1 * QTL_optima[0])) | (abs(p1_mean - QTL_optima[1]) > abs(0.1 * QTL_optima[1]))) return;
+        phenotypes = inds.sumOfMutationsOfType(m2);
+        scale = dnorm(5, 5, 2);
+        inds.fitnessScaling = 1 + dnorm(phenotypes, 5, 2)/scale;
+        if (sim.generation%%10 == 0) cat(", " + mean(phenotypes));
+    }
+    
+    block_5:5000 late() {
         m2muts = sim.mutationsOfType(m2);
-        m2freqs = sim.mutationFrequencies(NULL, m2muts);
-        o = order(m2freqs, ascending = F);
-        m2muts = m2muts[o];
-        m2freqs = m2freqs[o];
-        m2e0 = m2muts.getValue("e0");
-        m2e1 = m2muts.getValue("e1");
-        catn("\nQTL mutations (f: e0, e1):");
-        for (i in seqAlong(m2muts)) catn(m2freqs[i] + ": " + m2e0[i] + ", " + m2e1[i]);
-        fixed_m2 = m2muts[m2freqs == 1];
-        cov_fixed = cov(fixed_m2.getValue("e0"), fixed_m2.getValue("e1"));
-        effects = sim.getValue("all_effects");
-        cov_drawn = cov(drop(effects[, 0]), drop(effects[, 1]));
-        catn("\nCovariance of effects among fixed QTLs: " + cov_fixed);
-        catn("\nCovariance of effects specified by the QTL DFE: " + QTL_cov);
-        catn("\nCovariance of effects across all QTL draws: " + cov_drawn);
-        sim.simulationFinished();
+        freqs = sim.mutationFrequencies(NULL, m2muts);
+        effects = m2muts.selectionCoeff;
+        catn();
+        print(cbind(freqs, effects));
+    }
+
+---
+
+    <slimr_script[5]>
+    block_1:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeMutationType("m2", 0.5, "n", 0, 0.15);
+        m2.convertToSubstitution = F;
+        initializeGenomicElementType("g1", c(m1, m2), c(1, 0.1));
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:fitness(m2) {
+        return(1);
+    }
+    
+    block_3:1 early() {
+        sim.addSubpop("p1", 500);
+        cat("Phenotypes: 0");
+    }
+    
+    block_4:1:5000 late() {
+        inds = sim.subpopulations.individuals;
+        phenotypes = inds.sumOfMutationsOfType(m2);
+        scale = dnorm(5, 5, 2);
+        inds.fitnessScaling = 1 + dnorm(phenotypes, 5, 2)/scale;
+        if (sim.generation%%10 == 0) cat(", " + mean(phenotypes));
+    }
+    
+    block_5:5000 late() {
+        m2muts = sim.mutationsOfType(m2);
+        freqs = sim.mutationFrequencies(NULL, m2muts);
+        effects = m2muts.selectionCoeff;
+        catn();
+        print(cbind(freqs, effects));
+    }
+
+---
+
+    <slimr_script[5]>
+    block_1:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeMutationType("m2", 0.5, "n", 0, 0.15);
+        m2.convertToSubstitution = F;
+        initializeGenomicElementType("g1", c(m1, m2), c(1, 0.1));
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:fitness(m2) {
+        return(1);
+    }
+    
+    block_3:1 early() {
+        sim.addSubpop("p1", 500);
+        cat("Phenotypes: 0");
+    }
+    
+    block_4:1:5000 late() {
+        inds = sim.subpopulations.individuals;
+        phenotypes = inds.sumOfMutationsOfType(m2);
+        scale = dnorm(5, 5, 2);
+        inds.fitnessScaling = 1 + dnorm(phenotypes, 5, 2)/scale;
+        if (sim.generation%%10 == 0) cat(", " + mean(phenotypes));
+    }
+    
+    block_5:5000 late() {
+        m2muts = sim.mutationsOfType(m2);
+        freqs = sim.mutationFrequencies(NULL, m2muts);
+        effects = m2muts.selectionCoeff;
+        catn();
+        print(cbind(freqs, effects));
+    }
+
+---
+
+    <slimr_script[5]>
+    block_1:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeMutationType("m2", 0.5, "n", 0, 0.15);
+        m2.convertToSubstitution = F;
+        initializeGenomicElementType("g1", c(m1, m2), c(1, 0.1));
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:fitness(m2) {
+        return(1);
+    }
+    
+    block_3:1 early() {
+        sim.addSubpop("p1", 500);
+        cat("Phenotypes: 0");
+    }
+    
+    block_4:1:5000 late() {
+        inds = sim.subpopulations.individuals;
+        phenotypes = inds.sumOfMutationsOfType(m2);
+        scale = dnorm(5, 5, 2);
+        inds.fitnessScaling = 1 + dnorm(phenotypes, 5, 2)/scale;
+        if (sim.generation%%10 == 0) cat(", " + mean(phenotypes));
+    }
+    
+    block_5:5000 late() {
+        m2muts = sim.mutationsOfType(m2);
+        freqs = sim.mutationFrequencies(NULL, m2muts);
+        effects = m2muts.selectionCoeff;
+        catn();
+        print(cbind(freqs, effects));
+    }
+
+---
+
+    <slimr_script[5]>
+    block_1:initialize() {
+        initializeMutationRate(1e-07);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeMutationType("m2", 0.5, "n", 0, 0.15);
+        m2.convertToSubstitution = F;
+        initializeGenomicElementType("g1", c(m1, m2), c(1, 0.1));
+        initializeGenomicElement(g1, 0, 99999);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:fitness(m2) {
+        return(1);
+    }
+    
+    block_3:1 early() {
+        sim.addSubpop("p1", 500);
+        cat("Phenotypes: 0");
+    }
+    
+    block_4:1:5000 late() {
+        inds = sim.subpopulations.individuals;
+        phenotypes = inds.sumOfMutationsOfType(m2);
+        scale = dnorm(5, 5, 2);
+        inds.fitnessScaling = 1 + dnorm(phenotypes, 5, 2)/scale;
+        if (sim.generation%%10 == 0) cat(", " + mean(phenotypes));
+    }
+    
+    block_5:5000 late() {
+        m2muts = sim.mutationsOfType(m2);
+        freqs = sim.mutationFrequencies(NULL, m2muts);
+        effects = m2muts.selectionCoeff;
+        catn();
+        print(cbind(freqs, effects));
     }
 
 ---
@@ -2428,17 +2712,8 @@
     }
     
     block_4:1000 late() {
-        total = 0;
-        for (ind in p1.individuals) {
-            muts0 = ind.genomes[0] %.% mutations;
-            muts1 = ind.genomes[1] %.% mutations;
-            shared_count = sum(match(muts0, muts1) >= 0);
-            unshared_count = muts0.size() + muts1.size() - 2 * shared_count;
-            pi_ind = unshared_count/(sim.chromosome.lastPosition + 1);
-            total = total + pi_ind;
-        }
-        pi = total/p1.individuals.size();
-        cat("Mean nucleotide heterozygosity = " + pi + "\n");
+        heterozygosity = calcHeterozygosity(p1.genomes);
+        cat("Mean heterozygosity = " + heterozygosity + "\n");
     }
 
 ---
@@ -2724,7 +2999,7 @@
         if (sim.mutationsOfType(m1) %.% size() == 0) {
             p3g = p3.genomes;
             p1Total = sum(p3g.countOfMutationsOfType(m2));
-            maxTotal = p3g.size() * (L - 1);
+            maxTotal = p3g.size() * L;
             p1TotalFraction = p1Total/maxTotal;
             catn("Fraction with p1 ancestry: " + p1TotalFraction);
             p1Counts = integer(L);
@@ -2750,13 +3025,14 @@
         initializeGenomicElementType("g1", m1, 1);
         initializeGenomicElement(g1, 0, 99999);
         initializeRecombinationRate(1e-08);
+        if (fileExists("/usr/bin/Rscript")) defineConstant("RSCRIPT", "/usr/bin/Rscript") else if (fileExists("/usr/local/bin/Rscript")) defineConstant("RSCRIPT", "/usr/local/bin/Rscript") else stop("Couldn't find Rscript.");
     }
     
     block_2:1 early() {
         sim.addSubpop("p1", 5000);
         sim.setValue("fixed", NULL);
-        defineConstant("pdfPath", writeTempFile("plot_", ".pdf", ""));
-        if (exists("slimgui")) slimgui.openDocument(pdfPath);
+        defineConstant("pngPath", writeTempFile("plot_", ".png", ""));
+        if (exists("slimgui")) slimgui.openDocument(pngPath);
     }
     
     block_3:1:50000 early() {
@@ -2766,9 +3042,9 @@
         }
         if (sim.generation%%1000 != 0) return;
         y = sim.getValue("fixed");
-        rstr = paste(c("{", "x <- (1:" + size(y) + ") * 10", "y <- c(" + paste(y, sep = ", ") + ")", "quartz(width=4, height=4, type=\"pdf\", file=\"" + pdfPath + "\")", "par(mar=c(4.0, 4.0, 1.5, 1.5))", "plot(x=x, y=y, xlim=c(0, 50000), ylim=c(0, 500), type=\"l\",", "xlab=\"Generation\", ylab=\"Fixed mutations\", cex.axis=0.95,", "cex.lab=1.2, mgp=c(2.5, 0.7, 0), col=\"red\", lwd=2,", "xaxp=c(0, 50000, 2))", "box()", "dev.off()", "}"), sep = "\n");
+        rstr = paste("{", "x <- (1:" + size(y) + ") * 10", "y <- c(" + paste(y, sep = ", ") + ")", "png(width=4, height=4, units=\"in\", res=72, file=\"" + pngPath + "\")", "par(mar=c(4.0, 4.0, 1.5, 1.5))", "plot(x=x, y=y, xlim=c(0, 50000), ylim=c(0, 500), type=\"l\",", "xlab=\"Generation\", ylab=\"Fixed mutations\", cex.axis=0.95,", "cex.lab=1.2, mgp=c(2.5, 0.7, 0), col=\"red\", lwd=2,", "xaxp=c(0, 50000, 2))", "box()", "dev.off()", "}", sep = "\n");
         scriptPath = writeTempFile("plot_", ".R", rstr);
-        system("/usr/local/bin/Rscript", args = scriptPath);
+        system(RSCRIPT, args = scriptPath);
         deleteFile(scriptPath);
     }
     
@@ -3680,8 +3956,8 @@
         p1.setSpatialBounds(c(0, 0, 0, 1, 1, 1));
         p1.individuals.setSpatialPosition(p1.pointUniform(N));
         p1.individuals.z = 0;
-        defineConstant("mapValues", runif(25, 0, 1));
-        p1.defineSpatialMap("map1", "xy", c(5, 5), mapValues, interpolate = T, valueRange = c(0, 1), colors = c("red", "yellow"));
+        defineConstant("mapValues", matrix(runif(25, 0, 1), ncol = 5));
+        p1.defineSpatialMap("map1", "xy", mapValues, interpolate = T, valueRange = c(0, 1), colors = c("red", "yellow"));
     }
     
     block_4:modifyChild() {
@@ -4312,7 +4588,7 @@
         child = subpop.addCrossed(individual, mate);
         child.tag = sim.tag;
         sim.tag = sim.tag + 1;
-        line = paste(c(sim.generation, individual.tag, mate.tag, child.tag));
+        line = paste(sim.generation, individual.tag, mate.tag, child.tag);
         writeFile("~/Desktop/mating.txt", line, append = T);
     }
     
@@ -4363,7 +4639,7 @@
         child = subpop.addCrossed(individual, mate);
         child.tag = sim.tag;
         sim.tag = sim.tag + 1;
-        line = paste(c(sim.generation, individual.tag, mate.tag, child.tag));
+        line = paste(sim.generation, individual.tag, mate.tag, child.tag);
         writeFile("~/Desktop/mating.txt", line, append = T);
     }
     
@@ -4585,6 +4861,356 @@
 
 ---
 
+    <slimr_script[7]>
+    block_1:function (i)driveBreakpoints(o<Genome>$ gen1, o<Genome>$ gen2) {
+        breaks = sim.chromosome.drawBreakpoints();
+        gen1has = gen1.containsMarkerMutation(m2, D_pos);
+        gen2has = gen2.containsMarkerMutation(m2, D_pos);
+        if (gen1has == gen2has) return(breaks);
+        polarity = sum(breaks <= D_pos)%%2;
+        polarityI = (gen1has %?% 0 %else% 1);
+        desiredPolarity = (runif(1) < D_prob) %?% polarityI %else% !polarityI;
+        if (desiredPolarity != polarity) return(c(0, breaks));
+        return(breaks);
+    }
+    
+    block_2:initialize() {
+        initializeSLiMModelType("nonWF");
+        defineConstant("K", 500);
+        defineConstant("D_pos", 20000);
+        defineConstant("D_prob", 0.8);
+        initializeMutationType("m1", 0.5, "f", 0);
+        m1.convertToSubstitution = T;
+        initializeMutationType("m2", 0.1, "f", -0.1);
+        m2.color = "red";
+        m2.convertToSubstitution = F;
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeMutationRate(1e-07);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_3:reproduction() {
+        m = subpop.sampleIndividuals(1);
+        b1 = driveBreakpoints(genome1, genome2);
+        b2 = driveBreakpoints(m.genome1, m.genome2);
+        subpop.addRecombinant(genome1, genome2, b1, m.genome1, m.genome2, b2);
+    }
+    
+    block_4:1 early() {
+        sim.addSubpop("p1", 10);
+    }
+    
+    block_5:early() {
+        p1.fitnessScaling = K/p1.individualCount;
+    }
+    
+    block_6:100 early() {
+        target = sample(p1.genomes, 10);
+        target.addNewDrawnMutation(m2, D_pos);
+    }
+    
+    block_7:100:1000 late() {
+        mut = sim.mutationsOfType(m2);
+        if (size(mut) == 0) {
+            catn(sim.generation + ": LOST");
+            sim.simulationFinished();
+        } else if (sim.mutationFrequencies(NULL, mut) == 1) {
+            catn(sim.generation + ": FIXED");
+            sim.simulationFinished();
+        }
+    }
+
+---
+
+    <slimr_script[7]>
+    block_1:initialize() {
+        initializeSLiMModelType("nonWF");
+        initializeSLiMOptions(dimensionality = "xy", periodicity = "xy");
+        defineConstant("K", 10000);
+        defineConstant("S", 0.01);
+        defineConstant("HEALTH_S", 0);
+        defineConstant("HEALTH_I", 1);
+        defineConstant("HEALTH_R", 2);
+        defineConstant("FERTILITY", 0.05);
+        defineConstant("INFECTIVITY", 4);
+        defineConstant("RATE_DEATH", 0.3);
+        defineConstant("RATE_CLEAR", 0.05);
+        defineConstant("MAX_AGE", 100);
+        initializeMutationType("m1", 0.5, "f", 0);
+        m1.convertToSubstitution = T;
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeMutationRate(1e-07);
+        initializeRecombinationRate(1e-08);
+        initializeInteractionType(1, "xy", reciprocal = T, maxDistance = S * 3);
+        i1.setInteractionFunction("n", 1, S);
+        initializeInteractionType(2, "xy", reciprocal = T, maxDistance = 0.05);
+    }
+    
+    block_2:reproduction() {
+        litterSize = rpois(1, FERTILITY);
+        if (litterSize) {
+            mate = i2.nearestNeighbors(individual, 1);
+            if (mate.size()) for (i in seqLen(litterSize)) {
+                    offspring = subpop.addCrossed(individual, mate);
+                    pos = individual.spatialPosition + rnorm(2, 0, 0.005);
+                    offspring.setSpatialPosition(p1.pointPeriodic(pos));
+                    offspring.tag = HEALTH_S;
+                }
+        }
+    }
+    
+    block_3:1 early() {
+        sim.addSubpop("p1", K);
+        p1.individuals.setSpatialPosition(p1.pointUniform(K));
+        p1.individuals.tag = HEALTH_S;
+    }
+    
+    block_4:100 early() {
+        target = p1.sampleIndividuals(1, tag = HEALTH_S);
+        target.tag = HEALTH_I;
+    }
+    
+    block_5:early() {
+        i1.evaluate();
+        inds = p1.individuals;
+        competition = i1.totalOfNeighborStrengths(inds);
+        competition = (competition + 1)/(2 * PI * S^2);
+        inds.fitnessScaling = K/competition;
+        age_mortality = sqrt((MAX_AGE - inds.age)/MAX_AGE);
+        inds.fitnessScaling = inds.fitnessScaling * age_mortality;
+        infected = inds[inds.tag == HEALTH_I];
+        for (ind in infected) {
+            contacts = i1.drawByStrength(ind, rpois(1, INFECTIVITY));
+            for (contact in contacts) {
+                if (contact.tag == HEALTH_S) {
+                    strength = i1.strength(ind, contact);
+                    if (runif(1) < strength) contact.tag = HEALTH_I;
+                }
+            }
+            if (runif(1) < RATE_DEATH) ind.fitnessScaling = 0;
+            if (runif(1) < RATE_CLEAR) ind.tag = HEALTH_R;
+        }
+    }
+    
+    block_6:late() {
+        inds = p1.individuals;
+        for (ind in inds) {
+            newPos = ind.spatialPosition + runif(2, -0.005, 0.005);
+            ind.setSpatialPosition(p1.pointPeriodic(newPos));
+        }
+        inds_tags = inds.tag;
+        inds[inds_tags == HEALTH_S] %.% color = "green";
+        inds[inds_tags == HEALTH_I] %.% color = "red";
+        inds[inds_tags == HEALTH_R] %.% color = "blue";
+        i2.evaluate();
+    }
+    
+    block_7:1:1000 late() {
+        tags = p1.individuals.tag;
+        cat(sum(tags == HEALTH_S) + ", " + sum(tags == HEALTH_I) + ", " + sum(tags == HEALTH_R) + ", ");
+        if ((sum(tags == HEALTH_I) == 0) & (sim.generation >= 100)) {
+            catn("\nLOST in generation " + sim.generation);
+            sim.simulationFinished();
+        }
+    }
+
+---
+
+    <slimr_script[6]>
+    block_1:initialize() {
+        defineConstant("K", 1000);
+        defineConstant("N", 10);
+        defineConstant("M", 0.01);
+        defineConstant("R", 1.04);
+        initializeSLiMModelType("nonWF");
+        initializeMutationType("m1", 0.5, "f", 0);
+        m1.convertToSubstitution = T;
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeMutationRate(1e-07);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:reproduction() {
+        litterSize = rpois(1, R);
+        for (i in seqLen(litterSize)) {
+            mate = subpop.sampleIndividuals(1, exclude = individual);
+            if (mate.size()) subpop.addCrossed(individual, mate);
+        }
+    }
+    
+    block_3:1 early() {
+        for (i in seqLen(N)) sim.addSubpop(i, (i == 0) %?% 100 %else% 0);
+    }
+    
+    block_4:1 late() {
+        log = sim.createLogFile("~/Desktop/sim_log.txt", sep = "\t", logInterval = 10);
+        log.addGeneration();
+        log.addPopulationSize();
+        log.addMeanSDColumns("size", "sim.subpopulations.individualCount;");
+        log.addCustomColumn("pop_migrants", "sum(sim.subpopulations.individuals.migrant);");
+        log.addMeanSDColumns("migrants", "sapply(sim.subpopulations, 'sum(applyValue.individuals.migrant);');");
+    }
+    
+    block_5:early() {
+        inds = sim.subpopulations.individuals;
+        ages = inds.age;
+        inds[ages > 0] %.% fitnessScaling = 0;
+        inds = inds[ages == 0];
+        numMigrants = rbinom(1, inds.size(), M);
+        if (numMigrants) {
+            migrants = sample(inds, numMigrants);
+            currentSubpopID = migrants.subpopulation.id;
+            displacement = -1 + rbinom(migrants.size(), 1, 0.5) * 2;
+            newSubpopID = currentSubpopID + displacement;
+            actuallyMoving = (newSubpopID >= 0) & (newSubpopID < N);
+            if (sum(actuallyMoving)) {
+                migrants = migrants[actuallyMoving];
+                newSubpopID = newSubpopID[actuallyMoving];
+                for (subpop in sim.subpopulations) subpop.takeMigrants(migrants[newSubpopID == subpop.id]);
+            }
+        }
+        for (subpop in sim.subpopulations) {
+            juvenileCount = sum(subpop.individuals.age == 0);
+            subpop.fitnessScaling = K/juvenileCount;
+        }
+    }
+    
+    block_6:1001 late() {
+        sim.outputFixedMutations();
+    }
+
+---
+
+    <slimr_script[6]>
+    block_1:initialize() {
+        defineConstant("K", 50000);
+        defineConstant("R", 1.1);
+        defineConstant("M", K/(R - 1));
+        initializeSLiMModelType("nonWF");
+        initializeMutationType("m1", 0.5, "f", 0);
+        m1.convertToSubstitution = T;
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeMutationRate(1e-07);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:1 early() {
+        sim.addSubpop("p1", 50);
+        sim.addSubpop("p2", 50);
+        sim.addSubpop("p3", 50);
+        log = sim.createLogFile("~/Desktop/sim_log.txt", logInterval = 1);
+        log.addGeneration();
+        log.addSubpopulationSize(p1);
+        log.addSubpopulationSize(p2);
+        log.addSubpopulationSize(p3);
+    }
+    
+    block_3:reproduction(p1) {
+        litterSize = rpois(1, R);
+        for (i in seqLen(litterSize)) subpop.addCrossed(individual, subpop.sampleIndividuals(1));
+    }
+    
+    block_4:reproduction(p2) {
+        n_t = subpop.individualCount;
+        n_t_plus_1 = (R * n_t)/(1 + n_t/M);
+        mean_litter_size = n_t_plus_1/n_t;
+        litterSize = rpois(1, mean_litter_size);
+        for (i in seqLen(litterSize)) subpop.addCrossed(individual, subpop.sampleIndividuals(1));
+    }
+    
+    block_5:reproduction(p3) {
+        litterSize = rpois(1, R);
+        for (i in seqLen(litterSize)) subpop.addCrossed(individual, subpop.sampleIndividuals(1));
+    }
+    
+    block_6::200 early() {
+        inds = p1.individuals;
+        inds[inds.age > 0] %.% fitnessScaling = 0;
+        n_t_plus_pt5 = sum(inds.age == 0);
+        p1.fitnessScaling = K/n_t_plus_pt5;
+        inds = p2.individuals;
+        inds[inds.age > 0] %.% fitnessScaling = 0;
+        inds = p3.individuals;
+        inds[inds.age > 0] %.% fitnessScaling = 0;
+        n_t_plus_pt5 = sum(inds.age == 0);
+        p3.fitnessScaling = 1/(1 + (n_t_plus_pt5/R)/M);
+    }
+
+---
+
+    <slimr_script[10]>
+    block_01:initialize() {
+        initializeSLiMModelType("nonWF");
+        initializeMutationType("m1", 0.5, "f", 0);
+        m1.convertToSubstitution = T;
+        initializeGenomicElementType("g1", m1, 1);
+        initializeGenomicElement(g1, 0, 99999);
+        initializeMutationRate(1e-07);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_02:reproduction() {
+        subpop.addCrossed(individual, subpop.sampleIndividuals(1));
+    }
+    
+    block_03:1 early() {
+        sim.addSubpop("p1", 10) %.% setValue("K", 500);
+        sim.addSubpop("p2", 10) %.% setValue("K", 600);
+    }
+    
+    block_04:early() {
+        for (subpop in sim.subpopulations) {
+            K = subpop.getValue("K");
+            subpop.fitnessScaling = K/subpop.individualCount;
+        }
+    }
+    
+    block_05:5000 late() {
+        ;
+    }
+    
+    block_06:999 late() {
+        sim.addSubpop("p3", 0) %.% setValue("K", 750);
+    }
+    
+    block_07:1000 reproduction() {
+        founderCount = rdunif(1, 10, 20);
+        p1_inds = p1.individuals;
+        p2_inds = p2.individuals;
+        all_inds = c(p1_inds, p2_inds);
+        for (i in seqLen(founderCount)) {
+            parent1 = sample(all_inds, 1);
+            if (rdunif(1) < 0.2) parent2 = sample(p1_inds, 1) else parent2 = sample(p2_inds, 1);
+            p3.addCrossed(parent1, parent2);
+        }
+        self.active = 0;
+    }
+    
+    block_08:1000 early() {
+        c(p1, p2) %.% fitnessScaling = 0;
+    }
+    
+    block_09:1999 late() {
+        sim.addSubpop("p4", 0) %.% setValue("K", 100);
+    }
+    
+    block_10:2000 reproduction() {
+        founderCount = rdunif(1, 10, 20);
+        all_inds = p3.individuals;
+        for (i in seqLen(founderCount)) {
+            parent1 = sample(all_inds, 1);
+            parent2 = sample(all_inds, 1);
+            p4.addCrossed(parent1, parent2);
+        }
+        self.active = 0;
+    }
+
+---
+
     <slimr_script[3]>
     block_1:initialize() {
         initializeTreeSeq();
@@ -4605,13 +5231,6 @@
 
 ---
 
-    <slimr_script[1]>
-    block_1:NA {
-        ;
-    }
-
----
-
     <slimr_script[4]>
     block_1:initialize() {
         initializeMutationRate(1e-07);
@@ -4707,71 +5326,6 @@
     
     block_3:s1 10 late() {
         sim.treeSeqOutput("./recipe_17.4.trees");
-    }
-
----
-
-    <slimr_script[3]>
-    block_1:initialize() {
-        defineConstant("N", 10000);
-        defineConstant("L", 1e+08);
-        defineConstant("L0", 2e+05);
-        defineConstant("L1", 1000);
-        initializeTreeSeq();
-        initializeMutationRate(1e-07);
-        initializeRecombinationRate(1e-08, L - 1);
-        initializeMutationType("m2", 0.5, "g", -(5/N), 1);
-        initializeGenomicElementType("g2", m2, 1);
-        for (start in seq(from = L0, to = L - (L0 + L1), by = (L0 + L1))) initializeGenomicElement(g2, start, (start + L1) - 1);
-    }
-    
-    block_2:1 early() {
-        sim.addSubpop("p1", N);
-        sim.rescheduleScriptBlock(s1, 10 * N, 10 * N);
-    }
-    
-    block_3:s1 10 late() {
-        sim.treeSeqOutput("./recipe_17.4.trees");
-    }
-
----
-
-    <slimr_script[5]>
-    block_1:initialize() {
-        defineConstant("L", 1e+08);
-        initializeTreeSeq();
-        initializeMutationRate(0);
-        initializeMutationType("m1", 0.5, "f", 0.1);
-        initializeGenomicElementType("g1", m1, 1);
-        initializeGenomicElement(g1, 0, L - 1);
-        initializeRecombinationRate(1e-08);
-    }
-    
-    block_2:1 late() {
-        sim.addSubpop("p1", 500);
-        sim.addSubpop("p2", 500);
-        sim.treeSeqRememberIndividuals(sim.subpopulations.individuals);
-        p1.genomes.addNewDrawnMutation(m1, asInteger(L * 0.2));
-        p2.genomes.addNewDrawnMutation(m1, asInteger(L * 0.8));
-        sim.addSubpop("p3", 1000);
-        p3.setMigrationRates(c(p1, p2), c(0.5, 0.5));
-    }
-    
-    block_3:2 late() {
-        p3.setMigrationRates(c(p1, p2), c(0, 0));
-        p1.setSubpopulationSize(0);
-        p2.setSubpopulationSize(0);
-    }
-    
-    block_4:2:10000 late() {
-        if (sim.mutationsOfType(m1) %.% size() == 0) {
-            sim.treeSeqOutput("./recipe_17.5.trees");
-            sim.simulationFinished();
-        }
-    }
-    
-    block_5:10000 late() {
-        stop("Did not reach fixation of beneficial alleles.");
     }
 
 ---
@@ -4843,108 +5397,73 @@
 
 ---
 
-    <slimr_script[3]>
-    block_1:initialize() {
-        initializeTreeSeq();
-        initializeMutationRate(1e-10);
-        initializeMutationType("m1", 0.5, "g", 0.1, 0.1);
-        initializeMutationType("m2", 0.5, "g", -0.1, 0.1);
-        initializeGenomicElementType("g1", c(m1, m2), c(1, 1));
-        initializeGenomicElement(g1, 0, 1e+08 - 1);
-        initializeRecombinationRate(1e-08);
-    }
-    
-    block_2:1 early() {
-        sim.addSubpop("p1", 500);
-    }
-    
-    block_3:20000 late() {
-        sim.treeSeqOutput("./recipe_17.7.trees");
-    }
-
----
-
-    <slimr_script[3]>
-    block_1:initialize() {
-        initializeTreeSeq();
-        initializeMutationRate(1e-10);
-        initializeMutationType("m1", 0.5, "g", 0.1, 0.1);
-        initializeMutationType("m2", 0.5, "g", -0.1, 0.1);
-        initializeGenomicElementType("g1", c(m1, m2), c(1, 1));
-        initializeGenomicElement(g1, 0, 1e+08 - 1);
-        initializeRecombinationRate(1e-08);
-    }
-    
-    block_2:1 early() {
-        sim.addSubpop("p1", 500);
-    }
-    
-    block_3:20000 late() {
-        sim.treeSeqOutput("./recipe_17.7.trees");
-    }
-
----
-
-    <slimr_script[1]>
-    block_1:NA {
-        ;
-    }
-
----
-
-    <slimr_script[1]>
-    block_1:NA {
-        ;
-    }
-
----
-
-    <slimr_script[1]>
-    block_1:NA {
-        ;
-    }
-
----
-
-    <slimr_script[1]>
-    block_1:NA {
-        ;
-    }
-
----
-
-    <slimr_script[1]>
-    block_1:NA {
-        ;
-    }
-
----
-
     <slimr_script[4]>
     block_1:initialize() {
-        initializeTreeSeq(simplificationRatio = INF);
+        initializeTreeSeq();
         initializeMutationRate(0);
-        initializeMutationType("m2", 0.5, "f", 1);
-        m2.convertToSubstitution = F;
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeMutationType("m2", 0.5, "f", 0.1);
         initializeGenomicElementType("g1", m2, 1);
-        initializeGenomicElement(g1, 0, 1e+06 - 1);
-        initializeRecombinationRate(3e-10);
+        initializeGenomicElement(g1, 0, 1e+08 - 1);
+        initializeRecombinationRate(1e-08);
     }
     
     block_2:1 late() {
-        sim.addSubpop("p1", 1e+05);
+        sim.readFromPopulationFile("recipe_17.8.trees");
+        target = sample(sim.subpopulations.genomes, 1);
+        target.addNewDrawnMutation(m2, 10000);
     }
     
-    block_3:100 late() {
-        sample(p1.genomes, 1) %.% addNewDrawnMutation(m2, 5e+05);
-    }
-    
-    block_4:100:10000 late() {
-        mut = sim.mutationsOfType(m2);
-        if (mut.size() != 1) stop(sim.generation + ": LOST") else if (sum(sim.mutationFrequencies(NULL, mut)) == 1) {
-            sim.treeSeqOutput("recipe_17.10_decap.trees");
+    block_3:1:2000 late() {
+        if (sim.mutationsOfType(m2) %.% size() == 0) {
+            print(sim.substitutions.size() %?% "FIXED" %else% "LOST");
+            sim.treeSeqOutput("recipe_17.8_II.trees");
             sim.simulationFinished();
         }
+    }
+    
+    block_4:2000 early() {
+        sim.simulationFinished();
+    }
+
+---
+
+    <slimr_script[6]>
+    block_1:initialize() {
+        initializeSLiMModelType("nonWF");
+        initializeTreeSeq();
+        initializeSex("A");
+        initializeMutationRate(0);
+        initializeMutationType("m1", 0.5, "f", 0);
+        initializeMutationType("m2", 0.5, "f", 0.1);
+        m2.convertToSubstitution = T;
+        initializeGenomicElementType("g1", m2, 1);
+        initializeGenomicElement(g1, 0, 1e+08 - 1);
+        initializeRecombinationRate(1e-08);
+    }
+    
+    block_2:reproduction(NULL, "F") {
+        subpop.addCrossed(individual, subpop.sampleIndividuals(1, sex = "M"));
+    }
+    
+    block_3:1 early() {
+        sim.readFromPopulationFile("recipe_17.9.trees");
+    }
+    
+    block_4:early() {
+        p0.fitnessScaling = 5000/p0.individualCount;
+    }
+    
+    block_5:1:2000 late() {
+        if (sim.mutationsOfType(m2) %.% size() == 0) {
+            print(sim.substitutions.size() %?% "FIXED" %else% "LOST");
+            sim.treeSeqOutput("recipe_17.9_II.trees");
+            sim.simulationFinished();
+        }
+    }
+    
+    block_6:2000 early() {
+        sim.simulationFinished();
     }
 
 ---
@@ -5357,51 +5876,39 @@
         sim.addSubpop("p1", 1000);
     }
     
-    block_3:1000 early() {
+    block_3:1000 late() {
         sim.treeSeqOutput("recipe_nucleotides.trees");
     }
 
 ---
 
-    <slimr_script[3]>
+    <slimr_script[4]>
     block_1:initialize() {
-        defineConstant("L", 1e+05);
         initializeSLiMOptions(nucleotideBased = T);
-        initializeTreeSeq();
-        initializeAncestralNucleotides(randomNucleotides(L));
+        initializeAncestralNucleotides(randomNucleotides(100));
         initializeMutationTypeNuc("m1", 0.5, "f", 0);
-        initializeGenomicElementType("g1", m1, 1, mmJukesCantor(1e-06));
-        initializeGenomicElement(g1, 0, L - 1);
-        initializeRecombinationRate(1e-06);
+        initializeGenomicElementType("g1", m1, 1, mmJukesCantor(1e-04/3));
+        initializeGenomicElement(g1, 0, 99);
+        initializeRecombinationRate(0.001);
     }
     
     block_2:1 early() {
-        sim.addSubpop("p1", 1000);
+        sim.addSubpop("p1", 500);
     }
     
-    block_3:1000 early() {
-        sim.treeSeqOutput("recipe_nucleotides.trees");
-    }
-
----
-
-    <slimr_script[3]>
-    block_1:initialize() {
-        defineConstant("L", 1e+05);
-        initializeSLiMOptions(nucleotideBased = T);
-        initializeTreeSeq();
-        initializeAncestralNucleotides(randomNucleotides(L));
-        initializeMutationTypeNuc("m1", 0.5, "f", 0);
-        initializeGenomicElementType("g1", m1, 1, mmJukesCantor(1e-06));
-        initializeGenomicElement(g1, 0, L - 1);
-        initializeRecombinationRate(1e-06);
+    block_3:mutation(m1) {
+        m = sim.subsetMutations(position = mut.position, nucleotide = mut.nucleotide);
+        if (m.length()) return(m);
+        return(T);
     }
     
-    block_2:1 early() {
-        sim.addSubpop("p1", 1000);
-    }
-    
-    block_3:1000 early() {
-        sim.treeSeqOutput("recipe_nucleotides.trees");
+    block_4:1000 late() {
+        for (pos in 0:99) {
+            muts = sim.subsetMutations(position = pos);
+            nucs = muts.nucleotide;
+            cat(pos + " : " + paste(nucs));
+            if (size(nucs) != size(unique(nucs))) cat("     DUPLICATES!");
+            catn();
+        }
     }
 

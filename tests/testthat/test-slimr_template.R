@@ -19,15 +19,15 @@ test_that("templating works", {
   ) -> script_temp
 
   expect_s3_class(script_temp, "slimr_script")
-  verify_output(test_path("slimr_template_output_test_unrendered.txt"),
-                script_temp)
+
+  expect_snapshot(print(script_temp))
 
   info <- slimr_template_info(script_temp)
 
   expect_equal(info$block_init$mut_rate, 1e-07)
   expect_equal(info$block_init$genome_size, 99999)
 
-  expect_warning(script_partial <- slimr_script_render(script_temp,
+  expect_warning(script_partial <- slim_script_render(script_temp,
                                         template = list(
                                           list(mut_rate = 1e-5),
                                           list(genome_size = 2999)
@@ -37,8 +37,7 @@ test_that("templating works", {
 
   expect_s3_class(script_partial, "slimr_script_coll")
 
-  verify_output(test_path("slimr_template_output_test_list_w_missing.txt"),
-                script_partial)
+  expect_snapshot(print(script_partial))
 
 
 })

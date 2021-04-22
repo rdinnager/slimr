@@ -312,4 +312,14 @@ mutations are actually needed.}
 
 }
 }
+\seealso{
+Other Individual: 
+\code{\link{containsMutations}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{relatedness}()},
+\code{\link{setSpatialPosition}()},
+\code{\link{sumOfMutationsOfType}()},
+\code{\link{uniqueMutationsOfType}()}
+}
+\concept{Individual}
 \keyword{datasets}

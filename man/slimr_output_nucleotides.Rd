@@ -7,7 +7,7 @@
 slimr_output_nucleotides(name = "seqs", subpops = FALSE, ...)
 }
 \arguments{
-\item{name}{Name of data column to hold sequences}
+\item{name}{Name of output to use to label it in \code{slimr_results object}. Default is \code{"seqs"}.}
 
 \item{subpops}{Should the subpopulation of each sequence be outputted as well?}
 

@@ -106,10 +106,13 @@
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -164,7 +167,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>recipes</span> <span class='op'>&lt;-</span> <span class='fu'>slim_get_recipes</span><span class='op'>(</span><span class='st'>"all"</span><span class='op'>)</span>
 <span class='va'>recipes</span><span class='op'>[[</span><span class='fl'>12</span><span class='op'>]</span><span class='op'>]</span>
-</div><div class='output co'>#&gt; [1] "// Keywords: \n\ninitialize() {\n\tinitializeMutationRate(1e-7);\n\tinitializeMutationType(\"m1\", 0.5, \"f\", 0.0);\n\tinitializeGenomicElementType(\"g1\", m1, 1.0);\n\tinitializeGenomicElement(g1, 0, 99999);\n\tinitializeRecombinationRate(1e-8);\n}\n1 { sim.addSubpop(\"p1\", 100); }\n1000:1099 {\n\tnewSize = asInteger(p1.individualCount * 1.03);\n\tp1.setSubpopulationSize(newSize);\n}\n10000 late() { sim.outputFull(); }"</div></pre>
+</div><div class='output co'>#&gt; [1] "// Keywords: \n\ninitialize() {\n\tinitializeMutationRate(1e-7);\n\tinitializeMutationType(\"m1\", 0.5, \"f\", 0.0);\n\tinitializeGenomicElementType(\"g1\", m1, 1.0);\n\tinitializeGenomicElement(g1, 0, 99999);\n\tinitializeRecombinationRate(1e-8);\n}\n1 { sim.addSubpop(\"p1\", 100); }\n1000:1099 {\n\tnewSize = asInteger(p1.individualCount * 1.03);\n\tp1.setSubpopulationSize(newSize);\n}\n10000 late() { sim.outputFixedMutations(); }"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

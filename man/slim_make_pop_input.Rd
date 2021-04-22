@@ -16,15 +16,44 @@ slim_make_pop_input(
   mut_dom = NULL,
   mut_pop = NULL,
   mut_gen = NULL,
-  mut_prev = NULL,
-  mut_nuc = NULL,
-  ind_coord = NULL,
-  ind_age = NULL,
-  gen_type = NULL
+  mut_nuc = NULL
 )
 }
 \arguments{
-\item{gen_type}{}
+\item{snps}{R object containing SNPs. Can be a matrix with 0, 1, or 2 as its elements,
+or a \code{genlight} object. Rows correspond to individuals, columns to loci.}
+
+\item{file_name}{Path to file where the population input file should be saved.}
+
+\item{sim_gen}{What generation to write in the file. This doesn't really do anything, but is just a requirement
+for the format.}
+
+\item{ind_pops}{An optional character vector with length equal to \code{nrow(snps)} with Subpopulation indicators for
+each individual. Should be "p1", "p2", etc. as this is how subpopulations are named in SLiM.}
+
+\item{ind_sex}{An optional character vector with length equal to \code{nrow(snps)} with the sex for each individual (can be
+"H" for hermaphrodite, "F" for female, or "M" for male.)}
+
+\item{mut_pos}{An optional integer vector with length equal to \code{ncol(snps)} specifying the positions in the genome
+of each loci.}
+
+\item{mut_type}{An optional character vector with length equal to \code{nrow(snps)} with the mutation type of each loci.
+Should be "m1", "m2", etc. as this is how mutation types are named in SLiM.}
+
+\item{mut_sel}{An optional numeric vector with length equal to \code{nrow(snps)} with the selection coefficient for the
+mutation type of each loci.}
+
+\item{mut_dom}{An optional numeric vector with length equal to \code{nrow(snps)} with the dominance coefficient for the
+mutation type of each loci.}
+
+\item{mut_pop}{An optional character vector with length equal to \code{nrow(snps)} with the subpopulation of origin
+for the mutation at each loci. Should be "p1", "p2", etc. as this is how subpopulations are named in SLiM.}
+
+\item{mut_gen}{An optional integer vector with length equal to \code{ncol(snps)} specifying the generation of origin
+for the mutation at each loci.}
+
+\item{mut_nuc}{An optional character vector with length equal to \code{nrow(snps)} with the nucleotide of the
+mutation. Should be "A", "C", "G", or "T".}
 }
 \value{
 

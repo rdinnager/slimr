@@ -29,7 +29,7 @@ An object of type float. Return will be of length 1 (a singleton)
 }
 \description{
 Documentation for SLiM function \code{calcPairHeterozygosity}, which is a method
-of the SLiM class \code{SLiMBuiltin}.
+of the SLiM class \code{\link{SLiMBuiltin}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -77,7 +77,23 @@ about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other SLiMBuiltin: 
+\code{\link{SLiMBuiltin}},
+\code{\link{calcFST}()},
+\code{\link{calcHeterozygosity}()},
+\code{\link{calcVA}()},
+\code{\link{calcWattersonsTheta}()},
+\code{\link{codonsToAminoAcids}()},
+\code{\link{mm16To256}()},
+\code{\link{mmJukesCantor}()},
+\code{\link{mmKimura}()},
+\code{\link{nucleotideCounts}()},
+\code{\link{nucleotideFrequencies}()},
+\code{\link{nucleotidesToCodons}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{SLiMBuiltin}

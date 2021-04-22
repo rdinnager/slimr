@@ -289,7 +289,7 @@ names(all_methods_data)[length(all_methods_data)] <- "SLiMBuiltin"
 func_template <- "
 SLiM method <<function_name>>
 
-Documentation for SLiM function \\code{<<function_name>>}, which is a method of the SLiM class \\code{<<class_name>>}.
+Documentation for SLiM function \\code{<<function_name>>}, which is a method of the SLiM class \\code{\\link{<<class_name>>}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \\code{\\link{slim_block}} function further nested in a \\code{\\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
@@ -299,6 +299,7 @@ Documentation for this function can be found in the official \\href{http://benha
 <<params>>
 
 @aliases <<class_name>>$<<function_name>> <<class_abbr>>$<<function_name>>
+@family <<class_name>>
 @return An object of type <<return_type_desc>>. <<ifelse(return_singleton, 'Return will be of length 1 (a singleton)', '')>>
 @details <<description>>
 @section Copyright:
@@ -521,6 +522,7 @@ class_roxy <- "
 Documentation for <<class_name>> class from SLiM
 
 @aliases <<class_abbr>>
+@family <<class_name>>
 @details <<intro_text>>
 This class has the following methods (functions):
 \\itemize{
@@ -602,6 +604,10 @@ r_script <- paste(
 r_script <- stringr::str_replace_all(r_script,
                                      "“",
                                      '"')
+
+r_script <- stringr::str_replace_all(r_script,
+                                    stringr::fixed("\\t"),
+                                    stringr::fixed("\\\\t"))
 
 r_script <- r_script %>%
   stringr::str_replace_all("genomicElem entType",

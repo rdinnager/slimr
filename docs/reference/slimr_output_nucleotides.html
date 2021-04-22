@@ -106,10 +106,13 @@
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -153,11 +156,15 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name</th>
-      <td><p>Name of data column to hold sequences</p></td>
+      <td><p>Name of output to use to label it in <code>slimr_results object</code>. Default is <code>"seqs"</code>.</p></td>
     </tr>
     <tr>
       <th>subpops</th>
       <td><p>Should the subpopulation of each sequence be outputted as well?</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Other arguments to be passed to <code><a href='slimr_output.html'>slimr_output</a></code></p></td>
     </tr>
     </table>
 

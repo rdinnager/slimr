@@ -139,4 +139,23 @@ of tag is not used by SLiM; it is free for you to use.}
 
 }
 }
+\seealso{
+Other LogFile: 
+\code{\link{addCustomColumn}()},
+\code{\link{addGenerationStage}()},
+\code{\link{addGeneration}()},
+\code{\link{addKeysAndValuesFrom}()},
+\code{\link{addMeanSDColumns}()},
+\code{\link{addPopulationSexRatio}()},
+\code{\link{addPopulationSize}()},
+\code{\link{addSubpopulationSexRatio}()},
+\code{\link{addSubpopulationSize}()},
+\code{\link{clearKeysAndValues}()},
+\code{\link{flush}()},
+\code{\link{logRow}()},
+\code{\link{setFilePath}()},
+\code{\link{setLogInterval}()},
+\code{\link{setValue}()}
+}
+\concept{LogFile}
 \keyword{datasets}

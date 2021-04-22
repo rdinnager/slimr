@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>defineSpatialMap</code>, which is a method of
-the SLiM class <code>Subpopulation</code>.
+the SLiM class <code><a href='Subpopulation.html'>Subpopulation</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -160,15 +163,7 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>defineSpatialMap</span><span class='op'>(</span>
-  <span class='va'>name</span>,
-  <span class='va'>spatiality</span>,
-  <span class='va'>gridSize</span>,
-  <span class='va'>values</span>,
-  <span class='va'>interpolate</span>,
-  <span class='va'>valueRange</span>,
-  <span class='va'>colors</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>defineSpatialMap</span><span class='op'>(</span><span class='va'>name</span>, <span class='va'>spatiality</span>, <span class='va'>values</span>, <span class='va'>interpolate</span>, <span class='va'>valueRange</span>, <span class='va'>colors</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -182,10 +177,6 @@ details for description.</p></td>
       <th>spatiality</th>
       <td><p>An object of type string. Must be of length 1 (a singleton).
 See details for description.</p></td>
-    </tr>
-    <tr>
-      <th>gridSize</th>
-      <td><p>An object of type null or integer. See details for description.</p></td>
     </tr>
     <tr>
       <th>values</th>
@@ -213,51 +204,38 @@ is <code>NULL</code>. See details for description.</p></td>
     <p>An object of type void.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Defines a spatial map for the subpopulation. The map will henceforth
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=582'>SLiM manual: page 582</a>.</p>
+<p>Defines a spatial map for the subpopulation. The map will henceforth
 be identified by name. The map uses the spatial dimensions referenced by
 spatiality, which must be a subset of the dimensions defined for the simulation
-in initializeSLiMOptions(). Spatiality "x" is permitted for dimensionality "x";
-spatiality "x", "y", or "xy" for dimensionality "xy"; and spatiality "x", "y",
-"z", "xy", "yz", "xz", or "xyz" for dimensionality "xyz". The spatial map is
-defined by a grid of values of a size specified by gridSize, which must have
-one value per spatial dimension (or gridSize may be NULL; see below); for a
-spatiality of "xz", for example, gridSize must be of length 2, specifying the
-size of the values grid in the x and z dimensions. The parameter values then
-gives the values of the grid; it must be of length equal to the product of the
-gridSize elements, and specifies values varying first (i.e., fastest) in the
-x dimension, then in y, then in z. Beginning in SLiM 2.6, the values parameter
-may be a matrix/array with the number of dimensions appropriate for the declared
-spatiality of the map; for example, a map with spatiality "xy" would require a
-(two-dimensional) matrix, whereas a map with spatiality of "xyz" would require
-a threedimensional array. (See the Eidos manual for discussion of matrices and
-arrays.) If a matrix/array argument is supplied for values, gridSize must either
-be NULL, or (for backward compatibility) may match the dimensions of values as
-they would be given by dim(values). The data in values is interpreted just as
-is described above for the vector case: varying first in x, then in y, then in
-z. BEWARE: since the values in Eidos matrices and arrays are stored in column-
-first order (following the convention established by R), this means that for
-a map with spatiality "xy" each column of the values matrix will provide map
-data as x varies and y remains constant. This will be confusing if you think
-of matrix columns as being "x” and matrix rows as being "y”, so try not to
-think that way; the opposite is true. This behavior is actually simple, self-
-consistent, and backward-compatible; if you before created a spatial map with
-a vector values before and a gridSize of c(x, y) specifying the dimensions of
-that vector, you can now supply matrix(values, nrow=x) for values to get exactly
-the same spatial map, and you can still supply the same value of c(x, y) for
-gridSize if you wish (or you may supply NULL). If, however, you are looking at
-a matrix as printed in the Eidos console, and want that matrix to be used as a
-spatial map in SLiM in the same orientation, you should use the transpose of the
-matrix, as supplied by the t() function. Actually, since matrices are printed in
-the console with each successive row having a larger index, whereas in Cartesian
-(x, y) coordinates yvalues increase as you go upward, you may also wish to
-reverse the order of rows in your matrix prior to transposing (or the order
-of columns after transposing), with an expression such as t(map[(nrow(map)-1):
-0,]), in order to make the spatial map display in SLiMgui as you expect (since
-SLiMgui displays everything in Cartesian coordinates). Apologies if this is
-confusing; it would be nice if matrix notation, programming languages, and
-Descartes all agreed on such things, but they do not, so be very careful that
-your spatial maps are oriented as you wish them to be! Moving on to the other
-parameters of defineSpatialMap(): if interpolate is F, values across the
+in initializeSLiMOptions(). Spatiality "x" is permitted for dimensionality
+"x"; spatiality "x", "y", or "xy" for dimensionality "xy"; and spatiality "x",
+"y", "z", "xy", "yz", "xz", or "xyz" for dimensionality "xyz". The spatial
+map is defined by a grid of values supplied in parameter values. The remaining
+optional parameters are described below. Note that the semantics of this method
+changed in SLiM 3.5; in particular, the gridSize parameter was removed, and
+the interpretation of the values parameter changed as described below. Existing
+code written prior to SLiM 3.5 will produce an error, due to the removed
+gridSize parameter, and must be revised carefully to obtain the same result,
+even if NULL had been passed for gridSize previously. Beginning in SLiM 3.5,
+the values parameter must be a vector/matrix/array with the number of dimensions
+appropriate for the declared spatiality of the map; for example, a map with
+spatiality "x" would require a (one-dimensional) vector, spatiality "xy" would
+require a (two-dimensional) matrix, and a map with spatiality of "xyz" would
+require a three-dimensional array. (See the Eidos manual for discussion of
+vectors, matrices, and arrays.) The data in values is interpreted in such a way
+that a two-dimensional matrix of values, with (0, 0) at upper left and values
+by column, is transformed into the format expected by SLiM, with (0, 0) at
+lower left and values by row; in other words, the twodimensional matrix as it
+prints in the Eidos console will match the appearance of the two-dimensional
+spatial map as seen in SLiMgui. This is a change in behavior from versions
+prior to SLiM 3.5; it ensures that images loaded from disk with the Eidos class
+Image can be used directly as spatial maps, achieving the expected orientation,
+with no need for transposition or flipping. If the spatial map is a three-
+dimensional array, it is read as successive z-axis "planes”, each of which is
+a two-dimensional matrix that is treated as described above. Moving on to the
+other parameters of defineSpatialMap(): if interpolate is F, values across the
 spatial map are not interpolated; the value at a given point is equal to the
 nearest value defined by the grid of values specified. If interpolate is T,
 values across the spatial map will be interpolated (using linear, bilinear,
@@ -292,9 +270,9 @@ not attempt to display an "xyz" spatial map, for example, since it has no
 way to choose which 2D slice through the xyz space it ought to display). The
 spatialMapColor() method will return translated color strings for any spatial
 map, however, even if SLiMgui is unable to display the spatial map. If there are
-multiple spatial maps with color-mapping parameters defined, SLiMgui will choose
-just one for display; it will prefer an "xy" map if one is available, but beyond
-that heuristic its choice will be arbitrary.</p>
+multiple spatial maps that SLiMgui is capable of displaying, it choose one for
+display by default, but other maps may be selected from the context menu on the
+individuals view (with a right-click or control-click).</p>
     <h2 class="hasAnchor" id="copyright"><a class="anchor" href="#copyright"></a>Copyright</h2>
 
     
@@ -306,6 +284,37 @@ documentation is
 Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Subpopulation: 
+<code><a href='Subpopulation.html'>Subpopulation</a></code>,
+<code><a href='addCloned.html'>addCloned</a>()</code>,
+<code><a href='addCrossed.html'>addCrossed</a>()</code>,
+<code><a href='addEmpty.html'>addEmpty</a>()</code>,
+<code><a href='addRecombinant.html'>addRecombinant</a>()</code>,
+<code><a href='addSelfed.html'>addSelfed</a>()</code>,
+<code><a href='cachedFitness.html'>cachedFitness</a>()</code>,
+<code><a href='configureDisplay.html'>configureDisplay</a>()</code>,
+<code><a href='outputMSSample.html'>outputMSSample</a>()</code>,
+<code><a href='outputSample.html'>outputSample</a>()</code>,
+<code><a href='outputVCFSample.html'>outputVCFSample</a>()</code>,
+<code><a href='pointInBounds.html'>pointInBounds</a>()</code>,
+<code><a href='pointPeriodic.html'>pointPeriodic</a>()</code>,
+<code><a href='pointReflected.html'>pointReflected</a>()</code>,
+<code><a href='pointStopped.html'>pointStopped</a>()</code>,
+<code><a href='pointUniform.html'>pointUniform</a>()</code>,
+<code><a href='removeSubpopulation.html'>removeSubpopulation</a>()</code>,
+<code><a href='sampleIndividuals.html'>sampleIndividuals</a>()</code>,
+<code><a href='setCloningRate.html'>setCloningRate</a>()</code>,
+<code><a href='setMigrationRates.html'>setMigrationRates</a>()</code>,
+<code><a href='setSelfingRate.html'>setSelfingRate</a>()</code>,
+<code><a href='setSexRatio.html'>setSexRatio</a>()</code>,
+<code><a href='setSpatialBounds.html'>setSpatialBounds</a>()</code>,
+<code><a href='setSubpopulationSize.html'>setSubpopulationSize</a>()</code>,
+<code><a href='spatialMapColor.html'>spatialMapColor</a>()</code>,
+<code><a href='spatialMapValue.html'>spatialMapValue</a>()</code>,
+<code><a href='subsetIndividuals.html'>subsetIndividuals</a>()</code>,
+<code><a href='takeMigrants.html'>takeMigrants</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

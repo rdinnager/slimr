@@ -40,4 +40,20 @@ This class has the following properties:
 \item{None.}{This class has no properties.}
 }
 }
+\seealso{
+Other SLiMBuiltin: 
+\code{\link{calcFST}()},
+\code{\link{calcHeterozygosity}()},
+\code{\link{calcPairHeterozygosity}()},
+\code{\link{calcVA}()},
+\code{\link{calcWattersonsTheta}()},
+\code{\link{codonsToAminoAcids}()},
+\code{\link{mm16To256}()},
+\code{\link{mmJukesCantor}()},
+\code{\link{mmKimura}()},
+\code{\link{nucleotideCounts}()},
+\code{\link{nucleotideFrequencies}()},
+\code{\link{nucleotidesToCodons}()}
+}
+\concept{SLiMBuiltin}
 \keyword{datasets}

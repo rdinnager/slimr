@@ -175,4 +175,36 @@ subpopulations.}
 
 }
 }
+\seealso{
+Other Subpopulation: 
+\code{\link{addCloned}()},
+\code{\link{addCrossed}()},
+\code{\link{addEmpty}()},
+\code{\link{addRecombinant}()},
+\code{\link{addSelfed}()},
+\code{\link{cachedFitness}()},
+\code{\link{configureDisplay}()},
+\code{\link{defineSpatialMap}()},
+\code{\link{outputMSSample}()},
+\code{\link{outputSample}()},
+\code{\link{outputVCFSample}()},
+\code{\link{pointInBounds}()},
+\code{\link{pointPeriodic}()},
+\code{\link{pointReflected}()},
+\code{\link{pointStopped}()},
+\code{\link{pointUniform}()},
+\code{\link{removeSubpopulation}()},
+\code{\link{sampleIndividuals}()},
+\code{\link{setCloningRate}()},
+\code{\link{setMigrationRates}()},
+\code{\link{setSelfingRate}()},
+\code{\link{setSexRatio}()},
+\code{\link{setSpatialBounds}()},
+\code{\link{setSubpopulationSize}()},
+\code{\link{spatialMapColor}()},
+\code{\link{spatialMapValue}()},
+\code{\link{subsetIndividuals}()},
+\code{\link{takeMigrants}()}
+}
+\concept{Subpopulation}
 \keyword{datasets}

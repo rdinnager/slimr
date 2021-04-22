@@ -105,10 +105,13 @@
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -150,7 +153,7 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <h2 id="section-install-and-setup-slim-software-for-use-with-slimr" class="hasAnchor"><a href="#section-install-and-setup-slim-software-for-use-with-slimr" class="anchor"></a>Install and setup SLiM software for use with slimr</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -162,171 +165,248 @@
       <tr>
         
         <td>
-          <p><code><a href="addCloned.html">addCloned()</a></code> </p>
+          <p><code><a href="slim_setup.html">slim_setup()</a></code> </p>
         </td>
-        <td><p>SLiM method addCloned</p></td>
+        <td><p>Attempt to install and / or setup SLiM for use with slimr</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-slimr-verbs" class="hasAnchor"><a href="#section-slimr-verbs" class="anchor"></a>slimr verbs</h2>
+          <p class="section-desc"><p>Functions that can be inserted in slimr code blocks for metaprogramming.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-main-slimr-verbs" class="hasAnchor"><a href="#section-main-slimr-verbs" class="anchor"></a>Main slimr verbs</h3>
+          <p class="section-desc"><p>The three main functions that can be called inside <code>slim_block</code> calls for metaprogramming</p></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="slimr_output.html">slimr_output()</a></code> </p>
+        </td>
+        <td><p>Tell SLiM to produce easily parseable output</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="addCrossed.html">addCrossed()</a></code> </p>
+          <p><code><a href="slimr_inline.html">slimr_inline()</a></code> </p>
         </td>
-        <td><p>SLiM method addCrossed</p></td>
+        <td><p>Insert R objects into SLiM scripts</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="addEmpty.html">addEmpty()</a></code> </p>
+          <p><code><a href="slimr_template.html">slimr_template()</a></code> </p>
         </td>
-        <td><p>SLiM method addEmpty</p></td>
+        <td><p>Create a templated variable</p></td>
+      </tr>
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-slimr-output-special-variants" class="hasAnchor"><a href="#section-slimr-output-special-variants" class="anchor"></a>slimr_output_ special variants</h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="slimr_output_coords.html">slimr_output_coords()</a></code> </p>
+        </td>
+        <td><p>Utility function to tell SLiM to output coordinates from spatial simulations</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="addMutations.html">addMutations()</a></code> </p>
+          <p><code><a href="slimr_output_full.html">slimr_output_full()</a></code> </p>
         </td>
-        <td><p>SLiM method addMutations</p></td>
+        <td><p>Utility function to tell SLiM to output its outputFull() output</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="addNewDrawnMutation.html">addNewDrawnMutation()</a></code> </p>
+          <p><code><a href="slimr_output_nucleotides.html">slimr_output_nucleotides()</a></code> </p>
         </td>
-        <td><p>SLiM method addNewDrawnMutation</p></td>
+        <td><p>Utility function to tell SLiM to output Nucleotides</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="addNewMutation.html">addNewMutation()</a></code> </p>
+          <p><code><a href="slimr_output_sex.html">slimr_output_sex()</a></code> </p>
         </td>
-        <td><p>SLiM method addNewMutation</p></td>
+        <td><p>Utility function to tell SLim to output sexes of individuals</p></td>
+      </tr>
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-slimr-block-verbs" class="hasAnchor"><a href="#section-slimr-block-verbs" class="anchor"></a>slimr_block_ verbs</h3>
+          <p class="section-desc"><p>These function generate full code blocks and can be used inside <code>slimr_script</code> calls.</p></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="slimr_block_init_minimal.html">slimr_block_init_minimal()</a></code> </p>
+        </td>
+        <td><p>Generate minimal initialize() block</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="addRecombinant.html">addRecombinant()</a></code> </p>
+          <p><code><a href="slimr_block_progress.html">slimr_block_progress()</a></code> </p>
         </td>
-        <td><p>SLiM method addRecombinant</p></td>
+        <td><p>Insert slim_block to track progress when using slim_run</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-creating-slimr-script-objects" class="hasAnchor"><a href="#section-creating-slimr-script-objects" class="anchor"></a>Creating slimr_script objects</h2>
+          <p class="section-desc"><p>These functions help you create and manipulate <code>slimr_script</code> objects, which contain SLiM simulation instructions</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="slim_script.html">slim_script()</a></code> </p>
+        </td>
+        <td><p>Create a SLiMR script</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="addSelfed.html">addSelfed()</a></code> </p>
+          <p><code><a href="slim_block.html">slim_block()</a></code> </p>
         </td>
-        <td><p>SLiM method addSelfed</p></td>
+        <td><p>Setup a SLiM code block</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="addSubpop.html">addSubpop()</a></code> </p>
+          <p><code><a href="slim_function.html">slim_function()</a></code> </p>
         </td>
-        <td><p>SLiM method addSubpop</p></td>
+        <td><p>Specify an Eidos function to be included in the SLiM script</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="addSubpopSplit.html">addSubpopSplit()</a></code> </p>
+          <p><code><a href="slim_script_render.html">slim_script_render()</a></code> </p>
         </td>
-        <td><p>SLiM method addSubpopSplit</p></td>
+        <td><p>Render a SLiM script with special slimrlang formatting</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="ancestralNucleotides.html">ancestralNucleotides()</a></code> </p>
+          <p><code><a href="slim_load_globals.html">slim_load_globals()</a></code> </p>
         </td>
-        <td><p>SLiM method ancestralNucleotides</p></td>
+        <td><p>Load SLiM Globals into R Global environment</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="as_slimr_script.html">as_slimr_script()</a></code> </p>
+          <p><code><a href="slim_unload_globals.html">slim_unload_globals()</a></code> </p>
         </td>
-        <td><p>Convert a character vector into a slim_script object</p></td>
+        <td><p>Unload SLiM Globals from R Global environment</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-run-a-slimr-script-object-and-return-results-to-r" class="hasAnchor"><a href="#section-run-a-slimr-script-object-and-return-results-to-r" class="anchor"></a>Run a slimr_script object and return results to R</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="slim_run.html">slim_run()</a></code> </p>
+        </td>
+        <td><p>Run a SLiM script from R</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-work-with-slim-recipes-from-slim-manual" class="hasAnchor"><a href="#section-work-with-slim-recipes-from-slim-manual" class="anchor"></a>Work with SLiM recipes from SLiM manual</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="slim_get_recipe.html">slim_get_recipe()</a></code> </p>
+        </td>
+        <td><p>Get a SLiM recipe</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="as_slim_text.slimr_script.html">as_slim_text(<i>&lt;slimr_script&gt;</i>)</a></code> </p>
+          <p><code><a href="slim_get_recipes.html">slim_get_recipes()</a></code> </p>
         </td>
-        <td><p>Convert a slimr_script to a length 1 character vector</p></td>
+        <td><p>Get a list of SLiM recipes (as text)</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-operators" class="hasAnchor"><a href="#section-operators" class="anchor"></a>Operators</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="grapes-.-grapes.html">`%.%`</a></code> </p>
+        </td>
+        <td><p>slimrlang stub for the SLiM '.' operator</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="cachedFitness.html">cachedFitness()</a></code> </p>
+          <p><code><a href="grapes-help-grapes.html">`%?%`</a></code> <code><a href="grapes-help-grapes.html">`%?%`</a></code> </p>
         </td>
-        <td><p>SLiM method cachedFitness</p></td>
-      </tr><tr>
+        <td><p>slimrlang stub for the first part of the SLiM ternary operator (<code>condition ? yes else no</code>).</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-slim-class-objects" class="hasAnchor"><a href="#section-slim-class-objects" class="anchor"></a>SLiM Class Objects</h2>
+          <p class="section-desc"><p>Objects representing the different classes used in SLiM. These can be used to look up and autocomplete what methods or properties are available for a class</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
           <p><code><a href="Chromosome.html">Chromosome</a></code> </p>
         </td>
         <td><p>Chromosome</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="codonsToAminoAcids.html">codonsToAminoAcids()</a></code> </p>
-        </td>
-        <td><p>SLiM method codonsToAminoAcids</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="configureDisplay.html">configureDisplay()</a></code> </p>
-        </td>
-        <td><p>SLiM method configureDisplay</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="containsMarkerMutation.html">containsMarkerMutation()</a></code> </p>
-        </td>
-        <td><p>SLiM method containsMarkerMutation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="containsMutations.html">containsMutations()</a></code> <code><a href="containsMutations.html">containsMutations()</a></code> </p>
-        </td>
-        <td><p>SLiM method containsMutations</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="countOfMutationsOfType.html">countOfMutationsOfType()</a></code> <code><a href="countOfMutationsOfType.html">countOfMutationsOfType()</a></code> <code><a href="countOfMutationsOfType.html">countOfMutationsOfType()</a></code> </p>
-        </td>
-        <td><p>SLiM method countOfMutationsOfType</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="defineSpatialMap.html">defineSpatialMap()</a></code> </p>
-        </td>
-        <td><p>SLiM method defineSpatialMap</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="deregisterScriptBlock.html">deregisterScriptBlock()</a></code> </p>
-        </td>
-        <td><p>SLiM method deregisterScriptBlock</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="distance.html">distance()</a></code> </p>
-        </td>
-        <td><p>SLiM method distance</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="distanceToPoint.html">distanceToPoint()</a></code> </p>
-        </td>
-        <td><p>SLiM method distanceToPoint</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="drawBreakpoints.html">drawBreakpoints()</a></code> </p>
-        </td>
-        <td><p>SLiM method drawBreakpoints</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="drawByStrength.html">drawByStrength()</a></code> </p>
-        </td>
-        <td><p>SLiM method drawByStrength</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="drawSelectionCoefficient.html">drawSelectionCoefficient()</a></code> </p>
-        </td>
-        <td><p>SLiM method drawSelectionCoefficient</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="evaluate.html">evaluate()</a></code> </p>
-        </td>
-        <td><p>SLiM method evaluate</p></td>
       </tr><tr>
         
         <td>
@@ -348,27 +428,347 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="getValue.html">getValue()</a></code> <code><a href="getValue.html">getValue()</a></code> <code><a href="getValue.html">getValue()</a></code> <code><a href="getValue.html">getValue()</a></code> <code><a href="getValue.html">getValue()</a></code> <code><a href="getValue.html">getValue()</a></code> <code><a href="getValue.html">getValue()</a></code> <code><a href="getValue.html">getValue()</a></code> </p>
+          <p><code><a href="Individual.html">Individual</a></code> </p>
         </td>
-        <td><p>SLiM method getValue</p></td>
+        <td><p>Individual</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="get_slim_call.html">get_slim_call()</a></code> </p>
+          <p><code><a href="Initialize.html">Initialize</a></code> </p>
         </td>
-        <td><p>Get the call information for running SLiM. Doubles as a check for SLiM availability.</p></td>
+        <td><p>Initialize</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="grapes-.-grapes.html">`%.%`</a></code> </p>
+          <p><code><a href="InteractionType.html">InteractionType</a></code> </p>
         </td>
-        <td><p>slimrlang stub for the SLiM '.' operator</p></td>
+        <td><p>InteractionType</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="grapes-help-grapes.html">`%?%`</a></code> <code><a href="grapes-help-grapes.html">`%?%`</a></code> </p>
+          <p><code><a href="LogFile.html">LogFile</a></code> </p>
         </td>
-        <td><p>slimrlang stub for the first part of the SLiM ternary operator (<code>condition ? yes else no</code>).</p></td>
+        <td><p>LogFile</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Mutation.html">Mutation</a></code> </p>
+        </td>
+        <td><p>Mutation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="MutationType.html">MutationType</a></code> </p>
+        </td>
+        <td><p>MutationType</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="SLiMBuiltin.html">SLiMBuiltin</a></code> </p>
+        </td>
+        <td><p>SLiMBuiltin</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="SLiMEidosBlock.html">SLiMEidosBlock</a></code> </p>
+        </td>
+        <td><p>SLiMEidosBlock</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="SLiMSim.html">SLiMSim</a></code> </p>
+        </td>
+        <td><p>SLiMSim</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Subpopulation.html">Subpopulation</a></code> </p>
+        </td>
+        <td><p>Subpopulation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Substitution.html">Substitution</a></code> </p>
+        </td>
+        <td><p>Substitution</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-slim-class-methods" class="hasAnchor"><a href="#section-slim-class-methods" class="anchor"></a>SLiM Class Methods</h2>
+          <p class="section-desc"><p>SLiM methods by SLiM class. Note that if a function appears multiple times within a class, that is because a method with the same name exists in other classes. Each links to the same documentation which combines documentation for all classes in one place. This is a bug created by limitation in the R documentation system, but shouldn’t cause the user any issues.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-chromosome" class="hasAnchor"><a href="#section-chromosome" class="anchor"></a>Chromosome</h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="ancestralNucleotides.html">ancestralNucleotides()</a></code> </p>
+        </td>
+        <td><p>SLiM method ancestralNucleotides</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Chromosome.html">Chromosome</a></code> </p>
+        </td>
+        <td><p>Chromosome</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="drawBreakpoints.html">drawBreakpoints()</a></code> </p>
+        </td>
+        <td><p>SLiM method drawBreakpoints</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setAncestralNucleotides.html">setAncestralNucleotides()</a></code> </p>
+        </td>
+        <td><p>SLiM method setAncestralNucleotides</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setGeneConversion.html">setGeneConversion()</a></code> </p>
+        </td>
+        <td><p>SLiM method setGeneConversion</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setHotspotMap.html">setHotspotMap()</a></code> </p>
+        </td>
+        <td><p>SLiM method setHotspotMap</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setMutationRate.html">setMutationRate()</a></code> </p>
+        </td>
+        <td><p>SLiM method setMutationRate</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setRecombinationRate.html">setRecombinationRate()</a></code> </p>
+        </td>
+        <td><p>SLiM method setRecombinationRate</p></td>
+      </tr>
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-genome" class="hasAnchor"><a href="#section-genome" class="anchor"></a>Genome</h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="addMutations.html">addMutations()</a></code> </p>
+        </td>
+        <td><p>SLiM method addMutations</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="addNewDrawnMutation.html">addNewDrawnMutation()</a></code> </p>
+        </td>
+        <td><p>SLiM method addNewDrawnMutation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="addNewMutation.html">addNewMutation()</a></code> </p>
+        </td>
+        <td><p>SLiM method addNewMutation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="containsMarkerMutation.html">containsMarkerMutation()</a></code> </p>
+        </td>
+        <td><p>SLiM method containsMarkerMutation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="containsMutations.html">containsMutations()</a></code> <code><a href="containsMutations.html">containsMutations()</a></code> </p>
+        </td>
+        <td><p>SLiM method containsMutations</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="countOfMutationsOfType.html">countOfMutationsOfType()</a></code> <code><a href="countOfMutationsOfType.html">countOfMutationsOfType()</a></code> <code><a href="countOfMutationsOfType.html">countOfMutationsOfType()</a></code> </p>
+        </td>
+        <td><p>SLiM method countOfMutationsOfType</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Genome.html">Genome</a></code> </p>
+        </td>
+        <td><p>Genome</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="mutationCountsInGenomes.html">mutationCountsInGenomes()</a></code> </p>
+        </td>
+        <td><p>SLiM method mutationCountsInGenomes</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="mutationFrequenciesInGenomes.html">mutationFrequenciesInGenomes()</a></code> </p>
+        </td>
+        <td><p>SLiM method mutationFrequenciesInGenomes</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="mutationsOfType.html">mutationsOfType()</a></code> <code><a href="mutationsOfType.html">mutationsOfType()</a></code> </p>
+        </td>
+        <td><p>SLiM method mutationsOfType</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="nucleotides.html">nucleotides()</a></code> </p>
+        </td>
+        <td><p>SLiM method nucleotides</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="output.html">output()</a></code> </p>
+        </td>
+        <td><p>SLiM method output</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="outputMS.html">outputMS()</a></code> </p>
+        </td>
+        <td><p>SLiM method outputMS</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="outputVCF.html">outputVCF()</a></code> </p>
+        </td>
+        <td><p>SLiM method outputVCF</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="positionsOfMutationsOfType.html">positionsOfMutationsOfType()</a></code> </p>
+        </td>
+        <td><p>SLiM method positionsOfMutationsOfType</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="readFromMS.html">readFromMS()</a></code> </p>
+        </td>
+        <td><p>SLiM method readFromMS</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="readFromVCF.html">readFromVCF()</a></code> </p>
+        </td>
+        <td><p>SLiM method readFromVCF</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="removeMutations.html">removeMutations()</a></code> </p>
+        </td>
+        <td><p>SLiM method removeMutations</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sumOfMutationsOfType.html">sumOfMutationsOfType()</a></code> <code><a href="sumOfMutationsOfType.html">sumOfMutationsOfType()</a></code> </p>
+        </td>
+        <td><p>SLiM method sumOfMutationsOfType</p></td>
+      </tr>
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-genomicelement" class="hasAnchor"><a href="#section-genomicelement" class="anchor"></a>GenomicElement</h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="GenomicElement.html">GenomicElement</a></code> </p>
+        </td>
+        <td><p>GenomicElement</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setGenomicElementType.html">setGenomicElementType()</a></code> </p>
+        </td>
+        <td><p>SLiM method setGenomicElementType</p></td>
+      </tr>
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-genomicelementtype" class="hasAnchor"><a href="#section-genomicelementtype" class="anchor"></a>GenomicElementType</h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="GenomicElementType.html">GenomicElementType</a></code> </p>
+        </td>
+        <td><p>GenomicElementType</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setMutationFractions.html">setMutationFractions()</a></code> </p>
+        </td>
+        <td><p>SLiM method setMutationFractions</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setMutationMatrix.html">setMutationMatrix()</a></code> </p>
+        </td>
+        <td><p>SLiM method setMutationMatrix</p></td>
+      </tr>
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-individual" class="hasAnchor"><a href="#section-individual" class="anchor"></a>Individual</h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="containsMutations.html">containsMutations()</a></code> <code><a href="containsMutations.html">containsMutations()</a></code> </p>
+        </td>
+        <td><p>SLiM method containsMutations</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="countOfMutationsOfType.html">countOfMutationsOfType()</a></code> <code><a href="countOfMutationsOfType.html">countOfMutationsOfType()</a></code> <code><a href="countOfMutationsOfType.html">countOfMutationsOfType()</a></code> </p>
+        </td>
+        <td><p>SLiM method countOfMutationsOfType</p></td>
       </tr><tr>
         
         <td>
@@ -376,6 +776,43 @@
         </td>
         <td><p>Individual</p></td>
       </tr><tr>
+        
+        <td>
+          <p><code><a href="relatedness.html">relatedness()</a></code> </p>
+        </td>
+        <td><p>SLiM method relatedness</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setSpatialPosition.html">setSpatialPosition()</a></code> </p>
+        </td>
+        <td><p>SLiM method setSpatialPosition</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sumOfMutationsOfType.html">sumOfMutationsOfType()</a></code> <code><a href="sumOfMutationsOfType.html">sumOfMutationsOfType()</a></code> </p>
+        </td>
+        <td><p>SLiM method sumOfMutationsOfType</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="uniqueMutationsOfType.html">uniqueMutationsOfType()</a></code> </p>
+        </td>
+        <td><p>SLiM method uniqueMutationsOfType</p></td>
+      </tr>
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-initialize" class="hasAnchor"><a href="#section-initialize" class="anchor"></a>Initialize</h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
           <p><code><a href="Initialize.html">Initialize</a></code> </p>
@@ -465,6 +902,43 @@
           <p><code><a href="initializeTreeSeq.html">initializeTreeSeq()</a></code> </p>
         </td>
         <td><p>SLiM method initializeTreeSeq</p></td>
+      </tr>
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-interactiontype" class="hasAnchor"><a href="#section-interactiontype" class="anchor"></a>InteractionType</h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="distance.html">distance()</a></code> </p>
+        </td>
+        <td><p>SLiM method distance</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="distanceToPoint.html">distanceToPoint()</a></code> </p>
+        </td>
+        <td><p>SLiM method distanceToPoint</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="drawByStrength.html">drawByStrength()</a></code> </p>
+        </td>
+        <td><p>SLiM method drawByStrength</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="evaluate.html">evaluate()</a></code> </p>
+        </td>
+        <td><p>SLiM method evaluate</p></td>
       </tr><tr>
         
         <td>
@@ -486,6 +960,268 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="nearestInteractingNeighbors.html">nearestInteractingNeighbors()</a></code> </p>
+        </td>
+        <td><p>SLiM method nearestInteractingNeighbors</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="nearestNeighbors.html">nearestNeighbors()</a></code> </p>
+        </td>
+        <td><p>SLiM method nearestNeighbors</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="nearestNeighborsOfPoint.html">nearestNeighborsOfPoint()</a></code> </p>
+        </td>
+        <td><p>SLiM method nearestNeighborsOfPoint</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setInteractionFunction.html">setInteractionFunction()</a></code> </p>
+        </td>
+        <td><p>SLiM method setInteractionFunction</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="strength.html">strength()</a></code> </p>
+        </td>
+        <td><p>SLiM method strength</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="totalOfNeighborStrengths.html">totalOfNeighborStrengths()</a></code> </p>
+        </td>
+        <td><p>SLiM method totalOfNeighborStrengths</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="unevaluate.html">unevaluate()</a></code> </p>
+        </td>
+        <td><p>SLiM method unevaluate</p></td>
+      </tr>
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-logfile" class="hasAnchor"><a href="#section-logfile" class="anchor"></a>LogFile</h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="addCustomColumn.html">addCustomColumn()</a></code> </p>
+        </td>
+        <td><p>SLiM method addCustomColumn</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="addGeneration.html">addGeneration()</a></code> </p>
+        </td>
+        <td><p>SLiM method addGeneration</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="addGenerationStage.html">addGenerationStage()</a></code> </p>
+        </td>
+        <td><p>SLiM method addGenerationStage</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="addKeysAndValuesFrom.html">addKeysAndValuesFrom()</a></code> </p>
+        </td>
+        <td><p>SLiM method addKeysAndValuesFrom</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="addMeanSDColumns.html">addMeanSDColumns()</a></code> </p>
+        </td>
+        <td><p>SLiM method addMeanSDColumns</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="addPopulationSexRatio.html">addPopulationSexRatio()</a></code> </p>
+        </td>
+        <td><p>SLiM method addPopulationSexRatio</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="addPopulationSize.html">addPopulationSize()</a></code> </p>
+        </td>
+        <td><p>SLiM method addPopulationSize</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="addSubpopulationSexRatio.html">addSubpopulationSexRatio()</a></code> </p>
+        </td>
+        <td><p>SLiM method addSubpopulationSexRatio</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="addSubpopulationSize.html">addSubpopulationSize()</a></code> </p>
+        </td>
+        <td><p>SLiM method addSubpopulationSize</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="clearKeysAndValues.html">clearKeysAndValues()</a></code> </p>
+        </td>
+        <td><p>SLiM method clearKeysAndValues</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="flush.html">flush()</a></code> </p>
+        </td>
+        <td><p>SLiM method flush</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="LogFile.html">LogFile</a></code> </p>
+        </td>
+        <td><p>LogFile</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="logRow.html">logRow()</a></code> </p>
+        </td>
+        <td><p>SLiM method logRow</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setFilePath.html">setFilePath()</a></code> </p>
+        </td>
+        <td><p>SLiM method setFilePath</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setLogInterval.html">setLogInterval()</a></code> </p>
+        </td>
+        <td><p>SLiM method setLogInterval</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setValue.html">setValue()</a></code> </p>
+        </td>
+        <td><p>SLiM method setValue</p></td>
+      </tr>
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-mutation" class="hasAnchor"><a href="#section-mutation" class="anchor"></a>Mutation</h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="Mutation.html">Mutation</a></code> </p>
+        </td>
+        <td><p>Mutation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setMutationType.html">setMutationType()</a></code> </p>
+        </td>
+        <td><p>SLiM method setMutationType</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setSelectionCoeff.html">setSelectionCoeff()</a></code> </p>
+        </td>
+        <td><p>SLiM method setSelectionCoeff</p></td>
+      </tr>
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-mutationtype" class="hasAnchor"><a href="#section-mutationtype" class="anchor"></a>MutationType</h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="drawSelectionCoefficient.html">drawSelectionCoefficient()</a></code> </p>
+        </td>
+        <td><p>SLiM method drawSelectionCoefficient</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="MutationType.html">MutationType</a></code> </p>
+        </td>
+        <td><p>MutationType</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setDistribution.html">setDistribution()</a></code> </p>
+        </td>
+        <td><p>SLiM method setDistribution</p></td>
+      </tr>
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-slimbuiltin" class="hasAnchor"><a href="#section-slimbuiltin" class="anchor"></a>SLiMBuiltin</h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="calcFST.html">calcFST()</a></code> </p>
+        </td>
+        <td><p>SLiM method calcFST</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="calcHeterozygosity.html">calcHeterozygosity()</a></code> </p>
+        </td>
+        <td><p>SLiM method calcHeterozygosity</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="calcPairHeterozygosity.html">calcPairHeterozygosity()</a></code> </p>
+        </td>
+        <td><p>SLiM method calcPairHeterozygosity</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="calcVA.html">calcVA()</a></code> </p>
+        </td>
+        <td><p>SLiM method calcVA</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="calcWattersonsTheta.html">calcWattersonsTheta()</a></code> </p>
+        </td>
+        <td><p>SLiM method calcWattersonsTheta</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="codonsToAminoAcids.html">codonsToAminoAcids()</a></code> </p>
+        </td>
+        <td><p>SLiM method codonsToAminoAcids</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="mm16To256.html">mm16To256()</a></code> </p>
         </td>
         <td><p>SLiM method mm16To256</p></td>
@@ -504,9 +1240,89 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="Mutation.html">Mutation</a></code> </p>
+          <p><code><a href="nucleotideCounts.html">nucleotideCounts()</a></code> </p>
         </td>
-        <td><p>Mutation</p></td>
+        <td><p>SLiM method nucleotideCounts</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="nucleotideFrequencies.html">nucleotideFrequencies()</a></code> </p>
+        </td>
+        <td><p>SLiM method nucleotideFrequencies</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="nucleotidesToCodons.html">nucleotidesToCodons()</a></code> </p>
+        </td>
+        <td><p>SLiM method nucleotidesToCodons</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="SLiMBuiltin.html">SLiMBuiltin</a></code> </p>
+        </td>
+        <td><p>SLiMBuiltin</p></td>
+      </tr>
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-slimeidosblock" class="hasAnchor"><a href="#section-slimeidosblock" class="anchor"></a>SLiMEidosBlock</h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="SLiMEidosBlock.html">SLiMEidosBlock</a></code> </p>
+        </td>
+        <td><p>SLiMEidosBlock</p></td>
+      </tr>
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-slimsim" class="hasAnchor"><a href="#section-slimsim" class="anchor"></a>SLiMSim</h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="addSubpop.html">addSubpop()</a></code> </p>
+        </td>
+        <td><p>SLiM method addSubpop</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="addSubpopSplit.html">addSubpopSplit()</a></code> </p>
+        </td>
+        <td><p>SLiM method addSubpopSplit</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="countOfMutationsOfType.html">countOfMutationsOfType()</a></code> <code><a href="countOfMutationsOfType.html">countOfMutationsOfType()</a></code> <code><a href="countOfMutationsOfType.html">countOfMutationsOfType()</a></code> </p>
+        </td>
+        <td><p>SLiM method countOfMutationsOfType</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="createLogFile.html">createLogFile()</a></code> </p>
+        </td>
+        <td><p>SLiM method createLogFile</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="deregisterScriptBlock.html">deregisterScriptBlock()</a></code> </p>
+        </td>
+        <td><p>SLiM method deregisterScriptBlock</p></td>
       </tr><tr>
         
         <td>
@@ -528,60 +1344,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="MutationType.html">MutationType</a></code> </p>
-        </td>
-        <td><p>MutationType</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="nearestInteractingNeighbors.html">nearestInteractingNeighbors()</a></code> </p>
-        </td>
-        <td><p>SLiM method nearestInteractingNeighbors</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="nearestNeighbors.html">nearestNeighbors()</a></code> </p>
-        </td>
-        <td><p>SLiM method nearestNeighbors</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="nearestNeighborsOfPoint.html">nearestNeighborsOfPoint()</a></code> </p>
-        </td>
-        <td><p>SLiM method nearestNeighborsOfPoint</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="nucleotideCounts.html">nucleotideCounts()</a></code> </p>
-        </td>
-        <td><p>SLiM method nucleotideCounts</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="nucleotideFrequencies.html">nucleotideFrequencies()</a></code> </p>
-        </td>
-        <td><p>SLiM method nucleotideFrequencies</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="nucleotides.html">nucleotides()</a></code> </p>
-        </td>
-        <td><p>SLiM method nucleotides</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="nucleotidesToCodons.html">nucleotidesToCodons()</a></code> </p>
-        </td>
-        <td><p>SLiM method nucleotidesToCodons</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="output.html">output()</a></code> </p>
-        </td>
-        <td><p>SLiM method output</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="outputFixedMutations.html">outputFixedMutations()</a></code> </p>
         </td>
         <td><p>SLiM method outputFixedMutations</p></td>
@@ -594,27 +1356,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="outputMS.html">outputMS()</a></code> </p>
-        </td>
-        <td><p>SLiM method outputMS</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="outputMSSample.html">outputMSSample()</a></code> </p>
-        </td>
-        <td><p>SLiM method outputMSSample</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="outputMutations.html">outputMutations()</a></code> </p>
         </td>
         <td><p>SLiM method outputMutations</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="outputSample.html">outputSample()</a></code> </p>
-        </td>
-        <td><p>SLiM method outputSample</p></td>
       </tr><tr>
         
         <td>
@@ -624,81 +1368,15 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="outputVCF.html">outputVCF()</a></code> </p>
-        </td>
-        <td><p>SLiM method outputVCF</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="outputVCFSample.html">outputVCFSample()</a></code> </p>
-        </td>
-        <td><p>SLiM method outputVCFSample</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pointInBounds.html">pointInBounds()</a></code> </p>
-        </td>
-        <td><p>SLiM method pointInBounds</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pointPeriodic.html">pointPeriodic()</a></code> </p>
-        </td>
-        <td><p>SLiM method pointPeriodic</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pointReflected.html">pointReflected()</a></code> </p>
-        </td>
-        <td><p>SLiM method pointReflected</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pointStopped.html">pointStopped()</a></code> </p>
-        </td>
-        <td><p>SLiM method pointStopped</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pointUniform.html">pointUniform()</a></code> </p>
-        </td>
-        <td><p>SLiM method pointUniform</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="positionsOfMutationsOfType.html">positionsOfMutationsOfType()</a></code> </p>
-        </td>
-        <td><p>SLiM method positionsOfMutationsOfType</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="readFromMS.html">readFromMS()</a></code> </p>
-        </td>
-        <td><p>SLiM method readFromMS</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="readFromPopulationFile.html">readFromPopulationFile()</a></code> </p>
         </td>
         <td><p>SLiM method readFromPopulationFile</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="readFromVCF.html">readFromVCF()</a></code> </p>
-        </td>
-        <td><p>SLiM method readFromVCF</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="recalculateFitness.html">recalculateFitness()</a></code> </p>
         </td>
         <td><p>SLiM method recalculateFitness</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="reconstruct.slimr_script.html">reconstruct(<i>&lt;slimr_script&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Reconstruct slimrlang code to make this slimr_script</p></td>
       </tr><tr>
         
         <td>
@@ -756,153 +1434,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="relatedness.html">relatedness()</a></code> </p>
-        </td>
-        <td><p>SLiM method relatedness</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="removeMutations.html">removeMutations()</a></code> </p>
-        </td>
-        <td><p>SLiM method removeMutations</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="removeSubpopulation.html">removeSubpopulation()</a></code> </p>
-        </td>
-        <td><p>SLiM method removeSubpopulation</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="rescheduleScriptBlock.html">rescheduleScriptBlock()</a></code> </p>
         </td>
         <td><p>SLiM method rescheduleScriptBlock</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sampleIndividuals.html">sampleIndividuals()</a></code> </p>
-        </td>
-        <td><p>SLiM method sampleIndividuals</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setAncestralNucleotides.html">setAncestralNucleotides()</a></code> </p>
-        </td>
-        <td><p>SLiM method setAncestralNucleotides</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setCloningRate.html">setCloningRate()</a></code> </p>
-        </td>
-        <td><p>SLiM method setCloningRate</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setDistribution.html">setDistribution()</a></code> </p>
-        </td>
-        <td><p>SLiM method setDistribution</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setGeneConversion.html">setGeneConversion()</a></code> </p>
-        </td>
-        <td><p>SLiM method setGeneConversion</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setGenomicElementType.html">setGenomicElementType()</a></code> </p>
-        </td>
-        <td><p>SLiM method setGenomicElementType</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setHotspotMap.html">setHotspotMap()</a></code> </p>
-        </td>
-        <td><p>SLiM method setHotspotMap</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setInteractionFunction.html">setInteractionFunction()</a></code> </p>
-        </td>
-        <td><p>SLiM method setInteractionFunction</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setMigrationRates.html">setMigrationRates()</a></code> </p>
-        </td>
-        <td><p>SLiM method setMigrationRates</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setMutationFractions.html">setMutationFractions()</a></code> </p>
-        </td>
-        <td><p>SLiM method setMutationFractions</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setMutationMatrix.html">setMutationMatrix()</a></code> </p>
-        </td>
-        <td><p>SLiM method setMutationMatrix</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setMutationRate.html">setMutationRate()</a></code> </p>
-        </td>
-        <td><p>SLiM method setMutationRate</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setMutationType.html">setMutationType()</a></code> </p>
-        </td>
-        <td><p>SLiM method setMutationType</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setRecombinationRate.html">setRecombinationRate()</a></code> </p>
-        </td>
-        <td><p>SLiM method setRecombinationRate</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setSelectionCoeff.html">setSelectionCoeff()</a></code> </p>
-        </td>
-        <td><p>SLiM method setSelectionCoeff</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setSelfingRate.html">setSelfingRate()</a></code> </p>
-        </td>
-        <td><p>SLiM method setSelfingRate</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setSexRatio.html">setSexRatio()</a></code> </p>
-        </td>
-        <td><p>SLiM method setSexRatio</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setSpatialBounds.html">setSpatialBounds()</a></code> </p>
-        </td>
-        <td><p>SLiM method setSpatialBounds</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setSpatialPosition.html">setSpatialPosition()</a></code> </p>
-        </td>
-        <td><p>SLiM method setSpatialPosition</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setSubpopulationSize.html">setSubpopulationSize()</a></code> </p>
-        </td>
-        <td><p>SLiM method setSubpopulationSize</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="setValue.html">setValue()</a></code> <code><a href="setValue.html">setValue()</a></code> <code><a href="setValue.html">setValue()</a></code> <code><a href="setValue.html">setValue()</a></code> <code><a href="setValue.html">setValue()</a></code> <code><a href="setValue.html">setValue()</a></code> <code><a href="setValue.html">setValue()</a></code> <code><a href="setValue.html">setValue()</a></code> </p>
-        </td>
-        <td><p>SLiM method setValue</p></td>
       </tr><tr>
         
         <td>
@@ -912,309 +1446,15 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="SLiMBuiltin.html">SLiMBuiltin</a></code> </p>
-        </td>
-        <td><p>SLiMBuiltin</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="SLiMEidosBlock.html">SLiMEidosBlock</a></code> </p>
-        </td>
-        <td><p>SLiMEidosBlock</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slimr_block_init_minimal.html">slimr_block_init_minimal()</a></code> </p>
-        </td>
-        <td><p>Generate minimal initialize() block</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slimr_block_progress.html">slimr_block_progress()</a></code> </p>
-        </td>
-        <td><p>Insert slim_block to track progress when using slim_run</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slimr_clip_original.html">slimr_clip_original()</a></code> </p>
-        </td>
-        <td><p>Copy original slimrlang code used to create a slimr_script object to the clipboard</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slimr_inline.html">slimr_inline()</a></code> </p>
-        </td>
-        <td><p>Insert R objects into SLiM scripts</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slimr_name.html">slimr_name()</a></code> </p>
-        </td>
-        <td><p>Convert a string to a SLiM object name</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slimr_open_original.html">slimr_open_original()</a></code> </p>
-        </td>
-        <td><p>Open original slimrlang code used to create a slimr_script object in a new document</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slimr_output.html">slimr_output()</a></code> </p>
-        </td>
-        <td><p>Tell SLiM to produce easily parseable output</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slimr_output_nucleotides.html">slimr_output_nucleotides()</a></code> </p>
-        </td>
-        <td><p>Utility function to tell SLiM to output Nucleotides</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slimr_script_render.html">slimr_script_render()</a></code> </p>
-        </td>
-        <td><p>Render a SLiM script with special slimrlang formatting</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slimr_template.html">slimr_template()</a></code> </p>
-        </td>
-        <td><p>Create a templated variable</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slimr_template_info.html">slimr_template_info()</a></code> </p>
-        </td>
-        <td><p>Get information on templating in a slimr_script</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slimr_write.html">slimr_write()</a></code> </p>
-        </td>
-        <td><p>Write a slimr_script object to a text file</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="SLiMSim.html">SLiMSim</a></code> </p>
         </td>
         <td><p>SLiMSim</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="slim_block.html">slim_block()</a></code> </p>
+          <p><code><a href="subsetMutations.html">subsetMutations()</a></code> </p>
         </td>
-        <td><p>Setup a SLiM code block</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_code_markup.html">slim_code_markup()</a></code> </p>
-        </td>
-        <td><p>Generate SLiM output markup codes.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_code_Rify.html">slim_code_Rify()</a></code> </p>
-        </td>
-        <td><p>Rify some SLiM code</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_code_SLiMify.html">slim_code_SLiMify()</a></code> </p>
-        </td>
-        <td><p>Rify some SLiM code</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_extract_output_data.html">slim_extract_output_data()</a></code> </p>
-        </td>
-        <td><p>Extract data produced by SLiM</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_file.html">slim_file()</a></code> </p>
-        </td>
-        <td><p>Make sure a filename is compatable with using in a SLiM script.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_find_block_starting_at.html">slim_find_block_starting_at()</a></code> </p>
-        </td>
-        <td><p>Title</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_function.html">slim_function()</a></code> </p>
-        </td>
-        <td><p>Specify an Eidos function to be included in the SLiM script</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_gen_output_code.html">slim_gen_output_code()</a></code> </p>
-        </td>
-        <td><p>Title</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_gen_output_markup_code.html">slim_gen_output_markup_code()</a></code> </p>
-        </td>
-        <td><p>Title</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_get_recipe.html">slim_get_recipe()</a></code> </p>
-        </td>
-        <td><p>Get a SLiM recipe</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_get_recipes.html">slim_get_recipes()</a></code> </p>
-        </td>
-        <td><p>Get a list of SLiM recipes (as text)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_make_pop_input.html">slim_make_pop_input()</a></code> </p>
-        </td>
-        <td><p>Create a file to initialise a population in SliM</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_open.html">slim_open()</a></code> </p>
-        </td>
-        <td><p>Title</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_outputFull_extract.html">slim_outputFull_extract()</a></code> </p>
-        </td>
-        <td><p>Extract Elements from SLiM's outputFull()</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_outputGS_extract.html">slim_outputGS_extract()</a></code> </p>
-        </td>
-        <td><p>Extract Elements from SLiM's output() for genomes</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_output_every_code.html">slim_output_every_code()</a></code> </p>
-        </td>
-        <td><p>Title</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_output_genlight.html">slim_output_genlight()</a></code> </p>
-        </td>
-        <td><p>Extract data into a genlight object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_register_event_code.html">slim_register_event_code()</a></code> </p>
-        </td>
-        <td><p>Title</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_results_to_data.html">slim_results_to_data()</a></code> </p>
-        </td>
-        <td><p>Convert output data from a slimr_results object to a tibble</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_run.html">slim_run()</a></code> </p>
-        </td>
-        <td><p>Run a SLiM script from R</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_script.html">slim_script()</a></code> </p>
-        </td>
-        <td><p>Create a SLiMR script</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_script_add_code.html">slim_script_add_code()</a></code> </p>
-        </td>
-        <td><p>Add code into a block in a slim_script.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_script_change_duration.html">slim_script_change_duration()</a></code> </p>
-        </td>
-        <td><p>Function to change a slimr_script object's duration</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_script_duration.html">slim_script_duration()</a></code> </p>
-        </td>
-        <td><p>Set the duration of a slimr_script</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_script_remove_output.html">slim_script_remove_output()</a></code> </p>
-        </td>
-        <td><p>Remove line from a slim_script pertaining to output</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="slim_setup.html">slim_setup()</a></code> </p>
-        </td>
-        <td><p>Attempt to install and / or setup SLiM for use with slimr</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="spatialMapColor.html">spatialMapColor()</a></code> </p>
-        </td>
-        <td><p>SLiM method spatialMapColor</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="spatialMapValue.html">spatialMapValue()</a></code> </p>
-        </td>
-        <td><p>SLiM method spatialMapValue</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="strength.html">strength()</a></code> </p>
-        </td>
-        <td><p>SLiM method strength</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Subpopulation.html">Subpopulation</a></code> </p>
-        </td>
-        <td><p>Subpopulation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="subsetIndividuals.html">subsetIndividuals()</a></code> </p>
-        </td>
-        <td><p>SLiM method subsetIndividuals</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="Substitution.html">Substitution</a></code> </p>
-        </td>
-        <td><p>Substitution</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="sumOfMutationsOfType.html">sumOfMutationsOfType()</a></code> <code><a href="sumOfMutationsOfType.html">sumOfMutationsOfType()</a></code> </p>
-        </td>
-        <td><p>SLiM method sumOfMutationsOfType</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="takeMigrants.html">takeMigrants()</a></code> </p>
-        </td>
-        <td><p>SLiM method takeMigrants</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="totalOfNeighborStrengths.html">totalOfNeighborStrengths()</a></code> </p>
-        </td>
-        <td><p>SLiM method totalOfNeighborStrengths</p></td>
+        <td><p>SLiM method subsetMutations</p></td>
       </tr><tr>
         
         <td>
@@ -1239,18 +1479,237 @@
           <p><code><a href="treeSeqSimplify.html">treeSeqSimplify()</a></code> </p>
         </td>
         <td><p>SLiM method treeSeqSimplify</p></td>
+      </tr>
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-subpopulation" class="hasAnchor"><a href="#section-subpopulation" class="anchor"></a>Subpopulation</h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="addCloned.html">addCloned()</a></code> </p>
+        </td>
+        <td><p>SLiM method addCloned</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="unevaluate.html">unevaluate()</a></code> </p>
+          <p><code><a href="addCrossed.html">addCrossed()</a></code> </p>
         </td>
-        <td><p>SLiM method unevaluate</p></td>
+        <td><p>SLiM method addCrossed</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="uniqueMutationsOfType.html">uniqueMutationsOfType()</a></code> </p>
+          <p><code><a href="addEmpty.html">addEmpty()</a></code> </p>
         </td>
-        <td><p>SLiM method uniqueMutationsOfType</p></td>
+        <td><p>SLiM method addEmpty</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="addRecombinant.html">addRecombinant()</a></code> </p>
+        </td>
+        <td><p>SLiM method addRecombinant</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="addSelfed.html">addSelfed()</a></code> </p>
+        </td>
+        <td><p>SLiM method addSelfed</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="cachedFitness.html">cachedFitness()</a></code> </p>
+        </td>
+        <td><p>SLiM method cachedFitness</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="configureDisplay.html">configureDisplay()</a></code> </p>
+        </td>
+        <td><p>SLiM method configureDisplay</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="defineSpatialMap.html">defineSpatialMap()</a></code> </p>
+        </td>
+        <td><p>SLiM method defineSpatialMap</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="outputMSSample.html">outputMSSample()</a></code> </p>
+        </td>
+        <td><p>SLiM method outputMSSample</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="outputSample.html">outputSample()</a></code> </p>
+        </td>
+        <td><p>SLiM method outputSample</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="outputVCFSample.html">outputVCFSample()</a></code> </p>
+        </td>
+        <td><p>SLiM method outputVCFSample</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pointInBounds.html">pointInBounds()</a></code> </p>
+        </td>
+        <td><p>SLiM method pointInBounds</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pointPeriodic.html">pointPeriodic()</a></code> </p>
+        </td>
+        <td><p>SLiM method pointPeriodic</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pointReflected.html">pointReflected()</a></code> </p>
+        </td>
+        <td><p>SLiM method pointReflected</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pointStopped.html">pointStopped()</a></code> </p>
+        </td>
+        <td><p>SLiM method pointStopped</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pointUniform.html">pointUniform()</a></code> </p>
+        </td>
+        <td><p>SLiM method pointUniform</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="removeSubpopulation.html">removeSubpopulation()</a></code> </p>
+        </td>
+        <td><p>SLiM method removeSubpopulation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sampleIndividuals.html">sampleIndividuals()</a></code> </p>
+        </td>
+        <td><p>SLiM method sampleIndividuals</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setCloningRate.html">setCloningRate()</a></code> </p>
+        </td>
+        <td><p>SLiM method setCloningRate</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setMigrationRates.html">setMigrationRates()</a></code> </p>
+        </td>
+        <td><p>SLiM method setMigrationRates</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setSelfingRate.html">setSelfingRate()</a></code> </p>
+        </td>
+        <td><p>SLiM method setSelfingRate</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setSexRatio.html">setSexRatio()</a></code> </p>
+        </td>
+        <td><p>SLiM method setSexRatio</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setSpatialBounds.html">setSpatialBounds()</a></code> </p>
+        </td>
+        <td><p>SLiM method setSpatialBounds</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="setSubpopulationSize.html">setSubpopulationSize()</a></code> </p>
+        </td>
+        <td><p>SLiM method setSubpopulationSize</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="spatialMapColor.html">spatialMapColor()</a></code> </p>
+        </td>
+        <td><p>SLiM method spatialMapColor</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="spatialMapValue.html">spatialMapValue()</a></code> </p>
+        </td>
+        <td><p>SLiM method spatialMapValue</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Subpopulation.html">Subpopulation</a></code> </p>
+        </td>
+        <td><p>Subpopulation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="subsetIndividuals.html">subsetIndividuals()</a></code> </p>
+        </td>
+        <td><p>SLiM method subsetIndividuals</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="takeMigrants.html">takeMigrants()</a></code> </p>
+        </td>
+        <td><p>SLiM method takeMigrants</p></td>
+      </tr>
+    </tbody><tbody>
+      
+      <tr>
+        <th colspan="2">
+          <h3 id="section-substitution" class="hasAnchor"><a href="#section-substitution" class="anchor"></a>Substitution</h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="Substitution.html">Substitution</a></code> </p>
+        </td>
+        <td><p>Substitution</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-convert-between-r-like-and-slim-like-code" class="hasAnchor"><a href="#section-convert-between-r-like-and-slim-like-code" class="anchor"></a>Convert between R-like and SLiM-like code</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="slim_code_Rify.html">slim_code_Rify()</a></code> </p>
+        </td>
+        <td><p>Rify some SLiM code</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="slim_code_SLiMify.html">slim_code_SLiMify()</a></code> </p>
+        </td>
+        <td><p>Rify some SLiM code</p></td>
       </tr>
     </tbody>
     </table>

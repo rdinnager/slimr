@@ -37,7 +37,7 @@ An object of type Mutation object.
 }
 \description{
 Documentation for SLiM function \code{addNewMutation}, which is a method of the
-SLiM class \code{Genome}.
+SLiM class \code{\link{Genome}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -114,7 +114,29 @@ about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other Genome: 
+\code{\link{Genome}},
+\code{\link{addMutations}()},
+\code{\link{addNewDrawnMutation}()},
+\code{\link{containsMarkerMutation}()},
+\code{\link{containsMutations}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{mutationCountsInGenomes}()},
+\code{\link{mutationFrequenciesInGenomes}()},
+\code{\link{mutationsOfType}()},
+\code{\link{nucleotides}()},
+\code{\link{outputMS}()},
+\code{\link{outputVCF}()},
+\code{\link{output}()},
+\code{\link{positionsOfMutationsOfType}()},
+\code{\link{readFromMS}()},
+\code{\link{readFromVCF}()},
+\code{\link{removeMutations}()},
+\code{\link{sumOfMutationsOfType}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Genome}

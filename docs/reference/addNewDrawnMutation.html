@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>addNewDrawnMutation</code>, which is a method of
-the SLiM class <code>Genome</code>.
+the SLiM class <code><a href='Genome.html'>Genome</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -202,59 +205,66 @@ is <code>NULL</code>. See details for description.</p></td>
     <p>An object of type Mutation object.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Add new mutations to the target genome(s) with the specified
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=533'>SLiM manual: page 533</a>.</p>
+<p>Add new mutations to the target genome(s) with the specified
 mutationType (specified by the MutationType object or by integer identifier),
 position, originGeneration (which may be NULL, the default, to specify the
-current generation), and originSubpop (specified by the Subpopulation object
-or by integer identifier, or by NULL, the default, to specify the subpopulation
-to which the first target genome belongs). If originSubpop is supplied as an
-integer, it is intentionally not checked for validity; you may use arbitrary
-values of originSubpop to "tag” the mutations that you create (see section
-23.8.1). The selection coefficients of the mutations are drawn from their
-mutation types; addNewMutation() may be used instead if you wish to specify
-selection coefficients. In non-nucleotide-based models, mutationType will
-always be a non-nucleotide-based mutation type, and so nucleotide must be NULL
-(the default). In a nucleotide-based model, mutationType might still be non-
-nucleotide-based (in which case nucleotide must still be NULL), or mutationType
-might be nucleotide-based, in which case a non-NULL value must be supplied
-for nucleotide, specifying the nucleotide(s) to be associated with the new
-mutation(s). Nucleotides may be specified with string values ("A", "C", "G",
-or "T"), or with integer values (A=0, C=1, G=2, T=3). If a nucleotide mutation
-already exists at the mutating position, it is replaced automatically in
-accordance with the stacking policy for nucleotidebased mutation types. No
-check is performed that a new mutation’s nucleotide differs from the ancestral
-sequence, or that its selection coefficient is consistent with other mutations
-that may already exist at the given position with the same nucleotide; model
-consistency is the responsibility of the model. Beginning in SLiM 2.5 this
-method is vectorized, so all of these parameters may be singletons (in which
-case that single value is used for all mutations created by the call) or non-
-singleton vectors (in which case one element is used for each corresponding
-mutation created). Nonsingleton parameters must match in length, since their
-elements need to be matched up oneto- one. The new mutations created by this
-method are returned, even if their actual addition is prevented by the mutation
-stacking policy (see the mutationStackPolicy property of MutationType, section
-23.9.1). However, the order of the mutations in the returned vector is not
-guaranteed to be the same as the order in which the values are specified in
-parameter vectors, unless the position parameter is specified in ascending
-order. In other words, presorting the parameters to this method into ascending
-order by position, using order() and subsetting, will guarantee that the order
-of the returned vector of mutations corresponds to the order of elements in the
-parameters to this method; otherwise, no such guarantee exists. Beginning in
-SLiM 2.1, this is a class method, not an instance method. This means that it
-does not get multiplexed out to all of the elements of the receiver (which would
-add a different new mutation to each element); instead, it is performed as a
-single operation, adding the same new mutation objects to all of the elements of
-the receiver. Before SLiM 2.1, to add the same mutations to multiple genomes, it
-was necessary to call addNewDrawnMutation() on one of the genomes, and then add
-the returned Mutation object to all of the other genomes using addMutations().
-That is not necessary in SLiM 2.1 and later, because of this change (although
-doing it the old way does no harm and produces identical behavior). Pre-2.1
-code that actually relied upon the old multiplexing behavior will no longer
-work correctly (but this is expected to be an extremely rare pattern of usage).
-Calling this will normally affect the fitness values calculated at the end of
-the current generation (but not sooner); if you want current fitness values to
-be affected, you can call SLiMSim’s method recalculateFitness() – but see the
-documentation of that method for caveats.</p>
+current generation; otherwise, beginning in SLiM 3.5, it must be equal to the
+current generation anyway, as other uses of this property have been deprecated),
+and originSubpop (specified by the Subpopulation object or by integer
+identifier, or by NULL, the default, to specify the subpopulation to which
+the first target genome belongs). If originSubpop is supplied as an integer,
+it is intentionally not checked for validity; you may use arbitrary values
+of originSubpop to "tag” the mutations that you create (see section 24.9.1).
+The selection coefficients of the mutations are drawn from their mutation
+types; addNewMutation() may be used instead if you wish to specify selection
+coefficients. In non-nucleotide-based models, mutationType will always be a non-
+nucleotide-based mutation type, and so nucleotide must be NULL (the default). In
+a nucleotide-based model, mutationType might still be non-nucleotide-based (in
+which case nucleotide must still be NULL), or mutationType might be nucleotide-
+based, in which case a non-NULL value must be supplied for nucleotide,
+specifying the nucleotide(s) to be associated with the new mutation(s).
+Nucleotides may be specified with string values ("A", "C", "G", or "T"), or
+with integer values (A=0, C=1, G=2, T=3). If a nucleotide mutation already
+exists at the mutating position, it is replaced automatically in accordance with
+the stacking policy for nucleotidebased mutation types. No check is performed
+that a new mutation’s nucleotide differs from the ancestral sequence, or that
+its selection coefficient is consistent with other mutations that may already
+exist at the given position with the same nucleotide; model consistency is the
+responsibility of the model. Beginning in SLiM 2.5 this method is vectorized,
+so all of these parameters may be singletons (in which case that single value
+is used for all mutations created by the call) or non-singleton vectors (in
+which case one element is used for each corresponding mutation created).
+Nonsingleton parameters must match in length, since their elements need to be
+matched up oneto- one. The new mutations created by this method are returned,
+even if their actual addition is prevented by the mutation stacking policy (see
+the mutationStackPolicy property of MutationType, section 24.10.1). However,
+the order of the mutations in the returned vector is not guaranteed to be
+the same as the order in which the values are specified in parameter vectors,
+unless the position parameter is specified in ascending order. In other words,
+presorting the parameters to this method into ascending order by position, using
+order() and subsetting, will guarantee that the order of the returned vector of
+mutations corresponds to the order of elements in the parameters to this method;
+otherwise, no such guarantee exists. Beginning in SLiM 2.1, this is a class
+method, not an instance method. This means that it does not get multiplexed out
+to all of the elements of the receiver (which would add a different new mutation
+to each element); instead, it is performed as a single operation, adding the
+same new mutation objects to all of the elements of the receiver. Before SLiM
+2.1, to add the same mutations to multiple genomes, it was necessary to call
+addNewDrawnMutation() on one of the genomes, and then add the returned Mutation
+object to all of the other genomes using addMutations(). That is not necessary
+in SLiM 2.1 and later, because of this change (although doing it the old way
+does no harm and produces identical behavior). Pre-2.1 code that actually relied
+upon the old multiplexing behavior will no longer work correctly (but this is
+expected to be an extremely rare pattern of usage). Calling this will normally
+affect the fitness values calculated at the end of the current generation
+(but not sooner); if you want current fitness values to be affected, you can
+call SLiMSim’s method recalculateFitness() – but see the documentation of that
+method for caveats. Note that in nonWF models that use tree-sequence recording,
+mutations cannot be added to an individual after the generation in which the
+individual is created (i.e., when the age of the individual is greater than 0),
+to prevent the possibility of inconsistencies in the recorded tree sequence.</p>
     <h2 class="hasAnchor" id="copyright"><a class="anchor" href="#copyright"></a>Copyright</h2>
 
     
@@ -266,6 +276,27 @@ documentation is
 Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Genome: 
+<code><a href='Genome.html'>Genome</a></code>,
+<code><a href='addMutations.html'>addMutations</a>()</code>,
+<code><a href='addNewMutation.html'>addNewMutation</a>()</code>,
+<code><a href='containsMarkerMutation.html'>containsMarkerMutation</a>()</code>,
+<code><a href='containsMutations.html'>containsMutations</a>()</code>,
+<code><a href='countOfMutationsOfType.html'>countOfMutationsOfType</a>()</code>,
+<code><a href='mutationCountsInGenomes.html'>mutationCountsInGenomes</a>()</code>,
+<code><a href='mutationFrequenciesInGenomes.html'>mutationFrequenciesInGenomes</a>()</code>,
+<code><a href='mutationsOfType.html'>mutationsOfType</a>()</code>,
+<code><a href='nucleotides.html'>nucleotides</a>()</code>,
+<code><a href='outputMS.html'>outputMS</a>()</code>,
+<code><a href='outputVCF.html'>outputVCF</a>()</code>,
+<code><a href='output.html'>output</a>()</code>,
+<code><a href='positionsOfMutationsOfType.html'>positionsOfMutationsOfType</a>()</code>,
+<code><a href='readFromMS.html'>readFromMS</a>()</code>,
+<code><a href='readFromVCF.html'>readFromVCF</a>()</code>,
+<code><a href='removeMutations.html'>removeMutations</a>()</code>,
+<code><a href='sumOfMutationsOfType.html'>sumOfMutationsOfType</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

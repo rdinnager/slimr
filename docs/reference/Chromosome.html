@@ -106,10 +106,13 @@
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -154,7 +157,12 @@
     <p>An object of class <code>list</code> of length 40.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This class has the following methods (functions):</p><ul>
+    <p>This class represents the layout and properties of the chromosome being
+simulated. The
+chromosome currently being simulated is available through the sim.chromosome
+global. Section
+1.5.4 presents an overview of the conceptual role of this class.
+This class has the following methods (functions):</p><ul>
 <li><p><code><a href='ancestralNucleotides.html'>ancestralNucleotides</a></code></p></li>
 <li><p><code><a href='drawBreakpoints.html'>drawBreakpoints</a></code></p></li>
 <li><p><code><a href='setAncestralNucleotides.html'>setAncestralNucleotides</a></code></p></li>
@@ -239,8 +247,11 @@ hotspotEndPositionsM, when using sex-specific hotspot maps; unavailable
 otherwise.</p></dd>
 <dt>lastPosition</dt><dd><p>A property of type integer. It is of length one
 (a singleton). This property is a constant, so it is not modifiable.
-<strong>Property Description:</strong> The last valid position in the chromosome; its
-length, essentially.</p></dd>
+<strong>Property Description:</strong> The last valid position in the chromosome;
+its length, essentially. Note that the chromosome length is determined by
+the maximum of the end of the last genomic element, the end of the last
+recombination region, and the end of the last mutation map region (or hotspot
+map region).</p></dd>
 <dt>mutationEndPositions</dt><dd><p>A property of type integer. This property is a
 constant, so it is not modifiable. <strong>Property Description:</strong> The end
 positions for mutation rate regions along the chromosome. Each mutation rate
@@ -358,6 +369,16 @@ to use.</p></dd>
 
 </dl>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Chromosome: 
+<code><a href='ancestralNucleotides.html'>ancestralNucleotides</a>()</code>,
+<code><a href='drawBreakpoints.html'>drawBreakpoints</a>()</code>,
+<code><a href='setAncestralNucleotides.html'>setAncestralNucleotides</a>()</code>,
+<code><a href='setGeneConversion.html'>setGeneConversion</a>()</code>,
+<code><a href='setHotspotMap.html'>setHotspotMap</a>()</code>,
+<code><a href='setMutationRate.html'>setMutationRate</a>()</code>,
+<code><a href='setRecombinationRate.html'>setRecombinationRate</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -64,4 +64,10 @@ genomic element types.}
 
 }
 }
+\seealso{
+Other GenomicElementType: 
+\code{\link{setMutationFractions}()},
+\code{\link{setMutationMatrix}()}
+}
+\concept{GenomicElementType}
 \keyword{datasets}

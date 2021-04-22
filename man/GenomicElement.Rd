@@ -48,4 +48,9 @@ to use.}
 
 }
 }
+\seealso{
+Other GenomicElement: 
+\code{\link{setGenomicElementType}()}
+}
+\concept{GenomicElement}
 \keyword{datasets}

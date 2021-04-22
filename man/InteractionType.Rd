@@ -285,4 +285,21 @@ for another way of attaching state to interaction types.}
 
 }
 }
+\seealso{
+Other InteractionType: 
+\code{\link{distanceToPoint}()},
+\code{\link{distance}()},
+\code{\link{drawByStrength}()},
+\code{\link{evaluate}()},
+\code{\link{interactingNeighborCount}()},
+\code{\link{interactionDistance}()},
+\code{\link{nearestInteractingNeighbors}()},
+\code{\link{nearestNeighborsOfPoint}()},
+\code{\link{nearestNeighbors}()},
+\code{\link{setInteractionFunction}()},
+\code{\link{strength}()},
+\code{\link{totalOfNeighborStrengths}()},
+\code{\link{unevaluate}()}
+}
+\concept{InteractionType}
 \keyword{datasets}

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a file to initialise a population in SliM — slim_make_pop_input • slimr</title>
+<title>Create a file to initialise a population in SLiM — slim_make_pop_input • slimr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Create a file to initialise a population in SliM — slim_make_pop_input" />
+<meta property="og:title" content="Create a file to initialise a population in SLiM — slim_make_pop_input" />
 <meta property="og:description" content="Make a SLiM file in the style of outputFull() which can be read by SLiM. This is useful to
 start a simulation with a particular population state that you define in R" />
 <meta property="og:image" content="/logo.png" />
@@ -107,10 +107,13 @@ start a simulation with a particular population state that you define in R" />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -138,7 +141,7 @@ start a simulation with a particular population state that you define in R" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a file to initialise a population in SliM</h1>
+    <h1>Create a file to initialise a population in SLiM</h1>
     <small class="dont-index">Source: <a href='https://github.com/rdinnager/slimr/blob/master/R/slim_input.R'><code>R/slim_input.R</code></a></small>
     <div class="hidden name"><code>slim_make_pop_input.Rd</code></div>
     </div>
@@ -160,19 +163,70 @@ start a simulation with a particular population state that you define in R</p>
   mut_dom <span class='op'>=</span> <span class='cn'>NULL</span>,
   mut_pop <span class='op'>=</span> <span class='cn'>NULL</span>,
   mut_gen <span class='op'>=</span> <span class='cn'>NULL</span>,
-  mut_prev <span class='op'>=</span> <span class='cn'>NULL</span>,
-  mut_nuc <span class='op'>=</span> <span class='cn'>NULL</span>,
-  ind_coord <span class='op'>=</span> <span class='cn'>NULL</span>,
-  ind_age <span class='op'>=</span> <span class='cn'>NULL</span>,
-  gen_type <span class='op'>=</span> <span class='cn'>NULL</span>
+  mut_nuc <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>gen_type</th>
-      <td></td>
+      <th>snps</th>
+      <td><p>R object containing SNPs. Can be a matrix with 0, 1, or 2 as its elements,
+or a <code>genlight</code> object. Rows correspond to individuals, columns to loci.</p></td>
+    </tr>
+    <tr>
+      <th>file_name</th>
+      <td><p>Path to file where the population input file should be saved.</p></td>
+    </tr>
+    <tr>
+      <th>sim_gen</th>
+      <td><p>What generation to write in the file. This doesn't really do anything, but is just a requirement
+for the format.</p></td>
+    </tr>
+    <tr>
+      <th>ind_pops</th>
+      <td><p>An optional character vector with length equal to <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(snps)</a></code> with Subpopulation indicators for
+each individual. Should be "p1", "p2", etc. as this is how subpopulations are named in SLiM.</p></td>
+    </tr>
+    <tr>
+      <th>ind_sex</th>
+      <td><p>An optional character vector with length equal to <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(snps)</a></code> with the sex for each individual (can be
+"H" for hermaphrodite, "F" for female, or "M" for male.)</p></td>
+    </tr>
+    <tr>
+      <th>mut_pos</th>
+      <td><p>An optional integer vector with length equal to <code><a href='https://rdrr.io/r/base/nrow.html'>ncol(snps)</a></code> specifying the positions in the genome
+of each loci.</p></td>
+    </tr>
+    <tr>
+      <th>mut_type</th>
+      <td><p>An optional character vector with length equal to <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(snps)</a></code> with the mutation type of each loci.
+Should be "m1", "m2", etc. as this is how mutation types are named in SLiM.</p></td>
+    </tr>
+    <tr>
+      <th>mut_sel</th>
+      <td><p>An optional numeric vector with length equal to <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(snps)</a></code> with the selection coefficient for the
+mutation type of each loci.</p></td>
+    </tr>
+    <tr>
+      <th>mut_dom</th>
+      <td><p>An optional numeric vector with length equal to <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(snps)</a></code> with the dominance coefficient for the
+mutation type of each loci.</p></td>
+    </tr>
+    <tr>
+      <th>mut_pop</th>
+      <td><p>An optional character vector with length equal to <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(snps)</a></code> with the subpopulation of origin
+for the mutation at each loci. Should be "p1", "p2", etc. as this is how subpopulations are named in SLiM.</p></td>
+    </tr>
+    <tr>
+      <th>mut_gen</th>
+      <td><p>An optional integer vector with length equal to <code><a href='https://rdrr.io/r/base/nrow.html'>ncol(snps)</a></code> specifying the generation of origin
+for the mutation at each loci.</p></td>
+    </tr>
+    <tr>
+      <th>mut_nuc</th>
+      <td><p>An optional character vector with length equal to <code><a href='https://rdrr.io/r/base/nrow.html'>nrow(snps)</a></code> with the nucleotide of the
+mutation. Should be "A", "C", "G", or "T".</p></td>
     </tr>
     </table>
 

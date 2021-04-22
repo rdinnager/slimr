@@ -19,7 +19,7 @@ An object of type float.
 }
 \description{
 Documentation for SLiM function \code{distanceToPoint}, which is a method of the
-SLiM class \code{InteractionType}.
+SLiM class \code{\link{InteractionType}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -62,7 +62,24 @@ about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other InteractionType: 
+\code{\link{InteractionType}},
+\code{\link{distance}()},
+\code{\link{drawByStrength}()},
+\code{\link{evaluate}()},
+\code{\link{interactingNeighborCount}()},
+\code{\link{interactionDistance}()},
+\code{\link{nearestInteractingNeighbors}()},
+\code{\link{nearestNeighborsOfPoint}()},
+\code{\link{nearestNeighbors}()},
+\code{\link{setInteractionFunction}()},
+\code{\link{strength}()},
+\code{\link{totalOfNeighborStrengths}()},
+\code{\link{unevaluate}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{InteractionType}

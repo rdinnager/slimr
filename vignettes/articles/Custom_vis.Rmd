@@ -86,7 +86,7 @@ I've added a few `slimr_template()` calls to make it easier to quickly change pa
 In order to make a custom visualization for this script we can provide a custom callback function. This is a function which takes as its first argument a dataset named `data`, which is dynamically constructed while SLiM is running based on the `slimr_output()` call in the script. To get an example dataset we can use to test our callback function, we can just run the script with `capture_output = TRUE`, which will capture the data and output it in the final results. This will tell us what the data will look like during the SLiM run. Since we just need it for testing purposes, we can just run the simulation for a small number of generations and on a small number of individuals (just enough to accumulate a few mutations to test the visualization).
 
 ```{r run_script_test}
-chromosome_sim_test <- slimr_script_render(chromosome_sim,
+chromosome_sim_test <- slim_script_render(chromosome_sim,
                                            template = list(N = 100))
 output_test <- slim_run(chromosome_sim_test)
 output_test$output_data
@@ -139,7 +139,7 @@ Let's try it out!
 
 ```{r run_sim_w_callback, eval=FALSE}
 ## change mutation rate and increase pop size
-chromosome_sim_1 <- slimr_script_render(chromosome_sim,
+chromosome_sim_1 <- slim_script_render(chromosome_sim,
                                            template = list(N = 500,
                                                            mut_rate = 1e-6))
 

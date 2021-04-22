@@ -32,7 +32,7 @@ An object of type Individual object.
 }
 \description{
 Documentation for SLiM function \code{subsetIndividuals}, which is a method of
-the SLiM class \code{Subpopulation}.
+the SLiM class \code{\link{Subpopulation}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -72,7 +72,39 @@ about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other Subpopulation: 
+\code{\link{Subpopulation}},
+\code{\link{addCloned}()},
+\code{\link{addCrossed}()},
+\code{\link{addEmpty}()},
+\code{\link{addRecombinant}()},
+\code{\link{addSelfed}()},
+\code{\link{cachedFitness}()},
+\code{\link{configureDisplay}()},
+\code{\link{defineSpatialMap}()},
+\code{\link{outputMSSample}()},
+\code{\link{outputSample}()},
+\code{\link{outputVCFSample}()},
+\code{\link{pointInBounds}()},
+\code{\link{pointPeriodic}()},
+\code{\link{pointReflected}()},
+\code{\link{pointStopped}()},
+\code{\link{pointUniform}()},
+\code{\link{removeSubpopulation}()},
+\code{\link{sampleIndividuals}()},
+\code{\link{setCloningRate}()},
+\code{\link{setMigrationRates}()},
+\code{\link{setSelfingRate}()},
+\code{\link{setSexRatio}()},
+\code{\link{setSpatialBounds}()},
+\code{\link{setSubpopulationSize}()},
+\code{\link{spatialMapColor}()},
+\code{\link{spatialMapValue}()},
+\code{\link{takeMigrants}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Subpopulation}

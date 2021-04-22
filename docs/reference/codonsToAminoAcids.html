@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>codonsToAminoAcids</code>, which is a method of
-the SLiM class <code>SLiMBuiltin</code>.
+the SLiM class <code><a href='SLiMBuiltin.html'>SLiMBuiltin</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -167,43 +170,53 @@ full SLiM script.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>codons</th>
-      <td><p>An object of type integer or logical or logical. See details for
-description.</p></td>
+      <td><p>An object of type integer. See details for description.</p></td>
     </tr>
     <tr>
       <th>long</th>
-      <td><p>An object of type integer or logical or logical. Must be of length 1
-(a singleton). The default value is <code>F</code>. See details for description.</p></td>
+      <td><p>An object of type logical or integer. Must be of length 1 (a
+singleton). The default value is <code>F</code>. See details for description.</p></td>
     </tr>
     <tr>
       <th>paste</th>
-      <td><p>An object of type integer or logical or logical. Must be of length
-1 (a singleton). The default value is <code>T</code>. See details for description.</p></td>
+      <td><p>An object of type logical. Must be of length 1 (a singleton). The
+default value is <code>T</code>. See details for description.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of type string or float or float or float or integer or float
-or integer.</p>
+    <p>An object of type integer or string.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Returns the amino acid sequence corresponding to the codon sequence
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=589'>SLiM manual: page 589</a>.</p>
+<p>Returns the amino acid sequence corresponding to the codon sequence
 in codons. Codons should be represented with values in [0, 63] where AAA is 0,
-AAC is 1, AAG is 2, and TTT is 63; see ancestralNucleotides() for discussion
-of this encoding. If long is F (the default), the standard single-letter
-codes for amino acids will be used (where Serine is "S", etc.); if long is T,
-the standard three-letter codes will be used instead (where Serine is "Ser",
-etc.). When paste is T (the default), the amino acid sequence returned will
-be a singleton string, such as "LYATI" (when long is F) or "Leu-Tyr-Ala-Thr-
-Ile" (when long is T). When paste is F, the amino acid sequence will instead
-be returned as a string vector, with one element per amino acid, such as "L"
-"Y" "A" "T" "I" (when long is F) or "Leu" "Tyr" "Ala" "Thr" "Ile" (when long
-is T). Using the paste=T option is considerably faster than using paste()
-in script. This function interprets the supplied codon sequence as the sense
-strand (i.e., the strand that is not transcribed, and which mirrors the mRNA’s
-sequence). This uses the standard DNA codon table directly. For example,
-if the nucleotide sequence is CAA TTC, that will correspond to a codon
+AAC is 1, AAG is 2, and TTT is 63; see ancestralNucleotides() for discussion of
+this encoding. If long is F (the default), the standard single-letter codes for
+amino acids will be used (where Serine is "S", etc.); if long is T, the standard
+three-letter codes will be used instead (where Serine is "Ser", etc.). Beginning
+in SLiM 3.5, if long is 0, integer codes will be used as follows (and paste will
+be ignored): stop (TAA, TAG, TGA) 0 Alanine 1 Arginine 2 Asparagine 3 Aspartic
+acid (Aspartate) 4 Cysteine 5 Glutamine 6 Glutamic acid (Glutamate) 7 Glycine
+8 Histidine 9 Isoleucine 10 Leucine 11 Lysine 12 Methionine 13 Phenylalanine 14
+Proline 15 Serine 16 Threonine 17 Tryptophan 18 Tyrosine 19 Valine 20 There does
+not seem to be a widely used standard for integer coding of amino acids, so SLiM
+just numbers them alphabetically, making stop codons 0. If you want a different
+coding, you can make your own 64-element vector and use it to convert codons to
+whatever integer codes you need. Other integer values of long are reserved for
+future use (to support other codings), and will currently produce an error. When
+long is T or F and paste is T (the default), the amino acid sequence returned
+will be a singleton string, such as "LYATI" (when long is F) or "Leu-Tyr-Ala-
+Thr-Ile" (when long is T). When long is T or F and paste is F, the amino acid
+sequence will instead be returned as a string vector, with one element per amino
+acid, such as "L" "Y" "A" "T" "I" (when long is F) or "Leu" "Tyr" "Ala" "Thr"
+"Ile" (when long is T). Using the paste=T option is considerably faster than
+using paste() in script. This function interprets the supplied codon sequence
+as the sense strand (i.e., the strand that is not transcribed, and which mirrors
+the mRNA’s sequence). This uses the standard DNA codon table directly. For
+example, if the nucleotide sequence is CAA TTC, that will correspond to a codon
 vector of 16 61, and will result in the amino acid sequence Gln-Phe ("QF").
 (is)codonsToNucleotides(integer codons, [string$ format = "string"]) Returns
 the nucleotide sequence corresponding to the codon sequence supplied in codons.
@@ -225,6 +238,21 @@ documentation is
 Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other SLiMBuiltin: 
+<code><a href='SLiMBuiltin.html'>SLiMBuiltin</a></code>,
+<code><a href='calcFST.html'>calcFST</a>()</code>,
+<code><a href='calcHeterozygosity.html'>calcHeterozygosity</a>()</code>,
+<code><a href='calcPairHeterozygosity.html'>calcPairHeterozygosity</a>()</code>,
+<code><a href='calcVA.html'>calcVA</a>()</code>,
+<code><a href='calcWattersonsTheta.html'>calcWattersonsTheta</a>()</code>,
+<code><a href='mm16To256.html'>mm16To256</a>()</code>,
+<code><a href='mmJukesCantor.html'>mmJukesCantor</a>()</code>,
+<code><a href='mmKimura.html'>mmKimura</a>()</code>,
+<code><a href='nucleotideCounts.html'>nucleotideCounts</a>()</code>,
+<code><a href='nucleotideFrequencies.html'>nucleotideFrequencies</a>()</code>,
+<code><a href='nucleotidesToCodons.html'>nucleotidesToCodons</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

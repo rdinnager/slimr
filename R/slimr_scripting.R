@@ -478,10 +478,10 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #' @param slimr_script The \code{slimr_script} object to be rendered
 #' @param template A list or data.frame containing values for any templated variables. If a list,
 #' it must be named, where the names correspond to the variables. If a list of lists, the inner
-#' lists must be named with the variable names, and \code{slimr_script_render} will render a
+#' lists must be named with the variable names, and \code{slim_script_render} will render a
 #' separate \code{slimr_script} for each top-level list element and return it as a \code{slimr_script_coll}
 #' object. If a \code{data.frame} (or \code{tibble}), then the column names should match the templated
-#' variables, and \code{slimr_script_render} will render a separate \code{slimr_script} for each row
+#' variables, and \code{slim_script_render} will render a separate \code{slimr_script} for each row
 #' and return it as a \code{slimr_script_coll} object.
 #' @param replace_NAs Should \code{NA} values in the template be replaced by their default values?
 #' @param reps Should the rendered script be replicated? If greater than 1, a \code{slimr_script_coll}
@@ -492,7 +492,7 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #' @export
 #'
 #' @examples
-slimr_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE,
+slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE,
                                 reps = 1) {
 
   if(attr(slimr_script, "script_info")$rendered) {

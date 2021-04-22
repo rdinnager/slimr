@@ -69,4 +69,22 @@ This class has the following properties:
 \item{None.}{This class has no properties.}
 }
 }
+\seealso{
+Other Initialize: 
+\code{\link{initializeAncestralNucleotides}()},
+\code{\link{initializeGeneConversion}()},
+\code{\link{initializeGenomicElementType}()},
+\code{\link{initializeGenomicElement}()},
+\code{\link{initializeHotspotMap}()},
+\code{\link{initializeInteractionType}()},
+\code{\link{initializeMutationRate}()},
+\code{\link{initializeMutationTypeNuc}()},
+\code{\link{initializeMutationType}()},
+\code{\link{initializeRecombinationRate}()},
+\code{\link{initializeSLiMModelType}()},
+\code{\link{initializeSLiMOptions}()},
+\code{\link{initializeSex}()},
+\code{\link{initializeTreeSeq}()}
+}
+\concept{Initialize}
 \keyword{datasets}

@@ -229,4 +229,15 @@ to use.}
 
 }
 }
+\seealso{
+Other Chromosome: 
+\code{\link{ancestralNucleotides}()},
+\code{\link{drawBreakpoints}()},
+\code{\link{setAncestralNucleotides}()},
+\code{\link{setGeneConversion}()},
+\code{\link{setHotspotMap}()},
+\code{\link{setMutationRate}()},
+\code{\link{setRecombinationRate}()}
+}
+\concept{Chromosome}
 \keyword{datasets}

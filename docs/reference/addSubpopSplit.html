@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>addSubpopSplit</code>, which is a method of the
-SLiM class <code>SLiMSim</code>.
+SLiM class <code><a href='SLiMSim.html'>SLiMSim</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -193,7 +196,9 @@ default value is <code>0.5</code>. See details for description.</p></td>
 singleton)</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Split off a new subpopulation with id subpopID and size individuals
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=566'>SLiM manual: page 566</a>.</p>
+<p>Split off a new subpopulation with id subpopID and size individuals
 derived from subpopulation sourceSubpop. The subpopID parameter may be either
 an integer giving the ID of the new subpopulation, or a string giving the name
 of the new subpopulation (such as "p5" to specify an ID of 5). The sourceSubpop
@@ -201,7 +206,7 @@ parameter may specify the source subpopulation either as a Subpopulation object
 or by integer identifier. Only if sex is enabled in the simulation, the initial
 sex ratio may optionally be specified as sexRatio (as the male fraction, M:M+F);
 if it is not specified, a default of 0.5 is used. The new subpopulation will be
-defined as a global variable immediately by this method (see section 23.13), and
+defined as a global variable immediately by this method (see section 24.14), and
 will also be returned by this method. Subpopulations added by this method will
 consist of individuals that are clonal copies of individuals from the source
 subpopulation, randomly chosen with probabilities proportional to fitness. The
@@ -225,6 +230,39 @@ documentation is
 Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other SLiMSim: 
+<code><a href='SLiMSim.html'>SLiMSim</a></code>,
+<code><a href='addSubpop.html'>addSubpop</a>()</code>,
+<code><a href='countOfMutationsOfType.html'>countOfMutationsOfType</a>()</code>,
+<code><a href='createLogFile.html'>createLogFile</a>()</code>,
+<code><a href='deregisterScriptBlock.html'>deregisterScriptBlock</a>()</code>,
+<code><a href='mutationCounts.html'>mutationCounts</a>()</code>,
+<code><a href='mutationFrequencies.html'>mutationFrequencies</a>()</code>,
+<code><a href='mutationsOfType.html'>mutationsOfType</a>()</code>,
+<code><a href='outputFixedMutations.html'>outputFixedMutations</a>()</code>,
+<code><a href='outputFull.html'>outputFull</a>()</code>,
+<code><a href='outputMutations.html'>outputMutations</a>()</code>,
+<code><a href='outputUsage.html'>outputUsage</a>()</code>,
+<code><a href='readFromPopulationFile.html'>readFromPopulationFile</a>()</code>,
+<code><a href='recalculateFitness.html'>recalculateFitness</a>()</code>,
+<code><a href='registerEarlyEvent.html'>registerEarlyEvent</a>()</code>,
+<code><a href='registerFitnessCallback.html'>registerFitnessCallback</a>()</code>,
+<code><a href='registerInteractionCallback.html'>registerInteractionCallback</a>()</code>,
+<code><a href='registerLateEvent.html'>registerLateEvent</a>()</code>,
+<code><a href='registerMateChoiceCallback.html'>registerMateChoiceCallback</a>()</code>,
+<code><a href='registerModifyChildCallback.html'>registerModifyChildCallback</a>()</code>,
+<code><a href='registerMutationCallback.html'>registerMutationCallback</a>()</code>,
+<code><a href='registerRecombinationCallback.html'>registerRecombinationCallback</a>()</code>,
+<code><a href='registerReproductionCallback.html'>registerReproductionCallback</a>()</code>,
+<code><a href='rescheduleScriptBlock.html'>rescheduleScriptBlock</a>()</code>,
+<code><a href='simulationFinished.html'>simulationFinished</a>()</code>,
+<code><a href='subsetMutations.html'>subsetMutations</a>()</code>,
+<code><a href='treeSeqCoalesced.html'>treeSeqCoalesced</a>()</code>,
+<code><a href='treeSeqOutput.html'>treeSeqOutput</a>()</code>,
+<code><a href='treeSeqRememberIndividuals.html'>treeSeqRememberIndividuals</a>()</code>,
+<code><a href='treeSeqSimplify.html'>treeSeqSimplify</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

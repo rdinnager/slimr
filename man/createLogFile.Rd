@@ -44,7 +44,7 @@ singleton)
 }
 \description{
 Documentation for SLiM function \code{createLogFile}, which is a method of the
-SLiM class \code{SLiMSim}.
+SLiM class \code{\link{SLiMSim}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -68,7 +68,7 @@ zlib as they are written, and the standard .gz extension for gzip-compressed
 files will be appended to the filename in filePath if it is not already
 present. The sep parameter specifies the separator between data values within
 a row. The default of "," will generate a "comma-separated value” (CSV) file,
-while passing sep="\t" will use a tab separator instead to generate a "tab-
+while passing sep="\\t" will use a tab separator instead to generate a "tab-
 separated value” (TSV) file. Other values for sep may also be used, but are less
 standard. LogTable supports periodic automatic logging of a new row of data,
 enabled by supplying a non-NULL value for logInterval. In this case, a new row
@@ -105,7 +105,41 @@ about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other SLiMSim: 
+\code{\link{SLiMSim}},
+\code{\link{addSubpopSplit}()},
+\code{\link{addSubpop}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{deregisterScriptBlock}()},
+\code{\link{mutationCounts}()},
+\code{\link{mutationFrequencies}()},
+\code{\link{mutationsOfType}()},
+\code{\link{outputFixedMutations}()},
+\code{\link{outputFull}()},
+\code{\link{outputMutations}()},
+\code{\link{outputUsage}()},
+\code{\link{readFromPopulationFile}()},
+\code{\link{recalculateFitness}()},
+\code{\link{registerEarlyEvent}()},
+\code{\link{registerFitnessCallback}()},
+\code{\link{registerInteractionCallback}()},
+\code{\link{registerLateEvent}()},
+\code{\link{registerMateChoiceCallback}()},
+\code{\link{registerModifyChildCallback}()},
+\code{\link{registerMutationCallback}()},
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{rescheduleScriptBlock}()},
+\code{\link{simulationFinished}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqOutput}()},
+\code{\link{treeSeqRememberIndividuals}()},
+\code{\link{treeSeqSimplify}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{SLiMSim}

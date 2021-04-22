@@ -17,7 +17,7 @@ An object of type void.
 }
 \description{
 Documentation for SLiM function \code{setGenomicElementType}, which is a method
-of the SLiM class \code{GenomicElement}.
+of the SLiM class \code{\link{GenomicElement}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -46,7 +46,12 @@ about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other GenomicElement: 
+\code{\link{GenomicElement}}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{GenomicElement}

@@ -106,10 +106,13 @@
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,10 +154,17 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class <code>list</code> of length 43.</p>
+    <p>An object of class <code>list</code> of length 44.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This class has the following methods (functions):</p><ul>
+    <p>This class represents one subpopulation in the simulated population.
+Section 1.5.5 presents an
+overview of the conceptual role of this class. The subpopulations currently
+defined in the
+simulation are defined as global constants with the same names used in the SLiM
+input file – p1,
+p2, and so forth.
+This class has the following methods (functions):</p><ul>
 <li><p><code><a href='addCloned.html'>addCloned</a></code></p></li>
 <li><p><code><a href='addCrossed.html'>addCrossed</a></code></p></li>
 <li><p><code><a href='addEmpty.html'>addEmpty</a></code></p></li>
@@ -163,7 +173,6 @@
 <li><p><code><a href='cachedFitness.html'>cachedFitness</a></code></p></li>
 <li><p><code><a href='configureDisplay.html'>configureDisplay</a></code></p></li>
 <li><p><code><a href='defineSpatialMap.html'>defineSpatialMap</a></code></p></li>
-<li><p><code><a href='getValue.html'>getValue</a></code></p></li>
 <li><p><code><a href='outputMSSample.html'>outputMSSample</a></code></p></li>
 <li><p><code><a href='outputSample.html'>outputSample</a></code></p></li>
 <li><p><code><a href='outputVCFSample.html'>outputVCFSample</a></code></p></li>
@@ -180,7 +189,6 @@
 <li><p><code><a href='setSexRatio.html'>setSexRatio</a></code></p></li>
 <li><p><code><a href='setSpatialBounds.html'>setSpatialBounds</a></code></p></li>
 <li><p><code><a href='setSubpopulationSize.html'>setSubpopulationSize</a></code></p></li>
-<li><p><code><a href='setValue.html'>setValue</a></code></p></li>
 <li><p><code><a href='spatialMapColor.html'>spatialMapColor</a></code></p></li>
 <li><p><code><a href='spatialMapValue.html'>spatialMapValue</a></code></p></li>
 <li><p><code><a href='subsetIndividuals.html'>subsetIndividuals</a></code></p></li>
@@ -245,6 +253,31 @@ constant, so it is not modifiable. <strong>Property Description:</strong> All of
 individuals contained by the subpopulation. Each individual is diploid and thus
 contains two Genome objects. See the sampleIndividuals() and subsetIndividuals()
 for fast ways to get a subset of the individuals in a subpopulation.</p></dd>
+<dt>lifetimeReproductiveOutput</dt><dd><p>A property of type integer. This property
+is a constant, so it is not modifiable. <strong>Property Description:</strong> If
+pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
+lifetimeReproductiveOutput contains the value of the Individual property
+reproductiveOutput for all individuals in the subpopulation that died in the
+last selection/mortality generation cycle stage (or, for WF models, immediately
+after reproduction). This allows access to the lifetime reproductive output of
+individuals in the subpopulation at the end of their lives. If pedigree tracking
+is not on, this property is unavailable.</p></dd>
+<dt>lifetimeReproductiveOutputF</dt><dd><p>A property of type integer. This property
+is a constant, so it is not modifiable. <strong>Property Description:</strong> If
+pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
+lifetimeReproductiveOutputF contains the value of the Individual property
+reproductiveOutput for all female individuals in the subpopulation that died
+in the last selection/ mortality generation cycle stage (or, for WF models,
+immediately after reproduction). This property is undefined if separate sexes
+have not been enabled, or if pedigree tracking is not on.</p></dd>
+<dt>lifetimeReproductiveOutputM</dt><dd><p>A property of type integer. This property
+is a constant, so it is not modifiable. <strong>Property Description:</strong> If
+pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
+lifetimeReproductiveOutputM contains the value of the Individual property
+reproductiveOutput for all male individuals in the subpopulation that died
+in the last selection/ mortality generation cycle stage (or, for WF models,
+immediately after reproduction). This property is undefined if separate sexes
+have not been enabled, or if pedigree tracking is not on.</p></dd>
 <dt>selfingRate</dt><dd><p>A property of type float. It is of length one (a singleton).
 This property is a constant, so it is not modifiable. <strong>Property
 Description:</strong> The expected value of the fraction of children in the next
@@ -275,12 +308,44 @@ A user-defined integer value. The value of tag is initially undefined, and
 it is an error to try to read it; if you wish it to have a defined value, you
 must arrange that yourself by explicitly setting its value prior to using it
 elsewhere in your code. The value of tag is not used by SLiM; it is free for
-you to use. See also the getValue() and setValue() methods, for another way of
-attaching state to subpopulations.</p></dd>
+you to use. See also the getValue() and setValue() methods (provided by the
+Dictionary class; see the Eidos manual), for another way of attaching state to
+subpopulations.</p></dd>
 
 
 </dl>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Subpopulation: 
+<code><a href='addCloned.html'>addCloned</a>()</code>,
+<code><a href='addCrossed.html'>addCrossed</a>()</code>,
+<code><a href='addEmpty.html'>addEmpty</a>()</code>,
+<code><a href='addRecombinant.html'>addRecombinant</a>()</code>,
+<code><a href='addSelfed.html'>addSelfed</a>()</code>,
+<code><a href='cachedFitness.html'>cachedFitness</a>()</code>,
+<code><a href='configureDisplay.html'>configureDisplay</a>()</code>,
+<code><a href='defineSpatialMap.html'>defineSpatialMap</a>()</code>,
+<code><a href='outputMSSample.html'>outputMSSample</a>()</code>,
+<code><a href='outputSample.html'>outputSample</a>()</code>,
+<code><a href='outputVCFSample.html'>outputVCFSample</a>()</code>,
+<code><a href='pointInBounds.html'>pointInBounds</a>()</code>,
+<code><a href='pointPeriodic.html'>pointPeriodic</a>()</code>,
+<code><a href='pointReflected.html'>pointReflected</a>()</code>,
+<code><a href='pointStopped.html'>pointStopped</a>()</code>,
+<code><a href='pointUniform.html'>pointUniform</a>()</code>,
+<code><a href='removeSubpopulation.html'>removeSubpopulation</a>()</code>,
+<code><a href='sampleIndividuals.html'>sampleIndividuals</a>()</code>,
+<code><a href='setCloningRate.html'>setCloningRate</a>()</code>,
+<code><a href='setMigrationRates.html'>setMigrationRates</a>()</code>,
+<code><a href='setSelfingRate.html'>setSelfingRate</a>()</code>,
+<code><a href='setSexRatio.html'>setSexRatio</a>()</code>,
+<code><a href='setSpatialBounds.html'>setSpatialBounds</a>()</code>,
+<code><a href='setSubpopulationSize.html'>setSubpopulationSize</a>()</code>,
+<code><a href='spatialMapColor.html'>spatialMapColor</a>()</code>,
+<code><a href='spatialMapValue.html'>spatialMapValue</a>()</code>,
+<code><a href='subsetIndividuals.html'>subsetIndividuals</a>()</code>,
+<code><a href='takeMigrants.html'>takeMigrants</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

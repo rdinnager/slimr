@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>outputFixedMutations</code>, which is a method
-of the SLiM class <code>SLiMSim</code>.
+of the SLiM class <code><a href='SLiMSim.html'>SLiMSim</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -182,18 +185,20 @@ default value is <code>F</code>. See details for description.</p></td>
     <p>An object of type void.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Output all fixed mutations – all Substitution objects, in other words
-(see section 1.5.2) – in a SLiM native format (see section 25.1.2 for output
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=568'>SLiM manual: page 568</a>.</p>
+<p>Output all fixed mutations – all Substitution objects, in other words
+(see section 1.5.2) – in a SLiM native format (see section 26.1.2 for output
 format details). If the optional parameter filePath is NULL (the default),
 output will be sent to Eidos’s output stream (see section 4.2.1). Otherwise,
 output will be sent to the filesystem path specified by filePath, overwriting
 that file if append if F, or appending to the end of it if append is T.
 Mutations which have fixed but have not been turned into Substitution objects
 – typically because convertToSubstitution has been set to F for their mutation
-type (see section 23.9.1) – are not output; they are still considered to be
+type (see section 24.10.1) – are not output; they are still considered to be
 segregating mutations by SLiM. In SLiM 3.3 and later, the output format includes
 the nucleotides associated with any nucleotide-based mutations; see section
-25.1.2. Output is generally done in a late() event, so that the output reflects
+26.1.2. Output is generally done in a late() event, so that the output reflects
 the state of the simulation at the end of a generation.</p>
     <h2 class="hasAnchor" id="copyright"><a class="anchor" href="#copyright"></a>Copyright</h2>
 
@@ -206,6 +211,39 @@ documentation is
 Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other SLiMSim: 
+<code><a href='SLiMSim.html'>SLiMSim</a></code>,
+<code><a href='addSubpopSplit.html'>addSubpopSplit</a>()</code>,
+<code><a href='addSubpop.html'>addSubpop</a>()</code>,
+<code><a href='countOfMutationsOfType.html'>countOfMutationsOfType</a>()</code>,
+<code><a href='createLogFile.html'>createLogFile</a>()</code>,
+<code><a href='deregisterScriptBlock.html'>deregisterScriptBlock</a>()</code>,
+<code><a href='mutationCounts.html'>mutationCounts</a>()</code>,
+<code><a href='mutationFrequencies.html'>mutationFrequencies</a>()</code>,
+<code><a href='mutationsOfType.html'>mutationsOfType</a>()</code>,
+<code><a href='outputFull.html'>outputFull</a>()</code>,
+<code><a href='outputMutations.html'>outputMutations</a>()</code>,
+<code><a href='outputUsage.html'>outputUsage</a>()</code>,
+<code><a href='readFromPopulationFile.html'>readFromPopulationFile</a>()</code>,
+<code><a href='recalculateFitness.html'>recalculateFitness</a>()</code>,
+<code><a href='registerEarlyEvent.html'>registerEarlyEvent</a>()</code>,
+<code><a href='registerFitnessCallback.html'>registerFitnessCallback</a>()</code>,
+<code><a href='registerInteractionCallback.html'>registerInteractionCallback</a>()</code>,
+<code><a href='registerLateEvent.html'>registerLateEvent</a>()</code>,
+<code><a href='registerMateChoiceCallback.html'>registerMateChoiceCallback</a>()</code>,
+<code><a href='registerModifyChildCallback.html'>registerModifyChildCallback</a>()</code>,
+<code><a href='registerMutationCallback.html'>registerMutationCallback</a>()</code>,
+<code><a href='registerRecombinationCallback.html'>registerRecombinationCallback</a>()</code>,
+<code><a href='registerReproductionCallback.html'>registerReproductionCallback</a>()</code>,
+<code><a href='rescheduleScriptBlock.html'>rescheduleScriptBlock</a>()</code>,
+<code><a href='simulationFinished.html'>simulationFinished</a>()</code>,
+<code><a href='subsetMutations.html'>subsetMutations</a>()</code>,
+<code><a href='treeSeqCoalesced.html'>treeSeqCoalesced</a>()</code>,
+<code><a href='treeSeqOutput.html'>treeSeqOutput</a>()</code>,
+<code><a href='treeSeqRememberIndividuals.html'>treeSeqRememberIndividuals</a>()</code>,
+<code><a href='treeSeqSimplify.html'>treeSeqSimplify</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

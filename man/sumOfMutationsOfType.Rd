@@ -23,7 +23,7 @@ An object of type float. Return will be of length 1 (a singleton)
 }
 \description{
 Documentation for SLiM function \code{sumOfMutationsOfType}, which is a method
-of the SLiM class \code{Genome}.
+of the SLiM class \code{\link{Genome}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -32,7 +32,7 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 
 Documentation for SLiM function \code{sumOfMutationsOfType}, which is a method
-of the SLiM class \code{Individual}.
+of the SLiM class \code{\link{Individual}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -85,6 +85,35 @@ about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other Genome: 
+\code{\link{Genome}},
+\code{\link{addMutations}()},
+\code{\link{addNewDrawnMutation}()},
+\code{\link{addNewMutation}()},
+\code{\link{containsMarkerMutation}()},
+\code{\link{containsMutations}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{mutationCountsInGenomes}()},
+\code{\link{mutationFrequenciesInGenomes}()},
+\code{\link{mutationsOfType}()},
+\code{\link{nucleotides}()},
+\code{\link{outputMS}()},
+\code{\link{outputVCF}()},
+\code{\link{output}()},
+\code{\link{positionsOfMutationsOfType}()},
+\code{\link{readFromMS}()},
+\code{\link{readFromVCF}()},
+\code{\link{removeMutations}()}
+
+Other Individual: 
+\code{\link{Individual}},
+\code{\link{containsMutations}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{relatedness}()},
+\code{\link{setSpatialPosition}()},
+\code{\link{uniqueMutationsOfType}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
@@ -92,3 +121,5 @@ Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Genome}
+\concept{Individual}

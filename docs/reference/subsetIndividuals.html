@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>subsetIndividuals</code>, which is a method of
-the SLiM class <code>Subpopulation</code>.
+the SLiM class <code><a href='Subpopulation.html'>Subpopulation</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -160,7 +163,7 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>subsetIndividuals</span><span class='op'>(</span><span class='va'>exclude</span>, <span class='va'>sex</span>, <span class='va'>minAge</span>, <span class='va'>maxAge</span>, <span class='va'>migrant</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>subsetIndividuals</span><span class='op'>(</span><span class='va'>exclude</span>, <span class='va'>sex</span>, <span class='va'>tag</span>, <span class='va'>minAge</span>, <span class='va'>maxAge</span>, <span class='va'>migrant</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,7 +176,12 @@ full SLiM script.</p>
     <tr>
       <th>sex</th>
       <td><p>An object of type null or string. Must be of length 1 (a singleton).
-The default value is <code>NULL],[Ni$ tag = NULL</code>. See details for description.</p></td>
+The default value is <code>NULL</code>. See details for description.</p></td>
+    </tr>
+    <tr>
+      <th>tag</th>
+      <td><p>An object of type null or integer. Must be of length 1 (a singleton).
+The default value is <code>NULL</code>. See details for description.</p></td>
     </tr>
     <tr>
       <th>minAge</th>
@@ -197,14 +205,15 @@ singleton). The default value is <code>NULL</code>. See details for description.
     <p>An object of type Individual object.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Returns a vector of individuals subset from the individuals in the
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=588'>SLiM manual: page 588</a>.</p>
+<p>Returns a vector of individuals subset from the individuals in the
 target subpopulation. The parameters specify constraints upon the subset
 of individuals that will be returned. Parameter exclude, if non- NULL, may
 specify a specific individual that should not be included (typically the focal
 individual in some operation). Parameter sex, if non-NULL, may specify a sex
 ("M" or "F") for the individuals to be returned, in sexual models. Parameter
-tag, if non-NULL, may specify a tag value for the individuals to be returned;
-only individuals whose tag property matches this value will be returned.
+tag, if non-NULL, may specify a tag value for the individuals to be returned.
 Parameters minAge and maxAge, if non-NULL, may specify a minimum or maximum age
 for the individuals to be returned, in nonWF models. Parameter migrant, if non-
 NULL, may specify a required value for the migrant property of the individuals
@@ -225,6 +234,37 @@ documentation is
 Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Subpopulation: 
+<code><a href='Subpopulation.html'>Subpopulation</a></code>,
+<code><a href='addCloned.html'>addCloned</a>()</code>,
+<code><a href='addCrossed.html'>addCrossed</a>()</code>,
+<code><a href='addEmpty.html'>addEmpty</a>()</code>,
+<code><a href='addRecombinant.html'>addRecombinant</a>()</code>,
+<code><a href='addSelfed.html'>addSelfed</a>()</code>,
+<code><a href='cachedFitness.html'>cachedFitness</a>()</code>,
+<code><a href='configureDisplay.html'>configureDisplay</a>()</code>,
+<code><a href='defineSpatialMap.html'>defineSpatialMap</a>()</code>,
+<code><a href='outputMSSample.html'>outputMSSample</a>()</code>,
+<code><a href='outputSample.html'>outputSample</a>()</code>,
+<code><a href='outputVCFSample.html'>outputVCFSample</a>()</code>,
+<code><a href='pointInBounds.html'>pointInBounds</a>()</code>,
+<code><a href='pointPeriodic.html'>pointPeriodic</a>()</code>,
+<code><a href='pointReflected.html'>pointReflected</a>()</code>,
+<code><a href='pointStopped.html'>pointStopped</a>()</code>,
+<code><a href='pointUniform.html'>pointUniform</a>()</code>,
+<code><a href='removeSubpopulation.html'>removeSubpopulation</a>()</code>,
+<code><a href='sampleIndividuals.html'>sampleIndividuals</a>()</code>,
+<code><a href='setCloningRate.html'>setCloningRate</a>()</code>,
+<code><a href='setMigrationRates.html'>setMigrationRates</a>()</code>,
+<code><a href='setSelfingRate.html'>setSelfingRate</a>()</code>,
+<code><a href='setSexRatio.html'>setSexRatio</a>()</code>,
+<code><a href='setSpatialBounds.html'>setSpatialBounds</a>()</code>,
+<code><a href='setSubpopulationSize.html'>setSubpopulationSize</a>()</code>,
+<code><a href='spatialMapColor.html'>spatialMapColor</a>()</code>,
+<code><a href='spatialMapValue.html'>spatialMapValue</a>()</code>,
+<code><a href='takeMigrants.html'>takeMigrants</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

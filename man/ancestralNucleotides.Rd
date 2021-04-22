@@ -23,7 +23,7 @@ An object of type integer or string.
 }
 \description{
 Documentation for SLiM function \code{ancestralNucleotides}, which is a method
-of the SLiM class \code{Chromosome}.
+of the SLiM class \code{\link{Chromosome}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -74,7 +74,18 @@ about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other Chromosome: 
+\code{\link{Chromosome}},
+\code{\link{drawBreakpoints}()},
+\code{\link{setAncestralNucleotides}()},
+\code{\link{setGeneConversion}()},
+\code{\link{setHotspotMap}()},
+\code{\link{setMutationRate}()},
+\code{\link{setRecombinationRate}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Chromosome}

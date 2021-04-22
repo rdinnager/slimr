@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>readFromVCF</code>, which is a method of the
-SLiM class <code>Genome</code>.
+SLiM class <code><a href='Genome.html'>Genome</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -183,7 +186,9 @@ for description.</p></td>
     <p>An object of type Mutation object.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Read new mutations from the VCF format file at filePath and add
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=538'>SLiM manual: page 538</a>.</p>
+<p>Read new mutations from the VCF format file at filePath and add
 them to the target genomes. The number of target genomes must match the
 number of genomes represented in the VCF file (i.e., two times the number
 of samples, if each sample is diploid). To read into all of the genomes in
@@ -191,12 +196,12 @@ a given subpopulation pN, simply call pN.genomes.readFromVCF(), assuming the
 subpopulation’s size matches that of the VCF file taking ploidy into account.
 A vector containing all of the mutations created by readFromVCF() is returned.
 SLiM’s VCF parsing is quite primitive. The header is parsed only inasmuch as
-SLiM looks to see whether SLiM-specific VCF fields (see sections 25.2.3 and
-25.2.4) are defined or not; the rest of the header information is ignored.
+SLiM looks to see whether SLiM-specific VCF fields (see sections 26.2.3 and
+26.2.4) are defined or not; the rest of the header information is ignored.
 Call lines are assumed to follow the format: #CHROM POS ID REF ALT QUAL FILTER
 INFO FORMAT i0...iN The CHROM, ID, QUAL, FILTER, and FORMAT fields are ignored,
 and information in the genotype fields beyond the GT genotype subfield are
-also ignored. SLiM’s own VCF annotations (see section 25.2.3) are honored; in
+also ignored. SLiM’s own VCF annotations (see section 26.2.3) are honored; in
 particular, mutations will be created using the given values of MID, S, PO, GO,
 and MT if those subfields are present, and DOM, if it is present, must match
 the dominance coefficient of the mutation type. The parameter mutationType (a
@@ -230,7 +235,7 @@ VCF file for that allele will be used. If the mutation type is non-nucleotide-
 based, the nucleotide provided will be ignored. If multiple alleles using the
 same nucleotide at the same position are specified in the VCF file, a separate
 mutation will be created for each, mirroring SLiM’s behavior with independent
-mutational lineages when writing VCF (see section 25.2.4). The MULTIALLELIC flag
+mutational lineages when writing VCF (see section 26.2.4). The MULTIALLELIC flag
 is ignored by readFromVCF(); call lines for mutations at the same base position
 in the same genome will result in stacked mutations whether or not MULTIALLELIC
 is present. The target genomes correspond, in order, to the haploid or diploid
@@ -250,6 +255,27 @@ documentation is
 Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Genome: 
+<code><a href='Genome.html'>Genome</a></code>,
+<code><a href='addMutations.html'>addMutations</a>()</code>,
+<code><a href='addNewDrawnMutation.html'>addNewDrawnMutation</a>()</code>,
+<code><a href='addNewMutation.html'>addNewMutation</a>()</code>,
+<code><a href='containsMarkerMutation.html'>containsMarkerMutation</a>()</code>,
+<code><a href='containsMutations.html'>containsMutations</a>()</code>,
+<code><a href='countOfMutationsOfType.html'>countOfMutationsOfType</a>()</code>,
+<code><a href='mutationCountsInGenomes.html'>mutationCountsInGenomes</a>()</code>,
+<code><a href='mutationFrequenciesInGenomes.html'>mutationFrequenciesInGenomes</a>()</code>,
+<code><a href='mutationsOfType.html'>mutationsOfType</a>()</code>,
+<code><a href='nucleotides.html'>nucleotides</a>()</code>,
+<code><a href='outputMS.html'>outputMS</a>()</code>,
+<code><a href='outputVCF.html'>outputVCF</a>()</code>,
+<code><a href='output.html'>output</a>()</code>,
+<code><a href='positionsOfMutationsOfType.html'>positionsOfMutationsOfType</a>()</code>,
+<code><a href='readFromMS.html'>readFromMS</a>()</code>,
+<code><a href='removeMutations.html'>removeMutations</a>()</code>,
+<code><a href='sumOfMutationsOfType.html'>sumOfMutationsOfType</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

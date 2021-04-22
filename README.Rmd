@@ -68,7 +68,7 @@ slim_script(
 script_1
 ```
 
-You can output this script to text to run in a standalone SLiM installation, or you can run it in SLiM directly from R.
+You can output this script to text to run in a standalone SLiM installation, or you can run it in SLiM directly from R, and many other things. Please see the package website for lots of examples (link in top right corner of github repo).
 
 You can also do fancy stuff like make the above script or another script into a template that you can dynamically fill-in with parameters generated in R. You can also make SLiM generate R-friendly input. See the vignettes for details of these features and how to use them.
 

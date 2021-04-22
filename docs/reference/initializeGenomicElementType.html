@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>initializeGenomicElementType</code>, which is a
-method of the SLiM class <code>Initialize</code>.
+method of the SLiM class <code><a href='Initialize.html'>Initialize</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -192,7 +195,9 @@ details for description.</p></td>
 (a singleton)</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Add a genomic element type at initialization time. The id must
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=517'>SLiM manual: page 517</a>.</p>
+<p>Add a genomic element type at initialization time. The id must
 not already be used for any genomic element type in the simulation. The
 mutationTypes vector identifies the mutation types used by the genomic element,
 and the proportions vector should be of equal length, specifying the relative
@@ -225,18 +230,18 @@ that depend upon the trinucleotide sequence centered upon a mutation site (the
 adjacent bases to the left and right, in other words, as well as the mutating
 nucleotide itself), mutationMatrix should be a 64×4 float matrix, specifying
 mutation rates for the central nucleotide of an existing trinucleotide sequence
-(rows from 0–63, representing codons as described in the documentation for
-the ancestralNucleotides() method of Chromosome) to each of the four possible
-derived nucleotide states (columns from 0–3 for A/C/G/T as before): Note that
-in every case it is the central nucleotide of the trinucleotide sequence that
-is mutating, but rates can be specified independently based upon the nucleotides
-in the first and third positions as well, with this type of mutation matrix.
-Several helper functions are defined to construct common types of mutation
-matrices, such as mmJukesCantor() to create a mutation matrix for a Jukes–
-Cantor model; see section 23.15.1. See chapter 18 for practical examples of
-mutation matrices, and section 21.2.3 for further discussion of the mutational
-paradigm in nucleotide-based models. * PA→C PA→G PA→T PC→A * PC→G PC→T
-PG→A PG→C * PG→T PT→A PT→C PT→G * * PAAA→ACA PAAA→AGA PAAA→ATA * PAAC→ACC
+(rows from 0–63, representing trinucleotides as described in the documentation
+for the ancestralNucleotides() method of Chromosome) to each of the four
+possible derived nucleotide states (columns from 0–3 for A/C/G/T as before):
+Note that in every case it is the central nucleotide of the trinucleotide
+sequence that is mutating, but rates can be specified independently based
+upon the nucleotides in the first and third positions as well, with this type
+of mutation matrix. Several helper functions are defined to construct common
+types of mutation matrices, such as mmJukesCantor() to create a mutation matrix
+for a Jukes–Cantor model; see section 24.16.1. See chapter 18 for practical
+examples of mutation matrices, and section 22.2.3 for further discussion of the
+mutational paradigm in nucleotide-based models. * PA→C PA→G PA→T PC→A * PC→G
+PC→T PG→A PG→C * PG→T PT→A PT→C PT→G * * PAAA→ACA PAAA→AGA PAAA→ATA * PAAC→ACC
 PAAC→AGC PAAC→ATC * PAAG→ACG PAAG→AGG PAAG→ATG * PAAT→ACT PAAT→AGT PAAT→ATT
 PACA→AAA * PACA→AGA PACA→ATA PACC→AAC * PACC→AGC PACC→ATC PACG→AAG * PACG→AGG
 PACG→ATG . . . . . . . . . . . . PTTC→TAC PTTC→TCC PTTC→TGC * PTTG→TAG PTTG→TCG
@@ -252,6 +257,23 @@ documentation is
 Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Initialize: 
+<code><a href='Initialize.html'>Initialize</a></code>,
+<code><a href='initializeAncestralNucleotides.html'>initializeAncestralNucleotides</a>()</code>,
+<code><a href='initializeGeneConversion.html'>initializeGeneConversion</a>()</code>,
+<code><a href='initializeGenomicElement.html'>initializeGenomicElement</a>()</code>,
+<code><a href='initializeHotspotMap.html'>initializeHotspotMap</a>()</code>,
+<code><a href='initializeInteractionType.html'>initializeInteractionType</a>()</code>,
+<code><a href='initializeMutationRate.html'>initializeMutationRate</a>()</code>,
+<code><a href='initializeMutationTypeNuc.html'>initializeMutationTypeNuc</a>()</code>,
+<code><a href='initializeMutationType.html'>initializeMutationType</a>()</code>,
+<code><a href='initializeRecombinationRate.html'>initializeRecombinationRate</a>()</code>,
+<code><a href='initializeSLiMModelType.html'>initializeSLiMModelType</a>()</code>,
+<code><a href='initializeSLiMOptions.html'>initializeSLiMOptions</a>()</code>,
+<code><a href='initializeSex.html'>initializeSex</a>()</code>,
+<code><a href='initializeTreeSeq.html'>initializeTreeSeq</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

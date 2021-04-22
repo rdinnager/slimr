@@ -24,7 +24,7 @@ or void or void or void or void or void or void or void or void.
 }
 \description{
 Documentation for SLiM function \code{addCustomColumn}, which is a method of the
-SLiM class \code{LogFile}.
+SLiM class \code{\link{LogFile}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -58,7 +58,26 @@ about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other LogFile: 
+\code{\link{LogFile}},
+\code{\link{addGenerationStage}()},
+\code{\link{addGeneration}()},
+\code{\link{addKeysAndValuesFrom}()},
+\code{\link{addMeanSDColumns}()},
+\code{\link{addPopulationSexRatio}()},
+\code{\link{addPopulationSize}()},
+\code{\link{addSubpopulationSexRatio}()},
+\code{\link{addSubpopulationSize}()},
+\code{\link{clearKeysAndValues}()},
+\code{\link{flush}()},
+\code{\link{logRow}()},
+\code{\link{setFilePath}()},
+\code{\link{setLogInterval}()},
+\code{\link{setValue}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{LogFile}

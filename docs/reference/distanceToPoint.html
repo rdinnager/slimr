@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>distanceToPoint</code>, which is a method of the
-SLiM class <code>InteractionType</code>.
+SLiM class <code><a href='InteractionType.html'>InteractionType</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -181,7 +184,9 @@ description.</p></td>
     <p>An object of type float.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Returns a vector containing distances between individuals in
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=549'>SLiM manual: page 549</a>.</p>
+<p>Returns a vector containing distances between individuals in
 individuals1 and the point given by the spatial coordinates in point. The
 point vector is interpreted as providing coordinates precisely as specified by
 the spatiality of the interaction type; if the interaction type’s spatiality
@@ -211,6 +216,22 @@ documentation is
 Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other InteractionType: 
+<code><a href='InteractionType.html'>InteractionType</a></code>,
+<code><a href='distance.html'>distance</a>()</code>,
+<code><a href='drawByStrength.html'>drawByStrength</a>()</code>,
+<code><a href='evaluate.html'>evaluate</a>()</code>,
+<code><a href='interactingNeighborCount.html'>interactingNeighborCount</a>()</code>,
+<code><a href='interactionDistance.html'>interactionDistance</a>()</code>,
+<code><a href='nearestInteractingNeighbors.html'>nearestInteractingNeighbors</a>()</code>,
+<code><a href='nearestNeighborsOfPoint.html'>nearestNeighborsOfPoint</a>()</code>,
+<code><a href='nearestNeighbors.html'>nearestNeighbors</a>()</code>,
+<code><a href='setInteractionFunction.html'>setInteractionFunction</a>()</code>,
+<code><a href='strength.html'>strength</a>()</code>,
+<code><a href='totalOfNeighborStrengths.html'>totalOfNeighborStrengths</a>()</code>,
+<code><a href='unevaluate.html'>unevaluate</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

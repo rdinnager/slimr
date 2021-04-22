@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>relatedness</code>, which is a method of the
-SLiM class <code>Individual</code>.
+SLiM class <code><a href='Individual.html'>Individual</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -177,17 +180,19 @@ description.</p></td>
     <p>An object of type float.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Returns a vector containing the degrees of relatedness between the
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=545'>SLiM manual: page 545</a>.</p>
+<p>Returns a vector containing the degrees of relatedness between the
 receiver and each of the individuals in individuals. The relatedness between A
 and B is always 1.0 if A and B are actually the same individual; this facility
 works even if SLiM’s optional pedigree tracking is turned off (in which case
-all other relatedness values will be 0.0). Otherwise, if pedigree tracking is
+all other relatedness values will be 0.0. Otherwise, if pedigree tracking is
 turned on with initializeSLiMOptions(keepPedigrees=T), this method will use
-the pedigree information described in section 23.6.1 to construct a relatedness
+the pedigree information described in section 24.6.1 to construct a relatedness
 estimate. More specifically, if information about the grandparental generation
 is available, then each grandparent shared by A and B contributes 0.125 towards
 the total relatedness, for a maximum value of 0.5 with four shared grandparents.
-If grandparental information in unavailable, then if parental information is
+If grandparental information is unavailable, then if parental information is
 available it is used, with each parent shared by A and B contributing 0.25,
 again for a maximum of 0.5. If even parental information is unavailable, then
 the relatedness is assumed to be 0.0. Again, however, if A and B are the same
@@ -206,6 +211,15 @@ documentation is
 Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Individual: 
+<code><a href='Individual.html'>Individual</a></code>,
+<code><a href='containsMutations.html'>containsMutations</a>()</code>,
+<code><a href='countOfMutationsOfType.html'>countOfMutationsOfType</a>()</code>,
+<code><a href='setSpatialPosition.html'>setSpatialPosition</a>()</code>,
+<code><a href='sumOfMutationsOfType.html'>sumOfMutationsOfType</a>()</code>,
+<code><a href='uniqueMutationsOfType.html'>uniqueMutationsOfType</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

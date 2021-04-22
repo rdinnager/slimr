@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>initializeSLiMOptions</code>, which is a method
-of the SLiM class <code>Initialize</code>.
+of the SLiM class <code><a href='Initialize.html'>Initialize</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -215,30 +218,35 @@ or logical or logical. Must be of length 1 (a singleton). The default value is
     <p>An object of type void.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Configure options for the simulation. If initializeSLiMOptions()
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=523'>SLiM manual: page 523</a>.</p>
+<p>Configure options for the simulation. If initializeSLiMOptions()
 is called at all then it must be called before any other initialization
 function (except initializeSLiMModelType()), so that SLiM knows from the
 outset which optional features are enabled and which are not. If keepPedigrees
 is T, SLiM will keep pedigree information for every individual in the
 simulation, tracking the identity of its parents and grandparents. This
 allows individuals to assess their degree of pedigree-based relatedness to
-other individuals (see Individual’s relatedness() method, section 23.6.2), as
+other individuals (see Individual’s relatedness() method, section 24.6.2), as
 well as allowing a model to find "trios” (two parents and an offspring they
-generated) using the pedigree properties of Individual (section 23.6.1). As
-a side effect of keepPedigrees being T, the pedigreeID, pedigreeParentIDs,
-and pedigreeGrandparentIDs properties of Individual will have defined values
-(see section 23.6.1), as will the genomePedigreeID property of Genome (see
-section 23.3.1). Note that pedigree-based relatedness doesn’t necessarily
-correspond to genetic relatedness, due to effects such as assortment and
-recombination. For an overview of other ways of tracking genetic ancestry,
-including true local ancestry at each position on the chromosome, see sections
-1.7 and 14.7. If dimensionality is not "", SLiM will enable its optional
-"continuous space” facility. Three values for dimensionality are presently
-supported: "x", "xy", and "xyz", specifying that continuous space should be
-enabled for one, two, or three dimensions, respectively, using (x), (x, y),
-and (x, y, z) coordinates respectively. This has a number of side effects.
-First of all, it means that the specified properties of Individual (x, y,
-and/or z) will be interpreted by SLiM as spatial positions; in particular,
+generated) using the pedigree properties of Individual (section 24.6.1). As a
+side effect of keepPedigrees being T, the pedigreeID, pedigreeParentIDs, and
+pedigreeGrandparentIDs properties of Individual will have defined values (see
+section 24.6.1), as will the genomePedigreeID property of Genome (see section
+24.3.1). Note that pedigree-based relatedness doesn’t necessarily correspond
+to genetic relatedness, due to effects such as assortment and recombination.
+For an overview of other ways of tracking genetic ancestry, including true
+local ancestry at each position on the chromosome, see sections 1.7 and 14.7.
+Beginning in SLiM 3.5, keepPedigrees=T also enables tracking of individual
+reproductive output, available through the reproductiveOutput property of
+Individual (see section 24.6.1) and the lifetimeReproductiveOutput property
+of Subpopulation (see section 24.14.1). If dimensionality is not "", SLiM will
+enable its optional "continuous space” facility. Three values for dimensionality
+are presently supported: "x", "xy", and "xyz", specifying that continuous
+space should be enabled for one, two, or three dimensions, respectively, using
+(x), (x, y), and (x, y, z) coordinates respectively. This has a number of side
+effects. First of all, it means that the specified properties of Individual (x,
+y, and/or z) will be interpreted by SLiM as spatial positions; in particular,
 SLiMgui will use those properties to display subpopulations spatially. Second,
 it allows spatial interactions to be defined, evaluated, and queried using
 initializeInteractionType() and interaction() callbacks. And third, it enables
@@ -325,6 +333,23 @@ documentation is
 Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Initialize: 
+<code><a href='Initialize.html'>Initialize</a></code>,
+<code><a href='initializeAncestralNucleotides.html'>initializeAncestralNucleotides</a>()</code>,
+<code><a href='initializeGeneConversion.html'>initializeGeneConversion</a>()</code>,
+<code><a href='initializeGenomicElementType.html'>initializeGenomicElementType</a>()</code>,
+<code><a href='initializeGenomicElement.html'>initializeGenomicElement</a>()</code>,
+<code><a href='initializeHotspotMap.html'>initializeHotspotMap</a>()</code>,
+<code><a href='initializeInteractionType.html'>initializeInteractionType</a>()</code>,
+<code><a href='initializeMutationRate.html'>initializeMutationRate</a>()</code>,
+<code><a href='initializeMutationTypeNuc.html'>initializeMutationTypeNuc</a>()</code>,
+<code><a href='initializeMutationType.html'>initializeMutationType</a>()</code>,
+<code><a href='initializeRecombinationRate.html'>initializeRecombinationRate</a>()</code>,
+<code><a href='initializeSLiMModelType.html'>initializeSLiMModelType</a>()</code>,
+<code><a href='initializeSex.html'>initializeSex</a>()</code>,
+<code><a href='initializeTreeSeq.html'>initializeTreeSeq</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

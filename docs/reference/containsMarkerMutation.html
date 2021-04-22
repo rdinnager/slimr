@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>containsMarkerMutation</code>, which is a method
-of the SLiM class <code>Genome</code>.
+of the SLiM class <code><a href='Genome.html'>Genome</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -188,7 +191,9 @@ singleton). The default value is <code>F</code>. See details for description.</p
 length 1 (a singleton)</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Returns T if the genome contains a mutation of type mutType at
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=535'>SLiM manual: page 535</a>.</p>
+<p>Returns T if the genome contains a mutation of type mutType at
 position, F otherwise (if returnMutation has its default value of F; see
 below). This method is, as its name suggests, intended for checking for
 "marker mutations”: mutations of a special mutation type that are not literally
@@ -218,6 +223,27 @@ documentation is
 Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Genome: 
+<code><a href='Genome.html'>Genome</a></code>,
+<code><a href='addMutations.html'>addMutations</a>()</code>,
+<code><a href='addNewDrawnMutation.html'>addNewDrawnMutation</a>()</code>,
+<code><a href='addNewMutation.html'>addNewMutation</a>()</code>,
+<code><a href='containsMutations.html'>containsMutations</a>()</code>,
+<code><a href='countOfMutationsOfType.html'>countOfMutationsOfType</a>()</code>,
+<code><a href='mutationCountsInGenomes.html'>mutationCountsInGenomes</a>()</code>,
+<code><a href='mutationFrequenciesInGenomes.html'>mutationFrequenciesInGenomes</a>()</code>,
+<code><a href='mutationsOfType.html'>mutationsOfType</a>()</code>,
+<code><a href='nucleotides.html'>nucleotides</a>()</code>,
+<code><a href='outputMS.html'>outputMS</a>()</code>,
+<code><a href='outputVCF.html'>outputVCF</a>()</code>,
+<code><a href='output.html'>output</a>()</code>,
+<code><a href='positionsOfMutationsOfType.html'>positionsOfMutationsOfType</a>()</code>,
+<code><a href='readFromMS.html'>readFromMS</a>()</code>,
+<code><a href='readFromVCF.html'>readFromVCF</a>()</code>,
+<code><a href='removeMutations.html'>removeMutations</a>()</code>,
+<code><a href='sumOfMutationsOfType.html'>sumOfMutationsOfType</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

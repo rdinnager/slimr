@@ -1,7 +1,7 @@
 #'SLiM method initializeAncestralNucleotides
 #'
 #'Documentation for SLiM function \code{initializeAncestralNucleotides}, which is
-#'a method of the SLiM class \code{Initialize}.
+#'a method of the SLiM class \code{\link{Initialize}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -17,6 +17,7 @@
 #'
 #'@aliases
 #'Initialize$initializeAncestralNucleotides .Init$initializeAncestralNucleotides
+#'@family Initialize
 #'@return An object of type integer. Return will be of length 1 (a singleton)
 #'@details This function, which may be called only in nucleotide-based models
 #'(see section 1.8), supplies an ancestral nucleotide sequence for the model.
@@ -51,7 +52,7 @@ initializeAncestralNucleotides <- function(sequence) {
 #'SLiM method initializeGeneConversion
 #'
 #'Documentation for SLiM function \code{initializeGeneConversion}, which is a
-#'method of the SLiM class \code{Initialize}.
+#'method of the SLiM class \code{\link{Initialize}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -73,6 +74,7 @@ initializeAncestralNucleotides <- function(sequence) {
 #'description.
 #'
 #'@aliases Initialize$initializeGeneConversion .Init$initializeGeneConversion
+#'@family Initialize
 #'@return An object of type void.
 #'@details Calling this function switches the recombination model from a "simple
 #'crossover” model to a "double-stranded break (DSB)” model, and configures
@@ -111,7 +113,7 @@ simpleConversionFraction, bias)
 #'SLiM method initializeGenomicElement
 #'
 #'Documentation for SLiM function \code{initializeGenomicElement}, which is a
-#'method of the SLiM class \code{Initialize}.
+#'method of the SLiM class \code{\link{Initialize}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -128,6 +130,7 @@ simpleConversionFraction, bias)
 #'@param end An object of type integer. See details for description.
 #'
 #'@aliases Initialize$initializeGenomicElement .Init$initializeGenomicElement
+#'@family Initialize
 #'@return An object of type GenomicElement object.
 #'@details Add a genomic element to the chromosome at initialization time.
 #'The start and end parameters give the first and last base positions to be
@@ -164,7 +167,7 @@ initializeGenomicElement <- function(genomicElementType, start, end) {
 #'SLiM method initializeGenomicElementType
 #'
 #'Documentation for SLiM function \code{initializeGenomicElementType}, which is a
-#'method of the SLiM class \code{Initialize}.
+#'method of the SLiM class \code{\link{Initialize}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -185,6 +188,7 @@ initializeGenomicElement <- function(genomicElementType, start, end) {
 #'
 #'@aliases
 #'Initialize$initializeGenomicElementType .Init$initializeGenomicElementType
+#'@family Initialize
 #'@return An object of type GenomicElementType object. Return will be of length 1
 #'(a singleton)
 #'@details Add a genomic element type at initialization time. The id must
@@ -256,7 +260,7 @@ mutationMatrix)
 #'SLiM method initializeHotspotMap
 #'
 #'Documentation for SLiM function \code{initializeHotspotMap}, which is a method
-#'of the SLiM class \code{Initialize}.
+#'of the SLiM class \code{\link{Initialize}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -274,6 +278,7 @@ mutationMatrix)
 #'default value is \code{"*"}. See details for description.
 #'
 #'@aliases Initialize$initializeHotspotMap .Init$initializeHotspotMap
+#'@family Initialize
 #'@return An object of type void.
 #'@details In nucleotide-based models, set the mutation rate multiplier along the
 #'chromosome. Nucleotidebased models define sequence-based mutation rates that
@@ -330,7 +335,7 @@ initializeHotspotMap <- function(multipliers, ends, sex) {
 #'SLiM method initializeInteractionType
 #'
 #'Documentation for SLiM function \code{initializeInteractionType}, which is a
-#'method of the SLiM class \code{Initialize}.
+#'method of the SLiM class \code{\link{Initialize}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -353,6 +358,7 @@ initializeHotspotMap <- function(multipliers, ends, sex) {
 #'singleton). The default value is \code{"**"}. See details for description.
 #'
 #'@aliases Initialize$initializeInteractionType .Init$initializeInteractionType
+#'@family Initialize
 #'@return An object of type InteractionType object. Return will be of length 1 (a
 #'singleton)
 #'@details Add an interaction type at initialization time. The id must not
@@ -444,7 +450,7 @@ sexSegregation)
 #'SLiM method initializeMutationRate
 #'
 #'Documentation for SLiM function \code{initializeMutationRate}, which is a method
-#'of the SLiM class \code{Initialize}.
+#'of the SLiM class \code{\link{Initialize}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -462,6 +468,7 @@ sexSegregation)
 #'default value is \code{"*"}. See details for description.
 #'
 #'@aliases Initialize$initializeMutationRate .Init$initializeMutationRate
+#'@family Initialize
 #'@return An object of type void.
 #'@details Set the mutation rate per base position per generation along the
 #'chromosome. To be precise, this mutation rate is the expected mean number of
@@ -526,7 +533,7 @@ initializeMutationRate <- function(rates, ends, sex) {
 #'SLiM method initializeMutationType
 #'
 #'Documentation for SLiM function \code{initializeMutationType}, which is a method
-#'of the SLiM class \code{Initialize}.
+#'of the SLiM class \code{\link{Initialize}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -546,6 +553,7 @@ initializeMutationRate <- function(rates, ends, sex) {
 #'@param ... An object of type NA. NA See details for description.
 #'
 #'@aliases Initialize$initializeMutationType .Init$initializeMutationType
+#'@family Initialize
 #'@return An object of type MutationType object. Return will be of length 1 (a
 #'singleton)
 #'@details Add a mutation type at initialization time. The id must not already
@@ -596,7 +604,7 @@ initializeMutationType <- function(id, dominanceCoeff, distributionType, ...)
 #'SLiM method initializeMutationTypeNuc
 #'
 #'Documentation for SLiM function \code{initializeMutationTypeNuc}, which is a
-#'method of the SLiM class \code{Initialize}.
+#'method of the SLiM class \code{\link{Initialize}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -616,6 +624,7 @@ initializeMutationType <- function(id, dominanceCoeff, distributionType, ...)
 #'@param ... An object of type NA. NA See details for description.
 #'
 #'@aliases Initialize$initializeMutationTypeNuc .Init$initializeMutationTypeNuc
+#'@family Initialize
 #'@return An object of type MutationType object. Return will be of length 1 (a
 #'singleton)
 #'@details Add a nucleotide-based mutation type at initialization time. This
@@ -649,7 +658,7 @@ distributionType, ...) {
 #'SLiM method initializeRecombinationRate
 #'
 #'Documentation for SLiM function \code{initializeRecombinationRate}, which is a
-#'method of the SLiM class \code{Initialize}.
+#'method of the SLiM class \code{\link{Initialize}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -668,6 +677,7 @@ distributionType, ...) {
 #'
 #'@aliases
 #'Initialize$initializeRecombinationRate .Init$initializeRecombinationRate
+#'@family Initialize
 #'@return An object of type void.
 #'@details Set the recombination rate per base position per generation along the
 #'chromosome. To be precise, this recombination rate is the probability that a
@@ -733,7 +743,7 @@ initializeRecombinationRate <- function(rates, ends, sex) {
 #'SLiM method initializeSex
 #'
 #'Documentation for SLiM function \code{initializeSex}, which is a method of the
-#'SLiM class \code{Initialize}.
+#'SLiM class \code{\link{Initialize}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -750,6 +760,7 @@ initializeRecombinationRate <- function(rates, ends, sex) {
 #'(a singleton). The default value is \code{1}. See details for description.
 #'
 #'@aliases Initialize$initializeSex .Init$initializeSex
+#'@family Initialize
 #'@return An object of type void.
 #'@details Enable and configure sex in the simulation. The argument chromosomeType
 #'gives the type of chromosome to be simulated; this should be "A", "X", or "Y".
@@ -779,7 +790,7 @@ initializeSex <- function(chromosomeType, xDominanceCoeff) {
 #'SLiM method initializeSLiMModelType
 #'
 #'Documentation for SLiM function \code{initializeSLiMModelType}, which is a
-#'method of the SLiM class \code{Initialize}.
+#'method of the SLiM class \code{\link{Initialize}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -794,6 +805,7 @@ initializeSex <- function(chromosomeType, xDominanceCoeff) {
 #'See details for description.
 #'
 #'@aliases Initialize$initializeSLiMModelType .Init$initializeSLiMModelType
+#'@family Initialize
 #'@return An object of type void.
 #'@details Configure the type of SLiM model used for the simulation. At present,
 #'one of two model types may be selected. If modelType is "WF", SLiM will use a
@@ -822,7 +834,7 @@ initializeSLiMModelType <- function(modelType) {
 #'SLiM method initializeSLiMOptions
 #'
 #'Documentation for SLiM function \code{initializeSLiMOptions}, which is a method
-#'of the SLiM class \code{Initialize}.
+#'of the SLiM class \code{\link{Initialize}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -853,6 +865,7 @@ initializeSLiMModelType <- function(modelType) {
 #'\code{F}. See details for description.
 #'
 #'@aliases Initialize$initializeSLiMOptions .Init$initializeSLiMOptions
+#'@family Initialize
 #'@return An object of type void.
 #'@details Configure options for the simulation. If initializeSLiMOptions()
 #'is called at all then it must be called before any other initialization
@@ -976,7 +989,7 @@ mutationRuns, preventIncidentalSelfing, nucleotideBased)
 #'SLiM method initializeTreeSeq
 #'
 #'Documentation for SLiM function \code{initializeTreeSeq}, which is a method of
-#'the SLiM class \code{Initialize}.
+#'the SLiM class \code{\link{Initialize}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -1003,6 +1016,7 @@ mutationRuns, preventIncidentalSelfing, nucleotideBased)
 #'singleton). The default value is \code{T}. See details for description.
 #'
 #'@aliases Initialize$initializeTreeSeq .Init$initializeTreeSeq
+#'@family Initialize
 #'@return An object of type void.
 #'@details Configure options for tree sequence recording. Calling this
 #'function turns on tree sequence recording, as a side effect, for later
@@ -1093,7 +1107,7 @@ simplificationInterval, checkCoalescence, runCrosschecks, retainCoalescentOnly)
 #'SLiM method ancestralNucleotides
 #'
 #'Documentation for SLiM function \code{ancestralNucleotides}, which is a method
-#'of the SLiM class \code{Chromosome}.
+#'of the SLiM class \code{\link{Chromosome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -1112,6 +1126,7 @@ simplificationInterval, checkCoalescence, runCrosschecks, retainCoalescentOnly)
 #'singleton). See details for description.
 #'
 #'@aliases Chromosome$ancestralNucleotides .c$ancestralNucleotides
+#'@family Chromosome
 #'@return An object of type integer or string.
 #'@details Returns the ancestral nucleotide sequence originally supplied
 #'to initializeAncestralNucleotides(), including any sequence changes due
@@ -1158,7 +1173,7 @@ ancestralNucleotides <- function(start, end, format = "string") {
 #'SLiM method drawBreakpoints
 #'
 #'Documentation for SLiM function \code{drawBreakpoints}, which is a method of the
-#'SLiM class \code{Chromosome}.
+#'SLiM class \code{\link{Chromosome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -1175,6 +1190,7 @@ ancestralNucleotides <- function(start, end, format = "string") {
 #'The default value is \code{NULL}. See details for description.
 #'
 #'@aliases Chromosome$drawBreakpoints .c$drawBreakpoints
+#'@family Chromosome
 #'@return An object of type integer.
 #'@details Draw recombination breakpoints, using the chromosome’s recombination
 #'rate map, the current gene conversion parameters, and (in some cases – see
@@ -1218,7 +1234,7 @@ drawBreakpoints <- function(parent, n) {
 #'SLiM method setAncestralNucleotides
 #'
 #'Documentation for SLiM function \code{setAncestralNucleotides}, which is a
-#'method of the SLiM class \code{Chromosome}.
+#'method of the SLiM class \code{\link{Chromosome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -1233,6 +1249,7 @@ drawBreakpoints <- function(parent, n) {
 #'description.
 #'
 #'@aliases Chromosome$setAncestralNucleotides .c$setAncestralNucleotides
+#'@family Chromosome
 #'@return An object of type integer. Return will be of length 1 (a singleton)
 #'@details This method, which may be called only in nucleotide-based models
 #'(see section 1.8), replaces the ancestral nucleotide sequence for the
@@ -1263,7 +1280,7 @@ setAncestralNucleotides <- function(sequence) {
 #'SLiM method setGeneConversion
 #'
 #'Documentation for SLiM function \code{setGeneConversion}, which is a method of
-#'the SLiM class \code{Chromosome}.
+#'the SLiM class \code{\link{Chromosome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -1285,6 +1302,7 @@ setAncestralNucleotides <- function(sequence) {
 #'description.
 #'
 #'@aliases Chromosome$setGeneConversion .c$setGeneConversion
+#'@family Chromosome
 #'@return An object of type void.
 #'@details This method switches the recombination model to the "double-stranded
 #'break (DSB)” model (if it is not already set to that), and configures the
@@ -1312,7 +1330,7 @@ simpleConversionFraction, bias)
 #'SLiM method setHotspotMap
 #'
 #'Documentation for SLiM function \code{setHotspotMap}, which is a method of the
-#'SLiM class \code{Chromosome}.
+#'SLiM class \code{\link{Chromosome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -1330,6 +1348,7 @@ simpleConversionFraction, bias)
 #'default value is \code{"*"}. See details for description.
 #'
 #'@aliases Chromosome$setHotspotMap .c$setHotspotMap
+#'@family Chromosome
 #'@return An object of type void.
 #'@details In nucleotide-based models, set the mutation rate multiplier along
 #'the chromosome. There are two ways to call this method. If the optional ends
@@ -1373,7 +1392,7 @@ setHotspotMap <- function(multipliers, ends, sex) {
 #'SLiM method setMutationRate
 #'
 #'Documentation for SLiM function \code{setMutationRate}, which is a method of the
-#'SLiM class \code{Chromosome}.
+#'SLiM class \code{\link{Chromosome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -1391,6 +1410,7 @@ setHotspotMap <- function(multipliers, ends, sex) {
 #'default value is \code{"*"}. See details for description.
 #'
 #'@aliases Chromosome$setMutationRate .c$setMutationRate
+#'@family Chromosome
 #'@return An object of type void.
 #'@details Set the mutation rate per base position per generation along the
 #'chromosome. There are two ways to call this method. If the optional ends
@@ -1436,7 +1456,7 @@ setMutationRate <- function(rates, ends, sex) {
 #'SLiM method setRecombinationRate
 #'
 #'Documentation for SLiM function \code{setRecombinationRate}, which is a method
-#'of the SLiM class \code{Chromosome}.
+#'of the SLiM class \code{\link{Chromosome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -1454,6 +1474,7 @@ setMutationRate <- function(rates, ends, sex) {
 #'default value is \code{"*"}. See details for description.
 #'
 #'@aliases Chromosome$setRecombinationRate .c$setRecombinationRate
+#'@family Chromosome
 #'@return An object of type void.
 #'@details Set the recombination rate per base position per generation along the
 #'chromosome. All rates must be in the interval [0.0, 0.5]. There are two ways
@@ -1500,7 +1521,7 @@ setRecombinationRate <- function(rates, ends, sex) {
 #'SLiM method addMutations
 #'
 #'Documentation for SLiM function \code{addMutations}, which is a method of the
-#'SLiM class \code{Genome}.
+#'SLiM class \code{\link{Genome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -1514,6 +1535,7 @@ setRecombinationRate <- function(rates, ends, sex) {
 #'@param mutations An object of type Mutation object. See details for description.
 #'
 #'@aliases Genome$addMutations .G$addMutations
+#'@family Genome
 #'@return An object of type void.
 #'@details Add the existing mutations in mutations to the genome, if they are
 #'not already present (if they are already present, they will be ignored), and
@@ -1544,7 +1566,7 @@ addMutations <- function(mutations) {
 #'SLiM method addNewDrawnMutation
 #'
 #'Documentation for SLiM function \code{addNewDrawnMutation}, which is a method of
-#'the SLiM class \code{Genome}.
+#'the SLiM class \code{\link{Genome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -1566,6 +1588,7 @@ addMutations <- function(mutations) {
 #'is \code{NULL}. See details for description.
 #'
 #'@aliases Genome$addNewDrawnMutation .G$addNewDrawnMutation
+#'@family Genome
 #'@return An object of type Mutation object.
 #'@details Add new mutations to the target genome(s) with the specified
 #'mutationType (specified by the MutationType object or by integer identifier),
@@ -1645,7 +1668,7 @@ originSubpop, nucleotide)
 #'SLiM method addNewMutation
 #'
 #'Documentation for SLiM function \code{addNewMutation}, which is a method of the
-#'SLiM class \code{Genome}.
+#'SLiM class \code{\link{Genome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -1668,6 +1691,7 @@ originSubpop, nucleotide)
 #'is \code{NULL}. See details for description.
 #'
 #'@aliases Genome$addNewMutation .G$addNewMutation
+#'@family Genome
 #'@return An object of type Mutation object.
 #'@details Add new mutations to the target genome(s) with the specified
 #'mutationType (specified by the MutationType object or by integer identifier),
@@ -1742,7 +1766,7 @@ originSubpop, nucleotide)
 #'SLiM method containsMarkerMutation
 #'
 #'Documentation for SLiM function \code{containsMarkerMutation}, which is a method
-#'of the SLiM class \code{Genome}.
+#'of the SLiM class \code{\link{Genome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -1761,6 +1785,7 @@ originSubpop, nucleotide)
 #'singleton). The default value is \code{F}. See details for description.
 #'
 #'@aliases Genome$containsMarkerMutation .G$containsMarkerMutation
+#'@family Genome
 #'@return An object of type null or logical or Mutation object. Return will be of
 #'length 1 (a singleton)
 #'@details Returns T if the genome contains a mutation of type mutType at
@@ -1800,7 +1825,7 @@ containsMarkerMutation <- function(mutType, position, returnMutation) {
 #'SLiM method containsMutations
 #'
 #'Documentation for SLiM function \code{containsMutations}, which is a method of
-#'the SLiM class \code{Genome}.
+#'the SLiM class \code{\link{Genome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -1814,6 +1839,7 @@ containsMarkerMutation <- function(mutType, position, returnMutation) {
 #'@param mutations An object of type Mutation object. See details for description.
 #'
 #'@aliases Genome$containsMutations .G$containsMutations
+#'@family Genome
 #'@return An object of type logical.
 #'@details Returns a logical vector indicating whether each of the mutations
 #'in mutations is present in the genome; each element in the returned vector
@@ -1838,7 +1864,7 @@ containsMutations <- function(mutations) {
 #'SLiM method countOfMutationsOfType
 #'
 #'Documentation for SLiM function \code{countOfMutationsOfType}, which is a method
-#'of the SLiM class \code{Genome}.
+#'of the SLiM class \code{\link{Genome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -1853,6 +1879,7 @@ containsMutations <- function(mutations) {
 #'length 1 (a singleton). See details for description.
 #'
 #'@aliases Genome$countOfMutationsOfType .G$countOfMutationsOfType
+#'@family Genome
 #'@return An object of type integer. Return will be of length 1 (a singleton)
 #'@details Returns the number of mutations that are of the type specified by
 #'mutType, out of all of the mutations in the genome. If you need a vector of the
@@ -1877,7 +1904,7 @@ countOfMutationsOfType <- function(mutType) {
 #'SLiM method mutationCountsInGenomes
 #'
 #'Documentation for SLiM function \code{mutationCountsInGenomes}, which is a
-#'method of the SLiM class \code{Genome}.
+#'method of the SLiM class \code{\link{Genome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -1892,6 +1919,7 @@ countOfMutationsOfType <- function(mutType) {
 #'\code{NULL}. See details for description.
 #'
 #'@aliases Genome$mutationCountsInGenomes .G$mutationCountsInGenomes
+#'@family Genome
 #'@return An object of type integer.
 #'@details Return an integer vector with the frequency counts of all of the
 #'Mutation objects passed in mutations, within the target Genome vector. If the
@@ -1921,7 +1949,7 @@ mutationCountsInGenomes <- function(mutations) {
 #'SLiM method mutationFrequenciesInGenomes
 #'
 #'Documentation for SLiM function \code{mutationFrequenciesInGenomes}, which is a
-#'method of the SLiM class \code{Genome}.
+#'method of the SLiM class \code{\link{Genome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -1936,6 +1964,7 @@ mutationCountsInGenomes <- function(mutations) {
 #'\code{NULL}. See details for description.
 #'
 #'@aliases Genome$mutationFrequenciesInGenomes .G$mutationFrequenciesInGenomes
+#'@family Genome
 #'@return An object of type float.
 #'@details Return a float vector with the frequencies of all of the Mutation
 #'objects passed in mutations, within the target Genome vector. If the optional
@@ -1964,7 +1993,7 @@ mutationFrequenciesInGenomes <- function(mutations) {
 #'SLiM method mutationsOfType
 #'
 #'Documentation for SLiM function \code{mutationsOfType}, which is a method of the
-#'SLiM class \code{Genome}.
+#'SLiM class \code{\link{Genome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -1979,6 +2008,7 @@ mutationFrequenciesInGenomes <- function(mutations) {
 #'length 1 (a singleton). See details for description.
 #'
 #'@aliases Genome$mutationsOfType .G$mutationsOfType
+#'@family Genome
 #'@return An object of type Mutation object.
 #'@details Returns an object vector of all the mutations that are of the type
 #'specified by mutType, out of all of the mutations in the genome. If you just
@@ -2006,7 +2036,7 @@ mutationsOfType <- function(mutType) {
 #'SLiM method nucleotides
 #'
 #'Documentation for SLiM function \code{nucleotides}, which is a method of the
-#'SLiM class \code{Genome}.
+#'SLiM class \code{\link{Genome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2025,6 +2055,7 @@ mutationsOfType <- function(mutType) {
 #'default value is \code{"string"}. See details for description.
 #'
 #'@aliases Genome$nucleotides .G$nucleotides
+#'@family Genome
 #'@return An object of type integer or string.
 #'@details Returns the nucleotide sequence for the genome. This is the
 #'current ancestral sequence, as would be returned by the Chromosome method
@@ -2067,7 +2098,7 @@ nucleotides <- function(start, end, format) {
 #'SLiM method output
 #'
 #'Documentation for SLiM function \code{output}, which is a method of the SLiM
-#'class \code{Genome}.
+#'class \code{\link{Genome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2084,6 +2115,7 @@ nucleotides <- function(start, end, format) {
 #'default value is \code{F}. See details for description.
 #'
 #'@aliases Genome$output .G$output
+#'@family Genome
 #'@return An object of type void.
 #'@details Output the target genomes in SLiM’s native format (see section 26.3.1
 #'for output format details). This low-level output method may be used to output
@@ -2114,7 +2146,7 @@ output <- function(filePath, append) {
 #'SLiM method outputMS
 #'
 #'Documentation for SLiM function \code{outputMS}, which is a method of the SLiM
-#'class \code{Genome}.
+#'class \code{\link{Genome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2133,6 +2165,7 @@ output <- function(filePath, append) {
 #'singleton). The default value is \code{F}. See details for description.
 #'
 #'@aliases Genome$outputMS .G$outputMS
+#'@family Genome
 #'@return An object of type void.
 #'@details Output the target genomes in MS format (see section 26.3.2 for output
 #'format details). This low-level output method may be used to output any sample
@@ -2171,7 +2204,7 @@ outputMS <- function(filePath, append, filterMonomorphic) {
 #'SLiM method outputVCF
 #'
 #'Documentation for SLiM function \code{outputVCF}, which is a method of the SLiM
-#'class \code{Genome}.
+#'class \code{\link{Genome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2194,6 +2227,7 @@ outputMS <- function(filePath, append, filterMonomorphic) {
 #'singleton). The default value is \code{T}. See details for description.
 #'
 #'@aliases Genome$outputVCF .G$outputVCF
+#'@family Genome
 #'@return An object of type void.
 #'@details Output the target genomes in VCF format (see sections 26.2.3, 26.2.4,
 #'and 26.3.3 for output format details). The target genomes are treated as pairs
@@ -2231,7 +2265,7 @@ outputNonnucleotides)
 #'SLiM method positionsOfMutationsOfType
 #'
 #'Documentation for SLiM function \code{positionsOfMutationsOfType}, which is a
-#'method of the SLiM class \code{Genome}.
+#'method of the SLiM class \code{\link{Genome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2246,6 +2280,7 @@ outputNonnucleotides)
 #'length 1 (a singleton). See details for description.
 #'
 #'@aliases Genome$positionsOfMutationsOfType .G$positionsOfMutationsOfType
+#'@family Genome
 #'@return An object of type integer.
 #'@details Returns the positions of mutations that are of the type specified by
 #'mutType, out of all of the mutations in the genome. If you need a vector of the
@@ -2270,7 +2305,7 @@ positionsOfMutationsOfType <- function(mutType) {
 #'SLiM method readFromMS
 #'
 #'Documentation for SLiM function \code{readFromMS}, which is a method of the SLiM
-#'class \code{Genome}.
+#'class \code{\link{Genome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2287,6 +2322,7 @@ positionsOfMutationsOfType <- function(mutType) {
 #'length 1 (a singleton). See details for description.
 #'
 #'@aliases Genome$readFromMS .G$readFromMS
+#'@family Genome
 #'@return An object of type Mutation object.
 #'@details Read new mutations from the MS format file at filePath and add them
 #'to the target genomes. The number of target genomes must match the number
@@ -2325,7 +2361,7 @@ readFromMS <- function(filePath, mutationType) {
 #'SLiM method readFromVCF
 #'
 #'Documentation for SLiM function \code{readFromVCF}, which is a method of the
-#'SLiM class \code{Genome}.
+#'SLiM class \code{\link{Genome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2343,6 +2379,7 @@ readFromMS <- function(filePath, mutationType) {
 #'for description.
 #'
 #'@aliases Genome$readFromVCF .G$readFromVCF
+#'@family Genome
 #'@return An object of type Mutation object.
 #'@details Read new mutations from the VCF format file at filePath and add
 #'them to the target genomes. The number of target genomes must match the
@@ -2418,7 +2455,7 @@ readFromVCF <- function(filePath, mutationType) {
 #'SLiM method removeMutations
 #'
 #'Documentation for SLiM function \code{removeMutations}, which is a method of the
-#'SLiM class \code{Genome}.
+#'SLiM class \code{\link{Genome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2435,6 +2472,7 @@ readFromVCF <- function(filePath, mutationType) {
 #'The default value is \code{F}. See details for description.
 #'
 #'@aliases Genome$removeMutations .G$removeMutations
+#'@family Genome
 #'@return An object of type void.
 #'@details Remove the mutations in mutations from the target genome(s), if they
 #'are present (if they are not present, they will be ignored). If NULL is passed
@@ -2479,7 +2517,7 @@ removeMutations <- function(mutations, substitute) {
 #'SLiM method sumOfMutationsOfType
 #'
 #'Documentation for SLiM function \code{sumOfMutationsOfType}, which is a method
-#'of the SLiM class \code{Genome}.
+#'of the SLiM class \code{\link{Genome}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2494,6 +2532,7 @@ removeMutations <- function(mutations, substitute) {
 #'length 1 (a singleton). See details for description.
 #'
 #'@aliases Genome$sumOfMutationsOfType .G$sumOfMutationsOfType
+#'@family Genome
 #'@return An object of type float. Return will be of length 1 (a singleton)
 #'@details Returns the sum of the selection coefficients of all mutations that
 #'are of the type specified by mutType, out of all of the mutations in the genome.
@@ -2523,7 +2562,7 @@ sumOfMutationsOfType <- function(mutType) {
 #'SLiM method setGenomicElementType
 #'
 #'Documentation for SLiM function \code{setGenomicElementType}, which is a method
-#'of the SLiM class \code{GenomicElement}.
+#'of the SLiM class \code{\link{GenomicElement}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2538,6 +2577,7 @@ sumOfMutationsOfType <- function(mutType) {
 #'object. Must be of length 1 (a singleton). See details for description.
 #'
 #'@aliases GenomicElement$setGenomicElementType .GE$setGenomicElementType
+#'@family GenomicElement
 #'@return An object of type void.
 #'@details Set the genomic element type used for a genomic element (see section
 #'1.5.4). The genomicElementType parameter should supply the new genomic element
@@ -2564,7 +2604,7 @@ setGenomicElementType <- function(genomicElementType) {
 #'SLiM method setMutationFractions
 #'
 #'Documentation for SLiM function \code{setMutationFractions}, which is a method
-#'of the SLiM class \code{GenomicElementType}.
+#'of the SLiM class \code{\link{GenomicElementType}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2580,6 +2620,7 @@ setGenomicElementType <- function(genomicElementType) {
 #'@param proportions An object of type numeric. See details for description.
 #'
 #'@aliases GenomicElementType$setMutationFractions .GET$setMutationFractions
+#'@family GenomicElementType
 #'@return An object of type void or void.
 #'@details Set the mutation type fractions contributing to a genomic element type.
 #'The mutationTypes vector should supply the mutation types used by the genomic
@@ -2606,7 +2647,7 @@ setMutationFractions <- function(mutationTypes, proportions) {
 #'SLiM method setMutationMatrix
 #'
 #'Documentation for SLiM function \code{setMutationMatrix}, which is a method of
-#'the SLiM class \code{GenomicElementType}.
+#'the SLiM class \code{\link{GenomicElementType}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2620,6 +2661,7 @@ setMutationFractions <- function(mutationTypes, proportions) {
 #'@param mutationMatrix An object of type float. See details for description.
 #'
 #'@aliases GenomicElementType$setMutationMatrix .GET$setMutationMatrix
+#'@family GenomicElementType
 #'@return An object of type void or void.
 #'@details Sets a new nucleotide mutation matrix for the genomic
 #'element type. This replaces the mutation matrix originally set by
@@ -2645,7 +2687,7 @@ setMutationMatrix <- function(mutationMatrix) {
 #'SLiM method containsMutations
 #'
 #'Documentation for SLiM function \code{containsMutations}, which is a method of
-#'the SLiM class \code{Individual}.
+#'the SLiM class \code{\link{Individual}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2659,6 +2701,7 @@ setMutationMatrix <- function(mutationMatrix) {
 #'@param mutations An object of type Mutation object. See details for description.
 #'
 #'@aliases Individual$containsMutations .I$containsMutations
+#'@family Individual
 #'@return An object of type logical.
 #'@details Returns a logical vector indicating whether each of the mutations in
 #'mutations is present in the individual (in either of its genomes); each element
@@ -2683,7 +2726,7 @@ containsMutations <- function(mutations) {
 #'SLiM method countOfMutationsOfType
 #'
 #'Documentation for SLiM function \code{countOfMutationsOfType}, which is a method
-#'of the SLiM class \code{Individual}.
+#'of the SLiM class \code{\link{Individual}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2698,6 +2741,7 @@ containsMutations <- function(mutations) {
 #'length 1 (a singleton). See details for description.
 #'
 #'@aliases Individual$countOfMutationsOfType .I$countOfMutationsOfType
+#'@family Individual
 #'@return An object of type integer. Return will be of length 1 (a singleton)
 #'@details Returns the number of mutations that are of the type specified by
 #'mutType, out of all of the mutations in the individual (in both of its genomes;
@@ -2723,7 +2767,7 @@ countOfMutationsOfType <- function(mutType) {
 #'SLiM method relatedness
 #'
 #'Documentation for SLiM function \code{relatedness}, which is a method of the
-#'SLiM class \code{Individual}.
+#'SLiM class \code{\link{Individual}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2738,6 +2782,7 @@ countOfMutationsOfType <- function(mutType) {
 #'description.
 #'
 #'@aliases Individual$relatedness .I$relatedness
+#'@family Individual
 #'@return An object of type float.
 #'@details Returns a vector containing the degrees of relatedness between the
 #'receiver and each of the individuals in individuals. The relatedness between A
@@ -2775,7 +2820,7 @@ relatedness <- function(individuals) {
 #'SLiM method setSpatialPosition
 #'
 #'Documentation for SLiM function \code{setSpatialPosition}, which is a method of
-#'the SLiM class \code{Individual}.
+#'the SLiM class \code{\link{Individual}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2789,6 +2834,7 @@ relatedness <- function(individuals) {
 #'@param position An object of type float. See details for description.
 #'
 #'@aliases Individual$setSpatialPosition .I$setSpatialPosition
+#'@family Individual
 #'@return An object of type void.
 #'@details Sets the spatial position of the individual (as accessed through
 #'the spatialPosition property). The length of position (the number of
@@ -2832,7 +2878,7 @@ setSpatialPosition <- function(position) {
 #'SLiM method sumOfMutationsOfType
 #'
 #'Documentation for SLiM function \code{sumOfMutationsOfType}, which is a method
-#'of the SLiM class \code{Individual}.
+#'of the SLiM class \code{\link{Individual}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2847,6 +2893,7 @@ setSpatialPosition <- function(position) {
 #'length 1 (a singleton). See details for description.
 #'
 #'@aliases Individual$sumOfMutationsOfType .I$sumOfMutationsOfType
+#'@family Individual
 #'@return An object of type float. Return will be of length 1 (a singleton)
 #'@details Returns the sum of the selection coefficients of all mutations that
 #'are of the type specified by mutType, out of all of the mutations in the
@@ -2874,7 +2921,7 @@ sumOfMutationsOfType <- function(mutType) {
 #'SLiM method uniqueMutationsOfType
 #'
 #'Documentation for SLiM function \code{uniqueMutationsOfType}, which is a method
-#'of the SLiM class \code{Individual}.
+#'of the SLiM class \code{\link{Individual}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2889,6 +2936,7 @@ sumOfMutationsOfType <- function(mutType) {
 #'length 1 (a singleton). See details for description.
 #'
 #'@aliases Individual$uniqueMutationsOfType .I$uniqueMutationsOfType
+#'@family Individual
 #'@return An object of type Mutation object.
 #'@details Returns an object vector of all the mutations that are of the type
 #'specified by mutType, out of all of the mutations in the individual. Mutations
@@ -2924,7 +2972,7 @@ uniqueMutationsOfType <- function(mutType) {
 #'SLiM method distance
 #'
 #'Documentation for SLiM function \code{distance}, which is a method of the SLiM
-#'class \code{InteractionType}.
+#'class \code{\link{InteractionType}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2941,6 +2989,7 @@ uniqueMutationsOfType <- function(mutType) {
 #'value is \code{NULL}. See details for description.
 #'
 #'@aliases InteractionType$distance .IT$distance
+#'@family InteractionType
 #'@return An object of type float.
 #'@details Returns a vector containing distances between individuals in
 #'individuals1 and individuals2. At least one of individuals1 or individuals2
@@ -2981,7 +3030,7 @@ distance <- function(individuals1, individuals2) {
 #'SLiM method distanceToPoint
 #'
 #'Documentation for SLiM function \code{distanceToPoint}, which is a method of the
-#'SLiM class \code{InteractionType}.
+#'SLiM class \code{\link{InteractionType}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -2997,6 +3046,7 @@ distance <- function(individuals1, individuals2) {
 #'@param point An object of type float. See details for description.
 #'
 #'@aliases InteractionType$distanceToPoint .IT$distanceToPoint
+#'@family InteractionType
 #'@return An object of type float.
 #'@details Returns a vector containing distances between individuals in
 #'individuals1 and the point given by the spatial coordinates in point. The
@@ -3035,7 +3085,7 @@ distanceToPoint <- function(individuals1, point) {
 #'SLiM method drawByStrength
 #'
 #'Documentation for SLiM function \code{drawByStrength}, which is a method of the
-#'SLiM class \code{InteractionType}.
+#'SLiM class \code{\link{InteractionType}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3052,6 +3102,7 @@ distanceToPoint <- function(individuals1, point) {
 #'default value is \code{1}. See details for description.
 #'
 #'@aliases InteractionType$drawByStrength .IT$drawByStrength
+#'@family InteractionType
 #'@return An object of type Individual object.
 #'@details Returns up to count individuals drawn from the subpopulation of
 #'individual. The probability of drawing particular individuals is proportional
@@ -3086,7 +3137,7 @@ drawByStrength <- function(individual, count) {
 #'SLiM method evaluate
 #'
 #'Documentation for SLiM function \code{evaluate}, which is a method of the SLiM
-#'class \code{InteractionType}.
+#'class \code{\link{InteractionType}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3103,6 +3154,7 @@ drawByStrength <- function(individual, count) {
 #'The default value is \code{F}. See details for description.
 #'
 #'@aliases InteractionType$evaluate .IT$evaluate
+#'@family InteractionType
 #'@return An object of type void.
 #'@details Triggers evaluation of the interaction for the subpopulations specified
 #'by subpops (or for all subpopulations, if subpops is NULL). By default, the
@@ -3166,7 +3218,7 @@ evaluate <- function(subpops, immediate) {
 #'SLiM method interactingNeighborCount
 #'
 #'Documentation for SLiM function \code{interactingNeighborCount}, which is a
-#'method of the SLiM class \code{InteractionType}.
+#'method of the SLiM class \code{\link{InteractionType}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3181,6 +3233,7 @@ evaluate <- function(subpops, immediate) {
 #'description.
 #'
 #'@aliases InteractionType$interactingNeighborCount .IT$interactingNeighborCount
+#'@family InteractionType
 #'@return An object of type integer.
 #'@details Returns the number of interacting individuals for each individual
 #'in individuals, within the maximum interaction distance according to the
@@ -3214,7 +3267,7 @@ interactingNeighborCount <- function(individuals) {
 #'SLiM method interactionDistance
 #'
 #'Documentation for SLiM function \code{interactionDistance}, which is a method of
-#'the SLiM class \code{InteractionType}.
+#'the SLiM class \code{\link{InteractionType}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3231,6 +3284,7 @@ interactingNeighborCount <- function(individuals) {
 #'is \code{NULL}. See details for description.
 #'
 #'@aliases InteractionType$interactionDistance .IT$interactionDistance
+#'@family InteractionType
 #'@return An object of type float.
 #'@details Returns a vector containing interaction-dependent distances between
 #'receiver and individuals in exerters that exert an interaction strength upon
@@ -3267,7 +3321,7 @@ interactionDistance <- function(receiver, exerters) {
 #'SLiM method nearestInteractingNeighbors
 #'
 #'Documentation for SLiM function \code{nearestInteractingNeighbors}, which is a
-#'method of the SLiM class \code{InteractionType}.
+#'method of the SLiM class \code{\link{InteractionType}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3285,6 +3339,7 @@ interactionDistance <- function(receiver, exerters) {
 #'
 #'@aliases
 #'InteractionType$nearestInteractingNeighbors .IT$nearestInteractingNeighbors
+#'@family InteractionType
 #'@return An object of type Individual object.
 #'@details Returns up to count interacting individuals that are spatially
 #'closest to individual, according to the distance metric of the InteractionType.
@@ -3321,7 +3376,7 @@ nearestInteractingNeighbors <- function(individual, count) {
 #'SLiM method nearestNeighbors
 #'
 #'Documentation for SLiM function \code{nearestNeighbors}, which is a method of
-#'the SLiM class \code{InteractionType}.
+#'the SLiM class \code{\link{InteractionType}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3338,6 +3393,7 @@ nearestInteractingNeighbors <- function(individual, count) {
 #'default value is \code{1}. See details for description.
 #'
 #'@aliases InteractionType$nearestNeighbors .IT$nearestNeighbors
+#'@family InteractionType
 #'@return An object of type Individual object.
 #'@details Returns up to count individuals that are spatially closest to
 #'individual, according to the distance metric of the InteractionType. To obtain
@@ -3370,7 +3426,7 @@ nearestNeighbors <- function(individual, count) {
 #'SLiM method nearestNeighborsOfPoint
 #'
 #'Documentation for SLiM function \code{nearestNeighborsOfPoint}, which is a
-#'method of the SLiM class \code{InteractionType}.
+#'method of the SLiM class \code{\link{InteractionType}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3388,6 +3444,7 @@ nearestNeighbors <- function(individual, count) {
 #'default value is \code{1}. See details for description.
 #'
 #'@aliases InteractionType$nearestNeighborsOfPoint .IT$nearestNeighborsOfPoint
+#'@family InteractionType
 #'@return An object of type Individual object.
 #'@details Returns up to count individuals in subpop that are spatially closest to
 #'point, according to the distance metric of the InteractionType. To obtain all of
@@ -3414,7 +3471,7 @@ nearestNeighborsOfPoint <- function(subpop, point, count) {
 #'SLiM method setInteractionFunction
 #'
 #'Documentation for SLiM function \code{setInteractionFunction}, which is a method
-#'of the SLiM class \code{InteractionType}.
+#'of the SLiM class \code{\link{InteractionType}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3430,6 +3487,7 @@ nearestNeighborsOfPoint <- function(subpop, point, count) {
 #'@param ... An object of type NA. NA See details for description.
 #'
 #'@aliases InteractionType$setInteractionFunction .IT$setInteractionFunction
+#'@family InteractionType
 #'@return An object of type void.
 #'@details Set the function used to translate spatial distances into interaction
 #'strengths for an interaction type. The functionType may be "f", in which case
@@ -3464,7 +3522,7 @@ setInteractionFunction <- function(functionType, ...) {
 #'SLiM method strength
 #'
 #'Documentation for SLiM function \code{strength}, which is a method of the SLiM
-#'class \code{InteractionType}.
+#'class \code{\link{InteractionType}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3481,6 +3539,7 @@ setInteractionFunction <- function(functionType, ...) {
 #'is \code{NULL}. See details for description.
 #'
 #'@aliases InteractionType$strength .IT$strength
+#'@family InteractionType
 #'@return An object of type float.
 #'@details Returns a vector containing the interaction strengths exerted upon
 #'receiver by the individuals in exerters. If exerters is NULL (the default),
@@ -3518,7 +3577,7 @@ strength <- function(receiver, exerters) {
 #'SLiM method totalOfNeighborStrengths
 #'
 #'Documentation for SLiM function \code{totalOfNeighborStrengths}, which is a
-#'method of the SLiM class \code{InteractionType}.
+#'method of the SLiM class \code{\link{InteractionType}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3533,6 +3592,7 @@ strength <- function(receiver, exerters) {
 #'description.
 #'
 #'@aliases InteractionType$totalOfNeighborStrengths .IT$totalOfNeighborStrengths
+#'@family InteractionType
 #'@return An object of type float.
 #'@details Returns a vector of the total interaction strength felt by each
 #'individual in individuals, which does not need to be a singleton; indeed, it
@@ -3573,7 +3633,7 @@ totalOfNeighborStrengths <- function(individuals) {
 #'SLiM method unevaluate
 #'
 #'Documentation for SLiM function \code{unevaluate}, which is a method of the SLiM
-#'class \code{InteractionType}.
+#'class \code{\link{InteractionType}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3587,6 +3647,7 @@ totalOfNeighborStrengths <- function(individuals) {
 #'@param void An object of type . See details for description.
 #'
 #'@aliases InteractionType$unevaluate .IT$unevaluate
+#'@family InteractionType
 #'@return An object of type void.
 #'@details Discards all evaluation of this interaction, for all subpopulations.
 #'The state of the InteractionType is reset to a state prior to evaluation. This
@@ -3625,7 +3686,7 @@ unevaluate <- function(void) {
 #'SLiM method addCustomColumn
 #'
 #'Documentation for SLiM function \code{addCustomColumn}, which is a method of the
-#'SLiM class \code{LogFile}.
+#'SLiM class \code{\link{LogFile}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3644,6 +3705,7 @@ unevaluate <- function(void) {
 #'\code{NULL}. See details for description.
 #'
 #'@aliases LogFile$addCustomColumn .LF$addCustomColumn
+#'@family LogFile
 #'@return An object of type void or void or void or void or void or void or void
 #'or void or void or void or void or void or void or void or void.
 #'@details Adds a new data column with its name provided by columnName. The value
@@ -3674,7 +3736,7 @@ addCustomColumn <- function(columnName, source, context) {
 #'SLiM method addGeneration
 #'
 #'Documentation for SLiM function \code{addGeneration}, which is a method of the
-#'SLiM class \code{LogFile}.
+#'SLiM class \code{\link{LogFile}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3688,6 +3750,7 @@ addCustomColumn <- function(columnName, source, context) {
 #'@param void An object of type . See details for description.
 #'
 #'@aliases LogFile$addGeneration .LF$addGeneration
+#'@family LogFile
 #'@return An object of type void or void or void or void or void or void or void
 #'or void or void or void or void or void or void or void or void.
 #'@details Adds a new data column that provides the generation number, named
@@ -3710,7 +3773,7 @@ addGeneration <- function(void) {
 #'SLiM method addGenerationStage
 #'
 #'Documentation for SLiM function \code{addGenerationStage}, which is a method of
-#'the SLiM class \code{LogFile}.
+#'the SLiM class \code{\link{LogFile}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3724,6 +3787,7 @@ addGeneration <- function(void) {
 #'@param void An object of type . See details for description.
 #'
 #'@aliases LogFile$addGenerationStage .LF$addGenerationStage
+#'@family LogFile
 #'@return An object of type void or void or void or void or void or void or void
 #'or void or void or void or void or void or void or void or void.
 #'@details Adds a new data column that provides the generation cycle stage, named
@@ -3750,7 +3814,7 @@ addGenerationStage <- function(void) {
 #'SLiM method addKeysAndValuesFrom
 #'
 #'Documentation for SLiM function \code{addKeysAndValuesFrom}, which is a method
-#'of the SLiM class \code{LogFile}.
+#'of the SLiM class \code{\link{LogFile}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3765,6 +3829,7 @@ addGenerationStage <- function(void) {
 #'for description.
 #'
 #'@aliases LogFile$addKeysAndValuesFrom .LF$addKeysAndValuesFrom
+#'@family LogFile
 #'@return An object of type void or void or void or void or void or void or void
 #'or void or void or void or void or void or void or void or void.
 #'@details This Dictionary method has an override in LogFile to make it illegal to
@@ -3787,7 +3852,7 @@ addKeysAndValuesFrom <- function(source) {
 #'SLiM method addMeanSDColumns
 #'
 #'Documentation for SLiM function \code{addMeanSDColumns}, which is a method of
-#'the SLiM class \code{LogFile}.
+#'the SLiM class \code{\link{LogFile}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3806,6 +3871,7 @@ addKeysAndValuesFrom <- function(source) {
 #'\code{NULL}. See details for description.
 #'
 #'@aliases LogFile$addMeanSDColumns .LF$addMeanSDColumns
+#'@family LogFile
 #'@return An object of type void or void or void or void or void or void or void
 #'or void or void or void or void or void or void or void or void.
 #'@details Adds two new data columns with names of columnName_mean and
@@ -3835,7 +3901,7 @@ addMeanSDColumns <- function(columnName, source, context) {
 #'SLiM method addPopulationSexRatio
 #'
 #'Documentation for SLiM function \code{addPopulationSexRatio}, which is a method
-#'of the SLiM class \code{LogFile}.
+#'of the SLiM class \code{\link{LogFile}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3849,6 +3915,7 @@ addMeanSDColumns <- function(columnName, source, context) {
 #'@param void An object of type . See details for description.
 #'
 #'@aliases LogFile$addPopulationSexRatio .LF$addPopulationSexRatio
+#'@family LogFile
 #'@return An object of type void or void or void or void or void or void or void
 #'or void or void or void or void or void or void or void or void.
 #'@details Adds a new data column that provides the population sex ratio M:(M+F),
@@ -3871,7 +3938,7 @@ addPopulationSexRatio <- function(void) {
 #'SLiM method addPopulationSize
 #'
 #'Documentation for SLiM function \code{addPopulationSize}, which is a method of
-#'the SLiM class \code{LogFile}.
+#'the SLiM class \code{\link{LogFile}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3885,6 +3952,7 @@ addPopulationSexRatio <- function(void) {
 #'@param void An object of type . See details for description.
 #'
 #'@aliases LogFile$addPopulationSize .LF$addPopulationSize
+#'@family LogFile
 #'@return An object of type void or void or void or void or void or void or void
 #'or void or void or void or void or void or void or void or void.
 #'@details Adds a new data column that provides the total population size, named
@@ -3907,7 +3975,7 @@ addPopulationSize <- function(void) {
 #'SLiM method addSubpopulationSexRatio
 #'
 #'Documentation for SLiM function \code{addSubpopulationSexRatio}, which is a
-#'method of the SLiM class \code{LogFile}.
+#'method of the SLiM class \code{\link{LogFile}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3922,6 +3990,7 @@ addPopulationSize <- function(void) {
 #'length 1 (a singleton). See details for description.
 #'
 #'@aliases LogFile$addSubpopulationSexRatio .LF$addSubpopulationSexRatio
+#'@family LogFile
 #'@return An object of type void or void or void or void or void or void or void
 #'or void or void or void or void or void or void or void or void.
 #'@details Adds a new data column that provides the sex ratio M:(M+F) of the
@@ -3945,7 +4014,7 @@ addSubpopulationSexRatio <- function(subpop) {
 #'SLiM method addSubpopulationSize
 #'
 #'Documentation for SLiM function \code{addSubpopulationSize}, which is a method
-#'of the SLiM class \code{LogFile}.
+#'of the SLiM class \code{\link{LogFile}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3960,6 +4029,7 @@ addSubpopulationSexRatio <- function(subpop) {
 #'length 1 (a singleton). See details for description.
 #'
 #'@aliases LogFile$addSubpopulationSize .LF$addSubpopulationSize
+#'@family LogFile
 #'@return An object of type void or void or void or void or void or void or void
 #'or void or void or void or void or void or void or void or void.
 #'@details Adds a new data column that provides the size of the subpopulation
@@ -3983,7 +4053,7 @@ addSubpopulationSize <- function(subpop) {
 #'SLiM method clearKeysAndValues
 #'
 #'Documentation for SLiM function \code{clearKeysAndValues}, which is a method of
-#'the SLiM class \code{LogFile}.
+#'the SLiM class \code{\link{LogFile}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -3997,6 +4067,7 @@ addSubpopulationSize <- function(subpop) {
 #'@param void An object of type . See details for description.
 #'
 #'@aliases LogFile$clearKeysAndValues .LF$clearKeysAndValues
+#'@family LogFile
 #'@return An object of type void or void or void or void or void or void or void
 #'or void or void or void or void or void or void or void or void.
 #'@details This Dictionary method has an override in LogFile to make it illegal to
@@ -4019,7 +4090,7 @@ clearKeysAndValues <- function(void) {
 #'SLiM method flush
 #'
 #'Documentation for SLiM function \code{flush}, which is a method of the SLiM
-#'class \code{LogFile}.
+#'class \code{\link{LogFile}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4033,6 +4104,7 @@ clearKeysAndValues <- function(void) {
 #'@param void An object of type . See details for description.
 #'
 #'@aliases LogFile$flush .LF$flush
+#'@family LogFile
 #'@return An object of type void or void or void or void or void or void or void
 #'or void or void or void or void or void or void or void or void.
 #'@details Flushes all buffered data to the output file, synchronously. This will
@@ -4060,7 +4132,7 @@ flush <- function(void) {
 #'SLiM method logRow
 #'
 #'Documentation for SLiM function \code{logRow}, which is a method of the SLiM
-#'class \code{LogFile}.
+#'class \code{\link{LogFile}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4074,6 +4146,7 @@ flush <- function(void) {
 #'@param void An object of type . See details for description.
 #'
 #'@aliases LogFile$logRow .LF$logRow
+#'@family LogFile
 #'@return An object of type void or void or void or void or void or void or void
 #'or void or void or void or void or void or void or void or void.
 #'@details This logs a new row of data, by evaluating all of the generators added
@@ -4100,7 +4173,7 @@ logRow <- function(void) {
 #'SLiM method setLogInterval
 #'
 #'Documentation for SLiM function \code{setLogInterval}, which is a method of the
-#'SLiM class \code{LogFile}.
+#'SLiM class \code{\link{LogFile}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4115,6 +4188,7 @@ logRow <- function(void) {
 #'singleton). The default value is \code{NULL}. See details for description.
 #'
 #'@aliases LogFile$setLogInterval .LF$setLogInterval
+#'@family LogFile
 #'@return An object of type void or void or void or void or void or void or void
 #'or void or void or void or void or void or void or void or void.
 #'@details Sets the automatic logging interval. A logInterval of NULL stops
@@ -4140,7 +4214,7 @@ setLogInterval <- function(logInterval) {
 #'SLiM method setFilePath
 #'
 #'Documentation for SLiM function \code{setFilePath}, which is a method of the
-#'SLiM class \code{LogFile}.
+#'SLiM class \code{\link{LogFile}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4163,6 +4237,7 @@ setLogInterval <- function(logInterval) {
 #'The default value is \code{NULL}. See details for description.
 #'
 #'@aliases LogFile$setFilePath .LF$setFilePath
+#'@family LogFile
 #'@return An object of type void or void or void or void or void or void or void
 #'or void or void or void or void or void or void or void or void.
 #'@details Redirects the LogFile to write new rows to a new filePath. Any rows
@@ -4194,7 +4269,7 @@ setFilePath <- function(filePath, initialContents, append, compress, sep) {
 #'SLiM method setValue
 #'
 #'Documentation for SLiM function \code{setValue}, which is a method of the SLiM
-#'class \code{LogFile}.
+#'class \code{\link{LogFile}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4210,6 +4285,7 @@ setFilePath <- function(filePath, initialContents, append, compress, sep) {
 #'@param value An object of type string or any. See details for description.
 #'
 #'@aliases LogFile$setValue .LF$setValue
+#'@family LogFile
 #'@return An object of type void or void or void or void or void or void or void
 #'or void or void or void or void or void or void or void or void.
 #'@details This Dictionary method has an override in LogFile to make it illegal to
@@ -4234,7 +4310,7 @@ setValue <- function(key, value) {
 #'SLiM method setMutationType
 #'
 #'Documentation for SLiM function \code{setMutationType}, which is a method of the
-#'SLiM class \code{Mutation}.
+#'SLiM class \code{\link{Mutation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4249,6 +4325,7 @@ setValue <- function(key, value) {
 #'length 1 (a singleton). See details for description.
 #'
 #'@aliases Mutation$setMutationType .M$setMutationType
+#'@family Mutation
 #'@return An object of type void or void.
 #'@details Set the mutation type of the mutation to mutType (which may be
 #'specified as either an integer identifier or a MutationType object). This
@@ -4283,7 +4360,7 @@ setMutationType <- function(mutType) {
 #'SLiM method setSelectionCoeff
 #'
 #'Documentation for SLiM function \code{setSelectionCoeff}, which is a method of
-#'the SLiM class \code{Mutation}.
+#'the SLiM class \code{\link{Mutation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4298,6 +4375,7 @@ setMutationType <- function(mutType) {
 #'singleton). See details for description.
 #'
 #'@aliases Mutation$setSelectionCoeff .M$setSelectionCoeff
+#'@family Mutation
 #'@return An object of type void or void.
 #'@details Set the selection coefficient of the mutation to selectionCoeff. The
 #'selection coefficient will be changed for all individuals that possess the
@@ -4331,7 +4409,7 @@ setSelectionCoeff <- function(selectionCoeff) {
 #'SLiM method drawSelectionCoefficient
 #'
 #'Documentation for SLiM function \code{drawSelectionCoefficient}, which is a
-#'method of the SLiM class \code{MutationType}.
+#'method of the SLiM class \code{\link{MutationType}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4346,6 +4424,7 @@ setSelectionCoeff <- function(selectionCoeff) {
 #'default value is \code{1}. See details for description.
 #'
 #'@aliases MutationType$drawSelectionCoefficient .MT$drawSelectionCoefficient
+#'@family MutationType
 #'@return An object of type float or void.
 #'@details Draws and returns a vector of n selection coefficients using the
 #'currently defined distribution of fitness effects (DFE) for the target mutation
@@ -4370,7 +4449,7 @@ drawSelectionCoefficient <- function(n) {
 #'SLiM method setDistribution
 #'
 #'Documentation for SLiM function \code{setDistribution}, which is a method of the
-#'SLiM class \code{MutationType}.
+#'SLiM class \code{\link{MutationType}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4386,6 +4465,7 @@ drawSelectionCoefficient <- function(n) {
 #'@param ... An object of type NA. NA See details for description.
 #'
 #'@aliases MutationType$setDistribution .MT$setDistribution
+#'@family MutationType
 #'@return An object of type float or void.
 #'@details Set the distribution of fitness effects for a mutation type. The
 #'distributionType may be "f", in which case the ellipsis ... should supply a
@@ -4421,7 +4501,7 @@ setDistribution <- function(distributionType, ...) {
 #'SLiM method addSubpop
 #'
 #'Documentation for SLiM function \code{addSubpop}, which is a method of the SLiM
-#'class \code{SLiMSim}.
+#'class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4440,6 +4520,7 @@ setDistribution <- function(distributionType, ...) {
 #'default value is \code{0.5}. See details for description.
 #'
 #'@aliases SLiMSim$addSubpop .SS$addSubpop
+#'@family SLiMSim
 #'@return An object of type Subpopulation object. Return will be of length 1 (a
 #'singleton)
 #'@details Add a new subpopulation with id subpopID and size individuals.
@@ -4471,7 +4552,7 @@ addSubpop <- function(subpopID, size, sexRatio) {
 #'SLiM method addSubpopSplit
 #'
 #'Documentation for SLiM function \code{addSubpopSplit}, which is a method of the
-#'SLiM class \code{SLiMSim}.
+#'SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4492,6 +4573,7 @@ addSubpop <- function(subpopID, size, sexRatio) {
 #'default value is \code{0.5}. See details for description.
 #'
 #'@aliases SLiMSim$addSubpopSplit .SS$addSubpopSplit
+#'@family SLiMSim
 #'@return An object of type Subpopulation object. Return will be of length 1 (a
 #'singleton)
 #'@details Split off a new subpopulation with id subpopID and size individuals
@@ -4533,7 +4615,7 @@ addSubpopSplit <- function(subpopID, size, sourceSubpop, sexRatio) {
 #'SLiM method countOfMutationsOfType
 #'
 #'Documentation for SLiM function \code{countOfMutationsOfType}, which is a method
-#'of the SLiM class \code{SLiMSim}.
+#'of the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4548,6 +4630,7 @@ addSubpopSplit <- function(subpopID, size, sourceSubpop, sexRatio) {
 #'length 1 (a singleton). See details for description.
 #'
 #'@aliases SLiMSim$countOfMutationsOfType .SS$countOfMutationsOfType
+#'@family SLiMSim
 #'@return An object of type integer. Return will be of length 1 (a singleton)
 #'@details Returns the number of mutations that are of the type specified
 #'by mutType, out of all of the mutations that are currently active in the
@@ -4574,7 +4657,7 @@ countOfMutationsOfType <- function(mutType) {
 #'SLiM method createLogFile
 #'
 #'Documentation for SLiM function \code{createLogFile}, which is a method of the
-#'SLiM class \code{SLiMSim}.
+#'SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4601,6 +4684,7 @@ countOfMutationsOfType <- function(mutType) {
 #'singleton). The default value is \code{NULL}. See details for description.
 #'
 #'@aliases SLiMSim$createLogFile .SS$createLogFile
+#'@family SLiMSim
 #'@return An object of type LogFile object. Return will be of length 1 (a
 #'singleton)
 #'@details Creates and returns a new LogFile object that logs data from the
@@ -4615,7 +4699,7 @@ countOfMutationsOfType <- function(mutType) {
 #'files will be appended to the filename in filePath if it is not already
 #'present. The sep parameter specifies the separator between data values within
 #'a row. The default of "," will generate a "comma-separated value” (CSV) file,
-#'while passing sep="\t" will use a tab separator instead to generate a "tab-
+#'while passing sep="\\t" will use a tab separator instead to generate a "tab-
 #'separated value” (TSV) file. Other values for sep may also be used, but are less
 #'standard. LogTable supports periodic automatic logging of a new row of data,
 #'enabled by supplying a non-NULL value for logInterval. In this case, a new row
@@ -4660,7 +4744,7 @@ logInterval, flushInterval)
 #'SLiM method deregisterScriptBlock
 #'
 #'Documentation for SLiM function \code{deregisterScriptBlock}, which is a method
-#'of the SLiM class \code{SLiMSim}.
+#'of the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4675,6 +4759,7 @@ logInterval, flushInterval)
 #'details for description.
 #'
 #'@aliases SLiMSim$deregisterScriptBlock .SS$deregisterScriptBlock
+#'@family SLiMSim
 #'@return An object of type void.
 #'@details All SLiMEidosBlock objects specified by scriptBlocks (either with
 #'SLiMEidosBlock objects or with integer identifiers) will be scheduled for
@@ -4703,7 +4788,7 @@ deregisterScriptBlock <- function(scriptBlocks) {
 #'SLiM method mutationCounts
 #'
 #'Documentation for SLiM function \code{mutationCounts}, which is a method of the
-#'SLiM class \code{SLiMSim}.
+#'SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4720,6 +4805,7 @@ deregisterScriptBlock <- function(scriptBlocks) {
 #'\code{NULL}. See details for description.
 #'
 #'@aliases SLiMSim$mutationCounts .SS$mutationCounts
+#'@family SLiMSim
 #'@return An object of type integer.
 #'@details Return an integer vector with the frequency counts of all of the
 #'Mutation objects passed in mutations, within the Subpopulation objects in
@@ -4749,7 +4835,7 @@ mutationCounts <- function(subpops, mutations) {
 #'SLiM method mutationFrequencies
 #'
 #'Documentation for SLiM function \code{mutationFrequencies}, which is a method of
-#'the SLiM class \code{SLiMSim}.
+#'the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4766,6 +4852,7 @@ mutationCounts <- function(subpops, mutations) {
 #'\code{NULL}. See details for description.
 #'
 #'@aliases SLiMSim$mutationFrequencies .SS$mutationFrequencies
+#'@family SLiMSim
 #'@return An object of type float.
 #'@details Return a float vector with the frequencies of all of the Mutation
 #'objects passed in mutations, within the Subpopulation objects in subpops.
@@ -4795,7 +4882,7 @@ mutationFrequencies <- function(subpops, mutations) {
 #'SLiM method mutationsOfType
 #'
 #'Documentation for SLiM function \code{mutationsOfType}, which is a method of the
-#'SLiM class \code{SLiMSim}.
+#'SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4810,6 +4897,7 @@ mutationFrequencies <- function(subpops, mutations) {
 #'length 1 (a singleton). See details for description.
 #'
 #'@aliases SLiMSim$mutationsOfType .SS$mutationsOfType
+#'@family SLiMSim
 #'@return An object of type Mutation object.
 #'@details Returns an object vector of all the mutations that are of the type
 #'specified by mutType, out of all of the mutations that are currently active
@@ -4837,7 +4925,7 @@ mutationsOfType <- function(mutType) {
 #'SLiM method outputFixedMutations
 #'
 #'Documentation for SLiM function \code{outputFixedMutations}, which is a method
-#'of the SLiM class \code{SLiMSim}.
+#'of the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4854,6 +4942,7 @@ mutationsOfType <- function(mutType) {
 #'default value is \code{F}. See details for description.
 #'
 #'@aliases SLiMSim$outputFixedMutations .SS$outputFixedMutations
+#'@family SLiMSim
 #'@return An object of type void.
 #'@details Output all fixed mutations – all Substitution objects, in other words
 #'(see section 1.5.2) – in a SLiM native format (see section 26.1.2 for output
@@ -4886,7 +4975,7 @@ outputFixedMutations <- function(filePath, append) {
 #'SLiM method outputFull
 #'
 #'Documentation for SLiM function \code{outputFull}, which is a method of the SLiM
-#'class \code{SLiMSim}.
+#'class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -4913,6 +5002,7 @@ outputFixedMutations <- function(filePath, append) {
 #'The default value is \code{F}. See details for description.
 #'
 #'@aliases SLiMSim$outputFull .SS$outputFull
+#'@family SLiMSim
 #'@return An object of type void.
 #'@details Output the state of the entire population (see section 26.1.1 for
 #'output format details). If the optional parameter filePath is NULL (the
@@ -4985,7 +5075,7 @@ ancestralNucleotides, pedigreeIDs)
 #'SLiM method outputMutations
 #'
 #'Documentation for SLiM function \code{outputMutations}, which is a method of the
-#'SLiM class \code{SLiMSim}.
+#'SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -5003,6 +5093,7 @@ ancestralNucleotides, pedigreeIDs)
 #'default value is \code{F}. See details for description.
 #'
 #'@aliases SLiMSim$outputMutations .SS$outputMutations
+#'@family SLiMSim
 #'@return An object of type void.
 #'@details Output all of the given mutations (see section 26.1.3 for output
 #'format details). This can be used to output all mutations of a given mutation
@@ -5032,7 +5123,7 @@ outputMutations <- function(mutations, filePath, append) {
 #'SLiM method outputUsage
 #'
 #'Documentation for SLiM function \code{outputUsage}, which is a method of the
-#'SLiM class \code{SLiMSim}.
+#'SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -5046,6 +5137,7 @@ outputMutations <- function(mutations, filePath, append) {
 #'@param void An object of type . See details for description.
 #'
 #'@aliases SLiMSim$outputUsage .SS$outputUsage
+#'@family SLiMSim
 #'@return An object of type void.
 #'@details Output the current memory usage of the simulation to Eidos’s output
 #'stream. The specifics of what is printed, and in what format, should not be
@@ -5074,7 +5166,7 @@ outputUsage <- function(void) {
 #'SLiM method readFromPopulationFile
 #'
 #'Documentation for SLiM function \code{readFromPopulationFile}, which is a method
-#'of the SLiM class \code{SLiMSim}.
+#'of the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -5089,6 +5181,7 @@ outputUsage <- function(void) {
 #'details for description.
 #'
 #'@aliases SLiMSim$readFromPopulationFile .SS$readFromPopulationFile
+#'@family SLiMSim
 #'@return An object of type integer. Return will be of length 1 (a singleton)
 #'@details Read from a population initialization file, whether in text or binary
 #'format as previously specified to outputFull(), and return the generation
@@ -5187,7 +5280,7 @@ readFromPopulationFile <- function(filePath) {
 #'SLiM method recalculateFitness
 #'
 #'Documentation for SLiM function \code{recalculateFitness}, which is a method of
-#'the SLiM class \code{SLiMSim}.
+#'the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -5202,6 +5295,7 @@ readFromPopulationFile <- function(filePath) {
 #'singleton). The default value is \code{NULL}. See details for description.
 #'
 #'@aliases SLiMSim$recalculateFitness .SS$recalculateFitness
+#'@family SLiMSim
 #'@return An object of type void.
 #'@details Force an immediate recalculation of fitness values for all individuals
 #'in all subpopulations. Normally fitness values are calculated at a fixed
@@ -5250,7 +5344,7 @@ recalculateFitness <- function(generation) {
 #'SLiM method registerEarlyEvent
 #'
 #'Documentation for SLiM function \code{registerEarlyEvent}, which is a method of
-#'the SLiM class \code{SLiMSim}.
+#'the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -5271,6 +5365,7 @@ recalculateFitness <- function(generation) {
 #'The default value is \code{NULL}. See details for description.
 #'
 #'@aliases SLiMSim$registerEarlyEvent .SS$registerEarlyEvent
+#'@family SLiMSim
 #'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
 #'singleton)
 #'@details Register a block of Eidos source code, represented as the string
@@ -5301,7 +5396,7 @@ registerEarlyEvent <- function(id, source, start, end) {
 #'SLiM method registerFitnessCallback
 #'
 #'Documentation for SLiM function \code{registerFitnessCallback}, which is a
-#'method of the SLiM class \code{SLiMSim}.
+#'method of the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -5327,6 +5422,7 @@ registerEarlyEvent <- function(id, source, start, end) {
 #'The default value is \code{NULL}. See details for description.
 #'
 #'@aliases SLiMSim$registerFitnessCallback .SS$registerFitnessCallback
+#'@family SLiMSim
 #'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
 #'singleton)
 #'@details Register a block of Eidos source code, represented as the string
@@ -5362,7 +5458,7 @@ registerFitnessCallback <- function(id, source, mutType, subpop, start, end)
 #'SLiM method registerInteractionCallback
 #'
 #'Documentation for SLiM function \code{registerInteractionCallback}, which is a
-#'method of the SLiM class \code{SLiMSim}.
+#'method of the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -5388,6 +5484,7 @@ registerFitnessCallback <- function(id, source, mutType, subpop, start, end)
 #'The default value is \code{NULL}. See details for description.
 #'
 #'@aliases SLiMSim$registerInteractionCallback .SS$registerInteractionCallback
+#'@family SLiMSim
 #'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
 #'singleton)
 #'@details Register a block of Eidos source code, represented as the string
@@ -5422,7 +5519,7 @@ end) {
 #'SLiM method registerLateEvent
 #'
 #'Documentation for SLiM function \code{registerLateEvent}, which is a method of
-#'the SLiM class \code{SLiMSim}.
+#'the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -5443,6 +5540,7 @@ end) {
 #'The default value is \code{NULL}. See details for description.
 #'
 #'@aliases SLiMSim$registerLateEvent .SS$registerLateEvent
+#'@family SLiMSim
 #'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
 #'singleton)
 #'@details Register a block of Eidos source code, represented as the string
@@ -5473,7 +5571,7 @@ registerLateEvent <- function(id, source, start, end) {
 #'SLiM method registerMateChoiceCallback
 #'
 #'Documentation for SLiM function \code{registerMateChoiceCallback}, which is a
-#'method of the SLiM class \code{SLiMSim}.
+#'method of the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -5497,6 +5595,7 @@ registerLateEvent <- function(id, source, start, end) {
 #'The default value is \code{NULL}. See details for description.
 #'
 #'@aliases SLiMSim$registerMateChoiceCallback .SS$registerMateChoiceCallback
+#'@family SLiMSim
 #'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
 #'singleton)
 #'@details Register a block of Eidos source code, represented as the string
@@ -5529,7 +5628,7 @@ registerMateChoiceCallback <- function(id, source, subpop, start, end) {
 #'SLiM method registerModifyChildCallback
 #'
 #'Documentation for SLiM function \code{registerModifyChildCallback}, which is a
-#'method of the SLiM class \code{SLiMSim}.
+#'method of the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -5553,6 +5652,7 @@ registerMateChoiceCallback <- function(id, source, subpop, start, end) {
 #'The default value is \code{NULL}. See details for description.
 #'
 #'@aliases SLiMSim$registerModifyChildCallback .SS$registerModifyChildCallback
+#'@family SLiMSim
 #'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
 #'singleton)
 #'@details Register a block of Eidos source code, represented as the string
@@ -5585,7 +5685,7 @@ registerModifyChildCallback <- function(id, source, subpop, start, end) {
 #'SLiM method registerMutationCallback
 #'
 #'Documentation for SLiM function \code{registerMutationCallback}, which is a
-#'method of the SLiM class \code{SLiMSim}.
+#'method of the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -5612,6 +5712,7 @@ registerModifyChildCallback <- function(id, source, subpop, start, end) {
 #'The default value is \code{NULL}. See details for description.
 #'
 #'@aliases SLiMSim$registerMutationCallback .SS$registerMutationCallback
+#'@family SLiMSim
 #'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
 #'singleton)
 #'@details Register a block of Eidos source code, represented as the string
@@ -5647,7 +5748,7 @@ registerMutationCallback <- function(id, source, mutType, subpop, start, end)
 #'SLiM method registerRecombinationCallback
 #'
 #'Documentation for SLiM function \code{registerRecombinationCallback}, which is a
-#'method of the SLiM class \code{SLiMSim}.
+#'method of the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -5671,6 +5772,7 @@ registerMutationCallback <- function(id, source, mutType, subpop, start, end)
 #'The default value is \code{NULL}. See details for description.
 #'
 #'@aliases SLiMSim$registerRecombinationCallback .SS$registerRecombinationCallback
+#'@family SLiMSim
 #'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
 #'singleton)
 #'@details Register a block of Eidos source code, represented as the string
@@ -5703,7 +5805,7 @@ registerRecombinationCallback <- function(id, source, subpop, start, end) {
 #'SLiM method registerReproductionCallback
 #'
 #'Documentation for SLiM function \code{registerReproductionCallback}, which is a
-#'method of the SLiM class \code{SLiMSim}.
+#'method of the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -5729,6 +5831,7 @@ registerRecombinationCallback <- function(id, source, subpop, start, end) {
 #'The default value is \code{NULL}. See details for description.
 #'
 #'@aliases SLiMSim$registerReproductionCallback .SS$registerReproductionCallback
+#'@family SLiMSim
 #'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
 #'singleton)
 #'@details Register a block of Eidos source code, represented as the string
@@ -5764,7 +5867,7 @@ registerReproductionCallback <- function(id, source, subpop, sex, start, end)
 #'SLiM method rescheduleScriptBlock
 #'
 #'Documentation for SLiM function \code{rescheduleScriptBlock}, which is a method
-#'of the SLiM class \code{SLiMSim}.
+#'of the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -5785,6 +5888,7 @@ registerReproductionCallback <- function(id, source, subpop, sex, start, end)
 #'\code{NULL}. See details for description.
 #'
 #'@aliases SLiMSim$rescheduleScriptBlock .SS$rescheduleScriptBlock
+#'@family SLiMSim
 #'@return An object of type SLiMEidosBlock object.
 #'@details Reschedule the target script block given by block to execute in a
 #'specified set of generations. The first way to specify the generation set is
@@ -5852,7 +5956,7 @@ rescheduleScriptBlock <- function(block, start, end, generations) {
 #'SLiM method simulationFinished
 #'
 #'Documentation for SLiM function \code{simulationFinished}, which is a method of
-#'the SLiM class \code{SLiMSim}.
+#'the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -5866,6 +5970,7 @@ rescheduleScriptBlock <- function(block, start, end, generations) {
 #'@param void An object of type . See details for description.
 #'
 #'@aliases SLiMSim$simulationFinished .SS$simulationFinished
+#'@family SLiMSim
 #'@return An object of type void.
 #'@details Declare the current simulation finished. Normally SLiM ends a
 #'simulation when, at the end of a generation, there are no script events or
@@ -5895,7 +6000,7 @@ simulationFinished <- function(void) {
 #'SLiM method subsetMutations
 #'
 #'Documentation for SLiM function \code{subsetMutations}, which is a method of the
-#'SLiM class \code{SLiMSim}.
+#'SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -5921,6 +6026,7 @@ simulationFinished <- function(void) {
 #'The default value is \code{NULL}. See details for description.
 #'
 #'@aliases SLiMSim$subsetMutations .SS$subsetMutations
+#'@family SLiMSim
 #'@return An object of type Mutation object.
 #'@details Returns a vector of mutations subset from the list of all active
 #'mutations in the simulation (as would be provided by the mutations property).
@@ -5959,7 +6065,7 @@ subsetMutations <- function(exclude, mutType, position, nucleotide, tag, id)
 #'SLiM method treeSeqCoalesced
 #'
 #'Documentation for SLiM function \code{treeSeqCoalesced}, which is a method of
-#'the SLiM class \code{SLiMSim}.
+#'the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -5973,6 +6079,7 @@ subsetMutations <- function(exclude, mutType, position, nucleotide, tag, id)
 #'@param void An object of type . See details for description.
 #'
 #'@aliases SLiMSim$treeSeqCoalesced .SS$treeSeqCoalesced
+#'@family SLiMSim
 #'@return An object of type logical. Return will be of length 1 (a singleton)
 #'@details Returns the coalescence state for the recorded tree sequence at
 #'the last simplification. The returned value is a logical singleton flag,
@@ -6019,7 +6126,7 @@ treeSeqCoalesced <- function(void) {
 #'SLiM method treeSeqOutput
 #'
 #'Documentation for SLiM function \code{treeSeqOutput}, which is a method of the
-#'SLiM class \code{SLiMSim}.
+#'SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -6040,6 +6147,7 @@ treeSeqCoalesced <- function(void) {
 #'default value is \code{NULL}. See details for description.
 #'
 #'@aliases SLiMSim$treeSeqOutput .SS$treeSeqOutput
+#'@family SLiMSim
 #'@return An object of type void.
 #'@details Outputs the current tree sequence recording tables to the path
 #'specified by path. This method may only be called if tree sequence recording
@@ -6083,7 +6191,7 @@ treeSeqOutput <- function(path, simplify, includeModel, metadata) {
 #'SLiM method treeSeqRememberIndividuals
 #'
 #'Documentation for SLiM function \code{treeSeqRememberIndividuals}, which is a
-#'method of the SLiM class \code{SLiMSim}.
+#'method of the SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -6100,6 +6208,7 @@ treeSeqOutput <- function(path, simplify, includeModel, metadata) {
 #'The default value is \code{T}. See details for description.
 #'
 #'@aliases SLiMSim$treeSeqRememberIndividuals .SS$treeSeqRememberIndividuals
+#'@family SLiMSim
 #'@return An object of type void.
 #'@details Mark the individuals specified by individuals to be kept across
 #'tree sequence table simplification. This method may only be called if tree
@@ -6179,7 +6288,7 @@ treeSeqRememberIndividuals <- function(individuals, permanent) {
 #'SLiM method treeSeqSimplify
 #'
 #'Documentation for SLiM function \code{treeSeqSimplify}, which is a method of the
-#'SLiM class \code{SLiMSim}.
+#'SLiM class \code{\link{SLiMSim}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -6193,6 +6302,7 @@ treeSeqRememberIndividuals <- function(individuals, permanent) {
 #'@param void An object of type . See details for description.
 #'
 #'@aliases SLiMSim$treeSeqSimplify .SS$treeSeqSimplify
+#'@family SLiMSim
 #'@return An object of type void.
 #'@details Triggers an immediate simplification of the tree sequence recording
 #'tables. This method may only be called if tree sequence recording has been
@@ -6223,7 +6333,7 @@ treeSeqSimplify <- function(void) {
 #'SLiM method addCloned
 #'
 #'Documentation for SLiM function \code{addCloned}, which is a method of the SLiM
-#'class \code{Subpopulation}.
+#'class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -6238,6 +6348,7 @@ treeSeqSimplify <- function(void) {
 #'singleton). See details for description.
 #'
 #'@aliases Subpopulation$addCloned .P$addCloned
+#'@family Subpopulation
 #'@return An object of type null or Individual object. Return will be of length 1
 #'(a singleton)
 #'@details Generates a new offspring individual from the given parent by
@@ -6266,7 +6377,7 @@ addCloned <- function(parent) {
 #'SLiM method addCrossed
 #'
 #'Documentation for SLiM function \code{addCrossed}, which is a method of the SLiM
-#'class \code{Subpopulation}.
+#'class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -6285,6 +6396,7 @@ addCloned <- function(parent) {
 #'singleton). The default value is \code{NULL}. See details for description.
 #'
 #'@aliases Subpopulation$addCrossed .P$addCrossed
+#'@family Subpopulation
 #'@return An object of type null or Individual object. Return will be of length 1
 #'(a singleton)
 #'@details Generates a new offspring individual from the given parents
@@ -6360,7 +6472,7 @@ addCrossed <- function(parent1, parent2, sex) {
 #'SLiM method addEmpty
 #'
 #'Documentation for SLiM function \code{addEmpty}, which is a method of the SLiM
-#'class \code{Subpopulation}.
+#'class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -6375,6 +6487,7 @@ addCrossed <- function(parent1, parent2, sex) {
 #'singleton). The default value is \code{NULL}. See details for description.
 #'
 #'@aliases Subpopulation$addEmpty .P$addEmpty
+#'@family Subpopulation
 #'@return An object of type null or Individual object. Return will be of length 1
 #'(a singleton)
 #'@details Generates a new offspring individual with empty genomes (i.e.,
@@ -6407,7 +6520,7 @@ addEmpty <- function(sex) {
 #'SLiM method addRecombinant
 #'
 #'Documentation for SLiM function \code{addRecombinant}, which is a method of the
-#'SLiM class \code{Subpopulation}.
+#'SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -6432,6 +6545,7 @@ addEmpty <- function(sex) {
 #'singleton). The default value is \code{NULL}. See details for description.
 #'
 #'@aliases Subpopulation$addRecombinant .P$addRecombinant
+#'@family Subpopulation
 #'@return An object of type null or Individual object. Return will be of length 1
 #'(a singleton)
 #'@details Generates a new offspring individual from the given parental genomes
@@ -6515,7 +6629,7 @@ breaks2, sex) {
 #'SLiM method addSelfed
 #'
 #'Documentation for SLiM function \code{addSelfed}, which is a method of the SLiM
-#'class \code{Subpopulation}.
+#'class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -6530,6 +6644,7 @@ breaks2, sex) {
 #'singleton). See details for description.
 #'
 #'@aliases Subpopulation$addSelfed .P$addSelfed
+#'@family Subpopulation
 #'@return An object of type null or Individual object. Return will be of length 1
 #'(a singleton)
 #'@details Generates a new offspring individual from the given parent by selfing,
@@ -6564,7 +6679,7 @@ addSelfed <- function(parent) {
 #'SLiM method cachedFitness
 #'
 #'Documentation for SLiM function \code{cachedFitness}, which is a method of the
-#'SLiM class \code{Subpopulation}.
+#'SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -6578,6 +6693,7 @@ addSelfed <- function(parent) {
 #'@param indices An object of type null or integer. See details for description.
 #'
 #'@aliases Subpopulation$cachedFitness .P$cachedFitness
+#'@family Subpopulation
 #'@return An object of type float.
 #'@details The fitness values calculated for the individuals at the indices
 #'given are returned. If NULL is passed, fitness values for all individuals in
@@ -6610,7 +6726,7 @@ cachedFitness <- function(indices) {
 #'SLiM method configureDisplay
 #'
 #'Documentation for SLiM function \code{configureDisplay}, which is a method of
-#'the SLiM class \code{Subpopulation}.
+#'the SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -6629,6 +6745,7 @@ cachedFitness <- function(indices) {
 #'singleton). The default value is \code{NULL}. See details for description.
 #'
 #'@aliases Subpopulation$configureDisplay .P$configureDisplay
+#'@family Subpopulation
 #'@return An object of type void.
 #'@details This method customizes the display of the subpopulation in SLiMgui’s
 #'Population Visualization graph. When this method is called by a model running
@@ -6671,7 +6788,7 @@ configureDisplay <- function(center, scale, color) {
 #'SLiM method defineSpatialMap
 #'
 #'Documentation for SLiM function \code{defineSpatialMap}, which is a method of
-#'the SLiM class \code{Subpopulation}.
+#'the SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -6695,6 +6812,7 @@ configureDisplay <- function(center, scale, color) {
 #'\code{NULL}. See details for description.
 #'
 #'@aliases Subpopulation$defineSpatialMap .P$defineSpatialMap
+#'@family Subpopulation
 #'@return An object of type void.
 #'@details Defines a spatial map for the subpopulation. The map will henceforth
 #'be identified by name. The map uses the spatial dimensions referenced by
@@ -6783,7 +6901,7 @@ colors)
 #'SLiM method outputMSSample
 #'
 #'Documentation for SLiM function \code{outputMSSample}, which is a method of the
-#'SLiM class \code{Subpopulation}.
+#'SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -6808,6 +6926,7 @@ colors)
 #'singleton). The default value is \code{F}. See details for description.
 #'
 #'@aliases Subpopulation$outputMSSample .P$outputMSSample
+#'@family Subpopulation
 #'@return An object of type void.
 #'@details Output a random sample from the subpopulation in MS format (see
 #'section 26.2.2 for output format details). Positions in the output will span
@@ -6853,7 +6972,7 @@ filterMonomorphic)
 #'SLiM method outputSample
 #'
 #'Documentation for SLiM function \code{outputSample}, which is a method of the
-#'SLiM class \code{Subpopulation}.
+#'SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -6876,6 +6995,7 @@ filterMonomorphic)
 #'default value is \code{F}. See details for description.
 #'
 #'@aliases Subpopulation$outputSample .P$outputSample
+#'@family Subpopulation
 #'@return An object of type void.
 #'@details Output a random sample from the subpopulation in SLiM’s native format
 #'(see section 26.2.1 for output format details). A sample of genomes (not entire
@@ -6912,7 +7032,7 @@ outputSample <- function(sampleSize, replace, requestedSex, filePath, append)
 #'SLiM method outputVCFSample
 #'
 #'Documentation for SLiM function \code{outputVCFSample}, which is a method of the
-#'SLiM class \code{Subpopulation}.
+#'SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -6941,6 +7061,7 @@ outputSample <- function(sampleSize, replace, requestedSex, filePath, append)
 #'singleton). The default value is \code{T}. See details for description.
 #'
 #'@aliases Subpopulation$outputVCFSample .P$outputVCFSample
+#'@family Subpopulation
 #'@return An object of type void.
 #'@details Output a random sample from the subpopulation in VCF format (see
 #'sections 26.2.3 and 26.2.4 for output format details). A sample of individuals
@@ -6983,7 +7104,7 @@ filePath, append, simplifyNucleotides, outputNonnucleotides)
 #'SLiM method pointInBounds
 #'
 #'Documentation for SLiM function \code{pointInBounds}, which is a method of the
-#'SLiM class \code{Subpopulation}.
+#'SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -6997,6 +7118,7 @@ filePath, append, simplifyNucleotides, outputNonnucleotides)
 #'@param point An object of type float. See details for description.
 #'
 #'@aliases Subpopulation$pointInBounds .P$pointInBounds
+#'@family Subpopulation
 #'@return An object of type logical.
 #'@details Returns T if point is inside the spatial boundaries of the
 #'subpopulation, F otherwise. For example, for a simulation with "xy"
@@ -7028,7 +7150,7 @@ pointInBounds <- function(point) {
 #'SLiM method pointPeriodic
 #'
 #'Documentation for SLiM function \code{pointPeriodic}, which is a method of the
-#'SLiM class \code{Subpopulation}.
+#'SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7042,6 +7164,7 @@ pointInBounds <- function(point) {
 #'@param point An object of type float. See details for description.
 #'
 #'@aliases Subpopulation$pointPeriodic .P$pointPeriodic
+#'@family Subpopulation
 #'@return An object of type float.
 #'@details Returns a revised version of point that has been brought inside
 #'the periodic spatial boundaries of the subpopulation (as specified by the
@@ -7082,7 +7205,7 @@ pointPeriodic <- function(point) {
 #'SLiM method pointReflected
 #'
 #'Documentation for SLiM function \code{pointReflected}, which is a method of the
-#'SLiM class \code{Subpopulation}.
+#'SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7096,6 +7219,7 @@ pointPeriodic <- function(point) {
 #'@param point An object of type float. See details for description.
 #'
 #'@aliases Subpopulation$pointReflected .P$pointReflected
+#'@family Subpopulation
 #'@return An object of type float.
 #'@details Returns a revised version of point that has been brought inside
 #'the spatial boundaries of the subpopulation by reflection. In brief, if
@@ -7128,7 +7252,7 @@ pointReflected <- function(point) {
 #'SLiM method pointStopped
 #'
 #'Documentation for SLiM function \code{pointStopped}, which is a method of the
-#'SLiM class \code{Subpopulation}.
+#'SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7142,6 +7266,7 @@ pointReflected <- function(point) {
 #'@param point An object of type float. See details for description.
 #'
 #'@aliases Subpopulation$pointStopped .P$pointStopped
+#'@family Subpopulation
 #'@return An object of type float.
 #'@details Returns a revised version of point that has been brought inside the
 #'spatial boundaries of the subpopulation by clamping. In brief, if a coordinate
@@ -7172,7 +7297,7 @@ pointStopped <- function(point) {
 #'SLiM method pointUniform
 #'
 #'Documentation for SLiM function \code{pointUniform}, which is a method of the
-#'SLiM class \code{Subpopulation}.
+#'SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7187,6 +7312,7 @@ pointStopped <- function(point) {
 #'default value is \code{1}. See details for description.
 #'
 #'@aliases Subpopulation$pointUniform .P$pointUniform
+#'@family Subpopulation
 #'@return An object of type float.
 #'@details Returns a new point (or points, for n > 1) generated from uniform draws
 #'for each coordinate, within the spatial boundaries of the subpopulation. The
@@ -7212,7 +7338,7 @@ pointUniform <- function(n) {
 #'SLiM method removeSubpopulation
 #'
 #'Documentation for SLiM function \code{removeSubpopulation}, which is a method of
-#'the SLiM class \code{Subpopulation}.
+#'the SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7226,6 +7352,7 @@ pointUniform <- function(n) {
 #'@param void An object of type . See details for description.
 #'
 #'@aliases Subpopulation$removeSubpopulation .P$removeSubpopulation
+#'@family Subpopulation
 #'@return An object of type void.
 #'@details Removes this subpopulation from the model. The subpopulation is
 #'immediately removed from the list of active subpopulations, and the symbol
@@ -7258,7 +7385,7 @@ removeSubpopulation <- function(void) {
 #'SLiM method sampleIndividuals
 #'
 #'Documentation for SLiM function \code{sampleIndividuals}, which is a method of
-#'the SLiM class \code{Subpopulation}.
+#'the SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7285,6 +7412,7 @@ removeSubpopulation <- function(void) {
 #'singleton). The default value is \code{NULL}. See details for description.
 #'
 #'@aliases Subpopulation$sampleIndividuals .P$sampleIndividuals
+#'@family Subpopulation
 #'@return An object of type Individual object.
 #'@details Returns a vector of individuals, of size less than or equal to
 #'parameter size, sampled from the individuals in the target subpopulation.
@@ -7328,7 +7456,7 @@ migrant) {
 #'SLiM method setCloningRate
 #'
 #'Documentation for SLiM function \code{setCloningRate}, which is a method of the
-#'SLiM class \code{Subpopulation}.
+#'SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7342,6 +7470,7 @@ migrant) {
 #'@param rate An object of type numeric. See details for description.
 #'
 #'@aliases Subpopulation$setCloningRate .P$setCloningRate
+#'@family Subpopulation
 #'@return An object of type void.
 #'@details Set the cloning rate of this subpopulation. The rate is changed to
 #'rate, which should be between 0.0 and 1.0, inclusive. Clonal reproduction can
@@ -7373,7 +7502,7 @@ setCloningRate <- function(rate) {
 #'SLiM method setMigrationRates
 #'
 #'Documentation for SLiM function \code{setMigrationRates}, which is a method of
-#'the SLiM class \code{Subpopulation}.
+#'the SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7389,6 +7518,7 @@ setCloningRate <- function(rate) {
 #'@param rates An object of type numeric. See details for description.
 #'
 #'@aliases Subpopulation$setMigrationRates .P$setMigrationRates
+#'@family Subpopulation
 #'@return An object of type void.
 #'@details Set the migration rates to this subpopulation from the subpopulations
 #'in sourceSubpops to the corresponding rates specified in rates; in other words,
@@ -7417,7 +7547,7 @@ setMigrationRates <- function(sourceSubpops, rates) {
 #'SLiM method setSelfingRate
 #'
 #'Documentation for SLiM function \code{setSelfingRate}, which is a method of the
-#'SLiM class \code{Subpopulation}.
+#'SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7432,6 +7562,7 @@ setMigrationRates <- function(sourceSubpops, rates) {
 #'details for description.
 #'
 #'@aliases Subpopulation$setSelfingRate .P$setSelfingRate
+#'@family Subpopulation
 #'@return An object of type void.
 #'@details Set the selfing rate of this subpopulation. The rate is changed to
 #'rate, which should be between 0.0 and 1.0, inclusive. Selfing can only be
@@ -7458,7 +7589,7 @@ setSelfingRate <- function(rate) {
 #'SLiM method setSexRatio
 #'
 #'Documentation for SLiM function \code{setSexRatio}, which is a method of the
-#'SLiM class \code{Subpopulation}.
+#'SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7473,6 +7604,7 @@ setSelfingRate <- function(rate) {
 #'details for description.
 #'
 #'@aliases Subpopulation$setSexRatio .P$setSexRatio
+#'@family Subpopulation
 #'@return An object of type void.
 #'@details Set the sex ratio of this subpopulation to sexRatio. As defined
 #'in SLiM, this is actually the fraction of the subpopulation that is male;
@@ -7500,7 +7632,7 @@ setSexRatio <- function(sexRatio) {
 #'SLiM method setSpatialBounds
 #'
 #'Documentation for SLiM function \code{setSpatialBounds}, which is a method of
-#'the SLiM class \code{Subpopulation}.
+#'the SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7514,6 +7646,7 @@ setSexRatio <- function(sexRatio) {
 #'@param bounds An object of type numeric. See details for description.
 #'
 #'@aliases Subpopulation$setSpatialBounds .P$setSpatialBounds
+#'@family Subpopulation
 #'@return An object of type void.
 #'@details Set the spatial boundaries of the subpopulation to bounds. This
 #'method may be called only for simulations in which continuous space has been
@@ -7549,7 +7682,7 @@ setSpatialBounds <- function(bounds) {
 #'SLiM method setSubpopulationSize
 #'
 #'Documentation for SLiM function \code{setSubpopulationSize}, which is a method
-#'of the SLiM class \code{Subpopulation}.
+#'of the SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7564,6 +7697,7 @@ setSpatialBounds <- function(bounds) {
 #'details for description.
 #'
 #'@aliases Subpopulation$setSubpopulationSize .P$setSubpopulationSize
+#'@family Subpopulation
 #'@return An object of type void.
 #'@details Set the size of this subpopulation to size individuals. This
 #'will take effect when children are next generated; it does not change the
@@ -7593,7 +7727,7 @@ setSubpopulationSize <- function(size) {
 #'SLiM method spatialMapColor
 #'
 #'Documentation for SLiM function \code{spatialMapColor}, which is a method of the
-#'SLiM class \code{Subpopulation}.
+#'SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7609,6 +7743,7 @@ setSubpopulationSize <- function(size) {
 #'@param value An object of type string or numeric. See details for description.
 #'
 #'@aliases Subpopulation$spatialMapColor .P$spatialMapColor
+#'@family Subpopulation
 #'@return An object of type string.
 #'@details Looks up the spatial map indicated by name, and uses its color-
 #'translation machinery (as defined by the valueRange and colors parameters to
@@ -7635,7 +7770,7 @@ spatialMapColor <- function(name, value) {
 #'SLiM method spatialMapValue
 #'
 #'Documentation for SLiM function \code{spatialMapValue}, which is a method of the
-#'SLiM class \code{Subpopulation}.
+#'SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7651,6 +7786,7 @@ spatialMapColor <- function(name, value) {
 #'@param point An object of type string or float. See details for description.
 #'
 #'@aliases Subpopulation$spatialMapValue .P$spatialMapValue
+#'@family Subpopulation
 #'@return An object of type float.
 #'@details Looks up the spatial map indicated by name, and uses its mapping
 #'machinery (as defined by the gridSize, values, and interpolate parameters to
@@ -7688,7 +7824,7 @@ spatialMapValue <- function(name, point) {
 #'SLiM method subsetIndividuals
 #'
 #'Documentation for SLiM function \code{subsetIndividuals}, which is a method of
-#'the SLiM class \code{Subpopulation}.
+#'the SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7713,6 +7849,7 @@ spatialMapValue <- function(name, point) {
 #'singleton). The default value is \code{NULL}. See details for description.
 #'
 #'@aliases Subpopulation$subsetIndividuals .P$subsetIndividuals
+#'@family Subpopulation
 #'@return An object of type Individual object.
 #'@details Returns a vector of individuals subset from the individuals in the
 #'target subpopulation. The parameters specify constraints upon the subset
@@ -7748,7 +7885,7 @@ subsetIndividuals <- function(exclude, sex, tag, minAge, maxAge, migrant) {
 #'SLiM method takeMigrants
 #'
 #'Documentation for SLiM function \code{takeMigrants}, which is a method of the
-#'SLiM class \code{Subpopulation}.
+#'SLiM class \code{\link{Subpopulation}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7763,6 +7900,7 @@ subsetIndividuals <- function(exclude, sex, tag, minAge, maxAge, migrant) {
 #'description.
 #'
 #'@aliases Subpopulation$takeMigrants .P$takeMigrants
+#'@family Subpopulation
 #'@return An object of type void.
 #'@details Immediately moves the individuals in migrants to the target
 #'subpopulation (removing them from their previous subpopulation). Individuals in
@@ -7793,7 +7931,7 @@ takeMigrants <- function(migrants) {
 #'SLiM method codonsToAminoAcids
 #'
 #'Documentation for SLiM function \code{codonsToAminoAcids}, which is a method of
-#'the SLiM class \code{SLiMBuiltin}.
+#'the SLiM class \code{\link{SLiMBuiltin}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7811,6 +7949,7 @@ takeMigrants <- function(migrants) {
 #'default value is \code{T}. See details for description.
 #'
 #'@aliases SLiMBuiltin$codonsToAminoAcids .SB$codonsToAminoAcids
+#'@family SLiMBuiltin
 #'@return An object of type integer or string.
 #'@details Returns the amino acid sequence corresponding to the codon sequence
 #'in codons. Codons should be represented with values in [0, 63] where AAA is 0,
@@ -7866,7 +8005,7 @@ codonsToAminoAcids <- function(codons, long, paste) {
 #'SLiM method mm16To256
 #'
 #'Documentation for SLiM function \code{mm16To256}, which is a method of the SLiM
-#'class \code{SLiMBuiltin}.
+#'class \code{\link{SLiMBuiltin}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7880,6 +8019,7 @@ codonsToAminoAcids <- function(codons, long, paste) {
 #'@param mutationMatrix16 An object of type float. See details for description.
 #'
 #'@aliases SLiMBuiltin$mm16To256 .SB$mm16To256
+#'@family SLiMBuiltin
 #'@return An object of type float.
 #'@details Returns a 64×4 mutation matrix that is functionally identical to
 #'the supplied 4×4 mutation matrix in mutationMatrix16. The mutation rate for
@@ -7909,7 +8049,7 @@ mm16To256 <- function(mutationMatrix16) {
 #'SLiM method mmJukesCantor
 #'
 #'Documentation for SLiM function \code{mmJukesCantor}, which is a method of the
-#'SLiM class \code{SLiMBuiltin}.
+#'SLiM class \code{\link{SLiMBuiltin}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7924,6 +8064,7 @@ mm16To256 <- function(mutationMatrix16) {
 #'details for description.
 #'
 #'@aliases SLiMBuiltin$mmJukesCantor .SB$mmJukesCantor
+#'@family SLiMBuiltin
 #'@return An object of type float.
 #'@details Returns a mutation matrix representing a Jukes–Cantor (1969) model with
 #'mutation rate alpha to each possible alternative nucleotide at a site: This 2×2
@@ -7947,7 +8088,7 @@ mmJukesCantor <- function(alpha) {
 #'SLiM method mmKimura
 #'
 #'Documentation for SLiM function \code{mmKimura}, which is a method of the SLiM
-#'class \code{SLiMBuiltin}.
+#'class \code{\link{SLiMBuiltin}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -7964,6 +8105,7 @@ mmJukesCantor <- function(alpha) {
 #'See details for description.
 #'
 #'@aliases SLiMBuiltin$mmKimura .SB$mmKimura
+#'@family SLiMBuiltin
 #'@return An object of type float.
 #'@details Returns a mutation matrix representing a Kimura (1980) model with
 #'transition rate alpha and transversion rate beta: This 2×2 matrix is suitable
@@ -7987,7 +8129,7 @@ mmKimura <- function(alpha, beta) {
 #'SLiM method nucleotideCounts
 #'
 #'Documentation for SLiM function \code{nucleotideCounts}, which is a method of
-#'the SLiM class \code{SLiMBuiltin}.
+#'the SLiM class \code{\link{SLiMBuiltin}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -8002,6 +8144,7 @@ mmKimura <- function(alpha, beta) {
 #'description.
 #'
 #'@aliases SLiMBuiltin$nucleotideCounts .SB$nucleotideCounts
+#'@family SLiMBuiltin
 #'@return An object of type integer.
 #'@details A convenience function that returns an integer vector of length four,
 #'providing the number of occurrences of A / C / G / T nucleotides, respectively,
@@ -8027,7 +8170,7 @@ nucleotideCounts <- function(sequence) {
 #'SLiM method nucleotideFrequencies
 #'
 #'Documentation for SLiM function \code{nucleotideFrequencies}, which is a method
-#'of the SLiM class \code{SLiMBuiltin}.
+#'of the SLiM class \code{\link{SLiMBuiltin}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -8042,6 +8185,7 @@ nucleotideCounts <- function(sequence) {
 #'description.
 #'
 #'@aliases SLiMBuiltin$nucleotideFrequencies .SB$nucleotideFrequencies
+#'@family SLiMBuiltin
 #'@return An object of type float.
 #'@details A convenience function that returns a float vector of length four,
 #'providing the frequencies of occurrences of A / C / G / T nucleotides,
@@ -8067,7 +8211,7 @@ nucleotideFrequencies <- function(sequence) {
 #'SLiM method nucleotidesToCodons
 #'
 #'Documentation for SLiM function \code{nucleotidesToCodons}, which is a method of
-#'the SLiM class \code{SLiMBuiltin}.
+#'the SLiM class \code{\link{SLiMBuiltin}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -8082,6 +8226,7 @@ nucleotideFrequencies <- function(sequence) {
 #'description.
 #'
 #'@aliases SLiMBuiltin$nucleotidesToCodons .SB$nucleotidesToCodons
+#'@family SLiMBuiltin
 #'@return An object of type integer.
 #'@details Returns the codon sequence corresponding to the nucleotide sequence
 #'in sequence. The codon sequence is an integer vector with values from 0 to
@@ -8141,7 +8286,7 @@ nucleotidesToCodons <- function(sequence) {
 #'SLiM method calcFST
 #'
 #'Documentation for SLiM function \code{calcFST}, which is a method of the SLiM
-#'class \code{SLiMBuiltin}.
+#'class \code{\link{SLiMBuiltin}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -8162,6 +8307,7 @@ nucleotidesToCodons <- function(sequence) {
 #'The default value is \code{NULL}. See details for description.
 #'
 #'@aliases SLiMBuiltin$calcFST .SB$calcFST
+#'@family SLiMBuiltin
 #'@return An object of type float. Return will be of length 1 (a singleton)
 #'@details Calculates the FST between two Genome vectors – typically, but not
 #'necessarily, the genomes that constitute two different subpopulations (which
@@ -8213,7 +8359,7 @@ calcFST <- function(genomes1, genomes2, muts, start, end) {
 #'SLiM method calcHeterozygosity
 #'
 #'Documentation for SLiM function \code{calcHeterozygosity}, which is a method of
-#'the SLiM class \code{SLiMBuiltin}.
+#'the SLiM class \code{\link{SLiMBuiltin}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -8233,6 +8379,7 @@ calcFST <- function(genomes1, genomes2, muts, start, end) {
 #'The default value is \code{NULL}. See details for description.
 #'
 #'@aliases SLiMBuiltin$calcHeterozygosity .SB$calcHeterozygosity
+#'@family SLiMBuiltin
 #'@return An object of type float. Return will be of length 1 (a singleton)
 #'@details Calculates the heterozygosity for a vector of genomes, based upon
 #'the frequencies of mutations in the genomes. Often genomes will be all of
@@ -8271,7 +8418,7 @@ calcHeterozygosity <- function(genomes, muts, start, end) {
 #'SLiM method calcPairHeterozygosity
 #'
 #'Documentation for SLiM function \code{calcPairHeterozygosity}, which is a method
-#'of the SLiM class \code{SLiMBuiltin}.
+#'of the SLiM class \code{\link{SLiMBuiltin}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -8294,6 +8441,7 @@ calcHeterozygosity <- function(genomes, muts, start, end) {
 #'singleton). The default value is \code{T}. See details for description.
 #'
 #'@aliases SLiMBuiltin$calcPairHeterozygosity .SB$calcPairHeterozygosity
+#'@family SLiMBuiltin
 #'@return An object of type float. Return will be of length 1 (a singleton)
 #'@details Calculates the heterozygosity for a pair of genomes; these will
 #'typically be the two genomes of a diploid individual (individual.genome1 and
@@ -8338,7 +8486,7 @@ infiniteSites) {
 #'SLiM method calcVA
 #'
 #'Documentation for SLiM function \code{calcVA}, which is a method of the SLiM
-#'class \code{SLiMBuiltin}.
+#'class \code{\link{SLiMBuiltin}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -8355,6 +8503,7 @@ infiniteSites) {
 #'singleton). See details for description.
 #'
 #'@aliases SLiMBuiltin$calcVA .SB$calcVA
+#'@family SLiMBuiltin
 #'@return An object of type float. Return will be of length 1 (a singleton)
 #'@details Calculates VA, the additive genetic variance, among a vector
 #'individuals, in a particular mutation type mutType that represents quantitative
@@ -8383,7 +8532,7 @@ calcVA <- function(individuals, mutType) {
 #'SLiM method calcWattersonsTheta
 #'
 #'Documentation for SLiM function \code{calcWattersonsTheta}, which is a method of
-#'the SLiM class \code{SLiMBuiltin}.
+#'the SLiM class \code{\link{SLiMBuiltin}}.
 #'Note that the R function is a stub, it does not do anything in R (except bring
 #'up this documentation). It will only do
 #'anything useful when used inside a \code{\link{slim_block}} function further
@@ -8403,6 +8552,7 @@ calcVA <- function(individuals, mutType) {
 #'The default value is \code{NULL}. See details for description.
 #'
 #'@aliases SLiMBuiltin$calcWattersonsTheta .SB$calcWattersonsTheta
+#'@family SLiMBuiltin
 #'@return An object of type float. Return will be of length 1 (a singleton)
 #'@details Calculates Watterson’s theta (a metric of genetic diversity comparable
 #'to heterozygosity) for a vector of genomes, based upon the mutations in the
@@ -8450,6 +8600,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'Documentation for Initialize class from SLiM
 #'
 #'@aliases .Init
+#'@family Initialize
 #'@details Before a SLiM simulation can be run, the various classes underlying the
 #'simulation need to be
 #'set up with an initial configuration. In SLiM 1.8 and earlier, this was done by
@@ -8509,6 +8660,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'Documentation for Chromosome class from SLiM
 #'
 #'@aliases .c
+#'@family Chromosome
 #'@details This class represents the layout and properties of the chromosome being
 #'simulated. The
 #'chromosome currently being simulated is available through the sim.chromosome
@@ -8728,6 +8880,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'Documentation for Genome class from SLiM
 #'
 #'@aliases .G
+#'@family Genome
 #'@details This class represents one full genome of an individual (one of the two
 #'genomes contained by a
 #'diploid individual, that is, in the way that SLiM uses the term), composed of
@@ -8812,6 +8965,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'Documentation for GenomicElement class from SLiM
 #'
 #'@aliases .GE
+#'@family GenomicElement
 #'@details This class represents a genomic element of a particular genomic element
 #'type, with a start and
 #'end; the chromosome is composed of a series of such genomic elements. Section
@@ -8850,6 +9004,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'Documentation for GenomicElementType class from SLiM
 #'
 #'@aliases .GET
+#'@family GenomicElementType
 #'@details This class represents a type of genomic element, with particular
 #'mutation types. The genomic
 #'element types currently defined in the simulation are defined as global
@@ -8904,6 +9059,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'Documentation for Individual class from SLiM
 #'
 #'@aliases .I
+#'@family Individual
 #'@details This class represents a single simulated individual. Individuals in
 #'SLiM are diploid, and thus
 #'contain two Genome objects. Most functionality in SLiM is contained in the
@@ -9206,6 +9362,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'Documentation for InteractionType class from SLiM
 #'
 #'@aliases .IT
+#'@family InteractionType
 #'@details This class represents a type of interaction between individuals. This
 #'is an advanced feature, the
 #'use of which is optional. Once an interaction type is set up with
@@ -9481,6 +9638,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'Documentation for LogFile class from SLiM
 #'
 #'@aliases .LF
+#'@family LogFile
 #'@details LogFile is a class that can, optionally, be used to log out a table of
 #'information about the
 #'running simulation to a text file. The information logged out is completely
@@ -9610,6 +9768,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'Documentation for Mutation class from SLiM
 #'
 #'@aliases .M
+#'@family Mutation
 #'@details This class represents a single point mutation. Mutations can be shared
 #'by the genomes of many
 #'individuals; if they reach fixation, they are converted to Substitution objects.
@@ -9707,6 +9866,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'Documentation for MutationType class from SLiM
 #'
 #'@aliases .MT
+#'@family MutationType
 #'@details This class represents a type of mutation with a particular distribution
 #'of fitness effects, such as
 #'neutral mutations or weakly beneficial mutations. Sections 1.5.3 and 1.5.4
@@ -9947,6 +10107,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'Documentation for SLiMBuiltin class from SLiM
 #'
 #'@aliases .SB
+#'@family SLiMBuiltin
 #'@details SLiM provides a small number of built-in functions, documented here.
 #'Note that these are
 #'distinct from the functions built into the Eidos language itself, which are
@@ -9977,6 +10138,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'Documentation for SLiMEidosBlock class from SLiM
 #'
 #'@aliases .SEB
+#'@family SLiMEidosBlock
 #'@details This class represents a block of Eidos code registered in a SLiM
 #'simulation. All Eidos events and
 #'Eidos callbacks defined in the SLiM input file of the current simulation are
@@ -10047,6 +10209,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'Documentation for SLiMSim class from SLiM
 #'
 #'@aliases .SS
+#'@family SLiMSim
 #'@details This class represents a SLiM simulation. The current SLiMSim instance
 #'is defined as a global
 #'constant named sim.
@@ -10212,6 +10375,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'Documentation for Subpopulation class from SLiM
 #'
 #'@aliases .P
+#'@family Subpopulation
 #'@details This class represents one subpopulation in the simulated population.
 #'Section 1.5.5 presents an
 #'overview of the conceptual role of this class. The subpopulations currently
@@ -10377,6 +10541,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'Documentation for Substitution class from SLiM
 #'
 #'@aliases .S
+#'@family Substitution
 #'@details This class represents a mutation that has been fixed; Mutation objects
 #'are converted to
 #'Substitution objects upon fixation. Its properties are thus very similar to

@@ -94,4 +94,26 @@ assumed to take on the most inconvenient value possible.}
 
 }
 }
+\seealso{
+Other Genome: 
+\code{\link{addMutations}()},
+\code{\link{addNewDrawnMutation}()},
+\code{\link{addNewMutation}()},
+\code{\link{containsMarkerMutation}()},
+\code{\link{containsMutations}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{mutationCountsInGenomes}()},
+\code{\link{mutationFrequenciesInGenomes}()},
+\code{\link{mutationsOfType}()},
+\code{\link{nucleotides}()},
+\code{\link{outputMS}()},
+\code{\link{outputVCF}()},
+\code{\link{output}()},
+\code{\link{positionsOfMutationsOfType}()},
+\code{\link{readFromMS}()},
+\code{\link{readFromVCF}()},
+\code{\link{removeMutations}()},
+\code{\link{sumOfMutationsOfType}()}
+}
+\concept{Genome}
 \keyword{datasets}

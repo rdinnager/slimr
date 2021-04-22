@@ -215,14 +215,19 @@ process_output <- function(code, block_names) {
   list(new_code, slimr_output_attr)
 }
 
-slimr_output_full <- function(name = "full_output") {
+#' Utility function to tell SLiM to output its outputFull() output
+#'
+#' @param name Name of output to use to label it in \code{slimr_results object}. Default is \code{"full_output"}
+#' @param ... Other arguments to be passed to \code{\link{slimr_output}}
+#' @export
+slimr_output_full <- function(name = "full_output", ...) {
   slimr_output(sim.outputFull(), name)
 }
 
 
 #' Utility function to tell SLiM to output Nucleotides
 #'
-#' @param name Name of data column to hold sequences
+#' @param name Name of output to use to label it in \code{slimr_results object}. Default is \code{"seqs"}.
 #' @param subpops Should the subpopulation of each sequence be outputted as well?
 #' @param ... Other arguments to be passed to \code{\link{slimr_output}}
 #' @export
@@ -245,6 +250,14 @@ slimr_output_nucleotides <- function(name = "seqs", subpops = FALSE, ...) {
   }
 }
 
+#' Utility function to tell SLiM to output coordinates from spatial simulations
+#'
+#' @param dimensionality What dimensionality should be output? Can be
+#' "x", "xy", or "xyz".
+#' @param ... Other arguments to be passed to \code{\link{slimr_output}}
+#' @details Outputs x, y, and z coordinates as separate entries in \code{slimr_results},
+#' with names "x", "y", and "z".
+#'
 #' @export
 slimr_output_coords <- function(dimensionality = c("x", "xy", "xyz"),
                                 ...) {
@@ -268,6 +281,12 @@ slimr_output_coords <- function(dimensionality = c("x", "xy", "xyz"),
 
 }
 
+#' Utility function to tell SLim to output sexes of individuals
+#'
+#' @param name Name of output to use to label it in \code{slimr_results object}. Default is \code{"sex"}.
+#'
+#' @param ...
+#'
 #' @export
 slimr_output_sex <- function(name = "sex", ...) {
 

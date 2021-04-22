@@ -106,10 +106,13 @@
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -154,7 +157,39 @@
     <p>An object of class <code>list</code> of length 14.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This class has the following methods (functions):</p><ul>
+    <p>Before a SLiM simulation can be run, the various classes underlying the
+simulation need to be
+set up with an initial configuration. In SLiM 1.8 and earlier, this was done by
+means of # directives
+in the simulation’s input file. In SLiM 2 and later, simulation parameters are
+instead configured
+using Eidos.
+Configuration in Eidos is done in initialize() callbacks that run prior to the
+beginning of
+simulation execution. Eidos callbacks are discussed more broadly in chapter 25,
+but for our
+present purposes, the idea is very simple. In your input file, you can simply
+write something like
+this:
+initialize()  ... 
+The initialize() specifies that the script block is to be executed as an
+initialize() callback
+before the simulation starts. The script between the braces  would set up
+various aspects of the
+simulation by calling initialization functions. These are SLiM functions that
+may be called only in
+an initialize() callback, and their names begin with initialize to mark them
+clearly as such.
+You may also use other Eidos functionality, of course; for example, you might
+automate generating
+a large number of subpopulations with complex migration patterns by using a for
+loop.
+One thing worth mentioning is that in the context of an initialize() callback,
+the sim global
+for the simulation itself is not defined. This is because the state of the
+simulation is not yet
+constructed fully, and accessing partially constructed state would not be safe.
+This class has the following methods (functions):</p><ul>
 <li><p><code><a href='initializeAncestralNucleotides.html'>initializeAncestralNucleotides</a></code></p></li>
 <li><p><code><a href='initializeGeneConversion.html'>initializeGeneConversion</a></code></p></li>
 <li><p><code><a href='initializeGenomicElement.html'>initializeGenomicElement</a></code></p></li>
@@ -174,6 +209,23 @@
 
 </dl>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Initialize: 
+<code><a href='initializeAncestralNucleotides.html'>initializeAncestralNucleotides</a>()</code>,
+<code><a href='initializeGeneConversion.html'>initializeGeneConversion</a>()</code>,
+<code><a href='initializeGenomicElementType.html'>initializeGenomicElementType</a>()</code>,
+<code><a href='initializeGenomicElement.html'>initializeGenomicElement</a>()</code>,
+<code><a href='initializeHotspotMap.html'>initializeHotspotMap</a>()</code>,
+<code><a href='initializeInteractionType.html'>initializeInteractionType</a>()</code>,
+<code><a href='initializeMutationRate.html'>initializeMutationRate</a>()</code>,
+<code><a href='initializeMutationTypeNuc.html'>initializeMutationTypeNuc</a>()</code>,
+<code><a href='initializeMutationType.html'>initializeMutationType</a>()</code>,
+<code><a href='initializeRecombinationRate.html'>initializeRecombinationRate</a>()</code>,
+<code><a href='initializeSLiMModelType.html'>initializeSLiMModelType</a>()</code>,
+<code><a href='initializeSLiMOptions.html'>initializeSLiMOptions</a>()</code>,
+<code><a href='initializeSex.html'>initializeSex</a>()</code>,
+<code><a href='initializeTreeSeq.html'>initializeTreeSeq</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -83,7 +83,9 @@ script_1
 ```
 
 You can output this script to text to run in a standalone SLiM
-installation, or you can run it in SLiM directly from R.
+installation, or you can run it in SLiM directly from R, and many other
+things. Please see the package website for lots of examples (link in top
+right corner of github repo).
 
 You can also do fancy stuff like make the above script or another script
 into a template that you can dynamically fill-in with parameters

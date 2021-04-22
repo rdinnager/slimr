@@ -107,4 +107,10 @@ to use.}
 
 }
 }
+\seealso{
+Other Mutation: 
+\code{\link{setMutationType}()},
+\code{\link{setSelectionCoeff}()}
+}
+\concept{Mutation}
 \keyword{datasets}

@@ -106,10 +106,13 @@
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,12 +154,27 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class <code>list</code> of length 12.</p>
+    <p>An object of class <code>list</code> of length 10.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This class has the following methods (functions):</p><ul>
-<li><p><code><a href='getValue.html'>getValue</a></code></p></li>
-<li><p><code><a href='setValue.html'>setValue</a></code></p></li>
+    <p>This class represents a mutation that has been fixed; Mutation objects
+are converted to
+Substitution objects upon fixation. Its properties are thus very similar to
+those of Mutation.
+Section 1.5.2 presents an overview of the conceptual role of this class.
+Since Substitution objects represent fixation events that occurred in the past,
+they are
+relatively immutable. However, since it may be useful to attach (possibly
+dynamic) state to
+substitutions, their tag and subpopID properties are mutable, and they also
+provide the same
+getValue() / setValue() functionality as Mutation (inherited from the Eidos
+class Dictionary).
+Values set on a Mutation object will carry over to the corresponding
+Substitution object
+automatically upon fixation.
+This class has the following methods (functions):</p><ul>
+<li><p>None. This class has no methods.</p></li>
 </ul><p>This class has the following properties:</p><dl>
 <dt>id</dt><dd><p>A property of type integer. It is of length one (a singleton). This
 property is a constant, so it is not modifiable. <strong>Property Description:</strong>
@@ -195,7 +213,7 @@ from the distribution of fitness effects of its MutationType.</p></dd>
 This property is a variable, so it is modifiable. <strong>Property Description:</strong>
 The identifier of the subpopulation in which this mutation arose. This value
 is carried over from the Mutation object directly; if a "tag” value was used
-in the Mutation object (see section 23.8.1), that value will carry over to
+in the Mutation object (see section 24.9.1), that value will carry over to
 the corresponding Substitution object. The subpopID in Substitution is a read-
 write property to allow it to be used as a "tag” in the same way, if the origin
 subpopulation identifier is not needed.</p></dd>

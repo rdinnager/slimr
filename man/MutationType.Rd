@@ -250,4 +250,10 @@ attaching state to mutation types.}
 
 }
 }
+\seealso{
+Other MutationType: 
+\code{\link{drawSelectionCoefficient}()},
+\code{\link{setDistribution}()}
+}
+\concept{MutationType}
 \keyword{datasets}

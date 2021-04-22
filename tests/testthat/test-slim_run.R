@@ -61,7 +61,7 @@ test_that("slim_run works on slimr_script_coll objects", {
       sim.simulationFinished();
     })
   ) %>%
-    slimr_script_render(reps = 3) %>%
+    slim_script_render(reps = 3) %>%
     slim_run() -> run_3_times
 
   expect_length(run_3_times, 3L)
@@ -92,7 +92,7 @@ test_that("slim_run works in parallel", {
         sim.simulationFinished();
       })
     ) %>%
-      slimr_script_render(reps = 3) %>%
+      slim_script_render(reps = 3) %>%
       slim_run(parallel = TRUE) -> run_3_times
 
   expect_length(run_3_times, 3L)

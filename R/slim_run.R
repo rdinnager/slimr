@@ -130,7 +130,7 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
 
   if(!attr(x, "script_info")$rendered) {
     rlang::inform("slimr_script is unrendered. Trying to render now...")
-    x <- slimr_script_render(x)
+    x <- slim_script_render(x)
   }
 
   script <- as_slim_text(x)

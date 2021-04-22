@@ -106,10 +106,13 @@
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -154,11 +157,17 @@
     <p>An object of class <code>list</code> of length 13.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This class has the following methods (functions):</p><ul>
-<li><p><code><a href='getValue.html'>getValue</a></code></p></li>
+    <p>This class represents a single point mutation. Mutations can be shared
+by the genomes of many
+individuals; if they reach fixation, they are converted to Substitution objects.
+Although Mutation has a tag property, like most SLiM classes, the subpopID can
+also store
+custom values if you don’t need to track the origin subpopulation of mutations
+(see below).
+Section 1.5.2 presents an overview of the conceptual role of this class.
+This class has the following methods (functions):</p><ul>
 <li><p><code><a href='setMutationType.html'>setMutationType</a></code></p></li>
 <li><p><code><a href='setSelectionCoeff.html'>setSelectionCoeff</a></code></p></li>
-<li><p><code><a href='setValue.html'>setValue</a></code></p></li>
 </ul><p>This class has the following properties:</p><dl>
 <dt>id</dt><dd><p>A property of type integer. It is of length one (a singleton). This
 property is a constant, so it is not modifiable. <strong>Property Description:</strong>
@@ -167,6 +176,21 @@ immutable identifier that will be unique across the duration of the run. These
 identifiers are not re-used during a run, except that if a population file is
 loaded from disk, the loaded mutations will receive their original identifier
 values as saved in the population file.</p></dd>
+<dt>isFixed</dt><dd><p>A property of type logical. It is of length one (a singleton).
+This property is a constant, so it is not modifiable. <strong>Property
+Description:</strong> T if the mutation has fixed (in the SLiM sense of having been
+converted to a Substitution object), F otherwise. Since fixed/substituted
+mutations are removed from the simulation, you will only see this flag be T if
+you have held onto a mutation beyond its usual lifetime (see section 27.2).</p></dd>
+<dt>isSegregating</dt><dd><p>A property of type logical. It is of length one
+(a singleton). This property is a constant, so it is not modifiable.
+<strong>Property Description:</strong> T if the mutation is segregating (in the SLiM
+sense of not having been either lost or converted to a Substitution object), F
+otherwise. Since both lost and fixed/substituted mutations are removed from the
+simulation, you will only see this flag be F if you have held onto a mutation
+beyond its usual lifetime (see section 27.2). Note that if isSegregating is F,
+isFixed will let you determine whether the mutation is no longer segregating
+because it was lost, or because it fixed.</p></dd>
 <dt>mutationType</dt><dd><p>A property of type MutationType object. It is of length
 one (a singleton). This property is a constant, so it is not modifiable.
 <strong>Property Description:</strong> The MutationType from which this mutation was
@@ -193,7 +217,7 @@ Description:</strong> The position in the chromosome of this mutation.</p></dd>
 from the distribution of fitness effects of its MutationType. If a mutation
 has a selectionCoeff of s, the multiplicative fitness effect of the mutation
 in a homozygote is 1+s; in a heterozygote it is 1+hs, where h is the dominance
-coefficient kept by the mutation type (see section 23.9.1). Note that this
+coefficient kept by the mutation type (see section 24.10.1). Note that this
 property has a quirk: it is stored internally in SLiM using a single-precision
 float, not the double-precision float type normally used by Eidos. This means
 that if you set a mutation mut’s selection coefficient to some number x,
@@ -223,6 +247,11 @@ to use.</p></dd>
 
 </dl>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Mutation: 
+<code><a href='setMutationType.html'>setMutationType</a>()</code>,
+<code><a href='setSelectionCoeff.html'>setSelectionCoeff</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

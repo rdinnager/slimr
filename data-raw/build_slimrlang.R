@@ -606,6 +606,18 @@ r_script <- stringr::str_replace_all(r_script,
                                      '"')
 
 r_script <- stringr::str_replace_all(r_script,
+                                     "”",
+                                     '"')
+
+r_script <- stringr::str_replace_all(r_script,
+                                     "’",
+                                     "'")
+
+r_script <- stringr::str_replace_all(r_script,
+                                     "–",
+                                     "-")
+
+r_script <- stringr::str_replace_all(r_script,
                                     stringr::fixed("\\t"),
                                     stringr::fixed("\\\\t"))
 

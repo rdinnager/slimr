@@ -21,7 +21,7 @@ This callback specifies that a code block is providing logic to determine the
 strength of interaction between individuals. It should return the strength of the interaction
 as a numeric value. You must explicitly use \code{return(value)} at the end of the code block.
 For more information on how to use \code{interaction()} callback
-see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=604}{SLiM Manual: page 606}
+see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=604}{SLiM Manual: page 604}
 }
 \details{
 Global variables available in reproduction callbacks:
@@ -33,9 +33,37 @@ Global variables available in reproduction callbacks:
   \item{subpop}{The subpopulation in which the receiver and exerter live}
 }
 }
+\section{Copyright}{
+
+This is documentation for a function in the SLiM software, and has been
+modified from the official manual,
+which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+}
+
 \examples{
 slim_block(interaction(), {
   # custom interaction strength as a function of values held in exerter and receiver tagF element.
   return(dnorm(exerter.tagF, receiver.tagF, 0.1) / dnorm(0, 0, 0.1))
 })
 }
+\seealso{
+Other callbacks: 
+\code{\link{early}()},
+\code{\link{fitness}()},
+\code{\link{initialize}()},
+\code{\link{late}()},
+\code{\link{mateChoice}()},
+\code{\link{modifyChild}()},
+\code{\link{recombination}()},
+\code{\link{reproduction}()},
+\code{\link{slim_callbacks}()}
+}
+\author{
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+(\email{messer@cornell.edu})
+}
+\concept{callbacks}

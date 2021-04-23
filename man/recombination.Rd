@@ -20,7 +20,7 @@ in the generations it is active. This is achieved by setting breakpoints into th
 \code{breakpoints}, replacing the default (as integer positions). If \code{breakpoints} is modified
 the callback must return \code{T}. If \code{return(F)} is used, SLiM will use the original
 \code{breakpoints}.
-see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=604}{SLiM Manual: page 603}
+see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=604}{SLiM Manual: page 604}
 }
 \details{
 Global variables available in reproduction callbacks:
@@ -32,6 +32,17 @@ Global variables available in reproduction callbacks:
   \item{breakpoints}{An integer vector of crossover breakpoints}
 }
 }
+\section{Copyright}{
+
+This is documentation for a function in the SLiM software, and has been
+modified from the official manual,
+which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+}
+
 \examples{
 # From page 261 of the SLiM Manual
 slim_block(recombination(), {
@@ -52,3 +63,20 @@ slim_block(recombination(), {
 
 })
 }
+\seealso{
+Other callbacks: 
+\code{\link{early}()},
+\code{\link{fitness}()},
+\code{\link{initialize}()},
+\code{\link{interaction}()},
+\code{\link{late}()},
+\code{\link{mateChoice}()},
+\code{\link{modifyChild}()},
+\code{\link{reproduction}()},
+\code{\link{slim_callbacks}()}
+}
+\author{
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+(\email{messer@cornell.edu})
+}
+\concept{callbacks}

@@ -41,6 +41,18 @@ reference:
   - contents:
     - "`%.%`"
     - "`%?%`"
+  - title: SLiM Callbacks
+    desc: Function stubs for SLiM callback Functions
+  - contents:
+      - initialize
+      - late
+      - early
+      - fitness
+      - mateChoice
+      - modifyChild
+      - recombination
+      - interaction
+      - reproduction
   - title: SLiM Class Objects
     desc: >
       Objects representing the different classes used in SLiM. These can be used to look up and

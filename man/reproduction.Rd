@@ -32,6 +32,17 @@ Global variables available in reproduction callbacks:
   \item{subpop}{The subpopulation to which the focal individual belongs}
 }
 }
+\section{Copyright}{
+
+This is documentation for a function in the SLiM software, and has been
+modified from the official manual,
+which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+}
+
 \examples{
 slim_block(reproduction(), {
 
@@ -39,3 +50,20 @@ slim_block(reproduction(), {
 
 })
 }
+\seealso{
+Other callbacks: 
+\code{\link{early}()},
+\code{\link{fitness}()},
+\code{\link{initialize}()},
+\code{\link{interaction}()},
+\code{\link{late}()},
+\code{\link{mateChoice}()},
+\code{\link{modifyChild}()},
+\code{\link{recombination}()},
+\code{\link{slim_callbacks}()}
+}
+\author{
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+(\email{messer@cornell.edu})
+}
+\concept{callbacks}

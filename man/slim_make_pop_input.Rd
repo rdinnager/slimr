@@ -66,6 +66,6 @@ Make a SLiM file in the style of \code{outputFull()} which can be read by SLiM. 
 start a simulation with a particular population state that you define in R
 }
 \examples{
-pop_file <- slim_make_pop_input(matrix(rbinom(1000, 0.25), nrow = 100, ncol = 100))
+pop_file <- slim_make_pop_input(matrix(rbinom(1000, 2, 0.25), nrow = 100, ncol = 100))
 cat(readLines(pop_file))
 }

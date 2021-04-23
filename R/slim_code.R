@@ -126,11 +126,14 @@ slim_code_SLiMify <- function(code_snippet, prettycode = FALSE) {
 #' each numbered Globals to load, or a named integer vector where the names
 #' refer to different Global types (see details for more information), and the value
 #' refers to how many of that Global type to load.
-#'
-#' @return
+#' @param sim Should the \code{sim} global be loaded?
+#' @param self Should the \code{self} global be loaded?
+#' @param pseudo Should 'pseudo-variables' be loaded? These are similar to SLiM
+#' globals but are only available inside certain callbacks.
+#' @return None
 #' @export
 #' @examples slim_load_globals(c(p = 4, g = 2))
-slim_load_globals <- function(max = 10, sim = TRUE, self = TRUE) {
+slim_load_globals <- function(max = 10, sim = TRUE, self = TRUE, pseudo = TRUE) {
 
   if(sim) {
     rlang::env_bind_lazy(rlang::global_env(),
@@ -140,6 +143,43 @@ slim_load_globals <- function(max = 10, sim = TRUE, self = TRUE) {
   if(self) {
     rlang::env_bind_lazy(rlang::global_env(),
                          self = SLiMEidosBlock)
+  }
+
+  if(pseudo) {
+    rlang::env_bind_lazy(rlang::global_env(),
+                         genome1 = Genome)
+    rlang::env_bind_lazy(rlang::global_env(),
+                         genome2 = Genome)
+    rlang::env_bind_lazy(rlang::global_env(),
+                         childGenome1 = Genome)
+    rlang::env_bind_lazy(rlang::global_env(),
+                         childGenome2 = Genome)
+    rlang::env_bind_lazy(rlang::global_env(),
+                         parent1Genome1 = Genome)
+    rlang::env_bind_lazy(rlang::global_env(),
+                         parent1Genome2 = Genome)
+    rlang::env_bind_lazy(rlang::global_env(),
+                         parent2Genome1 = Genome)
+    rlang::env_bind_lazy(rlang::global_env(),
+                         parent2Genome2 = Genome)
+    rlang::env_bind_lazy(rlang::global_env(),
+                         subpop = Subpopulation)
+    rlang::env_bind_lazy(rlang::global_env(),
+                         sourceSubpop = Subpopulation)
+    rlang::env_bind_lazy(rlang::global_env(),
+                         individual = Individual)
+    rlang::env_bind_lazy(rlang::global_env(),
+                         receiver = Individual)
+    rlang::env_bind_lazy(rlang::global_env(),
+                         exerter = Individual)
+    rlang::env_bind_lazy(rlang::global_env(),
+                         child = Individual)
+    rlang::env_bind_lazy(rlang::global_env(),
+                         parent1 = Individual)
+    rlang::env_bind_lazy(rlang::global_env(),
+                         parent2 = Individual)
+    rlang::env_bind_lazy(rlang::global_env(),
+                         mut = Mutation)
   }
 
   if(!rlang::is_named(max)) {
@@ -203,6 +243,44 @@ slim_load_globals <- function(max = 10, sim = TRUE, self = TRUE) {
     ob_names_all <- c(ob_names_all, "self")
   }
 
+  if(pseudo) {
+    ob_names <- c(ob_names, c("genome1",
+                              "genome2",
+                              "childGenome1",
+                              "childGenome2",
+                              "parent1Genome1",
+                              "parent1Genome2",
+                              "parent2Genome1",
+                              "parent2Genome2",
+                              "subpop",
+                              "sourceSubpop",
+                              "individual",
+                              "receiver",
+                              "exerter",
+                              "child",
+                              "parent1",
+                              "parent2",
+                              "mut"))
+
+    ob_names_all <- c(ob_names_all, c("genome1",
+                                      "genome2",
+                                      "childGenome1",
+                                      "childGenome2",
+                                      "parent1Genome1",
+                                      "parent1Genome2",
+                                      "parent2Genome1",
+                                      "parent2Genome2",
+                                      "subpop",
+                                      "sourceSubpop",
+                                      "individual",
+                                      "receiver",
+                                      "exerter",
+                                      "child",
+                                      "parent1",
+                                      "parent2",
+                                      "mut"))
+  }
+
   .resources$loaded_globals <- union(.resources$loaded_globals,
                                      as.list(ob_names_all) %>%
                                        purrr::flatten_chr())
@@ -213,7 +291,7 @@ slim_load_globals <- function(max = 10, sim = TRUE, self = TRUE) {
                     "\n\nIf there were already objects with any of these names in the global environment\nthen their values have been replaced.\n",
                     "Use slim_unload_globals() to remove them."),
               .frequency = "once",
-              .frequency_id = "load_slim_globals")
+              .frequency_id = "slim_load_globals")
 
   }
 

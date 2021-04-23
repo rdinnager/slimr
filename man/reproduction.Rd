@@ -33,9 +33,9 @@ Global variables available in reproduction callbacks:
 }
 }
 \examples{
-slim_block(reproduction()) {
+slim_block(reproduction(), {
 
-  subpop.addCrossed(individual, subpop.sampleIndividuals(1));
+  subpop.addCrossed(individual, subpop.sampleIndividuals(1))
 
-}
+})
 }

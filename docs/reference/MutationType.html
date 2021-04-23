@@ -163,15 +163,15 @@ neutral mutations or weakly beneficial mutations. Sections 1.5.3 and 1.5.4
 present an overview of
 the conceptual role of this class. The mutation types currently defined in the
 simulation are
-defined as global constants with the same names used in the SLiM input file –
+defined as global constants with the same names used in the SLiM input file -
 m1, m2, and so forth.
 There are currently six options for the distribution of fitness effects in SLiM,
 represented by
 single-character codes:
-"f" – A fixed fitness effect. This DFE type has a single parameter, the
+"f" - A fixed fitness effect. This DFE type has a single parameter, the
 selection coefficient s to
 be used by all mutations of the mutation type.
-"g" – A gamma-distributed fitness effect. This DFE type is specified by two
+"g" - A gamma-distributed fitness effect. This DFE type is specified by two
 parameters, a mean
 value and a shape parameter. The gamma distribution from which mutations are
 drawn is given by
@@ -182,7 +182,7 @@ parameterization is the
 same as for the Eidos function rgamma(). A gamma distribution is often used to
 model deleterious
 mutations at functional sites.
-"e" – An exponentially-distributed fitness effect. This DFE type is specified by
+"e" - An exponentially-distributed fitness effect. This DFE type is specified by
 a single
 parameter, the mean of the distribution. The exponential distribution from which
 mutations are
@@ -191,7 +191,7 @@ where β is the specified
 mean for the distribution. This parameterization is the same as for the Eidos
 function rexp(). An
 exponential distribution is often used to model beneficial mutations.
-"n" – A normally-distributed fitness effect. This DFE type is specified by two
+"n" - A normally-distributed fitness effect. This DFE type is specified by two
 parameters, a
 mean and a standard deviation. The normal distribution from which mutations are
 drawn is given
@@ -202,7 +202,7 @@ function rnorm(). A
 normal distribution is often used to model mutations that can be either
 beneficial or deleterious,
 since both tails of the distribution are unbounded.
-"w" – A Weibull-distributed fitness effect. This DFE type is specified by a
+"w" - A Weibull-distributed fitness effect. This DFE type is specified by a
 scale parameter and a
 shape parameter. The Weibull distribution from which mutations are drawn is
 given by the
@@ -212,7 +212,7 @@ the shape parameter. This parameterization is the same as for the Eidos function
 rweibull(). A
 Weibull distribution is often used to model mutations following extreme-value
 theory.
-"s" – A script-based fitness effect. This DFE type is specified by a script
+"s" - A script-based fitness effect. This DFE type is specified by a script
 parameter of type
 string, specifying an Eidos script to be executed to produce each new selection
 coefficient. For
@@ -236,7 +236,7 @@ length one (a singleton). This property is a variable, so it is modifiable.
 in SLiMgui. Outside of SLiMgui, this property still exists, but is not used
 by SLiM. Colors may be specified by name, or with hexadecimal RGB values of
 the form "#RRGGBB" (see the Eidos manual). If color is the empty string, "",
-SLiMgui’s default (selection-coefficient–based) color scheme is used; this is
+SLiMgui's default (selection-coefficient-based) color scheme is used; this is
 the default for new MutationType objects.</p></dd>
 <dt>colorSubstitution</dt><dd><p>A property of type string or string or logical or float
 or string or float or integer or integer or string or logical or integer. It is
@@ -246,7 +246,7 @@ type in SLiMgui (see the discussion for the colorSubstitution property of the
 Chromosome class for details). Outside of SLiMgui, this property still exists,
 but is not used by SLiM. Colors may be specified by name, or with hexadecimal
 RGB values of the form "#RRGGBB" (see the Eidos manual). If colorSubstitution
-is the empty string, "", SLiMgui’s default (selection-coefficient–based) color
+is the empty string, "", SLiMgui's default (selection-coefficient-based) color
 scheme is used; this is the default for new MutationType objects.</p></dd>
 <dt>convertToSubstitution</dt><dd><p>A property of type string or string or logical
 or float or string or float or integer or integer or string or logical or
@@ -300,8 +300,8 @@ It is of length one (a singleton). This property is a variable, so it is
 modifiable. <strong>Property Description:</strong> The dominance coefficient used for
 mutations of this type when heterozygous. Changing this will normally affect
 the fitness values calculated at the end of the current generation; if you
-want current fitness values to be affected, you can call SLiMSim’s method
-recalculateFitness() – but see the documentation of that method for caveats.
+want current fitness values to be affected, you can call SLiMSim's method
+recalculateFitness() - but see the documentation of that method for caveats.
 Note that the dominance coefficient is not bounded. A dominance coefficient
 greater than 1.0 may be used to achieve an overdominance effect. By making
 the selection coefficient very small and the dominance coefficient very large,
@@ -309,7 +309,7 @@ an overdominance scenario in which both homozygotes have the same fitness may
 be approximated, to a nearly arbitrary degree of precision. Note that this
 property has a quirk: it is stored internally in SLiM using a single-precision
 float, not the double-precision float type normally used by Eidos. This means
-that if you set a mutation type muttype’s dominance coefficient to some number
+that if you set a mutation type muttype's dominance coefficient to some number
 x, muttype.dominanceCoeff==x may be F due to floating-point rounding error.
 Comparisons of floating-point numbers for exact equality is often a bad idea,
 but this is one case where it may fail unexpectedly. Instead, it is recommended
@@ -324,7 +324,7 @@ float or string or float or integer or integer or string or logical or integer.
 It is of length one (a singleton). This property is a variable, so it is
 modifiable. <strong>Property Description:</strong> The group into which this mutation
 type belongs for purposes of mutation stacking policy. This is equal to the
-mutation type’s id by default. See mutationStackPolicy, below, for discussion.
+mutation type's id by default. See mutationStackPolicy, below, for discussion.
 In nucleotide-based models, the stacking group for nucleotide-based mutation
 types is always -1, and cannot be changed. Non-nucleotide-based mutation types
 may also be set to share the -1 stacking group, if they should participate in
@@ -335,9 +335,9 @@ or float or string or float or integer or integer or string or logical or
 integer. It is of length one (a singleton). This property is a variable,
 so it is modifiable. <strong>Property Description:</strong> This property and the
 mutationStackGroup property together govern whether mutations of this mutation
-type’s stacking group can "stack” – can occupy the same position in a single
+type's stacking group can "stack" - can occupy the same position in a single
 individual. A set of mutation types with the same value for mutationStackGroup
-is called a "stacking group”, and all mutation types in a given stacking
+is called a "stacking group", and all mutation types in a given stacking
 group must have the same mutationStackPolicy value, which defines the stacking
 behavior of all mutations of the mutation types in the stacking group. In other
 words, one stacking group might allow its mutations to stack, while another
@@ -351,14 +351,14 @@ disabled by a premature stop codon, for example, you might wish to assume, for
 simplicity, that further mutations cannot alter that fact. If the policy is set
 to "l", the last mutation of this stacking group at a given site is retained;
 earlier mutation of this stacking group at the same site are discarded. This
-can be useful for modeling an "infinitealleles” scenario in which every new
+can be useful for modeling an "infinitealleles" scenario in which every new
 mutation at a site generates a completely new allele, rather than retaining the
 previous mutations at the site. The mutation stacking policy applies only within
-the given mutation type’s stacking group; mutations of different stacking groups
+the given mutation type's stacking group; mutations of different stacking groups
 are always allowed to stack in SLiM. The policy applies to all mutations added
 to the model after the policy is set, whether those mutations are introduced
 by calls such as addMutation(), addNewMutation(), or addNewDrawnMutation(), or
-are added by SLiM’s own mutation-generation machinery. However, no attempt is
+are added by SLiM's own mutation-generation machinery. However, no attempt is
 made to enforce the policy for mutations already existing at the time the policy
 is set; typically, therefore, the policy is set in an initialize() callback so
 that it applies throughout the simulation. The policy is also not enforced upon

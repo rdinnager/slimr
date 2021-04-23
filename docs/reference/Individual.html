@@ -176,7 +176,7 @@ This class has the following methods (functions):</p><ul>
 </ul><p>This class has the following properties:</p><dl>
 <dt>age</dt><dd><p>A property of type integer. It is of length one (a singleton). This
 property is a variable, so it is modifiable. <strong>Property Description:</strong>
-The age of the individual, measured in generation "ticks”. A newly generated
+The age of the individual, measured in generation "ticks". A newly generated
 offspring individual will have an age of 0 in the same generation in which
 is was created. The age of every individual is incremented by one at the same
 point that the generation counter is incremented. The age of individuals may be
@@ -187,11 +187,11 @@ property is a variable, so it is modifiable. <strong>Property Description:</stro
 The color used to display the individual in SLiMgui. Outside of SLiMgui, this
 property still exists, but is not used by SLiM. Colors may be specified by name,
 or with hexadecimal RGB values of the form "#RRGGBB" (see the Eidos manual). If
-color is the empty string, "", SLiMgui’s default (fitness-based) color scheme is
+color is the empty string, "", SLiMgui's default (fitness-based) color scheme is
 used; this is the default for new Individual objects.</p></dd>
 <dt>fitnessScaling</dt><dd><p>A property of type float. It is of length one (a
 singleton). This property is a variable, so it is modifiable. <strong>Property
-Description:</strong> A float scaling factor applied to the individual’s fitness
+Description:</strong> A float scaling factor applied to the individual's fitness
 (i.e., the fitness value computed for the individual will be multiplied by this
 value). This provides a simple, fast way to modify the fitness of an individual;
 conceptually it is similar to returning a fitness effect for the individual from
@@ -225,7 +225,7 @@ Description:</strong> Set to T if the individual migrated during the current gen
 F otherwise. In WF models, this flag is set at the point when a new child is
 generated if it is a migrant (i.e., if its source subpopulation is not the
 same as its subpopulation), and remains valid, with the same value, for the
-rest of the individual’s lifetime. In nonWF models, this flag is F for all
+rest of the individual's lifetime. In nonWF models, this flag is F for all
 new individuals, is set to F in all individuals at the end of the reproduction
 generation cycle stage, and is set to T on all individuals moved to a new
 subpopulation by takeMigrants(); the T value set by takeMigrants() will remain
@@ -263,7 +263,7 @@ number of offspring for which this individual has been a parent. If pedigree
 tracking is not on, this property is unavailable. If an individual is a
 parent by cloning or selfing, or as both parents for a biparental mating,
 this value is incremented by two. Involvement of an individual as a parent
-for an addRecombinant() call does not change this property’s value, since the
+for an addRecombinant() call does not change this property's value, since the
 reproductive contribution in that case is unclear; one must conduct separate
 bookkeeping for that case if necessary. This property is only useful in nonWF
 models, since in WF models the parental generation dies immediately after
@@ -284,7 +284,7 @@ of the x, y, and z properties (if those properties are encompassed by the
 spatial dimensionality of the simulation). In other words, if the declared
 dimensionality is "xy", the individual.spatialPosition property is equivalent
 to c(individual.x, individual.y); individual.z is not used since it is not
-encompassed by the simulation’s dimensionality. This property cannot be set, but
+encompassed by the simulation's dimensionality. This property cannot be set, but
 the setSpatialPosition() method may be used to achieve the same thing.</p></dd>
 <dt>subpopulation</dt><dd><p>A property of type Subpopulation object. It is of length
 one (a singleton). This property is a constant, so it is not modifiable.
@@ -343,7 +343,7 @@ an effectively random value that could be different every time you run your
 model); if you wish it to have a defined value, you must arrange that yourself
 by explicitly setting its value prior to using it elsewhere in your code,
 typically in a modifyChild() callback. The value of x is not used by SLiM unless
-the optional "continuous space” facility is enabled with the dimensionality
+the optional "continuous space" facility is enabled with the dimensionality
 parameter to initializeSLiMOptions(), in which case x will be understood to
 represent the x coordinate of the individual in space. If continuous space is
 not enabled, you may use x as an additional tag value of type float.</p></dd>
@@ -354,7 +354,7 @@ an effectively random value that could be different every time you run your
 model); if you wish it to have a defined value, you must arrange that yourself
 by explicitly setting its value prior to using it elsewhere in your code,
 typically in a modifyChild() callback. The value of y is not used by SLiM unless
-the optional "continuous space” facility is enabled with the dimensionality
+the optional "continuous space" facility is enabled with the dimensionality
 parameter to initializeSLiMOptions(), in which case y will be understood to
 represent the y coordinate of the individual in space (if the dimensionality is
 "xy" or "xyz"). If continuous space is not enabled, or the dimensionality is not
@@ -366,27 +366,27 @@ an effectively random value that could be different every time you run your
 model); if you wish it to have a defined value, you must arrange that yourself
 by explicitly setting its value prior to using it elsewhere in your code,
 typically in a modifyChild() callback. The value of z is not used by SLiM unless
-the optional "continuous space” facility is enabled with the dimensionality
+the optional "continuous space" facility is enabled with the dimensionality
 parameter to initializeSLiMOptions(), in which case z will be understood to
 represent the z coordinate of the individual in space (if the dimensionality
 is "xyz"). If continuous space is not enabled, or the dimensionality is not
 "xyz", you may use z as an additional tag value of type float. 24.6.2 Individual
-methods – (logical)containsMutations(object&lt;Mutation&gt; mutations) Returns a
+methods - (logical)containsMutations(object&lt;Mutation&gt; mutations) Returns a
 logical vector indicating whether each of the mutations in mutations is present
 in the individual (in either of its genomes); each element in the returned
 vector indicates whether the corresponding mutation is present (T) or absent
 (F). This method is provided for speed; it is much faster than the corresponding
-Eidos code. – (integer$)countOfMutationsOfType(io&lt;MutationType&gt;$ mutType)
+Eidos code. - (integer$)countOfMutationsOfType(io&lt;MutationType&gt;$ mutType)
 Returns the number of mutations that are of the type specified by mutType, out
 of all of the mutations in the individual (in both of its genomes; a mutation
 that is present in both genomes counts twice). If you need a vector of the
 matching Mutation objects, rather than just a count, you should probably use
 uniqueMutationsOfType(). This method is provided for speed; it is much faster
-than the corresponding Eidos code. – (float)relatedness(object&lt;Individual&gt;
+than the corresponding Eidos code. - (float)relatedness(object&lt;Individual&gt;
 individuals) Returns a vector containing the degrees of relatedness between
 the receiver and each of the individuals in individuals. The relatedness
 between A and B is always 1.0 if A and B are actually the same individual;
-this facility works even if SLiM’s optional pedigree tracking is turned
+this facility works even if SLiM's optional pedigree tracking is turned
 off (in which case all other relatedness values will be 0.0. Otherwise, if
 pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
 this method will use the pedigree information described in section 24.6.1 to
@@ -412,7 +412,7 @@ of the simulation). In other words, if the declared dimensionality is "xy",
 calling individual.setSpatialPosition(c(1.0, 0.5)) property is equivalent
 to individual.x = 1.0; individual.y = 0.5; individual.z is not set (even if
 a third value is supplied in position) since it is not encompassed by the
-simulation’s dimensionality in this example. Note that this is an Eidos class
+simulation's dimensionality in this example. Note that this is an Eidos class
 method, somewhat unusually, which allows it to work in a special way when
 called on a vector of individuals. When the target vector of individuals is
 non-singleton, this method can do one of two things. If position contains
@@ -425,7 +425,7 @@ individual will be set to the corresponding point from position (where the
 point data is concatenated, not interleaved, just as it would be returned by
 accessing the spatialPosition property on the vector of target individuals).
 Calling this method with a position vector of any other length is an error.
-– (float$)sumOfMutationsOfType(io&lt;MutationType&gt;$ mutType) Returns the sum of
+- (float$)sumOfMutationsOfType(io&lt;MutationType&gt;$ mutType) Returns the sum of
 the selection coefficients of all mutations that are of the type specified by
 mutType, out of all of the mutations in the genomes of the individual. This is
 often useful in models that use a particular mutation type to represent QTLs
@@ -433,7 +433,7 @@ with additive effects; in that context, sumOfMutationsOfType() will provide the
 sum of the additive effects of the QTLs for the given mutation type. This method
 is provided for speed; it is much faster than the corresponding Eidos code. Note
 that this method also exists on Genome, for cases in which the sum for just one
-genome is desired. – (object&lt;Mutation&gt;)uniqueMutationsOfType(io&lt;MutationType&gt;$
+genome is desired. - (object&lt;Mutation&gt;)uniqueMutationsOfType(io&lt;MutationType&gt;$
 mutType) Returns an object vector of all the mutations that are of the type
 specified by mutType, out of all of the mutations in the individual. Mutations
 present in both genomes will occur only once in the result of this method,

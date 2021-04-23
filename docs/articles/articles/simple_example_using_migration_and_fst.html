@@ -114,6 +114,11 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rdinnager.github.io/slimr/index.html">slimr</a></span><span class="op">)</span>
 <span class="co">#&gt; Welcome to the slimr package for forward population genetics simulation in SLiM. For more information on SLiM please visit https://messerlab.org/slim/ .</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'slimr'</span>
+<span class="co">#&gt; The following object is masked from 'package:base':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     interaction</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/thibautjombart/adegenet">adegenet</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: ade4</span>
 <span class="co">#&gt; Registered S3 method overwritten by 'spdep':</span>
@@ -318,7 +323,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 #&gt;         </span><span style="color: #00BBBB;">sim.addSubpop(</span><span>i, </span><span style="color: #0000BB;">100</span><span style="color: #00BBBB;">)</span><span>;
 #&gt;     </span><span style="color: #0000BB;">}</span><span>
 #&gt;     subpops </span><span style="color: #00BB00;">=</span><span> sim.subpopulations;
-#&gt;     disp_mat </span><span style="color: #00BB00;">=</span><span> </span><span style="color: #0000BB;">{</span><span>. </span><span style="color: #00BB00;">&lt;-</span><span> </span><span style="color: #00BBBB;">matrix(c</span><span style="color: #BBBB00;">(</span><span style="color: #0000BB;">1</span><span>, </span><span style="color: #0000BB;">1</span><span>, </span><span style="color: #0000BB;">1</span><span>, </span><span style="color: #0000BB;">2</span><span>, </span><span style="color: #0000BB;">2</span><span>, </span><span style="color: #0000BB;">2</span><span>, </span><span style="color: #0000BB;">3</span><span>, </span><span style="color: #0000BB;">3</span><span>, </span><span style="color: #0000BB;">3</span><span>, </span><span style="color: #0000BB;">1</span><span>, ...</span><span style="color: #BBBB00;">)</span><span>, nrow = </span><span style="color: #0000BB;">9</span><span>, ncol = </span><span style="color: #0000BB;">3</span><span style="color: #00BBBB;">)</span><span style="color: #0000BB;">}</span><span>
+#&gt;     disp_mat </span><span style="color: #00BB00;">=</span><span> </span><span style="color: #0000BB;">{</span><span>. </span><span style="color: #00BB00;">=</span><span> </span><span style="color: #00BBBB;">matrix(c</span><span style="color: #BBBB00;">(</span><span style="color: #0000BB;">1</span><span>, </span><span style="color: #0000BB;">1</span><span>, </span><span style="color: #0000BB;">1</span><span>, </span><span style="color: #0000BB;">2</span><span>, </span><span style="color: #0000BB;">2</span><span>, </span><span style="color: #0000BB;">2</span><span>, </span><span style="color: #0000BB;">3</span><span>, </span><span style="color: #0000BB;">3</span><span>, </span><span style="color: #0000BB;">3</span><span>, </span><span style="color: #0000BB;">1</span><span>, ...</span><span style="color: #BBBB00;">)</span><span>, nrow = </span><span style="color: #0000BB;">9</span><span>, ncol = </span><span style="color: #0000BB;">3</span><span style="color: #00BBBB;">)</span><span style="color: #0000BB;">}</span><span>
 #&gt;     </span><span style="color: #BB0000;">for</span><span> </span><span style="color: #0000BB;">(</span><span>line </span><span style="color: #BB0000;">in</span><span> </span><span style="color: #00BBBB;">seqLen(nrow</span><span style="color: #BBBB00;">(</span><span>disp_mat</span><span style="color: #BBBB00;">)</span><span style="color: #00BBBB;">)</span><span style="color: #0000BB;">)</span><span> </span><span style="color: #0000BB;">{</span><span>
 #&gt;         i </span><span style="color: #00BB00;">=</span><span> </span><span style="color: #00BBBB;">asInteger(</span><span>disp_mat</span><span style="color: #BBBB00;">[</span><span>line, </span><span style="color: #0000BB;">0</span><span style="color: #BBBB00;">]</span><span style="color: #00BBBB;">)</span><span>;
 #&gt;         j </span><span style="color: #00BB00;">=</span><span> </span><span style="color: #00BBBB;">asInteger(</span><span>disp_mat</span><span style="color: #BBBB00;">[</span><span>line, </span><span style="color: #0000BB;">1</span><span style="color: #BBBB00;">]</span><span style="color: #00BBBB;">)</span><span>;
@@ -381,11 +386,11 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <span class="co">#&gt; Simulation finished with exit status: 0</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Success!</span></code></pre></div>
-<p>Looks like it worked. We can get the resulting genomic data from the returned object and convert it into a genlight object using the <code><a href="../../reference/slim_output_genlight.html">slim_output_genlight()</a></code> function. Then we can plot the results.</p>
+<p>Looks like it worked. We can get the resulting genomic data from the returned object and convert it into a genlight object using the <code><a href="../../reference/slim_extract_genlight.html">slim_extract_genlight()</a></code> function. Then we can plot the results.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">dartR</span><span class="op">)</span>
 
-<span class="va">inds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/slim_output_genlight.html">slim_output_genlight</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"final_output"</span><span class="op">)</span>
+<span class="va">inds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/slim_extract_genlight.html">slim_extract_genlight</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"final_output"</span><span class="op">)</span>
 <span class="co">#&gt; Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">inds</span><span class="op">)</span></code></pre></div>
 <p><img src="simple_example_using_migration_and_fst_files/figure-html/get_dat-1.png" width="700"> Note that the SNPs are ordered by their mutation id, which should roughly correspond to their order of origination, so the leftmost mutations are the oldest, the rightmost the youngest. Using a genlight object we can calculate a lot of population genetics metrics easily using the package <code>dartR</code>. Let’s calculate Fst for example.</p>
@@ -606,7 +611,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <p>Let’s extract all the genomic data into genlight objects so we can easily calculate Fst. Since this might also take a little while we will parallelize this extraction as well using <code>furrr</code> (since we already set a <code>future</code> plan, and <code>furrr</code> uses <code>future</code> under the hood). Just in case any simulations give us trouble, we will wrap the extraction in <code><a href="https://rdrr.io/r/base/try.html">try()</a></code> so that the whole thing doesn’t fail for one error.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">all_gl</span> <span class="op">&lt;-</span> <span class="fu">furrr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/furrr/man/future_map.html">future_map</a></span><span class="op">(</span><span class="va">all_results</span>,
-                     <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="fu"><a href="../../reference/slim_output_genlight.html">slim_output_genlight</a></span><span class="op">(</span><span class="va">.x</span>, <span class="st">"final_output"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+                     <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="fu"><a href="../../reference/slim_extract_genlight.html">slim_extract_genlight</a></span><span class="op">(</span><span class="va">.x</span>, <span class="st">"final_output"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
                      .progress <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Any errors?</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
@@ -774,10 +779,10 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <span class="va">end_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">end_time</span> <span class="op">-</span> <span class="va">start_time</span>
-<span class="co">#&gt; Time difference of 1.487517 mins</span>
+<span class="co">#&gt; Time difference of 1.706796 mins</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Total Duration:"</span>, <span class="va">end_time</span> <span class="op">-</span> <span class="va">start_time</span><span class="op">)</span>
-<span class="co">#&gt; Total Duration: 1.487517</span></code></pre></div>
+<span class="co">#&gt; Total Duration: 1.706796</span></code></pre></div>
 <p>Firstly, negative values of Fst are incorrect, and usually reflect numerical inaccuracy around zero, so we will set negative Fst values to zero. Then let’s look at the distribution.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">all_fsts</span><span class="op">[</span><span class="va">all_fsts</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0.0</span>
@@ -802,20 +807,20 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Residuals:</span>
 <span class="co">#&gt;      Min       1Q   Median       3Q      Max </span>
-<span class="co">#&gt; -0.19247 -0.03435 -0.00546  0.01378  0.62245 </span>
+<span class="co">#&gt; -0.15112 -0.03941 -0.00641  0.01366  0.78581 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Coefficients:</span>
 <span class="co">#&gt;                   Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="co">#&gt; (Intercept)       0.037574   0.004588   8.189 7.94e-15 ***</span>
-<span class="co">#&gt; pop_size_st      -0.024871   0.004598  -5.409 1.31e-07 ***</span>
-<span class="co">#&gt; m_st             -0.042708   0.004612  -9.259  &lt; 2e-16 ***</span>
-<span class="co">#&gt; pop_size_st:m_st  0.026958   0.004708   5.726 2.53e-08 ***</span>
+<span class="co">#&gt; (Intercept)       0.039376   0.005704   6.903 3.11e-11 ***</span>
+<span class="co">#&gt; pop_size_st      -0.023562   0.005716  -4.122 4.88e-05 ***</span>
+<span class="co">#&gt; m_st             -0.045494   0.005735  -7.933 4.42e-14 ***</span>
+<span class="co">#&gt; pop_size_st:m_st  0.025477   0.005854   4.352 1.86e-05 ***</span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Residual standard error: 0.07925 on 296 degrees of freedom</span>
-<span class="co">#&gt; Multiple R-squared:  0.3566, Adjusted R-squared:  0.3501 </span>
-<span class="co">#&gt; F-statistic: 54.69 on 3 and 296 DF,  p-value: &lt; 2.2e-16</span></code></pre></div>
+<span class="co">#&gt; Residual standard error: 0.09853 on 296 degrees of freedom</span>
+<span class="co">#&gt; Multiple R-squared:  0.2703, Adjusted R-squared:  0.263 </span>
+<span class="co">#&gt; F-statistic: 36.56 on 3 and 296 DF,  p-value: &lt; 2.2e-16</span></code></pre></div>
 <p>So both migration rate</p>
 <p>We can demonstrate the interaction by splitting our data into population size bins and plotting the migration rate relationship as separate lines for each bin.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">

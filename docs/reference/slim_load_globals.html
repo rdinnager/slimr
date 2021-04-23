@@ -153,7 +153,7 @@
 
     </div>
 
-    <pre class="usage"><span class='fu'>slim_load_globals</span><span class='op'>(</span>max <span class='op'>=</span> <span class='fl'>10</span>, sim <span class='op'>=</span> <span class='cn'>TRUE</span>, self <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>slim_load_globals</span><span class='op'>(</span>max <span class='op'>=</span> <span class='fl'>10</span>, sim <span class='op'>=</span> <span class='cn'>TRUE</span>, self <span class='op'>=</span> <span class='cn'>TRUE</span>, pseudo <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,13 +165,24 @@ each numbered Globals to load, or a named integer vector where the names
 refer to different Global types (see details for more information), and the value
 refers to how many of that Global type to load.</p></td>
     </tr>
+    <tr>
+      <th>sim</th>
+      <td><p>Should the <code>sim</code> global be loaded?</p></td>
+    </tr>
+    <tr>
+      <th>self</th>
+      <td><p>Should the <code>self</code> global be loaded?</p></td>
+    </tr>
+    <tr>
+      <th>pseudo</th>
+      <td><p>Should 'pseudo-variables' be loaded? These are similar to SLiM
+globals but are only available inside certain callbacks.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
-
+    <p>None</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>By default this will load ten of each of the standard SLiM Globals (e.g. objects prefixed with "p",
@@ -188,6 +199,23 @@ they will be overwritten.</p>
 #&gt; <span class='warning'>* g1, g2</span>
 #&gt; <span class='warning'>* sim</span>
 #&gt; <span class='warning'>* self</span>
+#&gt; <span class='warning'>* genome1</span>
+#&gt; <span class='warning'>* genome2</span>
+#&gt; <span class='warning'>* childGenome1</span>
+#&gt; <span class='warning'>* childGenome2</span>
+#&gt; <span class='warning'>* parent1Genome1</span>
+#&gt; <span class='warning'>* parent1Genome2</span>
+#&gt; <span class='warning'>* parent2Genome1</span>
+#&gt; <span class='warning'>* parent2Genome2</span>
+#&gt; <span class='warning'>* subpop</span>
+#&gt; <span class='warning'>* sourceSubpop</span>
+#&gt; <span class='warning'>* individual</span>
+#&gt; <span class='warning'>* receiver</span>
+#&gt; <span class='warning'>* exerter</span>
+#&gt; <span class='warning'>* child</span>
+#&gt; <span class='warning'>* parent1</span>
+#&gt; <span class='warning'>* parent2</span>
+#&gt; <span class='warning'>* mut</span>
 #&gt; <span class='warning'></span>
 #&gt; <span class='warning'>If there were already objects with any of these names in the global environment</span>
 #&gt; <span class='warning'>then their values have been replaced.</span>

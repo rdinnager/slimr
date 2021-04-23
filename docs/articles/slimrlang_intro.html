@@ -145,6 +145,11 @@ initialize()
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rdinnager.github.io/slimr/index.html">slimr</a></span><span class="op">)</span>
 <span class="co">#&gt; Welcome to the slimr package for forward population genetics simulation in SLiM. For more information on SLiM please visit https://messerlab.org/slim/ .</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'slimr'</span>
+<span class="co">#&gt; The following object is masked from 'package:base':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     interaction</span>
 
 <span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span>
   <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu">initialize</span><span class="op">(</span><span class="op">)</span>,
@@ -291,7 +296,7 @@ An object of type Subpopulation object. Return will be of length 1 (a singleton)
 Copyright
 </h3>
 <p>
-This is documentation for a function in the SLiM software, and has been reproduced from the official manual, which can be found here: <a href="http://benhaller.com/slim/SLiM_Manual.pdf">http://benhaller.com/slim/SLiM_Manual.pdf</a>. This documentation is Copyright Â© 2016â€“2020 Philipp Messer. All rights reserved. More information about SLiM can be found on the official website: <a href="https://messerlab.org/slim/">https://messerlab.org/slim/</a>
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual, which can be found here: <a href="http://benhaller.com/slim/SLiM_Manual.pdf">http://benhaller.com/slim/SLiM_Manual.pdf</a>. This documentation is Copyright Â© 2016-2020 Philipp Messer. All rights reserved. More information about SLiM can be found on the official website: <a href="https://messerlab.org/slim/">https://messerlab.org/slim/</a>
 </p>
 <h3>
 Author(s)
@@ -336,19 +341,19 @@ Other SLiMSim: <code>SLiMSim</code>, <code><a href="../reference/addSubpopSplit.
 <span class="va">script_2</span></code></pre></div>
 <pre class="fansi fansi-output"><code>#&gt; &lt;slimr_script[3]&gt;
 #&gt; <span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-07)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">99999)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
+#&gt;     </span><span style="color: #00BBBB;">.Init.initializeMutationRate</span><span style="color: #0000BB;">(1e-07)</span><span>;
+#&gt;     </span><span style="color: #00BBBB;">.Init.initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
+#&gt;     </span><span style="color: #00BBBB;">.Init.initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
+#&gt;     </span><span style="color: #00BBBB;">.Init.initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">99999)</span><span>;
+#&gt;     </span><span style="color: #00BBBB;">.Init.initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
 #&gt; </span><span style="color: #BBBB00;">}</span><span>
 #&gt; 
 #&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">si.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
+#&gt;     </span><span style="color: #00BBBB;">si..SS.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
 #&gt; </span><span style="color: #BBBB00;">}</span><span>
 #&gt; 
 #&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">si.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
+#&gt;     </span><span style="color: #00BBBB;">si..SS.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
 #&gt; </span><span style="color: #BBBB00;">}</span><span>
 </span></code></pre>
 <p>Okay, next up, let’s see some of the neat stuff we can do to manipulate these SLiM scripts in R. First, we will see how to use R to fill in parts of the SLiM script with data from R. This is accomplished using the <code>slimr_template</code> function, which can be used to insert R generated data into a SLiM script.</p>
@@ -773,7 +778,7 @@ Other SLiMSim: <code>SLiMSim</code>, <code><a href="../reference/addSubpopSplit.
 #&gt; </span><span style="color: #BBBB00;">}</span><span>
 #&gt; 
 #&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>1:10000 late() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BB00;">..subpop..</span><span>fitnessScaling </span><span style="color: #00BB00;">=</span><span> </span><span style="color: #0000BB;">0.5</span><span>;
+#&gt;     </span><span style="color: #00BB00;">..subpop..</span><span>.P.fitnessScaling </span><span style="color: #00BB00;">=</span><span> </span><span style="color: #0000BB;">0.5</span><span>;
 #&gt; </span><span style="color: #BBBB00;">}</span><span>
 #&gt; 
 #&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_4:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
@@ -788,7 +793,7 @@ Other SLiMSim: <code>SLiMSim</code>, <code><a href="../reference/addSubpopSplit.
 <span class="fu"><a href="../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">script_q</span>, template <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>subpop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"p1"</span>, <span class="st">"p2"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; &lt;slimr_script_coll[2]&gt;</span>
 <span class="co">#&gt; Error in parse(text = code, keep.source = TRUE): &lt;text&gt;:2:5: unexpected INCOMPLETE_STRING</span>
-<span class="co">#&gt; 2:     "p1.fitnessScaling = 0.5;</span>
+<span class="co">#&gt; 2:     "p1..P.fitnessScaling = 0.5;</span>
 <span class="co">#&gt; 3: }</span>
 <span class="co">#&gt;        ^</span></code></pre></div>
 <p>Since this is also invalid R code, we get a parsing error. Now, if we use <code>unquote_strings = TRUE</code>:</p>
@@ -839,7 +844,7 @@ Other SLiMSim: <code>SLiMSim</code>, <code><a href="../reference/addSubpopSplit.
 #&gt; </span><span style="color: #BBBB00;">}</span><span>
 #&gt; 
 #&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>1:10000 late() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     p.fitnessScaling </span><span style="color: #00BB00;">=</span><span> </span><span style="color: #0000BB;">0.5</span><span>;
+#&gt;     p..P.fitnessScaling </span><span style="color: #00BB00;">=</span><span> </span><span style="color: #0000BB;">0.5</span><span>;
 #&gt; </span><span style="color: #BBBB00;">}</span><span>
 #&gt; 
 #&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_4:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
@@ -862,7 +867,7 @@ Other SLiMSim: <code>SLiMSim</code>, <code><a href="../reference/addSubpopSplit.
 #&gt; </span><span style="color: #BBBB00;">}</span><span>
 #&gt; 
 #&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>1:10000 late() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     p.fitnessScaling </span><span style="color: #00BB00;">=</span><span> </span><span style="color: #0000BB;">0.5</span><span>;
+#&gt;     p..P.fitnessScaling </span><span style="color: #00BB00;">=</span><span> </span><span style="color: #0000BB;">0.5</span><span>;
 #&gt; </span><span style="color: #BBBB00;">}</span><span>
 #&gt; 
 #&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_4:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
@@ -923,7 +928,7 @@ Other SLiMSim: <code>SLiMSim</code>, <code><a href="../reference/addSubpopSplit.
 #&gt; </span><span style="color: #BBBB00;">}</span><span>
 #&gt; 
 #&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>1:100 late() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #0000BB;">{</span><span style="color: #00BBBB;">p.outputVCFSample(</span><span>sampleSize = </span><span style="color: #0000BB;">10</span><span style="color: #00BBBB;">)</span><span> </span><span style="color: #00BB00;">-&gt;</span><span> VCF</span><span style="color: #0000BB;">}</span><span>
+#&gt;     </span><span style="color: #0000BB;">{</span><span style="color: #00BBBB;">p..P.outputVCFSample(</span><span>sampleSize = </span><span style="color: #0000BB;">10</span><span style="color: #00BBBB;">)</span><span> </span><span style="color: #00BB00;">-&gt;</span><span> VCF</span><span style="color: #0000BB;">}</span><span>
 #&gt;     </span><span style="color: #00BBBB;">catn</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"Another successful round of evolution completed!"</span><span style="color: #0000BB;">)</span><span>;
 #&gt; </span><span style="color: #BBBB00;">}</span><span>
 #&gt; 

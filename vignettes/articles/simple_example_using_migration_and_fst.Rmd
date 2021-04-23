@@ -167,12 +167,12 @@ results <- slim_run(script_2, throw_error = TRUE)
 
 ```
 
-Looks like it worked. We can get the resulting genomic data from the returned object and convert it into a genlight object using the `slim_output_genlight()` function. Then we can plot the results.
+Looks like it worked. We can get the resulting genomic data from the returned object and convert it into a genlight object using the `slim_extract_genlight()` function. Then we can plot the results.
 
 ```{r get_dat}
 library(dartR)
 
-inds <- slim_output_genlight(results, "final_output")
+inds <- slim_extract_genlight(results, "final_output")
 plot(inds)
 
 ```
@@ -282,7 +282,7 @@ Let's extract all the genomic data into genlight objects so we can easily calcul
 
 ```{r all_genlight}
 all_gl <- furrr::future_map(all_results,
-                     ~suppressWarnings(suppressMessages(try(slim_output_genlight(.x, "final_output")))),
+                     ~suppressWarnings(suppressMessages(try(slim_extract_genlight(.x, "final_output")))),
                      .progress = TRUE)
 ```
 

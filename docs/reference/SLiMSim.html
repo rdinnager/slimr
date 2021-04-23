@@ -213,7 +213,7 @@ the SLiM documentation for details). Used only when simulating an X chromosome;
 setting a value for this property in other circumstances is an error. Changing
 this will normally affect the fitness values calculated at the end of the
 current generation; if you want current fitness values to be affected, you can
-call SLiMSim’s method recalculateFitness() – but see the documentation of that
+call SLiMSim's method recalculateFitness() - but see the documentation of that
 method for caveats.</p></dd>
 <dt>generation</dt><dd><p>A property of type integer. It is of length one (a singleton).
 This property is a variable, so it is modifiable. <strong>Property Description:</strong>
@@ -231,7 +231,7 @@ nonWF models), "tally" (while tallying mutation reference counts and removing
 fixed mutations), "swap" (while swapping the offspring generation into the
 parental generation in WF models), "end" (during internal bookkeeping after
 each generation), and "console" (during the in-between-generations state in
-which commands in SLiMgui’s Eidos console are executed). It would probably be
+which commands in SLiMgui's Eidos console are executed). It would probably be
 a good idea not to use this latter set of values; they are probably not user-
 visible during ordinary model execution anyway. During execution of initialize()
 callbacks, no SLiMSim object yet exists and so this property cannot be accessed.
@@ -258,8 +258,8 @@ being used in the simulation.</p></dd>
 <dt>modelType</dt><dd><p>A property of type string. It is of length one (a singleton).
 This property is a constant, so it is not modifiable. <strong>Property
 Description:</strong> The type of model being simulated, as specified in
-initializeSLiMModelType(). This will be "WF" for WF models (Wright–Fisher
-models, the default), or "nonWF" for nonWF models (non-Wright–Fisher models; see
+initializeSLiMModelType(). This will be "WF" for WF models (Wright-Fisher
+models, the default), or "nonWF" for nonWF models (non-Wright-Fisher models; see
 section 1.6 for discussion).</p></dd>
 <dt>mutationTypes</dt><dd><p>A property of type MutationType object. This property
 is a constant, so it is not modifiable. <strong>Property Description:</strong> The
@@ -304,12 +304,12 @@ Dictionary class; see the Eidos manual), for another way of attaching state to
 the simulation.</p></dd>
 <dt>verbosity</dt><dd><p>A property of type integer. It is of length one (a singleton).
 This property is a variable, so it is modifiable. <strong>Property Description:</strong>
-The verbosity level, for SLiM’s logging of information about the simulation.
+The verbosity level, for SLiM's logging of information about the simulation.
 This is 1 by default, but can be changed at the command line with the -l[ong]
 option. It is provided here so that scripts can consult it to govern the level
 of verbosity of their own output, or set the verbosity level for particular
-sections of their code. A verbosity level of 0 suppresses most of SLiM’s
-optional output; 2 adds some extra output beyond SLiM’s standard output. See
+sections of their code. A verbosity level of 0 suppresses most of SLiM's
+optional output; 2 adds some extra output beyond SLiM's standard output. See
 sections 19.3 and 20.4 for more information.</p></dd>
 
 

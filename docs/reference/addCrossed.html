@@ -205,14 +205,14 @@ offspring individual is generated from parent1 and parent2 by crossing them. In
 sexual models parent1 must be female and parent2 must be male; in hermaphroditic
 models, parent1 and parent2 are unrestricted. If parent1 and parent2 are the
 same individual in a hermaphroditic model, that parent self-fertilizes, or
-"selfs”, to generate the offspring sexually (note this is not the same as
-clonal reproduction). Such selfing is considered "incidental” by addCrossed(),
+"selfs", to generate the offspring sexually (note this is not the same as
+clonal reproduction). Such selfing is considered "incidental" by addCrossed(),
 however; if the preventIncidentalSelfing flag of initializeSLiMOptions() is
 T, supplying the same individual for parent1 and parent2 is an error (you must
 check for and prevent incidental selfing if you set that flag in a nonWF model).
 If non-incidental selfing is desired, addSelfed() should be used instead.
 The sex parameter specifies the sex of the offspring. A value of NULL means
-"make the default choice”; in non-sexual models it is the only legal value
+"make the default choice"; in non-sexual models it is the only legal value
 for sex, and does nothing, whereas in sexual models it causes male or female
 to be chosen with equal probability. A value of "M" or "F" for sex specifies
 that the offspring should be male or female, respectively. Finally, a float
@@ -256,7 +256,7 @@ core.</p>
 reproduced from the official manual,
 which can be found here: <a href='http://benhaller.com/slim/SLiM_Manual.pdf'>http://benhaller.com/slim/SLiM_Manual.pdf</a>. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>

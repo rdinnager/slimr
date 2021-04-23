@@ -194,18 +194,18 @@ generator with custom Eidos code can be added with addCustomColumn(). LogFile
 expects to be
 fully configured, with calls to add...() methods to add generators, before the
 first row of data is
-written out, to ensure consistency in the file’s data. When the first row of
+written out, to ensure consistency in the file's data. When the first row of
 data is written (or
-buffered), the LogFile’s configuration will then be frozen, and calls to add...
+buffered), the LogFile's configuration will then be frozen, and calls to add...
 () will no longer be
 allowed. Columns will be written, in each row, in the order in which add...()
 calls are made on
-the LogFile, and they will be named in the file’s header line as documented in
+the LogFile, and they will be named in the file's header line as documented in
 those methods. It
 is an error to have two columns with the same name.
 LogFile is a subclass of the Eidos class Dictionary, but unlike other SLiM
 classes that are
-Dictionary subclasses, this does not allow you to attach arbitrary key–value
+Dictionary subclasses, this does not allow you to attach arbitrary key-value
 pairs to the object.
 Instead, LogFile uses its Dictionary-ness to make the data from the last logged
 row available
@@ -213,7 +213,7 @@ through getValue(), using the name of the generator (i.e., the name of the data
 column) as the
 key. One quirk of LogFile is that because its keys are defined by the columns
 that it generates,
-and columns can sometimes contain an NA value, LogFile’s dictionary can, in
+and columns can sometimes contain an NA value, LogFile's dictionary can, in
 effect, contain NULL
 values (representing NA); this is not normally allowed by Dictionary. This
 should cause no trouble;
@@ -249,7 +249,7 @@ This class has the following methods (functions):</p><ul>
 <dt>allKeys</dt><dd><p>A property of type string or string or integer or integer or
 integer. This property is a constant, so it is not modifiable. <strong>Property
 Description:</strong> This Dictionary property has an override in LogFile to return,
-in order, the names of the log file columns, which are the keys for LogFile’s
+in order, the names of the log file columns, which are the keys for LogFile's
 dictionary.</p></dd>
 <dt>filePath</dt><dd><p>A property of type string or string or integer or integer or
 integer. It is of length one (a singleton). This property is a constant, so it

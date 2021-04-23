@@ -30,6 +30,9 @@ reference:
   - title: Run a slimr_script object and return results to R
   - contents:
     - slim_run
+  - title: Extract Output from slimr_results Objects
+  - contents:
+    - starts_with("slim_extract_")
   - title: Work with SLiM recipes from SLiM manual
   - contents:
     - slim_get_recipe

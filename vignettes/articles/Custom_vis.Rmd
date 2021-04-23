@@ -92,10 +92,10 @@ output_test <- slim_run(chromosome_sim_test)
 output_test$output_data
 ```
 
-So now we can write a function that takes the outputted `tibble` and make the desired plot. The first thing we need to do is extract the relevant information from the full output. In this case we only need the information on mutations: their position, and their prevalance in the population. We can use the handy `slimr` function `slim_outputFull_extract(type = "mutation")` for this. This function extracts various pieces of the SLiM `outputFull()` function, which contains all information about a population in a SLiM simulation. In this case, we only need the information for the latest generation. Let's test it:
+So now we can write a function that takes the outputted `tibble` and make the desired plot. The first thing we need to do is extract the relevant information from the full output. In this case we only need the information on mutations: their position, and their prevalance in the population. We can use the handy `slimr` function `slim_extract_full(type = "mutation")` for this. This function extracts various pieces of the SLiM `outputFull()` function, which contains all information about a population in a SLiM simulation. In this case, we only need the information for the latest generation. Let's test it:
 
 ```{r test_data_extract}
-mut_dat <- slim_outputFull_extract(output_test$output_data[nrow(output_test$output_data), ],
+mut_dat <- slim_extract_full(output_test$output_data[nrow(output_test$output_data), ],
                                    "mutations")
 mut_dat
 ```
@@ -129,7 +129,7 @@ Now the final callback function:
 
 ```{r finally_callback}
 make_hilbert <- function(data, max_prev) {
-  mutation_data <- slim_outputFull_extract(data[nrow(data), ], "mutations")
+  mutation_data <- slim_extract_full(data[nrow(data), ], "mutations")
   plot_HC(mutation_data$chrome_pos, mutation_data$prevalence, chrs, bg, max_prev)
   invisible(NULL)
 }

@@ -61,7 +61,7 @@ slim_results_to_data <- function(dat, generations = NULL) {
   res_dat <- dat %>%
     dplyr::mutate("ord" := seq_len(dplyr::n())) %>%
     dplyr::group_by(.data$type, .data$expression) %>%
-    dplyr::group_modify(~slim_output_to_data(.x, unlist(.y$type[1]))) %>%
+    dplyr::group_modify(~slim_extract_to_data(.x, unlist(.y$type[1]))) %>%
     dplyr::ungroup() %>%
     dplyr::arrange(.data$ord) %>%
     dplyr::select(-.data$ord)
@@ -70,7 +70,7 @@ slim_results_to_data <- function(dat, generations = NULL) {
 
 }
 
-slim_output_to_data <- function(dat, type) {
+slim_extract_to_data <- function(dat, type) {
 
   if(type == "slim_output") {
     first_line <- readr::read_lines(dat$data[[1]],
@@ -82,7 +82,7 @@ slim_output_to_data <- function(dat, type) {
 
     res <- switch(output_type,
                   A = purrr::map(purrr::transpose(dat),
-                                 ~slim_outputFull_extract(.x,
+                                 ~slim_extract_full(.x,
                                                           type = "full_individual",
                                                           join = FALSE)),
                   GS = purrr::map(purrr::transpose(dat),
@@ -153,7 +153,7 @@ slim_to_Rob <- function(dat, type) {
 #' @export
 #'
 #' @examples
-slim_outputFull_extract <- function(output_full, type = c("mutations", "individuals",
+slim_extract_full <- function(output_full, type = c("mutations", "individuals",
                                                           "genomes", "coordinates",
                                                           "sexes", "ages", "full_individual"), join = TRUE,
                                     expand_mutations = FALSE) {
@@ -178,7 +178,7 @@ slim_outputFull_extract <- function(output_full, type = c("mutations", "individu
 
   get_one <- function(type, data, generation) {
     purrr::map2_dfr(data, generation,
-                    ~slim_outputFull_extract_one(.x, type, expand_mutations, generation = .y)) %>%
+                    ~slim_extract_full_one(.x, type, expand_mutations, generation = .y)) %>%
       dplyr::select(.data$generation, dplyr::everything())
   }
 
@@ -209,7 +209,7 @@ slim_outputFull_extract <- function(output_full, type = c("mutations", "individu
 
 }
 
-slim_outputFull_extract_one <- function(string, type, expand_mutations, generation) {
+slim_extract_full_one <- function(string, type, expand_mutations, generation) {
 
   if(stringr::str_detect(string, "Ancestral sequence:")) {
     ancs <- TRUE
@@ -491,7 +491,7 @@ slim_outputGS_extract_one <- function(string, type, expand_mutations, generation
 
 
 
-slim_output_individuals <- function(output_data, format = c("genlight", "tibble")) {
+slim_extract_individuals <- function(output_data, format = c("genlight", "tibble")) {
 
   format <- match.arg(format)
 
@@ -500,7 +500,7 @@ slim_output_individuals <- function(output_data, format = c("genlight", "tibble"
   }
 
   dat <- purrr::pmap_dfr(list(output_data$expression, output_data$data, output_data$generation),
-                        ~slim_output_individuals_one(..1, ..2, ..3)) %>%
+                        ~slim_extract_individuals_one(..1, ..2, ..3)) %>%
     dplyr::select(.data$generation, dplyr::everything())
 
   if(format == "genlight") {
@@ -526,12 +526,12 @@ slim_output_individuals <- function(output_data, format = c("genlight", "tibble"
 
 }
 
-slim_output_individuals_one <- function(expression, data, generation) {
+slim_extract_individuals_one <- function(expression, data, generation) {
   if(any(stringr::str_detect(expression, "outputVCF"))) {
     dat <- read_VCF(data)
   } else {
     if(any(stringr::str_detect(expression, "outputFull"))) {
-      dat <- slim_outputFull_extract(dplyr::tibble(generation = generation,
+      dat <- slim_extract_full(dplyr::tibble(generation = generation,
                                                    expression = expression,
                                                    data = data),
                                      c("individuals", "genomes", "mutations"),
@@ -588,22 +588,22 @@ read_VCF <- function(string) {
 #'
 #' @return A \code{genlight} object
 #' @export
-slim_output_genlight <- function(x, ...) {
-  UseMethod("slim_output_genlight", x)
+slim_extract_genlight <- function(x, ...) {
+  UseMethod("slim_extract_genlight", x)
 }
 
 #' @export
-slim_output_genlight.slimr_results_coll <- function(x, name = NULL, by = NULL, ...) {
+slim_extract_genlight.slimr_results_coll <- function(x, name = NULL, by = NULL, ...) {
   if(is.null(names(x))) {
     names(x) <- paste0("rep_", seq_along(x))
   }
-  furrr::future_imap_dfr(x, ~ slim_output_genlight(.x, name = name, by = by, ...) %>%
+  furrr::future_imap_dfr(x, ~ slim_extract_genlight(.x, name = name, by = by, ...) %>%
                        dplyr::mutate(rep = .y),
                        .options = furrr::furrr_options(seed = TRUE))
 }
 
 #' @export
-slim_output_genlight.slimr_results <- function(x, name = NULL, by = NULL, ...) {
+slim_extract_genlight.slimr_results <- function(x, name = NULL, by = NULL, ...) {
 
   assert_package("adegenet")
 
@@ -624,13 +624,13 @@ slim_output_genlight.slimr_results <- function(x, name = NULL, by = NULL, ...) {
                                  class(.x)); .x})
 
     gls <- purrr::map(data_split,
-                      ~slim_output_genlight(.x))
+                      ~slim_extract_genlight(.x))
 
     dat <- dplyr::group_keys(output_data_grouped) %>%
       dplyr::mutate(genlight = gls)
 
   } else {
-    dat <- slim_output_genlight(output_data)
+    dat <- slim_extract_genlight(output_data)
   }
 
   dat
@@ -638,7 +638,7 @@ slim_output_genlight.slimr_results <- function(x, name = NULL, by = NULL, ...) {
 }
 
 #' @export
-slim_output_genlight.slimr_output_data <- function(x, ...) {
+slim_extract_genlight.slimr_output_data <- function(x, ...) {
 
   assert_package("adegenet")
 
@@ -658,7 +658,7 @@ slim_output_genlight.slimr_output_data <- function(x, ...) {
   }
 
   if(nrow(output_full) > 0) {
-    c(alleles, mut_dat) %<-% slim_output_genlight_tibble_full(output_full)
+    c(alleles, mut_dat) %<-% slim_extract_genlight_tibble_full(output_full)
     dat_gen_full <- methods::new("genlight", gen = alleles %>%
                                    dplyr::select(-.data$pop_id, -.data$ind_id) %>%
                                    as.matrix(),
@@ -674,7 +674,7 @@ slim_output_genlight.slimr_output_data <- function(x, ...) {
   if(nrow(output_VCF) > 0) {
 
     rlang::abort("Sorry, VCF output not yet supported.")
-    #dat_VCF <- slim_output_genlight_tibble_VCF(output_VCF)
+    #dat_VCF <- slim_extract_genlight_tibble_VCF(output_VCF)
     # dat_gen_VCF <- methods::new("genlight", gen = alleles %>%
     #                               dplyr::select(-.data$pop_id, -.data$ind_id) %>%
     #                               as.matrix(),
@@ -689,7 +689,7 @@ slim_output_genlight.slimr_output_data <- function(x, ...) {
   }
 
   if(nrow(output_GS) > 0) {
-    c(alleles, mut_dat) %<-% slim_output_genlight_tibble_GS(output_GS)
+    c(alleles, mut_dat) %<-% slim_extract_genlight_tibble_GS(output_GS)
     dat_gen_GS <- methods::new("genlight", gen = alleles %>%
                                    dplyr::select(-.data$ind_id) %>%
                                    as.matrix(),
@@ -738,15 +738,15 @@ slim_output_genlight.slimr_output_data <- function(x, ...) {
 
 }
 
-slim_output_genlight_tibble_full <- function(output_full) {
+slim_extract_genlight_tibble_full <- function(output_full) {
 
-  inds <- slim_outputFull_extract(output_full,
+  inds <- slim_extract_full(output_full,
                                   c("individuals",
                                     "genomes"),
                                   join = TRUE,
                                   expand_mutations = TRUE)
 
-  muts <- slim_outputFull_extract(output_full,
+  muts <- slim_extract_full(output_full,
                                   "mutations")
 
   suppressMessages(
@@ -779,7 +779,7 @@ slim_output_genlight_tibble_full <- function(output_full) {
 
 }
 
-slim_output_genlight_tibble_GS <- function(output_GS) {
+slim_extract_genlight_tibble_GS <- function(output_GS) {
 
   inds <- slim_outputGS_extract(output_GS,
                                 c("genomes"),

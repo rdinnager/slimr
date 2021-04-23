@@ -1,4 +1,7 @@
 test_that("slim_extract_output_data works", {
+
+  skip_on_covr()
+
   test_sim <- slim_script(
     slim_block_init_minimal(),
     slim_block_add_subpops(1, 100),

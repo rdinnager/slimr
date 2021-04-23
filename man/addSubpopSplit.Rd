@@ -58,7 +58,7 @@ individuals has mated to produce offspring, the model is effectively of parental
 individuals in the source subpopulation mating randomly according to fitness,
 as usual in SLiM, with juveniles migrating to the newly added subpopulation.
 Effectively, then, then new subpopulation is created empty, and is filled by
-migrating juveniles from the source subpopulation, in accordance with SLiM’s
+migrating juveniles from the source subpopulation, in accordance with SLiM's
 usual model of juvenile migration.
 }
 \section{Copyright}{
@@ -67,7 +67,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

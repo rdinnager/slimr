@@ -38,7 +38,7 @@ immediately rather than taking effect at the end of the current generation,
 you may call recalculateFitness() to force an immediate recalculation and
 recache. The optional parameter generation provides the generation for which
 fitness() callbacks should be selected; if it is NULL (the default), the
-simulation’s current generation value, sim.generation, is used. If you call
+simulation's current generation value, sim.generation, is used. If you call
 recalculateFitness() in an early() event in a WF model, you may wish this
 to be sim.generation - 1 in order to utilize the fitness() callbacks for the
 previous generation, as if the changes that you have made to fitness-influencing
@@ -65,7 +65,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

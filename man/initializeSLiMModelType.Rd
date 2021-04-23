@@ -31,9 +31,9 @@ benhaller.com/slim/SLiM_Manual.pdf#page=523}{SLiM manual: page 523}.
 
 Configure the type of SLiM model used for the simulation. At present,
 one of two model types may be selected. If modelType is "WF", SLiM will use a
-Wright–Fisher (WF) model; this is the model type that has always been supported
+Wright-Fisher (WF) model; this is the model type that has always been supported
 by SLiM, and is the model type used if initializeSLiMModelType() is not called.
-If modelType is "nonWF", SLiM will use a non-Wright–Fisher (nonWF) model
+If modelType is "nonWF", SLiM will use a non-Wright-Fisher (nonWF) model
 instead; this is a new model type supported by SLiM 3.0 and above (see section
 1.6). If initializeSLiMModelType() is called at all then it must be called
 before any other initialization function, so that SLiM knows from the outset
@@ -45,7 +45,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

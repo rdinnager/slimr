@@ -36,12 +36,12 @@ Enable and configure sex in the simulation. The argument chromosomeType
 gives the type of chromosome to be simulated; this should be "A", "X", or "Y".
 If the chromosomeType is "X", the optional xDominanceCoeff parameter can supply
 the dominance coefficient used when a mutation is present in an XY male, and is
-thus "heterozygous” (but in a different sense than the heterozygosity of an XX
+thus "heterozygous" (but in a different sense than the heterozygosity of an XX
 female with one copy of the mutation). Calling this function has the side effect
 of enabling sex in the simulation; individuals will be male and female (rather
 than hermaphroditic) regardless of the chromosomeType chosen for simulation.
-There is no way to disable sex once it has been enabled; if you don’t want to
-have sex, don’t call this function.
+There is no way to disable sex once it has been enabled; if you don't want to
+have sex, don't call this function.
 }
 \section{Copyright}{
 
@@ -49,7 +49,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

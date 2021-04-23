@@ -39,17 +39,17 @@ benhaller.com/slim/SLiM_Manual.pdf#page=535}{SLiM manual: page 535}.
 Returns T if the genome contains a mutation of type mutType at
 position, F otherwise (if returnMutation has its default value of F; see
 below). This method is, as its name suggests, intended for checking for
-"marker mutations”: mutations of a special mutation type that are not literally
+"marker mutations": mutations of a special mutation type that are not literally
 mutations in the usual sense, but instead are added in to particular genomes
 to mark them as possessing some property. Marker mutations are not typically
-added by SLiM’s mutation-generating machinery; instead they are added explicitly
+added by SLiM's mutation-generating machinery; instead they are added explicitly
 with addNewMutation() or addNewDrawnMutation() at a known, constant position
 in the genome. This method provides a check for whether a marker mutation of a
 given type exists in a particular genome; because the position to check is known
 in advance, that check can be done much faster than the equivalent check with
 containsMutations() or countOfMutationsOfType(), using a binary search of the
 genome. See section 14.4 for one example of a model that uses marker mutations
-– in that case, to mark chromosomes that possess an inversion. If returnMutation
+- in that case, to mark chromosomes that possess an inversion. If returnMutation
 is T (an option added in SLiM 3), this method returns the actual mutation found,
 rather than just T or F. More specifically, the first mutation found of mutType
 at position will be returned; if more than one such mutation exists in the
@@ -62,7 +62,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

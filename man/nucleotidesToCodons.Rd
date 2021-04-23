@@ -42,7 +42,7 @@ them into the corresponding amino acid sequence if desired. The nucleotide
 sequence in sequence may be supplied in any of three formats: a string vector
 with single-letter nucleotides (e.g., "T", "A", "T", "A"), a singleton string
 of nucleotide letters (e.g., "TATA"), or an integer vector of nucleotide
-values (e.g., 3, 0, 3, 0) using SLiM’s standard code of A=0, C=1, G=2, T=3.
+values (e.g., 3, 0, 3, 0) using SLiM's standard code of A=0, C=1, G=2, T=3.
 If the choice of format is not driven by other considerations, such as ease
 of manipulation, then the singleton string format will certainly be the most
 memory-efficient for long sequences, and will probably also be the fastest.
@@ -60,7 +60,7 @@ on disk. The format parameter controls the format of the returned sequence. It
 may be "string" to obtain the generated sequence as a singleton string (e.g.,
 "TATA"), "char" to obtain it as a string vector of single characters (e.g.,
 "T", "A", "T", "A"), or "integer" to obtain it as an integer vector (e.g., 3,
-0, 3, 0), using SLiM’s standard code of A=0, C=1, G=2, T=3. For passing directly
+0, 3, 0), using SLiM's standard code of A=0, C=1, G=2, T=3. For passing directly
 to initializeAncestralNucleotides(), format "string" (a singleton string) will
 certainly be the most memory-efficient, and probably also the fastest. Memory
 efficiency can be a significant consideration; the nucleotide sequence for a
@@ -76,7 +76,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

@@ -16,7 +16,8 @@ slim_make_pop_input(
   mut_dom = NULL,
   mut_pop = NULL,
   mut_gen = NULL,
-  mut_nuc = NULL
+  mut_nuc = NULL,
+  version = 4
 )
 }
 \arguments{
@@ -54,11 +55,17 @@ for the mutation at each loci.}
 
 \item{mut_nuc}{An optional character vector with length equal to \code{nrow(snps)} with the nucleotide of the
 mutation. Should be "A", "C", "G", or "T".}
+
+\item{version}{SLiM output version number to use.}
 }
 \value{
-
+Returns the file name where the population data was saved
 }
 \description{
 Make a SLiM file in the style of \code{outputFull()} which can be read by SLiM. This is useful to
 start a simulation with a particular population state that you define in R
+}
+\examples{
+pop_file <- slim_make_pop_input(matrix(rbinom(1000, 0.25), nrow = 100, ncol = 100))
+cat(readLines(pop_file))
 }

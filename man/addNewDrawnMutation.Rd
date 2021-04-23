@@ -55,7 +55,7 @@ and originSubpop (specified by the Subpopulation object or by integer
 identifier, or by NULL, the default, to specify the subpopulation to which
 the first target genome belongs). If originSubpop is supplied as an integer,
 it is intentionally not checked for validity; you may use arbitrary values
-of originSubpop to "tag” the mutations that you create (see section 24.9.1).
+of originSubpop to "tag" the mutations that you create (see section 24.9.1).
 The selection coefficients of the mutations are drawn from their mutation
 types; addNewMutation() may be used instead if you wish to specify selection
 coefficients. In non-nucleotide-based models, mutationType will always be a non-
@@ -68,7 +68,7 @@ Nucleotides may be specified with string values ("A", "C", "G", or "T"), or
 with integer values (A=0, C=1, G=2, T=3). If a nucleotide mutation already
 exists at the mutating position, it is replaced automatically in accordance with
 the stacking policy for nucleotidebased mutation types. No check is performed
-that a new mutation’s nucleotide differs from the ancestral sequence, or that
+that a new mutation's nucleotide differs from the ancestral sequence, or that
 its selection coefficient is consistent with other mutations that may already
 exist at the given position with the same nucleotide; model consistency is the
 responsibility of the model. Beginning in SLiM 2.5 this method is vectorized,
@@ -99,7 +99,7 @@ upon the old multiplexing behavior will no longer work correctly (but this is
 expected to be an extremely rare pattern of usage). Calling this will normally
 affect the fitness values calculated at the end of the current generation
 (but not sooner); if you want current fitness values to be affected, you can
-call SLiMSim’s method recalculateFitness() – but see the documentation of that
+call SLiMSim's method recalculateFitness() - but see the documentation of that
 method for caveats. Note that in nonWF models that use tree-sequence recording,
 mutations cannot be added to an individual after the generation in which the
 individual is created (i.e., when the age of the individual is greater than 0),
@@ -111,7 +111,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

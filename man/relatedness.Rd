@@ -32,7 +32,7 @@ benhaller.com/slim/SLiM_Manual.pdf#page=545}{SLiM manual: page 545}.
 Returns a vector containing the degrees of relatedness between the
 receiver and each of the individuals in individuals. The relatedness between A
 and B is always 1.0 if A and B are actually the same individual; this facility
-works even if SLiM’s optional pedigree tracking is turned off (in which case
+works even if SLiM's optional pedigree tracking is turned off (in which case
 all other relatedness values will be 0.0. Otherwise, if pedigree tracking is
 turned on with initializeSLiMOptions(keepPedigrees=T), this method will use
 the pedigree information described in section 24.6.1 to construct a relatedness
@@ -54,7 +54,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

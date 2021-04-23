@@ -20,7 +20,7 @@ Section 1.5.5 presents an
 overview of the conceptual role of this class. The subpopulations currently
 defined in the
 simulation are defined as global constants with the same names used in the SLiM
-input file – p1,
+input file - p1,
 p2, and so forth.
 This class has the following methods (functions):
 \itemize{
@@ -161,7 +161,7 @@ each coordinate used by the dimensionality of the simulation, followed by
 maximums for each. In other words, if the declared dimensionality is "xy", the
 spatialBounds property will contain values (x0, y0, x1, y1); bounds for the
 z coordinate will not be included in that case, since that coordinate is not
-used in the simulation’s dimensionality. This property cannot be set, but the
+used in the simulation's dimensionality. This property cannot be set, but the
 setSpatialBounds() method may be used to achieve the same thing. }
 \item{tag}{A property of type integer. It is of length one (a singleton). This
 property is a variable, so it is modifiable. \strong{Property Description:}

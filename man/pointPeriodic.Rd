@@ -36,7 +36,7 @@ spatial boundary, that coordinate is wrapped around the boundary, so that it
 lies inside the spatial extent by the same magnitude that it previously lay
 outside, but on the opposite side of the space; in effect, the two edges of
 the periodic spatial boundary are seamlessly joined. This is done iteratively
-until all coordinates lie inside the subpopulation’s periodic boundaries. Note
+until all coordinates lie inside the subpopulation's periodic boundaries. Note
 that non-periodic spatial boundaries are not enforced by this method; they
 should be enforced using pointReflected(), pointStopped(), or some other means
 of enforcing boundary constraints (which can be used after pointPeriodic() to
@@ -56,7 +56,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

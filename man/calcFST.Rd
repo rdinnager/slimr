@@ -39,21 +39,21 @@ full SLiM script.
 Documentation for this function can be found in the official \href{http://
 benhaller.com/slim/SLiM_Manual.pdf#page=592}{SLiM manual: page 592}.
 
-Calculates the FST between two Genome vectors – typically, but not
+Calculates the FST between two Genome vectors - typically, but not
 necessarily, the genomes that constitute two different subpopulations (which
 we will assume for the purposes of this discussion). In general, higher FST
 indicates greater genetic divergence between subpopulations. The calculation
 is done using only the mutations in muts; if muts is NULL, all mutations
 are used. The muts parameter can therefore be used to calculate the FST only
 for a particular mutation type (by passing only mutations of that type). The
-calculation can be narrowed to apply to only a window – a subrange of the
-full chromosome – by passing the interval bounds [start, end] for the desired
+calculation can be narrowed to apply to only a window - a subrange of the
+full chromosome - by passing the interval bounds [start, end] for the desired
 window. In this case, the vector of mutations used for the calculation will
 be subset to include only mutations within the specified window. The default
 behavior, with start and end of NULL, provides the genome-wide FST, which
 is often used to assess the overall level of genetic divergence between
 sister species or allopatric subpopulations. The code for calcFST() is just
-an Eidos implementation of Wright’s definition of FST: where is the average
+an Eidos implementation of Wright's definition of FST: where is the average
 heterozygosity in the two subpopulations, and is the total heterozygosity
 when both subpopulations are combined. In this implementation, the two genome
 vectors are weighted equally, not weighted by their size. The implementation
@@ -78,7 +78,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

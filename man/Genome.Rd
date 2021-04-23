@@ -66,11 +66,11 @@ one (a singleton). This property is a constant, so it is not modifiable.
 belongs. }
 \item{isNullGenome}{A property of type logical. It is of length one
 (a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} T if the genome is a "null” genome, F if it is
+\strong{Property Description:} T if the genome is a "null" genome, F if it is
 an ordinary genome object. When a sex chromosome (X or Y) is simulated, the
-other sex chromosome also exists in the simulation, but it is a "null” genome
+other sex chromosome also exists in the simulation, but it is a "null" genome
 that does not carry any mutations. Instead, it is a placeholder, present to
-allow SLiM’s code to operate in much the same way as it does when an autosome is
+allow SLiM's code to operate in much the same way as it does when an autosome is
 simulated. Null genomes should not be accessed or manipulated. }
 \item{mutations}{A property of type Mutation object. This property is a
 constant, so it is not modifiable. \strong{Property Description:} All of the

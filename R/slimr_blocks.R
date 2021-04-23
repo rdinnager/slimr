@@ -3,9 +3,15 @@
 #' @param update_every How often to update progress, expressed as the number
 #' of generations after which an update should be tracked.
 #'
-#' @return
+#' @return A \code{slimr_block} object
 #' @export
-slimr_block_progress <- function(update_every = 1) {
+#' @example
+#' slim_script(
+#'   slim_block_init_minimal(),
+#'   slim_block_progress(10),
+#'   slim_block_finish(100)
+#' )
+slim_block_progress <- function(update_every = 1) {
   slim_block(late(), {
     slimr_output(sim.generation, "progress", do_every = !!update_every)
   })
@@ -25,8 +31,14 @@ slimr_block_progress <- function(update_every = 1) {
 #' @param genome_size Genome size of the population, in number of loci.
 #' @param recombination_rate Overall recombination rate.
 #'
+#' @return A \code{slimr_block} object
 #' @export
-slimr_block_init_minimal <- function(mutation_rate = 1e-7,
+#' @example
+#' slim_script(
+#'   slim_block_init_minimal(),
+#'   slim_block_finish(100)
+#' )
+slim_block_init_minimal <- function(mutation_rate = 1e-7,
                                    dominance = 0.5,
                                    selection = 0.0,
                                    dist_type = "f",
@@ -42,4 +54,24 @@ slimr_block_init_minimal <- function(mutation_rate = 1e-7,
     initializeRecombinationRate(!!rlang::enexpr(recombination_rate));
   })
 
+}
+
+#' Generate simulationFinished Block
+#'
+#' This generates a simple block to end a SLiM simulation.
+#'
+#' @param generation Generation to end the simulation at.
+#'
+#' @return A \code{slimr_block} object
+#' @export
+#'
+#' @examples
+#' slim_script(
+#'   slim_block_init_minimal(),
+#'   slim_block_finish(100)
+#' )
+slim_block_finish <- function(generation) {
+  slim_block(!!generation, {
+    sim.simulationFinished()
+  })
 }

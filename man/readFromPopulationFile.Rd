@@ -31,7 +31,7 @@ benhaller.com/slim/SLiM_Manual.pdf#page=569}{SLiM manual: page 569}.
 
 Read from a population initialization file, whether in text or binary
 format as previously specified to outputFull(), and return the generation
-counter value represented by the file’s contents (i.e., the generation at which
+counter value represented by the file's contents (i.e., the generation at which
 the file was generated). Although this is most commonly used to set up initial
 populations (often in an Eidos event set to run in generation 1, immediately
 after simulation initialization), it may be called in any Eidos event; the
@@ -64,17 +64,17 @@ method changes the generation counter to the generation read from the file.
 If you do not want the generation counter to be changed, you can change it
 back after reading, by setting sim.generation to whatever value you wish. Note
 that restoring a saved past state and running forward again will not yield the
-same simulation results, because the random number generator’s state will not
+same simulation results, because the random number generator's state will not
 be the same; to ensure reproducibility from a given time point, setSeed() can
-be used to establish a new seed value. Any changes made to the simulation’s
+be used to establish a new seed value. Any changes made to the simulation's
 structure (mutation types, genomic element types, etc.) will not be wiped
 and re-established by readFromPopulationFile(); this method loads only the
-population’s state, not the simulation configuration, so care should be taken
+population's state, not the simulation configuration, so care should be taken
 to ensure that the simulation structure meshes coherently with the loaded data.
 Indeed, state such as the selfing and cloning rates of subpopulations, values
 set into tag properties, and values set onto objects with setValue() will also
 be lost, since it is not saved out by outputFull(). Only information saved by
-outputFull() will be restored; all other state associated with the simulation’s
+outputFull() will be restored; all other state associated with the simulation's
 subpopulations, individuals, genomes, mutations, and substitutions will be lost,
 and should be re-established by the model if it is still needed. As of SLiM
 2.3, this method will read and restore the spatial positions of individuals if
@@ -96,7 +96,7 @@ in the output file. Loading an output file that contains nucleotide information
 in a non-nucleotide-based model, and vice versa, will produce an error. As of
 SLiM 3.5, this method will read and restore the pedigree IDs of individuals and
 genomes if that information is present in the output file (as requested with
-outputFull(pedigreeIDs=T)) and if SLiM’s optional pedigree tracking has been
+outputFull(pedigreeIDs=T)) and if SLiM's optional pedigree tracking has been
 turned on with initializeSLiMOptions(keepPedigrees=T). This method can also be
 used to read tree-sequence (.trees) files saved by treeSeqOutput() or generated
 by the Python pyslim package. When loading a tree sequence, a crosscheck of
@@ -115,7 +115,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

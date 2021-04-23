@@ -19,7 +19,7 @@ This class represents a type of genomic element, with particular
 mutation types. The genomic
 element types currently defined in the simulation are defined as global
 constants with the same
-names used in the SLiM input file – g1, g2, and so forth. Section 1.5.4 presents
+names used in the SLiM input file - g1, g2, and so forth. Section 1.5.4 presents
 an overview of the
 conceptual role of this class.
 This class has the following methods (functions):
@@ -34,7 +34,7 @@ property is a variable, so it is modifiable. \strong{Property Description:}
 The color used to display genomic elements of this type in SLiMgui. Outside
 of SLiMgui, this property still exists, but is not used by SLiM. Colors may be
 specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see the
-Eidos manual). If color is the empty string, "", SLiMgui’s default color scheme
+Eidos manual). If color is the empty string, "", SLiMgui's default color scheme
 is used; this is the default for new GenomicElementType objects. }
 \item{id}{A property of type integer. It is of length one (a singleton). This
 property is a constant, so it is not modifiable. \strong{Property Description:}

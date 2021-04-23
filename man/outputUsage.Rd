@@ -28,7 +28,7 @@ full SLiM script.
 Documentation for this function can be found in the official \href{http://
 benhaller.com/slim/SLiM_Manual.pdf#page=569}{SLiM manual: page 569}.
 
-Output the current memory usage of the simulation to Eidos’s output
+Output the current memory usage of the simulation to Eidos's output
 stream. The specifics of what is printed, and in what format, should not be
 relied upon as they may change from version to version of SLiM. This method
 is primarily useful for understanding where the memory usage of a simulation
@@ -44,7 +44,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

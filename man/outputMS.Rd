@@ -41,7 +41,7 @@ of Genome objects (the Eidos function sample() may be useful for constructing
 custom samples, as may the SLiM class Individual). For output of a sample
 from a single Subpopulation, the outputMSSample() of Subpopulation may be
 more straightforward to use. If the optional parameter filePath is NULL (the
-default), output is directed to SLiM’s standard output. Otherwise, the output
+default), output is directed to SLiM's standard output. Otherwise, the output
 is sent to the file specified by filePath, overwriting that file if append if F,
 or appending to the end of it if append is T. Positions in the output will span
 the interval [0,1]. If filterMonomorphic is F (the default), all mutations that
@@ -61,7 +61,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

@@ -62,7 +62,7 @@ requestedSex; passing "*", the default, indicates that genomes from individuals
 should be selected randomly, without respect to sex. If the sampling options
 provided by this method are not adequate, see the outputMS() method of Genome
 for a more flexible low-level option. If the optional parameter filePath is NULL
-(the default), output will be sent to Eidos’s output stream (see section 4.2.1).
+(the default), output will be sent to Eidos's output stream (see section 4.2.1).
 Otherwise, output will be sent to the filesystem path specified by filePath,
 overwriting that file if append if F, or appending to the end of it if append
 is T. If filterMonomorphic is F (the default), all mutations that are present
@@ -82,7 +82,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

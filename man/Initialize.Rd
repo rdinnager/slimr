@@ -19,7 +19,7 @@ Before a SLiM simulation can be run, the various classes underlying the
 simulation need to be
 set up with an initial configuration. In SLiM 1.8 and earlier, this was done by
 means of # directives
-in the simulation’s input file. In SLiM 2 and later, simulation parameters are
+in the simulation's input file. In SLiM 2 and later, simulation parameters are
 instead configured
 using Eidos.
 Configuration in Eidos is done in initialize() callbacks that run prior to the

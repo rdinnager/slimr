@@ -58,7 +58,7 @@ acid, such as "L" "Y" "A" "T" "I" (when long is F) or "Leu" "Tyr" "Ala" "Thr"
 "Ile" (when long is T). Using the paste=T option is considerably faster than
 using paste() in script. This function interprets the supplied codon sequence
 as the sense strand (i.e., the strand that is not transcribed, and which mirrors
-the mRNA’s sequence). This uses the standard DNA codon table directly. For
+the mRNA's sequence). This uses the standard DNA codon table directly. For
 example, if the nucleotide sequence is CAA TTC, that will correspond to a codon
 vector of 16 61, and will result in the amino acid sequence Gln-Phe ("QF").
 (is)codonsToNucleotides(integer codons, [string$ format = "string"]) Returns
@@ -69,7 +69,7 @@ encoding. The format parameter controls the format of the returned sequence. It
 may be "string" to obtain the sequence as a singleton string (e.g., "TATACG"),
 "char" to obtain it as a string vector of single characters (e.g., "T", "A",
 "T", "A", "C", "G"), or "integer" to obtain it as an integer vector (e.g., 3, 0,
-3, 0, 1, 2), using SLiM’s standard code of A=0, C=1, G=2, T=3.
+3, 0, 1, 2), using SLiM's standard code of A=0, C=1, G=2, T=3.
 }
 \section{Copyright}{
 
@@ -77,7 +77,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

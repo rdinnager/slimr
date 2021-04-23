@@ -38,7 +38,7 @@ properties (if those properties are encompassed by the spatial dimensionality
 of the simulation). In other words, if the declared dimensionality is "xy",
 calling individual.setSpatialPosition(c(1.0, 0.5)) property is equivalent to
 individual.x = 1.0; individual.y = 0.5; individual.z is not set (even if a third
-value is supplied in position) since it is not encompassed by the simulation’s
+value is supplied in position) since it is not encompassed by the simulation's
 dimensionality in this example. Note that this is an Eidos class method,
 somewhat unusually, which allows it to work in a special way when called on a
 vector of individuals. When the target vector of individuals is non-singleton,
@@ -59,7 +59,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

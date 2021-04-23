@@ -39,7 +39,7 @@ explicitly using the setSelectionCoeff() method if so desired. The mutation
 type of a mutation is normally a constant in simulations, so be sure you know
 what you are doing. Changing this will normally affect the fitness values
 calculated at the end of the current generation; if you want current fitness
-values to be affected, you can call SLiMSim’s method recalculateFitness() – but
+values to be affected, you can call SLiMSim's method recalculateFitness() - but
 see the documentation of that method for caveats. In nucleotide-based models,
 a restriction applies: nucleotide-based mutations may not be changed to a non-
 nucleotide-based mutation type, and non-nucleotide-based mutations may not be
@@ -51,7 +51,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

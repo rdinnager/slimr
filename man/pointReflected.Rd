@@ -33,7 +33,7 @@ the spatial boundaries of the subpopulation by reflection. In brief, if
 a coordinate of point lies beyond a spatial boundary, that coordinate is
 reflected across the boundary, so that it lies inside the boundary by the
 same magnitude that it previously lay outside the boundary. This is done
-iteratively until all coordinates lie inside the subpopulation’s boundaries.
+iteratively until all coordinates lie inside the subpopulation's boundaries.
 This method is useful for implementing reflecting boundary conditions. This
 may only be called in simulations for which continuous space has been enabled
 with initializeSLiMOptions(). The length of point must be an exact multiple of
@@ -48,7 +48,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

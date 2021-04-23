@@ -32,7 +32,7 @@ benhaller.com/slim/SLiM_Manual.pdf#page=536}{SLiM manual: page 536}.
 Return a float vector with the frequencies of all of the Mutation
 objects passed in mutations, within the target Genome vector. If the optional
 mutations argument is NULL (the default), frequencies will be returned for all
-of the active Mutation objects in the simulation – the same Mutation objects,
+of the active Mutation objects in the simulation - the same Mutation objects,
 and in the same order, as would be returned by the mutations property of sim, in
 other words. See the +mutationCountsInGenomes() method to obtain integer counts
 instead of float frequencies. See also the SLiMSim methods mutationCounts()
@@ -45,7 +45,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

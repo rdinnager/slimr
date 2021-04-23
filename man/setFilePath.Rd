@@ -49,7 +49,7 @@ be supplied, which will either replace any existing file or will be appended to
 it, depending upon the value of append. New values may be supplied for compress
 and sep; the meaning of these parameters is identical to their meaning in
 createLogFile(), except that a value of NULL for these means "do not change this
-setting from its previous value”. In effect, then, this method lets you start
+setting from its previous value". In effect, then, this method lets you start
 a completely new log file at a new path, without having to create and configure
 a new LogFile object. The new file will be created (or appended) synchronously,
 with the specified initial contents.
@@ -60,7 +60,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

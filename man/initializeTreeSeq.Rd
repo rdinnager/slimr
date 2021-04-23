@@ -55,14 +55,14 @@ benhaller.com/slim/SLiM_Manual.pdf#page=525}{SLiM manual: page 525}.
 
 Configure options for tree sequence recording. Calling this
 function turns on tree sequence recording, as a side effect, for later
-reconstruction of the simulation’s evolutionary dynamics; if you do not
+reconstruction of the simulation's evolutionary dynamics; if you do not
 want tree sequence recording to be enabled, do not call this function.
 The recordMutations flag controls whether information about individual
 mutations is recorded or not. Such recording takes time and memory, and
 so can be turned off if only the tree sequence itself is needed, but it
 is turned on by default since mutation recording is generally useful. The
 simplificationRatio and simplificationInterval parameters control how often
-automatic simplification of the recorded tree sequence occurs. This is a speed–
+automatic simplification of the recorded tree sequence occurs. This is a speed-
 memory tradeoff: more frequent simplification (lower simplificationRatio
 or smaller simplificationInterval) means the stored tree sequences will use
 less memory, but at a cost of somewhat longer run times. Conversely, a larger
@@ -77,14 +77,14 @@ are NULL) thus requests that SLiM try to find a generation interval such that
 the maximum size of the stored tree sequences is ten times the size after
 simplification. INF may be supplied to indicate that automatic simplification
 should never occur; 0 may be supplied to indicate that automatic simplification
-should be performed at the end of every generation. Alternatively – the second
-option – simplificationRatio may be NULL and simplificationInterval may be
+should be performed at the end of every generation. Alternatively - the second
+option - simplificationRatio may be NULL and simplificationInterval may be
 set to the interval, in generations, between simplifications. This may provide
 more reliable performance, but the interval must be chosen carefully to avoid
 exceeding the available memory. The simplificationInterval value may be a
 very large number to specify that simplification should never occur (not INF,
 though, since it is an integer value), or 1 to simplify every generation.
-Finally – the third option – both parameters may be non-NULL, in which case
+Finally - the third option - both parameters may be non-NULL, in which case
 simplificationRatio is used as described above, while simplificationInterval
 provides the initial interval first used by SLiM (and then subsequently
 increased or decreased to try to match the requested simplification ratio). The
@@ -100,7 +100,7 @@ will call treeSeqCoalesced() to check for coalescence during its execution,
 checkCoalescence should be set to T. Since the coalescence checks entail
 a performance penalty, the default of F is preferable otherwise. See the
 documentation for treeSeqCoalesced() for further discussion. The runCrosschecks
-parameter controls whether cross-checks between SLiM’s internal data structures
+parameter controls whether cross-checks between SLiM's internal data structures
 and the tree-sequence recording data structures will be conducted. These two
 sets of data structures record much the same thing (mutations in genomes), but
 using completely different representations, so such cross-checks can be useful
@@ -111,7 +111,7 @@ The retainCoalescentOnly parameter controls how, exactly, simplification of
 the tree-sequence data is performed in SLiM (both for auto-simplification
 and for calls to treeSeqSimplify()). More specifically, this parameter
 controls the behavior of simplification for individuals and genomes that have
-been "retained” by calling treeSeqRememberIndividuals() with the parameter
+been "retained" by calling treeSeqRememberIndividuals() with the parameter
 permanent=F. The default of retainCoalescentOnly=T helps to keep the number
 of retained individuals relatively small, which is helpful if your simulation
 regularly flags many individuals for retaining. In this case, changing
@@ -126,7 +126,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

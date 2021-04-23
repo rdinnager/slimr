@@ -70,8 +70,8 @@ initializeGeneConversion(), this property will be unavailable. }
 \item{geneConversionSimpleConversionFraction}{A property of type float. It is of
 length one (a singleton). This property is a constant, so it is not modifiable.
 \strong{Property Description:} The fraction of gene conversion tracts that
-are "simple” (i.e., not involving resolution of heteroduplex mismatches);
-the remainder will be "complex”. When gene conversion has not been enabled by
+are "simple" (i.e., not involving resolution of heteroduplex mismatches);
+the remainder will be "complex". When gene conversion has not been enabled by
 calling initializeGeneConversion(), this property will be unavailable. }
 \item{genomicElements}{A property of type GenomicElement object. This property
 is a constant, so it is not modifiable. \strong{Property Description:} All of

@@ -70,7 +70,7 @@ spatial map as seen in SLiMgui. This is a change in behavior from versions
 prior to SLiM 3.5; it ensures that images loaded from disk with the Eidos class
 Image can be used directly as spatial maps, achieving the expected orientation,
 with no need for transposition or flipping. If the spatial map is a three-
-dimensional array, it is read as successive z-axis "planes”, each of which is
+dimensional array, it is read as successive z-axis "planes", each of which is
 a two-dimensional matrix that is treated as described above. Moving on to the
 other parameters of defineSpatialMap(): if interpolate is F, values across the
 spatial map are not interpolated; the value at a given point is equal to the
@@ -117,7 +117,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

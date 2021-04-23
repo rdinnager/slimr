@@ -29,7 +29,7 @@ full SLiM script.
 Documentation for this function can be found in the official \href{http://
 benhaller.com/slim/SLiM_Manual.pdf#page=591}{SLiM manual: page 591}.
 
-Returns a mutation matrix representing a Jukes–Cantor (1969) model with
+Returns a mutation matrix representing a Jukes-Cantor (1969) model with
 mutation rate alpha to each possible alternative nucleotide at a site: This 2×2
 matrix is suitable for use with initializeGenomicElementType(). Note that the
 actual mutation rate produced by this matrix is 3*alpha.
@@ -40,7 +40,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

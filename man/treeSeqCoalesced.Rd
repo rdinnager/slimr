@@ -32,7 +32,7 @@ Returns the coalescence state for the recorded tree sequence at
 the last simplification. The returned value is a logical singleton flag,
 T to indicate that full coalescence was observed at the last treesequence
 simplification (meaning that there is a single ancestral individual that roots
-all ancestry trees at all sites along the chromosome – although not necessarily
+all ancestry trees at all sites along the chromosome - although not necessarily
 the same ancestor at all sites), or F if full coalescence was not observed. For
 simple models, reaching coalescence may indicate that the model has reached an
 equilibrium state, but this may not be true in models that modify the dynamics
@@ -43,7 +43,7 @@ require burn-in beyond coalescence to reach equilibrium, or may not have an
 equilibrium state at all. Also note that some actions by a model, such as adding
 a new subpopulation, may cause the coalescence state to revert from T back
 to F (at the next simplification), so a return value of T may not necessarily
-mean that the model is coalesced at the present moment – only that it was
+mean that the model is coalesced at the present moment - only that it was
 coalesced at the last simplification. This method may only be called if tree
 sequence recording has been turned on with initializeTreeSeq(); in addition,
 checkCoalescence=T must have been supplied to initializeTreeSeq(), so that the
@@ -62,7 +62,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

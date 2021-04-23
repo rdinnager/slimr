@@ -36,7 +36,7 @@ Read new mutations from the MS format file at filePath and add them
 to the target genomes. The number of target genomes must match the number
 of genomes represented in the MS file. To read into all of the genomes in
 a given subpopulation pN, simply call pN.genomes.readFromMS(), assuming the
-subpopulation’s size matches that of the MS file. A vector containing all of the
+subpopulation's size matches that of the MS file. A vector containing all of the
 mutations created by readFromMS() is returned. Each mutation is created at the
 position specified in the file, using the mutation type given by mutationType.
 Positions are expected to be in [0,1], and are scaled to the length of the
@@ -58,7 +58,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

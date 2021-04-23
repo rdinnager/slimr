@@ -37,19 +37,19 @@ full SLiM script.
 Documentation for this function can be found in the official \href{http://
 benhaller.com/slim/SLiM_Manual.pdf#page=594}{SLiM manual: page 594}.
 
-Calculates Watterson’s theta (a metric of genetic diversity comparable
+Calculates Watterson's theta (a metric of genetic diversity comparable
 to heterozygosity) for a vector of genomes, based upon the mutations in the
 genomes. Often genomes will be all of the genomes in a subpopulation, or in
 the entire population, but any genome vector may be used. By default, with
 muts=NULL, the calculation is based upon all mutations in the simulation; the
 calculation can instead be based upon a subset of mutations, such as mutations
 of a specific mutation type, by passing the desired vector of mutations for
-muts. The calculation can be narrowed to apply to only a window – a subrange
-of the full chromosome – by passing the interval bounds [start, end] for the
+muts. The calculation can be narrowed to apply to only a window - a subrange
+of the full chromosome - by passing the interval bounds [start, end] for the
 desired window. In this case, the vector of mutations used for the calculation
 will be subset to include only mutations within the specified window. The
 default behavior, with start and end of NULL, provides the genome-wide
-Watterson’s theta. The implementation of calcWattersonsTheta(), viewable with
+Watterson's theta. The implementation of calcWattersonsTheta(), viewable with
 functionSource(), treats every mutation as independent in the heterozygosity
 calculations. One could regard this choice as embodying an infinite-sites
 interpretation of the segregating mutations, as with calcHeterozygosity(). In
@@ -64,7 +64,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

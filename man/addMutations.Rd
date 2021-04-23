@@ -34,7 +34,7 @@ if the addition is not prevented by the mutation stacking policy (see the
 mutationStackPolicy property of MutationType, section 24.10.1). Calling this
 will normally affect the fitness values calculated at the end of the current
 generation; if you want current fitness values to be affected, you can call
-SLiMSim’s method recalculateFitness() – but see the documentation of that
+SLiMSim's method recalculateFitness() - but see the documentation of that
 method for caveats. Note that in nonWF models that use tree-sequence recording,
 mutations cannot be added to an individual after the generation in which the
 individual is created (i.e., when the age of the individual is greater than 0),
@@ -46,7 +46,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

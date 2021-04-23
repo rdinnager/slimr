@@ -51,7 +51,7 @@ and runtime. Supplying F for permanent will instead mark the individuals only
 for (temporary) retention: their genomes will not be added to the sample, and
 they will appear in the final tree sequence only if one of their genomes is
 retained across simplification. In other words, the rule of thumb for retained
-individuals is simple: if a genome is kept by simplification, the genome’s
+individuals is simple: if a genome is kept by simplification, the genome's
 corresponding individual is kept also, if it is retained. Note that permanent
 remembering takes priority; calling this function with permanent=F on an
 individual that has previously been permanently remembered will not remove it
@@ -68,7 +68,7 @@ may be useful to retain a genome and its associated individual when it is
 simply an intermediate node in the ancestry (i.e., in the middle of a branch).
 This can be enabled by setting retainCoalescentOnly to F in your call to
 initializeTreeSeq(). In this case, ancestral genomes that are intermediate
-("unary nodes”, in tskit parlance) and are within an individual that has been
+("unary nodes", in tskit parlance) and are within an individual that has been
 retained using the permanent=F flag here are kept, along with the retained
 individual itself. Since setting retainCoalescentOnly to F will prevent the
 unary nodes for retained individuals from being pruned, simplification may
@@ -83,7 +83,7 @@ at either (a) the final generation, if the individual is alive at the end of
 the simulation, or (b) the last time that the individual was remembered, if
 not. Calling treeSeqRememberIndividuals() on an individual that is already
 remembered will cause the archived information about the remembered individual
-to be updated to reflect the individual’s current state; care should be taken
+to be updated to reflect the individual's current state; care should be taken
 to remember individuals at a point in time when their state is valid. A case
 where this is particularly important is for the spatial location of individuals
 in continuous-space models. SLiM automatically retains the portions of the
@@ -99,7 +99,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

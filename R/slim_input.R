@@ -26,14 +26,18 @@
 #' for the mutation at each loci.
 #' @param mut_nuc An optional character vector with length equal to \code{nrow(snps)} with the nucleotide of the
 #' mutation. Should be "A", "C", "G", or "T".
+#' @param version SLiM output version number to use.
 #'
-#' @return
+#' @return Returns the file name where the population data was saved
 #' @export
 #'
 #' @examples
+#' pop_file <- slim_make_pop_input(matrix(rbinom(1000, 0.25), nrow = 100, ncol = 100))
+#' cat(readLines(pop_file))
 slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, ind_pops = NULL,
                                 ind_sex = NULL, mut_pos = NULL, mut_type = NULL, mut_sel = NULL,
-                                mut_dom = NULL, mut_pop = NULL, mut_gen = NULL, mut_nuc = NULL) {
+                                mut_dom = NULL, mut_pop = NULL, mut_gen = NULL, mut_nuc = NULL,
+                                version = 4) {
 
   if(inherits(snps, "genlight")) {
     snps <- as.matrix(snps)
@@ -63,11 +67,13 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
   }
 
   first_line <- glue::glue("#OUT {sim_gen} A")
-  line_2 <- if(is.null(ind_age)) {
-    "Version: 3"
-  } else {
-    "Version: 4"
-  }
+  # line_2 <- if(is.null(ind_age)) {
+  #   "Version: 3"
+  # } else {
+  #   "Version: 4"
+  # }
+
+  line_2 <- paste0("Version: ", version)
 
   if(is.null(ind_pops)) {
     ind_pops <-  rep("p1", n_inds)

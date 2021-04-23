@@ -38,7 +38,7 @@ More specifically, this method returns only individuals which can exert an
 interaction upon the focal individual; it does not include individuals that only
 feel an interaction from the focal individual. To obtain all of the interacting
 individuals within the maximum interaction distance of individual, simply pass
-a value for count that is greater than or equal to the size of individual’s
+a value for count that is greater than or equal to the size of individual's
 subpopulation. Note that if fewer than count interacting individuals are within
 the maximum interaction distance, the vector returned may be shorter than count,
 or even zero-length; it is important to check for this possibility even when
@@ -56,7 +56,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

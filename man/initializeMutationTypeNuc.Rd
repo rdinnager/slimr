@@ -40,7 +40,7 @@ benhaller.com/slim/SLiM_Manual.pdf#page=522}{SLiM manual: page 522}.
 
 Add a nucleotide-based mutation type at initialization time. This
 function is identical to initializeMutationType() except that the new mutation
-type will be nucleotide-based – in other words, mutations belonging to the
+type will be nucleotide-based - in other words, mutations belonging to the
 new mutation type will have an associated nucleotide. This function may be
 called only in nucleotide-based models (as enabled by the nucleotideBased
 parameter to initializeSLiMOptions()). Nucleotide-based mutations always use
@@ -57,7 +57,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

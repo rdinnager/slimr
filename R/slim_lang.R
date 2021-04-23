@@ -39,7 +39,7 @@
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -77,7 +77,7 @@ initializeAncestralNucleotides <- function(sequence) {
 #'@family Initialize
 #'@return An object of type void.
 #'@details Calling this function switches the recombination model from a "simple
-#'crossover” model to a "double-stranded break (DSB)” model, and configures
+#'crossover" model to a "double-stranded break (DSB)" model, and configures
 #'the details of the gene conversion tracts that will therefore be modeled (see
 #'section 1.5.6 for discussion of these models). The fraction of DSBs that will
 #'be modeled as non-crossover events is given by nonCrossoverFraction. The mean
@@ -85,8 +85,8 @@ initializeAncestralNucleotides <- function(sequence) {
 #'crossover events) is given by meanLength; the actual extent of a gene conversion
 #'tract will be the sum of two independent draws from a geometric distribution
 #'with mean meanLength/2. The fraction of gene conversion tracts that are modeled
-#'as "simple” is given by simpleConversionFraction; the remainder will be modeled
-#'as "complex”, involving repair of heteroduplex mismatches. Finally, the GC bias
+#'as "simple" is given by simpleConversionFraction; the remainder will be modeled
+#'as "complex", involving repair of heteroduplex mismatches. Finally, the GC bias
 #'during heteroduplex mismatch repair is given by bias, with the default of 0.0
 #'indicating no bias, 1.0 indicating an absolute preference for G/C mutations
 #'over A/T mutations, and -1.0 indicating an absolute preference for A/T mutations
@@ -98,7 +98,7 @@ initializeAncestralNucleotides <- function(sequence) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -154,7 +154,7 @@ simpleConversionFraction, bias)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -209,7 +209,7 @@ initializeGenomicElement <- function(genomicElementType, start, end) {
 #'case, mutationMatrix should take one of two standard forms. For sequence-based
 #'mutation rates that depend upon only the single nucleotide at a mutation site,
 #'mutationMatrix should be a 4×4 float matrix, specifying mutation rates for an
-#'existing nucleotide state (rows from 0– 3 representing A/C/G/T) to each of the
+#'existing nucleotide state (rows from 0- 3 representing A/C/G/T) to each of the
 #'four possible derived nucleotide states (columns, with the same meaning): The
 #'mutation rates in this matrix are absolute rates, per nucleotide per generation;
 #'they will be used by SLiM directly unless they are multiplied by a factor from
@@ -224,15 +224,15 @@ initializeGenomicElement <- function(genomicElementType, start, end) {
 #'adjacent bases to the left and right, in other words, as well as the mutating
 #'nucleotide itself), mutationMatrix should be a 64×4 float matrix, specifying
 #'mutation rates for the central nucleotide of an existing trinucleotide sequence
-#'(rows from 0–63, representing trinucleotides as described in the documentation
+#'(rows from 0-63, representing trinucleotides as described in the documentation
 #'for the ancestralNucleotides() method of Chromosome) to each of the four
-#'possible derived nucleotide states (columns from 0–3 for A/C/G/T as before):
+#'possible derived nucleotide states (columns from 0-3 for A/C/G/T as before):
 #'Note that in every case it is the central nucleotide of the trinucleotide
 #'sequence that is mutating, but rates can be specified independently based
 #'upon the nucleotides in the first and third positions as well, with this type
 #'of mutation matrix. Several helper functions are defined to construct common
 #'types of mutation matrices, such as mmJukesCantor() to create a mutation matrix
-#'for a Jukes–Cantor model; see section 24.16.1. See chapter 18 for practical
+#'for a Jukes-Cantor model; see section 24.16.1. See chapter 18 for practical
 #'examples of mutation matrices, and section 22.2.3 for further discussion of the
 #'mutational paradigm in nucleotide-based models. * PA→C PA→G PA→T PC→A * PC→G
 #'PC→T PG→A PG→C * PG→T PT→A PT→C PT→G * * PAAA→ACA PAAA→AGA PAAA→ATA * PAAC→ACC
@@ -245,7 +245,7 @@ initializeGenomicElement <- function(genomicElementType, start, end) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -322,7 +322,7 @@ mutationMatrix)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -435,7 +435,7 @@ initializeHotspotMap <- function(multipliers, ends, sex) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -520,7 +520,7 @@ sexSegregation)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -590,7 +590,7 @@ initializeMutationRate <- function(rates, ends, sex) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -629,7 +629,7 @@ initializeMutationType <- function(id, dominanceCoeff, distributionType, ...)
 #'singleton)
 #'@details Add a nucleotide-based mutation type at initialization time. This
 #'function is identical to initializeMutationType() except that the new mutation
-#'type will be nucleotide-based – in other words, mutations belonging to the
+#'type will be nucleotide-based - in other words, mutations belonging to the
 #'new mutation type will have an associated nucleotide. This function may be
 #'called only in nucleotide-based models (as enabled by the nucleotideBased
 #'parameter to initializeSLiMOptions()). Nucleotide-based mutations always use
@@ -644,7 +644,7 @@ initializeMutationType <- function(id, dominanceCoeff, distributionType, ...)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -730,7 +730,7 @@ distributionType, ...) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -766,18 +766,18 @@ initializeRecombinationRate <- function(rates, ends, sex) {
 #'gives the type of chromosome to be simulated; this should be "A", "X", or "Y".
 #'If the chromosomeType is "X", the optional xDominanceCoeff parameter can supply
 #'the dominance coefficient used when a mutation is present in an XY male, and is
-#'thus "heterozygous” (but in a different sense than the heterozygosity of an XX
+#'thus "heterozygous" (but in a different sense than the heterozygosity of an XX
 #'female with one copy of the mutation). Calling this function has the side effect
 #'of enabling sex in the simulation; individuals will be male and female (rather
 #'than hermaphroditic) regardless of the chromosomeType chosen for simulation.
-#'There is no way to disable sex once it has been enabled; if you don’t want to
-#'have sex, don’t call this function.
+#'There is no way to disable sex once it has been enabled; if you don't want to
+#'have sex, don't call this function.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -809,9 +809,9 @@ initializeSex <- function(chromosomeType, xDominanceCoeff) {
 #'@return An object of type void.
 #'@details Configure the type of SLiM model used for the simulation. At present,
 #'one of two model types may be selected. If modelType is "WF", SLiM will use a
-#'Wright–Fisher (WF) model; this is the model type that has always been supported
+#'Wright-Fisher (WF) model; this is the model type that has always been supported
 #'by SLiM, and is the model type used if initializeSLiMModelType() is not called.
-#'If modelType is "nonWF", SLiM will use a non-Wright–Fisher (nonWF) model
+#'If modelType is "nonWF", SLiM will use a non-Wright-Fisher (nonWF) model
 #'instead; this is a new model type supported by SLiM 3.0 and above (see section
 #'1.6). If initializeSLiMModelType() is called at all then it must be called
 #'before any other initialization function, so that SLiM knows from the outset
@@ -821,7 +821,7 @@ initializeSex <- function(chromosomeType, xDominanceCoeff) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -874,13 +874,13 @@ initializeSLiMModelType <- function(modelType) {
 #'is T, SLiM will keep pedigree information for every individual in the
 #'simulation, tracking the identity of its parents and grandparents. This
 #'allows individuals to assess their degree of pedigree-based relatedness to
-#'other individuals (see Individual’s relatedness() method, section 24.6.2), as
-#'well as allowing a model to find "trios” (two parents and an offspring they
+#'other individuals (see Individual's relatedness() method, section 24.6.2), as
+#'well as allowing a model to find "trios" (two parents and an offspring they
 #'generated) using the pedigree properties of Individual (section 24.6.1). As a
 #'side effect of keepPedigrees being T, the pedigreeID, pedigreeParentIDs, and
 #'pedigreeGrandparentIDs properties of Individual will have defined values (see
 #'section 24.6.1), as will the genomePedigreeID property of Genome (see section
-#'24.3.1). Note that pedigree-based relatedness doesn’t necessarily correspond
+#'24.3.1). Note that pedigree-based relatedness doesn't necessarily correspond
 #'to genetic relatedness, due to effects such as assortment and recombination.
 #'For an overview of other ways of tracking genetic ancestry, including true
 #'local ancestry at each position on the chromosome, see sections 1.7 and 14.7.
@@ -888,7 +888,7 @@ initializeSLiMModelType <- function(modelType) {
 #'reproductive output, available through the reproductiveOutput property of
 #'Individual (see section 24.6.1) and the lifetimeReproductiveOutput property
 #'of Subpopulation (see section 24.14.1). If dimensionality is not "", SLiM will
-#'enable its optional "continuous space” facility. Three values for dimensionality
+#'enable its optional "continuous space" facility. Three values for dimensionality
 #'are presently supported: "x", "xy", and "xyz", specifying that continuous
 #'space should be enabled for one, two, or three dimensions, respectively, using
 #'(x), (x, y), and (x, y, z) coordinates respectively. This has a number of side
@@ -900,14 +900,14 @@ initializeSLiMModelType <- function(modelType) {
 #'the use of any other properties and methods related to continuous space, such
 #'as setting the spatial boundaries of subpopulations, which would otherwise
 #'raise an error. If periodicity is not "", SLiM will designate the specified
-#'spatial dimensions as being periodic – wrapping around at the edges of the
+#'spatial dimensions as being periodic - wrapping around at the edges of the
 #'spatial boundaries of that dimension. This option may only be used if the
 #'dimensionality parameter to initializeSLiMOptions() has been used to enable
 #'spatiality in the model, and only spatial dimensions that were specified in the
 #'dimensionality of the model may be declared to be periodic (but if desired, it
 #'is permissible to make just a subset of those dimensions periodic; it is not
 #'an all-or-none proposition). For example, if the specified dimensionality is
-#'"xy", the model’s periodicity may be "x", "y", or "xy" (or "", the default,
+#'"xy", the model's periodicity may be "x", "y", or "xy" (or "", the default,
 #'to specify that there are no periodic dimensions). A one-dimensional periodic
 #'model would model a space like the perimeter of a circle. A two-dimensional
 #'model periodic in one of those dimensions would model a space like a cylinder
@@ -915,7 +915,7 @@ initializeSLiMModelType <- function(modelType) {
 #'torus. The shapes of three-dimensional periodic models are harder to visualize,
 #'but are essentially higherdimensional analogues of these concepts. Periodic
 #'boundary conditions are commonly used to model spatial scenarios without "edge
-#'effects”, since there are no edges in the periodic spatial dimensions. The
+#'effects", since there are no edges in the periodic spatial dimensions. The
 #'pointPeriodic() method of Subpopulation is typically used in conjunction with
 #'this option, to actually implement the periodic boundary condition for the
 #'specified dimensions. If mutationRuns is not 0, SLiM will use the value given
@@ -928,10 +928,10 @@ initializeSLiMModelType <- function(modelType) {
 #'that each mutation run is likely to contain a relatively large number of
 #'mutations; these priorities are in tension, so an intermediate balance between
 #'them is generally desirable. The optimal number of mutation runs will depend
-#'upon the machine and even the compiler used to build SLiM, so SLiM’s default
+#'upon the machine and even the compiler used to build SLiM, so SLiM's default
 #'value may not be optimal; for maximal performance it can thus be beneficial to
 #'experiment with different values and find the optimal value for the simulation
-#'– a process which SLiM can assist with (see section 20.4). Specifying the
+#'- a process which SLiM can assist with (see section 20.4). Specifying the
 #'number of mutation runs is an advanced technique, but in certain cases it can
 #'improve performance significantly. If preventIncidentalSelfing is T, incidental
 #'selfing in hermaphroditic models will be prevented by SLiM. By default (i.e.,
@@ -940,7 +940,7 @@ initializeSLiMModelType <- function(modelType) {
 #'same individual to be chosen as both the first and second parent, resulting
 #'in selfing events even when the selfing rate is zero. In many models this
 #'is unimportant, since it happens fairly infrequently and does not have large
-#'consequences. This behavior is SLiM’s default because it is the simplest option,
+#'consequences. This behavior is SLiM's default because it is the simplest option,
 #'and produces results that most closely align with simple analytical population
 #'genetics models. However, in some models this selfing can be undesirable and
 #'problematic. In particular, models that involve very high variance in fitness
@@ -974,7 +974,7 @@ initializeSLiMModelType <- function(modelType) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -1020,14 +1020,14 @@ mutationRuns, preventIncidentalSelfing, nucleotideBased)
 #'@return An object of type void.
 #'@details Configure options for tree sequence recording. Calling this
 #'function turns on tree sequence recording, as a side effect, for later
-#'reconstruction of the simulation’s evolutionary dynamics; if you do not
+#'reconstruction of the simulation's evolutionary dynamics; if you do not
 #'want tree sequence recording to be enabled, do not call this function.
 #'The recordMutations flag controls whether information about individual
 #'mutations is recorded or not. Such recording takes time and memory, and
 #'so can be turned off if only the tree sequence itself is needed, but it
 #'is turned on by default since mutation recording is generally useful. The
 #'simplificationRatio and simplificationInterval parameters control how often
-#'automatic simplification of the recorded tree sequence occurs. This is a speed–
+#'automatic simplification of the recorded tree sequence occurs. This is a speed-
 #'memory tradeoff: more frequent simplification (lower simplificationRatio
 #'or smaller simplificationInterval) means the stored tree sequences will use
 #'less memory, but at a cost of somewhat longer run times. Conversely, a larger
@@ -1042,14 +1042,14 @@ mutationRuns, preventIncidentalSelfing, nucleotideBased)
 #'the maximum size of the stored tree sequences is ten times the size after
 #'simplification. INF may be supplied to indicate that automatic simplification
 #'should never occur; 0 may be supplied to indicate that automatic simplification
-#'should be performed at the end of every generation. Alternatively – the second
-#'option – simplificationRatio may be NULL and simplificationInterval may be
+#'should be performed at the end of every generation. Alternatively - the second
+#'option - simplificationRatio may be NULL and simplificationInterval may be
 #'set to the interval, in generations, between simplifications. This may provide
 #'more reliable performance, but the interval must be chosen carefully to avoid
 #'exceeding the available memory. The simplificationInterval value may be a
 #'very large number to specify that simplification should never occur (not INF,
 #'though, since it is an integer value), or 1 to simplify every generation.
-#'Finally – the third option – both parameters may be non-NULL, in which case
+#'Finally - the third option - both parameters may be non-NULL, in which case
 #'simplificationRatio is used as described above, while simplificationInterval
 #'provides the initial interval first used by SLiM (and then subsequently
 #'increased or decreased to try to match the requested simplification ratio). The
@@ -1065,7 +1065,7 @@ mutationRuns, preventIncidentalSelfing, nucleotideBased)
 #'checkCoalescence should be set to T. Since the coalescence checks entail
 #'a performance penalty, the default of F is preferable otherwise. See the
 #'documentation for treeSeqCoalesced() for further discussion. The runCrosschecks
-#'parameter controls whether cross-checks between SLiM’s internal data structures
+#'parameter controls whether cross-checks between SLiM's internal data structures
 #'and the tree-sequence recording data structures will be conducted. These two
 #'sets of data structures record much the same thing (mutations in genomes), but
 #'using completely different representations, so such cross-checks can be useful
@@ -1076,7 +1076,7 @@ mutationRuns, preventIncidentalSelfing, nucleotideBased)
 #'the tree-sequence data is performed in SLiM (both for auto-simplification
 #'and for calls to treeSeqSimplify()). More specifically, this parameter
 #'controls the behavior of simplification for individuals and genomes that have
-#'been "retained” by calling treeSeqRememberIndividuals() with the parameter
+#'been "retained" by calling treeSeqRememberIndividuals() with the parameter
 #'permanent=F. The default of retainCoalescentOnly=T helps to keep the number
 #'of retained individuals relatively small, which is helpful if your simulation
 #'regularly flags many individuals for retaining. In this case, changing
@@ -1089,7 +1089,7 @@ mutationRuns, preventIncidentalSelfing, nucleotideBased)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -1160,7 +1160,7 @@ simplificationInterval, checkCoalescence, runCrosschecks, retainCoalescentOnly)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -1192,8 +1192,8 @@ ancestralNucleotides <- function(start, end, format = "string") {
 #'@aliases Chromosome$drawBreakpoints .c$drawBreakpoints
 #'@family Chromosome
 #'@return An object of type integer.
-#'@details Draw recombination breakpoints, using the chromosome’s recombination
-#'rate map, the current gene conversion parameters, and (in some cases – see
+#'@details Draw recombination breakpoints, using the chromosome's recombination
+#'rate map, the current gene conversion parameters, and (in some cases - see
 #'below) any active and applicable recombination() callbacks. The number of
 #'breakpoints to generate, n, may be supplied; if it is NULL (the default), the
 #'number of breakpoints will be drawn based upon the overall recombination rate
@@ -1221,7 +1221,7 @@ ancestralNucleotides <- function(start, end, format = "string") {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -1267,7 +1267,7 @@ drawBreakpoints <- function(parent, n) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -1305,9 +1305,9 @@ setAncestralNucleotides <- function(sequence) {
 #'@family Chromosome
 #'@return An object of type void.
 #'@details This method switches the recombination model to the "double-stranded
-#'break (DSB)” model (if it is not already set to that), and configures the
+#'break (DSB)" model (if it is not already set to that), and configures the
 #'details of the gene conversion tracts that will therefore be modeled (see
-#'section 1.5.6 for discussion of the "DSB” recombination model). The meanings
+#'section 1.5.6 for discussion of the "DSB" recombination model). The meanings
 #'and effects of the parameters exactly mirror the initializeGeneConversion()
 #'function; see section 24.1 for details.
 #'@section Copyright:
@@ -1315,7 +1315,7 @@ setAncestralNucleotides <- function(sequence) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -1379,7 +1379,7 @@ simpleConversionFraction, bias)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -1443,7 +1443,7 @@ setHotspotMap <- function(multipliers, ends, sex) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -1506,7 +1506,7 @@ setMutationRate <- function(rates, ends, sex) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -1543,7 +1543,7 @@ setRecombinationRate <- function(rates, ends, sex) {
 #'mutationStackPolicy property of MutationType, section 24.10.1). Calling this
 #'will normally affect the fitness values calculated at the end of the current
 #'generation; if you want current fitness values to be affected, you can call
-#'SLiMSim’s method recalculateFitness() – but see the documentation of that
+#'SLiMSim's method recalculateFitness() - but see the documentation of that
 #'method for caveats. Note that in nonWF models that use tree-sequence recording,
 #'mutations cannot be added to an individual after the generation in which the
 #'individual is created (i.e., when the age of the individual is greater than 0),
@@ -1553,7 +1553,7 @@ setRecombinationRate <- function(rates, ends, sex) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -1599,7 +1599,7 @@ addMutations <- function(mutations) {
 #'identifier, or by NULL, the default, to specify the subpopulation to which
 #'the first target genome belongs). If originSubpop is supplied as an integer,
 #'it is intentionally not checked for validity; you may use arbitrary values
-#'of originSubpop to "tag” the mutations that you create (see section 24.9.1).
+#'of originSubpop to "tag" the mutations that you create (see section 24.9.1).
 #'The selection coefficients of the mutations are drawn from their mutation
 #'types; addNewMutation() may be used instead if you wish to specify selection
 #'coefficients. In non-nucleotide-based models, mutationType will always be a non-
@@ -1612,7 +1612,7 @@ addMutations <- function(mutations) {
 #'with integer values (A=0, C=1, G=2, T=3). If a nucleotide mutation already
 #'exists at the mutating position, it is replaced automatically in accordance with
 #'the stacking policy for nucleotidebased mutation types. No check is performed
-#'that a new mutation’s nucleotide differs from the ancestral sequence, or that
+#'that a new mutation's nucleotide differs from the ancestral sequence, or that
 #'its selection coefficient is consistent with other mutations that may already
 #'exist at the given position with the same nucleotide; model consistency is the
 #'responsibility of the model. Beginning in SLiM 2.5 this method is vectorized,
@@ -1643,7 +1643,7 @@ addMutations <- function(mutations) {
 #'expected to be an extremely rare pattern of usage). Calling this will normally
 #'affect the fitness values calculated at the end of the current generation
 #'(but not sooner); if you want current fitness values to be affected, you can
-#'call SLiMSim’s method recalculateFitness() – but see the documentation of that
+#'call SLiMSim's method recalculateFitness() - but see the documentation of that
 #'method for caveats. Note that in nonWF models that use tree-sequence recording,
 #'mutations cannot be added to an individual after the generation in which the
 #'individual is created (i.e., when the age of the individual is greater than 0),
@@ -1653,7 +1653,7 @@ addMutations <- function(mutations) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -1702,7 +1702,7 @@ originSubpop, nucleotide)
 #'by integer identifier, or by NULL, the default, to specify the subpopulation
 #'to which the first target genome belongs). If originSubpop is supplied as an
 #'integer, it is intentionally not checked for validity; you may use arbitrary
-#'values of originSubpop to "tag” the mutations that you create (see section
+#'values of originSubpop to "tag" the mutations that you create (see section
 #'24.9.1). The addNewDrawnMutation() method may be used instead if you wish
 #'selection coefficients to be drawn from the mutation types of the mutations. In
 #'non-nucleotide-based models, mutationType will always be a non-nucleotide-based
@@ -1715,7 +1715,7 @@ originSubpop, nucleotide)
 #'values (A=0, C=1, G=2, T=3). If a nucleotide mutation already exists at the
 #'mutating position, it is replaced automatically in accordance with the stacking
 #'policy for nucleotidebased mutation types. No check is performed that a new
-#'mutation’s nucleotide differs from the ancestral sequence, or that its selection
+#'mutation's nucleotide differs from the ancestral sequence, or that its selection
 #'coefficient is consistent with other mutations that may already exist at the
 #'given position with the same nucleotide; model consistency is the responsibility
 #'of the model. The new mutations created by this method are returned, even if
@@ -1741,7 +1741,7 @@ originSubpop, nucleotide)
 #'expected to be an extremely rare pattern of usage). Calling this will normally
 #'affect the fitness values calculated at the end of the current generation
 #'(but not sooner); if you want current fitness values to be affected, you can
-#'call SLiMSim’s method recalculateFitness() – but see the documentation of that
+#'call SLiMSim's method recalculateFitness() - but see the documentation of that
 #'method for caveats. Note that in nonWF models that use tree-sequence recording,
 #'mutations cannot be added to an individual after the generation in which the
 #'individual is created (i.e., when the age of the individual is greater than 0),
@@ -1751,7 +1751,7 @@ originSubpop, nucleotide)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -1791,17 +1791,17 @@ originSubpop, nucleotide)
 #'@details Returns T if the genome contains a mutation of type mutType at
 #'position, F otherwise (if returnMutation has its default value of F; see
 #'below). This method is, as its name suggests, intended for checking for
-#'"marker mutations”: mutations of a special mutation type that are not literally
+#'"marker mutations": mutations of a special mutation type that are not literally
 #'mutations in the usual sense, but instead are added in to particular genomes
 #'to mark them as possessing some property. Marker mutations are not typically
-#'added by SLiM’s mutation-generating machinery; instead they are added explicitly
+#'added by SLiM's mutation-generating machinery; instead they are added explicitly
 #'with addNewMutation() or addNewDrawnMutation() at a known, constant position
 #'in the genome. This method provides a check for whether a marker mutation of a
 #'given type exists in a particular genome; because the position to check is known
 #'in advance, that check can be done much faster than the equivalent check with
 #'containsMutations() or countOfMutationsOfType(), using a binary search of the
 #'genome. See section 14.4 for one example of a model that uses marker mutations
-#'– in that case, to mark chromosomes that possess an inversion. If returnMutation
+#'- in that case, to mark chromosomes that possess an inversion. If returnMutation
 #'is T (an option added in SLiM 3), this method returns the actual mutation found,
 #'rather than just T or F. More specifically, the first mutation found of mutType
 #'at position will be returned; if more than one such mutation exists in the
@@ -1812,7 +1812,7 @@ originSubpop, nucleotide)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -1851,7 +1851,7 @@ containsMarkerMutation <- function(mutType, position, returnMutation) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -1891,7 +1891,7 @@ containsMutations <- function(mutations) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -1924,7 +1924,7 @@ countOfMutationsOfType <- function(mutType) {
 #'@details Return an integer vector with the frequency counts of all of the
 #'Mutation objects passed in mutations, within the target Genome vector. If the
 #'optional mutations argument is NULL (the default), frequency counts will be
-#'returned for all of the active Mutation objects in the simulation – the same
+#'returned for all of the active Mutation objects in the simulation - the same
 #'Mutation objects, and in the same order, as would be returned by the mutations
 #'property of sim, in other words. See the +mutationFrequenciesInGenomes() method
 #'to obtain float frequencies instead of integer counts. See also the SLiMSim
@@ -1936,7 +1936,7 @@ countOfMutationsOfType <- function(mutType) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -1969,7 +1969,7 @@ mutationCountsInGenomes <- function(mutations) {
 #'@details Return a float vector with the frequencies of all of the Mutation
 #'objects passed in mutations, within the target Genome vector. If the optional
 #'mutations argument is NULL (the default), frequencies will be returned for all
-#'of the active Mutation objects in the simulation – the same Mutation objects,
+#'of the active Mutation objects in the simulation - the same Mutation objects,
 #'and in the same order, as would be returned by the mutations property of sim, in
 #'other words. See the +mutationCountsInGenomes() method to obtain integer counts
 #'instead of float frequencies. See also the SLiMSim methods mutationCounts()
@@ -1980,7 +1980,7 @@ mutationCountsInGenomes <- function(mutations) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2023,7 +2023,7 @@ mutationFrequenciesInGenomes <- function(mutations) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2085,7 +2085,7 @@ mutationsOfType <- function(mutType) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2117,13 +2117,13 @@ nucleotides <- function(start, end, format) {
 #'@aliases Genome$output .G$output
 #'@family Genome
 #'@return An object of type void.
-#'@details Output the target genomes in SLiM’s native format (see section 26.3.1
+#'@details Output the target genomes in SLiM's native format (see section 26.3.1
 #'for output format details). This low-level output method may be used to output
 #'any sample of Genome objects (the Eidos function sample() may be useful for
 #'constructing custom samples, as may the SLiM class Individual). For output of
 #'a sample from a single Subpopulation, the outputSample() of Subpopulation may
 #'be more straightforward to use. If the optional parameter filePath is NULL (the
-#'default), output is directed to SLiM’s standard output. Otherwise, the output
+#'default), output is directed to SLiM's standard output. Otherwise, the output
 #'is sent to the file specified by filePath, overwriting that file if append if F,
 #'or appending to the end of it if append is T. See outputMS() and outputVCF() for
 #'other output formats. Output is generally done in a late() event, so that the
@@ -2133,7 +2133,7 @@ nucleotides <- function(start, end, format) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2173,7 +2173,7 @@ output <- function(filePath, append) {
 #'custom samples, as may the SLiM class Individual). For output of a sample
 #'from a single Subpopulation, the outputMSSample() of Subpopulation may be
 #'more straightforward to use. If the optional parameter filePath is NULL (the
-#'default), output is directed to SLiM’s standard output. Otherwise, the output
+#'default), output is directed to SLiM's standard output. Otherwise, the output
 #'is sent to the file specified by filePath, overwriting that file if append if F,
 #'or appending to the end of it if append is T. Positions in the output will span
 #'the interval [0,1]. If filterMonomorphic is F (the default), all mutations that
@@ -2191,7 +2191,7 @@ output <- function(filePath, append) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2237,7 +2237,7 @@ outputMS <- function(filePath, append, filterMonomorphic) {
 #'for constructing custom samples, as may the SLiM class Individual). For output
 #'of a sample from a single Subpopulation, the outputVCFSample() of Subpopulation
 #'may be more straightforward to use. If the optional parameter filePath is
-#'NULL (the default), output is directed to SLiM’s standard output. Otherwise,
+#'NULL (the default), output is directed to SLiM's standard output. Otherwise,
 #'the output is sent to the file specified by filePath, overwriting that file
 #'if append if F, or appending to the end of it if append is T. The parameters
 #'outputMultiallelics, simplifyNucleotides, and outputNonnucleotides affect
@@ -2250,7 +2250,7 @@ outputMS <- function(filePath, append, filterMonomorphic) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2292,7 +2292,7 @@ outputNonnucleotides)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2328,7 +2328,7 @@ positionsOfMutationsOfType <- function(mutType) {
 #'to the target genomes. The number of target genomes must match the number
 #'of genomes represented in the MS file. To read into all of the genomes in
 #'a given subpopulation pN, simply call pN.genomes.readFromMS(), assuming the
-#'subpopulation’s size matches that of the MS file. A vector containing all of the
+#'subpopulation's size matches that of the MS file. A vector containing all of the
 #'mutations created by readFromMS() is returned. Each mutation is created at the
 #'position specified in the file, using the mutation type given by mutationType.
 #'Positions are expected to be in [0,1], and are scaled to the length of the
@@ -2348,7 +2348,7 @@ positionsOfMutationsOfType <- function(mutType) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2386,15 +2386,15 @@ readFromMS <- function(filePath, mutationType) {
 #'number of genomes represented in the VCF file (i.e., two times the number
 #'of samples, if each sample is diploid). To read into all of the genomes in
 #'a given subpopulation pN, simply call pN.genomes.readFromVCF(), assuming the
-#'subpopulation’s size matches that of the VCF file taking ploidy into account.
+#'subpopulation's size matches that of the VCF file taking ploidy into account.
 #'A vector containing all of the mutations created by readFromVCF() is returned.
-#'SLiM’s VCF parsing is quite primitive. The header is parsed only inasmuch as
+#'SLiM's VCF parsing is quite primitive. The header is parsed only inasmuch as
 #'SLiM looks to see whether SLiM-specific VCF fields (see sections 26.2.3 and
 #'26.2.4) are defined or not; the rest of the header information is ignored.
 #'Call lines are assumed to follow the format: #CHROM POS ID REF ALT QUAL FILTER
 #'INFO FORMAT i0...iN The CHROM, ID, QUAL, FILTER, and FORMAT fields are ignored,
 #'and information in the genotype fields beyond the GT genotype subfield are
-#'also ignored. SLiM’s own VCF annotations (see section 26.2.3) are honored; in
+#'also ignored. SLiM's own VCF annotations (see section 26.2.3) are honored; in
 #'particular, mutations will be created using the given values of MID, S, PO, GO,
 #'and MT if those subfields are present, and DOM, if it is present, must match
 #'the dominance coefficient of the mutation type. The parameter mutationType (a
@@ -2412,7 +2412,7 @@ readFromMS <- function(filePath, mutationType) {
 #'complex states. Beyond this, the handling of the REF and ALT fields depends
 #'upon several factors. First of all, these fields are ignored in non-nucleotide-
 #'based models, although they are still checked for conformance. In nucleotide-
-#'based models, when a header definition for SLiM’s NONNUC tag is present (as
+#'based models, when a header definition for SLiM's NONNUC tag is present (as
 #'when nucleotide-based output is generated by SLiM): Second, if a NONNUC field is
 #'present in the INFO field the call line is taken to represent a non-nucleotide-
 #'based mutation, and REF and ALT are again ignored. In this case the mutation
@@ -2420,14 +2420,14 @@ readFromMS <- function(filePath, mutationType) {
 #'call line is taken to represent a nucleotide-based mutation. In this case, the
 #'mutation type used must be nucleotide-based. Also, in this case, the specified
 #'reference nucleotide must match the existing ancestral nucleotide at the
-#'given position. In nucleotidebased models, when a header definition for SLiM’s
+#'given position. In nucleotidebased models, when a header definition for SLiM's
 #'NONNUC tag is not present (as when loading a non- SLiM-generated VCF file):
 #'The mutation type will govern the way nucleotides are handled. If the mutation
 #'type used for a mutation is nucleotide-based, the nucleotide provided in the
 #'VCF file for that allele will be used. If the mutation type is non-nucleotide-
 #'based, the nucleotide provided will be ignored. If multiple alleles using the
 #'same nucleotide at the same position are specified in the VCF file, a separate
-#'mutation will be created for each, mirroring SLiM’s behavior with independent
+#'mutation will be created for each, mirroring SLiM's behavior with independent
 #'mutational lineages when writing VCF (see section 26.2.4). The MULTIALLELIC flag
 #'is ignored by readFromVCF(); call lines for mutations at the same base position
 #'in the same genome will result in stacked mutations whether or not MULTIALLELIC
@@ -2442,7 +2442,7 @@ readFromMS <- function(filePath, mutationType) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2479,22 +2479,22 @@ readFromVCF <- function(filePath, mutationType) {
 #'for mutations (which is the default), then all mutations will be removed from
 #'the target genomes; in this case, substitute must be F (a specific vector of
 #'mutations to be substituted is required). Note that the Mutation objects removed
-#'remain valid, and will still be in the simulation’s mutation registry (i.e.
-#'will be returned by SLiMSim’s mutations property), until the next generation.
+#'remain valid, and will still be in the simulation's mutation registry (i.e.
+#'will be returned by SLiMSim's mutations property), until the next generation.
 #'Changing this will normally affect the fitness values calculated at the end
 #'of the current generation; if you want current fitness values to be affected,
-#'you can call SLiMSim’s method recalculateFitness() – but see the documentation
+#'you can call SLiMSim's method recalculateFitness() - but see the documentation
 #'of that method for caveats. The optional parameter substitute was added in
 #'SLiM 2.2, with a default of F for backward compatibility. If substitute is
 #'T, Substitution objects will be created for all of the removed mutations so
 #'that they are recorded in the simulation as having fixed, just as if they
-#'had reached fixation and been removed by SLiM’s own internal machinery. This
+#'had reached fixation and been removed by SLiM's own internal machinery. This
 #'will occur regardless of whether the mutations have in fact fixed, regardless
 #'of the convertToSubstitution property of the relevant mutation types, and
 #'regardless of whether all copies of the mutations have even been removed
 #'from the simulation (making it possible to create Substitution objects for
 #'mutations that are still segregating). It is up to the caller to perform
-#'whatever checks are necessary to preserve the integrity of the simulation’s
+#'whatever checks are necessary to preserve the integrity of the simulation's
 #'records. Typically substitute will only be set to T in the context of calls like
 #'sim.subpopulations.genomes.removeMutations(muts, T), such that the substituted
 #'mutations are guaranteed to be entirely removed from circulation. As mentioned
@@ -2504,7 +2504,7 @@ readFromVCF <- function(filePath, mutationType) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2547,7 +2547,7 @@ removeMutations <- function(mutations, substitute) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2589,7 +2589,7 @@ sumOfMutationsOfType <- function(mutType) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2634,7 +2634,7 @@ setGenomicElementType <- function(genomicElementType) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2672,7 +2672,7 @@ setMutationFractions <- function(mutationTypes, proportions) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2713,7 +2713,7 @@ setMutationMatrix <- function(mutationMatrix) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2754,7 +2754,7 @@ containsMutations <- function(mutations) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2787,7 +2787,7 @@ countOfMutationsOfType <- function(mutType) {
 #'@details Returns a vector containing the degrees of relatedness between the
 #'receiver and each of the individuals in individuals. The relatedness between A
 #'and B is always 1.0 if A and B are actually the same individual; this facility
-#'works even if SLiM’s optional pedigree tracking is turned off (in which case
+#'works even if SLiM's optional pedigree tracking is turned off (in which case
 #'all other relatedness values will be 0.0. Otherwise, if pedigree tracking is
 #'turned on with initializeSLiMOptions(keepPedigrees=T), this method will use
 #'the pedigree information described in section 24.6.1 to construct a relatedness
@@ -2807,7 +2807,7 @@ countOfMutationsOfType <- function(mutType) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2846,7 +2846,7 @@ relatedness <- function(individuals) {
 #'of the simulation). In other words, if the declared dimensionality is "xy",
 #'calling individual.setSpatialPosition(c(1.0, 0.5)) property is equivalent to
 #'individual.x = 1.0; individual.y = 0.5; individual.z is not set (even if a third
-#'value is supplied in position) since it is not encompassed by the simulation’s
+#'value is supplied in position) since it is not encompassed by the simulation's
 #'dimensionality in this example. Note that this is an Eidos class method,
 #'somewhat unusually, which allows it to work in a special way when called on a
 #'vector of individuals. When the target vector of individuals is non-singleton,
@@ -2865,7 +2865,7 @@ relatedness <- function(individuals) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2908,7 +2908,7 @@ setSpatialPosition <- function(position) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -2957,7 +2957,7 @@ sumOfMutationsOfType <- function(mutType) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3017,7 +3017,7 @@ uniqueMutationsOfType <- function(mutType) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3051,10 +3051,10 @@ distance <- function(individuals1, individuals2) {
 #'@details Returns a vector containing distances between individuals in
 #'individuals1 and the point given by the spatial coordinates in point. The
 #'point vector is interpreted as providing coordinates precisely as specified by
-#'the spatiality of the interaction type; if the interaction type’s spatiality
+#'the spatiality of the interaction type; if the interaction type's spatiality
 #'is "xz", for example, then point[0] is assumed to be an x value, and point[1]
 #'is assumed to be a z value. Be careful; this means that in general it is
-#'not safe to pass an individual’s spatialPosition property for point, for
+#'not safe to pass an individual's spatialPosition property for point, for
 #'example (although it is safe if the spatiality of the interaction matches the
 #'dimensionality of the simulation). A coordinate for a periodic spatial dimension
 #'must be within the spatial bounds for that dimension, since coordinates outside
@@ -3072,7 +3072,7 @@ distance <- function(individuals1, individuals2) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3124,7 +3124,7 @@ distanceToPoint <- function(individuals1, point) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3170,7 +3170,7 @@ drawByStrength <- function(individual, count) {
 #'such callbacks). If T is passed for immediate, the interaction will immediately
 #'and synchronously evaluate all interactions between all individuals in the
 #'subpopulation(s), calling any applicable interaction() callbacks as necessary
-#'– if the interaction is spatial (see below). However, depending upon what
+#'- if the interaction is spatial (see below). However, depending upon what
 #'queries are later executed, this may represent considerable wasted computation.
 #'Immediate evaluation usually generates only a slight performance improvement
 #'even if the interactions between all pairs of individuals are eventually
@@ -3205,7 +3205,7 @@ drawByStrength <- function(individual, count) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3254,7 +3254,7 @@ evaluate <- function(subpops, immediate) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3308,7 +3308,7 @@ interactingNeighborCount <- function(individuals) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3347,7 +3347,7 @@ interactionDistance <- function(receiver, exerters) {
 #'interaction upon the focal individual; it does not include individuals that only
 #'feel an interaction from the focal individual. To obtain all of the interacting
 #'individuals within the maximum interaction distance of individual, simply pass
-#'a value for count that is greater than or equal to the size of individual’s
+#'a value for count that is greater than or equal to the size of individual's
 #'subpopulation. Note that if fewer than count interacting individuals are within
 #'the maximum interaction distance, the vector returned may be shorter than count,
 #'or even zero-length; it is important to check for this possibility even when
@@ -3363,7 +3363,7 @@ interactionDistance <- function(receiver, exerters) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3399,7 +3399,7 @@ nearestInteractingNeighbors <- function(individual, count) {
 #'individual, according to the distance metric of the InteractionType. To obtain
 #'all of the individuals within the maximum interaction distance of individual,
 #'simply pass a value for count that is greater than or equal to the size of
-#'individual’s subpopulation. Note that if fewer than count individuals are within
+#'individual's subpopulation. Note that if fewer than count individuals are within
 #'the maximum interaction distance, the vector returned may be shorter than count,
 #'or even zero-length; it is important to check for this possibility even when
 #'requesting a single neighbor. Note that this method does not use interaction
@@ -3413,7 +3413,7 @@ nearestInteractingNeighbors <- function(individual, count) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3458,7 +3458,7 @@ nearestNeighbors <- function(individual, count) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3509,7 +3509,7 @@ nearestNeighborsOfPoint <- function(subpop, point, count) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3564,7 +3564,7 @@ setInteractionFunction <- function(functionType, ...) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3620,7 +3620,7 @@ strength <- function(receiver, exerters) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3671,7 +3671,7 @@ totalOfNeighborStrengths <- function(individuals) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3723,7 +3723,7 @@ unevaluate <- function(void) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3760,7 +3760,7 @@ addCustomColumn <- function(columnName, source, context) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3801,7 +3801,7 @@ addGeneration <- function(void) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3839,7 +3839,7 @@ addGenerationStage <- function(void) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3888,7 +3888,7 @@ addKeysAndValuesFrom <- function(source) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3925,7 +3925,7 @@ addMeanSDColumns <- function(columnName, source, context) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -3962,7 +3962,7 @@ addPopulationSexRatio <- function(void) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4001,7 +4001,7 @@ addPopulationSize <- function(void) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4040,7 +4040,7 @@ addSubpopulationSexRatio <- function(subpop) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4077,7 +4077,7 @@ addSubpopulationSize <- function(subpop) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4111,7 +4111,7 @@ clearKeysAndValues <- function(void) {
 #'make the contents of the file on disk be up-to-date with the running simulation.
 #'Flushing frequently may entail a small performance penalty. More importantly,
 #'if .gz compression has been requested with compress=T the size of the resulting
-#'file will be larger – potentially much larger – if flush() is called frequently.
+#'file will be larger - potentially much larger - if flush() is called frequently.
 #'Note that automatic periodic flushing can be requested with the flushInterval
 #'parameter to createLogFile().
 #'@section Copyright:
@@ -4119,7 +4119,7 @@ clearKeysAndValues <- function(void) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4160,7 +4160,7 @@ flush <- function(void) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4201,7 +4201,7 @@ logRow <- function(void) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4247,7 +4247,7 @@ setLogInterval <- function(logInterval) {
 #'it, depending upon the value of append. New values may be supplied for compress
 #'and sep; the meaning of these parameters is identical to their meaning in
 #'createLogFile(), except that a value of NULL for these means "do not change this
-#'setting from its previous value”. In effect, then, this method lets you start
+#'setting from its previous value". In effect, then, this method lets you start
 #'a completely new log file at a new path, without having to create and configure
 #'a new LogFile object. The new file will be created (or appended) synchronously,
 #'with the specified initial contents.
@@ -4256,7 +4256,7 @@ setLogInterval <- function(logInterval) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4295,7 +4295,7 @@ setFilePath <- function(filePath, initialContents, append, compress, sep) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4337,7 +4337,7 @@ setValue <- function(key, value) {
 #'type of a mutation is normally a constant in simulations, so be sure you know
 #'what you are doing. Changing this will normally affect the fitness values
 #'calculated at the end of the current generation; if you want current fitness
-#'values to be affected, you can call SLiMSim’s method recalculateFitness() – but
+#'values to be affected, you can call SLiMSim's method recalculateFitness() - but
 #'see the documentation of that method for caveats. In nucleotide-based models,
 #'a restriction applies: nucleotide-based mutations may not be changed to a non-
 #'nucleotide-based mutation type, and non-nucleotide-based mutations may not be
@@ -4347,7 +4347,7 @@ setValue <- function(key, value) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4387,14 +4387,14 @@ setMutationType <- function(mutType) {
 #'fashion (see section 10.5 for further discussion of this point). Changing this
 #'will normally affect the fitness values calculated at the end of the current
 #'generation; if you want current fitness values to be affected, you can call
-#'SLiMSim’s method recalculateFitness() – but see the documentation of that method
+#'SLiMSim's method recalculateFitness() - but see the documentation of that method
 #'for caveats.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4430,13 +4430,13 @@ setSelectionCoeff <- function(selectionCoeff) {
 #'currently defined distribution of fitness effects (DFE) for the target mutation
 #'type. See section 24.10 above for discussion of the supported distributions
 #'and their uses. If the DFE is type "s", this method will result in synchronous
-#'execution of the DFE’s script.
+#'execution of the DFE's script.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4486,7 +4486,7 @@ drawSelectionCoefficient <- function(n) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4539,7 +4539,7 @@ setDistribution <- function(distributionType, ...) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4595,14 +4595,14 @@ addSubpop <- function(subpopID, size, sexRatio) {
 #'individuals in the source subpopulation mating randomly according to fitness,
 #'as usual in SLiM, with juveniles migrating to the newly added subpopulation.
 #'Effectively, then, then new subpopulation is created empty, and is filled by
-#'migrating juveniles from the source subpopulation, in accordance with SLiM’s
+#'migrating juveniles from the source subpopulation, in accordance with SLiM's
 #'usual model of juvenile migration.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4644,7 +4644,7 @@ addSubpopSplit <- function(subpopID, size, sourceSubpop, sexRatio) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4698,9 +4698,9 @@ countOfMutationsOfType <- function(mutType) {
 #'zlib as they are written, and the standard .gz extension for gzip-compressed
 #'files will be appended to the filename in filePath if it is not already
 #'present. The sep parameter specifies the separator between data values within
-#'a row. The default of "," will generate a "comma-separated value” (CSV) file,
+#'a row. The default of "," will generate a "comma-separated value" (CSV) file,
 #'while passing sep="\\t" will use a tab separator instead to generate a "tab-
-#'separated value” (TSV) file. Other values for sep may also be used, but are less
+#'separated value" (TSV) file. Other values for sep may also be used, but are less
 #'standard. LogTable supports periodic automatic logging of a new row of data,
 #'enabled by supplying a non-NULL value for logInterval. In this case, a new row
 #'will be logged (as if logRow() were called on the LogFile) at the end of every
@@ -4729,7 +4729,7 @@ countOfMutationsOfType <- function(mutType) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4775,7 +4775,7 @@ logInterval, flushInterval)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4812,7 +4812,7 @@ deregisterScriptBlock <- function(scriptBlocks) {
 #'subpops. The subpops argument is required, but you may pass NULL to get
 #'population-wide frequency counts. If the optional mutations argument is NULL
 #'(the default), frequency counts will be returned for all of the active Mutation
-#'objects in the simulation – the same Mutation objects, and in the same order,
+#'objects in the simulation - the same Mutation objects, and in the same order,
 #'as would be returned by the mutations property of sim, in other words. See
 #'the -mutationFrequencies() method to obtain float frequencies instead of
 #'integer counts. See also the Genome methods mutationCountsInGenomes() and
@@ -4822,7 +4822,7 @@ deregisterScriptBlock <- function(scriptBlocks) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4859,7 +4859,7 @@ mutationCounts <- function(subpops, mutations) {
 #'The subpops argument is required, but you may pass NULL to get population-
 #'wide frequencies. If the optional mutations argument is NULL (the default),
 #'frequencies will be returned for all of the active Mutation objects in
-#'the simulation – the same Mutation objects, and in the same order, as
+#'the simulation - the same Mutation objects, and in the same order, as
 #'would be returned by the mutations property of sim, in other words. See
 #'the -mutationCounts() method to obtain integer counts instead of float
 #'frequencies. See also the Genome methods mutationCountsInGenomes() and
@@ -4869,7 +4869,7 @@ mutationCounts <- function(subpops, mutations) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4912,7 +4912,7 @@ mutationFrequencies <- function(subpops, mutations) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -4944,15 +4944,15 @@ mutationsOfType <- function(mutType) {
 #'@aliases SLiMSim$outputFixedMutations .SS$outputFixedMutations
 #'@family SLiMSim
 #'@return An object of type void.
-#'@details Output all fixed mutations – all Substitution objects, in other words
-#'(see section 1.5.2) – in a SLiM native format (see section 26.1.2 for output
+#'@details Output all fixed mutations - all Substitution objects, in other words
+#'(see section 1.5.2) - in a SLiM native format (see section 26.1.2 for output
 #'format details). If the optional parameter filePath is NULL (the default),
-#'output will be sent to Eidos’s output stream (see section 4.2.1). Otherwise,
+#'output will be sent to Eidos's output stream (see section 4.2.1). Otherwise,
 #'output will be sent to the filesystem path specified by filePath, overwriting
 #'that file if append if F, or appending to the end of it if append is T.
 #'Mutations which have fixed but have not been turned into Substitution objects
-#'– typically because convertToSubstitution has been set to F for their mutation
-#'type (see section 24.10.1) – are not output; they are still considered to be
+#'- typically because convertToSubstitution has been set to F for their mutation
+#'type (see section 24.10.1) - are not output; they are still considered to be
 #'segregating mutations by SLiM. In SLiM 3.3 and later, the output format includes
 #'the nucleotides associated with any nucleotide-based mutations; see section
 #'26.1.2. Output is generally done in a late() event, so that the output reflects
@@ -4962,7 +4962,7 @@ mutationsOfType <- function(mutType) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -5006,7 +5006,7 @@ outputFixedMutations <- function(filePath, append) {
 #'@return An object of type void.
 #'@details Output the state of the entire population (see section 26.1.1 for
 #'output format details). If the optional parameter filePath is NULL (the
-#'default), output will be sent to Eidos’s output stream (see section 4.2.1).
+#'default), output will be sent to Eidos's output stream (see section 4.2.1).
 #'Otherwise, output will be sent to the filesystem path specified by filePath,
 #'overwriting that file if append if F, or appending to the end of it if append
 #'is T. When writing to a file, a logical flag, binary, may be supplied as well.
@@ -5026,7 +5026,7 @@ outputFixedMutations <- function(filePath, append) {
 #'spatialPositions is T, spatial position information will be output if it is
 #'available (see section 26.1.1 for format details). If the simulation does not
 #'have continuous space enabled, the spatialPositions parameter will be ignored.
-#'Positional information may be output for all output destinations – the Eidos
+#'Positional information may be output for all output destinations - the Eidos
 #'output stream, a text file, or a binary file. Beginning with SLiM 3.0, the
 #'ages parameter may be used to control the output of the ages of individuals in
 #'nonWF simulations. If ages is F, the output will not contain ages, preserving
@@ -5051,7 +5051,7 @@ outputFixedMutations <- function(filePath, append) {
 #'option is turned off (F) by default, to preserve backward compatibility; if
 #'it is turned on (T), different file version values will be used, and backward
 #'compatibility with previous versions of SLiM will be lost (see section 26.1.1).
-#'This option may only be used if SLiM’s optional pedigree tracking has been
+#'This option may only be used if SLiM's optional pedigree tracking has been
 #'turned on with initializeSLiMOptions(keepPedigrees=T). Output is generally done
 #'in a late() event, so that the output reflects the state of the simulation at
 #'the end of a generation.
@@ -5060,7 +5060,7 @@ outputFixedMutations <- function(filePath, append) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -5098,7 +5098,7 @@ ancestralNucleotides, pedigreeIDs)
 #'@details Output all of the given mutations (see section 26.1.3 for output
 #'format details). This can be used to output all mutations of a given mutation
 #'type, for example. If the optional parameter filePath is NULL (the default),
-#'output will be sent to Eidos’s output stream (see section 4.2.1). Otherwise,
+#'output will be sent to Eidos's output stream (see section 4.2.1). Otherwise,
 #'output will be sent to the filesystem path specified by filePath, overwriting
 #'that file if append if F, or appending to the end of it if append is T. In SLiM
 #'3.3 and later, the output format includes the nucleotides associated with any
@@ -5110,7 +5110,7 @@ ancestralNucleotides, pedigreeIDs)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -5139,7 +5139,7 @@ outputMutations <- function(mutations, filePath, append) {
 #'@aliases SLiMSim$outputUsage .SS$outputUsage
 #'@family SLiMSim
 #'@return An object of type void.
-#'@details Output the current memory usage of the simulation to Eidos’s output
+#'@details Output the current memory usage of the simulation to Eidos's output
 #'stream. The specifics of what is printed, and in what format, should not be
 #'relied upon as they may change from version to version of SLiM. This method
 #'is primarily useful for understanding where the memory usage of a simulation
@@ -5153,7 +5153,7 @@ outputMutations <- function(mutations, filePath, append) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -5185,7 +5185,7 @@ outputUsage <- function(void) {
 #'@return An object of type integer. Return will be of length 1 (a singleton)
 #'@details Read from a population initialization file, whether in text or binary
 #'format as previously specified to outputFull(), and return the generation
-#'counter value represented by the file’s contents (i.e., the generation at which
+#'counter value represented by the file's contents (i.e., the generation at which
 #'the file was generated). Although this is most commonly used to set up initial
 #'populations (often in an Eidos event set to run in generation 1, immediately
 #'after simulation initialization), it may be called in any Eidos event; the
@@ -5218,17 +5218,17 @@ outputUsage <- function(void) {
 #'If you do not want the generation counter to be changed, you can change it
 #'back after reading, by setting sim.generation to whatever value you wish. Note
 #'that restoring a saved past state and running forward again will not yield the
-#'same simulation results, because the random number generator’s state will not
+#'same simulation results, because the random number generator's state will not
 #'be the same; to ensure reproducibility from a given time point, setSeed() can
-#'be used to establish a new seed value. Any changes made to the simulation’s
+#'be used to establish a new seed value. Any changes made to the simulation's
 #'structure (mutation types, genomic element types, etc.) will not be wiped
 #'and re-established by readFromPopulationFile(); this method loads only the
-#'population’s state, not the simulation configuration, so care should be taken
+#'population's state, not the simulation configuration, so care should be taken
 #'to ensure that the simulation structure meshes coherently with the loaded data.
 #'Indeed, state such as the selfing and cloning rates of subpopulations, values
 #'set into tag properties, and values set onto objects with setValue() will also
 #'be lost, since it is not saved out by outputFull(). Only information saved by
-#'outputFull() will be restored; all other state associated with the simulation’s
+#'outputFull() will be restored; all other state associated with the simulation's
 #'subpopulations, individuals, genomes, mutations, and substitutions will be lost,
 #'and should be re-established by the model if it is still needed. As of SLiM
 #'2.3, this method will read and restore the spatial positions of individuals if
@@ -5250,7 +5250,7 @@ outputUsage <- function(void) {
 #'in a non-nucleotide-based model, and vice versa, will produce an error. As of
 #'SLiM 3.5, this method will read and restore the pedigree IDs of individuals and
 #'genomes if that information is present in the output file (as requested with
-#'outputFull(pedigreeIDs=T)) and if SLiM’s optional pedigree tracking has been
+#'outputFull(pedigreeIDs=T)) and if SLiM's optional pedigree tracking has been
 #'turned on with initializeSLiMOptions(keepPedigrees=T). This method can also be
 #'used to read tree-sequence (.trees) files saved by treeSeqOutput() or generated
 #'by the Python pyslim package. When loading a tree sequence, a crosscheck of
@@ -5267,7 +5267,7 @@ outputUsage <- function(void) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -5306,7 +5306,7 @@ readFromPopulationFile <- function(filePath) {
 #'you may call recalculateFitness() to force an immediate recalculation and
 #'recache. The optional parameter generation provides the generation for which
 #'fitness() callbacks should be selected; if it is NULL (the default), the
-#'simulation’s current generation value, sim.generation, is used. If you call
+#'simulation's current generation value, sim.generation, is used. If you call
 #'recalculateFitness() in an early() event in a WF model, you may wish this
 #'to be sim.generation - 1 in order to utilize the fitness() callbacks for the
 #'previous generation, as if the changes that you have made to fitness-influencing
@@ -5331,7 +5331,7 @@ readFromPopulationFile <- function(filePath) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -5383,7 +5383,7 @@ recalculateFitness <- function(generation) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -5428,7 +5428,7 @@ registerEarlyEvent <- function(id, source, start, end) {
 #'@details Register a block of Eidos source code, represented as the string
 #'singleton source, as an Eidos fitness() callback in the current simulation,
 #'with a required mutation type mutType (which may be an integer mutation type
-#'identifier, or NULL to indicate a global fitness() callback – see section
+#'identifier, or NULL to indicate a global fitness() callback - see section
 #'25.2), optional subpopulation subpop (which may also be an integer identifier,
 #'or NULL, the default, to indicate all subpopulations), and optional start and
 #'end generations all limiting its applicability. The script block will be given
@@ -5444,7 +5444,7 @@ registerEarlyEvent <- function(id, source, start, end) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -5505,7 +5505,7 @@ registerFitnessCallback <- function(id, source, mutType, subpop, start, end)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -5558,7 +5558,7 @@ end) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -5615,7 +5615,7 @@ registerLateEvent <- function(id, source, start, end) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -5672,7 +5672,7 @@ registerMateChoiceCallback <- function(id, source, subpop, start, end) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -5718,7 +5718,7 @@ registerModifyChildCallback <- function(id, source, subpop, start, end) {
 #'@details Register a block of Eidos source code, represented as the string
 #'singleton source, as an Eidos mutation() callback in the current simulation,
 #'with an optional mutation type mutType (which may be an integer mutation type
-#'identifier, or NULL, the default, to indicate all mutation types – see section
+#'identifier, or NULL, the default, to indicate all mutation types - see section
 #'25.8), optional subpopulation subpop (which may also be an integer identifier,
 #'or NULL, the default, to indicate all subpopulations), and optional start and
 #'end generations all limiting its applicability. The script block will be given
@@ -5734,7 +5734,7 @@ registerModifyChildCallback <- function(id, source, subpop, start, end) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -5792,7 +5792,7 @@ registerMutationCallback <- function(id, source, mutType, subpop, start, end)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -5853,7 +5853,7 @@ registerRecombinationCallback <- function(id, source, subpop, start, end) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -5943,7 +5943,7 @@ registerReproductionCallback <- function(id, source, subpop, sex, start, end)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -5987,7 +5987,7 @@ rescheduleScriptBlock <- function(block, start, end, generations) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -6051,7 +6051,7 @@ simulationFinished <- function(void) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -6085,7 +6085,7 @@ subsetMutations <- function(exclude, mutType, position, nucleotide, tag, id)
 #'the last simplification. The returned value is a logical singleton flag,
 #'T to indicate that full coalescence was observed at the last treesequence
 #'simplification (meaning that there is a single ancestral individual that roots
-#'all ancestry trees at all sites along the chromosome – although not necessarily
+#'all ancestry trees at all sites along the chromosome - although not necessarily
 #'the same ancestor at all sites), or F if full coalescence was not observed. For
 #'simple models, reaching coalescence may indicate that the model has reached an
 #'equilibrium state, but this may not be true in models that modify the dynamics
@@ -6096,7 +6096,7 @@ subsetMutations <- function(exclude, mutType, position, nucleotide, tag, id)
 #'equilibrium state at all. Also note that some actions by a model, such as adding
 #'a new subpopulation, may cause the coalescence state to revert from T back
 #'to F (at the next simplification), so a return value of T may not necessarily
-#'mean that the model is coalesced at the present moment – only that it was
+#'mean that the model is coalesced at the present moment - only that it was
 #'coalesced at the last simplification. This method may only be called if tree
 #'sequence recording has been turned on with initializeTreeSeq(); in addition,
 #'checkCoalescence=T must have been supplied to initializeTreeSeq(), so that the
@@ -6113,7 +6113,7 @@ subsetMutations <- function(exclude, mutType, position, nucleotide, tag, id)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -6170,7 +6170,7 @@ treeSeqCoalesced <- function(void) {
 #'metadata dictionary is not used by SLiM, or by pyslim, tskit, or msprime; you
 #'may use it for any purpose you wish. Note that metadata may actually be any
 #'subclass of Dictionary, such as the SLiMSim simulation object sim, or a LogFile
-#'instance. However, only the keys and values contained by the object’s Dictionary
+#'instance. However, only the keys and values contained by the object's Dictionary
 #'superclass state will be serialized into the metadata; properties of the
 #'subclass will be ignored.
 #'@section Copyright:
@@ -6178,7 +6178,7 @@ treeSeqCoalesced <- function(void) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -6229,7 +6229,7 @@ treeSeqOutput <- function(path, simplify, includeModel, metadata) {
 #'for (temporary) retention: their genomes will not be added to the sample, and
 #'they will appear in the final tree sequence only if one of their genomes is
 #'retained across simplification. In other words, the rule of thumb for retained
-#'individuals is simple: if a genome is kept by simplification, the genome’s
+#'individuals is simple: if a genome is kept by simplification, the genome's
 #'corresponding individual is kept also, if it is retained. Note that permanent
 #'remembering takes priority; calling this function with permanent=F on an
 #'individual that has previously been permanently remembered will not remove it
@@ -6246,7 +6246,7 @@ treeSeqOutput <- function(path, simplify, includeModel, metadata) {
 #'simply an intermediate node in the ancestry (i.e., in the middle of a branch).
 #'This can be enabled by setting retainCoalescentOnly to F in your call to
 #'initializeTreeSeq(). In this case, ancestral genomes that are intermediate
-#'("unary nodes”, in tskit parlance) and are within an individual that has been
+#'("unary nodes", in tskit parlance) and are within an individual that has been
 #'retained using the permanent=F flag here are kept, along with the retained
 #'individual itself. Since setting retainCoalescentOnly to F will prevent the
 #'unary nodes for retained individuals from being pruned, simplification may
@@ -6261,7 +6261,7 @@ treeSeqOutput <- function(path, simplify, includeModel, metadata) {
 #'the simulation, or (b) the last time that the individual was remembered, if
 #'not. Calling treeSeqRememberIndividuals() on an individual that is already
 #'remembered will cause the archived information about the remembered individual
-#'to be updated to reflect the individual’s current state; care should be taken
+#'to be updated to reflect the individual's current state; care should be taken
 #'to remember individuals at a point in time when their state is valid. A case
 #'where this is particularly important is for the spatial location of individuals
 #'in continuous-space models. SLiM automatically retains the portions of the
@@ -6275,7 +6275,7 @@ treeSeqOutput <- function(path, simplify, includeModel, metadata) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -6318,7 +6318,7 @@ treeSeqRememberIndividuals <- function(individuals, permanent) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -6364,7 +6364,7 @@ treeSeqSimplify <- function(void) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -6411,14 +6411,14 @@ addCloned <- function(parent) {
 #'sexual models parent1 must be female and parent2 must be male; in hermaphroditic
 #'models, parent1 and parent2 are unrestricted. If parent1 and parent2 are the
 #'same individual in a hermaphroditic model, that parent self-fertilizes, or
-#'"selfs”, to generate the offspring sexually (note this is not the same as
-#'clonal reproduction). Such selfing is considered "incidental” by addCrossed(),
+#'"selfs", to generate the offspring sexually (note this is not the same as
+#'clonal reproduction). Such selfing is considered "incidental" by addCrossed(),
 #'however; if the preventIncidentalSelfing flag of initializeSLiMOptions() is
 #'T, supplying the same individual for parent1 and parent2 is an error (you must
 #'check for and prevent incidental selfing if you set that flag in a nonWF model).
 #'If non-incidental selfing is desired, addSelfed() should be used instead.
 #'The sex parameter specifies the sex of the offspring. A value of NULL means
-#'"make the default choice”; in non-sexual models it is the only legal value
+#'"make the default choice"; in non-sexual models it is the only legal value
 #'for sex, and does nothing, whereas in sexual models it causes male or female
 #'to be chosen with equal probability. A value of "M" or "F" for sex specifies
 #'that the offspring should be male or female, respectively. Finally, a float
@@ -6459,7 +6459,7 @@ addCloned <- function(parent) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -6507,7 +6507,7 @@ addCrossed <- function(parent1, parent2, sex) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -6575,7 +6575,7 @@ addEmpty <- function(sex) {
 #'may be assigned some meaning in future.) Again, this discussion applies equally
 #'to strand3, strand4, and breaks2, mutatis mutandis. Note that when new mutations
 #'are generated by addRecombinant(), their subpopID property will be the id of
-#'the offspring’s subpopulation, since the parental subpopulation is ambiguous
+#'the offspring's subpopulation, since the parental subpopulation is ambiguous
 #'in the general case; this behavior differs from the other add...() methods.
 #'The sex parameter is interpreted exactly as in addCrossed(); see that method
 #'for discussion. If the offspring sex is specified in any way (i.e., if sex is
@@ -6587,12 +6587,12 @@ addEmpty <- function(sex) {
 #'when the reproductive mode is essentially clonal from a single parent, since
 #'such inference would be ambiguous in the general case. Similarly, the offspring
 #'is considered to have no parents for the purposes of pedigree tracking, since
-#'there may be more than two "parents” in the general case. When modeling the X or
+#'there may be more than two "parents" in the general case. When modeling the X or
 #'Y, strand1 and strand2 must be X genomes (or NULL), and strand3 and strand4 must
 #'both be X genomes or both be Y genomes (or NULL). These semantics allow several
 #'uses for addRecombinant(). When all strands are non-NULL, it is similar to
 #'addCrossed() except that the recombination breakpoints are specified explicitly,
-#'allowing very precise offspring generation without having to override SLiM’s
+#'allowing very precise offspring generation without having to override SLiM's
 #'breakpoint generation with a recombination() callback. When only strand1 and
 #'strand3 are supplied, it is very similar to addCloned(), creating a clonal
 #'offspring, except that the two parental genomes need not belong to the same
@@ -6615,7 +6615,7 @@ addEmpty <- function(sex) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -6666,7 +6666,7 @@ breaks2, sex) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -6713,7 +6713,7 @@ addSelfed <- function(parent) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -6747,35 +6747,35 @@ cachedFitness <- function(indices) {
 #'@aliases Subpopulation$configureDisplay .P$configureDisplay
 #'@family Subpopulation
 #'@return An object of type void.
-#'@details This method customizes the display of the subpopulation in SLiMgui’s
+#'@details This method customizes the display of the subpopulation in SLiMgui's
 #'Population Visualization graph. When this method is called by a model running
 #'outside SLiMgui, it will do nothing except type- checking and bounds-checking
 #'its arguments. When called by a model running in SLiMgui, the position,
-#'size, and color of the subpopulation’s displayed circle can be controlled as
+#'size, and color of the subpopulation's displayed circle can be controlled as
 #'specified below. The center parameter sets the coordinates of the center of
-#'the subpopulation’s displayed circle; it must be a float vector of length two,
+#'the subpopulation's displayed circle; it must be a float vector of length two,
 #'such that center[0] provides the x-coordinate and center[1] provides the y-
 #'coordinate. The square central area of the Population Visualization occupies
 #'scaled coordinates in [0,1] for both x and y, so the values in center must
-#'be within those bounds. If a value of NULL is provided, SLiMgui’s default
+#'be within those bounds. If a value of NULL is provided, SLiMgui's default
 #'center will be used (which currently arranges subpopulations in a circle).
 #'The scale parameter sets a scaling factor to be applied to the radius of the
-#'subpopulation’s displayed circle. The default radius used by SLiMgui is a
-#'function of the subpopulation’s number of individuals; this default radius is
+#'subpopulation's displayed circle. The default radius used by SLiMgui is a
+#'function of the subpopulation's number of individuals; this default radius is
 #'then multiplied by scale. If a value of NULL is provided, the default radius
 #'will be used; this is equivalent to supplying a scale of 1.0. Typically the
 #'same scale value should be used by all subpopulations, to scale all of their
 #'circles up or down uniformly, but that is not required. The color parameter
-#'sets the color to be used for the displayed subpopulation’s circle. Colors may
+#'sets the color to be used for the displayed subpopulation's circle. Colors may
 #'be specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see
-#'the Eidos manual). If color is NULL or the empty string, "", SLiMgui’s default
+#'the Eidos manual). If color is NULL or the empty string, "", SLiMgui's default
 #'(fitness-based) color will be used.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -6841,7 +6841,7 @@ configureDisplay <- function(center, scale, color) {
 #'prior to SLiM 3.5; it ensures that images loaded from disk with the Eidos class
 #'Image can be used directly as spatial maps, achieving the expected orientation,
 #'with no need for transposition or flipping. If the spatial map is a three-
-#'dimensional array, it is read as successive z-axis "planes”, each of which is
+#'dimensional array, it is read as successive z-axis "planes", each of which is
 #'a two-dimensional matrix that is treated as described above. Moving on to the
 #'other parameters of defineSpatialMap(): if interpolate is F, values across the
 #'spatial map are not interpolated; the value at a given point is equal to the
@@ -6886,7 +6886,7 @@ configureDisplay <- function(center, scale, color) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -6939,7 +6939,7 @@ colors)
 #'should be selected randomly, without respect to sex. If the sampling options
 #'provided by this method are not adequate, see the outputMS() method of Genome
 #'for a more flexible low-level option. If the optional parameter filePath is NULL
-#'(the default), output will be sent to Eidos’s output stream (see section 4.2.1).
+#'(the default), output will be sent to Eidos's output stream (see section 4.2.1).
 #'Otherwise, output will be sent to the filesystem path specified by filePath,
 #'overwriting that file if append if F, or appending to the end of it if append
 #'is T. If filterMonomorphic is F (the default), all mutations that are present
@@ -6957,7 +6957,7 @@ colors)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -6997,7 +6997,7 @@ filterMonomorphic)
 #'@aliases Subpopulation$outputSample .P$outputSample
 #'@family Subpopulation
 #'@return An object of type void.
-#'@details Output a random sample from the subpopulation in SLiM’s native format
+#'@details Output a random sample from the subpopulation in SLiM's native format
 #'(see section 26.2.1 for output format details). A sample of genomes (not entire
 #'individuals, note) of size sampleSize from the subpopulation will be output. The
 #'sample may be done either with or without replacement, as specified by replace;
@@ -7007,7 +7007,7 @@ filterMonomorphic)
 #'from individuals should be selected randomly, without respect to sex. If the
 #'sampling options provided by this method are not adequate, see the output()
 #'method of Genome for a more flexible low-level option. If the optional parameter
-#'filePath is NULL (the default), output will be sent to Eidos’s output stream
+#'filePath is NULL (the default), output will be sent to Eidos's output stream
 #'(see section 4.2.1). Otherwise, output will be sent to the filesystem path
 #'specified by filePath, overwriting that file if append if F, or appending to the
 #'end of it if append is T. See outputMSSample() and outputVCFSample() for other
@@ -7018,7 +7018,7 @@ filterMonomorphic)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7065,7 +7065,7 @@ outputSample <- function(sampleSize, replace, requestedSex, filePath, append)
 #'@return An object of type void.
 #'@details Output a random sample from the subpopulation in VCF format (see
 #'sections 26.2.3 and 26.2.4 for output format details). A sample of individuals
-#'(not genomes, note – unlike the outputSample() and outputMSSample() methods) of
+#'(not genomes, note - unlike the outputSample() and outputMSSample() methods) of
 #'size sampleSize from the subpopulation will be output. The sample may be done
 #'either with or without replacement, as specified by replace; the default is to
 #'sample with replacement. A particular sex of individuals may be requested for
@@ -7074,7 +7074,7 @@ outputSample <- function(sampleSize, replace, requestedSex, filePath, append)
 #'should be selected randomly, without respect to sex. If the sampling options
 #'provided by this method are not adequate, see the outputVCF() method of Genome
 #'for a more flexible low-level option. If the optional parameter filePath is
-#'NULL (the default), output will be sent to Eidos’s output stream (see section
+#'NULL (the default), output will be sent to Eidos's output stream (see section
 #'4.2.1). Otherwise, output will be sent to the filesystem path specified by
 #'filePath, overwriting that file if append if F, or appending to the end of
 #'it if append is T. The parameters outputMultiallelics, simplifyNucleotides,
@@ -7088,7 +7088,7 @@ outputSample <- function(sampleSize, replace, requestedSex, filePath, append)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7137,7 +7137,7 @@ filePath, append, simplifyNucleotides, outputNonnucleotides)
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7174,7 +7174,7 @@ pointInBounds <- function(point) {
 #'lies inside the spatial extent by the same magnitude that it previously lay
 #'outside, but on the opposite side of the space; in effect, the two edges of
 #'the periodic spatial boundary are seamlessly joined. This is done iteratively
-#'until all coordinates lie inside the subpopulation’s periodic boundaries. Note
+#'until all coordinates lie inside the subpopulation's periodic boundaries. Note
 #'that non-periodic spatial boundaries are not enforced by this method; they
 #'should be enforced using pointReflected(), pointStopped(), or some other means
 #'of enforcing boundary constraints (which can be used after pointPeriodic() to
@@ -7192,7 +7192,7 @@ pointInBounds <- function(point) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7226,7 +7226,7 @@ pointPeriodic <- function(point) {
 #'a coordinate of point lies beyond a spatial boundary, that coordinate is
 #'reflected across the boundary, so that it lies inside the boundary by the
 #'same magnitude that it previously lay outside the boundary. This is done
-#'iteratively until all coordinates lie inside the subpopulation’s boundaries.
+#'iteratively until all coordinates lie inside the subpopulation's boundaries.
 #'This method is useful for implementing reflecting boundary conditions. This
 #'may only be called in simulations for which continuous space has been enabled
 #'with initializeSLiMOptions(). The length of point must be an exact multiple of
@@ -7239,7 +7239,7 @@ pointPeriodic <- function(point) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7284,7 +7284,7 @@ pointReflected <- function(point) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7325,7 +7325,7 @@ pointStopped <- function(point) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7372,7 +7372,7 @@ pointUniform <- function(n) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7442,7 +7442,7 @@ removeSubpopulation <- function(void) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7481,7 +7481,7 @@ migrant) {
 #'sexes) or a vector containing two numeric values (the female and male cloning
 #'rates specified separately, at indices 0 and 1 respectively). During mating and
 #'offspring generation, the probability that any given offspring individual will
-#'be generated by cloning – by asexual reproduction without gametes or meiosis –
+#'be generated by cloning - by asexual reproduction without gametes or meiosis -
 #'will be equal to the cloning rate (for its sex, in sexual simulations) set in
 #'the parental (not the offspring!) subpopulation.
 #'@section Copyright:
@@ -7489,7 +7489,7 @@ migrant) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7534,7 +7534,7 @@ setCloningRate <- function(rate) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7568,15 +7568,15 @@ setMigrationRates <- function(sourceSubpops, rates) {
 #'rate, which should be between 0.0 and 1.0, inclusive. Selfing can only be
 #'enabled in non-sexual (i.e. hermaphroditic) simulations. During mating and
 #'offspring generation, the probability that any given offspring individual will
-#'be generated by selfing – by self-fertilization via gametes produced by meiosis
-#'by a single parent – will be equal to the selfing rate set in the parental (not
+#'be generated by selfing - by self-fertilization via gametes produced by meiosis
+#'by a single parent - will be equal to the selfing rate set in the parental (not
 #'the offspring!) subpopulation (see section 22.2.1).
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7619,7 +7619,7 @@ setSelfingRate <- function(rate) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7669,7 +7669,7 @@ setSexRatio <- function(sexRatio) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7714,7 +7714,7 @@ setSpatialBounds <- function(bounds) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7757,7 +7757,7 @@ setSubpopulationSize <- function(size) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7811,7 +7811,7 @@ spatialMapColor <- function(name, value) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7872,7 +7872,7 @@ spatialMapValue <- function(name, point) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7916,7 +7916,7 @@ subsetIndividuals <- function(exclude, sex, tag, minAge, maxAge, migrant) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -7975,7 +7975,7 @@ takeMigrants <- function(migrants) {
 #'"Ile" (when long is T). Using the paste=T option is considerably faster than
 #'using paste() in script. This function interprets the supplied codon sequence
 #'as the sense strand (i.e., the strand that is not transcribed, and which mirrors
-#'the mRNA’s sequence). This uses the standard DNA codon table directly. For
+#'the mRNA's sequence). This uses the standard DNA codon table directly. For
 #'example, if the nucleotide sequence is CAA TTC, that will correspond to a codon
 #'vector of 16 61, and will result in the amino acid sequence Gln-Phe ("QF").
 #'(is)codonsToNucleotides(integer codons, [string$ format = "string"]) Returns
@@ -7986,13 +7986,13 @@ takeMigrants <- function(migrants) {
 #'may be "string" to obtain the sequence as a singleton string (e.g., "TATACG"),
 #'"char" to obtain it as a string vector of single characters (e.g., "T", "A",
 #'"T", "A", "C", "G"), or "integer" to obtain it as an integer vector (e.g., 3, 0,
-#'3, 0, 1, 2), using SLiM’s standard code of A=0, C=1, G=2, T=3.
+#'3, 0, 1, 2), using SLiM's standard code of A=0, C=1, G=2, T=3.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -8036,7 +8036,7 @@ codonsToAminoAcids <- function(codons, long, paste) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -8066,7 +8066,7 @@ mm16To256 <- function(mutationMatrix16) {
 #'@aliases SLiMBuiltin$mmJukesCantor .SB$mmJukesCantor
 #'@family SLiMBuiltin
 #'@return An object of type float.
-#'@details Returns a mutation matrix representing a Jukes–Cantor (1969) model with
+#'@details Returns a mutation matrix representing a Jukes-Cantor (1969) model with
 #'mutation rate alpha to each possible alternative nucleotide at a site: This 2×2
 #'matrix is suitable for use with initializeGenomicElementType(). Note that the
 #'actual mutation rate produced by this matrix is 3*alpha.
@@ -8075,7 +8075,7 @@ mm16To256 <- function(mutationMatrix16) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -8116,7 +8116,7 @@ mmJukesCantor <- function(alpha) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -8150,14 +8150,14 @@ mmKimura <- function(alpha, beta) {
 #'providing the number of occurrences of A / C / G / T nucleotides, respectively,
 #'in the supplied nucleotide sequence. The parameter sequence may be a singleton
 #'string (e.g., "TATA"), a string vector of single characters (e.g., "T", "A",
-#'"T", "A"), or an integer vector (e.g., 3, 0, 3, 0), using SLiM’s standard code
+#'"T", "A"), or an integer vector (e.g., 3, 0, 3, 0), using SLiM's standard code
 #'of A=0, C=1, G=2, T=3.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -8191,14 +8191,14 @@ nucleotideCounts <- function(sequence) {
 #'providing the frequencies of occurrences of A / C / G / T nucleotides,
 #'respectively, in the supplied nucleotide sequence. The parameter sequence may be
 #'a singleton string (e.g., "TATA"), a string vector of single characters (e.g.,
-#'"T", "A", "T", "A"), or an integer vector (e.g., 3, 0, 3, 0), using SLiM’s
+#'"T", "A", "T", "A"), or an integer vector (e.g., 3, 0, 3, 0), using SLiM's
 #'standard code of A=0, C=1, G=2, T=3.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -8241,7 +8241,7 @@ nucleotideFrequencies <- function(sequence) {
 #'sequence in sequence may be supplied in any of three formats: a string vector
 #'with single-letter nucleotides (e.g., "T", "A", "T", "A"), a singleton string
 #'of nucleotide letters (e.g., "TATA"), or an integer vector of nucleotide
-#'values (e.g., 3, 0, 3, 0) using SLiM’s standard code of A=0, C=1, G=2, T=3.
+#'values (e.g., 3, 0, 3, 0) using SLiM's standard code of A=0, C=1, G=2, T=3.
 #'If the choice of format is not driven by other considerations, such as ease
 #'of manipulation, then the singleton string format will certainly be the most
 #'memory-efficient for long sequences, and will probably also be the fastest.
@@ -8259,7 +8259,7 @@ nucleotideFrequencies <- function(sequence) {
 #'may be "string" to obtain the generated sequence as a singleton string (e.g.,
 #'"TATA"), "char" to obtain it as a string vector of single characters (e.g.,
 #'"T", "A", "T", "A"), or "integer" to obtain it as an integer vector (e.g., 3,
-#'0, 3, 0), using SLiM’s standard code of A=0, C=1, G=2, T=3. For passing directly
+#'0, 3, 0), using SLiM's standard code of A=0, C=1, G=2, T=3. For passing directly
 #'to initializeAncestralNucleotides(), format "string" (a singleton string) will
 #'certainly be the most memory-efficient, and probably also the fastest. Memory
 #'efficiency can be a significant consideration; the nucleotide sequence for a
@@ -8273,7 +8273,7 @@ nucleotideFrequencies <- function(sequence) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -8309,21 +8309,21 @@ nucleotidesToCodons <- function(sequence) {
 #'@aliases SLiMBuiltin$calcFST .SB$calcFST
 #'@family SLiMBuiltin
 #'@return An object of type float. Return will be of length 1 (a singleton)
-#'@details Calculates the FST between two Genome vectors – typically, but not
+#'@details Calculates the FST between two Genome vectors - typically, but not
 #'necessarily, the genomes that constitute two different subpopulations (which
 #'we will assume for the purposes of this discussion). In general, higher FST
 #'indicates greater genetic divergence between subpopulations. The calculation
 #'is done using only the mutations in muts; if muts is NULL, all mutations
 #'are used. The muts parameter can therefore be used to calculate the FST only
 #'for a particular mutation type (by passing only mutations of that type). The
-#'calculation can be narrowed to apply to only a window – a subrange of the
-#'full chromosome – by passing the interval bounds [start, end] for the desired
+#'calculation can be narrowed to apply to only a window - a subrange of the
+#'full chromosome - by passing the interval bounds [start, end] for the desired
 #'window. In this case, the vector of mutations used for the calculation will
 #'be subset to include only mutations within the specified window. The default
 #'behavior, with start and end of NULL, provides the genome-wide FST, which
 #'is often used to assess the overall level of genetic divergence between
 #'sister species or allopatric subpopulations. The code for calcFST() is just
-#'an Eidos implementation of Wright’s definition of FST: where is the average
+#'an Eidos implementation of Wright's definition of FST: where is the average
 #'heterozygosity in the two subpopulations, and is the total heterozygosity
 #'when both subpopulations are combined. In this implementation, the two genome
 #'vectors are weighted equally, not weighted by their size. The implementation
@@ -8346,7 +8346,7 @@ nucleotidesToCodons <- function(sequence) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -8388,7 +8388,7 @@ calcFST <- function(genomes1, genomes2, muts, start, end) {
 #'all mutations in the simulation; the calculation can instead be based upon a
 #'subset of mutations, such as mutations of a specific mutation type, by passing
 #'the desired vector of mutations for muts. The calculation can be narrowed
-#'to apply to only a window – a subrange of the full chromosome – by passing
+#'to apply to only a window - a subrange of the full chromosome - by passing
 #'the interval bounds [start, end] for the desired window. In this case, the
 #'vector of mutations used for the calculation will be subset to include only
 #'mutations within the specified window. The default behavior, with start and
@@ -8405,7 +8405,7 @@ calcFST <- function(genomes1, genomes2, muts, start, end) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -8446,7 +8446,7 @@ calcHeterozygosity <- function(genomes, muts, start, end) {
 #'@details Calculates the heterozygosity for a pair of genomes; these will
 #'typically be the two genomes of a diploid individual (individual.genome1 and
 #'individual.genome2), but any two genomes may be supplied. The calculation can
-#'be narrowed to apply to only a window – a subrange of the full chromosome – by
+#'be narrowed to apply to only a window - a subrange of the full chromosome - by
 #'passing the interval bounds [start, end] for the desired window. In this case,
 #'the vector of mutations used for the calculation will be subset to include
 #'only mutations within the specified window. The default behavior, with start
@@ -8472,7 +8472,7 @@ calcHeterozygosity <- function(genomes, muts, start, end) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -8519,7 +8519,7 @@ infiniteSites) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -8554,19 +8554,19 @@ calcVA <- function(individuals, mutType) {
 #'@aliases SLiMBuiltin$calcWattersonsTheta .SB$calcWattersonsTheta
 #'@family SLiMBuiltin
 #'@return An object of type float. Return will be of length 1 (a singleton)
-#'@details Calculates Watterson’s theta (a metric of genetic diversity comparable
+#'@details Calculates Watterson's theta (a metric of genetic diversity comparable
 #'to heterozygosity) for a vector of genomes, based upon the mutations in the
 #'genomes. Often genomes will be all of the genomes in a subpopulation, or in
 #'the entire population, but any genome vector may be used. By default, with
 #'muts=NULL, the calculation is based upon all mutations in the simulation; the
 #'calculation can instead be based upon a subset of mutations, such as mutations
 #'of a specific mutation type, by passing the desired vector of mutations for
-#'muts. The calculation can be narrowed to apply to only a window – a subrange
-#'of the full chromosome – by passing the interval bounds [start, end] for the
+#'muts. The calculation can be narrowed to apply to only a window - a subrange
+#'of the full chromosome - by passing the interval bounds [start, end] for the
 #'desired window. In this case, the vector of mutations used for the calculation
 #'will be subset to include only mutations within the specified window. The
 #'default behavior, with start and end of NULL, provides the genome-wide
-#'Watterson’s theta. The implementation of calcWattersonsTheta(), viewable with
+#'Watterson's theta. The implementation of calcWattersonsTheta(), viewable with
 #'functionSource(), treats every mutation as independent in the heterozygosity
 #'calculations. One could regard this choice as embodying an infinite-sites
 #'interpretation of the segregating mutations, as with calcHeterozygosity(). In
@@ -8579,7 +8579,7 @@ calcVA <- function(individuals, mutType) {
 #'reproduced from the official manual,
 #'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 #'documentation is
-#'Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 #'about SLiM can be found
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -8605,7 +8605,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'simulation need to be
 #'set up with an initial configuration. In SLiM 1.8 and earlier, this was done by
 #'means of # directives
-#'in the simulation’s input file. In SLiM 2 and later, simulation parameters are
+#'in the simulation's input file. In SLiM 2 and later, simulation parameters are
 #'instead configured
 #'using Eidos.
 #'Configuration in Eidos is done in initialize() callbacks that run prior to the
@@ -8716,8 +8716,8 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'\item{geneConversionSimpleConversionFraction}{A property of type float. It is of
 #'length one (a singleton). This property is a constant, so it is not modifiable.
 #'\strong{Property Description:} The fraction of gene conversion tracts that
-#'are "simple” (i.e., not involving resolution of heteroduplex mismatches);
-#'the remainder will be "complex”. When gene conversion has not been enabled by
+#'are "simple" (i.e., not involving resolution of heteroduplex mismatches);
+#'the remainder will be "complex". When gene conversion has not been enabled by
 #'calling initializeGeneConversion(), this property will be unavailable. }
 #'\item{genomicElements}{A property of type GenomicElement object. This property
 #'is a constant, so it is not modifiable. \strong{Property Description:} All of
@@ -8932,11 +8932,11 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'belongs. }
 #'\item{isNullGenome}{A property of type logical. It is of length one
 #'(a singleton). This property is a constant, so it is not modifiable.
-#'\strong{Property Description:} T if the genome is a "null” genome, F if it is
+#'\strong{Property Description:} T if the genome is a "null" genome, F if it is
 #'an ordinary genome object. When a sex chromosome (X or Y) is simulated, the
-#'other sex chromosome also exists in the simulation, but it is a "null” genome
+#'other sex chromosome also exists in the simulation, but it is a "null" genome
 #'that does not carry any mutations. Instead, it is a placeholder, present to
-#'allow SLiM’s code to operate in much the same way as it does when an autosome is
+#'allow SLiM's code to operate in much the same way as it does when an autosome is
 #'simulated. Null genomes should not be accessed or manipulated. }
 #'\item{mutations}{A property of type Mutation object. This property is a
 #'constant, so it is not modifiable. \strong{Property Description:} All of the
@@ -9009,7 +9009,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'mutation types. The genomic
 #'element types currently defined in the simulation are defined as global
 #'constants with the same
-#'names used in the SLiM input file – g1, g2, and so forth. Section 1.5.4 presents
+#'names used in the SLiM input file - g1, g2, and so forth. Section 1.5.4 presents
 #'an overview of the
 #'conceptual role of this class.
 #'This class has the following methods (functions):
@@ -9024,7 +9024,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'The color used to display genomic elements of this type in SLiMgui. Outside
 #'of SLiMgui, this property still exists, but is not used by SLiM. Colors may be
 #'specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see the
-#'Eidos manual). If color is the empty string, "", SLiMgui’s default color scheme
+#'Eidos manual). If color is the empty string, "", SLiMgui's default color scheme
 #'is used; this is the default for new GenomicElementType objects. }
 #'\item{id}{A property of type integer. It is of length one (a singleton). This
 #'property is a constant, so it is not modifiable. \strong{Property Description:}
@@ -9082,7 +9082,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'\describe{
 #'\item{age}{A property of type integer. It is of length one (a singleton). This
 #'property is a variable, so it is modifiable. \strong{Property Description:}
-#'The age of the individual, measured in generation "ticks”. A newly generated
+#'The age of the individual, measured in generation "ticks". A newly generated
 #'offspring individual will have an age of 0 in the same generation in which
 #'is was created. The age of every individual is incremented by one at the same
 #'point that the generation counter is incremented. The age of individuals may be
@@ -9093,11 +9093,11 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'The color used to display the individual in SLiMgui. Outside of SLiMgui, this
 #'property still exists, but is not used by SLiM. Colors may be specified by name,
 #'or with hexadecimal RGB values of the form "#RRGGBB" (see the Eidos manual). If
-#'color is the empty string, "", SLiMgui’s default (fitness-based) color scheme is
+#'color is the empty string, "", SLiMgui's default (fitness-based) color scheme is
 #'used; this is the default for new Individual objects. }
 #'\item{fitnessScaling}{A property of type float. It is of length one (a
 #'singleton). This property is a variable, so it is modifiable. \strong{Property
-#'Description:} A float scaling factor applied to the individual’s fitness
+#'Description:} A float scaling factor applied to the individual's fitness
 #'(i.e., the fitness value computed for the individual will be multiplied by this
 #'value). This provides a simple, fast way to modify the fitness of an individual;
 #'conceptually it is similar to returning a fitness effect for the individual from
@@ -9131,7 +9131,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'F otherwise. In WF models, this flag is set at the point when a new child is
 #'generated if it is a migrant (i.e., if its source subpopulation is not the
 #'same as its subpopulation), and remains valid, with the same value, for the
-#'rest of the individual’s lifetime. In nonWF models, this flag is F for all
+#'rest of the individual's lifetime. In nonWF models, this flag is F for all
 #'new individuals, is set to F in all individuals at the end of the reproduction
 #'generation cycle stage, and is set to T on all individuals moved to a new
 #'subpopulation by takeMigrants(); the T value set by takeMigrants() will remain
@@ -9169,7 +9169,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'tracking is not on, this property is unavailable. If an individual is a
 #'parent by cloning or selfing, or as both parents for a biparental mating,
 #'this value is incremented by two. Involvement of an individual as a parent
-#'for an addRecombinant() call does not change this property’s value, since the
+#'for an addRecombinant() call does not change this property's value, since the
 #'reproductive contribution in that case is unclear; one must conduct separate
 #'bookkeeping for that case if necessary. This property is only useful in nonWF
 #'models, since in WF models the parental generation dies immediately after
@@ -9190,7 +9190,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'spatial dimensionality of the simulation). In other words, if the declared
 #'dimensionality is "xy", the individual.spatialPosition property is equivalent
 #'to c(individual.x, individual.y); individual.z is not used since it is not
-#'encompassed by the simulation’s dimensionality. This property cannot be set, but
+#'encompassed by the simulation's dimensionality. This property cannot be set, but
 #'the setSpatialPosition() method may be used to achieve the same thing. }
 #'\item{subpopulation}{A property of type Subpopulation object. It is of length
 #'one (a singleton). This property is a constant, so it is not modifiable.
@@ -9249,7 +9249,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'model); if you wish it to have a defined value, you must arrange that yourself
 #'by explicitly setting its value prior to using it elsewhere in your code,
 #'typically in a modifyChild() callback. The value of x is not used by SLiM unless
-#'the optional "continuous space” facility is enabled with the dimensionality
+#'the optional "continuous space" facility is enabled with the dimensionality
 #'parameter to initializeSLiMOptions(), in which case x will be understood to
 #'represent the x coordinate of the individual in space. If continuous space is
 #'not enabled, you may use x as an additional tag value of type float. }
@@ -9260,7 +9260,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'model); if you wish it to have a defined value, you must arrange that yourself
 #'by explicitly setting its value prior to using it elsewhere in your code,
 #'typically in a modifyChild() callback. The value of y is not used by SLiM unless
-#'the optional "continuous space” facility is enabled with the dimensionality
+#'the optional "continuous space" facility is enabled with the dimensionality
 #'parameter to initializeSLiMOptions(), in which case y will be understood to
 #'represent the y coordinate of the individual in space (if the dimensionality is
 #'"xy" or "xyz"). If continuous space is not enabled, or the dimensionality is not
@@ -9272,27 +9272,27 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'model); if you wish it to have a defined value, you must arrange that yourself
 #'by explicitly setting its value prior to using it elsewhere in your code,
 #'typically in a modifyChild() callback. The value of z is not used by SLiM unless
-#'the optional "continuous space” facility is enabled with the dimensionality
+#'the optional "continuous space" facility is enabled with the dimensionality
 #'parameter to initializeSLiMOptions(), in which case z will be understood to
 #'represent the z coordinate of the individual in space (if the dimensionality
 #'is "xyz"). If continuous space is not enabled, or the dimensionality is not
 #'"xyz", you may use z as an additional tag value of type float. 24.6.2 Individual
-#'methods – (logical)containsMutations(object<Mutation> mutations) Returns a
+#'methods - (logical)containsMutations(object<Mutation> mutations) Returns a
 #'logical vector indicating whether each of the mutations in mutations is present
 #'in the individual (in either of its genomes); each element in the returned
 #'vector indicates whether the corresponding mutation is present (T) or absent
 #'(F). This method is provided for speed; it is much faster than the corresponding
-#'Eidos code. – (integer$)countOfMutationsOfType(io<MutationType>$ mutType)
+#'Eidos code. - (integer$)countOfMutationsOfType(io<MutationType>$ mutType)
 #'Returns the number of mutations that are of the type specified by mutType, out
 #'of all of the mutations in the individual (in both of its genomes; a mutation
 #'that is present in both genomes counts twice). If you need a vector of the
 #'matching Mutation objects, rather than just a count, you should probably use
 #'uniqueMutationsOfType(). This method is provided for speed; it is much faster
-#'than the corresponding Eidos code. – (float)relatedness(object<Individual>
+#'than the corresponding Eidos code. - (float)relatedness(object<Individual>
 #'individuals) Returns a vector containing the degrees of relatedness between
 #'the receiver and each of the individuals in individuals. The relatedness
 #'between A and B is always 1.0 if A and B are actually the same individual;
-#'this facility works even if SLiM’s optional pedigree tracking is turned
+#'this facility works even if SLiM's optional pedigree tracking is turned
 #'off (in which case all other relatedness values will be 0.0. Otherwise, if
 #'pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
 #'this method will use the pedigree information described in section 24.6.1 to
@@ -9318,7 +9318,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'calling individual.setSpatialPosition(c(1.0, 0.5)) property is equivalent
 #'to individual.x = 1.0; individual.y = 0.5; individual.z is not set (even if
 #'a third value is supplied in position) since it is not encompassed by the
-#'simulation’s dimensionality in this example. Note that this is an Eidos class
+#'simulation's dimensionality in this example. Note that this is an Eidos class
 #'method, somewhat unusually, which allows it to work in a special way when
 #'called on a vector of individuals. When the target vector of individuals is
 #'non-singleton, this method can do one of two things. If position contains
@@ -9331,7 +9331,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'point data is concatenated, not interleaved, just as it would be returned by
 #'accessing the spatialPosition property on the vector of target individuals).
 #'Calling this method with a position vector of any other length is an error.
-#'– (float$)sumOfMutationsOfType(io<MutationType>$ mutType) Returns the sum of
+#'- (float$)sumOfMutationsOfType(io<MutationType>$ mutType) Returns the sum of
 #'the selection coefficients of all mutations that are of the type specified by
 #'mutType, out of all of the mutations in the genomes of the individual. This is
 #'often useful in models that use a particular mutation type to represent QTLs
@@ -9339,7 +9339,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'sum of the additive effects of the QTLs for the given mutation type. This method
 #'is provided for speed; it is much faster than the corresponding Eidos code. Note
 #'that this method also exists on Genome, for cases in which the sum for just one
-#'genome is desired. – (object<Mutation>)uniqueMutationsOfType(io<MutationType>$
+#'genome is desired. - (object<Mutation>)uniqueMutationsOfType(io<MutationType>$
 #'mutType) Returns an object vector of all the mutations that are of the type
 #'specified by mutType, out of all of the mutations in the individual. Mutations
 #'present in both genomes will occur only once in the result of this method,
@@ -9375,14 +9375,14 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'spatial dimensionality
 #'established with initializeSLiMOptions() (section 24.1), but do not need to be
 #'spatial. Spatial
-#'interactions can have – and almost always should have – a maximum distance,
+#'interactions can have - and almost always should have - a maximum distance,
 #'which allows them
 #'to be evaluated more efficiently (since all interactions beyond the maximum
 #'distance can be
 #'assumed to have a strength of zero).
 #'Note that if there are N individuals in a given subpopulation, each of which
 #'interacts with M
-#'other individuals, then InteractionType’s internal data structures will occupy
+#'other individuals, then InteractionType's internal data structures will occupy
 #'an amount of memory
 #'roughly proportional to N×M, for each evaluated subpopulation. Depending upon
 #'the queries
@@ -9393,7 +9393,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'sizes can therefore be expensive, although InteractionType goes to considerable
 #'lengths to
 #'minimize the overhead.
-#'The first step in InteractionType’s evaluation of an interaction is to determine
+#'The first step in InteractionType's evaluation of an interaction is to determine
 #'the distance from
 #'the individual receiving the interaction to the individual exerting the
 #'interaction. This is computed
@@ -9423,33 +9423,33 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'response to queries for simple information, such as the distance(),
 #'distanceToPoint(), and
 #'strength() methods.
-#'The second engine is based upon a data structure called a "k-d tree” that is
+#'The second engine is based upon a data structure called a "k-d tree" that is
 #'designed to
 #'optimize searches for spatially proximate points. This engine is usually used in
 #'response to queries
-#'involving "neighbors”, such as nearestNeighbors() and nearestNeighborsOfPoint().
+#'involving "neighbors", such as nearestNeighbors() and nearestNeighborsOfPoint().
 #'In SLiM,
-#'the term "neighbor” means an individual that is within the maximum interaction
+#'the term "neighbor" means an individual that is within the maximum interaction
 #'distance of a
 #'focal individual or point (excluding the focal individual itself); the neighbors
 #'of the focal individual
 #'or point are therefore those that fall within the fixed radius defined by the
 #'maximum interaction
-#'distance. Calls with "neighbor” in their name explicitly use the k-d tree
+#'distance. Calls with "neighbor" in their name explicitly use the k-d tree
 #'engine, and may therefore
 #'be called only for spatial interactions; in non-spatial interactions there is no
 #'concept of a
-#'"neighbor”. In terms of computational complexity, finding the nearest neighbor
+#'"neighbor". In terms of computational complexity, finding the nearest neighbor
 #'of a given
 #'individual using the brute-force engine is an O(N) computation, whereas with the
 #'k-d tree engine it
-#'is typically an O(log N) computation – a very important difference, especially
+#'is typically an O(log N) computation - a very important difference, especially
 #'for large N. In
 #'general, to get the best performance from a spatial model, you should (1) set a
 #'maximum distance
 #'for the model interactions that is as small as possible without introducing
 #'unwanted artifacts, and
-#'(2) use neighbor-based calls to make minimal queries when possible – if all you
+#'(2) use neighbor-based calls to make minimal queries when possible - if all you
 #'really care about
 #'is the distance to the nearest neighbor, use nearestNeighbors() to find the
 #'neighbor and then call
@@ -9457,7 +9457,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'distances to all individuals
 #'with distance() and then using min() to select the smallest, for example.
 #'The third engine, introduced in SLiM 3.1, is based upon a data structure called
-#'a "sparse array”
+#'a "sparse array"
 #'that is designed to track sparse non-zero values within a dataset that contains
 #'mostly zeros. It
 #'applies to spatial interactions because most pairs of interactions probably
@@ -9483,12 +9483,12 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'There are currently four options for interaction functions (IFs) in SLiM,
 #'represented by singlecharacter
 #'codes:
-#'"f" – a fixed interaction strength. This IF type has a single parameter, the
+#'"f" - a fixed interaction strength. This IF type has a single parameter, the
 #'interaction strength to
 #'be used for all interactions of this type. By default, interaction types use a
 #'type "f" IF with a value
 #'of 1.0, so interactions are binary: on within the maximum distance, off outside.
-#'"l" – a linear interaction strength. This IF type has a single parameter, the
+#'"l" - a linear interaction strength. This IF type has a single parameter, the
 #'maximum interaction
 #'strength to be used at distance 0.0. The interaction strength falls off
 #'linearly, reaching exactly zero
@@ -9496,7 +9496,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'distance dmax, and
 #'maximum interaction strength fmax, the formula for this IF is f(d) = fmax(1 −
 #'d / dmax).
-#'"e" – A negative exponential interaction strength. This IF type is specified by
+#'"e" - A negative exponential interaction strength. This IF type is specified by
 #'two parameters, a
 #'maximum interaction strength and a shape parameter. The interaction strength
 #'falls off nonlinearly
@@ -9507,7 +9507,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'anyway. The IF for this type is f(d) = fmaxexp(−λd), where λ is the specified
 #'shape parameter. Note
 #'that this parameterization is not the same as for the Eidos function rexp().
-#'"n" – A normal interaction strength (i.e., Gaussian, but "g" is avoided to
+#'"n" - A normal interaction strength (i.e., Gaussian, but "g" is avoided to
 #'prevent confusion with
 #'the gamma-function option provided for, e.g., MutationType). The interaction
 #'strength falls off
@@ -9524,7 +9524,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'rnorm(). A Gaussian function is often used to model spatial interactions, but is
 #'relatively
 #'computation-intensive.
-#'"c" – A Cauchy-distributed interaction strength. The interaction strength falls
+#'"c" - A Cauchy-distributed interaction strength. The interaction strength falls
 #'off non-linearly
 #'from the maximum, and cuts off discontinuously at the maximum distance;
 #'typically a maximum
@@ -9676,18 +9676,18 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'expects to be
 #'fully configured, with calls to add...() methods to add generators, before the
 #'first row of data is
-#'written out, to ensure consistency in the file’s data. When the first row of
+#'written out, to ensure consistency in the file's data. When the first row of
 #'data is written (or
-#'buffered), the LogFile’s configuration will then be frozen, and calls to add...
+#'buffered), the LogFile's configuration will then be frozen, and calls to add...
 #'() will no longer be
 #'allowed. Columns will be written, in each row, in the order in which add...()
 #'calls are made on
-#'the LogFile, and they will be named in the file’s header line as documented in
+#'the LogFile, and they will be named in the file's header line as documented in
 #'those methods. It
 #'is an error to have two columns with the same name.
 #'LogFile is a subclass of the Eidos class Dictionary, but unlike other SLiM
 #'classes that are
-#'Dictionary subclasses, this does not allow you to attach arbitrary key–value
+#'Dictionary subclasses, this does not allow you to attach arbitrary key-value
 #'pairs to the object.
 #'Instead, LogFile uses its Dictionary-ness to make the data from the last logged
 #'row available
@@ -9695,7 +9695,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'column) as the
 #'key. One quirk of LogFile is that because its keys are defined by the columns
 #'that it generates,
-#'and columns can sometimes contain an NA value, LogFile’s dictionary can, in
+#'and columns can sometimes contain an NA value, LogFile's dictionary can, in
 #'effect, contain NULL
 #'values (representing NA); this is not normally allowed by Dictionary. This
 #'should cause no trouble;
@@ -9734,7 +9734,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'\item{allKeys}{A property of type string or string or integer or integer or
 #'integer. This property is a constant, so it is not modifiable. \strong{Property
 #'Description:} This Dictionary property has an override in LogFile to return,
-#'in order, the names of the log file columns, which are the keys for LogFile’s
+#'in order, the names of the log file columns, which are the keys for LogFile's
 #'dictionary. }
 #'\item{filePath}{A property of type string or string or integer or integer or
 #'integer. It is of length one (a singleton). This property is a constant, so it
@@ -9774,7 +9774,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'individuals; if they reach fixation, they are converted to Substitution objects.
 #'Although Mutation has a tag property, like most SLiM classes, the subpopID can
 #'also store
-#'custom values if you don’t need to track the origin subpopulation of mutations
+#'custom values if you don't need to track the origin subpopulation of mutations
 #'(see below).
 #'Section 1.5.2 presents an overview of the conceptual role of this class.
 #'This class has the following methods (functions):
@@ -9835,7 +9835,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'coefficient kept by the mutation type (see section 24.10.1). Note that this
 #'property has a quirk: it is stored internally in SLiM using a single-precision
 #'float, not the double-precision float type normally used by Eidos. This means
-#'that if you set a mutation mut’s selection coefficient to some number x,
+#'that if you set a mutation mut's selection coefficient to some number x,
 #'mut.selectionCoeff==x may be F due to floating-point rounding error. Comparisons
 #'of floating-point numbers for exact equality is often a bad idea, but this is
 #'one case where it may fail unexpectedly. Instead, it is recommended to use the
@@ -9846,8 +9846,8 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'can be used to track the ancestry of mutations through their subpopulation of
 #'origin. For an overview of other ways of tracking genetic ancestry, including
 #'true local ancestry at each position on the chromosome, see sections 1.7 and
-#'14.7. If you don’t care which subpopulation a mutation originated in, the
-#'subpopID may be used as an arbitrary integer "tag” value for any purpose you
+#'14.7. If you don't care which subpopulation a mutation originated in, the
+#'subpopID may be used as an arbitrary integer "tag" value for any purpose you
 #'wish; SLiM does not do anything with the value of subpopID except propagate
 #'it to Substitution objects and report it in output. (It must still be >= 0,
 #'however, since SLiM object identifiers are limited to nonnegative integers). }
@@ -9873,15 +9873,15 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'present an overview of
 #'the conceptual role of this class. The mutation types currently defined in the
 #'simulation are
-#'defined as global constants with the same names used in the SLiM input file –
+#'defined as global constants with the same names used in the SLiM input file -
 #'m1, m2, and so forth.
 #'There are currently six options for the distribution of fitness effects in SLiM,
 #'represented by
 #'single-character codes:
-#'"f" – A fixed fitness effect. This DFE type has a single parameter, the
+#'"f" - A fixed fitness effect. This DFE type has a single parameter, the
 #'selection coefficient s to
 #'be used by all mutations of the mutation type.
-#'"g" – A gamma-distributed fitness effect. This DFE type is specified by two
+#'"g" - A gamma-distributed fitness effect. This DFE type is specified by two
 #'parameters, a mean
 #'value and a shape parameter. The gamma distribution from which mutations are
 #'drawn is given by
@@ -9892,7 +9892,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'same as for the Eidos function rgamma(). A gamma distribution is often used to
 #'model deleterious
 #'mutations at functional sites.
-#'"e" – An exponentially-distributed fitness effect. This DFE type is specified by
+#'"e" - An exponentially-distributed fitness effect. This DFE type is specified by
 #'a single
 #'parameter, the mean of the distribution. The exponential distribution from which
 #'mutations are
@@ -9901,7 +9901,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'mean for the distribution. This parameterization is the same as for the Eidos
 #'function rexp(). An
 #'exponential distribution is often used to model beneficial mutations.
-#'"n" – A normally-distributed fitness effect. This DFE type is specified by two
+#'"n" - A normally-distributed fitness effect. This DFE type is specified by two
 #'parameters, a
 #'mean and a standard deviation. The normal distribution from which mutations are
 #'drawn is given
@@ -9912,7 +9912,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'normal distribution is often used to model mutations that can be either
 #'beneficial or deleterious,
 #'since both tails of the distribution are unbounded.
-#'"w" – A Weibull-distributed fitness effect. This DFE type is specified by a
+#'"w" - A Weibull-distributed fitness effect. This DFE type is specified by a
 #'scale parameter and a
 #'shape parameter. The Weibull distribution from which mutations are drawn is
 #'given by the
@@ -9922,7 +9922,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'rweibull(). A
 #'Weibull distribution is often used to model mutations following extreme-value
 #'theory.
-#'"s" – A script-based fitness effect. This DFE type is specified by a script
+#'"s" - A script-based fitness effect. This DFE type is specified by a script
 #'parameter of type
 #'string, specifying an Eidos script to be executed to produce each new selection
 #'coefficient. For
@@ -9949,7 +9949,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'in SLiMgui. Outside of SLiMgui, this property still exists, but is not used
 #'by SLiM. Colors may be specified by name, or with hexadecimal RGB values of
 #'the form "#RRGGBB" (see the Eidos manual). If color is the empty string, "",
-#'SLiMgui’s default (selection-coefficient–based) color scheme is used; this is
+#'SLiMgui's default (selection-coefficient-based) color scheme is used; this is
 #'the default for new MutationType objects. }
 #'\item{colorSubstitution}{A property of type string or string or logical or float
 #'or string or float or integer or integer or string or logical or integer. It is
@@ -9959,7 +9959,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'Chromosome class for details). Outside of SLiMgui, this property still exists,
 #'but is not used by SLiM. Colors may be specified by name, or with hexadecimal
 #'RGB values of the form "#RRGGBB" (see the Eidos manual). If colorSubstitution
-#'is the empty string, "", SLiMgui’s default (selection-coefficient–based) color
+#'is the empty string, "", SLiMgui's default (selection-coefficient-based) color
 #'scheme is used; this is the default for new MutationType objects. }
 #'\item{convertToSubstitution}{A property of type string or string or logical
 #'or float or string or float or integer or integer or string or logical or
@@ -10013,8 +10013,8 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'modifiable. \strong{Property Description:} The dominance coefficient used for
 #'mutations of this type when heterozygous. Changing this will normally affect
 #'the fitness values calculated at the end of the current generation; if you
-#'want current fitness values to be affected, you can call SLiMSim’s method
-#'recalculateFitness() – but see the documentation of that method for caveats.
+#'want current fitness values to be affected, you can call SLiMSim's method
+#'recalculateFitness() - but see the documentation of that method for caveats.
 #'Note that the dominance coefficient is not bounded. A dominance coefficient
 #'greater than 1.0 may be used to achieve an overdominance effect. By making
 #'the selection coefficient very small and the dominance coefficient very large,
@@ -10022,7 +10022,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'be approximated, to a nearly arbitrary degree of precision. Note that this
 #'property has a quirk: it is stored internally in SLiM using a single-precision
 #'float, not the double-precision float type normally used by Eidos. This means
-#'that if you set a mutation type muttype’s dominance coefficient to some number
+#'that if you set a mutation type muttype's dominance coefficient to some number
 #'x, muttype.dominanceCoeff==x may be F due to floating-point rounding error.
 #'Comparisons of floating-point numbers for exact equality is often a bad idea,
 #'but this is one case where it may fail unexpectedly. Instead, it is recommended
@@ -10037,7 +10037,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'It is of length one (a singleton). This property is a variable, so it is
 #'modifiable. \strong{Property Description:} The group into which this mutation
 #'type belongs for purposes of mutation stacking policy. This is equal to the
-#'mutation type’s id by default. See mutationStackPolicy, below, for discussion.
+#'mutation type's id by default. See mutationStackPolicy, below, for discussion.
 #'In nucleotide-based models, the stacking group for nucleotide-based mutation
 #'types is always -1, and cannot be changed. Non-nucleotide-based mutation types
 #'may also be set to share the -1 stacking group, if they should participate in
@@ -10048,9 +10048,9 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'integer. It is of length one (a singleton). This property is a variable,
 #'so it is modifiable. \strong{Property Description:} This property and the
 #'mutationStackGroup property together govern whether mutations of this mutation
-#'type’s stacking group can "stack” – can occupy the same position in a single
+#'type's stacking group can "stack" - can occupy the same position in a single
 #'individual. A set of mutation types with the same value for mutationStackGroup
-#'is called a "stacking group”, and all mutation types in a given stacking
+#'is called a "stacking group", and all mutation types in a given stacking
 #'group must have the same mutationStackPolicy value, which defines the stacking
 #'behavior of all mutations of the mutation types in the stacking group. In other
 #'words, one stacking group might allow its mutations to stack, while another
@@ -10064,14 +10064,14 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'simplicity, that further mutations cannot alter that fact. If the policy is set
 #'to "l", the last mutation of this stacking group at a given site is retained;
 #'earlier mutation of this stacking group at the same site are discarded. This
-#'can be useful for modeling an "infinitealleles” scenario in which every new
+#'can be useful for modeling an "infinitealleles" scenario in which every new
 #'mutation at a site generates a completely new allele, rather than retaining the
 #'previous mutations at the site. The mutation stacking policy applies only within
-#'the given mutation type’s stacking group; mutations of different stacking groups
+#'the given mutation type's stacking group; mutations of different stacking groups
 #'are always allowed to stack in SLiM. The policy applies to all mutations added
 #'to the model after the policy is set, whether those mutations are introduced
 #'by calls such as addMutation(), addNewMutation(), or addNewDrawnMutation(), or
-#'are added by SLiM’s own mutation-generation machinery. However, no attempt is
+#'are added by SLiM's own mutation-generation machinery. However, no attempt is
 #'made to enforce the policy for mutations already existing at the time the policy
 #'is set; typically, therefore, the policy is set in an initialize() callback so
 #'that it applies throughout the simulation. The policy is also not enforced upon
@@ -10269,7 +10269,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'setting a value for this property in other circumstances is an error. Changing
 #'this will normally affect the fitness values calculated at the end of the
 #'current generation; if you want current fitness values to be affected, you can
-#'call SLiMSim’s method recalculateFitness() – but see the documentation of that
+#'call SLiMSim's method recalculateFitness() - but see the documentation of that
 #'method for caveats. }
 #'\item{generation}{A property of type integer. It is of length one (a singleton).
 #'This property is a variable, so it is modifiable. \strong{Property Description:}
@@ -10287,7 +10287,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'fixed mutations), "swap" (while swapping the offspring generation into the
 #'parental generation in WF models), "end" (during internal bookkeeping after
 #'each generation), and "console" (during the in-between-generations state in
-#'which commands in SLiMgui’s Eidos console are executed). It would probably be
+#'which commands in SLiMgui's Eidos console are executed). It would probably be
 #'a good idea not to use this latter set of values; they are probably not user-
 #'visible during ordinary model execution anyway. During execution of initialize()
 #'callbacks, no SLiMSim object yet exists and so this property cannot be accessed.
@@ -10314,8 +10314,8 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'\item{modelType}{A property of type string. It is of length one (a singleton).
 #'This property is a constant, so it is not modifiable. \strong{Property
 #'Description:} The type of model being simulated, as specified in
-#'initializeSLiMModelType(). This will be "WF" for WF models (Wright–Fisher
-#'models, the default), or "nonWF" for nonWF models (non-Wright–Fisher models; see
+#'initializeSLiMModelType(). This will be "WF" for WF models (Wright-Fisher
+#'models, the default), or "nonWF" for nonWF models (non-Wright-Fisher models; see
 #'section 1.6 for discussion). }
 #'\item{mutationTypes}{A property of type MutationType object. This property
 #'is a constant, so it is not modifiable. \strong{Property Description:} The
@@ -10360,12 +10360,12 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'the simulation. }
 #'\item{verbosity}{A property of type integer. It is of length one (a singleton).
 #'This property is a variable, so it is modifiable. \strong{Property Description:}
-#'The verbosity level, for SLiM’s logging of information about the simulation.
+#'The verbosity level, for SLiM's logging of information about the simulation.
 #'This is 1 by default, but can be changed at the command line with the -l[ong]
 #'option. It is provided here so that scripts can consult it to govern the level
 #'of verbosity of their own output, or set the verbosity level for particular
-#'sections of their code. A verbosity level of 0 suppresses most of SLiM’s
-#'optional output; 2 adds some extra output beyond SLiM’s standard output. See
+#'sections of their code. A verbosity level of 0 suppresses most of SLiM's
+#'optional output; 2 adds some extra output beyond SLiM's standard output. See
 #'sections 19.3 and 20.4 for more information.}
 #'
 #'}
@@ -10381,7 +10381,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'overview of the conceptual role of this class. The subpopulations currently
 #'defined in the
 #'simulation are defined as global constants with the same names used in the SLiM
-#'input file – p1,
+#'input file - p1,
 #'p2, and so forth.
 #'This class has the following methods (functions):
 #'\itemize{
@@ -10522,7 +10522,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'maximums for each. In other words, if the declared dimensionality is "xy", the
 #'spatialBounds property will contain values (x0, y0, x1, y1); bounds for the
 #'z coordinate will not be included in that case, since that coordinate is not
-#'used in the simulation’s dimensionality. This property cannot be set, but the
+#'used in the simulation's dimensionality. This property cannot be set, but the
 #'setSpatialBounds() method may be used to achieve the same thing. }
 #'\item{tag}{A property of type integer. It is of length one (a singleton). This
 #'property is a variable, so it is modifiable. \strong{Property Description:}
@@ -10600,10 +10600,10 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'\item{subpopID}{A property of type integer. It is of length one (a singleton).
 #'This property is a variable, so it is modifiable. \strong{Property Description:}
 #'The identifier of the subpopulation in which this mutation arose. This value
-#'is carried over from the Mutation object directly; if a "tag” value was used
+#'is carried over from the Mutation object directly; if a "tag" value was used
 #'in the Mutation object (see section 24.9.1), that value will carry over to
 #'the corresponding Substitution object. The subpopID in Substitution is a read-
-#'write property to allow it to be used as a "tag” in the same way, if the origin
+#'write property to allow it to be used as a "tag" in the same way, if the origin
 #'subpopulation identifier is not needed. }
 #'\item{tag}{A property of type integer. It is of length one (a singleton). This
 #'property is a variable, so it is modifiable. \strong{Property Description:} A

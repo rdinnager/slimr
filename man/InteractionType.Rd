@@ -27,14 +27,14 @@ relatively efficiently. Interactions are often spatial, depending upon the
 spatial dimensionality
 established with initializeSLiMOptions() (section 24.1), but do not need to be
 spatial. Spatial
-interactions can have – and almost always should have – a maximum distance,
+interactions can have - and almost always should have - a maximum distance,
 which allows them
 to be evaluated more efficiently (since all interactions beyond the maximum
 distance can be
 assumed to have a strength of zero).
 Note that if there are N individuals in a given subpopulation, each of which
 interacts with M
-other individuals, then InteractionType’s internal data structures will occupy
+other individuals, then InteractionType's internal data structures will occupy
 an amount of memory
 roughly proportional to N×M, for each evaluated subpopulation. Depending upon
 the queries
@@ -45,7 +45,7 @@ large population
 sizes can therefore be expensive, although InteractionType goes to considerable
 lengths to
 minimize the overhead.
-The first step in InteractionType’s evaluation of an interaction is to determine
+The first step in InteractionType's evaluation of an interaction is to determine
 the distance from
 the individual receiving the interaction to the individual exerting the
 interaction. This is computed
@@ -75,33 +75,33 @@ is usually used in
 response to queries for simple information, such as the distance(),
 distanceToPoint(), and
 strength() methods.
-The second engine is based upon a data structure called a "k-d tree” that is
+The second engine is based upon a data structure called a "k-d tree" that is
 designed to
 optimize searches for spatially proximate points. This engine is usually used in
 response to queries
-involving "neighbors”, such as nearestNeighbors() and nearestNeighborsOfPoint().
+involving "neighbors", such as nearestNeighbors() and nearestNeighborsOfPoint().
 In SLiM,
-the term "neighbor” means an individual that is within the maximum interaction
+the term "neighbor" means an individual that is within the maximum interaction
 distance of a
 focal individual or point (excluding the focal individual itself); the neighbors
 of the focal individual
 or point are therefore those that fall within the fixed radius defined by the
 maximum interaction
-distance. Calls with "neighbor” in their name explicitly use the k-d tree
+distance. Calls with "neighbor" in their name explicitly use the k-d tree
 engine, and may therefore
 be called only for spatial interactions; in non-spatial interactions there is no
 concept of a
-"neighbor”. In terms of computational complexity, finding the nearest neighbor
+"neighbor". In terms of computational complexity, finding the nearest neighbor
 of a given
 individual using the brute-force engine is an O(N) computation, whereas with the
 k-d tree engine it
-is typically an O(log N) computation – a very important difference, especially
+is typically an O(log N) computation - a very important difference, especially
 for large N. In
 general, to get the best performance from a spatial model, you should (1) set a
 maximum distance
 for the model interactions that is as small as possible without introducing
 unwanted artifacts, and
-(2) use neighbor-based calls to make minimal queries when possible – if all you
+(2) use neighbor-based calls to make minimal queries when possible - if all you
 really care about
 is the distance to the nearest neighbor, use nearestNeighbors() to find the
 neighbor and then call
@@ -109,7 +109,7 @@ distance() to get the distance to that neighbor, rather than getting the
 distances to all individuals
 with distance() and then using min() to select the smallest, for example.
 The third engine, introduced in SLiM 3.1, is based upon a data structure called
-a "sparse array”
+a "sparse array"
 that is designed to track sparse non-zero values within a dataset that contains
 mostly zeros. It
 applies to spatial interactions because most pairs of interactions probably
@@ -135,12 +135,12 @@ spatial interactions.
 There are currently four options for interaction functions (IFs) in SLiM,
 represented by singlecharacter
 codes:
-"f" – a fixed interaction strength. This IF type has a single parameter, the
+"f" - a fixed interaction strength. This IF type has a single parameter, the
 interaction strength to
 be used for all interactions of this type. By default, interaction types use a
 type "f" IF with a value
 of 1.0, so interactions are binary: on within the maximum distance, off outside.
-"l" – a linear interaction strength. This IF type has a single parameter, the
+"l" - a linear interaction strength. This IF type has a single parameter, the
 maximum interaction
 strength to be used at distance 0.0. The interaction strength falls off
 linearly, reaching exactly zero
@@ -148,7 +148,7 @@ at the maximum distance. In other words, for distance d, maximum interaction
 distance dmax, and
 maximum interaction strength fmax, the formula for this IF is f(d) = fmax(1 −
 d / dmax).
-"e" – A negative exponential interaction strength. This IF type is specified by
+"e" - A negative exponential interaction strength. This IF type is specified by
 two parameters, a
 maximum interaction strength and a shape parameter. The interaction strength
 falls off nonlinearly
@@ -159,7 +159,7 @@ is very small
 anyway. The IF for this type is f(d) = fmaxexp(−λd), where λ is the specified
 shape parameter. Note
 that this parameterization is not the same as for the Eidos function rexp().
-"n" – A normal interaction strength (i.e., Gaussian, but "g" is avoided to
+"n" - A normal interaction strength (i.e., Gaussian, but "g" is avoided to
 prevent confusion with
 the gamma-function option provided for, e.g., MutationType). The interaction
 strength falls off
@@ -176,7 +176,7 @@ Eidos function
 rnorm(). A Gaussian function is often used to model spatial interactions, but is
 relatively
 computation-intensive.
-"c" – A Cauchy-distributed interaction strength. The interaction strength falls
+"c" - A Cauchy-distributed interaction strength. The interaction strength falls
 off non-linearly
 from the maximum, and cuts off discontinuously at the maximum distance;
 typically a maximum

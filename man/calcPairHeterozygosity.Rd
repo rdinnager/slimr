@@ -44,7 +44,7 @@ benhaller.com/slim/SLiM_Manual.pdf#page=593}{SLiM manual: page 593}.
 Calculates the heterozygosity for a pair of genomes; these will
 typically be the two genomes of a diploid individual (individual.genome1 and
 individual.genome2), but any two genomes may be supplied. The calculation can
-be narrowed to apply to only a window – a subrange of the full chromosome – by
+be narrowed to apply to only a window - a subrange of the full chromosome - by
 passing the interval bounds [start, end] for the desired window. In this case,
 the vector of mutations used for the calculation will be subset to include
 only mutations within the specified window. The default behavior, with start
@@ -72,7 +72,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

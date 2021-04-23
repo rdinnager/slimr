@@ -45,9 +45,9 @@ Documentation for this function can be found in the official \href{http://
 benhaller.com/slim/SLiM_Manual.pdf#page=531}{SLiM manual: page 531}.
 
 This method switches the recombination model to the "double-stranded
-break (DSB)” model (if it is not already set to that), and configures the
+break (DSB)" model (if it is not already set to that), and configures the
 details of the gene conversion tracts that will therefore be modeled (see
-section 1.5.6 for discussion of the "DSB” recombination model). The meanings
+section 1.5.6 for discussion of the "DSB" recombination model). The meanings
 and effects of the parameters exactly mirror the initializeGeneConversion()
 function; see section 24.1 for details.
 }
@@ -57,7 +57,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

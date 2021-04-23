@@ -67,9 +67,9 @@ user-defined file header. If compress is T, the contents will be compressed with
 zlib as they are written, and the standard .gz extension for gzip-compressed
 files will be appended to the filename in filePath if it is not already
 present. The sep parameter specifies the separator between data values within
-a row. The default of "," will generate a "comma-separated value” (CSV) file,
+a row. The default of "," will generate a "comma-separated value" (CSV) file,
 while passing sep="\\t" will use a tab separator instead to generate a "tab-
-separated value” (TSV) file. Other values for sep may also be used, but are less
+separated value" (TSV) file. Other values for sep may also be used, but are less
 standard. LogTable supports periodic automatic logging of a new row of data,
 enabled by supplying a non-NULL value for logInterval. In this case, a new row
 will be logged (as if logRow() were called on the LogFile) at the end of every
@@ -100,7 +100,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

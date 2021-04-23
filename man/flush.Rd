@@ -33,7 +33,7 @@ Flushes all buffered data to the output file, synchronously. This will
 make the contents of the file on disk be up-to-date with the running simulation.
 Flushing frequently may entail a small performance penalty. More importantly,
 if .gz compression has been requested with compress=T the size of the resulting
-file will be larger – potentially much larger – if flush() is called frequently.
+file will be larger - potentially much larger - if flush() is called frequently.
 Note that automatic periodic flushing can be requested with the flushInterval
 parameter to createLogFile().
 }
@@ -43,7 +43,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

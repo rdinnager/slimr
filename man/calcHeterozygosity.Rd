@@ -44,7 +44,7 @@ vector may be used. By default, with muts=NULL, the calculation is based upon
 all mutations in the simulation; the calculation can instead be based upon a
 subset of mutations, such as mutations of a specific mutation type, by passing
 the desired vector of mutations for muts. The calculation can be narrowed
-to apply to only a window – a subrange of the full chromosome – by passing
+to apply to only a window - a subrange of the full chromosome - by passing
 the interval bounds [start, end] for the desired window. In this case, the
 vector of mutations used for the calculation will be subset to include only
 mutations within the specified window. The default behavior, with start and
@@ -63,7 +63,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

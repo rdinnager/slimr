@@ -73,10 +73,10 @@ from the distribution of fitness effects of its MutationType. }
 \item{subpopID}{A property of type integer. It is of length one (a singleton).
 This property is a variable, so it is modifiable. \strong{Property Description:}
 The identifier of the subpopulation in which this mutation arose. This value
-is carried over from the Mutation object directly; if a "tag” value was used
+is carried over from the Mutation object directly; if a "tag" value was used
 in the Mutation object (see section 24.9.1), that value will carry over to
 the corresponding Substitution object. The subpopID in Substitution is a read-
-write property to allow it to be used as a "tag” in the same way, if the origin
+write property to allow it to be used as a "tag" in the same way, if the origin
 subpopulation identifier is not needed. }
 \item{tag}{A property of type integer. It is of length one (a singleton). This
 property is a variable, so it is modifiable. \strong{Property Description:} A

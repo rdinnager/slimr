@@ -56,7 +56,7 @@ the other hand, it must be non-NULL, and therefore must be supplied. In that
 case, mutationMatrix should take one of two standard forms. For sequence-based
 mutation rates that depend upon only the single nucleotide at a mutation site,
 mutationMatrix should be a 4×4 float matrix, specifying mutation rates for an
-existing nucleotide state (rows from 0– 3 representing A/C/G/T) to each of the
+existing nucleotide state (rows from 0- 3 representing A/C/G/T) to each of the
 four possible derived nucleotide states (columns, with the same meaning): The
 mutation rates in this matrix are absolute rates, per nucleotide per generation;
 they will be used by SLiM directly unless they are multiplied by a factor from
@@ -71,15 +71,15 @@ that depend upon the trinucleotide sequence centered upon a mutation site (the
 adjacent bases to the left and right, in other words, as well as the mutating
 nucleotide itself), mutationMatrix should be a 64×4 float matrix, specifying
 mutation rates for the central nucleotide of an existing trinucleotide sequence
-(rows from 0–63, representing trinucleotides as described in the documentation
+(rows from 0-63, representing trinucleotides as described in the documentation
 for the ancestralNucleotides() method of Chromosome) to each of the four
-possible derived nucleotide states (columns from 0–3 for A/C/G/T as before):
+possible derived nucleotide states (columns from 0-3 for A/C/G/T as before):
 Note that in every case it is the central nucleotide of the trinucleotide
 sequence that is mutating, but rates can be specified independently based
 upon the nucleotides in the first and third positions as well, with this type
 of mutation matrix. Several helper functions are defined to construct common
 types of mutation matrices, such as mmJukesCantor() to create a mutation matrix
-for a Jukes–Cantor model; see section 24.16.1. See chapter 18 for practical
+for a Jukes-Cantor model; see section 24.16.1. See chapter 18 for practical
 examples of mutation matrices, and section 22.2.3 for further discussion of the
 mutational paradigm in nucleotide-based models. * PA→C PA→G PA→T PC→A * PC→G
 PC→T PG→A PG→C * PG→T PT→A PT→C PT→G * * PAAA→ACA PAAA→AGA PAAA→ATA * PAAC→ACC
@@ -94,7 +94,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

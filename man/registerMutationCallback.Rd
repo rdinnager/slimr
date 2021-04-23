@@ -50,7 +50,7 @@ benhaller.com/slim/SLiM_Manual.pdf#page=572}{SLiM manual: page 572}.
 Register a block of Eidos source code, represented as the string
 singleton source, as an Eidos mutation() callback in the current simulation,
 with an optional mutation type mutType (which may be an integer mutation type
-identifier, or NULL, the default, to indicate all mutation types – see section
+identifier, or NULL, the default, to indicate all mutation types - see section
 25.8), optional subpopulation subpop (which may also be an integer identifier,
 or NULL, the default, to indicate all subpopulations), and optional start and
 end generations all limiting its applicability. The script block will be given
@@ -68,7 +68,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }

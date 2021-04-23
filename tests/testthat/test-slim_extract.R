@@ -1,5 +1,13 @@
 test_that("slim_extract_output_data works", {
 
+  no_dat <- slim_extract_output_data(c("<slimr_out:start>",
+                                       "1, '', '', '', ''",
+                                       "<slimr_out:end>"))
+  expect_length(no_dat, 4)
+  expect_length(no_dat$data, 5)
+  expect_identical(nrow(no_dat$data), 1L)
+  expect_identical(no_dat$last_line, 3L)
+
   skip_on_covr()
 
   test_sim <- slim_script(

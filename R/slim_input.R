@@ -32,7 +32,7 @@
 #' @export
 #'
 #' @examples
-#' pop_file <- slim_make_pop_input(matrix(rbinom(1000, 0.25), nrow = 100, ncol = 100))
+#' pop_file <- slim_make_pop_input(matrix(rbinom(1000, 2, 0.25), nrow = 100, ncol = 100))
 #' cat(readLines(pop_file))
 slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, ind_pops = NULL,
                                 ind_sex = NULL, mut_pos = NULL, mut_type = NULL, mut_sel = NULL,

@@ -63,6 +63,54 @@ callbacks$modifyChild <- function(subpop_id) {
 
 }
 
+#' SLiM recombination() callback
+#'
+#' This callback specifies that a code block is providing logic to determine the breakpoints
+#' in the genome for recombination. It is called during the generation of gametes for each gamete
+#' in the generations it is active. This is achieved by setting breakpoints into the pseudo-variable
+#' \code{breakpoints}, replacing the default (as integer positions). If \code{breakpoints} is modified
+#' the callback must return \code{T}. If \code{return(F)} is used, SLiM will use the original
+#' \code{breakpoints}.
+#' see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=604}{SLiM Manual: page 603}
+#'
+#' @details
+#' Global variables available in reproduction callbacks:
+#' \describe{
+#'   \item{individual}{The focal parent that is generating a gamete}
+#'   \item{genome1}{One genome of the focal parent; this is the initial copy strand}
+#'   \item{genome2}{The other genome of the focal parent}
+#'   \item{subpop}{The subpopulation to which the focal parent belongs}
+#'   \item{breakpoints}{An integer vector of crossover breakpoints}
+#' }
+#'
+#' @param subpop_id The id(s) of the subpopulation(s) to which this callback should apply. Can
+#' be an integer 1, 2, etc., or character "p1", "p2", etc.
+#' @return None
+#' @export
+#'
+#' @examples
+#' # From page 261 of the SLiM Manual
+#' slim_block(recombination(), {
+#'   if (genome1.containsMarkerMutation(m2, 25000) ==
+#'       genome2.containsMarkerMutation(m2, 25000)) {
+#'
+#'     return(F)
+#'
+#'   }
+#'
+#'   inInv = (breakpoints > 25000) & (breakpoints < 75000)
+#'   if (!any(inInv)) {
+#'     return(F)
+#'   }
+#'
+#'   breakpoints = breakpoints[!inInv]
+#'   return(T)
+#'
+#' })
+recombination <- function(subpop_id) {
+  callbacks$recombination(subpop_id)
+}
+
 callbacks$recombination <- function(subpop_id) {
 
   argus <- rlang::enexprs(subpop_id)

@@ -3042,7 +3042,7 @@
         }
         if (sim.generation%%1000 != 0) return;
         y = sim.getValue("fixed");
-        rstr = paste("{", "x <- (1:" + size(y) + ") * 10", "y <- c(" + paste(y, sep = ", ") + ")", "png(width=4, height=4, units=\"in\", res=72, file=\"" + pngPath + "\")", "par(mar=c(4.0, 4.0, 1.5, 1.5))", "plot(x=x, y=y, xlim=c(0, 50000), ylim=c(0, 500), type=\"l\",", "xlab=\"Generation\", ylab=\"Fixed mutations\", cex.axis=0.95,", "cex.lab=1.2, mgp=c(2.5, 0.7, 0), col=\"red\", lwd=2,", "xaxp=c(0, 50000, 2))", "box()", "dev.off()", "}", sep = "\n");
+        rstr = paste("{", "x = (1:" + size(y) + ") * 10", "y = c(" + paste(y, sep = ", ") + ")", "png(width=4, height=4, units=\"in\", res=72, file=\"" + pngPath + "\")", "par(mar=c(4.0, 4.0, 1.5, 1.5))", "plot(x=x, y=y, xlim=c(0, 50000), ylim=c(0, 500), type=\"l\",", "xlab=\"Generation\", ylab=\"Fixed mutations\", cex.axis=0.95,", "cex.lab=1.2, mgp=c(2.5, 0.7, 0), col=\"red\", lwd=2,", "xaxp=c(0, 50000, 2))", "box()", "dev.off()", "}", sep = "\n");
         scriptPath = writeTempFile("plot_", ".R", rstr);
         system(RSCRIPT, args = scriptPath);
         deleteFile(scriptPath);

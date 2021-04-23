@@ -20,3 +20,25 @@ test_that("slim_script and slim_block produce correct objects", {
 
 })
 
+test_that("`<-` and `$` are handled directly in slim_block and slim_script", {
+
+  test_script <- slim_script(
+    slim_block_init_minimal(),
+    slim_block(1, 100, {
+      y <- sim$generation
+      print(y)
+    }),
+    slim_block(100, {
+      sim$simulationFinished()
+    })
+  )
+
+  expect_false(any(stringr::str_detect(as.character(test_script),
+                                       stringr::fixed("<-"))))
+
+  expect_false(any(stringr::str_detect(as.character(test_script),
+                                       stringr::fixed("$"))))
+
+  expect_snapshot(print(test_script))
+
+})

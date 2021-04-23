@@ -186,7 +186,9 @@ slim_block <- function(...) {
   }
 
   #code <- deparse(args[[n_args]], width.cutoff = 500, control = NULL)
-  code <- expr_deparse_fast(args[[n_args]])
+  code <- expr_deparse_fast(args[[n_args]])  %>%
+    slimr_code_replace_arrows() %>%
+    slimr_code_replace_dollars()
 
   if(code[1] == "{") {
     code <- code[2:(length(code) - 1L)]

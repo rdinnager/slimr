@@ -39,6 +39,8 @@ test_that("`<-` and `$` are handled directly in slim_block and slim_script", {
   expect_false(any(stringr::str_detect(as.character(test_script),
                                        stringr::fixed("$"))))
 
+  skip_on_covr()
+
   expect_snapshot(print(test_script))
 
 })

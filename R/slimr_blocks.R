@@ -75,3 +75,58 @@ slim_block_finish <- function(generation) {
     sim.simulationFinished()
   })
 }
+
+#' Generate a code block that just adds subpopulations to a SLiM simulation
+#'
+#' @param n_pop Number of subpopulations to add
+#' @param sizes Population sizes of subpopulations. Should have a length equal to \code{n_pop}, or
+#' else a length of 1 (in which case it will be recycled to \code{n_pop})
+#' @param generation The generation to add the subpopulations (default: 1)
+#' @param when WHen to add the subpopulations ("early" or "late"). Default: "early"
+#'
+#' @return A \code{slimr_block} object
+#' @export
+#'
+#' @examples
+#' slim_block_add_subpops(2, 100)
+slim_block_add_subpops <- function(n_pop = 1, sizes, generation = 1, when = c("early", "late")) {
+  when <- match.arg(when)
+
+  if(length(sizes) != 1 && length(sizes) != n_pop) {
+    rlang::abort("length of sizes should be equal to n_pop or 1")
+  } else {
+    if(length(sizes) == 1 && n_pop > 1) {
+      sizes <- rep(sizes, n_pop)
+    }
+  }
+
+  if(n_pop == 1) {
+    if(when == "early") {
+      slim_block(!!generation, early(), {
+        sim.addSubpop("p1", !!sizes[1])
+      })
+    } else {
+      slim_block(!!generation, late(), {
+        sim.addSubpop("p1", !!sizes[1])
+      })
+    }
+  } else {
+    if(when == "early") {
+      slim_block(!!generation, early(), {
+        !!rlang::parse_expr(c("{\n", purrr::map_chr(seq_len(n_pop),
+                                                  ~glue::glue("sim.addSubpop(p{.x}, {sizes[.x]})")),
+                            "\n}") %>%
+                            paste(collapse = "\n"))
+
+      })
+    } else {
+      slim_block(!!generation, late(), {
+        !!rlang::parse_expr(c("{\n", purrr::map_chr(seq_len(n_pop),
+                                                  ~glue::glue("sim.addSubpop(p{.x}, {sizes[.x]})")),
+                            "\n}") %>%
+                            paste(collapse = "\n"))
+
+      })
+    }
+  }
+}

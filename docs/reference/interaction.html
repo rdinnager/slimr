@@ -51,7 +51,7 @@
 strength of interaction between individuals. It should return the strength of the interaction
 as a numeric value. You must explicitly use return(value) at the end of the code block.
 For more information on how to use interaction() callback
-see SLiM Manual: page 606" />
+see SLiM Manual: page 604" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -154,7 +154,7 @@ see SLiM Manual: page 606" />
 strength of interaction between individuals. It should return the strength of the interaction
 as a numeric value. You must explicitly use <code><a href='https://rdrr.io/r/base/function.html'>return(value)</a></code> at the end of the code block.
 For more information on how to use <code>interaction()</code> callback
-see <a href='http://benhaller.com/slim/SLiM_Manual.pdf#page=604'>SLiM Manual: page 606</a></p>
+see <a href='http://benhaller.com/slim/SLiM_Manual.pdf#page=604'>SLiM Manual: page 604</a></p>
     </div>
 
     <pre class="usage"><span class='fu'>interaction</span><span class='op'>(</span><span class='va'>int_type_id</span>, <span class='va'>subpop_id</span><span class='op'>)</span></pre>
@@ -188,6 +188,33 @@ be an integer 1, 2, etc., or character "p1", "p2", etc.</p></td>
 
 </dl>
 
+    <h2 class="hasAnchor" id="copyright"><a class="anchor" href="#copyright"></a>Copyright</h2>
+
+    
+
+<p>This is documentation for a function in the SLiM software, and has been
+modified from the official manual,
+which can be found here: <a href='http://benhaller.com/slim/SLiM_Manual.pdf'>http://benhaller.com/slim/SLiM_Manual.pdf</a>. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other callbacks: 
+<code><a href='early.html'>early</a>()</code>,
+<code><a href='fitness.html'>fitness</a>()</code>,
+<code>initialize()</code>,
+<code><a href='late.html'>late</a>()</code>,
+<code><a href='mateChoice.html'>mateChoice</a>()</code>,
+<code><a href='modifyChild.html'>modifyChild</a>()</code>,
+<code><a href='recombination.html'>recombination</a>()</code>,
+<code><a href='reproduction.html'>reproduction</a>()</code>,
+<code><a href='slim_callbacks.html'>slim_callbacks</a>()</code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer
+(<a href='mailto:messer@cornell.edu'>messer@cornell.edu</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='slim_block.html'>slim_block</a></span><span class='op'>(</span><span class='fu'>interaction</span><span class='op'>(</span><span class='op'>)</span>, <span class='op'>{</span>

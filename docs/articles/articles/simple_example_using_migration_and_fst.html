@@ -222,7 +222,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
       <span class="op">}</span>
     <span class="op">}</span>
   <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">10000</span>, <span class="fu">late</span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span>
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">10000</span>, <span class="fu"><a href="../../reference/late.html">late</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span>
     <span class="fu">sim.outputFull</span><span class="op">(</span><span class="op">)</span>;
   <span class="op">}</span><span class="op">)</span>
 <span class="op">)</span> <span class="op">-&gt;</span> <span class="va">script_1</span>
@@ -302,7 +302,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
       <span class="op">}</span>
     <span class="op">}</span>
   <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">100000</span>, <span class="fu">late</span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span>
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">100000</span>, <span class="fu"><a href="../../reference/late.html">late</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span>
     <span class="fu"><a href="../../reference/slimr_output.html">slimr_output</a></span><span class="op">(</span><span class="fu">sim.outputFull</span><span class="op">(</span><span class="op">)</span>, <span class="st">"final_output"</span><span class="op">)</span>;
   <span class="op">}</span><span class="op">)</span>
 <span class="op">)</span> <span class="op">-&gt;</span> <span class="va">script_2</span>
@@ -458,7 +458,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
     <span class="fu">p1.setMigrationRates</span><span class="op">(</span><span class="va">p2</span>, <span class="fu"><a href="../../reference/slimr_template.html">slimr_template</a></span><span class="op">(</span><span class="st">"m"</span>, default <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span>;
     <span class="fu">p2.setMigrationRates</span><span class="op">(</span><span class="va">p1</span>, <span class="va">..m..</span><span class="op">)</span>;
   <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">10000</span>, <span class="fu">late</span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span>
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">10000</span>, <span class="fu"><a href="../../reference/late.html">late</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span>
     <span class="fu"><a href="../../reference/slimr_output.html">slimr_output</a></span><span class="op">(</span><span class="fu">sim.outputFull</span><span class="op">(</span><span class="op">)</span>, <span class="st">"final_output"</span><span class="op">)</span>;
   <span class="op">}</span><span class="op">)</span>
 <span class="op">)</span> <span class="op">-&gt;</span> <span class="va">script_3</span>
@@ -779,10 +779,10 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <span class="va">end_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">end_time</span> <span class="op">-</span> <span class="va">start_time</span>
-<span class="co">#&gt; Time difference of 1.706796 mins</span>
+<span class="co">#&gt; Time difference of 1.519153 mins</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Total Duration:"</span>, <span class="va">end_time</span> <span class="op">-</span> <span class="va">start_time</span><span class="op">)</span>
-<span class="co">#&gt; Total Duration: 1.706796</span></code></pre></div>
+<span class="co">#&gt; Total Duration: 1.519153</span></code></pre></div>
 <p>Firstly, negative values of Fst are incorrect, and usually reflect numerical inaccuracy around zero, so we will set negative Fst values to zero. Then let’s look at the distribution.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">all_fsts</span><span class="op">[</span><span class="va">all_fsts</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0.0</span>
@@ -807,20 +807,20 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Residuals:</span>
 <span class="co">#&gt;      Min       1Q   Median       3Q      Max </span>
-<span class="co">#&gt; -0.15112 -0.03941 -0.00641  0.01366  0.78581 </span>
+<span class="co">#&gt; -0.12396 -0.03769 -0.00186  0.01566  0.50087 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Coefficients:</span>
 <span class="co">#&gt;                   Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="co">#&gt; (Intercept)       0.039376   0.005704   6.903 3.11e-11 ***</span>
-<span class="co">#&gt; pop_size_st      -0.023562   0.005716  -4.122 4.88e-05 ***</span>
-<span class="co">#&gt; m_st             -0.045494   0.005735  -7.933 4.42e-14 ***</span>
-<span class="co">#&gt; pop_size_st:m_st  0.025477   0.005854   4.352 1.86e-05 ***</span>
+<span class="co">#&gt; (Intercept)       0.038157   0.004591   8.311 3.47e-15 ***</span>
+<span class="co">#&gt; pop_size_st      -0.024564   0.004601  -5.339 1.86e-07 ***</span>
+<span class="co">#&gt; m_st             -0.043946   0.004615  -9.522  &lt; 2e-16 ***</span>
+<span class="co">#&gt; pop_size_st:m_st  0.026474   0.004711   5.619 4.43e-08 ***</span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Residual standard error: 0.09853 on 296 degrees of freedom</span>
-<span class="co">#&gt; Multiple R-squared:  0.2703, Adjusted R-squared:  0.263 </span>
-<span class="co">#&gt; F-statistic: 36.56 on 3 and 296 DF,  p-value: &lt; 2.2e-16</span></code></pre></div>
+<span class="co">#&gt; Residual standard error: 0.0793 on 296 degrees of freedom</span>
+<span class="co">#&gt; Multiple R-squared:  0.3612, Adjusted R-squared:  0.3547 </span>
+<span class="co">#&gt; F-statistic: 55.78 on 3 and 296 DF,  p-value: &lt; 2.2e-16</span></code></pre></div>
 <p>So both migration rate</p>
 <p>We can demonstrate the interaction by splitting our data into population size bins and plotting the migration rate relationship as separate lines for each bin.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">

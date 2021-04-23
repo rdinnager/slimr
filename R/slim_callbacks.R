@@ -7,6 +7,8 @@ callbacks <- list()
 #' \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=516}{SLiM Manual: page 516}
 #' @family callbacks
 #' @return None
+#' @rdname callback_initialize
+#' @export
 #' @section Copyright:
 #' This is documentation for a function in the SLiM software, and has been
 #' modified from the official manual,

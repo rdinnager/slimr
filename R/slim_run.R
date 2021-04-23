@@ -366,6 +366,9 @@ slim_run_script <- function(script_txt,
       }
       if(length(out_lines) > 0) {
 
+        curr_line <- curr_line + length(out_lines)
+
+
         if(show_output) {
           cat("\r                                               \r")
           cat(out_lines, sep = "\n")

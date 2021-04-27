@@ -8,16 +8,24 @@ test_that("slim_extract_output_data works", {
   expect_identical(nrow(no_dat$data), 1L)
   expect_identical(no_dat$last_line, 3L)
 
-  skip_on_covr()
+  if(!on_covr()) {
 
-  test_sim <- slim_script(
-    slim_block_init_minimal(),
-    slim_block_add_subpops(1, 100),
-    slim_block(1, 100, late(), {
-      slimr_output(p1$outputMSSample(10), "MS", do_every = 10)
-    })
-  ) %>%
-    slim_run(simple_run = TRUE)
+    test_sim <- slim_script(
+      slim_block_init_minimal(),
+      slim_block_add_subpops(1, 100),
+      slim_block(1, 100, late(), {
+        slimr_output(p1$outputMSSample(10), "MS", do_every = 10)
+      })
+    ) %>%
+      slim_run(simple_run = TRUE)
+
+    if(on_ci()) {
+      readr::write_rds(test_sim, file.path(covr_test_folder, "slim_extract_test_1.rds"))
+    }
+
+  } else {
+    test_slim <- readr::read_rds(file.path(covr_test_folder, "slim_extract_test_1.rds"))
+  }
 
   dat <- slim_extract_output_data(test_sim$output)
 

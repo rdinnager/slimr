@@ -150,6 +150,13 @@ jobs:
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "error", check_dir = "check")
         shell: Rscript {0}
 
+      - name: Upload test objects for covr
+        if: runner.os == 'Linux'
+        uses: actions/upload-artifact@master
+        with:
+          name: covr-test-objects
+          path: covr_test_objects
+
       - name: Upload check results
         if: failure()
         uses: actions/upload-artifact@master
@@ -159,6 +166,7 @@ jobs:
 
   test-coverage:
     runs-on: macOS-latest
+    needs: R-CMD-check
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
       _R_CHECK_FORCE_SUGGESTS_: false
@@ -220,6 +228,11 @@ jobs:
           sudo make install
           cd ..
           rm SLiM.zip
+
+      - name: Download test objects for covr
+        uses: actions/download-artifact@master
+        with:
+          name: covr-test-objects
 
       - name: Test coverage
         run: |

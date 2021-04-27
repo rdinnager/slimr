@@ -121,7 +121,7 @@ containing output from the current iteration of the simulation. Columns are:
 }}
 
 \item{cb_args}{Additional arguments to be passed to any callback functions. Should be a named
-list where the names refer to the callback's argument s.}
+list where the names refer to the callback's arguments.}
 
 \item{new_grdev}{Should a new graphics device window be opened on RStudio? This is mainly useful if you are using
 custom callbacks that generate live figures, and want a faster plotting experience. This is because the

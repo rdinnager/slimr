@@ -19,7 +19,7 @@ callbacks <- list()
 #' on the official website: \url{https://messerlab.org/slim/}
 #' @author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #' (\email{messer@cornell.edu})
-#' @example
+#' @examples
 #' slim_block(initialize(), {
 #'   initializeMutationRate(1e-7)
 #'   initializeMutationType("m1", 0.5, "f", 0.0)
@@ -56,7 +56,7 @@ callbacks$initialize <- function() {
 #' on the official website: \url{https://messerlab.org/slim/}
 #' @author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #' (\email{messer@cornell.edu})
-#' @example
+#' @examples
 #' slim_block(1, early(), {
 #'   sim.addSubpop("p1", 100)
 #' })
@@ -89,7 +89,7 @@ callbacks$early <- function() {
 #' on the official website: \url{https://messerlab.org/slim/}
 #' @author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #' (\email{messer@cornell.edu})
-#' @example
+#' @examples
 #' slim_block(100, late(), {
 #'   sim.simulationFinished()
 #' })

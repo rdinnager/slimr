@@ -24,7 +24,7 @@ test_that("slim_extract_output_data works", {
     }
 
   } else {
-    test_slim <- readr::read_rds(file.path(covr_test_folder, "slim_extract_test_1.rds"))
+    test_sim <- readr::read_rds(file.path(covr_test_folder, "slim_extract_test_1.rds"))
   }
 
   dat <- slim_extract_output_data(test_sim$output)

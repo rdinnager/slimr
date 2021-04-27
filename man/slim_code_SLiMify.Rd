@@ -4,7 +4,7 @@
 \alias{slim_code_SLiMify}
 \title{Rify some SLiM code}
 \usage{
-slim_code_SLiMify(code_snippet, prettycode = FALSE)
+slim_code_SLiMify(code_snippet)
 }
 \arguments{
 \item{code_snippet}{SLiM code to Rify as a character vector}

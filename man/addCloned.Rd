@@ -28,7 +28,7 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=579}{SLiM manual: page 579}.
+benhaller.com/slim/SLiM_Manual.pdf\\#page=579}{SLiM manual: page 579}.
 
 Generates a new offspring individual from the given parent by
 clonal reproduction, queues it for addition to the target subpopulation, and

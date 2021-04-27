@@ -1,3 +1,5 @@
+url: https://rdinnager.github.io/slimr
+
 destination: docs
 reference:
   - title: Install and setup SLiM software for use with slimr
@@ -74,6 +76,7 @@ reference:
     - SLiMSim
     - Subpopulation
     - Substitution
+    - slim_classes
   - title: SLiM Class Methods
     desc: >
       SLiM methods by SLiM class. Note that if a function appears multiple times within a class,

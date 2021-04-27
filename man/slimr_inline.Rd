@@ -11,7 +11,7 @@ slimr_inline(object, delay = FALSE)
 
 \item{delay}{By default \code{slimr_inline} will insert the
 value of \code{object} into the script when the script is
-created (e.g. when \code{\link{slimr_script}} is called).
+created (e.g. when \code{\link{slim_script}} is called).
 However, setting \code{delay = TRUE} will delay the evaluation
 of \code{object} until the script is rendered instead (e.g. when
 \code{\link{slim_script_render}} is called). This allows you to

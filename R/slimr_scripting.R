@@ -406,7 +406,7 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #' function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 #'
 #' @param lhs Object of class \code{rhs}, to extract methods or properties from
-#' @param rhs SLiM class R object (such as \code{Subpopulation}, \code{.M}, etc.). Type \code{slim_classes} for a table of possible values.
+#' @param rhs SLiM class R object (such as \code{Subpopulation}, \code{.M}, etc.). Type \code{\link{slim_classes}} for a table of possible values.
 #'
 #' @export
 #'

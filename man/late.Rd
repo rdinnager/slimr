@@ -26,6 +26,11 @@ about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\examples{
+slim_block(100, late(), {
+  sim.simulationFinished()
+})
+}
 \seealso{
 Other callbacks: 
 \code{\link{early}()},

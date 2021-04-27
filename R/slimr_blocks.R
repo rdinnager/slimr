@@ -27,9 +27,10 @@ slim_block_progress <- function(update_every = 1) {
 #' @param dominance The overall dominance value.
 #' @param selection Mean selection strength for mutations
 #' @param dist_type Distribution from which to draw mutation selection values (see
-#' \code{\link{InitializeMutationType}} for possible values).
+#' \code{\link{initializeMutationType}} for possible values).
 #' @param genome_size Genome size of the population, in number of loci.
 #' @param recombination_rate Overall recombination rate.
+#' @param seed An optional integer used to set a random seed for the SLiM simulation.
 #'
 #' @return A \code{slimr_block} object
 #' @export
@@ -43,16 +44,29 @@ slim_block_init_minimal <- function(mutation_rate = 1e-7,
                                    selection = 0.0,
                                    dist_type = "f",
                                    genome_size = 100000,
-                                   recombination_rate = 1e-8) {
+                                   recombination_rate = 1e-8,
+                                   seed = NULL) {
 
-  slim_block(initialize(), {
-    initializeMutationRate(!!rlang::enexpr(mutation_rate));
-    initializeMutationType("m1", !!rlang::enexpr(dominance),
-                           "f", !!rlang::enexpr(selection));
-    initializeGenomicElementType("g1", m1, 1.0);
-    initializeGenomicElement(g1, 0, !!rlang::enexpr(genome_size) - 1L);
-    initializeRecombinationRate(!!rlang::enexpr(recombination_rate));
-  })
+  if(is.null(seed)) {
+    slim_block(initialize(), {
+      initializeMutationRate(!!rlang::enexpr(mutation_rate));
+      initializeMutationType("m1", !!rlang::enexpr(dominance),
+                             "f", !!rlang::enexpr(selection));
+      initializeGenomicElementType("g1", m1, 1.0);
+      initializeGenomicElement(g1, 0, !!rlang::enexpr(genome_size) - 1L);
+      initializeRecombinationRate(!!rlang::enexpr(recombination_rate));
+    })
+  } else {
+    slim_block(initialize(), {
+      setSeed(!!seed);
+      initializeMutationRate(!!rlang::enexpr(mutation_rate));
+      initializeMutationType("m1", !!rlang::enexpr(dominance),
+                             "f", !!rlang::enexpr(selection));
+      initializeGenomicElementType("g1", m1, 1.0);
+      initializeGenomicElement(g1, 0, !!rlang::enexpr(genome_size) - 1L);
+      initializeRecombinationRate(!!rlang::enexpr(recombination_rate));
+    })
+  }
 
 }
 

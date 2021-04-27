@@ -106,10 +106,13 @@
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,22 +154,227 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class <code>list</code> of length 21.</p>
+    <p>An object of class <code>list</code> of length 19.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This class has the following methods (functions):</p><ul>
+    <p>This class represents a type of interaction between individuals. This
+is an advanced feature, the
+use of which is optional. Once an interaction type is set up with
+initializeInteractionType()
+(see section 24.1), it can be evaluated and then queried to give information
+such as the nearest
+interacting neighbor of an individual, or the total strength of interactions
+felt by an individual,
+relatively efficiently. Interactions are often spatial, depending upon the
+spatial dimensionality
+established with initializeSLiMOptions() (section 24.1), but do not need to be
+spatial. Spatial
+interactions can have - and almost always should have - a maximum distance,
+which allows them
+to be evaluated more efficiently (since all interactions beyond the maximum
+distance can be
+assumed to have a strength of zero).
+Note that if there are N individuals in a given subpopulation, each of which
+interacts with M
+other individuals, then InteractionType's internal data structures will occupy
+an amount of memory
+roughly proportional to N×M, for each evaluated subpopulation. Depending upon
+the queries
+executed, interactions may also take computational time proportional to N×M, or
+even
+proportional to N2, in each evaluated subpopulation. Modeling interactions with
+large population
+sizes can therefore be expensive, although InteractionType goes to considerable
+lengths to
+minimize the overhead.
+The first step in InteractionType's evaluation of an interaction is to determine
+the distance from
+the individual receiving the interaction to the individual exerting the
+interaction. This is computed
+as the Euclidean distance between the spatial positions of the individuals,
+based upon the
+spatiality of the interaction (i.e., the spatial dimensions used by the
+interaction, which may be less
+than the dimensionality of the simulation as a whole). Second, this distance is
+compared to the
+maximum distance for the interaction type; if it is beyond that limit, the
+interaction strength is
+always zero (and it is also always zero for the interaction of an individual
+with itself). Third (when
+the distance is less than the maximum), the distance is converted into an
+interaction strength by an
+interaction function (IF), which is a characteristic of the InteractionType.
+Finally, this interaction
+strength may be modified by the interaction() callbacks currently active in the
+simulation, if any
+(see section 25.6).
+InteractionType is actually a wrapper for three different spatial query engines
+that share some
+of their data but work very differently. The first engine is a brute-force
+engine that simply
+computes distances and interaction strengths in response to queries. This engine
+is usually used in
+response to queries for simple information, such as the distance(),
+distanceToPoint(), and
+strength() methods.
+The second engine is based upon a data structure called a "k-d tree" that is
+designed to
+optimize searches for spatially proximate points. This engine is usually used in
+response to queries
+involving "neighbors", such as nearestNeighbors() and nearestNeighborsOfPoint().
+In SLiM,
+the term "neighbor" means an individual that is within the maximum interaction
+distance of a
+focal individual or point (excluding the focal individual itself); the neighbors
+of the focal individual
+or point are therefore those that fall within the fixed radius defined by the
+maximum interaction
+distance. Calls with "neighbor" in their name explicitly use the k-d tree
+engine, and may therefore
+be called only for spatial interactions; in non-spatial interactions there is no
+concept of a
+"neighbor". In terms of computational complexity, finding the nearest neighbor
+of a given
+individual using the brute-force engine is an O(N) computation, whereas with the
+k-d tree engine it
+is typically an O(log N) computation - a very important difference, especially
+for large N. In
+general, to get the best performance from a spatial model, you should (1) set a
+maximum distance
+for the model interactions that is as small as possible without introducing
+unwanted artifacts, and
+(2) use neighbor-based calls to make minimal queries when possible - if all you
+really care about
+is the distance to the nearest neighbor, use nearestNeighbors() to find the
+neighbor and then call
+distance() to get the distance to that neighbor, rather than getting the
+distances to all individuals
+with distance() and then using min() to select the smallest, for example.
+The third engine, introduced in SLiM 3.1, is based upon a data structure called
+a "sparse array"
+that is designed to track sparse non-zero values within a dataset that contains
+mostly zeros. It
+applies to spatial interactions because most pairs of interactions probably
+interact with a strength
+of zero (because typically N &gt;&gt; M, because few individuals fall within the
+maximum interaction
+radius from a given individual). The sparse array is used to cache all
+calculated distance/strength
+pairs for interactions within a given subpopulation. It is built using the k-d
+tree to find the
+interacting neighbors of each individual, and once built it can respond
+extremely quickly to
+queries from methods such as totalOfNeighborStrengths(); the interacting
+neighbors of a given
+individual are already known, allowing response in O(M) time. The sparse array
+is built on
+demand, when queries that would benefit from it are made. For it to be
+effective, it is particularly
+important that a maximum interaction distance be used that is as small as
+possible, so beginning
+with SLiM 3.1 a warning is issued when no maximum distance is defined for
+spatial interactions.
+There are currently four options for interaction functions (IFs) in SLiM,
+represented by singlecharacter
+codes:
+"f" - a fixed interaction strength. This IF type has a single parameter, the
+interaction strength to
+be used for all interactions of this type. By default, interaction types use a
+type "f" IF with a value
+of 1.0, so interactions are binary: on within the maximum distance, off outside.
+"l" - a linear interaction strength. This IF type has a single parameter, the
+maximum interaction
+strength to be used at distance 0.0. The interaction strength falls off
+linearly, reaching exactly zero
+at the maximum distance. In other words, for distance d, maximum interaction
+distance dmax, and
+maximum interaction strength fmax, the formula for this IF is f(d) = fmax(1 −
+d / dmax).
+"e" - A negative exponential interaction strength. This IF type is specified by
+two parameters, a
+maximum interaction strength and a shape parameter. The interaction strength
+falls off nonlinearly
+from the maximum, and cuts off discontinuously at the maximum distance;
+typically a
+maximum distance is chosen such that the interaction strength at that distance
+is very small
+anyway. The IF for this type is f(d) = fmaxexp(−λd), where λ is the specified
+shape parameter. Note
+that this parameterization is not the same as for the Eidos function rexp().
+"n" - A normal interaction strength (i.e., Gaussian, but "g" is avoided to
+prevent confusion with
+the gamma-function option provided for, e.g., MutationType). The interaction
+strength falls off
+non-linearly from the maximum, and cuts off discontinuously at the maximum
+distance; typically a
+maximum distance is chosen such that the interaction strength at that distance
+is very small
+anyway. This IF type is specified by two parameters, a maximum interaction
+strength and a
+standard deviation. The Gaussian IF for this type is f(d) = fmaxexp(−d2/2σ2),
+where σ is the standard
+deviation parameter. Note that this parameterization is not the same as for the
+Eidos function
+rnorm(). A Gaussian function is often used to model spatial interactions, but is
+relatively
+computation-intensive.
+"c" - A Cauchy-distributed interaction strength. The interaction strength falls
+off non-linearly
+from the maximum, and cuts off discontinuously at the maximum distance;
+typically a maximum
+distance is chosen such that the interaction strength at that distance is very
+small anyway. This IF
+type is specified by two parameters, a maximum interaction strength and a scale
+parameter. The IF
+for this type is f(d) = fmax/(1+(d/λ)2), where λ is the scale parameter. Note
+that this parameterization
+is not the same as for the Eidos function rcauchy(). A Cauchy distribution can
+be used to model
+interactions with relatively fat tails.
+An InteractionType may be allocated using the initializeInteractionType()
+function (see
+section 24.1). It must then be evaluated, with the evaluate() method, for any
+given
+subpopulation before it will respond to queries regarding that subpopulation.
+This causes the
+positions of all individuals to be cached, thus defining a snapshot in time that
+the InteractionType
+will then use to respond to queries (necessary since the positions of
+individuals may change at any
+time). This evaluated state will last until the current parental generation
+expires, at the end of the
+next offspring-generation phase. Before the InteractionType may be used with the
+new parental
+generation (the offspring of the old parental generation), the interaction must
+be evaluated again.
+InteractionType will automatically account for any periodic spatial boundaries
+established
+with the periodicity parameter of initializeSLiMOptions(); interactions will
+wrap around the
+periodic boundaries without any additional configuration of the interaction.
+Interactions involving
+periodic spatial boundaries entail some additional overhead in both memory usage
+and processor
+time; in particular, setting up the k-d tree after the interaction is evaluated
+may take many times
+longer than in the non-periodic case. Once the k-d tree has been set up,
+however, responses to
+spatial queries involving it should then be nearly as fast as in the non-
+periodic case. Spatial
+queries that do not involve the k-d tree will generally be marginally slower
+than in the nonperiodic
+case, but the difference should not be large.
+This class has the following methods (functions):</p><ul>
 <li><p><code><a href='distance.html'>distance</a></code></p></li>
 <li><p><code><a href='distanceToPoint.html'>distanceToPoint</a></code></p></li>
 <li><p><code><a href='drawByStrength.html'>drawByStrength</a></code></p></li>
 <li><p><code><a href='evaluate.html'>evaluate</a></code></p></li>
-<li><p><code><a href='getValue.html'>getValue</a></code></p></li>
 <li><p><code><a href='interactingNeighborCount.html'>interactingNeighborCount</a></code></p></li>
 <li><p><code><a href='interactionDistance.html'>interactionDistance</a></code></p></li>
 <li><p><code><a href='nearestInteractingNeighbors.html'>nearestInteractingNeighbors</a></code></p></li>
 <li><p><code><a href='nearestNeighbors.html'>nearestNeighbors</a></code></p></li>
 <li><p><code><a href='nearestNeighborsOfPoint.html'>nearestNeighborsOfPoint</a></code></p></li>
 <li><p><code><a href='setInteractionFunction.html'>setInteractionFunction</a></code></p></li>
-<li><p><code><a href='setValue.html'>setValue</a></code></p></li>
 <li><p><code><a href='strength.html'>strength</a></code></p></li>
 <li><p><code><a href='totalOfNeighborStrengths.html'>totalOfNeighborStrengths</a></code></p></li>
 <li><p><code><a href='unevaluate.html'>unevaluate</a></code></p></li>
@@ -211,12 +419,28 @@ The value of tag is initially undefined, and it is an error to try to read
 it; if you wish it to have a defined value, you must arrange that yourself by
 explicitly setting its value prior to using it elsewhere in your code. The value
 of tag is not used by SLiM; it is free for you to use. See also the getValue()
-and setValue() methods, for another way of attaching state to interaction
-types.</p></dd>
+and setValue() methods (provided by the Dictionary class; see the Eidos manual),
+for another way of attaching state to interaction types.</p></dd>
 
 
 </dl>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other InteractionType: 
+<code><a href='distanceToPoint.html'>distanceToPoint</a>()</code>,
+<code><a href='distance.html'>distance</a>()</code>,
+<code><a href='drawByStrength.html'>drawByStrength</a>()</code>,
+<code><a href='evaluate.html'>evaluate</a>()</code>,
+<code><a href='interactingNeighborCount.html'>interactingNeighborCount</a>()</code>,
+<code><a href='interactionDistance.html'>interactionDistance</a>()</code>,
+<code><a href='nearestInteractingNeighbors.html'>nearestInteractingNeighbors</a>()</code>,
+<code><a href='nearestNeighborsOfPoint.html'>nearestNeighborsOfPoint</a>()</code>,
+<code><a href='nearestNeighbors.html'>nearestNeighbors</a>()</code>,
+<code><a href='setInteractionFunction.html'>setInteractionFunction</a>()</code>,
+<code><a href='strength.html'>strength</a>()</code>,
+<code><a href='totalOfNeighborStrengths.html'>totalOfNeighborStrengths</a>()</code>,
+<code><a href='unevaluate.html'>unevaluate</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

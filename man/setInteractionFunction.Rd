@@ -19,7 +19,7 @@ An object of type void.
 }
 \description{
 Documentation for SLiM function \code{setInteractionFunction}, which is a method
-of the SLiM class \code{InteractionType}.
+of the SLiM class \code{\link{InteractionType}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -28,6 +28,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=552}{SLiM manual: page 552}.
+
 Set the function used to translate spatial distances into interaction
 strengths for an interaction type. The functionType may be "f", in which case
 the ellipsis ... should supply a numeric$ fixed interaction strength; "l", in
@@ -38,7 +41,7 @@ function; "n", in which case the ellipsis should supply a numeric$ maximum
 strength and a numeric$ sigma (standard deviation) parameter for a Gaussian
 function; or "c", in which case the ellipsis should supply a numeric$ maximum
 strength and a numeric$ scale parameter for a Cauchy distribution function. See
-section 23.7 above for discussions of these interaction functions. Non-spatial
+section 24.7 above for discussions of these interaction functions. Non-spatial
 interactions must use function type "f", since no distance values are available
 in that case. The interaction function for an interaction type is normally a
 constant in simulations; in any case, it cannot be changed when an interaction
@@ -50,12 +53,29 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other InteractionType: 
+\code{\link{InteractionType}},
+\code{\link{distanceToPoint}()},
+\code{\link{distance}()},
+\code{\link{drawByStrength}()},
+\code{\link{evaluate}()},
+\code{\link{interactingNeighborCount}()},
+\code{\link{interactionDistance}()},
+\code{\link{nearestInteractingNeighbors}()},
+\code{\link{nearestNeighborsOfPoint}()},
+\code{\link{nearestNeighbors}()},
+\code{\link{strength}()},
+\code{\link{totalOfNeighborStrengths}()},
+\code{\link{unevaluate}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{InteractionType}

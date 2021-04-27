@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>treeSeqCoalesced</code>, which is a method of
-the SLiM class <code>SLiMSim</code>.
+the SLiM class <code><a href='SLiMSim.html'>SLiMSim</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -176,11 +179,13 @@ full SLiM script.</p>
     <p>An object of type logical. Return will be of length 1 (a singleton)</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Returns the coalescence state for the recorded tree sequence at
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=575'>SLiM manual: page 575</a>.</p>
+<p>Returns the coalescence state for the recorded tree sequence at
 the last simplification. The returned value is a logical singleton flag,
 T to indicate that full coalescence was observed at the last treesequence
 simplification (meaning that there is a single ancestral individual that roots
-all ancestry trees at all sites along the chromosome – although not necessarily
+all ancestry trees at all sites along the chromosome - although not necessarily
 the same ancestor at all sites), or F if full coalescence was not observed. For
 simple models, reaching coalescence may indicate that the model has reached an
 equilibrium state, but this may not be true in models that modify the dynamics
@@ -191,7 +196,7 @@ require burn-in beyond coalescence to reach equilibrium, or may not have an
 equilibrium state at all. Also note that some actions by a model, such as adding
 a new subpopulation, may cause the coalescence state to revert from T back
 to F (at the next simplification), so a return value of T may not necessarily
-mean that the model is coalesced at the present moment – only that it was
+mean that the model is coalesced at the present moment - only that it was
 coalesced at the last simplification. This method may only be called if tree
 sequence recording has been turned on with initializeTreeSeq(); in addition,
 checkCoalescence=T must have been supplied to initializeTreeSeq(), so that the
@@ -211,9 +216,42 @@ happened in the current generation or in a recent preceding generation.</p>
 reproduced from the official manual,
 which can be found here: <a href='http://benhaller.com/slim/SLiM_Manual.pdf'>http://benhaller.com/slim/SLiM_Manual.pdf</a>. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other SLiMSim: 
+<code><a href='SLiMSim.html'>SLiMSim</a></code>,
+<code><a href='addSubpopSplit.html'>addSubpopSplit</a>()</code>,
+<code><a href='addSubpop.html'>addSubpop</a>()</code>,
+<code><a href='countOfMutationsOfType.html'>countOfMutationsOfType</a>()</code>,
+<code><a href='createLogFile.html'>createLogFile</a>()</code>,
+<code><a href='deregisterScriptBlock.html'>deregisterScriptBlock</a>()</code>,
+<code><a href='mutationCounts.html'>mutationCounts</a>()</code>,
+<code><a href='mutationFrequencies.html'>mutationFrequencies</a>()</code>,
+<code><a href='mutationsOfType.html'>mutationsOfType</a>()</code>,
+<code><a href='outputFixedMutations.html'>outputFixedMutations</a>()</code>,
+<code><a href='outputFull.html'>outputFull</a>()</code>,
+<code><a href='outputMutations.html'>outputMutations</a>()</code>,
+<code><a href='outputUsage.html'>outputUsage</a>()</code>,
+<code><a href='readFromPopulationFile.html'>readFromPopulationFile</a>()</code>,
+<code><a href='recalculateFitness.html'>recalculateFitness</a>()</code>,
+<code><a href='registerEarlyEvent.html'>registerEarlyEvent</a>()</code>,
+<code><a href='registerFitnessCallback.html'>registerFitnessCallback</a>()</code>,
+<code><a href='registerInteractionCallback.html'>registerInteractionCallback</a>()</code>,
+<code><a href='registerLateEvent.html'>registerLateEvent</a>()</code>,
+<code><a href='registerMateChoiceCallback.html'>registerMateChoiceCallback</a>()</code>,
+<code><a href='registerModifyChildCallback.html'>registerModifyChildCallback</a>()</code>,
+<code><a href='registerMutationCallback.html'>registerMutationCallback</a>()</code>,
+<code><a href='registerRecombinationCallback.html'>registerRecombinationCallback</a>()</code>,
+<code><a href='registerReproductionCallback.html'>registerReproductionCallback</a>()</code>,
+<code><a href='rescheduleScriptBlock.html'>rescheduleScriptBlock</a>()</code>,
+<code><a href='simulationFinished.html'>simulationFinished</a>()</code>,
+<code><a href='subsetMutations.html'>subsetMutations</a>()</code>,
+<code><a href='treeSeqOutput.html'>treeSeqOutput</a>()</code>,
+<code><a href='treeSeqRememberIndividuals.html'>treeSeqRememberIndividuals</a>()</code>,
+<code><a href='treeSeqSimplify.html'>treeSeqSimplify</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

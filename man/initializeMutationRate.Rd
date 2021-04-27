@@ -22,7 +22,7 @@ An object of type void.
 }
 \description{
 Documentation for SLiM function \code{initializeMutationRate}, which is a method
-of the SLiM class \code{Initialize}.
+of the SLiM class \code{\link{Initialize}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -31,6 +31,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=520}{SLiM manual: page 520}.
+
 Set the mutation rate per base position per generation along the
 chromosome. To be precise, this mutation rate is the expected mean number of
 mutations that will occur per base position per generation (per new offspring
@@ -83,12 +86,30 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other Initialize: 
+\code{\link{Initialize}},
+\code{\link{initializeAncestralNucleotides}()},
+\code{\link{initializeGeneConversion}()},
+\code{\link{initializeGenomicElementType}()},
+\code{\link{initializeGenomicElement}()},
+\code{\link{initializeHotspotMap}()},
+\code{\link{initializeInteractionType}()},
+\code{\link{initializeMutationTypeNuc}()},
+\code{\link{initializeMutationType}()},
+\code{\link{initializeRecombinationRate}()},
+\code{\link{initializeSLiMModelType}()},
+\code{\link{initializeSLiMOptions}()},
+\code{\link{initializeSex}()},
+\code{\link{initializeTreeSeq}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Initialize}

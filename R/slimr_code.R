@@ -1,6 +1,8 @@
 
 SLiMify <- function(code, for_script = FALSE) {
   code <- slimr_code_add_semicolons(code) %>%
+    slimr_code_replace_arrows() %>%
+    slimr_code_replace_dollars() %>%
     slimr_code_replace_dots(for_script = for_script) %>%
     slimr_code_remove_special_classes()
 
@@ -35,6 +37,14 @@ slimr_code_add_semicolons <- function(code_one) {
   get_semi <- which(!brace_lines & !do_lines)
   code_one[get_semi] <- paste0(code_one[get_semi], ";")
   code_one
+}
+
+slimr_code_replace_arrows <- function(code_one) {
+  stringr::str_replace_all(code_one, stringr::fixed("<-"), stringr::fixed("="))
+}
+
+slimr_code_replace_dollars <- function(code_one) {
+  stringr::str_replace_all(code_one, stringr::fixed("$"), stringr::fixed("."))
 }
 
 
@@ -95,7 +105,8 @@ slimr_code_replace_returns <- function(code_one) {
 
 
 slimr_code_remove_comments <- function(code_one) {
-  code <- stringr::str_replace_all(code_one, "//([^\"]+?)(\\n|$)", "\n")
+  #code <- stringr::str_replace_all(code_one, "//([^\"]+?)(\\n|$)", "\n")
+  code <- stringr::str_replace_all(code_one, '(?<!")//(.*?)(\\n|$)', "\n")
   stringr::str_remove_all(code, stringr::regex("/\\*(.*?)\\*/", dotall = TRUE))
 
 }

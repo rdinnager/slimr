@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>initializeInteractionType</code>, which is a
-method of the SLiM class <code>Initialize</code>.
+method of the SLiM class <code><a href='Initialize.html'>Initialize</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -204,7 +207,9 @@ singleton). The default value is <code>"**"</code>. See details for description.
 singleton)</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Add an interaction type at initialization time. The id must not
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=519'>SLiM manual: page 519</a>.</p>
+<p>Add an interaction type at initialization time. The id must not
 already be used for any interaction type in the simulation. The id parameter
 may be either an integer giving the ID of the new interaction type, or a string
 giving the name of the new interaction type (such as "i5" to specify an ID of
@@ -225,7 +230,7 @@ to reduce the amount of computation necessary by up to a factor of two. If
 reciprocal is F, the interaction is not guaranteed to be reciprocal and each
 interaction will be computed independently. The built-in interaction formulas
 are all reciprocal, but if you implement an interaction() callback (see section
-24.6), you must consider whether the callback you have implemented preserves
+25.6), you must consider whether the callback you have implemented preserves
 reciprocality or not. For this reason, the default is reciprocal=F, so that
 bugs are not inadvertently introduced by an invalid assumption of reciprocality.
 See below for a note regarding reciprocality in sexual simulations when using
@@ -268,7 +273,7 @@ guaranteed to be the same in both directions? By default, the interaction
 strength is 1.0 for all interactions within maxDistance. Often it is desirable
 to change the interaction function using setInteractionFunction(); modifying
 interaction strengths can also be achieved with interaction() callbacks if
-necessary (see section 24.6). In any case, interactions beyond maxDistance
+necessary (see section 25.6). In any case, interactions beyond maxDistance
 always have a strength of 0.0, and the interaction strength of an individual
 with itself is always 0.0, regardless of the interaction function or callbacks.
 The global symbol for the new interaction type is immediately available; the
@@ -281,9 +286,26 @@ return value also provides the new object.</p>
 reproduced from the official manual,
 which can be found here: <a href='http://benhaller.com/slim/SLiM_Manual.pdf'>http://benhaller.com/slim/SLiM_Manual.pdf</a>. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Initialize: 
+<code><a href='Initialize.html'>Initialize</a></code>,
+<code><a href='initializeAncestralNucleotides.html'>initializeAncestralNucleotides</a>()</code>,
+<code><a href='initializeGeneConversion.html'>initializeGeneConversion</a>()</code>,
+<code><a href='initializeGenomicElementType.html'>initializeGenomicElementType</a>()</code>,
+<code><a href='initializeGenomicElement.html'>initializeGenomicElement</a>()</code>,
+<code><a href='initializeHotspotMap.html'>initializeHotspotMap</a>()</code>,
+<code><a href='initializeMutationRate.html'>initializeMutationRate</a>()</code>,
+<code><a href='initializeMutationTypeNuc.html'>initializeMutationTypeNuc</a>()</code>,
+<code><a href='initializeMutationType.html'>initializeMutationType</a>()</code>,
+<code><a href='initializeRecombinationRate.html'>initializeRecombinationRate</a>()</code>,
+<code><a href='initializeSLiMModelType.html'>initializeSLiMModelType</a>()</code>,
+<code><a href='initializeSLiMOptions.html'>initializeSLiMOptions</a>()</code>,
+<code><a href='initializeSex.html'>initializeSex</a>()</code>,
+<code><a href='initializeTreeSeq.html'>initializeTreeSeq</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

@@ -6,7 +6,7 @@
 \alias{.G}
 \title{Genome}
 \format{
-An object of class \code{list} of length 22.
+An object of class \code{list} of length 24.
 }
 \usage{
 Genome
@@ -15,6 +15,12 @@ Genome
 Documentation for Genome class from SLiM
 }
 \details{
+This class represents one full genome of an individual (one of the two
+genomes contained by a
+diploid individual, that is, in the way that SLiM uses the term), composed of
+the mutations carried
+by that individual. Section 1.5.1 presents an overview of the conceptual role of
+this class.
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{addMutations}}}
@@ -23,6 +29,8 @@ This class has the following methods (functions):
 \item{\code{\link{containsMarkerMutation}}}
 \item{\code{\link{containsMutations}}}
 \item{\code{\link{countOfMutationsOfType}}}
+\item{\code{\link{mutationCountsInGenomes}}}
+\item{\code{\link{mutationFrequenciesInGenomes}}}
 \item{\code{\link{mutationsOfType}}}
 \item{\code{\link{nucleotides}}}
 \item{\code{\link{output}}}
@@ -58,11 +66,11 @@ one (a singleton). This property is a constant, so it is not modifiable.
 belongs. }
 \item{isNullGenome}{A property of type logical. It is of length one
 (a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} T if the genome is a "null” genome, F if it is
+\strong{Property Description:} T if the genome is a "null" genome, F if it is
 an ordinary genome object. When a sex chromosome (X or Y) is simulated, the
-other sex chromosome also exists in the simulation, but it is a "null” genome
+other sex chromosome also exists in the simulation, but it is a "null" genome
 that does not carry any mutations. Instead, it is a placeholder, present to
-allow SLiM’s code to operate in much the same way as it does when an autosome is
+allow SLiM's code to operate in much the same way as it does when an autosome is
 simulated. Null genomes should not be accessed or manipulated. }
 \item{mutations}{A property of type Mutation object. This property is a
 constant, so it is not modifiable. \strong{Property Description:} All of the
@@ -86,4 +94,26 @@ assumed to take on the most inconvenient value possible.}
 
 }
 }
+\seealso{
+Other Genome: 
+\code{\link{addMutations}()},
+\code{\link{addNewDrawnMutation}()},
+\code{\link{addNewMutation}()},
+\code{\link{containsMarkerMutation}()},
+\code{\link{containsMutations}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{mutationCountsInGenomes}()},
+\code{\link{mutationFrequenciesInGenomes}()},
+\code{\link{mutationsOfType}()},
+\code{\link{nucleotides}()},
+\code{\link{outputMS}()},
+\code{\link{outputVCF}()},
+\code{\link{output}()},
+\code{\link{positionsOfMutationsOfType}()},
+\code{\link{readFromMS}()},
+\code{\link{readFromVCF}()},
+\code{\link{removeMutations}()},
+\code{\link{sumOfMutationsOfType}()}
+}
+\concept{Genome}
 \keyword{datasets}

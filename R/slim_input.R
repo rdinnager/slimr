@@ -3,31 +3,41 @@
 #' Make a SLiM file in the style of \code{outputFull()} which can be read by SLiM. This is useful to
 #' start a simulation with a particular population state that you define in R
 #'
-#' @param snps
-#' @param file_name
-#' @param sim_gen
-#' @param ind_pops
-#' @param ind_sex
-#' @param mut_pos
-#' @param mut_type
-#' @param mut_sel
-#' @param mut_dom
-#' @param mut_pop
-#' @param mut_gen
-#' @param mut_prev
-#' @param mut_nuc
-#' @param ind_coord
-#' @param ind_age
-#' @param gen_type
+#' @param snps R object containing SNPs. Can be a matrix with 0, 1, or 2 as its elements,
+#' or a \code{genlight} object. Rows correspond to individuals, columns to loci.
+#' @param file_name Path to file where the population input file should be saved.
+#' @param sim_gen What generation to write in the file. This doesn't really do anything, but is just a requirement
+#' for the format.
+#' @param ind_pops An optional character vector with length equal to \code{nrow(snps)} with Subpopulation indicators for
+#' each individual. Should be "p1", "p2", etc. as this is how subpopulations are named in SLiM.
+#' @param ind_sex An optional character vector with length equal to \code{nrow(snps)} with the sex for each individual (can be
+#' "H" for hermaphrodite, "F" for female, or "M" for male.)
+#' @param mut_pos An optional integer vector with length equal to \code{ncol(snps)} specifying the positions in the genome
+#' of each loci.
+#' @param mut_type An optional character vector with length equal to \code{nrow(snps)} with the mutation type of each loci.
+#' Should be "m1", "m2", etc. as this is how mutation types are named in SLiM.
+#' @param mut_sel An optional numeric vector with length equal to \code{nrow(snps)} with the selection coefficient for the
+#' mutation type of each loci.
+#' @param mut_dom An optional numeric vector with length equal to \code{nrow(snps)} with the dominance coefficient for the
+#' mutation type of each loci.
+#' @param mut_pop An optional character vector with length equal to \code{nrow(snps)} with the subpopulation of origin
+#' for the mutation at each loci. Should be "p1", "p2", etc. as this is how subpopulations are named in SLiM.
+#' @param mut_gen An optional integer vector with length equal to \code{ncol(snps)} specifying the generation of origin
+#' for the mutation at each loci.
+#' @param mut_nuc An optional character vector with length equal to \code{nrow(snps)} with the nucleotide of the
+#' mutation. Should be "A", "C", "G", or "T".
+#' @param version SLiM output version number to use.
 #'
-#' @return
+#' @return Returns the file name where the population data was saved
 #' @export
 #'
 #' @examples
+#' pop_file <- slim_make_pop_input(matrix(rbinom(1000, 2, 0.25), nrow = 100, ncol = 100))
+#' cat(readLines(pop_file))
 slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, ind_pops = NULL,
                                 ind_sex = NULL, mut_pos = NULL, mut_type = NULL, mut_sel = NULL,
-                                mut_dom = NULL, mut_pop = NULL, mut_gen = NULL, mut_prev = NULL, mut_nuc = NULL,
-                                ind_coord = NULL, ind_age = NULL, gen_type= NULL) {
+                                mut_dom = NULL, mut_pop = NULL, mut_gen = NULL, mut_nuc = NULL,
+                                version = 4) {
 
   if(inherits(snps, "genlight")) {
     snps <- as.matrix(snps)
@@ -57,11 +67,13 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
   }
 
   first_line <- glue::glue("#OUT {sim_gen} A")
-  line_2 <- if(is.null(ind_age)) {
-    "Version: 3"
-  } else {
-    "Version: 4"
-  }
+  # line_2 <- if(is.null(ind_age)) {
+  #   "Version: 3"
+  # } else {
+  #   "Version: 4"
+  # }
+
+  line_2 <- paste0("Version: ", version)
 
   if(is.null(ind_pops)) {
     ind_pops <-  rep("p1", n_inds)
@@ -134,7 +146,7 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
                         mut_prev = mut_prev)
   if(!is.null(mut_nuc)) {
     muts <- muts %>%
-      dplyr::mutate("mut_nuc" := .data$mut_nuc[real_snps])
+      dplyr::mutate("mut_nuc" := mut_nuc[real_snps])
   }
 
   readr::write_delim(muts, tmp, " ", col_names = FALSE)
@@ -162,15 +174,15 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
                   "genome_1" := paste(.data$pop, .data$gen_1, sep = ":"),
                   "genome_2" := paste(.data$pop, .data$gen_2, sep = ":")) %>%
     dplyr::select(.data$pop_ind, .data$sex, .data$genome_1, .data$genome_2)
-  if(!is.null(ind_coord)) {
-    inds <- inds %>%
-      dplyr::mutate("coords" := ind_coord)
-  }
-
-  if(!is.null(ind_age)) {
-    inds <- inds %>%
-      dplyr::mutate("age" := ind_age)
-  }
+  # if(!is.null(ind_coord)) {
+  #   inds <- inds %>%
+  #     dplyr::mutate("coords" := ind_coord)
+  # }
+  #
+  # if(!is.null(ind_age)) {
+  #   inds <- inds %>%
+  #     dplyr::mutate("age" := ind_age)
+  # }
 
   readr::write_delim(inds, tmp, " ", col_names = FALSE)
   inds_txt <- readr::read_lines(tmp) %>%
@@ -191,9 +203,9 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
           sep = "\n")
   }
 
-  if(is.null(gen_type)) {
-    gen_type <- matrix(rep("A", n_gen), nrow = n_inds, byrow = TRUE)
-  }
+  #if(is.null(gen_type)) {
+  gen_type <- matrix(rep("A", n_gen), nrow = n_inds, byrow = TRUE)
+  #}
   gens_txt <- purrr::pmap_chr(list(purrr::array_branch(inds %>%
                                                      dplyr::select(-.data$pop_ind, -.data$sex) %>%
                                                      as.matrix(), 1),

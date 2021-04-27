@@ -15,6 +15,19 @@ SLiMEidosBlock
 Documentation for SLiMEidosBlock class from SLiM
 }
 \details{
+This class represents a block of Eidos code registered in a SLiM
+simulation. All Eidos events and
+Eidos callbacks defined in the SLiM input file of the current simulation are
+instantiated as
+SLiMEidosBlock objects and are available through the scriptBlocks property of
+SLiMSim; see
+section 24.13.1. In addition, new script blocks can be created programmatically
+and registered
+with the simulation, and registered script blocks can be deregistered; see the
+‑register...() and
+‑deregisterScriptBlock() methods of SLiMSim in section 24.13.2. The currently
+executing script
+block is available through the self global; see section 25.9.
 This class has the following methods (functions):
 \itemize{
 \item{None. This class has no methods.}
@@ -62,9 +75,10 @@ integer or integer or string. It is of length one (a singleton). This property
 is a constant, so it is not modifiable. \strong{Property Description:} The
 type of the script block; this will be "early" or "late" for the two types
 of Eidos events, or "initialize", "fitness", "mateChoice", "modifyChild", or
-"recombination" for the respective types of Eidos callbacks (see section 23.1
-and chapter 24).}
+"recombination" for the respective types of Eidos callbacks (see section 24.1
+and chapter 25).}
 
 }
 }
+\concept{SLiMEidosBlock}
 \keyword{datasets}

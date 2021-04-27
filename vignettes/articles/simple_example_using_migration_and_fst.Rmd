@@ -7,6 +7,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+options(future.rng.onMisuse = "ignore")
 ```
 
 ```{r color, echo = FALSE, results='asis'}
@@ -161,17 +162,17 @@ cat(as_slim_text(script_2))
 Now let's see if we can run it.
 
 ```{r run_script}
-tfile <- "temp.txt"
-results <- slim_run(script_2, capture_output = tfile, progress = FALSE)
+
+results <- slim_run(script_2, throw_error = TRUE)
 
 ```
 
-Looks like it worked. We can get the resulting genomic data from the returned object and convert it into a genlight object using the `slim_output_genlight()` function. Then we can plot the results.
+Looks like it worked. We can get the resulting genomic data from the returned object and convert it into a genlight object using the `slim_extract_genlight()` function. Then we can plot the results.
 
 ```{r get_dat}
 library(dartR)
 
-inds <- slim_output_genlight(results, "final_output")
+inds <- slim_extract_genlight(results, "final_output")
 plot(inds)
 
 ```
@@ -232,7 +233,7 @@ So in the above script we now have a placemarker for a `pop_size` and a `m` para
 
 ```{r slimr_template_example}
 
-example_script <- slimr_script_render(script_3, template = list(pop_size = 50, m = 0.05))
+example_script <- slim_script_render(script_3, template = list(pop_size = 50, m = 0.05))
 example_script
 
 ```
@@ -240,11 +241,12 @@ example_script
 We can also pass a `data.frame` to `slim_script_render` which will allow us to generate many scripts at once, let's setup a large number of scripts to explore different values of our two parameters.
 
 ```{r setup_many_scripts}
+n_reps <- 300
 
-param_df <- data.frame(pop_size = sample(5:100, 1000, replace = TRUE),
-                                                         m = runif(1000, 0, 0.5))
+param_df <- data.frame(pop_size = sample(5:100, n_reps, replace = TRUE),
+                                                         m = runif(n_reps, 0, 0.5))
 
-script_list <- slimr_script_render(script_3,
+script_list <- slim_script_render(script_3,
                                    template = param_df)
 
 script_list
@@ -259,7 +261,7 @@ if(requireNamespace("furrr", quietly = TRUE)) {
   
   future::plan(future::multisession)
   
-  all_results <- slim_run(script_list, parallel = TRUE, progress = TRUE)
+  all_results <- slim_run(script_list, parallel = TRUE, progress = TRUE, throw_error = TRUE)
   
 }
 
@@ -280,7 +282,7 @@ Let's extract all the genomic data into genlight objects so we can easily calcul
 
 ```{r all_genlight}
 all_gl <- furrr::future_map(all_results,
-                     ~suppressMessages(try(slim_output_genlight(.x, "final_output"))),
+                     ~suppressWarnings(suppressMessages(try(slim_extract_genlight(.x, "final_output")))),
                      .progress = TRUE)
 ```
 

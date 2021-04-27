@@ -16,7 +16,7 @@ An object of type void.
 }
 \description{
 Documentation for SLiM function \code{addMutations}, which is a method of the
-SLiM class \code{Genome}.
+SLiM class \code{\link{Genome}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -25,14 +25,20 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=533}{SLiM manual: page 533}.
+
 Add the existing mutations in mutations to the genome, if they are
 not already present (if they are already present, they will be ignored), and
 if the addition is not prevented by the mutation stacking policy (see the
-mutationStackPolicy property of MutationType, section 23.9.1). Calling this
+mutationStackPolicy property of MutationType, section 24.10.1). Calling this
 will normally affect the fitness values calculated at the end of the current
 generation; if you want current fitness values to be affected, you can call
-SLiMSim’s method recalculateFitness() – but see the documentation of that method
-for caveats.
+SLiMSim's method recalculateFitness() - but see the documentation of that
+method for caveats. Note that in nonWF models that use tree-sequence recording,
+mutations cannot be added to an individual after the generation in which the
+individual is created (i.e., when the age of the individual is greater than 0),
+to prevent the possibility of inconsistencies in the recorded tree sequence.
 }
 \section{Copyright}{
 
@@ -40,12 +46,34 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other Genome: 
+\code{\link{Genome}},
+\code{\link{addNewDrawnMutation}()},
+\code{\link{addNewMutation}()},
+\code{\link{containsMarkerMutation}()},
+\code{\link{containsMutations}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{mutationCountsInGenomes}()},
+\code{\link{mutationFrequenciesInGenomes}()},
+\code{\link{mutationsOfType}()},
+\code{\link{nucleotides}()},
+\code{\link{outputMS}()},
+\code{\link{outputVCF}()},
+\code{\link{output}()},
+\code{\link{positionsOfMutationsOfType}()},
+\code{\link{readFromMS}()},
+\code{\link{readFromVCF}()},
+\code{\link{removeMutations}()},
+\code{\link{sumOfMutationsOfType}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Genome}

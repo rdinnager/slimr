@@ -20,7 +20,7 @@ An object of type void.
 }
 \description{
 Documentation for SLiM function \code{removeMutations}, which is a method of the
-SLiM class \code{Genome}.
+SLiM class \code{\link{Genome}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -29,27 +29,30 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=539}{SLiM manual: page 539}.
+
 Remove the mutations in mutations from the target genome(s), if they
 are present (if they are not present, they will be ignored). If NULL is passed
 for mutations (which is the default), then all mutations will be removed from
 the target genomes; in this case, substitute must be F (a specific vector of
 mutations to be substituted is required). Note that the Mutation objects removed
-remain valid, and will still be in the simulation’s mutation registry (i.e.
-will be returned by SLiMSim’s mutations property), until the next generation.
+remain valid, and will still be in the simulation's mutation registry (i.e.
+will be returned by SLiMSim's mutations property), until the next generation.
 Changing this will normally affect the fitness values calculated at the end
 of the current generation; if you want current fitness values to be affected,
-you can call SLiMSim’s method recalculateFitness() – but see the documentation
+you can call SLiMSim's method recalculateFitness() - but see the documentation
 of that method for caveats. The optional parameter substitute was added in
 SLiM 2.2, with a default of F for backward compatibility. If substitute is
 T, Substitution objects will be created for all of the removed mutations so
 that they are recorded in the simulation as having fixed, just as if they
-had reached fixation and been removed by SLiM’s own internal machinery. This
+had reached fixation and been removed by SLiM's own internal machinery. This
 will occur regardless of whether the mutations have in fact fixed, regardless
 of the convertToSubstitution property of the relevant mutation types, and
 regardless of whether all copies of the mutations have even been removed
 from the simulation (making it possible to create Substitution objects for
 mutations that are still segregating). It is up to the caller to perform
-whatever checks are necessary to preserve the integrity of the simulation’s
+whatever checks are necessary to preserve the integrity of the simulation's
 records. Typically substitute will only be set to T in the context of calls like
 sim.subpopulations.genomes.removeMutations(muts, T), such that the substituted
 mutations are guaranteed to be entirely removed from circulation. As mentioned
@@ -61,12 +64,34 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other Genome: 
+\code{\link{Genome}},
+\code{\link{addMutations}()},
+\code{\link{addNewDrawnMutation}()},
+\code{\link{addNewMutation}()},
+\code{\link{containsMarkerMutation}()},
+\code{\link{containsMutations}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{mutationCountsInGenomes}()},
+\code{\link{mutationFrequenciesInGenomes}()},
+\code{\link{mutationsOfType}()},
+\code{\link{nucleotides}()},
+\code{\link{outputMS}()},
+\code{\link{outputVCF}()},
+\code{\link{output}()},
+\code{\link{positionsOfMutationsOfType}()},
+\code{\link{readFromMS}()},
+\code{\link{readFromVCF}()},
+\code{\link{sumOfMutationsOfType}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Genome}

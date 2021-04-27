@@ -15,11 +15,11 @@ singleton). See details for description.}
 \item{...}{An object of type NA. NA See details for description.}
 }
 \value{
-An object of type float or any but object or void or void.
+An object of type float or void.
 }
 \description{
 Documentation for SLiM function \code{setDistribution}, which is a method of the
-SLiM class \code{MutationType}.
+SLiM class \code{\link{MutationType}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -28,6 +28,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=562}{SLiM manual: page 562}.
+
 Set the distribution of fitness effects for a mutation type. The
 distributionType may be "f", in which case the ellipsis ... should supply a
 numeric$ fixed selection coefficient; "e", in which case the ellipsis should
@@ -38,7 +41,7 @@ in which case the ellipsis should supply a numeric$ mean selection coefficient
 and a numeric$ sigma (standard deviation) parameter for a normal distribution;
 "w", in which case the ellipsis should supply a numeric$ λ scale parameter and a
 numeric$ k shape parameter for a Weibull distribution; or "s", in which case the
-ellipsis should supply a string$ Eidos script parameter. See section 23.9 above
+ellipsis should supply a string$ Eidos script parameter. See section 24.10 above
 for discussions of these distributions and their uses. The DFE for a mutation
 type is normally a constant in simulations, so be sure you know what you are
 doing.
@@ -49,12 +52,18 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other MutationType: 
+\code{\link{MutationType}},
+\code{\link{drawSelectionCoefficient}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{MutationType}

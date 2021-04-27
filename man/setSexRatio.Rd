@@ -17,7 +17,7 @@ An object of type void.
 }
 \description{
 Documentation for SLiM function \code{setSexRatio}, which is a method of the
-SLiM class \code{Subpopulation}.
+SLiM class \code{\link{Subpopulation}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -26,13 +26,16 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=586}{SLiM manual: page 586}.
+
 Set the sex ratio of this subpopulation to sexRatio. As defined
 in SLiM, this is actually the fraction of the subpopulation that is male;
 in other words, the M:(M+F) ratio. This will take effect when children are
 next generated; it does not change the current subpopulation state. Unlike
 the selfing rate, the cloning rate, and migration rates, the sex ratio is
 deterministic: SLiM will generate offspring that exactly satisfy the requested
-sex ratio (within integer roundoff limits). See section 21.2.1 for further
+sex ratio (within integer roundoff limits). See section 22.2.1 for further
 details.
 }
 \section{Copyright}{
@@ -41,12 +44,44 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other Subpopulation: 
+\code{\link{Subpopulation}},
+\code{\link{addCloned}()},
+\code{\link{addCrossed}()},
+\code{\link{addEmpty}()},
+\code{\link{addRecombinant}()},
+\code{\link{addSelfed}()},
+\code{\link{cachedFitness}()},
+\code{\link{configureDisplay}()},
+\code{\link{defineSpatialMap}()},
+\code{\link{outputMSSample}()},
+\code{\link{outputSample}()},
+\code{\link{outputVCFSample}()},
+\code{\link{pointInBounds}()},
+\code{\link{pointPeriodic}()},
+\code{\link{pointReflected}()},
+\code{\link{pointStopped}()},
+\code{\link{pointUniform}()},
+\code{\link{removeSubpopulation}()},
+\code{\link{sampleIndividuals}()},
+\code{\link{setCloningRate}()},
+\code{\link{setMigrationRates}()},
+\code{\link{setSelfingRate}()},
+\code{\link{setSpatialBounds}()},
+\code{\link{setSubpopulationSize}()},
+\code{\link{spatialMapColor}()},
+\code{\link{spatialMapValue}()},
+\code{\link{subsetIndividuals}()},
+\code{\link{takeMigrants}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Subpopulation}

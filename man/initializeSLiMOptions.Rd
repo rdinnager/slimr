@@ -45,7 +45,7 @@ An object of type void.
 }
 \description{
 Documentation for SLiM function \code{initializeSLiMOptions}, which is a method
-of the SLiM class \code{Initialize}.
+of the SLiM class \code{\link{Initialize}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -54,6 +54,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=523}{SLiM manual: page 523}.
+
 Configure options for the simulation. If initializeSLiMOptions()
 is called at all then it must be called before any other initialization
 function (except initializeSLiMModelType()), so that SLiM knows from the
@@ -61,37 +64,40 @@ outset which optional features are enabled and which are not. If keepPedigrees
 is T, SLiM will keep pedigree information for every individual in the
 simulation, tracking the identity of its parents and grandparents. This
 allows individuals to assess their degree of pedigree-based relatedness to
-other individuals (see Individual’s relatedness() method, section 23.6.2), as
-well as allowing a model to find "trios” (two parents and an offspring they
-generated) using the pedigree properties of Individual (section 23.6.1). As
-a side effect of keepPedigrees being T, the pedigreeID, pedigreeParentIDs,
-and pedigreeGrandparentIDs properties of Individual will have defined values
-(see section 23.6.1), as will the genomePedigreeID property of Genome (see
-section 23.3.1). Note that pedigree-based relatedness doesn’t necessarily
-correspond to genetic relatedness, due to effects such as assortment and
-recombination. For an overview of other ways of tracking genetic ancestry,
-including true local ancestry at each position on the chromosome, see sections
-1.7 and 14.7. If dimensionality is not "", SLiM will enable its optional
-"continuous space” facility. Three values for dimensionality are presently
-supported: "x", "xy", and "xyz", specifying that continuous space should be
-enabled for one, two, or three dimensions, respectively, using (x), (x, y),
-and (x, y, z) coordinates respectively. This has a number of side effects.
-First of all, it means that the specified properties of Individual (x, y,
-and/or z) will be interpreted by SLiM as spatial positions; in particular,
+other individuals (see Individual's relatedness() method, section 24.6.2), as
+well as allowing a model to find "trios" (two parents and an offspring they
+generated) using the pedigree properties of Individual (section 24.6.1). As a
+side effect of keepPedigrees being T, the pedigreeID, pedigreeParentIDs, and
+pedigreeGrandparentIDs properties of Individual will have defined values (see
+section 24.6.1), as will the genomePedigreeID property of Genome (see section
+24.3.1). Note that pedigree-based relatedness doesn't necessarily correspond
+to genetic relatedness, due to effects such as assortment and recombination.
+For an overview of other ways of tracking genetic ancestry, including true
+local ancestry at each position on the chromosome, see sections 1.7 and 14.7.
+Beginning in SLiM 3.5, keepPedigrees=T also enables tracking of individual
+reproductive output, available through the reproductiveOutput property of
+Individual (see section 24.6.1) and the lifetimeReproductiveOutput property
+of Subpopulation (see section 24.14.1). If dimensionality is not "", SLiM will
+enable its optional "continuous space" facility. Three values for dimensionality
+are presently supported: "x", "xy", and "xyz", specifying that continuous
+space should be enabled for one, two, or three dimensions, respectively, using
+(x), (x, y), and (x, y, z) coordinates respectively. This has a number of side
+effects. First of all, it means that the specified properties of Individual (x,
+y, and/or z) will be interpreted by SLiM as spatial positions; in particular,
 SLiMgui will use those properties to display subpopulations spatially. Second,
 it allows spatial interactions to be defined, evaluated, and queried using
 initializeInteractionType() and interaction() callbacks. And third, it enables
 the use of any other properties and methods related to continuous space, such
 as setting the spatial boundaries of subpopulations, which would otherwise
 raise an error. If periodicity is not "", SLiM will designate the specified
-spatial dimensions as being periodic – wrapping around at the edges of the
+spatial dimensions as being periodic - wrapping around at the edges of the
 spatial boundaries of that dimension. This option may only be used if the
 dimensionality parameter to initializeSLiMOptions() has been used to enable
 spatiality in the model, and only spatial dimensions that were specified in the
 dimensionality of the model may be declared to be periodic (but if desired, it
 is permissible to make just a subset of those dimensions periodic; it is not
 an all-or-none proposition). For example, if the specified dimensionality is
-"xy", the model’s periodicity may be "x", "y", or "xy" (or "", the default,
+"xy", the model's periodicity may be "x", "y", or "xy" (or "", the default,
 to specify that there are no periodic dimensions). A one-dimensional periodic
 model would model a space like the perimeter of a circle. A two-dimensional
 model periodic in one of those dimensions would model a space like a cylinder
@@ -99,7 +105,7 @@ without its end caps; if periodic in both dimensions, the modeled space is a
 torus. The shapes of three-dimensional periodic models are harder to visualize,
 but are essentially higherdimensional analogues of these concepts. Periodic
 boundary conditions are commonly used to model spatial scenarios without "edge
-effects”, since there are no edges in the periodic spatial dimensions. The
+effects", since there are no edges in the periodic spatial dimensions. The
 pointPeriodic() method of Subpopulation is typically used in conjunction with
 this option, to actually implement the periodic boundary condition for the
 specified dimensions. If mutationRuns is not 0, SLiM will use the value given
@@ -112,10 +118,10 @@ be modified by mutation/recombination events when inherited, but long enough
 that each mutation run is likely to contain a relatively large number of
 mutations; these priorities are in tension, so an intermediate balance between
 them is generally desirable. The optimal number of mutation runs will depend
-upon the machine and even the compiler used to build SLiM, so SLiM’s default
+upon the machine and even the compiler used to build SLiM, so SLiM's default
 value may not be optimal; for maximal performance it can thus be beneficial to
 experiment with different values and find the optimal value for the simulation
-– a process which SLiM can assist with (see section 20.4). Specifying the
+- a process which SLiM can assist with (see section 20.4). Specifying the
 number of mutation runs is an advanced technique, but in certain cases it can
 improve performance significantly. If preventIncidentalSelfing is T, incidental
 selfing in hermaphroditic models will be prevented by SLiM. By default (i.e.,
@@ -124,7 +130,7 @@ in a biparental mating event independently. It is therefore possible for the
 same individual to be chosen as both the first and second parent, resulting
 in selfing events even when the selfing rate is zero. In many models this
 is unimportant, since it happens fairly infrequently and does not have large
-consequences. This behavior is SLiM’s default because it is the simplest option,
+consequences. This behavior is SLiM's default because it is the simplest option,
 and produces results that most closely align with simple analytical population
 genetics models. However, in some models this selfing can be undesirable and
 problematic. In particular, models that involve very high variance in fitness
@@ -160,12 +166,30 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other Initialize: 
+\code{\link{Initialize}},
+\code{\link{initializeAncestralNucleotides}()},
+\code{\link{initializeGeneConversion}()},
+\code{\link{initializeGenomicElementType}()},
+\code{\link{initializeGenomicElement}()},
+\code{\link{initializeHotspotMap}()},
+\code{\link{initializeInteractionType}()},
+\code{\link{initializeMutationRate}()},
+\code{\link{initializeMutationTypeNuc}()},
+\code{\link{initializeMutationType}()},
+\code{\link{initializeRecombinationRate}()},
+\code{\link{initializeSLiMModelType}()},
+\code{\link{initializeSex}()},
+\code{\link{initializeTreeSeq}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Initialize}

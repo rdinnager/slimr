@@ -15,11 +15,11 @@ details for description.}
 \item{proportions}{An object of type numeric. See details for description.}
 }
 \value{
-An object of type any but object or void or void or void.
+An object of type void or void.
 }
 \description{
 Documentation for SLiM function \code{setMutationFractions}, which is a method
-of the SLiM class \code{GenomicElementType}.
+of the SLiM class \code{\link{GenomicElementType}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -28,6 +28,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=541}{SLiM manual: page 541}.
+
 Set the mutation type fractions contributing to a genomic element type.
 The mutationTypes vector should supply the mutation types used by the genomic
 element (either as MutationType objects or as integer identifiers), and the
@@ -42,12 +45,18 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other GenomicElementType: 
+\code{\link{GenomicElementType}},
+\code{\link{setMutationMatrix}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{GenomicElementType}

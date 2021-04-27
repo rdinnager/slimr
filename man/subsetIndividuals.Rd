@@ -6,14 +6,17 @@
 \alias{.P$subsetIndividuals}
 \title{SLiM method subsetIndividuals}
 \usage{
-subsetIndividuals(exclude, sex, minAge, maxAge, migrant)
+subsetIndividuals(exclude, sex, tag, minAge, maxAge, migrant)
 }
 \arguments{
 \item{exclude}{An object of type null or Individual object. Must be of length 1
 (a singleton). The default value is \code{NULL}. See details for description.}
 
 \item{sex}{An object of type null or string. Must be of length 1 (a singleton).
-The default value is \code{NULL],[Ni$ tag = NULL}. See details for description.}
+The default value is \code{NULL}. See details for description.}
+
+\item{tag}{An object of type null or integer. Must be of length 1 (a singleton).
+The default value is \code{NULL}. See details for description.}
 
 \item{minAge}{An object of type null or integer. Must be of length 1 (a
 singleton). The default value is \code{NULL}. See details for description.}
@@ -29,7 +32,7 @@ An object of type Individual object.
 }
 \description{
 Documentation for SLiM function \code{subsetIndividuals}, which is a method of
-the SLiM class \code{Subpopulation}.
+the SLiM class \code{\link{Subpopulation}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -38,14 +41,16 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=588}{SLiM manual: page 588}.
+
 Returns a vector of individuals subset from the individuals in the
 target subpopulation. The parameters specify constraints upon the subset
 of individuals that will be returned. Parameter exclude, if non- NULL, may
 specify a specific individual that should not be included (typically the focal
 individual in some operation). Parameter sex, if non-NULL, may specify a sex
 ("M" or "F") for the individuals to be returned, in sexual models. Parameter
-tag, if non-NULL, may specify a tag value for the individuals to be returned;
-only individuals whose tag property matches this value will be returned.
+tag, if non-NULL, may specify a tag value for the individuals to be returned.
 Parameters minAge and maxAge, if non-NULL, may specify a minimum or maximum age
 for the individuals to be returned, in nonWF models. Parameter migrant, if non-
 NULL, may specify a required value for the migrant property of the individuals
@@ -62,12 +67,44 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other Subpopulation: 
+\code{\link{Subpopulation}},
+\code{\link{addCloned}()},
+\code{\link{addCrossed}()},
+\code{\link{addEmpty}()},
+\code{\link{addRecombinant}()},
+\code{\link{addSelfed}()},
+\code{\link{cachedFitness}()},
+\code{\link{configureDisplay}()},
+\code{\link{defineSpatialMap}()},
+\code{\link{outputMSSample}()},
+\code{\link{outputSample}()},
+\code{\link{outputVCFSample}()},
+\code{\link{pointInBounds}()},
+\code{\link{pointPeriodic}()},
+\code{\link{pointReflected}()},
+\code{\link{pointStopped}()},
+\code{\link{pointUniform}()},
+\code{\link{removeSubpopulation}()},
+\code{\link{sampleIndividuals}()},
+\code{\link{setCloningRate}()},
+\code{\link{setMigrationRates}()},
+\code{\link{setSelfingRate}()},
+\code{\link{setSexRatio}()},
+\code{\link{setSpatialBounds}()},
+\code{\link{setSubpopulationSize}()},
+\code{\link{spatialMapColor}()},
+\code{\link{spatialMapValue}()},
+\code{\link{takeMigrants}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Subpopulation}

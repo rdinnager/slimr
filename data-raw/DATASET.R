@@ -7,12 +7,14 @@ zip::unzip("data-raw/recipes.zip") ## doesn't work, had to do it manually with w
 files <- list.files("data-raw/SLiM_Recipes/", full.names = TRUE)
 
 recipes <- files %>%
-  grep("Recipe ", .,  value = TRUE)
+  grep("Recipe ", .,  value = TRUE) %>%
+  grep(".py", .,  value = TRUE, invert = TRUE)
 
 resources <- files[!stringr::str_detect(files, "Recipe ")]
 resources <- resources[resources != "_README.txt"]
 
-file.copy(resources, file.path("inst/extdata/recipe_resources", basename(resources)))
+file.copy(resources, file.path("inst/extdata/recipe_resources", basename(resources)),
+          overwrite = TRUE)
 
 recipe_name <- basename(recipes) %>%
   strsplit(" - ", fixed = TRUE) %>%
@@ -30,7 +32,7 @@ recipe_txt <- recipe_txt[order_frame$name]
 
 slim_recipes <- recipe_txt
 
-usethis::use_data(slim_recipes, internal = TRUE)
+usethis::use_data(slim_recipes, internal = TRUE, overwrite = TRUE)
 
 ## code to generate package logo
 logo_base <- imager::load.image("data-raw/logo_base.png") %>%

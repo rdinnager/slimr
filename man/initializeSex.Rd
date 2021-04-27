@@ -20,7 +20,7 @@ An object of type void.
 }
 \description{
 Documentation for SLiM function \code{initializeSex}, which is a method of the
-SLiM class \code{Initialize}.
+SLiM class \code{\link{Initialize}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -29,16 +29,19 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=523}{SLiM manual: page 523}.
+
 Enable and configure sex in the simulation. The argument chromosomeType
 gives the type of chromosome to be simulated; this should be "A", "X", or "Y".
 If the chromosomeType is "X", the optional xDominanceCoeff parameter can supply
 the dominance coefficient used when a mutation is present in an XY male, and is
-thus "heterozygous” (but in a different sense than the heterozygosity of an XX
+thus "heterozygous" (but in a different sense than the heterozygosity of an XX
 female with one copy of the mutation). Calling this function has the side effect
 of enabling sex in the simulation; individuals will be male and female (rather
 than hermaphroditic) regardless of the chromosomeType chosen for simulation.
-There is no way to disable sex once it has been enabled; if you don’t want to
-have sex, don’t call this function.
+There is no way to disable sex once it has been enabled; if you don't want to
+have sex, don't call this function.
 }
 \section{Copyright}{
 
@@ -46,12 +49,30 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other Initialize: 
+\code{\link{Initialize}},
+\code{\link{initializeAncestralNucleotides}()},
+\code{\link{initializeGeneConversion}()},
+\code{\link{initializeGenomicElementType}()},
+\code{\link{initializeGenomicElement}()},
+\code{\link{initializeHotspotMap}()},
+\code{\link{initializeInteractionType}()},
+\code{\link{initializeMutationRate}()},
+\code{\link{initializeMutationTypeNuc}()},
+\code{\link{initializeMutationType}()},
+\code{\link{initializeRecombinationRate}()},
+\code{\link{initializeSLiMModelType}()},
+\code{\link{initializeSLiMOptions}()},
+\code{\link{initializeTreeSeq}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Initialize}

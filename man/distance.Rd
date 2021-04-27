@@ -20,7 +20,7 @@ An object of type float.
 }
 \description{
 Documentation for SLiM function \code{distance}, which is a method of the SLiM
-class \code{InteractionType}.
+class \code{\link{InteractionType}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -29,6 +29,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=549}{SLiM manual: page 549}.
+
 Returns a vector containing distances between individuals in
 individuals1 and individuals2. At least one of individuals1 or individuals2
 must be singleton, so that the distances evaluated are either from one
@@ -57,12 +60,29 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other InteractionType: 
+\code{\link{InteractionType}},
+\code{\link{distanceToPoint}()},
+\code{\link{drawByStrength}()},
+\code{\link{evaluate}()},
+\code{\link{interactingNeighborCount}()},
+\code{\link{interactionDistance}()},
+\code{\link{nearestInteractingNeighbors}()},
+\code{\link{nearestNeighborsOfPoint}()},
+\code{\link{nearestNeighbors}()},
+\code{\link{setInteractionFunction}()},
+\code{\link{strength}()},
+\code{\link{totalOfNeighborStrengths}()},
+\code{\link{unevaluate}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{InteractionType}

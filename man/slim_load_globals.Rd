@@ -4,16 +4,23 @@
 \alias{slim_load_globals}
 \title{Load SLiM Globals into R Global environment}
 \usage{
-slim_load_globals(max = 10, sim = TRUE, self = TRUE)
+slim_load_globals(max = 10, sim = TRUE, self = TRUE, pseudo = TRUE)
 }
 \arguments{
 \item{max}{A single integer values indicating how many of
 each numbered Globals to load, or a named integer vector where the names
 refer to different Global types (see details for more information), and the value
 refers to how many of that Global type to load.}
+
+\item{sim}{Should the \code{sim} global be loaded?}
+
+\item{self}{Should the \code{self} global be loaded?}
+
+\item{pseudo}{Should 'pseudo-variables' be loaded? These are similar to SLiM
+globals but are only available inside certain callbacks.}
 }
 \value{
-
+None
 }
 \description{
 

@@ -106,10 +106,13 @@
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,21 +154,26 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class <code>list</code> of length 10.</p>
+    <p>An object of class <code>list</code> of length 8.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This class has the following methods (functions):</p><ul>
-<li><p><code><a href='getValue.html'>getValue</a></code></p></li>
+    <p>This class represents a type of genomic element, with particular
+mutation types. The genomic
+element types currently defined in the simulation are defined as global
+constants with the same
+names used in the SLiM input file - g1, g2, and so forth. Section 1.5.4 presents
+an overview of the
+conceptual role of this class.
+This class has the following methods (functions):</p><ul>
 <li><p><code><a href='setMutationFractions.html'>setMutationFractions</a></code></p></li>
 <li><p><code><a href='setMutationMatrix.html'>setMutationMatrix</a></code></p></li>
-<li><p><code><a href='setValue.html'>setValue</a></code></p></li>
 </ul><p>This class has the following properties:</p><dl>
 <dt>color</dt><dd><p>A property of type string. It is of length one (a singleton). This
 property is a variable, so it is modifiable. <strong>Property Description:</strong>
 The color used to display genomic elements of this type in SLiMgui. Outside
 of SLiMgui, this property still exists, but is not used by SLiM. Colors may be
 specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see the
-Eidos manual). If color is the empty string, "", SLiMgui’s default color scheme
+Eidos manual). If color is the empty string, "", SLiMgui's default color scheme
 is used; this is the default for new GenomicElementType objects.</p></dd>
 <dt>id</dt><dd><p>A property of type integer. It is of length one (a singleton). This
 property is a constant, so it is not modifiable. <strong>Property Description:</strong>
@@ -189,12 +197,18 @@ A user-defined integer value. The value of tag is initially undefined, and
 it is an error to try to read it; if you wish it to have a defined value, you
 must arrange that yourself by explicitly setting its value prior to using it
 elsewhere in your code. The value of tag is not used by SLiM; it is free for
-you to use. See also the getValue() and setValue() methods, for another way of
-attaching state to genomic element types.</p></dd>
+you to use. See also the getValue() and setValue() methods (provided by the
+Dictionary class; see the Eidos manual), for another way of attaching state to
+genomic element types.</p></dd>
 
 
 </dl>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other GenomicElementType: 
+<code><a href='setMutationFractions.html'>setMutationFractions</a>()</code>,
+<code><a href='setMutationMatrix.html'>setMutationMatrix</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

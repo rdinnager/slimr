@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>rescheduleScriptBlock</code>, which is a method
-of the SLiM class <code>SLiMSim</code>.
+of the SLiM class <code><a href='SLiMSim.html'>SLiMSim</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -172,8 +175,8 @@ singleton). See details for description.</p></td>
     </tr>
     <tr>
       <th>start</th>
-      <td><p>An object of type integer. Must be of length 1 (a singleton). See
-details for description.</p></td>
+      <td><p>An object of type null or integer. Must be of length 1 (a
+singleton). The default value is <code>NULL</code>. See details for description.</p></td>
     </tr>
     <tr>
       <th>end</th>
@@ -192,7 +195,9 @@ The default value is <code>NULL</code>. See details for description.</p></td>
     <p>An object of type SLiMEidosBlock object.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Reschedule the target script block given by block to execute in a
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=573'>SLiM manual: page 573</a>.</p>
+<p>Reschedule the target script block given by block to execute in a
 specified set of generations. The first way to specify the generation set is
 with start and end parameter values; block will then execute from start to
 end, inclusive. In this case, block is returned. The second way to specify
@@ -223,13 +228,19 @@ call like sim.rescheduleScriptBlock(self, sim.generation + 10, sim.generation +
 10); made inside a given block would therefore also cause the block to execute
 every tenth generation, although this sort of self-rescheduling code is probably
 harder to read, maintain, and debug. Whichever way of specifying the generation
-set is used, the discussion in section 24.9 applies: block may continue to be
+set is used, the discussion in section 25.9 applies: block may continue to be
 executed during the current life cycle stage even after it has been rescheduled,
 unless it is made inactive using its active property, and similarly, the block
 may not execute during the current life cycle stage if it was not already
 scheduled to do so. Rescheduling script blocks during the generation and life
 cycle stage in which they are executing, or in which they are intended to
-execute, should be avoided. Note that new script blocks can also be created and
+execute, should be avoided. Also, as mentioned in section 22.7, script blocks
+which are open-ended (i.e., with no specified end generation), are not used in
+determining whether the end of the simulation has been reached (because then
+the simulation would run forever); if you reschedule a block to be open-ended,
+and to start after the end of the last closed-ended block, the rescheduled block
+will therefore not run at all (just as such a block would not run at all in
+other circumstances, too). Note that new script blocks can also be created and
 scheduled using the register...() methods of SLiMSim; by using the same source
 as a template script block, the template can be duplicated and scheduled for
 different generations. In fact, rescheduleScriptBlock() does essentially that
@@ -242,9 +253,42 @@ internally.</p>
 reproduced from the official manual,
 which can be found here: <a href='http://benhaller.com/slim/SLiM_Manual.pdf'>http://benhaller.com/slim/SLiM_Manual.pdf</a>. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other SLiMSim: 
+<code><a href='SLiMSim.html'>SLiMSim</a></code>,
+<code><a href='addSubpopSplit.html'>addSubpopSplit</a>()</code>,
+<code><a href='addSubpop.html'>addSubpop</a>()</code>,
+<code><a href='countOfMutationsOfType.html'>countOfMutationsOfType</a>()</code>,
+<code><a href='createLogFile.html'>createLogFile</a>()</code>,
+<code><a href='deregisterScriptBlock.html'>deregisterScriptBlock</a>()</code>,
+<code><a href='mutationCounts.html'>mutationCounts</a>()</code>,
+<code><a href='mutationFrequencies.html'>mutationFrequencies</a>()</code>,
+<code><a href='mutationsOfType.html'>mutationsOfType</a>()</code>,
+<code><a href='outputFixedMutations.html'>outputFixedMutations</a>()</code>,
+<code><a href='outputFull.html'>outputFull</a>()</code>,
+<code><a href='outputMutations.html'>outputMutations</a>()</code>,
+<code><a href='outputUsage.html'>outputUsage</a>()</code>,
+<code><a href='readFromPopulationFile.html'>readFromPopulationFile</a>()</code>,
+<code><a href='recalculateFitness.html'>recalculateFitness</a>()</code>,
+<code><a href='registerEarlyEvent.html'>registerEarlyEvent</a>()</code>,
+<code><a href='registerFitnessCallback.html'>registerFitnessCallback</a>()</code>,
+<code><a href='registerInteractionCallback.html'>registerInteractionCallback</a>()</code>,
+<code><a href='registerLateEvent.html'>registerLateEvent</a>()</code>,
+<code><a href='registerMateChoiceCallback.html'>registerMateChoiceCallback</a>()</code>,
+<code><a href='registerModifyChildCallback.html'>registerModifyChildCallback</a>()</code>,
+<code><a href='registerMutationCallback.html'>registerMutationCallback</a>()</code>,
+<code><a href='registerRecombinationCallback.html'>registerRecombinationCallback</a>()</code>,
+<code><a href='registerReproductionCallback.html'>registerReproductionCallback</a>()</code>,
+<code><a href='simulationFinished.html'>simulationFinished</a>()</code>,
+<code><a href='subsetMutations.html'>subsetMutations</a>()</code>,
+<code><a href='treeSeqCoalesced.html'>treeSeqCoalesced</a>()</code>,
+<code><a href='treeSeqOutput.html'>treeSeqOutput</a>()</code>,
+<code><a href='treeSeqRememberIndividuals.html'>treeSeqRememberIndividuals</a>()</code>,
+<code><a href='treeSeqSimplify.html'>treeSeqSimplify</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

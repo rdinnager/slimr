@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>removeMutations</code>, which is a method of the
-SLiM class <code>Genome</code>.
+SLiM class <code><a href='Genome.html'>Genome</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -182,27 +185,29 @@ The default value is <code>F</code>. See details for description.</p></td>
     <p>An object of type void.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Remove the mutations in mutations from the target genome(s), if they
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=539'>SLiM manual: page 539</a>.</p>
+<p>Remove the mutations in mutations from the target genome(s), if they
 are present (if they are not present, they will be ignored). If NULL is passed
 for mutations (which is the default), then all mutations will be removed from
 the target genomes; in this case, substitute must be F (a specific vector of
 mutations to be substituted is required). Note that the Mutation objects removed
-remain valid, and will still be in the simulation’s mutation registry (i.e.
-will be returned by SLiMSim’s mutations property), until the next generation.
+remain valid, and will still be in the simulation's mutation registry (i.e.
+will be returned by SLiMSim's mutations property), until the next generation.
 Changing this will normally affect the fitness values calculated at the end
 of the current generation; if you want current fitness values to be affected,
-you can call SLiMSim’s method recalculateFitness() – but see the documentation
+you can call SLiMSim's method recalculateFitness() - but see the documentation
 of that method for caveats. The optional parameter substitute was added in
 SLiM 2.2, with a default of F for backward compatibility. If substitute is
 T, Substitution objects will be created for all of the removed mutations so
 that they are recorded in the simulation as having fixed, just as if they
-had reached fixation and been removed by SLiM’s own internal machinery. This
+had reached fixation and been removed by SLiM's own internal machinery. This
 will occur regardless of whether the mutations have in fact fixed, regardless
 of the convertToSubstitution property of the relevant mutation types, and
 regardless of whether all copies of the mutations have even been removed
 from the simulation (making it possible to create Substitution objects for
 mutations that are still segregating). It is up to the caller to perform
-whatever checks are necessary to preserve the integrity of the simulation’s
+whatever checks are necessary to preserve the integrity of the simulation's
 records. Typically substitute will only be set to T in the context of calls like
 sim.subpopulations.genomes.removeMutations(muts, T), such that the substituted
 mutations are guaranteed to be entirely removed from circulation. As mentioned
@@ -215,9 +220,30 @@ above, substitute may not be T if mutations is NULL.</p>
 reproduced from the official manual,
 which can be found here: <a href='http://benhaller.com/slim/SLiM_Manual.pdf'>http://benhaller.com/slim/SLiM_Manual.pdf</a>. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Genome: 
+<code><a href='Genome.html'>Genome</a></code>,
+<code><a href='addMutations.html'>addMutations</a>()</code>,
+<code><a href='addNewDrawnMutation.html'>addNewDrawnMutation</a>()</code>,
+<code><a href='addNewMutation.html'>addNewMutation</a>()</code>,
+<code><a href='containsMarkerMutation.html'>containsMarkerMutation</a>()</code>,
+<code><a href='containsMutations.html'>containsMutations</a>()</code>,
+<code><a href='countOfMutationsOfType.html'>countOfMutationsOfType</a>()</code>,
+<code><a href='mutationCountsInGenomes.html'>mutationCountsInGenomes</a>()</code>,
+<code><a href='mutationFrequenciesInGenomes.html'>mutationFrequenciesInGenomes</a>()</code>,
+<code><a href='mutationsOfType.html'>mutationsOfType</a>()</code>,
+<code><a href='nucleotides.html'>nucleotides</a>()</code>,
+<code><a href='outputMS.html'>outputMS</a>()</code>,
+<code><a href='outputVCF.html'>outputVCF</a>()</code>,
+<code><a href='output.html'>output</a>()</code>,
+<code><a href='positionsOfMutationsOfType.html'>positionsOfMutationsOfType</a>()</code>,
+<code><a href='readFromMS.html'>readFromMS</a>()</code>,
+<code><a href='readFromVCF.html'>readFromVCF</a>()</code>,
+<code><a href='sumOfMutationsOfType.html'>sumOfMutationsOfType</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

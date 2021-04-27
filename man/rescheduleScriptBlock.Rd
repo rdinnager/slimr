@@ -12,8 +12,8 @@ rescheduleScriptBlock(block, start, end, generations)
 \item{block}{An object of type SLiMEidosBlock object. Must be of length 1 (a
 singleton). See details for description.}
 
-\item{start}{An object of type integer. Must be of length 1 (a singleton). See
-details for description.}
+\item{start}{An object of type null or integer. Must be of length 1 (a
+singleton). The default value is \code{NULL}. See details for description.}
 
 \item{end}{An object of type null or integer. Must be of length 1 (a singleton).
 The default value is \code{NULL}. See details for description.}
@@ -26,7 +26,7 @@ An object of type SLiMEidosBlock object.
 }
 \description{
 Documentation for SLiM function \code{rescheduleScriptBlock}, which is a method
-of the SLiM class \code{SLiMSim}.
+of the SLiM class \code{\link{SLiMSim}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -35,6 +35,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=573}{SLiM manual: page 573}.
+
 Reschedule the target script block given by block to execute in a
 specified set of generations. The first way to specify the generation set is
 with start and end parameter values; block will then execute from start to
@@ -66,13 +69,19 @@ call like sim.rescheduleScriptBlock(self, sim.generation + 10, sim.generation +
 10); made inside a given block would therefore also cause the block to execute
 every tenth generation, although this sort of self-rescheduling code is probably
 harder to read, maintain, and debug. Whichever way of specifying the generation
-set is used, the discussion in section 24.9 applies: block may continue to be
+set is used, the discussion in section 25.9 applies: block may continue to be
 executed during the current life cycle stage even after it has been rescheduled,
 unless it is made inactive using its active property, and similarly, the block
 may not execute during the current life cycle stage if it was not already
 scheduled to do so. Rescheduling script blocks during the generation and life
 cycle stage in which they are executing, or in which they are intended to
-execute, should be avoided. Note that new script blocks can also be created and
+execute, should be avoided. Also, as mentioned in section 22.7, script blocks
+which are open-ended (i.e., with no specified end generation), are not used in
+determining whether the end of the simulation has been reached (because then
+the simulation would run forever); if you reschedule a block to be open-ended,
+and to start after the end of the last closed-ended block, the rescheduled block
+will therefore not run at all (just as such a block would not run at all in
+other circumstances, too). Note that new script blocks can also be created and
 scheduled using the register...() methods of SLiMSim; by using the same source
 as a template script block, the template can be duplicated and scheduled for
 different generations. In fact, rescheduleScriptBlock() does essentially that
@@ -84,12 +93,46 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other SLiMSim: 
+\code{\link{SLiMSim}},
+\code{\link{addSubpopSplit}()},
+\code{\link{addSubpop}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{createLogFile}()},
+\code{\link{deregisterScriptBlock}()},
+\code{\link{mutationCounts}()},
+\code{\link{mutationFrequencies}()},
+\code{\link{mutationsOfType}()},
+\code{\link{outputFixedMutations}()},
+\code{\link{outputFull}()},
+\code{\link{outputMutations}()},
+\code{\link{outputUsage}()},
+\code{\link{readFromPopulationFile}()},
+\code{\link{recalculateFitness}()},
+\code{\link{registerEarlyEvent}()},
+\code{\link{registerFitnessCallback}()},
+\code{\link{registerInteractionCallback}()},
+\code{\link{registerLateEvent}()},
+\code{\link{registerMateChoiceCallback}()},
+\code{\link{registerModifyChildCallback}()},
+\code{\link{registerMutationCallback}()},
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{simulationFinished}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqOutput}()},
+\code{\link{treeSeqRememberIndividuals}()},
+\code{\link{treeSeqSimplify}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{SLiMSim}

@@ -20,7 +20,7 @@ An object of type void.
 }
 \description{
 Documentation for SLiM function \code{evaluate}, which is a method of the SLiM
-class \code{InteractionType}.
+class \code{\link{InteractionType}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -29,6 +29,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=550}{SLiM manual: page 550}.
+
 Triggers evaluation of the interaction for the subpopulations specified
 by subpops (or for all subpopulations, if subpops is NULL). By default, the
 effects of this may be limited, however, since the underlying implementation may
@@ -43,7 +46,7 @@ advanced by one, so be careful with the generation ranges used in defining
 such callbacks). If T is passed for immediate, the interaction will immediately
 and synchronously evaluate all interactions between all individuals in the
 subpopulation(s), calling any applicable interaction() callbacks as necessary
-– if the interaction is spatial (see below). However, depending upon what
+- if the interaction is spatial (see below). However, depending upon what
 queries are later executed, this may represent considerable wasted computation.
 Immediate evaluation usually generates only a slight performance improvement
 even if the interactions between all pairs of individuals are eventually
@@ -58,12 +61,12 @@ any relevant changes have been made to the population. SLiM will invalidate any
 existing interactions after any portion of the generation cycle in which new
 individuals have been born or existing individuals have died. In a WF model,
 these events occur just before late() events execute (see the WF generation
-cycle diagram in chapter 21), so late() events are often the appropriate place
+cycle diagram in chapter 22), so late() events are often the appropriate place
 to put evaluate() calls, but early() events can work too if the interaction is
 not needed until that point in the generation cycle anyway. In nonWF models,
 on the other hand, new offspring are produced just before early() events
 and then individuals die just before late() events (see the nonWF generation
-cycle diagram in chapter 22), so interactions will be invalidated twice during
+cycle diagram in chapter 23), so interactions will be invalidated twice during
 each generation cycle. This means that in a nonWF model, an interaction that
 influences reproduction should usually be evaluated in a late() event, while an
 interaction that influences fitness or mortality should usually be evaluated in
@@ -80,12 +83,29 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other InteractionType: 
+\code{\link{InteractionType}},
+\code{\link{distanceToPoint}()},
+\code{\link{distance}()},
+\code{\link{drawByStrength}()},
+\code{\link{interactingNeighborCount}()},
+\code{\link{interactionDistance}()},
+\code{\link{nearestInteractingNeighbors}()},
+\code{\link{nearestNeighborsOfPoint}()},
+\code{\link{nearestNeighbors}()},
+\code{\link{setInteractionFunction}()},
+\code{\link{strength}()},
+\code{\link{totalOfNeighborStrengths}()},
+\code{\link{unevaluate}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{InteractionType}

@@ -1,15 +1,44 @@
-(string)codonsToAminoAcids(integer codons, [logical$ long = F],
-[logical$ paste = T])
+(is)codonsToAminoAcids(integer codons, [li$ long = F], [logical$ paste = T])
 Returns the amino acid sequence corresponding to the codon sequence in codons. Codons should be
 represented with values in [0, 63] where AAA is 0, AAC is 1, AAG is 2, and TTT is 63; see
 ancestralNucleotides() for discussion of this encoding. If long is F (the default), the standard
 single-letter codes for amino acids will be used (where Serine is "S", etc.); if long is T, the standard
-three-letter codes will be used instead (where Serine is "Ser", etc.).
-When paste is T (the default), the amino acid sequence returned will be a singleton string, such as
-"LYATI" (when long is F) or "Leu-Tyr-Ala-Thr-Ile" (when long is T). When paste is F, the
-amino acid sequence will instead be returned as a string vector, with one element per amino acid,
-such as "L" "Y" "A" "T" "I" (when long is F) or "Leu" "Tyr" "Ala" "Thr" "Ile" (when long
-is T). Using the paste=T option is considerably faster than using paste() in script.
+three-letter codes will be used instead (where Serine is "Ser", etc.). Beginning in SLiM 3.5, if long is
+0, integer codes will be used as follows (and paste will be ignored):
+stop (TAA, TAG, TGA) 0
+Alanine 1
+Arginine 2
+Asparagine 3
+Aspartic acid (Aspartate) 4
+Cysteine 5
+Glutamine 6
+Glutamic acid (Glutamate) 7
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 589
+Glycine 8
+Histidine 9
+Isoleucine 10
+Leucine 11
+Lysine 12
+Methionine 13
+Phenylalanine 14
+Proline 15
+Serine 16
+Threonine 17
+Tryptophan 18
+Tyrosine 19
+Valine 20
+There does not seem to be a widely used standard for integer coding of amino acids, so SLiM just
+numbers them alphabetically, making stop codons 0. If you want a different coding, you can make
+your own 64-element vector and use it to convert codons to whatever integer codes you need. Other
+integer values of long are reserved for future use (to support other codings), and will currently
+produce an error.
+When long is T or F and paste is T (the default), the amino acid sequence returned will be a
+singleton string, such as "LYATI" (when long is F) or "Leu-Tyr-Ala-Thr-Ile" (when long is T).
+When long is T or F and paste is F, the amino acid sequence will instead be returned as a string
+vector, with one element per amino acid, such as "L" "Y" "A" "T" "I" (when long is F) or "Leu"
+"Tyr" "Ala" "Thr" "Ile" (when long is T). Using the paste=T option is considerably faster than
+using paste() in script.
 This function interprets the supplied codon sequence as the sense strand (i.e., the strand that is not
 transcribed, and which mirrors the mRNA’s sequence). This uses the standard DNA codon table
 directly. For example, if the nucleotide sequence is CAA TTC, that will correspond to a codon vector
@@ -29,19 +58,15 @@ central nucleotide of the trinucleotide, and will be taken from the correspondin
 nucleotide in mutationMatrix16. This function can be used to easily construct a simple
 trinucleotide-based mutation matrix which can then be modified so that specific trinucleotides sustain
 a mutation rate that does not depend only upon their central nucleotide.
-See the documentation for initializeGenomicElementType() in section 23.1 for further discussion
+See the documentation for initializeGenomicElementType() in section 24.1 for further discussion
 of how these 64×4 mutation matrices are interpreted and used.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 590
 (float)mmJukesCantor(float$ alpha)
 Returns a mutation matrix representing a Jukes–Cantor (1969) model with mutation rate alpha to each
 possible alternative nucleotide at a site:
 This 2×2 matrix is suitable for use with initializeGenomicElementType(). Note that the actual
 mutation rate produced by this matrix is 3*alpha.
-0 α α α
-α 0 α α
-α α 0 α
-α α α 0
-TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 531
 (float)mmKimura(float$ alpha, float$ beta)
 Returns a mutation matrix representing a Kimura (1980) model with transition rate alpha and
 transversion rate beta:
@@ -75,6 +100,16 @@ A=0, C=1, G=2, T=3. If the choice of format is not driven by other consideration
 manipulation, then the singleton string format will certainly be the most memory-efficient for long
 sequences, and will probably also be the fastest. The nucleotide sequence provided must be a
 multiple of three in length, so that it translates to an integral number of codons.
+0 α α α
+α 0 α α
+α α 0 α
+α α α 0
+0 β α β
+β 0 β α
+α β 0 β
+β α β 0
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 591
 (is)randomNucleotides(integer$ length, [Nif basis = NULL],
 [string$ format = "string"])
 Generates a new random nucleotide sequence with length bases. The four nucleotides ACGT are
@@ -86,12 +121,6 @@ from files on disk.
 The format parameter controls the format of the returned sequence. It may be "string" to obtain
 the generated sequence as a singleton string (e.g., "TATA"), "char" to obtain it as a string vector
 of single characters (e.g., "T", "A", "T", "A"), or "integer" to obtain it as an integer vector (e.g., 3,
-0 β α β
-β 0 β α
-α β 0 β
-β α β 0
-TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 532
 0, 3, 0), using SLiM’s standard code of A=0, C=1, G=2, T=3. For passing directly to
 initializeAncestralNucleotides(), format "string" (a singleton string) will certainly be the
 most memory-efficient, and probably also the fastest. Memory efficiency can be a significant
@@ -99,3 +128,105 @@ consideration; the nucleotide sequence for a chromosome of length 109 will occup
 GB of memory when stored as a singleton string (with one byte per nucleotide), and much more if
 stored in the other formats. However, the other formats can be easier to work with in Eidos, and so
 may be preferable for relatively short chromosomes if you are manipulating the generated sequence.
+(float$)calcFST(object<Genome> genomes1, object<Genome> genomes2,
+[No<Mutation> muts = NULL], [Ni$ start = NULL], [Ni$ end = NULL])
+Calculates the FST between two Genome vectors – typically, but not necessarily, the genomes that
+constitute two different subpopulations (which we will assume for the purposes of this discussion). In
+general, higher FST indicates greater genetic divergence between subpopulations.
+The calculation is done using only the mutations in muts; if muts is NULL, all mutations are used. The
+muts parameter can therefore be used to calculate the FST only for a particular mutation type (by
+passing only mutations of that type).
+The calculation can be narrowed to apply to only a window – a subrange of the full chromosome – by
+passing the interval bounds [start, end] for the desired window. In this case, the vector of mutations
+used for the calculation will be subset to include only mutations within the specified window. The
+default behavior, with start and end of NULL, provides the genome-wide FST, which is often used to
+assess the overall level of genetic divergence between sister species or allopatric subpopulations.
+The code for calcFST() is just an Eidos implementation of Wright’s definition of FST:
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 592
+where is the average heterozygosity in the two subpopulations, and is the total heterozygosity
+when both subpopulations are combined. In this implementation, the two genome vectors are
+weighted equally, not weighted by their size.
+The implementation of calcFST(), viewable with functionSource(), treats every mutation in muts
+as independent in the heterozygosity calculations. If mutations are stacked, the heterozygosity
+calculated is by mutation, not by site. Similarly, if multiple Mutation objects exist in different
+genomes at the same site (whether representing different genetic states, or multiple mutational
+lineages for the same genetic state), each Mutation object is treated separately for purposes of the
+heterozygosity calculation, just as if they were at different sites. One could regard these choices as
+embodying an infinite-sites interpretation of the segregating mutations. In most biologically realistic
+models, such genetic states will be quite rare, and so the impact of these choices will be negligible;
+however, in some models these distinctions may be important.
+It is also worth noting that mutations that are at a frequency of 0.0 or 1.0 across the two
+subpopulations are excluded from the calculation, because for such mutations is zero and the
+result is therefore undefined.
+(float$)calcHeterozygosity(object<Genome> genomes, [No<Mutation> muts = NULL],
+[Ni$ start = NULL], [Ni$ end = NULL])
+Calculates the heterozygosity for a vector of genomes, based upon the frequencies of mutations in the
+genomes. Often genomes will be all of the genomes in a subpopulation, or in the entire population,
+but any genome vector may be used. By default, with muts=NULL, the calculation is based upon all
+mutations in the simulation; the calculation can instead be based upon a subset of mutations, such as
+mutations of a specific mutation type, by passing the desired vector of mutations for muts.
+The calculation can be narrowed to apply to only a window – a subrange of the full chromosome – by
+passing the interval bounds [start, end] for the desired window. In this case, the vector of mutations
+used for the calculation will be subset to include only mutations within the specified window. The
+default behavior, with start and end of NULL, provides the genome-wide heterozygosity.
+The implementation of calcHeterozygosity(), viewable with functionSource(), treats every
+mutation as independent in the heterozygosity calculations. One could regard this choice as
+embodying an infinite-sites interpretation of the segregating mutations. In most biologically realistic
+models, such genetic states will be quite rare, and so the impact of this choice will be negligible;
+however, in some models this distinction may be important. See calcPairHeterozygosity() for
+further discussion.
+(float$)calcPairHeterozygosity(object<Genome>$ genome1, object<Genome>$ genome2,
+[Ni$ start = NULL], [Ni$ end = NULL], [logical$ infiniteSites = T])
+Calculates the heterozygosity for a pair of genomes; these will typically be the two genomes of a
+diploid individual (individual.genome1 and individual.genome2), but any two genomes may be
+supplied.
+The calculation can be narrowed to apply to only a window – a subrange of the full chromosome – by
+passing the interval bounds [start, end] for the desired window. In this case, the vector of mutations
+used for the calculation will be subset to include only mutations within the specified window. The
+default behavior, with start and end of NULL, provides the genome-wide heterozygosity.
+The implementation calcPairHeterozygosity(), viewable with functionSource(), treats every
+mutation as independent in the heterozygosity calculations by default (i.e., with infiniteSites=T).
+If mutations are stacked, the heterozygosity calculated therefore depends upon the number of
+unshared mutations, not the number of differing sites. Similarly, if multiple Mutation objects exist in
+different genomes at the same site (whether representing different genetic states, or multiple
+mutational lineages for the same genetic state), each Mutation object is treated separately for
+purposes of the heterozygosity calculation, just as if they were at different sites. One could regard
+FST = 1 −
+HS
+HT
+HS HT
+HT
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 593
+these choices as embodying an infinite-sites interpretation of the segregating mutations. In most
+biologically realistic models, such genetic states will be quite rare, and so the impact of this choice
+will be negligible; however, in some models this distinction may be important. The behavior of
+calcPairHeterozygosity() can be switched to calculate based upon the number of differing sites,
+rather than the number of unshared mutations, by passing infiniteSites=F.
+(float$)calcVA(object<Individual> individuals, object<MutationType>$ mutType)
+Calculates VA, the additive genetic variance, among a vector individuals, in a particular mutation
+type mutType that represents quantitative trait loci (QTLs) influencing a quantitative phenotypic trait.
+This function assumes that mutations of type mutType encode their effect size upon the quantitative
+trait in their selectionCoeff property, as is fairly standard in SLiM (see, e.g., section 13.2). The
+implementation of calcVA(), which is viewable with functionSource(), is quite simple; if effect
+sizes are stored elsewhere (such as with setValue(), as in section 13.5), a new user-defined function
+following the pattern of calcVA() can easily be written.
+(float$)calcWattersonsTheta(object<Genome> genomes, [No<Mutation> muts = NULL],
+[Ni$ start = NULL], [Ni$ end = NULL])
+Calculates Watterson’s theta (a metric of genetic diversity comparable to heterozygosity) for a vector of
+genomes, based upon the mutations in the genomes. Often genomes will be all of the genomes in a
+subpopulation, or in the entire population, but any genome vector may be used. By default, with
+muts=NULL, the calculation is based upon all mutations in the simulation; the calculation can instead
+be based upon a subset of mutations, such as mutations of a specific mutation type, by passing the
+desired vector of mutations for muts.
+The calculation can be narrowed to apply to only a window – a subrange of the full chromosome – by
+passing the interval bounds [start, end] for the desired window. In this case, the vector of mutations
+used for the calculation will be subset to include only mutations within the specified window. The
+default behavior, with start and end of NULL, provides the genome-wide Watterson’s theta.
+The implementation of calcWattersonsTheta(), viewable with functionSource(), treats every
+mutation as independent in the heterozygosity calculations. One could regard this choice as
+embodying an infinite-sites interpretation of the segregating mutations, as with
+calcHeterozygosity(). In most biologically realistic models, such genetic states will be quite rare,
+and so the impact of this assumption will be negligible; however, in some models this distinction may
+be important. See calcPairHeterozygosity() for further discussion.

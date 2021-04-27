@@ -108,10 +108,13 @@
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -190,7 +193,7 @@
          <span class='op'>}</span><span class='op'>)</span>
 <span class='op'>)</span> <span class='op'>-&gt;</span> <span class='va'>script</span>
 <span class='fu'>reconstruct</span><span class='op'>(</span><span class='va'>script</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "slim_script(\n\n    slim_block(initialize(),  {\n        .Init$initializeMutationRate(1e-07)\n        .Init$initializeMutationType(\"m1\", 0.5, \"f\", 0)\n        .Init$initializeGenomicElementType(\"g1\", m1, 1)\n        .Init$initializeGenomicElement(g1, 0, 99999)\n        .Init$initializeRecombinationRate(1e-08)\n    }),\n\n    slim_block(1, early(),  {\n        sim %.% .SS$addSubpop(\"p1\", 500)\n    }),\n\n    slim_block(10000, early(),  {\n        sim %.% .SS$simulationFinished()\n    })\n)"</div></pre>
+</div><div class='output co'>#&gt; [1] "slim_script(\n\n    slim_block(initialize(),  {\n        .Init.initializeMutationRate(1e-07)\n        .Init.initializeMutationType(\"m1\", 0.5, \"f\", 0)\n        .Init.initializeGenomicElementType(\"g1\", m1, 1)\n        .Init.initializeGenomicElement(g1, 0, 99999)\n        .Init.initializeRecombinationRate(1e-08)\n    }),\n\n    slim_block(1, early(),  {\n        sim %.% .SS.addSubpop(\"p1\", 500)\n    }),\n\n    slim_block(10000, early(),  {\n        sim %.% .SS.simulationFinished()\n    })\n)"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -1,7 +1,7 @@
 #' Create a templated variable
 #'
 #' Create a templated variable inside a SLiM script. This function can be used directly inside a \code{slim_block} function call,
-#' to generate a placemarker that can be replaced with different values dynamically using \code{\link{slimr_script_render}}.
+#' to generate a placemarker that can be replaced with different values dynamically using \code{\link{slim_script_render}}.
 #'
 #' @param var_name Name to use as a placemarker for the variable. This name will be used for replacing values later.
 #' @param default A default value to be inserted during script rendering if a value is not otherwise provided.

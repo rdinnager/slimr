@@ -111,10 +111,13 @@ used within a slim_block call" />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -188,12 +191,85 @@ as an integer saying how many generations to run before producing output.
 e.g. <code>do_every = 10</code> means to output every 10 generations of the
 simulation.</p></td>
     </tr>
+    <tr>
+      <th>send_to</th>
+      <td><p><strong>*deprecated*</strong> Where to send the output? This could be used
+to send the output to be stored in the results object ("data"), or to an external file ("file").
+This will no longer be available in future versions in favour of an option to have the results
+stored as a pointer to an external file (to save memory).</p></td>
+    </tr>
+    <tr>
+      <th>file_name</th>
+      <td><p><strong>*deprecated*</strong> The file name to save output to if <code>send_to = "file"</code></p></td>
+    </tr>
+    <tr>
+      <th>format</th>
+      <td><p><strong>*deprecated*</strong> The file format to save data if <code>send_to = "file"</code>, Only "csv" is implemented
+but there are plans to support "fst" and "disk.frame".</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>Provide a custom type to the output. Used mostly for internal purposes.</p></td>
+    </tr>
+    <tr>
+      <th>expression</th>
+      <td><p>Provide a custom expression to be included with the output.
+Used mostly for internal purposes.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An expression with the code to be run in SLiM.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='slim_script.html'>slim_script</a></span><span class='op'>(</span>
+  <span class='fu'><a href='slim_block.html'>slim_block</a></span><span class='op'>(</span><span class='fu'>initialize</span><span class='op'>(</span><span class='op'>)</span>,
+             <span class='op'>{</span>
+               <span class='fu'><a href='initializeMutationRate.html'>initializeMutationRate</a></span><span class='op'>(</span><span class='fl'>1e-7</span><span class='op'>)</span>;
+               <span class='fu'><a href='initializeMutationType.html'>initializeMutationType</a></span><span class='op'>(</span><span class='st'>"m1"</span>, <span class='fl'>0.5</span>, <span class='st'>"f"</span>, <span class='fl'>0.0</span><span class='op'>)</span>;
+               <span class='fu'><a href='initializeGenomicElementType.html'>initializeGenomicElementType</a></span><span class='op'>(</span><span class='st'>"g1"</span>, <span class='va'>m1</span>, <span class='fl'>1.0</span><span class='op'>)</span>;
+               <span class='fu'><a href='initializeGenomicElement.html'>initializeGenomicElement</a></span><span class='op'>(</span><span class='va'>g1</span>, <span class='fl'>0</span>, <span class='fl'>99999</span><span class='op'>)</span>;
+               <span class='fu'><a href='initializeRecombinationRate.html'>initializeRecombinationRate</a></span><span class='op'>(</span><span class='fl'>1e-8</span><span class='op'>)</span>;
+             <span class='op'>}</span><span class='op'>)</span>,
+  <span class='fu'><a href='slim_block.html'>slim_block</a></span><span class='op'>(</span><span class='fl'>1</span>,
+             <span class='op'>{</span>
+               <span class='fu'>sim.addSubpop</span><span class='op'>(</span><span class='st'>"p1"</span>, <span class='fl'>100</span><span class='op'>)</span>;
+             <span class='op'>}</span><span class='op'>)</span>,
+  <span class='fu'><a href='slim_block.html'>slim_block</a></span><span class='op'>(</span><span class='fl'>100</span>,
+             <span class='op'>{</span>
+               <span class='fu'>slimr_output</span><span class='op'>(</span><span class='fu'>p1.outputVCFSample</span><span class='op'>(</span>sampleSize <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>, name <span class='op'>=</span> <span class='st'>"VCF"</span><span class='op'>)</span>;
+               <span class='fu'>sim.simulationFinished</span><span class='op'>(</span><span class='op'>)</span>;
+             <span class='op'>}</span><span class='op'>)</span>
+<span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='fu'><a href='slim_run.html'>slim_run</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>-&gt;</span> <span class='va'>run_w_out</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>Simulation finished with exit status: 0</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Success!</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>run_w_out</span><span class='op'>$</span><span class='va'>output_data</span><span class='op'>$</span><span class='va'>data</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; #OUT: 100 SV p1 10
+#&gt; ##fileformat=VCFv4.2
+#&gt; ##fileDate=20210423
+#&gt; ##source=SLiM
+#&gt; ##INFO=&lt;ID=MID,Number=.,Type=Integer,Description="Mutation ID in SLiM"&gt;
+#&gt; ##INFO=&lt;ID=S,Number=.,Type=Float,Description="Selection Coefficient"&gt;
+#&gt; ##INFO=&lt;ID=DOM,Number=.,Type=Float,Description="Dominance"&gt;
+#&gt; ##INFO=&lt;ID=PO,Number=.,Type=Integer,Description="Population of Origin"&gt;
+#&gt; ##INFO=&lt;ID=GO,Number=.,Type=Integer,Description="Generation of Origin"&gt;
+#&gt; ##INFO=&lt;ID=MT,Number=.,Type=Integer,Description="Mutation Type"&gt;
+#&gt; ##INFO=&lt;ID=AC,Number=.,Type=Integer,Description="Allele Count"&gt;
+#&gt; ##INFO=&lt;ID=DP,Number=1,Type=Integer,Description="Total Depth"&gt;
+#&gt; ##INFO=&lt;ID=MULTIALLELIC,Number=0,Type=Flag,Description="Multiallelic"&gt;
+#&gt; ##FORMAT=&lt;ID=GT,Number=1,Type=String,Description="Genotype"&gt;
+#&gt; #CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	i0	i1	i2	i3	i4	i5	i6	i7	i8	i9
+#&gt; 1	10316	.	A	T	1000	PASS	MID=32;S=0;DOM=0.5;PO=1;GO=16;MT=1;AC=6;DP=1000	GT	0|1	0|0	1|1	1|1	0|0	1|0	0|0	0|0	0|0	0|0
+#&gt; 1	14848	.	A	T	1000	PASS	MID=163;S=0;DOM=0.5;PO=1;GO=86;MT=1;AC=1;DP=1000	GT	0|0	0|0	0|0	0|0	0|0	0|0	0|1	0|0	0|0	0|0
+#&gt; 1	39230	.	A	T	1000	PASS	MID=137;S=0;DOM=0.5;PO=1;GO=69;MT=1;AC=1;DP=1000	GT	0|0	0|1	0|0	0|0	0|0	0|0	0|0	0|0	0|0	0|0
+#&gt; 1	52821	.	A	T	1000	PASS	MID=136;S=0;DOM=0.5;PO=1;GO=69;MT=1;AC=1;DP=1000	GT	0|0	0|0	0|0	0|0	1|0	0|0	0|0	0|0	0|0	0|0
+#&gt; 1	61441	.	A	T	1000	PASS	MID=173;S=0;DOM=0.5;PO=1;GO=90;MT=1;AC=2;DP=1000	GT	0|0	0|0	1|0	1|0	0|0	0|0	0|0	0|0	0|0	0|0
+#&gt; 1	74645	.	A	T	1000	PASS	MID=177;S=0;DOM=0.5;PO=1;GO=92;MT=1;AC=2;DP=1000	GT	0|0	1|0	0|0	0|0	0|0	0|0	0|0	0|0	1|0	0|0
+#&gt; 1	85394	.	A	T	1000	PASS	MID=152;S=0;DOM=0.5;PO=1;GO=83;MT=1;AC=1;DP=1000	GT	0|0	0|0	0|0	0|0	0|0	0|0	0|0	1|0	0|0	0|0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

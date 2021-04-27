@@ -20,7 +20,7 @@ An object of type integer.
 }
 \description{
 Documentation for SLiM function \code{mutationCounts}, which is a method of the
-SLiM class \code{SLiMSim}.
+SLiM class \code{\link{SLiMSim}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -29,15 +29,19 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=567}{SLiM manual: page 567}.
+
 Return an integer vector with the frequency counts of all of the
 Mutation objects passed in mutations, within the Subpopulation objects in
 subpops. The subpops argument is required, but you may pass NULL to get
 population-wide frequency counts. If the optional mutations argument is NULL
 (the default), frequency counts will be returned for all of the active Mutation
-objects in the simulation – the same Mutation objects, and in the same order,
-as would be returned by the mutations property of sim, in other words. See the
--mutationFrequencies() method to obtain float frequencies instead of integer
-counts.
+objects in the simulation - the same Mutation objects, and in the same order,
+as would be returned by the mutations property of sim, in other words. See
+the -mutationFrequencies() method to obtain float frequencies instead of
+integer counts. See also the Genome methods mutationCountsInGenomes() and
+mutationFrequenciesInGenomes().
 }
 \section{Copyright}{
 
@@ -45,12 +49,46 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other SLiMSim: 
+\code{\link{SLiMSim}},
+\code{\link{addSubpopSplit}()},
+\code{\link{addSubpop}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{createLogFile}()},
+\code{\link{deregisterScriptBlock}()},
+\code{\link{mutationFrequencies}()},
+\code{\link{mutationsOfType}()},
+\code{\link{outputFixedMutations}()},
+\code{\link{outputFull}()},
+\code{\link{outputMutations}()},
+\code{\link{outputUsage}()},
+\code{\link{readFromPopulationFile}()},
+\code{\link{recalculateFitness}()},
+\code{\link{registerEarlyEvent}()},
+\code{\link{registerFitnessCallback}()},
+\code{\link{registerInteractionCallback}()},
+\code{\link{registerLateEvent}()},
+\code{\link{registerMateChoiceCallback}()},
+\code{\link{registerModifyChildCallback}()},
+\code{\link{registerMutationCallback}()},
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{rescheduleScriptBlock}()},
+\code{\link{simulationFinished}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqOutput}()},
+\code{\link{treeSeqRememberIndividuals}()},
+\code{\link{treeSeqSimplify}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{SLiMSim}

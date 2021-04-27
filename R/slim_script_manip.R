@@ -20,14 +20,6 @@ insert_generation_output <- function(slim_script, line = NULL, start_gen = 1, en
 }
 
 
-#' Title
-#'
-#' @param slim_script
-#'
-#' @return
-#' @export
-#'
-#' @examples
 slim_find_block_starting_at <- function(slim_script, start_gen) {
   block_1 <- which(slim_script$start == start_gen & slim_script$colon == "")
   if(length(block_1) == 0) {

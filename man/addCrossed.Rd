@@ -24,7 +24,7 @@ An object of type null or Individual object. Return will be of length 1
 }
 \description{
 Documentation for SLiM function \code{addCrossed}, which is a method of the SLiM
-class \code{Subpopulation}.
+class \code{\link{Subpopulation}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -33,6 +33,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=579}{SLiM manual: page 579}.
+
 Generates a new offspring individual from the given parents
 by biparental sexual reproduction, queues it for addition to the target
 subpopulation, and returns it. The new offspring will not be visible as a
@@ -45,14 +48,14 @@ offspring individual is generated from parent1 and parent2 by crossing them. In
 sexual models parent1 must be female and parent2 must be male; in hermaphroditic
 models, parent1 and parent2 are unrestricted. If parent1 and parent2 are the
 same individual in a hermaphroditic model, that parent self-fertilizes, or
-"selfs”, to generate the offspring sexually (note this is not the same as
-clonal reproduction). Such selfing is considered "incidental” by addCrossed(),
+"selfs", to generate the offspring sexually (note this is not the same as
+clonal reproduction). Such selfing is considered "incidental" by addCrossed(),
 however; if the preventIncidentalSelfing flag of initializeSLiMOptions() is
 T, supplying the same individual for parent1 and parent2 is an error (you must
 check for and prevent incidental selfing if you set that flag in a nonWF model).
 If non-incidental selfing is desired, addSelfed() should be used instead.
 The sex parameter specifies the sex of the offspring. A value of NULL means
-"make the default choice”; in non-sexual models it is the only legal value
+"make the default choice"; in non-sexual models it is the only legal value
 for sex, and does nothing, whereas in sexual models it causes male or female
 to be chosen with equal probability. A value of "M" or "F" for sex specifies
 that the offspring should be male or female, respectively. Finally, a float
@@ -73,7 +76,7 @@ spawning), however, biparental mating may occur between parents that are not
 from the same subpopulation; that is legal in nonWF models, and in that case,
 modifyChild() callbacks for the subpopulation of parent1 are used (since that
 is the maternal parent). If the modifyChild() callback process results in
-rejection of the proposed child (see section 24.4), a new offspring individual
+rejection of the proposed child (see section 25.4), a new offspring individual
 will not be generated, and this method will return NULL. To force the generation
 of an offspring individual from a given pair of parents, you could loop until
 addCrossed() succeeds, but note that if your modifyChild() callback rejects
@@ -95,12 +98,44 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other Subpopulation: 
+\code{\link{Subpopulation}},
+\code{\link{addCloned}()},
+\code{\link{addEmpty}()},
+\code{\link{addRecombinant}()},
+\code{\link{addSelfed}()},
+\code{\link{cachedFitness}()},
+\code{\link{configureDisplay}()},
+\code{\link{defineSpatialMap}()},
+\code{\link{outputMSSample}()},
+\code{\link{outputSample}()},
+\code{\link{outputVCFSample}()},
+\code{\link{pointInBounds}()},
+\code{\link{pointPeriodic}()},
+\code{\link{pointReflected}()},
+\code{\link{pointStopped}()},
+\code{\link{pointUniform}()},
+\code{\link{removeSubpopulation}()},
+\code{\link{sampleIndividuals}()},
+\code{\link{setCloningRate}()},
+\code{\link{setMigrationRates}()},
+\code{\link{setSelfingRate}()},
+\code{\link{setSexRatio}()},
+\code{\link{setSpatialBounds}()},
+\code{\link{setSubpopulationSize}()},
+\code{\link{spatialMapColor}()},
+\code{\link{spatialMapValue}()},
+\code{\link{subsetIndividuals}()},
+\code{\link{takeMigrants}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Subpopulation}

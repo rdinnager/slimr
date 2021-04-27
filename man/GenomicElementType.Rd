@@ -6,7 +6,7 @@
 \alias{.GET}
 \title{GenomicElementType}
 \format{
-An object of class \code{list} of length 10.
+An object of class \code{list} of length 8.
 }
 \usage{
 GenomicElementType
@@ -15,12 +15,17 @@ GenomicElementType
 Documentation for GenomicElementType class from SLiM
 }
 \details{
+This class represents a type of genomic element, with particular
+mutation types. The genomic
+element types currently defined in the simulation are defined as global
+constants with the same
+names used in the SLiM input file - g1, g2, and so forth. Section 1.5.4 presents
+an overview of the
+conceptual role of this class.
 This class has the following methods (functions):
 \itemize{
-\item{\code{\link{getValue}}}
 \item{\code{\link{setMutationFractions}}}
 \item{\code{\link{setMutationMatrix}}}
-\item{\code{\link{setValue}}}
 }
 This class has the following properties:
 \describe{
@@ -29,7 +34,7 @@ property is a variable, so it is modifiable. \strong{Property Description:}
 The color used to display genomic elements of this type in SLiMgui. Outside
 of SLiMgui, this property still exists, but is not used by SLiM. Colors may be
 specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see the
-Eidos manual). If color is the empty string, "", SLiMgui’s default color scheme
+Eidos manual). If color is the empty string, "", SLiMgui's default color scheme
 is used; this is the default for new GenomicElementType objects. }
 \item{id}{A property of type integer. It is of length one (a singleton). This
 property is a constant, so it is not modifiable. \strong{Property Description:}
@@ -53,9 +58,16 @@ A user-defined integer value. The value of tag is initially undefined, and
 it is an error to try to read it; if you wish it to have a defined value, you
 must arrange that yourself by explicitly setting its value prior to using it
 elsewhere in your code. The value of tag is not used by SLiM; it is free for
-you to use. See also the getValue() and setValue() methods, for another way of
-attaching state to genomic element types.}
+you to use. See also the getValue() and setValue() methods (provided by the
+Dictionary class; see the Eidos manual), for another way of attaching state to
+genomic element types.}
 
 }
 }
+\seealso{
+Other GenomicElementType: 
+\code{\link{setMutationFractions}()},
+\code{\link{setMutationMatrix}()}
+}
+\concept{GenomicElementType}
 \keyword{datasets}

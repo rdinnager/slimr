@@ -26,7 +26,7 @@ singleton)
 }
 \description{
 Documentation for SLiM function \code{initializeMutationType}, which is a method
-of the SLiM class \code{Initialize}.
+of the SLiM class \code{\link{Initialize}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -35,6 +35,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=521}{SLiM manual: page 521}.
+
 Add a mutation type at initialization time. The id must not already
 be used for any mutation type in the simulation. The id parameter may be
 either an integer giving the ID of the new mutation type, or a string giving
@@ -51,19 +54,19 @@ mean selection coefficient and a numeric$ sigma (standard deviation) parameter
 for a normal distribution; "w", in which case the ellipsis should supply a
 numeric$ λ scale parameter and a numeric$ k shape parameter for a Weibull
 distribution; or "s", in which case the ellipsis should supply a string$ Eidos
-script parameter. See section 23.9 for discussion of the various DFEs and their
+script parameter. See section 24.10 for discussion of the various DFEs and their
 uses. The global symbol for the new mutation type is immediately available; the
 return value also provides the new object. Note that by default in WF models,
 all mutations of a given mutation type will be converted into Substitution
 objects when they reach fixation, for efficiency reasons. If you need to disable
 this conversion, to keep mutations of a given type active in the simulation
 even after they have fixed, you can do so by setting the convertToSubstitution
-property of MutationType to T. In contrast, by default in nonWF models mutations
+property of MutationType to F. In contrast, by default in nonWF models mutations
 will not be converted into Substitution objects when they reach fixation;
 convertToSubstitution is F by default in nonWF models. To enable conversion in
 nonWF models for neutral mutation types with no indirect fitness effects, you
-should therefore set convertToSubstitution to T. See sections 21.3, 22.5, and
-23.9.1 for further discussion regarding the convertToSubstitution property.
+should therefore set convertToSubstitution to T. See sections 22.3, 23.5, and
+24.10.1 for further discussion regarding the convertToSubstitution property.
 }
 \section{Copyright}{
 
@@ -71,12 +74,30 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other Initialize: 
+\code{\link{Initialize}},
+\code{\link{initializeAncestralNucleotides}()},
+\code{\link{initializeGeneConversion}()},
+\code{\link{initializeGenomicElementType}()},
+\code{\link{initializeGenomicElement}()},
+\code{\link{initializeHotspotMap}()},
+\code{\link{initializeInteractionType}()},
+\code{\link{initializeMutationRate}()},
+\code{\link{initializeMutationTypeNuc}()},
+\code{\link{initializeRecombinationRate}()},
+\code{\link{initializeSLiMModelType}()},
+\code{\link{initializeSLiMOptions}()},
+\code{\link{initializeSex}()},
+\code{\link{initializeTreeSeq}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Initialize}

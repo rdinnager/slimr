@@ -213,19 +213,19 @@ script_temp
 
 ```
 
-The first argument to `slimr_template` provides a name for the variable that will later be used to label values for replacement. The second argument provides a default value. Anytime this script is used without providing values for the templated variables, the default values will be used. This argument is optional, and if not provided, an error will be thrown if any variables have no values provided when later using this script. The above printed script shows that it is templated by printing a message describing the details below it, as well as inserting the templated variables in the script with green `..x..`, where `x` is the name of the variable. Replacing values is now as simple as running `slimr_script_render`.
+The first argument to `slimr_template` provides a name for the variable that will later be used to label values for replacement. The second argument provides a default value. Anytime this script is used without providing values for the templated variables, the default values will be used. This argument is optional, and if not provided, an error will be thrown if any variables have no values provided when later using this script. The above printed script shows that it is templated by printing a message describing the details below it, as well as inserting the templated variables in the script with green `..x..`, where `x` is the name of the variable. Replacing values is now as simple as running `slim_script_render`.
 
 ```{r script_render}
-single_script <- slimr_script_render(script_temp, 
+single_script <- slim_script_render(script_temp, 
                                      template = list(mut_rate = 1e-6, genome_size = 1999))
 
 single_script
 ```
 
-So we can see that we now have a `slimr_script` object where our templated variables have been replaced! `slimr_script_render` can also render multiple different values for the templated variables at the same time. To do this we can just pass in a list of lists (or a data.frame), where each element at the top level has a different set of values, and `slimr_script_render` will return a `slimr_script_coll` object, which stands for a slimr script collection. Let's try it.
+So we can see that we now have a `slimr_script` object where our templated variables have been replaced! `slim_script_render` can also render multiple different values for the templated variables at the same time. To do this we can just pass in a list of lists (or a data.frame), where each element at the top level has a different set of values, and `slim_script_render` will return a `slimr_script_coll` object, which stands for a slimr script collection. Let's try it.
 
 ```{r slimr_script_coll_template}
-multi_script <- slimr_script_render(script_temp,
+multi_script <- slim_script_render(script_temp,
                                     template = list(
                                         list(mut_rate = 1e-5, genome_size = 1999),
                                         list(mut_rate = 1e-6, genome_size = 2999),
@@ -235,10 +235,10 @@ multi_script <- slimr_script_render(script_temp,
 multi_script
 ```
 
-To save typing you can also just include `..x..` specifications in the SLiM code and this will be recognized as a templated variable. The disadvantage of this though is that you cannot specify a default value, which can be pretty handy. Default values are useful if, for example, you want to prototype a templated script, the default values can serve as "test" values that will be filled in automatically every time you want to test the script. Another potential use is so that you only have to specify some of your variables in your call to `slimr_script_render`, in which case, anything you don't specify will take their default values. Additionally `slimr_script_render` has an argument that allows you to use the default values in the case of a missing value in the data you supply (such as in the data.frame style specification). Let's look at an example of both of these scenarios.
+To save typing you can also just include `..x..` specifications in the SLiM code and this will be recognized as a templated variable. The disadvantage of this though is that you cannot specify a default value, which can be pretty handy. Default values are useful if, for example, you want to prototype a templated script, the default values can serve as "test" values that will be filled in automatically every time you want to test the script. Another potential use is so that you only have to specify some of your variables in your call to `slim_script_render`, in which case, anything you don't specify will take their default values. Additionally `slim_script_render` has an argument that allows you to use the default values in the case of a missing value in the data you supply (such as in the data.frame style specification). Let's look at an example of both of these scenarios.
 
 ```{r default_interp}
-script_partial <- slimr_script_render(script_temp,
+script_partial <- slim_script_render(script_temp,
                                     template = list(
                                         list(mut_rate = 1e-5),
                                         list(genome_size = 2999)
@@ -251,7 +251,7 @@ Warnings are generated to help prevent unexpected behaviour. For example if you 
 
 ```{r data_frame_example_1}
 
-script_temp_df <- slimr_script_render(script_temp,
+script_temp_df <- slim_script_render(script_temp,
                                       template = data.frame(
                                         mut_rate = c(1e-5, NA, 1e-6, 1e-7),
                                         genome_size = c(2000, 3000, NA, 5000)
@@ -266,7 +266,7 @@ So in this case the default settings are to not replace NAs, because in some cas
 
 ```{r data_frame_example_2}
 
-script_temp_df2 <- slimr_script_render(script_temp,
+script_temp_df2 <- slim_script_render(script_temp,
                                       template = data.frame(
                                         mut_rate = c(1e-5, NA, 1e-6, 1e-7),
                                         genome_size = c(2000, 3000, NA, 5000)
@@ -328,7 +328,7 @@ If we try and replace the Subpopulation now, we will get invalid SLiM code:
 
 ```{r test_unquote_false, error=TRUE}
 
-slimr_script_render(script_q, template = dplyr::tibble(subpop = c("p1", "p2")))
+slim_script_render(script_q, template = dplyr::tibble(subpop = c("p1", "p2")))
 
 ```
 
@@ -363,7 +363,7 @@ slim_script(
              })
 ) -> script_uq
 
-slimr_script_render(script_uq, template = dplyr::tibble(subpop = c("p1", "p2")))
+slim_script_render(script_uq, template = dplyr::tibble(subpop = c("p1", "p2")))
 
 ```
 

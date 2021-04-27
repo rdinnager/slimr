@@ -1,0 +1,4 @@
+This class represents one subpopulation in the simulated population. Section 1.5.5 presents an
+overview of the conceptual role of this class. The subpopulations currently defined in the
+simulation are defined as global constants with the same names used in the SLiM input file – p1,
+p2, and so forth.

@@ -17,7 +17,7 @@ An object of type void.
 }
 \description{
 Documentation for SLiM function \code{recalculateFitness}, which is a method of
-the SLiM class \code{SLiMSim}.
+the SLiM class \code{\link{SLiMSim}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -26,6 +26,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=571}{SLiM manual: page 571}.
+
 Force an immediate recalculation of fitness values for all individuals
 in all subpopulations. Normally fitness values are calculated at a fixed
 point in each generation, and those values are cached and used throughout the
@@ -35,7 +38,7 @@ immediately rather than taking effect at the end of the current generation,
 you may call recalculateFitness() to force an immediate recalculation and
 recache. The optional parameter generation provides the generation for which
 fitness() callbacks should be selected; if it is NULL (the default), the
-simulation’s current generation value, sim.generation, is used. If you call
+simulation's current generation value, sim.generation, is used. If you call
 recalculateFitness() in an early() event in a WF model, you may wish this
 to be sim.generation - 1 in order to utilize the fitness() callbacks for the
 previous generation, as if the changes that you have made to fitness-influencing
@@ -62,12 +65,46 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other SLiMSim: 
+\code{\link{SLiMSim}},
+\code{\link{addSubpopSplit}()},
+\code{\link{addSubpop}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{createLogFile}()},
+\code{\link{deregisterScriptBlock}()},
+\code{\link{mutationCounts}()},
+\code{\link{mutationFrequencies}()},
+\code{\link{mutationsOfType}()},
+\code{\link{outputFixedMutations}()},
+\code{\link{outputFull}()},
+\code{\link{outputMutations}()},
+\code{\link{outputUsage}()},
+\code{\link{readFromPopulationFile}()},
+\code{\link{registerEarlyEvent}()},
+\code{\link{registerFitnessCallback}()},
+\code{\link{registerInteractionCallback}()},
+\code{\link{registerLateEvent}()},
+\code{\link{registerMateChoiceCallback}()},
+\code{\link{registerModifyChildCallback}()},
+\code{\link{registerMutationCallback}()},
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{rescheduleScriptBlock}()},
+\code{\link{simulationFinished}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqOutput}()},
+\code{\link{treeSeqRememberIndividuals}()},
+\code{\link{treeSeqSimplify}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{SLiMSim}

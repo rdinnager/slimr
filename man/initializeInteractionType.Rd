@@ -36,7 +36,7 @@ singleton)
 }
 \description{
 Documentation for SLiM function \code{initializeInteractionType}, which is a
-method of the SLiM class \code{Initialize}.
+method of the SLiM class \code{\link{Initialize}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -45,6 +45,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=519}{SLiM manual: page 519}.
+
 Add an interaction type at initialization time. The id must not
 already be used for any interaction type in the simulation. The id parameter
 may be either an integer giving the ID of the new interaction type, or a string
@@ -66,7 +69,7 @@ to reduce the amount of computation necessary by up to a factor of two. If
 reciprocal is F, the interaction is not guaranteed to be reciprocal and each
 interaction will be computed independently. The built-in interaction formulas
 are all reciprocal, but if you implement an interaction() callback (see section
-24.6), you must consider whether the callback you have implemented preserves
+25.6), you must consider whether the callback you have implemented preserves
 reciprocality or not. For this reason, the default is reciprocal=F, so that
 bugs are not inadvertently introduced by an invalid assumption of reciprocality.
 See below for a note regarding reciprocality in sexual simulations when using
@@ -109,7 +112,7 @@ guaranteed to be the same in both directions? By default, the interaction
 strength is 1.0 for all interactions within maxDistance. Often it is desirable
 to change the interaction function using setInteractionFunction(); modifying
 interaction strengths can also be achieved with interaction() callbacks if
-necessary (see section 24.6). In any case, interactions beyond maxDistance
+necessary (see section 25.6). In any case, interactions beyond maxDistance
 always have a strength of 0.0, and the interaction strength of an individual
 with itself is always 0.0, regardless of the interaction function or callbacks.
 The global symbol for the new interaction type is immediately available; the
@@ -121,12 +124,30 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other Initialize: 
+\code{\link{Initialize}},
+\code{\link{initializeAncestralNucleotides}()},
+\code{\link{initializeGeneConversion}()},
+\code{\link{initializeGenomicElementType}()},
+\code{\link{initializeGenomicElement}()},
+\code{\link{initializeHotspotMap}()},
+\code{\link{initializeMutationRate}()},
+\code{\link{initializeMutationTypeNuc}()},
+\code{\link{initializeMutationType}()},
+\code{\link{initializeRecombinationRate}()},
+\code{\link{initializeSLiMModelType}()},
+\code{\link{initializeSLiMOptions}()},
+\code{\link{initializeSex}()},
+\code{\link{initializeTreeSeq}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Initialize}

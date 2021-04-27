@@ -24,7 +24,7 @@ length 1 (a singleton)
 }
 \description{
 Documentation for SLiM function \code{containsMarkerMutation}, which is a method
-of the SLiM class \code{Genome}.
+of the SLiM class \code{\link{Genome}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -33,20 +33,23 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=535}{SLiM manual: page 535}.
+
 Returns T if the genome contains a mutation of type mutType at
 position, F otherwise (if returnMutation has its default value of F; see
 below). This method is, as its name suggests, intended for checking for
-"marker mutations”: mutations of a special mutation type that are not literally
+"marker mutations": mutations of a special mutation type that are not literally
 mutations in the usual sense, but instead are added in to particular genomes
 to mark them as possessing some property. Marker mutations are not typically
-added by SLiM’s mutation-generating machinery; instead they are added explicitly
+added by SLiM's mutation-generating machinery; instead they are added explicitly
 with addNewMutation() or addNewDrawnMutation() at a known, constant position
 in the genome. This method provides a check for whether a marker mutation of a
 given type exists in a particular genome; because the position to check is known
 in advance, that check can be done much faster than the equivalent check with
 containsMutations() or countOfMutationsOfType(), using a binary search of the
 genome. See section 14.4 for one example of a model that uses marker mutations
-– in that case, to mark chromosomes that possess an inversion. If returnMutation
+- in that case, to mark chromosomes that possess an inversion. If returnMutation
 is T (an option added in SLiM 3), this method returns the actual mutation found,
 rather than just T or F. More specifically, the first mutation found of mutType
 at position will be returned; if more than one such mutation exists in the
@@ -59,12 +62,34 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other Genome: 
+\code{\link{Genome}},
+\code{\link{addMutations}()},
+\code{\link{addNewDrawnMutation}()},
+\code{\link{addNewMutation}()},
+\code{\link{containsMutations}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{mutationCountsInGenomes}()},
+\code{\link{mutationFrequenciesInGenomes}()},
+\code{\link{mutationsOfType}()},
+\code{\link{nucleotides}()},
+\code{\link{outputMS}()},
+\code{\link{outputVCF}()},
+\code{\link{output}()},
+\code{\link{positionsOfMutationsOfType}()},
+\code{\link{readFromMS}()},
+\code{\link{readFromVCF}()},
+\code{\link{removeMutations}()},
+\code{\link{sumOfMutationsOfType}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Genome}

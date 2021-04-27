@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>setSelectionCoeff</code>, which is a method of
-the SLiM class <code>Mutation</code>.
+the SLiM class <code><a href='Mutation.html'>Mutation</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -174,20 +177,22 @@ singleton). See details for description.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of type any but object or void or void or void.</p>
+    <p>An object of type void or void.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Set the selection coefficient of the mutation to selectionCoeff. The
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=558'>SLiM manual: page 558</a>.</p>
+<p>Set the selection coefficient of the mutation to selectionCoeff. The
 selection coefficient will be changed for all individuals that possess the
 mutation, since they all share a single Mutation object (note that the dominance
 coefficient will remain unchanged, as it is determined by the mutation type).
 This is normally a constant in simulations, so be sure you know what you are
-doing; often setting up a fitness() callback (see section 24.2) is preferable,
+doing; often setting up a fitness() callback (see section 25.2) is preferable,
 in order to modify the selection coefficient in a more limited and controlled
 fashion (see section 10.5 for further discussion of this point). Changing this
 will normally affect the fitness values calculated at the end of the current
 generation; if you want current fitness values to be affected, you can call
-SLiMSim’s method recalculateFitness() – but see the documentation of that method
+SLiMSim's method recalculateFitness() - but see the documentation of that method
 for caveats.</p>
     <h2 class="hasAnchor" id="copyright"><a class="anchor" href="#copyright"></a>Copyright</h2>
 
@@ -197,9 +202,14 @@ for caveats.</p>
 reproduced from the official manual,
 which can be found here: <a href='http://benhaller.com/slim/SLiM_Manual.pdf'>http://benhaller.com/slim/SLiM_Manual.pdf</a>. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Mutation: 
+<code><a href='Mutation.html'>Mutation</a></code>,
+<code><a href='setMutationType.html'>setMutationType</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

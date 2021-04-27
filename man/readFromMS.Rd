@@ -20,7 +20,7 @@ An object of type Mutation object.
 }
 \description{
 Documentation for SLiM function \code{readFromMS}, which is a method of the SLiM
-class \code{Genome}.
+class \code{\link{Genome}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -29,11 +29,14 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=538}{SLiM manual: page 538}.
+
 Read new mutations from the MS format file at filePath and add them
 to the target genomes. The number of target genomes must match the number
 of genomes represented in the MS file. To read into all of the genomes in
 a given subpopulation pN, simply call pN.genomes.readFromMS(), assuming the
-subpopulation’s size matches that of the MS file. A vector containing all of the
+subpopulation's size matches that of the MS file. A vector containing all of the
 mutations created by readFromMS() is returned. Each mutation is created at the
 position specified in the file, using the mutation type given by mutationType.
 Positions are expected to be in [0,1], and are scaled to the length of the
@@ -55,12 +58,34 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other Genome: 
+\code{\link{Genome}},
+\code{\link{addMutations}()},
+\code{\link{addNewDrawnMutation}()},
+\code{\link{addNewMutation}()},
+\code{\link{containsMarkerMutation}()},
+\code{\link{containsMutations}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{mutationCountsInGenomes}()},
+\code{\link{mutationFrequenciesInGenomes}()},
+\code{\link{mutationsOfType}()},
+\code{\link{nucleotides}()},
+\code{\link{outputMS}()},
+\code{\link{outputVCF}()},
+\code{\link{output}()},
+\code{\link{positionsOfMutationsOfType}()},
+\code{\link{readFromVCF}()},
+\code{\link{removeMutations}()},
+\code{\link{sumOfMutationsOfType}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Genome}

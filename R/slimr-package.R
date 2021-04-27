@@ -12,6 +12,8 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
                                                         "Individual",
                                                         ".IT",
                                                         "InteractionType",
+                                                        ".LF",
+                                                        "LogFile",
                                                         ".M",
                                                         "Mutation",
                                                         ".MT",
@@ -45,7 +47,8 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
                                                         "sim.subpopulations.individuals.subpopulation",
                                                         "sim.subpopulations.individuals.x",
                                                         "sim.subpopulations.individuals.y",
-                                                        "sim.subpopulations.individuals.z"
+                                                        "sim.subpopulations.individuals.z",
+                                                        "setSeed"
                                                         ))
 
 
@@ -85,7 +88,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
 
   ## replace all mentions of external files in recipes with their proper internal package file paths
   resources <- list.files(system.file("extdata", "recipe_resources", package = "slimr"), full.names = TRUE)
-  resources <- resources[!stringr::str_detect(resources, stringr::fixed("FIN_samples.txt"))]
+  #resources <- resources[!stringr::str_detect(resources, stringr::fixed("FIN_samples.txt"))]
 
   if(get_os() == "windows") {
     resources <- convert_to_wsl_path(resources)
@@ -93,12 +96,17 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
 
   recipe_vec <- unlist(slim_recipes)
 
-  recipes_using_resources <- purrr::map_int(resources,
+  recipes_using_resources <- purrr::map(resources,
                                             ~stringr::str_which(recipe_vec,
                                                                 stringr::coll(basename(.x))))
 
+  resources_used <- purrr::map_lgl(recipes_using_resources,
+                               ~length(.x) > 0)
+  recipes_using_resources <- recipes_using_resources %>%
+    purrr::simplify()
+
   slim_recipes[recipes_using_resources] <- purrr::map2(slim_recipes[recipes_using_resources],
-                                                       resources,
+                                                       resources[resources_used],
                                                        ~stringr::str_replace_all(.x,
                                                                                  paste0('\"[^"]*\\Q', basename(.y), '\\E\"'), ## some handy regex here
                                                                                  paste0('"', .y, '"')))

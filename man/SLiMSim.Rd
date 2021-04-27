@@ -6,7 +6,7 @@
 \alias{.SS}
 \title{SLiMSim}
 \format{
-An object of class \code{list} of length 48.
+An object of class \code{list} of length 51.
 }
 \usage{
 SLiMSim
@@ -15,13 +15,16 @@ SLiMSim
 Documentation for SLiMSim class from SLiM
 }
 \details{
+This class represents a SLiM simulation. The current SLiMSim instance
+is defined as a global
+constant named sim.
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{addSubpop}}}
 \item{\code{\link{addSubpopSplit}}}
 \item{\code{\link{countOfMutationsOfType}}}
+\item{\code{\link{createLogFile}}}
 \item{\code{\link{deregisterScriptBlock}}}
-\item{\code{\link{getValue}}}
 \item{\code{\link{mutationCounts}}}
 \item{\code{\link{mutationFrequencies}}}
 \item{\code{\link{mutationsOfType}}}
@@ -37,12 +40,12 @@ This class has the following methods (functions):
 \item{\code{\link{registerLateEvent}}}
 \item{\code{\link{registerMateChoiceCallback}}}
 \item{\code{\link{registerModifyChildCallback}}}
-\item{\code{\link{registerRecombinationCallback}}}
 \item{\code{\link{registerMutationCallback}}}
+\item{\code{\link{registerRecombinationCallback}}}
 \item{\code{\link{registerReproductionCallback}}}
 \item{\code{\link{rescheduleScriptBlock}}}
-\item{\code{\link{setValue}}}
 \item{\code{\link{simulationFinished}}}
+\item{\code{\link{subsetMutations}}}
 \item{\code{\link{treeSeqCoalesced}}}
 \item{\code{\link{treeSeqOutput}}}
 \item{\code{\link{treeSeqRememberIndividuals}}}
@@ -71,11 +74,31 @@ the SLiM documentation for details). Used only when simulating an X chromosome;
 setting a value for this property in other circumstances is an error. Changing
 this will normally affect the fitness values calculated at the end of the
 current generation; if you want current fitness values to be affected, you can
-call SLiMSim’s method recalculateFitness() – but see the documentation of that
+call SLiMSim's method recalculateFitness() - but see the documentation of that
 method for caveats. }
 \item{generation}{A property of type integer. It is of length one (a singleton).
 This property is a variable, so it is modifiable. \strong{Property Description:}
 The current generation number. }
+\item{generationStage}{A property of type string. It is of length one
+(a singleton). This property is a constant, so it is not modifiable.
+\strong{Property Description:} The current generation stage, as a string. The
+values of this property essentially mirror the generation stages of WF and
+nonWF models (see chapters 22 and 23). Common values include "early" (during
+execution of early() events), "reproduction" (during offspring generation),
+"fitness" (during fitness evaluation), and "late" (during execution of late()
+events). Other possible values include "begin" (during internal setup before
+each generation), "selection" (while applying selection and mortality in
+nonWF models), "tally" (while tallying mutation reference counts and removing
+fixed mutations), "swap" (while swapping the offspring generation into the
+parental generation in WF models), "end" (during internal bookkeeping after
+each generation), and "console" (during the in-between-generations state in
+which commands in SLiMgui's Eidos console are executed). It would probably be
+a good idea not to use this latter set of values; they are probably not user-
+visible during ordinary model execution anyway. During execution of initialize()
+callbacks, no SLiMSim object yet exists and so this property cannot be accessed.
+To detect this state, use exists("sim"); if that is F, sim does not exist, and
+therefore your code is executing during initialize() callbacks (or outside of
+SLiM entirely, in some other Eidos-based context). }
 \item{genomicElementTypes}{A property of type GenomicElementType object. This
 property is a constant, so it is not modifiable. \strong{Property Description:}
 The GenomicElementType objects being used in the simulation. }
@@ -90,11 +113,14 @@ know the runtime environment. }
 \item{interactionTypes}{A property of type InteractionType object. This property
 is a constant, so it is not modifiable. \strong{Property Description:} The
 InteractionType objects being used in the simulation. }
+\item{logFiles}{A property of type LogFile object. This property is a constant,
+so it is not modifiable. \strong{Property Description:} The LogFile objects
+being used in the simulation. }
 \item{modelType}{A property of type string. It is of length one (a singleton).
 This property is a constant, so it is not modifiable. \strong{Property
 Description:} The type of model being simulated, as specified in
-initializeSLiMModelType(). This will be "WF" for WF models (Wright–Fisher
-models, the default), or "nonWF" for nonWF models (non-Wright–Fisher models; see
+initializeSLiMModelType(). This will be "WF" for WF models (Wright-Fisher
+models, the default), or "nonWF" for nonWF models (non-Wright-Fisher models; see
 section 1.6 for discussion). }
 \item{mutationTypes}{A property of type MutationType object. This property
 is a constant, so it is not modifiable. \strong{Property Description:} The
@@ -134,9 +160,53 @@ A user-defined integer value. The value of tag is initially undefined, and
 it is an error to try to read it; if you wish it to have a defined value, you
 must arrange that yourself by explicitly setting its value prior to using it
 elsewhere in your code. The value of tag is not used by SLiM; it is free for
-you to use. See also the getValue() and setValue() methods, for another way of
-attaching state to the simulation.}
+you to use. See also the getValue() and setValue() methods (provided by the
+Dictionary class; see the Eidos manual), for another way of attaching state to
+the simulation. }
+\item{verbosity}{A property of type integer. It is of length one (a singleton).
+This property is a variable, so it is modifiable. \strong{Property Description:}
+The verbosity level, for SLiM's logging of information about the simulation.
+This is 1 by default, but can be changed at the command line with the -l[ong]
+option. It is provided here so that scripts can consult it to govern the level
+of verbosity of their own output, or set the verbosity level for particular
+sections of their code. A verbosity level of 0 suppresses most of SLiM's
+optional output; 2 adds some extra output beyond SLiM's standard output. See
+sections 19.3 and 20.4 for more information.}
 
 }
 }
+\seealso{
+Other SLiMSim: 
+\code{\link{addSubpopSplit}()},
+\code{\link{addSubpop}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{createLogFile}()},
+\code{\link{deregisterScriptBlock}()},
+\code{\link{mutationCounts}()},
+\code{\link{mutationFrequencies}()},
+\code{\link{mutationsOfType}()},
+\code{\link{outputFixedMutations}()},
+\code{\link{outputFull}()},
+\code{\link{outputMutations}()},
+\code{\link{outputUsage}()},
+\code{\link{readFromPopulationFile}()},
+\code{\link{recalculateFitness}()},
+\code{\link{registerEarlyEvent}()},
+\code{\link{registerFitnessCallback}()},
+\code{\link{registerInteractionCallback}()},
+\code{\link{registerLateEvent}()},
+\code{\link{registerMateChoiceCallback}()},
+\code{\link{registerModifyChildCallback}()},
+\code{\link{registerMutationCallback}()},
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{rescheduleScriptBlock}()},
+\code{\link{simulationFinished}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqOutput}()},
+\code{\link{treeSeqRememberIndividuals}()},
+\code{\link{treeSeqSimplify}()}
+}
+\concept{SLiMSim}
 \keyword{datasets}

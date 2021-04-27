@@ -13,11 +13,11 @@ setSelectionCoeff(selectionCoeff)
 singleton). See details for description.}
 }
 \value{
-An object of type any but object or void or void or void.
+An object of type void or void.
 }
 \description{
 Documentation for SLiM function \code{setSelectionCoeff}, which is a method of
-the SLiM class \code{Mutation}.
+the SLiM class \code{\link{Mutation}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -26,17 +26,20 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=558}{SLiM manual: page 558}.
+
 Set the selection coefficient of the mutation to selectionCoeff. The
 selection coefficient will be changed for all individuals that possess the
 mutation, since they all share a single Mutation object (note that the dominance
 coefficient will remain unchanged, as it is determined by the mutation type).
 This is normally a constant in simulations, so be sure you know what you are
-doing; often setting up a fitness() callback (see section 24.2) is preferable,
+doing; often setting up a fitness() callback (see section 25.2) is preferable,
 in order to modify the selection coefficient in a more limited and controlled
 fashion (see section 10.5 for further discussion of this point). Changing this
 will normally affect the fitness values calculated at the end of the current
 generation; if you want current fitness values to be affected, you can call
-SLiMSim’s method recalculateFitness() – but see the documentation of that method
+SLiMSim's method recalculateFitness() - but see the documentation of that method
 for caveats.
 }
 \section{Copyright}{
@@ -45,12 +48,18 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other Mutation: 
+\code{\link{Mutation}},
+\code{\link{setMutationType}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Mutation}

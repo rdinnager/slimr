@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>setSpatialPosition</code>, which is a method of
-the SLiM class <code>Individual</code>.
+the SLiM class <code><a href='Individual.html'>Individual</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -176,7 +179,9 @@ full SLiM script.</p>
     <p>An object of type void.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Sets the spatial position of the individual (as accessed through
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=545'>SLiM manual: page 545</a>.</p>
+<p>Sets the spatial position of the individual (as accessed through
 the spatialPosition property). The length of position (the number of
 coordinates in the spatial position of an individual) depends upon the
 spatial dimensionality declared with initializeSLiMOptions(). If the spatial
@@ -186,7 +191,7 @@ properties (if those properties are encompassed by the spatial dimensionality
 of the simulation). In other words, if the declared dimensionality is "xy",
 calling individual.setSpatialPosition(c(1.0, 0.5)) property is equivalent to
 individual.x = 1.0; individual.y = 0.5; individual.z is not set (even if a third
-value is supplied in position) since it is not encompassed by the simulation’s
+value is supplied in position) since it is not encompassed by the simulation's
 dimensionality in this example. Note that this is an Eidos class method,
 somewhat unusually, which allows it to work in a special way when called on a
 vector of individuals. When the target vector of individuals is non-singleton,
@@ -208,9 +213,18 @@ method with a position vector of any other length is an error.</p>
 reproduced from the official manual,
 which can be found here: <a href='http://benhaller.com/slim/SLiM_Manual.pdf'>http://benhaller.com/slim/SLiM_Manual.pdf</a>. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other Individual: 
+<code><a href='Individual.html'>Individual</a></code>,
+<code><a href='containsMutations.html'>containsMutations</a>()</code>,
+<code><a href='countOfMutationsOfType.html'>countOfMutationsOfType</a>()</code>,
+<code><a href='relatedness.html'>relatedness</a>()</code>,
+<code><a href='sumOfMutationsOfType.html'>sumOfMutationsOfType</a>()</code>,
+<code><a href='uniqueMutationsOfType.html'>uniqueMutationsOfType</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

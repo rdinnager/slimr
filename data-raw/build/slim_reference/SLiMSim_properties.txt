@@ -15,18 +15,36 @@ you want current fitness values to be affected, you can call SLiMSim’s method
 recalculateFitness() – but see the documentation of that method for caveats.
 generation <–> (integer$)
 The current generation number.
+generationStage => (string$)
+The current generation stage, as a string. The values of this property essentially mirror the
+generation stages of WF and nonWF models (see chapters 22 and 23). Common values include
+"early" (during execution of early() events), "reproduction" (during offspring generation),
+"fitness" (during fitness evaluation), and "late" (during execution of late() events).
+Other possible values include "begin" (during internal setup before each generation),
+"selection" (while applying selection and mortality in nonWF models), "tally" (while tallying
+mutation reference counts and removing fixed mutations), "swap" (while swapping the offspring
+generation into the parental generation in WF models), "end" (during internal bookkeeping after each
+generation), and "console" (during the in-between-generations state in which commands in
+SLiMgui’s Eidos console are executed). It would probably be a good idea not to use this latter set of
+values; they are probably not user-visible during ordinary model execution anyway.
+During execution of initialize() callbacks, no SLiMSim object yet exists and so this property
+cannot be accessed. To detect this state, use exists("sim"); if that is F, sim does not exist, and
+therefore your code is executing during initialize() callbacks (or outside of SLiM entirely, in some
+other Eidos-based context).
 genomicElementTypes => (object<GenomicElementType>)
 The GenomicElementType objects being used in the simulation.
 inSLiMgui => (logical$)
 This property has been deprecated, and may be removed in a future release of SLiM. In SLiM 3.2.1
 and later, use exists("slimgui") instead.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 564
 If T, the simulation is presently running inside SLiMgui; if F, it is running at the command line. In
 general simulations should not care where they are running, but in special circumstances such as
 opening plot windows it may be necessary to know the runtime environment.
 interactionTypes => (object<InteractionType>)
 The InteractionType objects being used in the simulation.
-TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 507
+logFiles => (object<LogFile>)
+The LogFile objects being used in the simulation.
 modelType => (string$)
 The type of model being simulated, as specified in initializeSLiMModelType(). This will be "WF"
 for WF models (Wright–Fisher models, the default), or "nonWF" for nonWF models (non-Wright–Fisher
@@ -55,5 +73,11 @@ tag <–> (integer$)
 A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read
 it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value
 prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.
-See also the getValue() and setValue() methods, for another way of attaching state to the
-simulation.
+See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos
+manual), for another way of attaching state to the simulation.
+verbosity <–> (integer$)
+The verbosity level, for SLiM’s logging of information about the simulation. This is 1 by default, but
+can be changed at the command line with the -l[ong] option. It is provided here so that scripts can
+consult it to govern the level of verbosity of their own output, or set the verbosity level for particular
+sections of their code. A verbosity level of 0 suppresses most of SLiM’s optional output; 2 adds some
+extra output beyond SLiM’s standard output. See sections 19.3 and 20.4 for more information.

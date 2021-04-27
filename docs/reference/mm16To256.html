@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>mm16To256</code>, which is a method of the SLiM
-class <code>SLiMBuiltin</code>.
+class <code><a href='SLiMBuiltin.html'>SLiMBuiltin</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -173,11 +176,12 @@ full SLiM script.</p>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of type string or float or float or float or integer or float
-or integer.</p>
+    <p>An object of type float.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Returns a 64×4 mutation matrix that is functionally identical to
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=590'>SLiM manual: page 590</a>.</p>
+<p>Returns a 64×4 mutation matrix that is functionally identical to
 the supplied 4×4 mutation matrix in mutationMatrix16. The mutation rate for
 each of the 64 trinucleotides will depend only upon the central nucleotide
 of the trinucleotide, and will be taken from the corresponding entry for
@@ -185,7 +189,7 @@ the same nucleotide in mutationMatrix16. This function can be used to easily
 construct a simple trinucleotide-based mutation matrix which can then be
 modified so that specific trinucleotides sustain a mutation rate that does
 not depend only upon their central nucleotide. See the documentation for
-initializeGenomicElementType() in section 23.1 for further discussion of how
+initializeGenomicElementType() in section 24.1 for further discussion of how
 these 64×4 mutation matrices are interpreted and used.</p>
     <h2 class="hasAnchor" id="copyright"><a class="anchor" href="#copyright"></a>Copyright</h2>
 
@@ -195,9 +199,24 @@ these 64×4 mutation matrices are interpreted and used.</p>
 reproduced from the official manual,
 which can be found here: <a href='http://benhaller.com/slim/SLiM_Manual.pdf'>http://benhaller.com/slim/SLiM_Manual.pdf</a>. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other SLiMBuiltin: 
+<code><a href='SLiMBuiltin.html'>SLiMBuiltin</a></code>,
+<code><a href='calcFST.html'>calcFST</a>()</code>,
+<code><a href='calcHeterozygosity.html'>calcHeterozygosity</a>()</code>,
+<code><a href='calcPairHeterozygosity.html'>calcPairHeterozygosity</a>()</code>,
+<code><a href='calcVA.html'>calcVA</a>()</code>,
+<code><a href='calcWattersonsTheta.html'>calcWattersonsTheta</a>()</code>,
+<code><a href='codonsToAminoAcids.html'>codonsToAminoAcids</a>()</code>,
+<code><a href='mmJukesCantor.html'>mmJukesCantor</a>()</code>,
+<code><a href='mmKimura.html'>mmKimura</a>()</code>,
+<code><a href='nucleotideCounts.html'>nucleotideCounts</a>()</code>,
+<code><a href='nucleotideFrequencies.html'>nucleotideFrequencies</a>()</code>,
+<code><a href='nucleotidesToCodons.html'>nucleotidesToCodons</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

@@ -23,7 +23,7 @@ An object of type float. Return will be of length 1 (a singleton)
 }
 \description{
 Documentation for SLiM function \code{sumOfMutationsOfType}, which is a method
-of the SLiM class \code{Genome}.
+of the SLiM class \code{\link{Genome}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -32,7 +32,7 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 
 Documentation for SLiM function \code{sumOfMutationsOfType}, which is a method
-of the SLiM class \code{Individual}.
+of the SLiM class \code{\link{Individual}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -41,6 +41,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=539}{SLiM manual: page 539}.
+
 Returns the sum of the selection coefficients of all mutations that
 are of the type specified by mutType, out of all of the mutations in the genome.
 This is often useful in models that use a particular mutation type to represent
@@ -49,6 +52,9 @@ the sum of the additive effects of the QTLs for the given mutation type. This
 method is provided for speed; it is much faster than the corresponding Eidos
 code. Note that this method also exists on Individual, for cases in which the
 sum across both genomes of an individual is desired.
+
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=546}{SLiM manual: page 546}.
 
 Returns the sum of the selection coefficients of all mutations that
 are of the type specified by mutType, out of all of the mutations in the
@@ -65,7 +71,7 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 
@@ -74,11 +80,40 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other Genome: 
+\code{\link{Genome}},
+\code{\link{addMutations}()},
+\code{\link{addNewDrawnMutation}()},
+\code{\link{addNewMutation}()},
+\code{\link{containsMarkerMutation}()},
+\code{\link{containsMutations}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{mutationCountsInGenomes}()},
+\code{\link{mutationFrequenciesInGenomes}()},
+\code{\link{mutationsOfType}()},
+\code{\link{nucleotides}()},
+\code{\link{outputMS}()},
+\code{\link{outputVCF}()},
+\code{\link{output}()},
+\code{\link{positionsOfMutationsOfType}()},
+\code{\link{readFromMS}()},
+\code{\link{readFromVCF}()},
+\code{\link{removeMutations}()}
+
+Other Individual: 
+\code{\link{Individual}},
+\code{\link{containsMutations}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{relatedness}()},
+\code{\link{setSpatialPosition}()},
+\code{\link{uniqueMutationsOfType}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
@@ -86,3 +121,5 @@ Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Genome}
+\concept{Individual}

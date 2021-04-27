@@ -1,0 +1,2 @@
+This class represents a SLiM simulation. The current SLiMSim instance is defined as a global
+constant named sim.

@@ -17,6 +17,8 @@ or Y) is simulated, the other sex chromosome also exists in the simulation, but 
 that does not carry any mutations. Instead, it is a placeholder, present to allow SLiM’s code to operate
 in much the same way as it does when an autosome is simulated. Null genomes should not be
 accessed or manipulated.
+TOC I TOC II WF nonWF initialize() Genome Individual Mutation SLiMSim Subpopulation
+Eidos events fitness() mateChoice() modifyChild() recombination() interaction() reproduction() 532
 mutations => (object<Mutation>)
 All of the Mutation objects present in this genome.
 tag <–> (integer$)

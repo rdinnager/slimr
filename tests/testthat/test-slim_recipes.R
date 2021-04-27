@@ -5,14 +5,14 @@ test_that("Retrieving SLiM recipes works", {
   expect_snapshot_output(cat(recipe_2))
 
   all_recipes <- slim_get_recipes()
-  expect_length(all_recipes, 160L)
+  expect_length(all_recipes, 165L)
   expect_type(all_recipes, "list")
 
   some_recipes <- slim_get_recipes(c(1, 45, 53, 132))
   expect_length(some_recipes, 4L)
   expect_type(some_recipes, "list")
 
-  expect_named(some_recipes, c("4.1", "9.5.1", "10.2", "17.4"))
+  expect_named(some_recipes, c("4.1", "9.2", "9.7", "16.12"))
 
 })
 

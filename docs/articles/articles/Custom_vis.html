@@ -64,10 +64,13 @@
       <a href="../../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../../articles/simple_example.html">simple_example</a>
+      <a href="../../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -92,7 +95,7 @@
 
       
 
-      </header><script src="Custom_vis_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="Custom_vis_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Custom Live Plotting for SLiM</h1>
@@ -156,7 +159,7 @@ initialize() {
     <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fu"><a href="../../reference/slimr_template.html">slimr_template</a></span><span class="op">(</span><span class="st">"N"</span>, <span class="fl">500</span><span class="op">)</span><span class="op">)</span>;
   <span class="op">}</span><span class="op">)</span>,
   
-  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1000</span>, <span class="fu">late</span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span>
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1000</span>, <span class="fu"><a href="../../reference/late.html">late</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span>
     <span class="fu"><a href="../../reference/slimr_output.html">slimr_output</a></span><span class="op">(</span> <span class="fu">sim.outputFull</span><span class="op">(</span><span class="op">)</span> , <span class="st">"fix_mut"</span>, do_every <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>;
   <span class="op">}</span><span class="op">)</span>
   
@@ -188,9 +191,9 @@ initialize() {
 <p>I’ve added a few <code><a href="../../reference/slimr_template.html">slimr_template()</a></code> calls to make it easier to quickly change parameters in the script for exploration.</p>
 <p>In order to make a custom visualization for this script we can provide a custom callback function. This is a function which takes as its first argument a dataset named <code>data</code>, which is dynamically constructed while SLiM is running based on the <code><a href="../../reference/slimr_output.html">slimr_output()</a></code> call in the script. To get an example dataset we can use to test our callback function, we can just run the script with <code>capture_output = TRUE</code>, which will capture the data and output it in the final results. This will tell us what the data will look like during the SLiM run. Since we just need it for testing purposes, we can just run the simulation for a small number of generations and on a small number of individuals (just enough to accumulate a few mutations to test the visualization).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">chromosome_sim_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/slimr_script_render.html">slimr_script_render</a></span><span class="op">(</span><span class="va">chromosome_sim</span>,
+<code class="sourceCode R"><span class="va">chromosome_sim_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">chromosome_sim</span>,
                                            template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning in replace_double_dots(slimr_script, .x, slimr_template_attr = slimr_template_attr, : Warning: A templated variable was not specified in the template and has been replaced by its default value.</code></pre>
+<pre><code>## Warning: Warning: A templated variable was not specified in the template and has been replaced by its default value.</code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">output_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/slim_run.html">slim_run</a></span><span class="op">(</span><span class="va">chromosome_sim_test</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
@@ -215,26 +218,26 @@ initialize() {
 ## </span><span style="color: #555555;">10</span><span>         50 fix_m~ sim.outputFu~ slim_ou~ </span><span style="color: #555555;">"</span><span>#OUT: 50 A\nVersion: 3\nPopulation~
 ## </span><span style="color: #555555;"># ... with 190 more rows</span><span>
 </span></code></pre>
-<p>So now we can write a function that takes the outputted <code>tibble</code> and make the desired plot. The first thing we need to do is extract the relevant information from the full output. In this case we only need the information on mutations: their position, and their prevalance in the population. We can use the handy <code>slimr</code> function <code><a href="../../reference/slim_outputFull_extract.html">slim_outputFull_extract(type = "mutation")</a></code> for this. This function extracts various pieces of the SLiM <code><a href="../../reference/outputFull.html">outputFull()</a></code> function, which contains all information about a population in a SLiM simulation. In this case, we only need the information for the latest generation. Let’s test it:</p>
+<p>So now we can write a function that takes the outputted <code>tibble</code> and make the desired plot. The first thing we need to do is extract the relevant information from the full output. In this case we only need the information on mutations: their position, and their prevalance in the population. We can use the handy <code>slimr</code> function <code><a href="../../reference/slim_extract_full.html">slim_extract_full(type = "mutation")</a></code> for this. This function extracts various pieces of the SLiM <code><a href="../../reference/outputFull.html">outputFull()</a></code> function, which contains all information about a population in a SLiM simulation. In this case, we only need the information for the latest generation. Let’s test it:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mut_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/slim_outputFull_extract.html">slim_outputFull_extract</a></span><span class="op">(</span><span class="va">output_test</span><span class="op">$</span><span class="va">output_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">output_test</span><span class="op">$</span><span class="va">output_data</span><span class="op">)</span>, <span class="op">]</span>,
+<code class="sourceCode R"><span class="va">mut_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/slim_extract_full.html">slim_extract_full</a></span><span class="op">(</span><span class="va">output_test</span><span class="op">$</span><span class="va">output_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">output_test</span><span class="op">$</span><span class="va">output_data</span><span class="op">)</span>, <span class="op">]</span>,
                                    <span class="st">"mutations"</span><span class="op">)</span>
 <span class="va">mut_dat</span></code></pre></div>
-<pre class="fansi fansi-output"><code>## <span style="color: #555555;"># A tibble: 67 x 11</span><span>
+<pre class="fansi fansi-output"><code>## <span style="color: #555555;"># A tibble: 53 x 11</span><span>
 ##    generation mut_id unique_mut_id mut_type chrome_pos selection dominance
 ##         </span><span style="color: #555555;font-style: italic;">&lt;int&gt;</span><span>  </span><span style="color: #555555;font-style: italic;">&lt;int&gt;</span><span>         </span><span style="color: #555555;font-style: italic;">&lt;int&gt;</span><span> </span><span style="color: #555555;font-style: italic;">&lt;chr&gt;</span><span>         </span><span style="color: #555555;font-style: italic;">&lt;int&gt;</span><span>     </span><span style="color: #555555;font-style: italic;">&lt;dbl&gt;</span><span>     </span><span style="color: #555555;font-style: italic;">&lt;dbl&gt;</span><span>
-## </span><span style="color: #555555;"> 1</span><span>       </span><span style="text-decoration: underline;">1</span><span>000     11          </span><span style="text-decoration: underline;">2</span><span>943 m1           </span><span style="text-decoration: underline;">131</span><span>387         0       0.5
-## </span><span style="color: #555555;"> 2</span><span>       </span><span style="text-decoration: underline;">1</span><span>000      8          </span><span style="text-decoration: underline;">3</span><span>130 m1            </span><span style="text-decoration: underline;">88</span><span>740         0       0.5
-## </span><span style="color: #555555;"> 3</span><span>       </span><span style="text-decoration: underline;">1</span><span>000     14          </span><span style="text-decoration: underline;">3</span><span>274 m1           </span><span style="text-decoration: underline;">160</span><span>203         0       0.5
-## </span><span style="color: #555555;"> 4</span><span>       </span><span style="text-decoration: underline;">1</span><span>000     10          </span><span style="text-decoration: underline;">3</span><span>295 m1           </span><span style="text-decoration: underline;">125</span><span>671         0       0.5
-## </span><span style="color: #555555;"> 5</span><span>       </span><span style="text-decoration: underline;">1</span><span>000      3          </span><span style="text-decoration: underline;">3</span><span>320 m1           </span><span style="text-decoration: underline;">112</span><span>500         0       0.5
-## </span><span style="color: #555555;"> 6</span><span>       </span><span style="text-decoration: underline;">1</span><span>000     16          </span><span style="text-decoration: underline;">3</span><span>398 m1           </span><span style="text-decoration: underline;">169</span><span>825         0       0.5
-## </span><span style="color: #555555;"> 7</span><span>       </span><span style="text-decoration: underline;">1</span><span>000      9          </span><span style="text-decoration: underline;">3</span><span>708 m1           </span><span style="text-decoration: underline;">105</span><span>650         0       0.5
-## </span><span style="color: #555555;"> 8</span><span>       </span><span style="text-decoration: underline;">1</span><span>000     21          </span><span style="text-decoration: underline;">3</span><span>772 m1             </span><span style="text-decoration: underline;">3</span><span>562         0       0.5
-## </span><span style="color: #555555;"> 9</span><span>       </span><span style="text-decoration: underline;">1</span><span>000     28          </span><span style="text-decoration: underline;">3</span><span>837 m1           </span><span style="text-decoration: underline;">119</span><span>535         0       0.5
-## </span><span style="color: #555555;">10</span><span>       </span><span style="text-decoration: underline;">1</span><span>000      1          </span><span style="text-decoration: underline;">3</span><span>913 m1            </span><span style="text-decoration: underline;">32</span><span>889         0       0.5
-## </span><span style="color: #555555;"># ... with 57 more rows, and 4 more variables: subpop </span><span style="color: #555555;font-style: italic;">&lt;chr&gt;</span><span style="color: #555555;">, first_gen </span><span style="color: #555555;font-style: italic;">&lt;int&gt;</span><span style="color: #555555;">,</span><span>
-## </span><span style="color: #555555;">#   prevalence </span><span style="color: #555555;font-style: italic;">&lt;int&gt;</span><span style="color: #555555;">, nucleotide </span><span style="color: #555555;font-style: italic;">&lt;chr&gt;</span><span>
+## </span><span style="color: #555555;"> 1</span><span>       </span><span style="text-decoration: underline;">1</span><span>000     21          </span><span style="text-decoration: underline;">2</span><span>315 m1            </span><span style="text-decoration: underline;">87</span><span>927         0       0.5
+## </span><span style="color: #555555;"> 2</span><span>       </span><span style="text-decoration: underline;">1</span><span>000     25          </span><span style="text-decoration: underline;">3</span><span>433 m1           </span><span style="text-decoration: underline;">133</span><span>089         0       0.5
+## </span><span style="color: #555555;"> 3</span><span>       </span><span style="text-decoration: underline;">1</span><span>000     22          </span><span style="text-decoration: underline;">3</span><span>707 m1            </span><span style="text-decoration: underline;">93</span><span>182         0       0.5
+## </span><span style="color: #555555;"> 4</span><span>       </span><span style="text-decoration: underline;">1</span><span>000     26          </span><span style="text-decoration: underline;">3</span><span>736 m1           </span><span style="text-decoration: underline;">153</span><span>981         0       0.5
+## </span><span style="color: #555555;"> 5</span><span>       </span><span style="text-decoration: underline;">1</span><span>000      3          </span><span style="text-decoration: underline;">3</span><span>773 m1           </span><span style="text-decoration: underline;">127</span><span>365         0       0.5
+## </span><span style="color: #555555;"> 6</span><span>       </span><span style="text-decoration: underline;">1</span><span>000      4          </span><span style="text-decoration: underline;">3</span><span>914 m1           </span><span style="text-decoration: underline;">167</span><span>567         0       0.5
+## </span><span style="color: #555555;"> 7</span><span>       </span><span style="text-decoration: underline;">1</span><span>000      5          </span><span style="text-decoration: underline;">4</span><span>319 m1           </span><span style="text-decoration: underline;">185</span><span>130         0       0.5
+## </span><span style="color: #555555;"> 8</span><span>       </span><span style="text-decoration: underline;">1</span><span>000     16          </span><span style="text-decoration: underline;">4</span><span>320 m1           </span><span style="text-decoration: underline;">211</span><span>672         0       0.5
+## </span><span style="color: #555555;"> 9</span><span>       </span><span style="text-decoration: underline;">1</span><span>000     17          </span><span style="text-decoration: underline;">4</span><span>321 m1           </span><span style="text-decoration: underline;">222</span><span>297         0       0.5
+## </span><span style="color: #555555;">10</span><span>       </span><span style="text-decoration: underline;">1</span><span>000     24          </span><span style="text-decoration: underline;">4</span><span>397 m1           </span><span style="text-decoration: underline;">109</span><span>322         0       0.5
+## </span><span style="color: #555555;"># ... with 43 more rows, and 4 more variables: subpop &lt;chr&gt;, first_gen &lt;int&gt;,</span><span>
+## </span><span style="color: #555555;">#   prevalence &lt;int&gt;, nucleotide &lt;chr&gt;</span><span>
 </span></code></pre>
 <p>Okay, so now we are ready to make our callback function. First we will create a little function to plot the Hilbert Curve. This uses a trick from the <code>grDevices</code> package to hold the display until each plot is finished drawing. This gives the animation produced while running the simulation a smoother appearance, but is not strictly necessary.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -261,14 +264,14 @@ initialize() {
 <p>Now the final callback function:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">make_hilbert</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">max_prev</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">mutation_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/slim_outputFull_extract.html">slim_outputFull_extract</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>, <span class="op">]</span>, <span class="st">"mutations"</span><span class="op">)</span>
+  <span class="va">mutation_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/slim_extract_full.html">slim_extract_full</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>, <span class="op">]</span>, <span class="st">"mutations"</span><span class="op">)</span>
   <span class="fu">plot_HC</span><span class="op">(</span><span class="va">mutation_data</span><span class="op">$</span><span class="va">chrome_pos</span>, <span class="va">mutation_data</span><span class="op">$</span><span class="va">prevalence</span>, <span class="va">chrs</span>, <span class="va">bg</span>, <span class="va">max_prev</span><span class="op">)</span>
   <span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>Let’s try it out!</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## change mutation rate and increase pop size</span>
-<span class="va">chromosome_sim_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/slimr_script_render.html">slimr_script_render</a></span><span class="op">(</span><span class="va">chromosome_sim</span>,
+<span class="va">chromosome_sim_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">chromosome_sim</span>,
                                            template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fl">500</span>,
                                                            mut_rate <span class="op">=</span> <span class="fl">1e-6</span><span class="op">)</span><span class="op">)</span>
 

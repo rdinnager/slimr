@@ -23,8 +23,8 @@ slim_script(
 ) -> script_1
 
 test_that("slimr_script output is correct", {
-  verify_output(test_path("slimr_script_output_test.txt"),
-                script_1)
+
+  expect_snapshot(print(script_1))
 
 })
 
@@ -85,8 +85,7 @@ initialize()
 
   to_script <- as_slimr_script(script_text)
 
-  verify_output(test_path("slimr_script_conversion_test.txt"),
-                to_script)
+  expect_snapshot(print(to_script))
 
   expect_s3_class(to_script, "slimr_script")
 

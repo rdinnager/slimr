@@ -106,10 +106,13 @@
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -171,7 +174,7 @@ It looks like this:
   <code>slim_block([id,] [start_gen, [end_gen,]], [slim_callback,] { ... })</code>
   where [ ] specifies that the code is optional.
 The minimum required is a single argument containing Eidos code. This will be run in every generation
-with slim_callback <code>early()</code>, the default for Eidos events. You can also optionally specify an id
+with slim_callback <code><a href='early.html'>early()</a></code>, the default for Eidos events. You can also optionally specify an id
 for the SLiM code block, which will be the first argument. This is optionally followed by a starting
 generation (start_gen). If only a starting generation is specified, the event will run only in that generation. Next
 comes an optional end generation (end_gen), which, if specified, will tell SLiM to run the event every generation
@@ -179,20 +182,20 @@ between start_gen and end_gen. The special value of <code>..</code> can be used 
 the last generation (in other words, run the event every generation between start_gen and the last generation used else
 where in the script). After end_gen is an optional callback, which corresponds to an Eidos callback. The following are
 valid Eidos callbacks:</p><ul>
-<li><p><code>early()</code></p></li>
-<li><p><code>late()</code></p></li>
+<li><p><code><a href='early.html'>early()</a></code></p></li>
+<li><p><code><a href='late.html'>late()</a></code></p></li>
 <li><p><code>initialize()</code></p></li>
-<li><p><code>fitness(mut_type_id, subpop_id)</code></p></li>
-<li><p><code>mateChoice(subpop_id)</code></p></li>
-<li><p><code>modifyChild(subpop_id)</code></p></li>
-<li><p><code>recombination(subpop_id)</code></p></li>
-<li><p><code><a href='https://rdrr.io/r/base/interaction.html'>interaction(int_type_id, subpop_id)</a></code></p></li>
-<li><p><code>reproduction(subpop_id, sex)</code></p></li>
+<li><p><code><a href='fitness.html'>fitness(mut_type_id, subpop_id)</a></code></p></li>
+<li><p><code><a href='mateChoice.html'>mateChoice(subpop_id)</a></code></p></li>
+<li><p><code><a href='modifyChild.html'>modifyChild(subpop_id)</a></code></p></li>
+<li><p><code><a href='recombination.html'>recombination(subpop_id)</a></code></p></li>
+<li><p><code><a href='interaction.html'>interaction(int_type_id, subpop_id)</a></code></p></li>
+<li><p><code><a href='reproduction.html'>reproduction(subpop_id, sex)</a></code></p></li>
 </ul>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='slim_script.html'>slim_script</a></span><span class='op'>(</span><span class='fu'>slim_block</span><span class='op'>(</span><span class='st'>"s1"</span>, <span class='fl'>1</span>, <span class='fl'>10000</span>, <span class='fu'>late</span><span class='op'>(</span><span class='op'>)</span>, <span class='op'>{</span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"Hello World!"</span><span class='op'>)</span><span class='op'>}</span><span class='op'>)</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='slim_script.html'>slim_script</a></span><span class='op'>(</span><span class='fu'>slim_block</span><span class='op'>(</span><span class='st'>"s1"</span>, <span class='fl'>1</span>, <span class='fl'>10000</span>, <span class='fu'><a href='late.html'>late</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='op'>{</span><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='st'>"Hello World!"</span><span class='op'>)</span><span class='op'>}</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='warning'>Warning: The arguments do not include an initialize block (use an initialize()</span>
 #&gt; <span class='warning'>            callback to create one) and so the resulting script will not be a valid SLiM</span>
 #&gt; <span class='warning'>            script. You can add an initialize block later through concatenation (using c())</span></div><div class='output co'>#&gt; &lt;slimr_script[1]&gt;

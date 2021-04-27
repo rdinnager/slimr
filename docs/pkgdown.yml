@@ -1,9 +1,10 @@
-pandoc: 2.7.3
+pandoc: 2.11.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   articles/Custom_vis: Custom_vis.html
-  articles/slimrlang_intro: slimrlang_intro.html
-  simple_example: simple_example.html
-last_built: 2021-03-10T08:18Z
+  articles/simple_example_using_migration_and_fst: simple_example_using_migration_and_fst.html
+  installing_SLiM_for_slimr: installing_SLiM_for_slimr.html
+  slimrlang_intro: slimrlang_intro.html
+last_built: 2021-04-23T06:55Z
 

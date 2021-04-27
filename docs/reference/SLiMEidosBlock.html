@@ -106,10 +106,13 @@
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -154,7 +157,20 @@
     <p>An object of class <code>list</code> of length 7.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This class has the following methods (functions):</p><ul>
+    <p>This class represents a block of Eidos code registered in a SLiM
+simulation. All Eidos events and
+Eidos callbacks defined in the SLiM input file of the current simulation are
+instantiated as
+SLiMEidosBlock objects and are available through the scriptBlocks property of
+SLiMSim; see
+section 24.13.1. In addition, new script blocks can be created programmatically
+and registered
+with the simulation, and registered script blocks can be deregistered; see the
+‑register...() and
+‑deregisterScriptBlock() methods of SLiMSim in section 24.13.2. The currently
+executing script
+block is available through the self global; see section 25.9.
+This class has the following methods (functions):</p><ul>
 <li><p>None. This class has no methods.</p></li>
 </ul><p>This class has the following properties:</p><dl>
 <dt>active</dt><dd><p>A property of type integer or integer or integer or string or
@@ -198,8 +214,8 @@ integer or integer or string. It is of length one (a singleton). This property
 is a constant, so it is not modifiable. <strong>Property Description:</strong> The
 type of the script block; this will be "early" or "late" for the two types
 of Eidos events, or "initialize", "fitness", "mateChoice", "modifyChild", or
-"recombination" for the respective types of Eidos callbacks (see section 23.1
-and chapter 24).</p></dd>
+"recombination" for the respective types of Eidos callbacks (see section 24.1
+and chapter 25).</p></dd>
 
 
 </dl>

@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>treeSeqOutput</code>, which is a method of the
-SLiM class <code>SLiMSim</code>.
+SLiM class <code><a href='SLiMSim.html'>SLiMSim</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -160,20 +163,30 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>treeSeqOutput</span><span class='op'>(</span><span class='va'>path</span>, <span class='va'>simplify</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>treeSeqOutput</span><span class='op'>(</span><span class='va'>path</span>, <span class='va'>simplify</span>, <span class='va'>includeModel</span>, <span class='va'>metadata</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>path</th>
-      <td><p>An object of type string or logical. Must be of length 1 (a
-singleton). See details for description.</p></td>
+      <td><p>An object of type string. Must be of length 1 (a singleton). See
+details for description.</p></td>
     </tr>
     <tr>
       <th>simplify</th>
-      <td><p>An object of type string or logical. Must be of length 1 (a
+      <td><p>An object of type logical. Must be of length 1 (a singleton).
+The default value is <code>T</code>. See details for description.</p></td>
+    </tr>
+    <tr>
+      <th>includeModel</th>
+      <td><p>An object of type logical. Must be of length 1 (a
 singleton). The default value is <code>T</code>. See details for description.</p></td>
+    </tr>
+    <tr>
+      <th>metadata</th>
+      <td><p>An object of type null. Must be of length 1 (a singleton). The
+default value is <code>NULL</code>. See details for description.</p></td>
     </tr>
     </table>
 
@@ -182,13 +195,32 @@ singleton). The default value is <code>T</code>. See details for description.</p
     <p>An object of type void.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Outputs the current tree sequence recording tables to the path
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=575'>SLiM manual: page 575</a>.</p>
+<p>Outputs the current tree sequence recording tables to the path
 specified by path. This method may only be called if tree sequence recording
 has been turned on with initializeTreeSeq(). If simplify is T (the default),
 simplification will be done immediately prior to output; this is almost always
-desirable, unless a model wishes to avoid simplification entirely. A binary
-tree sequence file will be written to the specified path; a filename extension
-of .trees is suggested for this type of file.</p>
+desirable, unless a model wishes to avoid simplification entirely. (Note that if
+simplification is not done, then all genomes since the last simplification will
+be marked as samples in the resulting tree sequence.) A binary tree sequence
+file will be written to the specified path; a filename extension of .trees
+is suggested for this type of file. Normally, the full SLiM script used to
+generate the tree sequence is written out to the provenance entry of the tree
+sequence file, to the model subkey of the parameters top-level key. Supplying
+F for includeModel suppresses output of the full script; see section 26.4.6
+for further discussion. A Dictionary object containing user-generated metadata
+may be supplied with the metadata parameter. If present, this dictionary will
+be serialized as JSON and attached to the saved tree sequence under a key
+named user_metadata, within the SLiM key (see section 26.4.5). If pyslim is
+used to read the tree sequence in Python, this metadata will automatically be
+deserialized and made available at ts.metadata["SLiM"]["user_metadata"]. This
+metadata dictionary is not used by SLiM, or by pyslim, tskit, or msprime; you
+may use it for any purpose you wish. Note that metadata may actually be any
+subclass of Dictionary, such as the SLiMSim simulation object sim, or a LogFile
+instance. However, only the keys and values contained by the object's Dictionary
+superclass state will be serialized into the metadata; properties of the
+subclass will be ignored.</p>
     <h2 class="hasAnchor" id="copyright"><a class="anchor" href="#copyright"></a>Copyright</h2>
 
     
@@ -197,9 +229,42 @@ of .trees is suggested for this type of file.</p>
 reproduced from the official manual,
 which can be found here: <a href='http://benhaller.com/slim/SLiM_Manual.pdf'>http://benhaller.com/slim/SLiM_Manual.pdf</a>. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other SLiMSim: 
+<code><a href='SLiMSim.html'>SLiMSim</a></code>,
+<code><a href='addSubpopSplit.html'>addSubpopSplit</a>()</code>,
+<code><a href='addSubpop.html'>addSubpop</a>()</code>,
+<code><a href='countOfMutationsOfType.html'>countOfMutationsOfType</a>()</code>,
+<code><a href='createLogFile.html'>createLogFile</a>()</code>,
+<code><a href='deregisterScriptBlock.html'>deregisterScriptBlock</a>()</code>,
+<code><a href='mutationCounts.html'>mutationCounts</a>()</code>,
+<code><a href='mutationFrequencies.html'>mutationFrequencies</a>()</code>,
+<code><a href='mutationsOfType.html'>mutationsOfType</a>()</code>,
+<code><a href='outputFixedMutations.html'>outputFixedMutations</a>()</code>,
+<code><a href='outputFull.html'>outputFull</a>()</code>,
+<code><a href='outputMutations.html'>outputMutations</a>()</code>,
+<code><a href='outputUsage.html'>outputUsage</a>()</code>,
+<code><a href='readFromPopulationFile.html'>readFromPopulationFile</a>()</code>,
+<code><a href='recalculateFitness.html'>recalculateFitness</a>()</code>,
+<code><a href='registerEarlyEvent.html'>registerEarlyEvent</a>()</code>,
+<code><a href='registerFitnessCallback.html'>registerFitnessCallback</a>()</code>,
+<code><a href='registerInteractionCallback.html'>registerInteractionCallback</a>()</code>,
+<code><a href='registerLateEvent.html'>registerLateEvent</a>()</code>,
+<code><a href='registerMateChoiceCallback.html'>registerMateChoiceCallback</a>()</code>,
+<code><a href='registerModifyChildCallback.html'>registerModifyChildCallback</a>()</code>,
+<code><a href='registerMutationCallback.html'>registerMutationCallback</a>()</code>,
+<code><a href='registerRecombinationCallback.html'>registerRecombinationCallback</a>()</code>,
+<code><a href='registerReproductionCallback.html'>registerReproductionCallback</a>()</code>,
+<code><a href='rescheduleScriptBlock.html'>rescheduleScriptBlock</a>()</code>,
+<code><a href='simulationFinished.html'>simulationFinished</a>()</code>,
+<code><a href='subsetMutations.html'>subsetMutations</a>()</code>,
+<code><a href='treeSeqCoalesced.html'>treeSeqCoalesced</a>()</code>,
+<code><a href='treeSeqRememberIndividuals.html'>treeSeqRememberIndividuals</a>()</code>,
+<code><a href='treeSeqSimplify.html'>treeSeqSimplify</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

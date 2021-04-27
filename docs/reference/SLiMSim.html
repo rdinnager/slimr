@@ -106,10 +106,13 @@
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,15 +154,18 @@
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An object of class <code>list</code> of length 48.</p>
+    <p>An object of class <code>list</code> of length 51.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This class has the following methods (functions):</p><ul>
+    <p>This class represents a SLiM simulation. The current SLiMSim instance
+is defined as a global
+constant named sim.
+This class has the following methods (functions):</p><ul>
 <li><p><code><a href='addSubpop.html'>addSubpop</a></code></p></li>
 <li><p><code><a href='addSubpopSplit.html'>addSubpopSplit</a></code></p></li>
 <li><p><code><a href='countOfMutationsOfType.html'>countOfMutationsOfType</a></code></p></li>
+<li><p><code><a href='createLogFile.html'>createLogFile</a></code></p></li>
 <li><p><code><a href='deregisterScriptBlock.html'>deregisterScriptBlock</a></code></p></li>
-<li><p><code><a href='getValue.html'>getValue</a></code></p></li>
 <li><p><code><a href='mutationCounts.html'>mutationCounts</a></code></p></li>
 <li><p><code><a href='mutationFrequencies.html'>mutationFrequencies</a></code></p></li>
 <li><p><code><a href='mutationsOfType.html'>mutationsOfType</a></code></p></li>
@@ -175,12 +181,12 @@
 <li><p><code><a href='registerLateEvent.html'>registerLateEvent</a></code></p></li>
 <li><p><code><a href='registerMateChoiceCallback.html'>registerMateChoiceCallback</a></code></p></li>
 <li><p><code><a href='registerModifyChildCallback.html'>registerModifyChildCallback</a></code></p></li>
-<li><p><code><a href='registerRecombinationCallback.html'>registerRecombinationCallback</a></code></p></li>
 <li><p><code><a href='registerMutationCallback.html'>registerMutationCallback</a></code></p></li>
+<li><p><code><a href='registerRecombinationCallback.html'>registerRecombinationCallback</a></code></p></li>
 <li><p><code><a href='registerReproductionCallback.html'>registerReproductionCallback</a></code></p></li>
 <li><p><code><a href='rescheduleScriptBlock.html'>rescheduleScriptBlock</a></code></p></li>
-<li><p><code><a href='setValue.html'>setValue</a></code></p></li>
 <li><p><code><a href='simulationFinished.html'>simulationFinished</a></code></p></li>
+<li><p><code><a href='subsetMutations.html'>subsetMutations</a></code></p></li>
 <li><p><code><a href='treeSeqCoalesced.html'>treeSeqCoalesced</a></code></p></li>
 <li><p><code><a href='treeSeqOutput.html'>treeSeqOutput</a></code></p></li>
 <li><p><code><a href='treeSeqRememberIndividuals.html'>treeSeqRememberIndividuals</a></code></p></li>
@@ -207,11 +213,31 @@ the SLiM documentation for details). Used only when simulating an X chromosome;
 setting a value for this property in other circumstances is an error. Changing
 this will normally affect the fitness values calculated at the end of the
 current generation; if you want current fitness values to be affected, you can
-call SLiMSim’s method recalculateFitness() – but see the documentation of that
+call SLiMSim's method recalculateFitness() - but see the documentation of that
 method for caveats.</p></dd>
 <dt>generation</dt><dd><p>A property of type integer. It is of length one (a singleton).
 This property is a variable, so it is modifiable. <strong>Property Description:</strong>
 The current generation number.</p></dd>
+<dt>generationStage</dt><dd><p>A property of type string. It is of length one
+(a singleton). This property is a constant, so it is not modifiable.
+<strong>Property Description:</strong> The current generation stage, as a string. The
+values of this property essentially mirror the generation stages of WF and
+nonWF models (see chapters 22 and 23). Common values include "early" (during
+execution of early() events), "reproduction" (during offspring generation),
+"fitness" (during fitness evaluation), and "late" (during execution of late()
+events). Other possible values include "begin" (during internal setup before
+each generation), "selection" (while applying selection and mortality in
+nonWF models), "tally" (while tallying mutation reference counts and removing
+fixed mutations), "swap" (while swapping the offspring generation into the
+parental generation in WF models), "end" (during internal bookkeeping after
+each generation), and "console" (during the in-between-generations state in
+which commands in SLiMgui's Eidos console are executed). It would probably be
+a good idea not to use this latter set of values; they are probably not user-
+visible during ordinary model execution anyway. During execution of initialize()
+callbacks, no SLiMSim object yet exists and so this property cannot be accessed.
+To detect this state, use exists("sim"); if that is F, sim does not exist, and
+therefore your code is executing during initialize() callbacks (or outside of
+SLiM entirely, in some other Eidos-based context).</p></dd>
 <dt>genomicElementTypes</dt><dd><p>A property of type GenomicElementType object. This
 property is a constant, so it is not modifiable. <strong>Property Description:</strong>
 The GenomicElementType objects being used in the simulation.</p></dd>
@@ -226,11 +252,14 @@ know the runtime environment.</p></dd>
 <dt>interactionTypes</dt><dd><p>A property of type InteractionType object. This property
 is a constant, so it is not modifiable. <strong>Property Description:</strong> The
 InteractionType objects being used in the simulation.</p></dd>
+<dt>logFiles</dt><dd><p>A property of type LogFile object. This property is a constant,
+so it is not modifiable. <strong>Property Description:</strong> The LogFile objects
+being used in the simulation.</p></dd>
 <dt>modelType</dt><dd><p>A property of type string. It is of length one (a singleton).
 This property is a constant, so it is not modifiable. <strong>Property
 Description:</strong> The type of model being simulated, as specified in
-initializeSLiMModelType(). This will be "WF" for WF models (Wright–Fisher
-models, the default), or "nonWF" for nonWF models (non-Wright–Fisher models; see
+initializeSLiMModelType(). This will be "WF" for WF models (Wright-Fisher
+models, the default), or "nonWF" for nonWF models (non-Wright-Fisher models; see
 section 1.6 for discussion).</p></dd>
 <dt>mutationTypes</dt><dd><p>A property of type MutationType object. This property
 is a constant, so it is not modifiable. <strong>Property Description:</strong> The
@@ -270,12 +299,55 @@ A user-defined integer value. The value of tag is initially undefined, and
 it is an error to try to read it; if you wish it to have a defined value, you
 must arrange that yourself by explicitly setting its value prior to using it
 elsewhere in your code. The value of tag is not used by SLiM; it is free for
-you to use. See also the getValue() and setValue() methods, for another way of
-attaching state to the simulation.</p></dd>
+you to use. See also the getValue() and setValue() methods (provided by the
+Dictionary class; see the Eidos manual), for another way of attaching state to
+the simulation.</p></dd>
+<dt>verbosity</dt><dd><p>A property of type integer. It is of length one (a singleton).
+This property is a variable, so it is modifiable. <strong>Property Description:</strong>
+The verbosity level, for SLiM's logging of information about the simulation.
+This is 1 by default, but can be changed at the command line with the -l[ong]
+option. It is provided here so that scripts can consult it to govern the level
+of verbosity of their own output, or set the verbosity level for particular
+sections of their code. A verbosity level of 0 suppresses most of SLiM's
+optional output; 2 adds some extra output beyond SLiM's standard output. See
+sections 19.3 and 20.4 for more information.</p></dd>
 
 
 </dl>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other SLiMSim: 
+<code><a href='addSubpopSplit.html'>addSubpopSplit</a>()</code>,
+<code><a href='addSubpop.html'>addSubpop</a>()</code>,
+<code><a href='countOfMutationsOfType.html'>countOfMutationsOfType</a>()</code>,
+<code><a href='createLogFile.html'>createLogFile</a>()</code>,
+<code><a href='deregisterScriptBlock.html'>deregisterScriptBlock</a>()</code>,
+<code><a href='mutationCounts.html'>mutationCounts</a>()</code>,
+<code><a href='mutationFrequencies.html'>mutationFrequencies</a>()</code>,
+<code><a href='mutationsOfType.html'>mutationsOfType</a>()</code>,
+<code><a href='outputFixedMutations.html'>outputFixedMutations</a>()</code>,
+<code><a href='outputFull.html'>outputFull</a>()</code>,
+<code><a href='outputMutations.html'>outputMutations</a>()</code>,
+<code><a href='outputUsage.html'>outputUsage</a>()</code>,
+<code><a href='readFromPopulationFile.html'>readFromPopulationFile</a>()</code>,
+<code><a href='recalculateFitness.html'>recalculateFitness</a>()</code>,
+<code><a href='registerEarlyEvent.html'>registerEarlyEvent</a>()</code>,
+<code><a href='registerFitnessCallback.html'>registerFitnessCallback</a>()</code>,
+<code><a href='registerInteractionCallback.html'>registerInteractionCallback</a>()</code>,
+<code><a href='registerLateEvent.html'>registerLateEvent</a>()</code>,
+<code><a href='registerMateChoiceCallback.html'>registerMateChoiceCallback</a>()</code>,
+<code><a href='registerModifyChildCallback.html'>registerModifyChildCallback</a>()</code>,
+<code><a href='registerMutationCallback.html'>registerMutationCallback</a>()</code>,
+<code><a href='registerRecombinationCallback.html'>registerRecombinationCallback</a>()</code>,
+<code><a href='registerReproductionCallback.html'>registerReproductionCallback</a>()</code>,
+<code><a href='rescheduleScriptBlock.html'>rescheduleScriptBlock</a>()</code>,
+<code><a href='simulationFinished.html'>simulationFinished</a>()</code>,
+<code><a href='subsetMutations.html'>subsetMutations</a>()</code>,
+<code><a href='treeSeqCoalesced.html'>treeSeqCoalesced</a>()</code>,
+<code><a href='treeSeqOutput.html'>treeSeqOutput</a>()</code>,
+<code><a href='treeSeqRememberIndividuals.html'>treeSeqRememberIndividuals</a>()</code>,
+<code><a href='treeSeqSimplify.html'>treeSeqSimplify</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

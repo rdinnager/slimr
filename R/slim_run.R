@@ -41,7 +41,16 @@
 #' entire simulation output to make a post-hoc animation).
 #' @param rec_args An optional list containing named arguments to be passed to \code{\link[av]{av_capture_graphics}} for graphics recording.
 #' Ignored if \code{record_graphics} is not \code{TRUE}.
-#' @param ... Additional arguments to be passed to any callback functions.
+#' @param ... Additional arguments to be passed to or from other methods.
+#' @param cb_args Additional arguments to be passed to any callback functions. Should be a named
+#' list where the names refer to the callback's arguments.
+#' @param parallel If \code{x} is a \code{slimr_script_coll}, should the elements in \code{x}
+#' be run in parallel. For this to work, you must have setup a parallel plan using \code{\link[future]{plan}}
+#' @param progress Should a progress bar be displayed?
+#' @param throw_error Should an error be thrown in R is an error is encountered in SLiM?
+#' If \code{FALSE}, the error message from SLiM is stored in the object returned
+#' by \code{slim_run}, but execution continues in R. Setting this to \code{TRUE} is useful
+#' in a script if subsequent code assumes that the simulation finished successfully.
 #'
 #' @return A \code{slimr_results} object which has the following components:
 #' \describe{
@@ -130,7 +139,7 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
 
   if(!attr(x, "script_info")$rendered) {
     rlang::inform("slimr_script is unrendered. Trying to render now...")
-    x <- slimr_script_render(x)
+    x <- slim_script_render(x)
   }
 
   script <- as_slim_text(x)
@@ -365,6 +374,9 @@ slim_run_script <- function(script_txt,
         pb$tick(0)
       }
       if(length(out_lines) > 0) {
+
+        curr_line <- curr_line + length(out_lines)
+
 
         if(show_output) {
           cat("\r                                               \r")

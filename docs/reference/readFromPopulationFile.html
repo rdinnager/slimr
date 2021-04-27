@@ -113,10 +113,13 @@ full SLiM script." />
       <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
-      <a href="../articles/simple_example.html">simple_example</a>
+      <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
     </li>
   </ul>
 </li>
@@ -151,7 +154,7 @@ full SLiM script." />
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>readFromPopulationFile</code>, which is a method
-of the SLiM class <code>SLiMSim</code>.
+of the SLiM class <code><a href='SLiMSim.html'>SLiMSim</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href='slim_block.html'>slim_block</a></code> function further
@@ -177,9 +180,11 @@ details for description.</p></td>
     <p>An object of type integer. Return will be of length 1 (a singleton)</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Read from a population initialization file, whether in text or binary
+    <p>Documentation for this function can be found in the official <a href='http://
+benhaller.com/slim/SLiM_Manual.pdf#page=569'>SLiM manual: page 569</a>.</p>
+<p>Read from a population initialization file, whether in text or binary
 format as previously specified to outputFull(), and return the generation
-counter value represented by the file’s contents (i.e., the generation at which
+counter value represented by the file's contents (i.e., the generation at which
 the file was generated). Although this is most commonly used to set up initial
 populations (often in an Eidos event set to run in generation 1, immediately
 after simulation initialization), it may be called in any Eidos event; the
@@ -201,28 +206,28 @@ need to evaluate interactions or modify other state prior to doing so). In SLiM
 any context other than a late() event causes a warning; calling from a late()
 event is almost always correct in WF models, so that fitness values can be
 automatically recalculated by SLiM at the usual time in the generation cycle
-without the need to force their recalculation (see chapter 21, and comments on
+without the need to force their recalculation (see chapter 22, and comments on
 recalculateFitness() below). In SLiM 3.0 when using the nonWF model, calling
 readFromPopulationFile() from any context other than an early() event causes a
 warning; calling from an early() event is almost always correct in nonWF models,
 so that fitness values can be automatically recalculated by SLiM at the usual
 time in the generation cycle without the need to force their recalculation (see
-chapter 22, and comments on recalculateFitness() below). As of SLiM 2.1, this
+chapter 23, and comments on recalculateFitness() below). As of SLiM 2.1, this
 method changes the generation counter to the generation read from the file.
 If you do not want the generation counter to be changed, you can change it
 back after reading, by setting sim.generation to whatever value you wish. Note
 that restoring a saved past state and running forward again will not yield the
-same simulation results, because the random number generator’s state will not
+same simulation results, because the random number generator's state will not
 be the same; to ensure reproducibility from a given time point, setSeed() can
-be used to establish a new seed value. Any changes made to the simulation’s
+be used to establish a new seed value. Any changes made to the simulation's
 structure (mutation types, genomic element types, etc.) will not be wiped
 and re-established by readFromPopulationFile(); this method loads only the
-population’s state, not the simulation configuration, so care should be taken
+population's state, not the simulation configuration, so care should be taken
 to ensure that the simulation structure meshes coherently with the loaded data.
 Indeed, state such as the selfing and cloning rates of subpopulations, values
 set into tag properties, and values set onto objects with setValue() will also
 be lost, since it is not saved out by outputFull(). Only information saved by
-outputFull() will be restored; all other state associated with the simulation’s
+outputFull() will be restored; all other state associated with the simulation's
 subpopulations, individuals, genomes, mutations, and substitutions will be lost,
 and should be re-established by the model if it is still needed. As of SLiM
 2.3, this method will read and restore the spatial positions of individuals if
@@ -241,17 +246,21 @@ an error will also result; the nonWF model requires age information. As of SLiM
 3.3, this method will restore the nucleotides of nucleotide-based mutations, and
 will restore the ancestral nucleotide sequence, if that information is present
 in the output file. Loading an output file that contains nucleotide information
-in a non-nucleotide-based model, and vice versa, will produce an error.
-This method can also be used to read tree-sequence (.trees) files saved by
-treeSeqOutput() or generated by the Python pyslim package. When loading a tree
-sequence, a crosscheck of the loaded data will be performed to ensure that the
-tree sequence was well-formed and was loaded correctly. When running a Release
-build of SLiM, however, this crosscheck will only occur the first time that
-readFromPopulationFile() is called to load a tree sequence; subsequent calls
-will not perform this crosscheck, for greater speed when running models that
-load saved population state many times (such as models that are conditional on
-fixation). If you suspect that a tree sequence file might be corrupted or read
-incorrectly, running a Debug build of SLiM enables crosschecks after every load.</p>
+in a non-nucleotide-based model, and vice versa, will produce an error. As of
+SLiM 3.5, this method will read and restore the pedigree IDs of individuals and
+genomes if that information is present in the output file (as requested with
+outputFull(pedigreeIDs=T)) and if SLiM's optional pedigree tracking has been
+turned on with initializeSLiMOptions(keepPedigrees=T). This method can also be
+used to read tree-sequence (.trees) files saved by treeSeqOutput() or generated
+by the Python pyslim package. When loading a tree sequence, a crosscheck of
+the loaded data will be performed to ensure that the tree sequence was well-
+formed and was loaded correctly. When running a Release build of SLiM, however,
+this crosscheck will only occur the first time that readFromPopulationFile()
+is called to load a tree sequence; subsequent calls will not perform this
+crosscheck, for greater speed when running models that load saved population
+state many times (such as models that are conditional on fixation). If you
+suspect that a tree sequence file might be corrupted or read incorrectly,
+running a Debug build of SLiM enables crosschecks after every load.</p>
     <h2 class="hasAnchor" id="copyright"><a class="anchor" href="#copyright"></a>Copyright</h2>
 
     
@@ -260,9 +269,42 @@ incorrectly, running a Debug build of SLiM enables crosschecks after every load.
 reproduced from the official manual,
 which can be found here: <a href='http://benhaller.com/slim/SLiM_Manual.pdf'>http://benhaller.com/slim/SLiM_Manual.pdf</a>. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href='https://messerlab.org/slim/'>https://messerlab.org/slim/</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other SLiMSim: 
+<code><a href='SLiMSim.html'>SLiMSim</a></code>,
+<code><a href='addSubpopSplit.html'>addSubpopSplit</a>()</code>,
+<code><a href='addSubpop.html'>addSubpop</a>()</code>,
+<code><a href='countOfMutationsOfType.html'>countOfMutationsOfType</a>()</code>,
+<code><a href='createLogFile.html'>createLogFile</a>()</code>,
+<code><a href='deregisterScriptBlock.html'>deregisterScriptBlock</a>()</code>,
+<code><a href='mutationCounts.html'>mutationCounts</a>()</code>,
+<code><a href='mutationFrequencies.html'>mutationFrequencies</a>()</code>,
+<code><a href='mutationsOfType.html'>mutationsOfType</a>()</code>,
+<code><a href='outputFixedMutations.html'>outputFixedMutations</a>()</code>,
+<code><a href='outputFull.html'>outputFull</a>()</code>,
+<code><a href='outputMutations.html'>outputMutations</a>()</code>,
+<code><a href='outputUsage.html'>outputUsage</a>()</code>,
+<code><a href='recalculateFitness.html'>recalculateFitness</a>()</code>,
+<code><a href='registerEarlyEvent.html'>registerEarlyEvent</a>()</code>,
+<code><a href='registerFitnessCallback.html'>registerFitnessCallback</a>()</code>,
+<code><a href='registerInteractionCallback.html'>registerInteractionCallback</a>()</code>,
+<code><a href='registerLateEvent.html'>registerLateEvent</a>()</code>,
+<code><a href='registerMateChoiceCallback.html'>registerMateChoiceCallback</a>()</code>,
+<code><a href='registerModifyChildCallback.html'>registerModifyChildCallback</a>()</code>,
+<code><a href='registerMutationCallback.html'>registerMutationCallback</a>()</code>,
+<code><a href='registerRecombinationCallback.html'>registerRecombinationCallback</a>()</code>,
+<code><a href='registerReproductionCallback.html'>registerReproductionCallback</a>()</code>,
+<code><a href='rescheduleScriptBlock.html'>rescheduleScriptBlock</a>()</code>,
+<code><a href='simulationFinished.html'>simulationFinished</a>()</code>,
+<code><a href='subsetMutations.html'>subsetMutations</a>()</code>,
+<code><a href='treeSeqCoalesced.html'>treeSeqCoalesced</a>()</code>,
+<code><a href='treeSeqOutput.html'>treeSeqOutput</a>()</code>,
+<code><a href='treeSeqRememberIndividuals.html'>treeSeqRememberIndividuals</a>()</code>,
+<code><a href='treeSeqSimplify.html'>treeSeqSimplify</a>()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Benjamin C Haller (<a href='mailto:bhaller@benhaller.com'>bhaller@benhaller.com</a>) and Philipp W Messer

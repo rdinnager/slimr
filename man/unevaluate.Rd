@@ -16,7 +16,7 @@ An object of type void.
 }
 \description{
 Documentation for SLiM function \code{unevaluate}, which is a method of the SLiM
-class \code{InteractionType}.
+class \code{\link{InteractionType}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -25,6 +25,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=553}{SLiM manual: page 553}.
+
 Discards all evaluation of this interaction, for all subpopulations.
 The state of the InteractionType is reset to a state prior to evaluation. This
 can be useful if the model state has changed in such a way that the evaluation
@@ -35,12 +38,12 @@ in such a way that previously calculated interaction strengths are no longer
 correct, unevaluate() allows the interaction to begin again from scratch. In
 WF models, all interactions are automatically reset to an unevaluated state at
 the moment when the new offspring generation becomes the parental generation
-(at step 4 in the generation cycle; see section 21.4). In nonWF models,
+(at step 4 in the generation cycle; see section 22.4). In nonWF models,
 all interactions are automatically reset to an unevaluated state twice per
 generation: immediately after reproduction() callbacks have completed (after
-step 1 in the generation cycle; see section 22.1), and immediately before
+step 1 in the generation cycle; see section 23.1), and immediately before
 viability/survival selection (before step 4 in the generation cycle; see section
-22.4). Given this automatic invalidation, most simulations have no reason to
+23.4). Given this automatic invalidation, most simulations have no reason to
 call unevaluate().
 }
 \section{Copyright}{
@@ -49,12 +52,29 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other InteractionType: 
+\code{\link{InteractionType}},
+\code{\link{distanceToPoint}()},
+\code{\link{distance}()},
+\code{\link{drawByStrength}()},
+\code{\link{evaluate}()},
+\code{\link{interactingNeighborCount}()},
+\code{\link{interactionDistance}()},
+\code{\link{nearestInteractingNeighbors}()},
+\code{\link{nearestNeighborsOfPoint}()},
+\code{\link{nearestNeighbors}()},
+\code{\link{setInteractionFunction}()},
+\code{\link{strength}()},
+\code{\link{totalOfNeighborStrengths}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{InteractionType}

@@ -5,13 +5,18 @@
 #' @name slimrlang-vctrs
 NULL
 
-#' @export
 new_slimr_code <- function(x = list()) {
   assert_valid_code(x)
   new_list_of(x, ptype = character(), class = "slimr_code")
 }
 
+#' Create a \code{slimr_code} object
+#'
+#' @param ... A list of character vectors.
+#'
 #' @export
+#' @examples
+#' slimr_code('print("Hello")', 'print("World!")')
 slimr_code <- function(...) {
   x <- list(...)
   x <- lapply(x, vec_cast, character())
@@ -58,7 +63,6 @@ as.character.slimr_code <- function(x, as_list = FALSE, ...) {
 }
 
 
-#' @export
 new_slimr_script <- function(block_name = character(),
                              block_id = character(),
                              start_gen = character(),
@@ -470,38 +474,89 @@ as_slimr_script <- function(slim_script_text) {
 }
 
 
+#' Extract a single code block from a \code{slimr_script}
+#'
+#' @param x \code{slimr_script} object to extract block from
+#'
+#' @param i The block to extract. Can be either an integer specifying what block(s)
+#' index to extract, or a character, in which case it pulls the block(s) with
+#' the corresponding name.
+#'
 #' @export
+#' @examples
+#' script <- slim_script(
+#'   slim_block_init_minimal(),
+#'   slim_block_finish(100)
+#' )
+#' get_block(script, "block_init")
+#' get_block(script, 2)
 get_block <- function(x, i) {
   #vec_assert(x, new_slimr_script())
   vec_slice(x, vec_as_location(i, vec_size(x), names = field(x, "block_name")))
 }
 
+#' Extract or set code from a \code{slimr_script} object
+#'
+#' @param x A \code{slimr_script} object
+#' @rdname code
+#'
 #' @export
+#' @examples
+#' script <- slim_script(
+#'   slim_block_init_minimal(),
+#'   slim_block_finish(100)
+#' )
+#' code(script)
 code <- function(x) {
   field(x, "code")
 }
 
+#' @param x A \code{slimr_script} object
+#'
+#' @param value Code to replace with.
+#' @rdname code
+#'
 #' @export
 `code<-` <- function(x, value) {
   field(x, "code") <- value
+  x
 }
 
+#' Extract or set end generation
+#'
+#' @param x A \code{slimr_script} object
+#' @rdname end_gen
+#'
 #' @export
+#' @examples
+#' script <- slim_script(
+#'   slim_block_init_minimal(),
+#'   slim_block(1, 100, {
+#'     sim.outputFull()
+#'   })
+#' )
+#' script
+#' end_gen(script)
+#' end_gen(script)[2] <- 1000
+#' script
 end_gen <- function(x) {
   field(x, "end_gen")
 }
 
+#' @param x A \code{slimr_script} object
+#' @param value A end generation value to replace with.
+#' @rdname end_gen
+#'
 #' @export
-`end_gen<-` <- function(x, position, value) {
-  field(x, "end_gen") <- value
+`end_gen<-` <- function(x, value) {
+  field(x, "end_gen") <- as.character(value)
+  x
 }
 
-#' @export
-`modify<-` <- function(x, ..., value) {
+`modify<-` <- function(x, field, position, value) {
   UseMethod("modify<-", x)
 }
 
-#' @export
 `modify<-.slimr_script` <- function(x, field, position, value) {
   if(field == "end_gen") {
     old_end_gen <- attr(x, "script_info")$end_gen
@@ -538,7 +593,34 @@ slim_script_duration <- function(x, duration) {
 
 }
 
+#' Convert a slimr_script to a length 1 character vector
+#'
+#' @param x \code{slimr_script} object to convert
+#' @param ... Further arguments, passed to or from other methods.
+#'
+#' @return A length 1 character vector
 #' @export
+#'
+#' @examples
+#' slim_script(
+#'    slim_block(initialize(),
+#'           {
+#'             initializeMutationRate(1e-7);
+#'             initializeMutationType("m1", 0.5, "f", 0.0);
+#'             initializeGenomicElementType("g1", m1, 1.0);
+#'             initializeGenomicElement(g1, 0, 99999);
+#'             initializeRecombinationRate(1e-8);
+#'           }),
+#'    slim_block(1,
+#'           {
+#'             sim.addSubpop("p1", 500);
+#'           }),
+#'    slim_block(10000,
+#'           {
+#'             sim.simulationFinished();
+#'           })
+#') -> script
+#'as_slim_text(script)
 as_slim_text <- function(x, ...) {
   UseMethod("as_slim_text", x)
 }
@@ -630,7 +712,41 @@ slimr_write.character <- function(x, file, ...) {
 
 }
 
+#' Reconstruct slimrlang code to make this slimr_script
+#'
+#' This reconstructs a \code{slimrlang} input sequence to regenerate the given \script(slimr_script)
+#' object. This is useful if you want to edit the SLiM script to add additional functionality,
+#' for example, where you want to incorporate the results of \code{slimrlang}'s internal edits, e.g.
+#' such as removing \code{\link{%.%}} special operators, etc. It is also useful when the
+#' \code{slimr_script} object has been created from converting a text-based SLiM script, such as when
+#' using \code{\link[slimr]{as.slimr_script}} from the \code{slimr} package on a character variable.
+#'
+#' @param x slimr_script object to reconstruct
+#' @param ... Further arguments, passed to or from other methods.
+#'
+#' @return A character vector of length one containing the reconstructed code.
 #' @export
+#'
+#' @examples
+#'slim_script(
+#'     slim_block(initialize(),
+#'          {
+#'               .Init$initializeMutationRate(1e-7);
+#'               .Init$initializeMutationType("m1", 0.5, "f", 0.0);
+#'               .Init$initializeGenomicElementType("g1", m1, 1.0);
+#'               .Init$initializeGenomicElement(g1, 0, 99999);
+#'               .Init$initializeRecombinationRate(1e-8);
+#'          }),
+#'            slim_block(1,
+#'            {
+#'               sim%.%.SS$addSubpop("p1", 500);
+#'            }),
+#'    slim_block(10000,
+#'          {
+#'               sim%.%.SS$simulationFinished();
+#'          })
+#') -> script
+#'reconstruct(script)
 reconstruct <- function(x, ...) {
   UseMethod("reconstruct", x)
 }
@@ -689,12 +805,18 @@ reconstruct.slimr_script <- function(x, ...) {
 }
 
 
-#' @export
+#' Make a new \code{slimr_script_coll} object
+#'
+#' @param x A list of \code{slir_script} objects
+#' @return A \code{slimr_script_coll} object
 new_slimr_script_coll <- function(x = list()) {
   new_list_of(x, ptype = new_slimr_script(), class = "slimr_script_coll")
 }
 
-#' @export
+#' Make a new \code{slimr_script_coll} object
+#'
+#' @param ... A list of \code{slir_script} objects
+#' @return A \code{slimr_script_coll} object
 slimr_script_coll <- function(...) {
   x <- list(...)
   x <- lapply(x, vec_cast, new_slimr_script())

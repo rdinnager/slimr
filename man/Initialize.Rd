@@ -15,6 +15,38 @@ Initialize
 Documentation for Initialize class from SLiM
 }
 \details{
+Before a SLiM simulation can be run, the various classes underlying the
+simulation need to be
+set up with an initial configuration. In SLiM 1.8 and earlier, this was done by
+means of # directives
+in the simulation's input file. In SLiM 2 and later, simulation parameters are
+instead configured
+using Eidos.
+Configuration in Eidos is done in initialize() callbacks that run prior to the
+beginning of
+simulation execution. Eidos callbacks are discussed more broadly in chapter 25,
+but for our
+present purposes, the idea is very simple. In your input file, you can simply
+write something like
+this:
+initialize() { ... }
+The initialize() specifies that the script block is to be executed as an
+initialize() callback
+before the simulation starts. The script between the braces {} would set up
+various aspects of the
+simulation by calling initialization functions. These are SLiM functions that
+may be called only in
+an initialize() callback, and their names begin with initialize to mark them
+clearly as such.
+You may also use other Eidos functionality, of course; for example, you might
+automate generating
+a large number of subpopulations with complex migration patterns by using a for
+loop.
+One thing worth mentioning is that in the context of an initialize() callback,
+the sim global
+for the simulation itself is not defined. This is because the state of the
+simulation is not yet
+constructed fully, and accessing partially constructed state would not be safe.
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{initializeAncestralNucleotides}}}
@@ -37,4 +69,22 @@ This class has the following properties:
 \item{None.}{This class has no properties.}
 }
 }
+\seealso{
+Other Initialize: 
+\code{\link{initializeAncestralNucleotides}()},
+\code{\link{initializeGeneConversion}()},
+\code{\link{initializeGenomicElementType}()},
+\code{\link{initializeGenomicElement}()},
+\code{\link{initializeHotspotMap}()},
+\code{\link{initializeInteractionType}()},
+\code{\link{initializeMutationRate}()},
+\code{\link{initializeMutationTypeNuc}()},
+\code{\link{initializeMutationType}()},
+\code{\link{initializeRecombinationRate}()},
+\code{\link{initializeSLiMModelType}()},
+\code{\link{initializeSLiMOptions}()},
+\code{\link{initializeSex}()},
+\code{\link{initializeTreeSeq}()}
+}
+\concept{Initialize}
 \keyword{datasets}

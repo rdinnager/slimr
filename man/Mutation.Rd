@@ -15,12 +15,18 @@ Mutation
 Documentation for Mutation class from SLiM
 }
 \details{
+This class represents a single point mutation. Mutations can be shared
+by the genomes of many
+individuals; if they reach fixation, they are converted to Substitution objects.
+Although Mutation has a tag property, like most SLiM classes, the subpopID can
+also store
+custom values if you don't need to track the origin subpopulation of mutations
+(see below).
+Section 1.5.2 presents an overview of the conceptual role of this class.
 This class has the following methods (functions):
 \itemize{
-\item{\code{\link{getValue}}}
 \item{\code{\link{setMutationType}}}
 \item{\code{\link{setSelectionCoeff}}}
-\item{\code{\link{setValue}}}
 }
 This class has the following properties:
 \describe{
@@ -31,6 +37,21 @@ immutable identifier that will be unique across the duration of the run. These
 identifiers are not re-used during a run, except that if a population file is
 loaded from disk, the loaded mutations will receive their original identifier
 values as saved in the population file. }
+\item{isFixed}{A property of type logical. It is of length one (a singleton).
+This property is a constant, so it is not modifiable. \strong{Property
+Description:} T if the mutation has fixed (in the SLiM sense of having been
+converted to a Substitution object), F otherwise. Since fixed/substituted
+mutations are removed from the simulation, you will only see this flag be T if
+you have held onto a mutation beyond its usual lifetime (see section 27.2). }
+\item{isSegregating}{A property of type logical. It is of length one
+(a singleton). This property is a constant, so it is not modifiable.
+\strong{Property Description:} T if the mutation is segregating (in the SLiM
+sense of not having been either lost or converted to a Substitution object), F
+otherwise. Since both lost and fixed/substituted mutations are removed from the
+simulation, you will only see this flag be F if you have held onto a mutation
+beyond its usual lifetime (see section 27.2). Note that if isSegregating is F,
+isFixed will let you determine whether the mutation is no longer segregating
+because it was lost, or because it fixed. }
 \item{mutationType}{A property of type MutationType object. It is of length
 one (a singleton). This property is a constant, so it is not modifiable.
 \strong{Property Description:} The MutationType from which this mutation was
@@ -57,10 +78,10 @@ Description:} The position in the chromosome of this mutation. }
 from the distribution of fitness effects of its MutationType. If a mutation
 has a selectionCoeff of s, the multiplicative fitness effect of the mutation
 in a homozygote is 1+s; in a heterozygote it is 1+hs, where h is the dominance
-coefficient kept by the mutation type (see section 23.9.1). Note that this
+coefficient kept by the mutation type (see section 24.10.1). Note that this
 property has a quirk: it is stored internally in SLiM using a single-precision
 float, not the double-precision float type normally used by Eidos. This means
-that if you set a mutation mut’s selection coefficient to some number x,
+that if you set a mutation mut's selection coefficient to some number x,
 mut.selectionCoeff==x may be F due to floating-point rounding error. Comparisons
 of floating-point numbers for exact equality is often a bad idea, but this is
 one case where it may fail unexpectedly. Instead, it is recommended to use the
@@ -71,8 +92,8 @@ The identifier of the subpopulation in which this mutation arose. This property
 can be used to track the ancestry of mutations through their subpopulation of
 origin. For an overview of other ways of tracking genetic ancestry, including
 true local ancestry at each position on the chromosome, see sections 1.7 and
-14.7. If you don’t care which subpopulation a mutation originated in, the
-subpopID may be used as an arbitrary integer "tag” value for any purpose you
+14.7. If you don't care which subpopulation a mutation originated in, the
+subpopID may be used as an arbitrary integer "tag" value for any purpose you
 wish; SLiM does not do anything with the value of subpopID except propagate
 it to Substitution objects and report it in output. (It must still be >= 0,
 however, since SLiM object identifiers are limited to nonnegative integers). }
@@ -86,4 +107,10 @@ to use.}
 
 }
 }
+\seealso{
+Other Mutation: 
+\code{\link{setMutationType}()},
+\code{\link{setSelectionCoeff}()}
+}
+\concept{Mutation}
 \keyword{datasets}

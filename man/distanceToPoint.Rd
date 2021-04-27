@@ -19,7 +19,7 @@ An object of type float.
 }
 \description{
 Documentation for SLiM function \code{distanceToPoint}, which is a method of the
-SLiM class \code{InteractionType}.
+SLiM class \code{\link{InteractionType}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -28,13 +28,16 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
+Documentation for this function can be found in the official \href{http://
+benhaller.com/slim/SLiM_Manual.pdf#page=549}{SLiM manual: page 549}.
+
 Returns a vector containing distances between individuals in
 individuals1 and the point given by the spatial coordinates in point. The
 point vector is interpreted as providing coordinates precisely as specified by
-the spatiality of the interaction type; if the interaction type’s spatiality
+the spatiality of the interaction type; if the interaction type's spatiality
 is "xz", for example, then point[0] is assumed to be an x value, and point[1]
 is assumed to be a z value. Be careful; this means that in general it is
-not safe to pass an individual’s spatialPosition property for point, for
+not safe to pass an individual's spatialPosition property for point, for
 example (although it is safe if the spatiality of the interaction matches the
 dimensionality of the simulation). A coordinate for a periodic spatial dimension
 must be within the spatial bounds for that dimension, since coordinates outside
@@ -54,12 +57,29 @@ This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
 which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
 documentation is
-Copyright © 2016–2020 Philipp Messer. All rights reserved. More information
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\seealso{
+Other InteractionType: 
+\code{\link{InteractionType}},
+\code{\link{distance}()},
+\code{\link{drawByStrength}()},
+\code{\link{evaluate}()},
+\code{\link{interactingNeighborCount}()},
+\code{\link{interactionDistance}()},
+\code{\link{nearestInteractingNeighbors}()},
+\code{\link{nearestNeighborsOfPoint}()},
+\code{\link{nearestNeighbors}()},
+\code{\link{setInteractionFunction}()},
+\code{\link{strength}()},
+\code{\link{totalOfNeighborStrengths}()},
+\code{\link{unevaluate}()}
+}
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{InteractionType}

@@ -238,7 +238,8 @@ jobs:
 
       - name: Test coverage
         run: |
-          codecovr_try <- try(covr::codecov(quiet = FALSE, clean = FALSE))
+          codecovr_try <- try(covr::codecov(quiet = FALSE, clean = FALSE,
+          line_exclusions = "R/slim_lang.R"))
           if(inherits(codecovr_try, "try-error"))
           {
           dir.create("coverage_results")

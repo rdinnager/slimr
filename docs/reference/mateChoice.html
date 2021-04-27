@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SLiM matChoice() callback — mateChoice • slimr</title>
+<title>SLiM mateChoice() callback — mateChoice • slimr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="SLiM matChoice() callback — mateChoice" />
+<meta property="og:title" content="SLiM mateChoice() callback — mateChoice" />
 <meta property="og:description" content="This callback specifies that a code block is providing logic for an individual to choose a mate. The first parent is
 chosen based on fitness values, then this callback is called to determine the second parent (if no callback is specified, it is chosen
 randomly proportional to fitness). The callback code should return a vector of weights specifying the proportional probability of each individual in the population
@@ -54,7 +54,7 @@ being the second parent (including the first parent, as selfing is possible). Al
 referring to the individual chosen as the second parent. Returning a numeric 0 tells SLiM that no mate could be found. Lastly, returning
 NULL tells SLiM to use the default weights vector, which is the same as just returning weights but is more efficient.
 see SLiM Manual: page 599" />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://rdinnager.github.io/slimr/logo.png" />
 
 
 
@@ -146,7 +146,7 @@ see SLiM Manual: page 599" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>SLiM matChoice() callback</h1>
+    <h1>SLiM mateChoice() callback</h1>
     <small class="dont-index">Source: <a href='https://github.com/rdinnager/slimr/blob/master/R/slim_callbacks.R'><code>R/slim_callbacks.R</code></a></small>
     <div class="hidden name"><code>mateChoice.Rd</code></div>
     </div>
@@ -204,7 +204,7 @@ on the official website: <a href='https://messerlab.org/slim/'>https://messerlab
     <div class='dont-index'><p>Other callbacks: 
 <code><a href='early.html'>early</a>()</code>,
 <code><a href='fitness.html'>fitness</a>()</code>,
-<code>initialize()</code>,
+<code><a href='initialize.html'>initialize</a>()</code>,
 <code><a href='interaction.html'>interaction</a>()</code>,
 <code><a href='late.html'>late</a>()</code>,
 <code><a href='modifyChild.html'>modifyChild</a>()</code>,

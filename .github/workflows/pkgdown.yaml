@@ -10,7 +10,7 @@ jobs:
   pkgdown:
     runs-on: macOS-latest
     env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_PAT: ${{ secrets.INSTALL_GITHUB_PAT }}
     steps:
       - uses: actions/checkout@v2
 
@@ -35,8 +35,42 @@ jobs:
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
+          if (!requireNamespace("BiocManager", quietly = TRUE))
+          install.packages("BiocManager")
+          BiocManager::install("HilbertCurve")
           install.packages("pkgdown", type = "binary")
         shell: Rscript {0}
+
+      - name: Download SLiM
+        run: |
+          cd ${{ github.workspace }}
+          wget http://benhaller.com/slim/SLiM.zip
+
+      - name: Cache SLiM
+        id: cache-slim
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ github.workspace }}/SLiM_build
+            ${{ github.workspace }}/SLiM
+          key: ${{ runner.os }}-build_SLiM-${{ hashFiles('SLiM.zip') }}
+
+      - name: Install SLiM Part 1
+        if: steps.cache-slim.outputs.cache-hit != 'true'
+        run: |
+          cd ${{ github.workspace }}
+          unzip -o SLiM.zip
+          mkdir SLiM_build
+          cd SLiM_build
+          cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
+          make
+
+      - name: Install SLiM Part 2
+        run: |
+          cd ${{ github.workspace }}/SLiM_build
+          sudo make install
+          cd ..
+          rm SLiM.zip
 
       - name: Install package
         run: R CMD INSTALL .

@@ -156,6 +156,7 @@ jobs:
         with:
           name: covr-test-objects
           path: ~/covr_test_objects
+          retention-days: 1
 
       - name: Upload check results
         if: failure()
@@ -233,6 +234,7 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: covr-test-objects
+          path: ~/covr_test_objects
 
       - name: Test coverage
         run: |

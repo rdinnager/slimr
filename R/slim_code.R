@@ -64,7 +64,7 @@ slim_code_Rify <- function(code_snippet) {
 #' @param code_snippet SLiM code to Rify as a character vector
 #'
 #' @return SLiMified code snippet
-slim_code_SLiMify <- function(code_snippet, prettycode = FALSE) {
+slim_code_SLiMify <- function(code_snippet) {
 
   # code_snippet <- stringr::str_replace_all(code_snippet,
   #                                          stringr::fixed("do;"),

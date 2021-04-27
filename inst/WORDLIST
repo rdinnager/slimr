@@ -209,6 +209,7 @@ genomePedigreeID
 genomicElementType
 getValue
 github
+globals
 gridSize
 gunzip
 gz

@@ -12,7 +12,7 @@ if(on_ci()) {
   ## github actions, which is uploaded as an artifact and then
   ## downloaded only when doing covr
 
-  covr_test_folder <- "covr_test_objects"
+  covr_test_folder <- "~/covr_test_objects"
 
   if(!dir.exists(covr_test_folder)) {
     dir.create(covr_test_folder)

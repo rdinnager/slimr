@@ -155,7 +155,7 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: covr-test-objects
-          path: covr_test_objects
+          path: ~/covr_test_objects
 
       - name: Upload check results
         if: failure()

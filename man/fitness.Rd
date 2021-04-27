@@ -7,7 +7,7 @@
 fitness(mut_type_id, subpop_id)
 }
 \arguments{
-\item{mut_type_id}{The id of the mutationType to which this callback shoul apply. Can be an
+\item{mut_type_id}{The id of the mutationType to which this callback should apply. Can be an
 integer 1, 2, etc., or character "m1", "m2", etc.}
 
 \item{subpop_id}{The id(s) of the subpopulation(s) to which this callback should apply. Can

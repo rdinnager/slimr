@@ -125,7 +125,7 @@ callbacks$late <- function() {
 #'   \item{subpop}{The subpopulation in which that individual lives}
 #' }
 #'
-#' @param mut_type_id The id of the mutationType to which this callback shoul apply. Can be an
+#' @param mut_type_id The id of the mutationType to which this callback should apply. Can be an
 #' integer 1, 2, etc., or character "m1", "m2", etc.
 #' @param subpop_id The id(s) of the subpopulation(s) to which this callback should apply. Can
 #' be an integer 1, 2, etc., or character "p1", "p2", etc.
@@ -167,7 +167,7 @@ callbacks$fitness <- function(mut_type_id, subpop_id) {
 
 }
 
-#' SLiM matChoice() callback
+#' SLiM mateChoice() callback
 #'
 #' This callback specifies that a code block is providing logic for an individual to choose a mate. The first parent is
 #' chosen based on fitness values, then this callback is called to determine the second parent (if no callback is specified, it is chosen

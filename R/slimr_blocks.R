@@ -82,7 +82,7 @@ slim_block_finish <- function(generation) {
 #' @param sizes Population sizes of subpopulations. Should have a length equal to \code{n_pop}, or
 #' else a length of 1 (in which case it will be recycled to \code{n_pop})
 #' @param generation The generation to add the subpopulations (default: 1)
-#' @param when WHen to add the subpopulations ("early" or "late"). Default: "early"
+#' @param when When to add the subpopulations ("early" or "late"). Default: "early"
 #'
 #' @return A \code{slimr_block} object
 #' @export

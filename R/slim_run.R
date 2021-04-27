@@ -43,7 +43,7 @@
 #' Ignored if \code{record_graphics} is not \code{TRUE}.
 #' @param ... Additional arguments to be passed to or from other methods.
 #' @param cb_args Additional arguments to be passed to any callback functions. Should be a named
-#' list where the names refer to the callback's argument s.
+#' list where the names refer to the callback's arguments.
 #' @param parallel If \code{x} is a \code{slimr_script_coll}, should the elements in \code{x}
 #' be run in parallel. For this to work, you must have setup a parallel plan using \code{\link[future]{plan}}
 #' @param progress Should a progress bar be displayed?

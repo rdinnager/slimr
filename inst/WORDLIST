@@ -146,6 +146,7 @@ calcHeterozygosity
 calcPairHeterozygosity
 calcVA
 calcWattersonsTheta
+callback's
 center
 centered
 centimorgan

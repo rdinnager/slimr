@@ -73,6 +73,7 @@ Suggests:
     furrr,
     future,
     Biostrings,
-    raster
+    raster,
+    withr
 VignetteBuilder: knitr
 Config/testthat/edition: 3

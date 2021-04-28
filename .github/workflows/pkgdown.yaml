@@ -3,6 +3,7 @@ on:
     branches:
       - master
   pull_request:
+    branches:
       - master
 
 name: pkgdown
@@ -36,9 +37,8 @@ jobs:
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
-          if (!requireNamespace("BiocManager", quietly = TRUE))
-          install.packages("BiocManager")
-          BiocManager::install("HilbertCurve")
+          remotes::install_bioc("HilbertCurve")
+          remotes::install_bioc("Biostrings")
           install.packages("pkgdown", type = "binary")
         shell: Rscript {0}
 

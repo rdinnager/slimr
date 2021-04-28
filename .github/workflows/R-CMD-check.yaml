@@ -74,6 +74,7 @@ jobs:
         run: |
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
+          remotes::install_bioc("Biostrings")
         shell: Rscript {0}
 
       - name: Download SLiM on Windows
@@ -196,6 +197,7 @@ jobs:
         run: |
           install.packages(c("remotes"))
           remotes::install_deps(dependencies = TRUE)
+          remotes::install_bioc("Biostrings")
           remotes::install_cran("covr")
         shell: Rscript {0}
 

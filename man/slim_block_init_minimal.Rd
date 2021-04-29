@@ -38,3 +38,9 @@ This function creates a minimal initialize block, allowing you to
 set some basic parameters, but generally only allowing for one type
 of mutation, which is distributed across the whole genome.
 }
+\examples{
+slim_script(
+  slim_block_init_minimal(),
+  slim_block_finish(100)
+)
+}

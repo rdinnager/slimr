@@ -5,7 +5,7 @@
 #'
 #' @return A \code{slimr_block} object
 #' @export
-#' @example
+#' @examples
 #' slim_script(
 #'   slim_block_init_minimal(),
 #'   slim_block_progress(10),
@@ -34,18 +34,18 @@ slim_block_progress <- function(update_every = 1) {
 #'
 #' @return A \code{slimr_block} object
 #' @export
-#' @example
+#' @examples
 #' slim_script(
 #'   slim_block_init_minimal(),
 #'   slim_block_finish(100)
 #' )
 slim_block_init_minimal <- function(mutation_rate = 1e-7,
-                                   dominance = 0.5,
-                                   selection = 0.0,
-                                   dist_type = "f",
-                                   genome_size = 100000,
-                                   recombination_rate = 1e-8,
-                                   seed = NULL) {
+                                    dominance = 0.5,
+                                    selection = 0.0,
+                                    dist_type = "f",
+                                    genome_size = 100000,
+                                    recombination_rate = 1e-8,
+                                    seed = NULL) {
 
   if(is.null(seed)) {
     slim_block(initialize(), {

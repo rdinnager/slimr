@@ -2,9 +2,9 @@
 SLiMify <- function(code, for_script = FALSE) {
   code <- slimr_code_add_semicolons(code) %>%
     slimr_code_replace_arrows() %>%
-    slimr_code_replace_dollars() %>%
+    slimr_code_remove_special_classes() %>%
     slimr_code_replace_dots(for_script = for_script) %>%
-    slimr_code_remove_special_classes()
+    slimr_code_replace_dollars()
 
   if(for_script) {
     code <- slimr_code_replace_ternary(code) %>%
@@ -59,11 +59,11 @@ slimr_code_replace_dots <- function(code_one, for_script = FALSE) {
                              ".")
   } else {
     code <- stringr::str_replace_all(code_one,
-                                     glue::glue("[^\\]\\)] \\%\\.\\% {.resources$classes_regex}\\$"),
-                                     ".")
+                                     glue::glue("([^\\]\\)]) \\%\\.\\% {.resources$classes_regex}\\$"),
+                                     "\\1.")
     code <- stringr::str_replace_all(code,
-                             "[^\\]\\)] \\%\\.\\% ",
-                             ".")
+                             "([^\\]\\)]) \\%\\.\\% ",
+                             "\\1.")
   }
 
   code
@@ -71,8 +71,11 @@ slimr_code_replace_dots <- function(code_one, for_script = FALSE) {
 }
 
 slimr_code_remove_special_classes <- function(code_one) {
-  stringr::str_remove_all(code_one,
+  code <- stringr::str_remove_all(code_one,
                            "(\\.Init|Initialize|\\.SS|SLiMBuiltin)\\$")
+  code <- stringr::str_remove_all(code,
+                                   glue::glue("{.resources$classes_regex}\\$"))
+  code
 }
 
 slimr_code_remove_slimr_special <- function(code_one) {

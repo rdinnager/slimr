@@ -179,6 +179,7 @@ test_that("slim_extract_genlight works as expected", {
 
   expect_snapshot(print(gl))
 
+  skip_on_os(c("mac", "linux"))
   png_file <- file.path(tempdir(), "gl_test.png")
   withr::with_png(png_file, width = 800, height = 600,
                   adegenet::plot(gl)

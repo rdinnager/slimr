@@ -152,7 +152,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Upload test objects for covr
-        if: runner.os == 'Windows'
+        if: runner.os == 'Linux'
         uses: actions/upload-artifact@master
         with:
           name: covr-test-objects

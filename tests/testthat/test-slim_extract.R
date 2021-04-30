@@ -151,8 +151,6 @@ test_that("slim_extract_genome works as expected", {
 
 test_that("slim_extract_genlight works as expected", {
 
-  skip_if_not_installed("adegenet")
-
   if(!on_covr()) {
 
     test_sim <- slim_script(
@@ -173,6 +171,8 @@ test_that("slim_extract_genlight works as expected", {
     test_sim <- readr::read_rds(file.path(covr_test_folder, "slim_extract_test_4.rds"))
 
   }
+
+  skip_if_not_installed("adegenet")
 
   gl <- slim_extract_genlight(test_sim, "output")
 

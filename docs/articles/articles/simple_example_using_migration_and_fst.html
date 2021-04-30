@@ -19,7 +19,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
 <script src="../../pkgdown.js"></script><meta property="og:title" content="simple_example_using_migration_and_fst">
 <meta property="og:description" content="slimr">
-<meta property="og:image" content="/logo.png">
+<meta property="og:image" content="https://rdinnager.github.io/slimr/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -95,7 +95,7 @@
 
       
 
-      </header><script src="simple_example_using_migration_and_fst_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
+      </header><script src="simple_example_using_migration_and_fst_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>simple_example_using_migration_and_fst</h1>
@@ -112,15 +112,19 @@
 PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 </style>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rdinnager.github.io/slimr/index.html">slimr</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rdinnager.github.io/slimr">slimr</a></span><span class="op">)</span>
 <span class="co">#&gt; Welcome to the slimr package for forward population genetics simulation in SLiM. For more information on SLiM please visit https://messerlab.org/slim/ .</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Attaching package: 'slimr'</span>
+<span class="co">#&gt; The following object is masked from 'package:methods':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     initialize</span>
 <span class="co">#&gt; The following object is masked from 'package:base':</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;     interaction</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/thibautjombart/adegenet">adegenet</a></span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: ade4</span>
+<span class="co">#&gt; Warning: package 'ade4' was built under R version 4.0.3</span>
 <span class="co">#&gt; Registered S3 method overwritten by 'spdep':</span>
 <span class="co">#&gt;   method   from</span>
 <span class="co">#&gt;   plot.mst ape</span>
@@ -131,8 +135,8 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <span class="co">#&gt;    &gt; tutorials/doc/questions: 'adegenetWeb()' </span>
 <span class="co">#&gt;    &gt; bug reports/feature requests: adegenetIssues()</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">dartR</span><span class="op">)</span>
-<span class="co">#&gt; Warning: package 'dartR' was built under R version 4.0.5</span>
 <span class="co">#&gt; Loading required package: ggplot2</span>
+<span class="co">#&gt; Warning: package 'ggplot2' was built under R version 4.0.3</span>
 <span class="co">#&gt; Registered S3 method overwritten by 'pegas':</span>
 <span class="co">#&gt;   method      from</span>
 <span class="co">#&gt;   print.amova ade4</span>
@@ -141,27 +145,13 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <span class="co">#&gt;   +.gg   ggplot2</span>
 <span class="co">#&gt; Registered S3 method overwritten by 'genetics':</span>
 <span class="co">#&gt;   method      from </span>
-<span class="co">#&gt;   [.haplotype pegas</span></code></pre></div>
-<pre class="fansi fansi-message"><code>#&gt; <span style="color: #00BBBB;">**** Welcome to dartR ****
-#&gt; </span><span>
-</span></code></pre>
-<pre class="fansi fansi-message"><code>#&gt; <span style="color: #00BB00;">Be aware that owing to CRAN requirements and compatibility reasons not all functions of the packages may run yet, as some dependencies could be missing. Hence for a most enjoyable experience we recommend to run the function </span><span>
-</span></code></pre>
-<pre class="fansi fansi-message"><code>#&gt; <span style="color: #0000BB;">gl.install.vanilla.dartR()</span><span>
-</span></code></pre>
-<pre class="fansi fansi-message"><code>#&gt; <span style="color: #00BB00;">This installs all missing and required packages for your version of dartR. 
-#&gt; For citation information please use:</span><span>
-</span></code></pre>
-<pre class="fansi fansi-message"><code>#&gt; <span style="color: #0000BB;">citation('dartR')</span><span>
-</span></code></pre>
-<pre class="fansi fansi-message"><code>#&gt; <span style="color: #00BBBB;">
-#&gt; **** Have fun using dartR! ****</span><span>
-</span></code></pre>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="co">#&gt;   [.haplotype pegas</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://purrr.tidyverse.org">purrr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/DavisVaughan/furrr">furrr</a></span><span class="op">)</span>
+<span class="co">#&gt; Warning: package 'furrr' was built under R version 4.0.3</span>
 <span class="co">#&gt; Loading required package: future</span>
+<span class="co">#&gt; Warning: package 'future' was built under R version 4.0.3</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123456</span><span class="op">)</span></code></pre></div>
 <pre><code>initialize() {
   initializeMutationRate(1e-7);
@@ -194,9 +184,9 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 
 10000 late() { sim.outputFull(); }
 </code></pre>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../../reference/slim_script.html">slim_script</a></span><span class="op">(</span>
-  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu">initialize</span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span>
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../../reference/initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span>
     <span class="fu"><a href="../../reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">1e-7</span><span class="op">)</span>;
     <span class="fu"><a href="../../reference/initializeMutationType.html">initializeMutationType</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;
     <span class="fu"><a href="../../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fl">1.0</span><span class="op">)</span>;
@@ -261,7 +251,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 #&gt;     </span><span style="color: #00BBBB;">sim.outputFull</span><span style="color: #0000BB;">()</span><span>;
 #&gt; </span><span style="color: #BBBB00;">}</span><span>
 </span></code></pre>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">disp_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0.78</span>, 
                      <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">0.10</span>, 
@@ -275,7 +265,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
                    ncol <span class="op">=</span> <span class="fl">3</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="fu"><a href="../../reference/slim_script.html">slim_script</a></span><span class="op">(</span>
-  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu">initialize</span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span>
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../../reference/initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span>
     <span class="fu">setSeed</span><span class="op">(</span><span class="fl">123456</span><span class="op">)</span>;
     <span class="fu"><a href="../../reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">2e-6</span><span class="op">)</span>;
     <span class="fu"><a href="../../reference/initializeMutationType.html">initializeMutationType</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;
@@ -341,8 +331,8 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 #&gt; </span><span style="color: #BBBB00;">}</span><span>
 </span></code></pre>
 <p>We can see that the whole matrix has been embedded in the SLiM script by running <code>as_slim_text</code> on this <code>slimr_script</code> object. This is the script that will actually be run by SLiM.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu">as_slim_text</span><span class="op">(</span><span class="va">script_2</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="fu"><a href="../../reference/as_slim_text.html">as_slim_text</a></span><span class="op">(</span><span class="va">script_2</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; initialize() {</span>
 <span class="co">#&gt;     setSeed(123456);</span>
 <span class="co">#&gt;     initializeMutationRate(2e-06);</span>
@@ -378,7 +368,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <span class="co">#&gt;     }</span>
 <span class="co">#&gt; }</span></code></pre></div>
 <p>Now let’s see if we can run it.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/slim_run.html">slim_run</a></span><span class="op">(</span><span class="va">script_2</span>, throw_error <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; </span>
@@ -387,14 +377,14 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Success!</span></code></pre></div>
 <p>Looks like it worked. We can get the resulting genomic data from the returned object and convert it into a genlight object using the <code><a href="../../reference/slim_extract_genlight.html">slim_extract_genlight()</a></code> function. Then we can plot the results.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">dartR</span><span class="op">)</span>
 
 <span class="va">inds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/slim_extract_genlight.html">slim_extract_genlight</a></span><span class="op">(</span><span class="va">results</span>, <span class="st">"final_output"</span><span class="op">)</span>
 <span class="co">#&gt; Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">inds</span><span class="op">)</span></code></pre></div>
 <p><img src="simple_example_using_migration_and_fst_files/figure-html/get_dat-1.png" width="700"> Note that the SNPs are ordered by their mutation id, which should roughly correspond to their order of origination, so the leftmost mutations are the oldest, the rightmost the youngest. Using a genlight object we can calculate a lot of population genetics metrics easily using the package <code>dartR</code>. Let’s calculate Fst for example.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p_fst</span> <span class="op">&lt;-</span> <span class="fu">dartR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dartR/man/gl.fst.pop.html">gl.fst.pop</a></span><span class="op">(</span><span class="va">inds</span>, nboots <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="va">p_fst</span>
 <span class="co">#&gt;              p2          p3 p1</span>
@@ -402,7 +392,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <span class="co">#&gt; p3 0.0001119945          NA NA</span>
 <span class="co">#&gt; p1 0.0126652474 0.007208347 NA</span></code></pre></div>
 <p>So generally those Fst values are low, which we would expect since our populations are not experiencing differential selection and the effects of drift are counteracted by migration between the populations. Nevertheless the pairwise Fst’s measured here are inversely proportional to the overall strength of migration between the population in our simulation. We can see this like this:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## convert migration rates into pairwise matrix using igraph</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org">igraph</a></span><span class="op">)</span>
 <span class="co">#&gt; </span>
@@ -442,10 +432,10 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="va">overall_mig_rates</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="va">p_fst</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="simple_example_using_migration_and_fst_files/figure-html/compare_mig-1.png" width="700"></p>
 <p>We can see generally the populations with the lowest migration rates also has the highest pairwise Fst, suggesting population with low migration have differentiated the most, which makes sense. In this particular example, the Fst seems to reach a minimum soon after, such that the two higher migration pairs don’t differ much in their pairwise Fsts. This could be a result of stochasticity. if we really want to know whether migration rate effects Fst under a simple neutral model of evolution, we should run many simulations and look at the average effect. <code>slimr</code> makes this easy to do using templating. Let’s simplify this model a little to just look at two populations at a time, and then set it up to run many times with different migration rates between them. Ww can also vary population size as it seems like this should be an important mediator of any effects, given it will effect the relative strength of drift in the populations.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="../../reference/slim_script.html">slim_script</a></span><span class="op">(</span>
-  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu">initialize</span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span>
+  <span class="fu"><a href="../../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../../reference/initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span>
     <span class="fu"><a href="../../reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">2e-6</span><span class="op">)</span>;
     <span class="fu"><a href="../../reference/initializeMutationType.html">initializeMutationType</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;
     <span class="fu"><a href="../../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fl">1.0</span><span class="op">)</span>;
@@ -487,7 +477,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 #&gt; variables </span><span style="color: #00BB00;">pop_size</span><span> and </span><span style="color: #00BB00;">m</span><span>.
 </span></code></pre>
 <p>So in the above script we now have a placemarker for a <code>pop_size</code> and a <code>m</code> parameter. We specified this using the <code>slimr_template</code> function directly inserted into the SLiM code. We also demonstrate a trick to reduce typing. We only have to use the <code>slimr_template</code> function once for a given variable, subsequent references to the same variable can be specified directly using the <code>..x..</code> notation. Now to generate a script with the templated variables replaced with values of our choosing, we use the <code>slim_script_render</code> function. Here is an example:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">example_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">script_3</span>, template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pop_size <span class="op">=</span> <span class="fl">50</span>, m <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span>
 <span class="va">example_script</span></code></pre></div>
@@ -512,7 +502,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 #&gt; </span><span style="color: #BBBB00;">}</span><span>
 </span></code></pre>
 <p>We can also pass a <code>data.frame</code> to <code>slim_script_render</code> which will allow us to generate many scripts at once, let’s setup a large number of scripts to explore different values of our two parameters.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n_reps</span> <span class="op">&lt;-</span> <span class="fl">300</span>
 
 <span class="va">param_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>pop_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">5</span><span class="op">:</span><span class="fl">100</span>, <span class="va">n_reps</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
@@ -592,7 +582,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 #&gt; and 297 more.
 </span></code></pre>
 <p>This function returns a <code>slimr_script_coll</code> object, or a slimr script collection. We can now use <code>slim_run</code> on this object, which will run every script in the collection, one after the other, and collect the results. We can specify a <code>parallel = TRUE</code> argument to run the scripts in parallel. <code>slimr</code> uses the <code>future</code> package for parallelization. This means that the user must specify a future <code>plan</code> prior to running <code>slim_run</code> which will setup the workers to be used by <code>slimr</code>. If you want to use parallelization with <code>slimr</code>, we recommend you familiarize yourself with the <code>future</code> package. If in doubt <code><a href="https://rdrr.io/pkg/future/man/plan.html">future::plan(future::multisession)</a></code> is the most general purpose specification which should work well on all platforms (and is the recommended plan by future for best stability of parallelization). You must also ensure the <code>future</code> and <code>furrr</code> packages are installed for this functionality to work. Let’s try running these:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">start_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
 <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"furrr"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   
@@ -602,19 +592,19 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
   
 <span class="op">}</span></code></pre></div>
 <p>Cool! First let’s check if all simulation completed without error:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="va">errors</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="va">all_results</span>,
                          <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">.x</span><span class="op">$</span><span class="va">error</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">errors</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0</span></code></pre></div>
 <p>Let’s extract all the genomic data into genlight objects so we can easily calculate Fst. Since this might also take a little while we will parallelize this extraction as well using <code>furrr</code> (since we already set a <code>future</code> plan, and <code>furrr</code> uses <code>future</code> under the hood). Just in case any simulations give us trouble, we will wrap the extraction in <code><a href="https://rdrr.io/r/base/try.html">try()</a></code> so that the whole thing doesn’t fail for one error.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">all_gl</span> <span class="op">&lt;-</span> <span class="fu">furrr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/furrr/man/future_map.html">future_map</a></span><span class="op">(</span><span class="va">all_results</span>,
                      <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/warning.html">suppressWarnings</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="fu"><a href="../../reference/slim_extract_genlight.html">slim_extract_genlight</a></span><span class="op">(</span><span class="va">.x</span>, <span class="st">"final_output"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
                      .progress <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Any errors?</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">errored</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">all_gl</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">==</span> <span class="st">"try-error"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">errored</span>
 <span class="co">#&gt; integer(0)</span>
@@ -623,7 +613,7 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
            <span class="op">~</span><span class="va">all_results</span><span class="op">[[</span><span class="va">.x</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">output_data</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
 <span class="co">#&gt; list()</span></code></pre></div>
 <p>We got ‘r length(errored)’ errors. Examining their data strings, we can see that they all essentially had no mutations, which is why we couldn’t construct a genlight object. Let’s just filter these out and continue with our analysis by calculating Fst.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">errored</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">all_gl</span> <span class="op">&lt;-</span> <span class="va">all_gl</span><span class="op">[</span><span class="op">-</span><span class="va">errored</span><span class="op">]</span>
 <span class="op">}</span>
@@ -703,92 +693,20 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <span class="co">#&gt; Registered S3 method overwritten by 'genetics':</span>
 <span class="co">#&gt;   method      from </span>
 <span class="co">#&gt;   [.haplotype pegas</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'pegas':</span>
-<span class="co">#&gt;   method      from</span>
-<span class="co">#&gt;   print.amova ade4</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'GGally':</span>
-<span class="co">#&gt;   method from   </span>
-<span class="co">#&gt;   +.gg   ggplot2</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'genetics':</span>
-<span class="co">#&gt;   method      from </span>
-<span class="co">#&gt;   [.haplotype pegas</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'pegas':</span>
-<span class="co">#&gt;   method      from</span>
-<span class="co">#&gt;   print.amova ade4</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'GGally':</span>
-<span class="co">#&gt;   method from   </span>
-<span class="co">#&gt;   +.gg   ggplot2</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'genetics':</span>
-<span class="co">#&gt;   method      from </span>
-<span class="co">#&gt;   [.haplotype pegas</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'pegas':</span>
-<span class="co">#&gt;   method      from</span>
-<span class="co">#&gt;   print.amova ade4</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'GGally':</span>
-<span class="co">#&gt;   method from   </span>
-<span class="co">#&gt;   +.gg   ggplot2</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'genetics':</span>
-<span class="co">#&gt;   method      from </span>
-<span class="co">#&gt;   [.haplotype pegas</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'pegas':</span>
-<span class="co">#&gt;   method      from</span>
-<span class="co">#&gt;   print.amova ade4</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'GGally':</span>
-<span class="co">#&gt;   method from   </span>
-<span class="co">#&gt;   +.gg   ggplot2</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'genetics':</span>
-<span class="co">#&gt;   method      from </span>
-<span class="co">#&gt;   [.haplotype pegas</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'pegas':</span>
-<span class="co">#&gt;   method      from</span>
-<span class="co">#&gt;   print.amova ade4</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'GGally':</span>
-<span class="co">#&gt;   method from   </span>
-<span class="co">#&gt;   +.gg   ggplot2</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'genetics':</span>
-<span class="co">#&gt;   method      from </span>
-<span class="co">#&gt;   [.haplotype pegas</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'pegas':</span>
-<span class="co">#&gt;   method      from</span>
-<span class="co">#&gt;   print.amova ade4</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'GGally':</span>
-<span class="co">#&gt;   method from   </span>
-<span class="co">#&gt;   +.gg   ggplot2</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'genetics':</span>
-<span class="co">#&gt;   method      from </span>
-<span class="co">#&gt;   [.haplotype pegas</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'pegas':</span>
-<span class="co">#&gt;   method      from</span>
-<span class="co">#&gt;   print.amova ade4</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'GGally':</span>
-<span class="co">#&gt;   method from   </span>
-<span class="co">#&gt;   +.gg   ggplot2</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'genetics':</span>
-<span class="co">#&gt;   method      from </span>
-<span class="co">#&gt;   [.haplotype pegas</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'pegas':</span>
-<span class="co">#&gt;   method      from</span>
-<span class="co">#&gt;   print.amova ade4</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'GGally':</span>
-<span class="co">#&gt;   method from   </span>
-<span class="co">#&gt;   +.gg   ggplot2</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'genetics':</span>
-<span class="co">#&gt;   method      from </span>
-<span class="co">#&gt;   [.haplotype pegas</span>
 
 <span class="va">end_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">end_time</span> <span class="op">-</span> <span class="va">start_time</span>
-<span class="co">#&gt; Time difference of 1.519153 mins</span>
+<span class="co">#&gt; Time difference of 2.656003 mins</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/cat.html">cat</a></span><span class="op">(</span><span class="st">"Total Duration:"</span>, <span class="va">end_time</span> <span class="op">-</span> <span class="va">start_time</span><span class="op">)</span>
-<span class="co">#&gt; Total Duration: 1.519153</span></code></pre></div>
+<span class="co">#&gt; Total Duration: 2.656003</span></code></pre></div>
 <p>Firstly, negative values of Fst are incorrect, and usually reflect numerical inaccuracy around zero, so we will set negative Fst values to zero. Then let’s look at the distribution.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">all_fsts</span><span class="op">[</span><span class="va">all_fsts</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0.0</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">all_fsts</span>, breaks <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></code></pre></div>
 <p><img src="simple_example_using_migration_and_fst_files/figure-html/fst_dist-1.png" width="700"> So how is Fst related to migration rate and population size? We can get an idea by running a simple linear model. Then we will do plots.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">errored</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">param_df</span> <span class="op">&lt;-</span> <span class="va">param_df</span><span class="op">[</span><span class="op">-</span><span class="va">errored</span>, <span class="op">]</span>
@@ -807,23 +725,23 @@ PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Residuals:</span>
 <span class="co">#&gt;      Min       1Q   Median       3Q      Max </span>
-<span class="co">#&gt; -0.12396 -0.03769 -0.00186  0.01566  0.50087 </span>
+<span class="co">#&gt; -0.14659 -0.03380 -0.00526  0.01281  0.72474 </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Coefficients:</span>
 <span class="co">#&gt;                   Estimate Std. Error t value Pr(&gt;|t|)    </span>
-<span class="co">#&gt; (Intercept)       0.038157   0.004591   8.311 3.47e-15 ***</span>
-<span class="co">#&gt; pop_size_st      -0.024564   0.004601  -5.339 1.86e-07 ***</span>
-<span class="co">#&gt; m_st             -0.043946   0.004615  -9.522  &lt; 2e-16 ***</span>
-<span class="co">#&gt; pop_size_st:m_st  0.026474   0.004711   5.619 4.43e-08 ***</span>
+<span class="co">#&gt; (Intercept)       0.031995   0.004853   6.593 1.98e-10 ***</span>
+<span class="co">#&gt; pop_size_st      -0.020359   0.004863  -4.186 3.74e-05 ***</span>
+<span class="co">#&gt; m_st             -0.037913   0.004879  -7.771 1.29e-13 ***</span>
+<span class="co">#&gt; pop_size_st:m_st  0.025452   0.004980   5.111 5.76e-07 ***</span>
 <span class="co">#&gt; ---</span>
 <span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Residual standard error: 0.0793 on 296 degrees of freedom</span>
-<span class="co">#&gt; Multiple R-squared:  0.3612, Adjusted R-squared:  0.3547 </span>
-<span class="co">#&gt; F-statistic: 55.78 on 3 and 296 DF,  p-value: &lt; 2.2e-16</span></code></pre></div>
+<span class="co">#&gt; Residual standard error: 0.08382 on 296 degrees of freedom</span>
+<span class="co">#&gt; Multiple R-squared:  0.2808, Adjusted R-squared:  0.2735 </span>
+<span class="co">#&gt; F-statistic: 38.51 on 3 and 296 DF,  p-value: &lt; 2.2e-16</span></code></pre></div>
 <p>So both migration rate</p>
 <p>We can demonstrate the interaction by splitting our data into population size bins and plotting the migration rate relationship as separate lines for each bin.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fst_dat</span> <span class="op">&lt;-</span> <span class="va">fst_dat</span> <span class="op">%&gt;%</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>ps_bin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">pop_size</span>, <span class="fl">5</span>, ordered_result <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 

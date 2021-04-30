@@ -53,7 +53,7 @@ This output can easily be read into R and even dynamically read
 during simulation runs with slim_run from the
 slimr package. This function should generally only be
 used within a slim_block call" />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://rdinnager.github.io/slimr/logo.png" />
 
 
 
@@ -224,7 +224,7 @@ Used mostly for internal purposes.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='slim_script.html'>slim_script</a></span><span class='op'>(</span>
-  <span class='fu'><a href='slim_block.html'>slim_block</a></span><span class='op'>(</span><span class='fu'>initialize</span><span class='op'>(</span><span class='op'>)</span>,
+  <span class='fu'><a href='slim_block.html'>slim_block</a></span><span class='op'>(</span><span class='fu'><a href='initialize.html'>initialize</a></span><span class='op'>(</span><span class='op'>)</span>,
              <span class='op'>{</span>
                <span class='fu'><a href='initializeMutationRate.html'>initializeMutationRate</a></span><span class='op'>(</span><span class='fl'>1e-7</span><span class='op'>)</span>;
                <span class='fu'><a href='initializeMutationType.html'>initializeMutationType</a></span><span class='op'>(</span><span class='st'>"m1"</span>, <span class='fl'>0.5</span>, <span class='st'>"f"</span>, <span class='fl'>0.0</span><span class='op'>)</span>;
@@ -250,7 +250,7 @@ Used mostly for internal purposes.</p></td>
 <span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='va'>run_w_out</span><span class='op'>$</span><span class='va'>output_data</span><span class='op'>$</span><span class='va'>data</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; #OUT: 100 SV p1 10
 #&gt; ##fileformat=VCFv4.2
-#&gt; ##fileDate=20210423
+#&gt; ##fileDate=20210427
 #&gt; ##source=SLiM
 #&gt; ##INFO=&lt;ID=MID,Number=.,Type=Integer,Description="Mutation ID in SLiM"&gt;
 #&gt; ##INFO=&lt;ID=S,Number=.,Type=Float,Description="Selection Coefficient"&gt;
@@ -263,13 +263,14 @@ Used mostly for internal purposes.</p></td>
 #&gt; ##INFO=&lt;ID=MULTIALLELIC,Number=0,Type=Flag,Description="Multiallelic"&gt;
 #&gt; ##FORMAT=&lt;ID=GT,Number=1,Type=String,Description="Genotype"&gt;
 #&gt; #CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	i0	i1	i2	i3	i4	i5	i6	i7	i8	i9
-#&gt; 1	10316	.	A	T	1000	PASS	MID=32;S=0;DOM=0.5;PO=1;GO=16;MT=1;AC=6;DP=1000	GT	0|1	0|0	1|1	1|1	0|0	1|0	0|0	0|0	0|0	0|0
-#&gt; 1	14848	.	A	T	1000	PASS	MID=163;S=0;DOM=0.5;PO=1;GO=86;MT=1;AC=1;DP=1000	GT	0|0	0|0	0|0	0|0	0|0	0|0	0|1	0|0	0|0	0|0
-#&gt; 1	39230	.	A	T	1000	PASS	MID=137;S=0;DOM=0.5;PO=1;GO=69;MT=1;AC=1;DP=1000	GT	0|0	0|1	0|0	0|0	0|0	0|0	0|0	0|0	0|0	0|0
-#&gt; 1	52821	.	A	T	1000	PASS	MID=136;S=0;DOM=0.5;PO=1;GO=69;MT=1;AC=1;DP=1000	GT	0|0	0|0	0|0	0|0	1|0	0|0	0|0	0|0	0|0	0|0
-#&gt; 1	61441	.	A	T	1000	PASS	MID=173;S=0;DOM=0.5;PO=1;GO=90;MT=1;AC=2;DP=1000	GT	0|0	0|0	1|0	1|0	0|0	0|0	0|0	0|0	0|0	0|0
-#&gt; 1	74645	.	A	T	1000	PASS	MID=177;S=0;DOM=0.5;PO=1;GO=92;MT=1;AC=2;DP=1000	GT	0|0	1|0	0|0	0|0	0|0	0|0	0|0	0|0	1|0	0|0
-#&gt; 1	85394	.	A	T	1000	PASS	MID=152;S=0;DOM=0.5;PO=1;GO=83;MT=1;AC=1;DP=1000	GT	0|0	0|0	0|0	0|0	0|0	0|0	0|0	1|0	0|0	0|0</div></pre>
+#&gt; 1	206	.	A	T	1000	PASS	MID=167;S=0;DOM=0.5;PO=1;GO=92;MT=1;AC=3;DP=1000	GT	0|0	1|0	0|0	0|0	0|1	0|1	0|0	0|0	0|0	0|0
+#&gt; 1	25975	.	A	T	1000	PASS	MID=185;S=0;DOM=0.5;PO=1;GO=98;MT=1;AC=1;DP=1000	GT	0|0	0|0	0|0	0|0	0|0	0|0	0|0	1|0	0|0	0|0
+#&gt; 1	42302	.	A	T	1000	PASS	MID=163;S=0;DOM=0.5;PO=1;GO=90;MT=1;AC=1;DP=1000	GT	0|0	0|0	0|0	0|0	0|0	0|0	0|0	0|1	0|0	0|0
+#&gt; 1	50055	.	A	T	1000	PASS	MID=132;S=0;DOM=0.5;PO=1;GO=74;MT=1;AC=2;DP=1000	GT	0|0	0|0	1|0	1|0	0|0	0|0	0|0	0|0	0|0	0|0
+#&gt; 1	50124	.	A	T	1000	PASS	MID=65;S=0;DOM=0.5;PO=1;GO=35;MT=1;AC=4;DP=1000	GT	1|0	0|0	0|0	0|0	1|0	1|0	0|0	0|1	0|0	0|0
+#&gt; 1	55168	.	A	T	1000	PASS	MID=158;S=0;DOM=0.5;PO=1;GO=87;MT=1;AC=1;DP=1000	GT	0|0	0|0	0|0	0|0	0|0	0|0	0|0	0|0	0|0	0|1
+#&gt; 1	65880	.	A	T	1000	PASS	MID=142;S=0;DOM=0.5;PO=1;GO=81;MT=1;AC=1;DP=1000	GT	0|0	0|0	0|0	0|0	0|0	0|0	0|0	0|1	0|0	0|0
+#&gt; 1	88065	.	A	T	1000	PASS	MID=155;S=0;DOM=0.5;PO=1;GO=86;MT=1;AC=2;DP=1000	GT	0|1	0|0	0|1	0|0	0|0	0|0	0|0	0|0	0|0	0|0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

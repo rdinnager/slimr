@@ -50,7 +50,7 @@
 <meta property="og:description" content="
 
 " />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://rdinnager.github.io/slimr/logo.png" />
 
 
 
@@ -154,7 +154,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for slimr_script</span>
-<span class='fu'>reconstruct</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'><a href='reconstruct.html'>reconstruct</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,7 +175,7 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='slim_script.html'>slim_script</a></span><span class='op'>(</span>
-    <span class='fu'><a href='slim_block.html'>slim_block</a></span><span class='op'>(</span><span class='fu'>initialize</span><span class='op'>(</span><span class='op'>)</span>,
+    <span class='fu'><a href='slim_block.html'>slim_block</a></span><span class='op'>(</span><span class='fu'><a href='initialize.html'>initialize</a></span><span class='op'>(</span><span class='op'>)</span>,
          <span class='op'>{</span>
               <span class='va'>.Init</span><span class='op'>$</span><span class='fu'>initializeMutationRate</span><span class='op'>(</span><span class='fl'>1e-7</span><span class='op'>)</span>;
               <span class='va'>.Init</span><span class='op'>$</span><span class='fu'>initializeMutationType</span><span class='op'>(</span><span class='st'>"m1"</span>, <span class='fl'>0.5</span>, <span class='st'>"f"</span>, <span class='fl'>0.0</span><span class='op'>)</span>;
@@ -192,7 +192,7 @@
               <span class='va'>sim</span><span class='op'>%.%</span><span class='va'>.SS</span><span class='op'>$</span><span class='fu'>simulationFinished</span><span class='op'>(</span><span class='op'>)</span>;
          <span class='op'>}</span><span class='op'>)</span>
 <span class='op'>)</span> <span class='op'>-&gt;</span> <span class='va'>script</span>
-<span class='fu'>reconstruct</span><span class='op'>(</span><span class='va'>script</span><span class='op'>)</span>
+<span class='fu'><a href='reconstruct.html'>reconstruct</a></span><span class='op'>(</span><span class='va'>script</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "slim_script(\n\n    slim_block(initialize(),  {\n        .Init.initializeMutationRate(1e-07)\n        .Init.initializeMutationType(\"m1\", 0.5, \"f\", 0)\n        .Init.initializeGenomicElementType(\"g1\", m1, 1)\n        .Init.initializeGenomicElement(g1, 0, 99999)\n        .Init.initializeRecombinationRate(1e-08)\n    }),\n\n    slim_block(1, early(),  {\n        sim %.% .SS.addSubpop(\"p1\", 500)\n    }),\n\n    slim_block(10000, early(),  {\n        sim %.% .SS.simulationFinished()\n    })\n)"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

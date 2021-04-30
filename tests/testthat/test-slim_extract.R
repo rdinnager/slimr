@@ -151,6 +151,8 @@ test_that("slim_extract_genome works as expected", {
 
 test_that("slim_extract_genlight works as expected", {
 
+  skip_if_not_installed("adegenet")
+
   if(!on_covr()) {
 
     test_sim <- slim_script(

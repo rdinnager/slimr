@@ -26,6 +26,11 @@ about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\examples{
+slim_block(1, early(), {
+  sim.addSubpop("p1", 100)
+})
+}
 \seealso{
 Other callbacks: 
 \code{\link{fitness}()},

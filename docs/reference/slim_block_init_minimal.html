@@ -50,7 +50,7 @@
 <meta property="og:description" content="This function creates a minimal initialize block, allowing you to
 set some basic parameters, but generally only allowing for one type
 of mutation, which is distributed across the whole genome." />
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="https://rdinnager.github.io/slimr/logo.png" />
 
 
 
@@ -159,7 +159,8 @@ of mutation, which is distributed across the whole genome.</p>
   selection <span class='op'>=</span> <span class='fl'>0</span>,
   dist_type <span class='op'>=</span> <span class='st'>"f"</span>,
   genome_size <span class='op'>=</span> <span class='fl'>1e+05</span>,
-  recombination_rate <span class='op'>=</span> <span class='fl'>1e-08</span>
+  recombination_rate <span class='op'>=</span> <span class='fl'>1e-08</span>,
+  seed <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -180,7 +181,7 @@ of mutation, which is distributed across the whole genome.</p>
     <tr>
       <th>dist_type</th>
       <td><p>Distribution from which to draw mutation selection values (see
-<code>InitializeMutationType</code> for possible values).</p></td>
+<code><a href='initializeMutationType.html'>initializeMutationType</a></code> for possible values).</p></td>
     </tr>
     <tr>
       <th>genome_size</th>
@@ -189,6 +190,10 @@ of mutation, which is distributed across the whole genome.</p>
     <tr>
       <th>recombination_rate</th>
       <td><p>Overall recombination rate.</p></td>
+    </tr>
+    <tr>
+      <th>seed</th>
+      <td><p>An optional integer used to set a random seed for the SLiM simulation.</p></td>
     </tr>
     </table>
 

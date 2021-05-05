@@ -16,3 +16,10 @@ A \code{slimr_block} object
 \description{
 Insert slim_block to track progress when using slim_run
 }
+\examples{
+slim_script(
+  slim_block_init_minimal(),
+  slim_block_progress(10),
+  slim_block_finish(100)
+)
+}

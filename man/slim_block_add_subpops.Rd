@@ -19,7 +19,7 @@ else a length of 1 (in which case it will be recycled to \code{n_pop})}
 
 \item{generation}{The generation to add the subpopulations (default: 1)}
 
-\item{when}{WHen to add the subpopulations ("early" or "late"). Default: "early"}
+\item{when}{When to add the subpopulations ("early" or "late"). Default: "early"}
 }
 \value{
 A \code{slimr_block} object

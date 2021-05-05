@@ -19,7 +19,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to slimr: Writing SLiM scripts from R">
 <meta property="og:description" content="slimr">
-<meta property="og:image" content="/logo.png">
+<meta property="og:image" content="https://rdinnager.github.io/slimr/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -95,7 +95,7 @@
 
       
 
-      </header><script src="slimrlang_intro_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
+      </header><script src="slimrlang_intro_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to slimr: Writing SLiM scripts from R</h1>
@@ -143,16 +143,19 @@ initialize()
 }</code></pre>
 <p>So how would we write this script in <code>slimr</code>? Like this:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rdinnager.github.io/slimr/index.html">slimr</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rdinnager.github.io/slimr">slimr</a></span><span class="op">)</span>
 <span class="co">#&gt; Welcome to the slimr package for forward population genetics simulation in SLiM. For more information on SLiM please visit https://messerlab.org/slim/ .</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Attaching package: 'slimr'</span>
+<span class="co">#&gt; The following object is masked from 'package:methods':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     initialize</span>
 <span class="co">#&gt; The following object is masked from 'package:base':</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;     interaction</span>
 
 <span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span>
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu">initialize</span><span class="op">(</span><span class="op">)</span>,
+  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../reference/initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,
              <span class="op">{</span>
                <span class="co">## set the overall mutation rate</span>
                <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">1e-7</span><span class="op">)</span>; 
@@ -311,11 +314,11 @@ See Also
 Other SLiMSim: <code>SLiMSim</code>, <code><a href="../reference/addSubpopSplit.html">addSubpopSplit()</a></code>, <code><a href="../reference/countOfMutationsOfType.html">countOfMutationsOfType()</a></code>, <code><a href="../reference/createLogFile.html">createLogFile()</a></code>, <code><a href="../reference/deregisterScriptBlock.html">deregisterScriptBlock()</a></code>, <code><a href="../reference/mutationCounts.html">mutationCounts()</a></code>, <code><a href="../reference/mutationFrequencies.html">mutationFrequencies()</a></code>, <code><a href="../reference/mutationsOfType.html">mutationsOfType()</a></code>, <code><a href="../reference/outputFixedMutations.html">outputFixedMutations()</a></code>, <code><a href="../reference/outputFull.html">outputFull()</a></code>, <code><a href="../reference/outputMutations.html">outputMutations()</a></code>, <code><a href="../reference/outputUsage.html">outputUsage()</a></code>, <code><a href="../reference/readFromPopulationFile.html">readFromPopulationFile()</a></code>, <code><a href="../reference/recalculateFitness.html">recalculateFitness()</a></code>, <code><a href="../reference/registerEarlyEvent.html">registerEarlyEvent()</a></code>, <code><a href="../reference/registerFitnessCallback.html">registerFitnessCallback()</a></code>, <code><a href="../reference/registerInteractionCallback.html">registerInteractionCallback()</a></code>, <code><a href="../reference/registerLateEvent.html">registerLateEvent()</a></code>, <code><a href="../reference/registerMateChoiceCallback.html">registerMateChoiceCallback()</a></code>, <code><a href="../reference/registerModifyChildCallback.html">registerModifyChildCallback()</a></code>, <code><a href="../reference/registerMutationCallback.html">registerMutationCallback()</a></code>, <code><a href="../reference/registerRecombinationCallback.html">registerRecombinationCallback()</a></code>, <code><a href="../reference/registerReproductionCallback.html">registerReproductionCallback()</a></code>, <code><a href="../reference/rescheduleScriptBlock.html">rescheduleScriptBlock()</a></code>, <code><a href="../reference/simulationFinished.html">simulationFinished()</a></code>, <code><a href="../reference/subsetMutations.html">subsetMutations()</a></code>, <code><a href="../reference/treeSeqCoalesced.html">treeSeqCoalesced()</a></code>, <code><a href="../reference/treeSeqOutput.html">treeSeqOutput()</a></code>, <code><a href="../reference/treeSeqRememberIndividuals.html">treeSeqRememberIndividuals()</a></code>, <code><a href="../reference/treeSeqSimplify.html">treeSeqSimplify()</a></code>
 </p>
 </div>
-<p>There is also two special classes which are not actually classes in SLiM itself, but they are used in <code>slimr</code> to keep particular types of SLiM function together. These are <code>Initialize</code> (or <code>.Init</code>) and <code>SLiMBuiltin</code> (or <code>.SB</code>). The <code>Initialize</code> object contains SLiM functions that can only be used in the <code>initialize()</code> block of SLiM code (more on this later). <code>SLiMBuiltin</code> contains miscellaneous functions built in to SLiM which are not part of any SLiM class.</p>
+<p>There is also two special classes which are not actually classes in SLiM itself, but they are used in <code>slimr</code> to keep particular types of SLiM function together. These are <code>Initialize</code> (or <code>.Init</code>) and <code>SLiMBuiltin</code> (or <code>.SB</code>). The <code>Initialize</code> object contains SLiM functions that can only be used in the <code><a href="../reference/initialize.html">initialize()</a></code> block of SLiM code (more on this later). <code>SLiMBuiltin</code> contains miscellaneous functions built in to SLiM which are not part of any SLiM class.</p>
 <p>Admittedly, using these extra R objects in the code does make it look somewhat less elegant, and also makes it no longer directly valid SLiM code. But don’t worry, <code>slimr</code> knows how to transform this syntax back into proper SLiM code, which you can see by printing out the resulting <code>slim_script</code> object.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span>
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu">initialize</span><span class="op">(</span><span class="op">)</span>,
+  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../reference/initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,
              <span class="op">{</span>
                <span class="co">## set the overall mutation rate</span>
                <span class="va">.Init</span><span class="op">$</span><span class="fu">initializeMutationRate</span><span class="op">(</span><span class="fl">1e-7</span><span class="op">)</span>; 
@@ -364,7 +367,7 @@ Other SLiMSim: <code>SLiMSim</code>, <code><a href="../reference/addSubpopSplit.
 <p>This is the simplest to get a SLiM script which has elements that can be filled in later with a templating mechanism. So, how does that work? Well, anywhere we want something in the SLiM script to be ‘in-fillable’, that is, to contain a variable section of the script that we can subsitute data into later, you can use the <code>slimr_template</code> function in place of what was formerly a hard-coded value. Here is an example using the same recipe as above, but in this case we want to be able to fill-in the genome size and the muation rate later:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span>
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu">initialize</span><span class="op">(</span><span class="op">)</span>,
+  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../reference/initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,
              <span class="op">{</span>
                <span class="co">## set the overall mutation rate (default = 1e-7)</span>
                <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span> <span class="fu"><a href="../reference/slimr_template.html">slimr_template</a></span><span class="op">(</span><span class="st">"mut_rate"</span>, <span class="fl">1e-7</span><span class="op">)</span> <span class="op">)</span>; 
@@ -735,7 +738,7 @@ Other SLiMSim: <code>SLiMSim</code>, <code><a href="../reference/addSubpopSplit.
 <p>There is one additional argument to <code>slimr_template</code> that we haven’t talked about yet, which is called <code>unquote_strings</code>. This option allows you to insert unquoted string values in a template. The default value, which is <code>FALSE</code>, means that <code>slimr_template</code> assumes that any variables of class “character” to be inserted are meant to be quoted in the SLiM script, so they will be treated as literal strings by SLiM. However, in some cases you may wish to use character values to insert references to SLiM objects themselves, in which case, they must be unquoted. As an example, perhaps you want to refer to different Subpopulations in a SLiM script dynamically using templating. To do this we can set <code>unquote_strings = TRUE</code>. As an example if we want to refer to a Subpopulation dynamically, and we don’t use <code>unquote_strings = TRUE</code>:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span>
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu">initialize</span><span class="op">(</span><span class="op">)</span>,
+  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../reference/initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,
              <span class="op">{</span>
                <span class="co">## set the overall mutation rate (default = 1e-7)</span>
                <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">1e-7</span><span class="op">)</span>; 
@@ -799,7 +802,7 @@ Other SLiMSim: <code>SLiMSim</code>, <code><a href="../reference/addSubpopSplit.
 <p>Since this is also invalid R code, we get a parsing error. Now, if we use <code>unquote_strings = TRUE</code>:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span>
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu">initialize</span><span class="op">(</span><span class="op">)</span>,
+  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../reference/initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,
              <span class="op">{</span>
                <span class="co">## set the overall mutation rate (default = 1e-7)</span>
                <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">1e-7</span><span class="op">)</span>; 
@@ -883,7 +886,7 @@ Other SLiMSim: <code>SLiMSim</code>, <code><a href="../reference/addSubpopSplit.
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span>
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu">initialize</span><span class="op">(</span><span class="op">)</span>,
+  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../reference/initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,
              <span class="op">{</span>
                <span class="co">## set the overall mutation rate</span>
                <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">1e-7</span><span class="op">)</span>; 

@@ -10,7 +10,8 @@ slim_block_init_minimal(
   selection = 0,
   dist_type = "f",
   genome_size = 1e+05,
-  recombination_rate = 1e-08
+  recombination_rate = 1e-08,
+  seed = NULL
 )
 }
 \arguments{
@@ -21,11 +22,13 @@ slim_block_init_minimal(
 \item{selection}{Mean selection strength for mutations}
 
 \item{dist_type}{Distribution from which to draw mutation selection values (see
-\code{\link{InitializeMutationType}} for possible values).}
+\code{\link{initializeMutationType}} for possible values).}
 
 \item{genome_size}{Genome size of the population, in number of loci.}
 
 \item{recombination_rate}{Overall recombination rate.}
+
+\item{seed}{An optional integer used to set a random seed for the SLiM simulation.}
 }
 \value{
 A \code{slimr_block} object
@@ -34,4 +37,10 @@ A \code{slimr_block} object
 This function creates a minimal initialize block, allowing you to
 set some basic parameters, but generally only allowing for one type
 of mutation, which is distributed across the whole genome.
+}
+\examples{
+slim_script(
+  slim_block_init_minimal(),
+  slim_block_finish(100)
+)
 }

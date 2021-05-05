@@ -25,7 +25,7 @@ by the simulation.
 \description{
 This function tries to automate the process of converting
 output in the \code{slimr_results} object returned by
-\code{\link{slimr_run}} function into usable data in the
+\code{\link{slim_run}} function into usable data in the
 form of a \code{tibble}. If this process fails you will
 end up with the data as a character string, and you will
 have to manually convert this into something you can use.

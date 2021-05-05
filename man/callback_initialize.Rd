@@ -25,6 +25,15 @@ about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\examples{
+slim_block(initialize(), {
+  initializeMutationRate(1e-7)
+  initializeMutationType("m1", 0.5, "f", 0.0)
+  initializeGenomicElementType("g1", m1, 1.0)
+  initializeGenomicElement(g1, 0, 99999)
+  initializeRecombinationRate(1e-8)
+})
+}
 \seealso{
 Other callbacks: 
 \code{\link{early}()},

@@ -285,7 +285,7 @@ slimr_output_coords <- function(dimensionality = c("x", "xy", "xyz"),
 #'
 #' @param name Name of output to use to label it in \code{slimr_results object}. Default is \code{"sex"}.
 #'
-#' @param ...
+#' @param ... Other arguments to be passed to \code{\link{slimr_output}}
 #'
 #' @export
 slimr_output_sex <- function(name = "sex", ...) {

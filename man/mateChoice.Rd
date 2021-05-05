@@ -2,7 +2,7 @@
 % Please edit documentation in R/slim_callbacks.R
 \name{mateChoice}
 \alias{mateChoice}
-\title{SLiM matChoice() callback}
+\title{SLiM mateChoice() callback}
 \usage{
 mateChoice(subpop_id)
 }

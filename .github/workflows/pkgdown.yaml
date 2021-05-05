@@ -1,0 +1,83 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+name: pkgdown
+
+jobs:
+  pkgdown:
+    runs-on: macOS-latest
+    env:
+      GITHUB_PAT: ${{ secrets.INSTALL_GITHUB_PAT }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-r@v1
+
+      - uses: r-lib/actions/setup-pandoc@v1
+
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+        shell: Rscript {0}
+
+      - name: Restore R package cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+
+      - name: Install dependencies
+        run: |
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_bioc("HilbertCurve")
+          remotes::install_bioc("Biostrings")
+          install.packages("pkgdown", type = "binary")
+        shell: Rscript {0}
+
+      - name: Download SLiM
+        run: |
+          cd ${{ github.workspace }}
+          wget http://benhaller.com/slim/SLiM.zip
+
+      - name: Cache SLiM
+        id: cache-slim
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ github.workspace }}/SLiM_build
+            ${{ github.workspace }}/SLiM
+          key: ${{ runner.os }}-build_SLiM-${{ hashFiles('SLiM.zip') }}
+
+      - name: Install SLiM Part 1
+        if: steps.cache-slim.outputs.cache-hit != 'true'
+        run: |
+          cd ${{ github.workspace }}
+          unzip -o SLiM.zip
+          mkdir SLiM_build
+          cd SLiM_build
+          cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
+          make
+
+      - name: Install SLiM Part 2
+        run: |
+          cd ${{ github.workspace }}/SLiM_build
+          sudo make install
+          cd ..
+          rm SLiM.zip
+
+      - name: Install package
+        run: R CMD INSTALL .
+
+      - name: Deploy package
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          Rscript -e 'pkgdown::deploy_to_branch(new_process = FALSE)'

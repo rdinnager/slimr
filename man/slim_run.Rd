@@ -120,6 +120,9 @@ containing output from the current iteration of the simulation. Columns are:
 \item{data}{The raw data output from SLiM as a character vector}
 }}
 
+\item{cb_args}{Additional arguments to be passed to any callback functions. Should be a named
+list where the names refer to the callback's arguments.}
+
 \item{new_grdev}{Should a new graphics device window be opened on RStudio? This is mainly useful if you are using
 custom callbacks that generate live figures, and want a faster plotting experience. This is because the
 default plot viewer in RStudio can be quite slow. Setting this to \code{TRUE} also allows \code{record_graphics} to work.}
@@ -132,7 +135,17 @@ entire simulation output to make a post-hoc animation).}
 \item{rec_args}{An optional list containing named arguments to be passed to \code{\link[av]{av_capture_graphics}} for graphics recording.
 Ignored if \code{record_graphics} is not \code{TRUE}.}
 
-\item{...}{Additional arguments to be passed to any callback functions.}
+\item{parallel}{If \code{x} is a \code{slimr_script_coll}, should the elements in \code{x}
+be run in parallel. For this to work, you must have setup a parallel plan using \code{\link[future]{plan}}}
+
+\item{progress}{Should a progress bar be displayed?}
+
+\item{throw_error}{Should an error be thrown in R is an error is encountered in SLiM?
+If \code{FALSE}, the error message from SLiM is stored in the object returned
+by \code{slim_run}, but execution continues in R. Setting this to \code{TRUE} is useful
+in a script if subsequent code assumes that the simulation finished successfully.}
+
+\item{...}{Additional arguments to be passed to or from other methods.}
 }
 \value{
 A \code{slimr_results} object which has the following components:

@@ -9,7 +9,7 @@ slimr_output_sex(name = "sex", ...)
 \arguments{
 \item{name}{Name of output to use to label it in \code{slimr_results object}. Default is \code{"sex"}.}
 
-\item{...}{}
+\item{...}{Other arguments to be passed to \code{\link{slimr_output}}}
 }
 \description{
 Utility function to tell SLim to output sexes of individuals

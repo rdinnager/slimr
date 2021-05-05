@@ -4,7 +4,13 @@
 \alias{slim_script_render}
 \title{Render a SLiM script with special slimrlang formatting}
 \usage{
-slim_script_render(slimr_script, template = NULL, replace_NAs = TRUE, reps = 1)
+slim_script_render(
+  slimr_script,
+  template = NULL,
+  replace_NAs = TRUE,
+  reps = 1,
+  parallel = FALSE
+)
 }
 \arguments{
 \item{slimr_script}{The \code{slimr_script} object to be rendered}
@@ -22,6 +28,9 @@ and return it as a \code{slimr_script_coll} object.}
 \item{reps}{Should the rendered script be replicated? If greater than 1, a \code{slimr_script_coll}
 will be returned. This can also be used with a \code{slimr_script} object that has already been
 rendered, in which case it will just repeat the rendered script in the result.}
+
+\item{parallel}{Should the rendering be done in parallel when rendering multiple scripts? Requires
+the \code{furrr} package and will use the plan set by \code{future::\link[future](plan)}}
 }
 \value{
 

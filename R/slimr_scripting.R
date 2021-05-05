@@ -489,13 +489,19 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #' @param reps Should the rendered script be replicated? If greater than 1, a \code{slimr_script_coll}
 #' will be returned. This can also be used with a \code{slimr_script} object that has already been
 #' rendered, in which case it will just repeat the rendered script in the result.
+#' @param parallel Should the rendering be done in parallel when rendering multiple scripts? Requires
+#' the \code{furrr} package and will use the plan set by \code{future::\link[future](plan)}
 #'
 #' @return
 #' @export
 #'
 #' @examples
 slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE,
-                                reps = 1) {
+                                reps = 1, parallel = FALSE) {
+
+  if(parallel) {
+    assert_package("furrr")
+  }
 
   if(attr(slimr_script, "script_info")$rendered) {
     if(reps > 1) {
@@ -536,11 +542,22 @@ slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE
       template <- list(template)
     }
 
-    new_scripts <- purrr::map(template,
-                              ~replace_double_dots(slimr_script,
-                                                   .x,
-                                                   slimr_template_attr = slimr_template_attr,
-                                                   replace_NAs = replace_NAs))
+    if(parallel) {
+      new_scripts <- furrr::future_map(template,
+                                ~replace_double_dots(slimr_script,
+                                                     .x,
+                                                     slimr_template_attr = slimr_template_attr,
+                                                     replace_NAs = replace_NAs),
+                                .options = furrr::furrr_options(globals = FALSE,
+                                                                lazy = TRUE,
+                                                                seed = TRUE))
+    } else {
+      new_scripts <- purrr::map(template,
+                                ~replace_double_dots(slimr_script,
+                                                     .x,
+                                                     slimr_template_attr = slimr_template_attr,
+                                                     replace_NAs = replace_NAs))
+    }
 
     ## templating in output?
     if(output_templating) {
@@ -550,8 +567,16 @@ slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE
                                 ~{attr(.x, "slimr_output")$file_name <- dplyr::na_if(.y, "NA"); .x})
     }
 
-    new_scripts <- purrr::map(new_scripts,
-                              ~reprocess_script(.x))
+    if(parallel) {
+      new_scripts <- furrr::future_map(new_scripts,
+                                       ~reprocess_script(.x),
+                                       .options = furrr::furrr_options(globals = FALSE,
+                                                                       lazy = TRUE,
+                                                                       seed = TRUE))
+    } else {
+      new_scripts <- purrr::map(new_scripts,
+                                ~reprocess_script(.x))
+    }
 
     if(list_length_1) {
       new_scripts <- new_scripts[[1]]
@@ -568,8 +593,13 @@ slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE
   }
 
   if(reps > 1) {
-    new_scripts <- replicate(reps, new_scripts, simplify = FALSE) %>%
-      new_slimr_script_coll()
+    if(length(new_scripts) == 1) {
+      new_scripts <- replicate(reps, new_scripts, simplify = FALSE) %>%
+        new_slimr_script_coll()
+    } else {
+      new_scripts <- replicate(reps, new_scripts, simplify = FALSE) %>%
+        vctrs::vec_unchop()
+    }
   }
 
   attr(new_scripts, "script_info")$rendered <- TRUE

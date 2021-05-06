@@ -490,7 +490,7 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #' will be returned. This can also be used with a \code{slimr_script} object that has already been
 #' rendered, in which case it will just repeat the rendered script in the result.
 #' @param parallel Should the rendering be done in parallel when rendering multiple scripts? Requires
-#' the \code{furrr} package and will use the plan set by \code{future::\link[future](plan)}
+#' the \code{furrr} package and will use the plan set by \code{future::\link[future]{plan}}
 #'
 #' @return
 #' @export

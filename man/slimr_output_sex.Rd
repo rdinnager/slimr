@@ -11,6 +11,9 @@ slimr_output_sex(name = "sex", ...)
 
 \item{...}{Other arguments to be passed to \code{\link{slimr_output}}}
 }
+\value{
+None
+}
 \description{
 Utility function to tell SLim to output sexes of individuals
 }

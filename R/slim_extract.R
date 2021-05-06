@@ -126,6 +126,64 @@ slim_extract_to_data <- function(dat, type) {
 
   }
 
+  if(type == "slim_nucleotides_both") {
+    assert_package("Biostrings", install = "BiocManager::install")
+    if(any(stringr::str_detect(dat$name, "_subpops"))) {
+      name_name <- dat$name[stringr::str_which(dat$name, "_subpops")][1]
+      seq_name <- stringr::str_remove(name_name, "_subpops")
+      subpops <- dat %>%
+        dplyr::filter(.data$name == name_name) %>%
+        dplyr::pull(.data$data)
+      subpops <- rep(subpops, each = 2)
+    } else {
+      seq_name <- dat$name[1]
+      subpops <- NULL
+    }
+
+    seq_dat <- dat %>%
+      dplyr::filter(.data$name == seq_name)
+
+    dna <- purrr::map(seq_dat %>%
+                        dplyr::pull(.data$data),
+                      ~ Biostrings::DNAStringSet(.x))
+
+    dat <- seq_dat %>%
+      dplyr::mutate("data" := dna,
+                    "subpops" = subpops)
+
+  }
+
+  if(type == "slim_snp") {
+
+    if(any(stringr::str_detect(dat$name, "_subpops"))) {
+      name_name <- dat$name[stringr::str_which(dat$name, "_subpops")][1]
+      seq_name <- stringr::str_remove(name_name, "_subpops")
+      subpops <- dat %>%
+        dplyr::filter(.data$name == name_name) %>%
+        dplyr::pull(.data$data)
+    } else {
+      seq_name <- dat$name[1]
+      subpops <- NULL
+    }
+
+    pos_dat <- dat %>%
+      dplyr::filter(.data$name == paste0(seq_name, "_pos")) %>%
+      dplyr::pull(.data$data)
+
+    seq_dat <- dat %>%
+      dplyr::filter(.data$name == seq_name)
+
+    snp <- purrr::map(seq_dat %>%
+                        dplyr::pull(.data$data),
+                      ~ slim_make_snp_matrix(.x))
+
+    dat <- seq_dat %>%
+      dplyr::mutate("data" := snp,
+                    "pos" := pos_dat,
+                    "subpops" = subpops)
+
+  }
+
   dat
 }
 
@@ -136,6 +194,23 @@ slim_to_Rob <- function(dat, type) {
   dat_res
 }
 
+slim_make_snp_matrix <- function(dat) {
+
+  ninds <- as.numeric(dat[1])
+  nsnps <- as.numeric(dat[2])
+
+  snp_mat <- matrix(as.numeric(as.logical(dat[c(-1, -2)])),
+                    nrow = ninds * 2,
+                    ncol = nsnps,
+                    byrow = TRUE)
+
+  snp_mat <- rowsum(snp_mat,
+                    rep(1:ninds, each = 2),
+                    reorder = FALSE)
+
+  snp_mat
+
+}
 
 
 #' Extract Elements from SLiM's outputFull()

@@ -247,7 +247,7 @@ slimr_output_nucleotides <- function(name = "seqs", subpops = FALSE, both_genome
                    name, type = "slim_nucleotides",
                    expression = "slimr_output_nucleotides()",
                    ...)
-      out2 <- slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".genome1.subpopulation)")),
+      out2 <- slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".subpopulation)")),
                    paste0(name, "_subpops"), type = "slim_nucleotides",
                    expression = "slimr_output_nucleotides()",
                    ...)
@@ -265,7 +265,7 @@ slimr_output_nucleotides <- function(name = "seqs", subpops = FALSE, both_genome
                            name, type = "slim_nucleotides_both",
                            expression = "slimr_output_nucleotides()",
                            ...)
-      out2 <- slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".genome1.subpopulation)")),
+      out2 <- slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".subpopulation)")),
                            paste0(name, "_subpops"), type = "slim_nucleotides_both",
                            expression = "slimr_output_nucleotides()",
                            ...)

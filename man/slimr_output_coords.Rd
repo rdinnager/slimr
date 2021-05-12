@@ -12,6 +12,9 @@ slimr_output_coords(dimensionality = c("x", "xy", "xyz"), ...)
 
 \item{...}{Other arguments to be passed to \code{\link{slimr_output}}}
 }
+\value{
+None
+}
 \description{
 Utility function to tell SLiM to output coordinates from spatial simulations
 }

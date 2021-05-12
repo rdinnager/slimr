@@ -229,24 +229,54 @@ slimr_output_full <- function(name = "full_output", ...) {
 #'
 #' @param name Name of output to use to label it in \code{slimr_results object}. Default is \code{"seqs"}.
 #' @param subpops Should the subpopulation of each sequence be outputted as well?
+#' @param inds SLiM expression that returns the individuals to get nucleotides from. By default all
+#' individuals are returned.
 #' @param ... Other arguments to be passed to \code{\link{slimr_output}}
+#' @return None
 #' @export
-slimr_output_nucleotides <- function(name = "seqs", subpops = FALSE, ...) {
-  if(subpops) {
-    out1 <- slimr_output(paste(sim.subpopulations.individuals.genome1.nucleotides()),
-                 name, type = "slim_nucleotides",
-                 expression = "slimr_output_nucleotides()",
-                 ...)
-    out2 <- slimr_output(paste(sim.subpopulations.individuals.subpopulation),
-                 paste0(name, "_subpops"), type = "slim_nucleotides",
-                 expression = "slimr_output_nucleotides()",
-                 ...)
-    return(list(out1, out2))
+slimr_output_nucleotides <- function(name = "seqs", subpops = FALSE, both_genomes = FALSE, inds = NULL, ...) {
+
+  inds <- rlang::enexpr(inds)
+  if(is.null(inds)) {
+    inds <- rlang::expr(sim.subpopulations.individuals)
+  }
+
+  if(!both_genomes) {
+    if(subpops) {
+      out1 <- slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".genome1.nucleotides())")),
+                   name, type = "slim_nucleotides",
+                   expression = "slimr_output_nucleotides()",
+                   ...)
+      out2 <- slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".genome1.subpopulation)")),
+                   paste0(name, "_subpops"), type = "slim_nucleotides",
+                   expression = "slimr_output_nucleotides()",
+                   ...)
+      return(list(out1, out2))
+    } else {
+      slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".genome1.nucleotides())")),
+                   name, type = "slim_nucleotides",
+                   expression = "slimr_output_nucleotides()",
+                   ...)
+    }
   } else {
-    slimr_output(paste(sim.subpopulations.individuals.genome1.nucleotides()),
-                 name, type = "slim_nucleotides",
-                 expression = "slimr_output_nucleotides()",
-                 ...)
+
+    if(subpops) {
+      out1 <- slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".genomes.nucleotides())")),
+                           name, type = "slim_nucleotides_both",
+                           expression = "slimr_output_nucleotides()",
+                           ...)
+      out2 <- slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".genome1.subpopulation)")),
+                           paste0(name, "_subpops"), type = "slim_nucleotides_both",
+                           expression = "slimr_output_nucleotides()",
+                           ...)
+      return(list(out1, out2))
+    } else {
+      slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".genomes.nucleotides())")),
+                   name, type = "slim_nucleotides_both",
+                   expression = "slimr_output_nucleotides()",
+                   ...)
+    }
+
   }
 }
 
@@ -257,6 +287,8 @@ slimr_output_nucleotides <- function(name = "seqs", subpops = FALSE, ...) {
 #' @param ... Other arguments to be passed to \code{\link{slimr_output}}
 #' @details Outputs x, y, and z coordinates as separate entries in \code{slimr_results},
 #' with names "x", "y", and "z".
+#'
+#' @return None
 #'
 #' @export
 slimr_output_coords <- function(dimensionality = c("x", "xy", "xyz"),
@@ -287,6 +319,8 @@ slimr_output_coords <- function(dimensionality = c("x", "xy", "xyz"),
 #'
 #' @param ... Other arguments to be passed to \code{\link{slimr_output}}
 #'
+#' @return None
+#'
 #' @export
 slimr_output_sex <- function(name = "sex", ...) {
 
@@ -296,6 +330,46 @@ slimr_output_sex <- function(name = "sex", ...) {
 }
 
 
-slimr_output_SNPs <- function(name = "SNPs", ...) {
-
+#' Utility function to tell SLiM to output SNP format data
+#'
+#' Use \code{\link{slim_results_to_data}} on the \code{\link{slim_run}} results to get this in a nice SNP matrix form.
+#'
+#' @param name Name of output to use to label it in \code{slimr_results object}. Default is \code{"snp"}.
+#' @param subpops Should the subpopulation of each sequence be outputted as well?
+#' @param ... Other arguments to be passed to \code{\link{slimr_output}}
+#'
+#' @return None
+#' @export
+#'
+#' @examples
+slimr_output_snp <- function(name = "snp", subpops = FALSE, ...) {
+  if(subpops) {
+    snp_out <- slimr_output(paste(size(sim.subpopulations.individuals),
+                                  size(sim.mutations),
+                                  sim.subpopulations.individuals.genomes.containsMutations(sim.mutations)),
+                            name, type = "slim_snp",
+                            expression = "slimr_output_snp()",
+                            ...)
+    pos_out <- slimr_output(sim.mutations.position,
+                           paste0(name, "_pos"), type = "slim_snp",
+                           expression = "slimr_output_snp()",
+                           ...)
+    subpop_out <- slimr_output(paste(sim.subpopulations.individuals.subpopulation),
+                         paste0(name, "_subpops"), type = "slim_snp",
+                         expression = "slimr_output_snp()",
+                         ...)
+    return(list(snp_out, pos_out, subpop_out))
+  } else {
+    snp_out <- slimr_output(paste(size(sim.subpopulations.individuals),
+                                  size(sim.mutations),
+                                  sim.subpopulations.individuals.genomes.containsMutations(sim.mutations)),
+                            name, type = "slim_snp",
+                            expression = "slimr_output_snp()",
+                            ...)
+    pos_out <- slimr_output(sim.mutations.position,
+                           paste0(name, "_pos"), type = "slim_snp",
+                           expression = "slimr_output_snp()",
+                           ...)
+    return(list(snp_out, pos_out))
+  }
 }

@@ -39,6 +39,7 @@ jobs:
           remotes::install_deps(dependencies = TRUE)
           remotes::install_bioc("HilbertCurve")
           remotes::install_bioc("Biostrings")
+          remotes::install_cran("colourvalues")
           install.packages("pkgdown", type = "binary")
         shell: Rscript {0}
 

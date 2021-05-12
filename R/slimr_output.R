@@ -229,23 +229,31 @@ slimr_output_full <- function(name = "full_output", ...) {
 #'
 #' @param name Name of output to use to label it in \code{slimr_results object}. Default is \code{"seqs"}.
 #' @param subpops Should the subpopulation of each sequence be outputted as well?
+#' @param inds SLiM expression that returns the individuals to get nucleotides from. By default all
+#' individuals are returned.
 #' @param ... Other arguments to be passed to \code{\link{slimr_output}}
 #' @return None
 #' @export
-slimr_output_nucleotides <- function(name = "seqs", subpops = FALSE, both_genomes = FALSE, ...) {
+slimr_output_nucleotides <- function(name = "seqs", subpops = FALSE, both_genomes = FALSE, inds = NULL, ...) {
+
+  inds <- rlang::enexpr(inds)
+  if(is.null(inds)) {
+    inds <- rlang::expr(sim.subpopulations.individuals)
+  }
+
   if(!both_genomes) {
     if(subpops) {
-      out1 <- slimr_output(paste(sim.subpopulations.individuals.genome1.nucleotides()),
+      out1 <- slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".genome1.nucleotides())")),
                    name, type = "slim_nucleotides",
                    expression = "slimr_output_nucleotides()",
                    ...)
-      out2 <- slimr_output(paste(sim.subpopulations.individuals.subpopulation),
+      out2 <- slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".genome1.subpopulation)")),
                    paste0(name, "_subpops"), type = "slim_nucleotides",
                    expression = "slimr_output_nucleotides()",
                    ...)
       return(list(out1, out2))
     } else {
-      slimr_output(paste(sim.subpopulations.individuals.genome1.nucleotides()),
+      slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".genome1.nucleotides())")),
                    name, type = "slim_nucleotides",
                    expression = "slimr_output_nucleotides()",
                    ...)
@@ -253,17 +261,17 @@ slimr_output_nucleotides <- function(name = "seqs", subpops = FALSE, both_genome
   } else {
 
     if(subpops) {
-      out1 <- slimr_output(paste(sim.subpopulations.individuals.genomes.nucleotides()),
+      out1 <- slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".genomes.nucleotides())")),
                            name, type = "slim_nucleotides_both",
                            expression = "slimr_output_nucleotides()",
                            ...)
-      out2 <- slimr_output(paste(sim.subpopulations.individuals.subpopulation),
+      out2 <- slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".genome1.subpopulation)")),
                            paste0(name, "_subpops"), type = "slim_nucleotides_both",
                            expression = "slimr_output_nucleotides()",
                            ...)
       return(list(out1, out2))
     } else {
-      slimr_output(paste(sim.subpopulations.individuals.genomes.nucleotides()),
+      slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".genomes.nucleotides())")),
                    name, type = "slim_nucleotides_both",
                    expression = "slimr_output_nucleotides()",
                    ...)

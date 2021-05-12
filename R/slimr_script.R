@@ -351,6 +351,11 @@ obj_print_footer.slimr_script <- function(x, ...) {
     template_text <- ""
   }
 
+  # inlines <- slim_detect_inline(x)
+  # if(any(inlines)) {
+  #   inline_blocks <- vctrs::field(x, "block_name")[inlines]
+  # }
+
   cat(template_text)
   invisible(template_text)
 }
@@ -893,3 +898,6 @@ vec_ptype_full.slimr_script_coll <- function(x, ...) "slimr_script_coll"
 #' @export
 vec_ptype_abbr.slimr_script_coll <- function(x, ...) "s-s-col"
 
+slim_detect_inline <- function(code) {
+
+}

@@ -143,6 +143,126 @@ slimr_output <- function(slimr_expr, name, do_every = 1,
 
 }
 
+#' Tell SLiM to produce easily parseable output (for multiple related outputs)
+#'
+#' Use this function in a \code{\link{slim_block}} call and it will be
+#' converted in the SLiM script into code to make formatted output.
+#' This output can easily be read into R and even dynamically read
+#' during simulation runs with \code{\link[slimr]{slim_run}} from the
+#' \code{slimr} package. This function should generally only be
+#' used within a \code{\link{slim_block}} call
+#'
+#' @param slimr_expr A SLiM expression to generate output. This can either be
+#' a SLiM expression designed to create output, such as \code{outputFull()},
+#' or an object created in the SLiM code, in which case \code{slimr_output}
+#' will automatically concatenate it to a string and output it
+#' @param name The name to use to identify this output.
+#' @param do_every How often should the output be produced? Expressed
+#' as an integer saying how many generations to run before producing output.
+#' e.g. \code{do_every = 10} means to output every 10 generations of the
+#' simulation.
+#' @param send_to \strong{*deprecated*} Where to send the output? This could be used
+#' to send the output to be stored in the results object ("data"), or to an external file ("file").
+#' This will no longer be available in future versions in favour of an option to have the results
+#' stored as a pointer to an external file (to save memory).
+#' @param file_name \strong{*deprecated*} The file name to save output to if \code{send_to = "file"}
+#' @param format \strong{*deprecated*} The file format to save data if \code{send_to = "file"}, Only "csv" is implemented
+#' but there are plans to support "fst" and "disk.frame".
+#' @param type Provide a custom type to the output. Used mostly for internal purposes.
+#' @param expression Provide a custom expression to be included with the output.
+#' Used mostly for internal purposes.
+#'
+#' @return An expression with the code to be run in SLiM.
+#'
+#' @export
+#'
+#' @examples
+#' slim_script(
+#'   slim_block(initialize(),
+#'              {
+#'                initializeMutationRate(1e-7);
+#'                initializeMutationType("m1", 0.5, "f", 0.0);
+#'                initializeGenomicElementType("g1", m1, 1.0);
+#'                initializeGenomicElement(g1, 0, 99999);
+#'                initializeRecombinationRate(1e-8);
+#'              }),
+#'   slim_block(1,
+#'              {
+#'                sim.addSubpop("p1", 100);
+#'              }),
+#'   slim_block(100,
+#'              {
+#'                slimr_output(p1.outputVCFSample(sampleSize = 10), name = "VCF");
+#'                sim.simulationFinished();
+#'              })
+#' ) %>%
+#' slim_run() -> run_w_out
+#'
+#' cat(run_w_out$output_data$data[[1]])
+slimr_output_list <- function(..., name, do_every = 1,
+                         send_to = c("data", "file"),
+                         file_name = tempfile(fileext = ".txt"),
+                         format = c("csv", "fst"),
+                         type = NULL,
+                         expression = NULL) {
+
+  send_to = match.arg(send_to)
+  format = match.arg(format)
+
+  slimr_exprs <- rlang::enexprs(..., .named = TRUE)
+
+  if(is.null(expression)) {
+    expr_txt <- rlang::expr_deparse(slimr_exprs)
+  } else {
+    expr_txt <- expression
+  }
+
+
+  if(is.null(type)) {
+    type <- "slimr_ouput_list"
+  }
+
+
+
+  new_code <- rlang::expr(
+    if(sim.generation %% !!do_every == 0) {
+      cat("\n<slimr_out:start>\n" + paste(sim.generation) + ",'" +
+            !!name + "','" + !!expr_txt + "','" + !!type + "','")
+      cat(!!slimr_expr)
+      cat("'\n<slimr_out:end>\n")
+    }
+  )
+
+
+  code_for_display <- paste0("{", rlang::expr_text(slimr_expr, width = 500),
+                             " -> ", name, "}")
+
+  .resources$temp_slimr_output$code_for_slim <- c(.resources$temp_slimr_output$code_for_slim,
+                                                  rlang::expr_text(new_code, width = 500))
+  .resources$temp_slimr_output$code_for_display <- c(.resources$temp_slimr_output$code_for_display,
+                                                     code_for_display)
+  .resources$temp_slimr_output$output_name <- c(.resources$temp_slimr_output$output_name,
+                                                name)
+
+  if(send_to == "file") {
+    .resources$temp_slimr_output$file_name <- c(.resources$temp_slimr_output$file_name,
+                                                file_name)
+    .resources$temp_slimr_output$format <- c(.resources$temp_slimr_output$format,
+                                             format)
+  } else {
+    .resources$temp_slimr_output$file_name <- c(.resources$temp_slimr_output$file_name,
+                                                NA)
+    .resources$temp_slimr_output$format <- c(.resources$temp_slimr_output$format,
+                                             NA)
+  }
+
+  rlang::sym(paste0(".__slmr_output_object_",
+                    length(.resources$temp_slimr_output$code_for_slim),
+                    "___"))
+  #new_code
+
+}
+
 sout <- function(slimr_expr, name, do_every = NULL,
                  send_to = c("data", "file"),
                  file_name = tempfile(fileext = ".txt"),

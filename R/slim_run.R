@@ -642,6 +642,7 @@ slim_process_output <- function(out, data_only = FALSE) {
                             quote = "\'",
                             col_types = "icccc")
 
+
       end_data <- max(data_lines)
       last_line <- end_data + 1L
 

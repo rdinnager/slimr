@@ -6,7 +6,7 @@
 \alias{.M}
 \title{Mutation}
 \format{
-An object of class \code{list} of length 13.
+An object of class \code{environment} of length 13.
 }
 \usage{
 Mutation

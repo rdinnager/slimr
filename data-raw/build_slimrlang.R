@@ -629,22 +629,7 @@ readr::write_lines(r_script, "R/slim_lang.R")
 
 slim_classes <- class_abbrs
 
-usethis::use_data(Initialize,
-                  Chromosome,
-                  Genome,
-                  GenomicElement,
-                  GenomicElementType,
-                  Individual,
-                  InteractionType,
-                  LogFile,
-                  Mutation,
-                  MutationType,
-                  SLiMBuiltin,
-                  SLiMEidosBlock,
-                  SLiMSim,
-                  Subpopulation,
-                  Substitution,
-                  .Init,
+usethis::use_data(.Init,
                   .c,
                   .G,
                   .GE,
@@ -659,13 +644,15 @@ usethis::use_data(Initialize,
                   .SS,
                   .P,
                   .S,
-                  slim_classes,
+                  internal = TRUE,
                   overwrite = TRUE
 )
 
+usethis::use_data(slim_classes, internal = FALSE, overwrite = TRUE)
+
 ## fix bad filenames
 
-bad_files <- list.files("data", all.files = TRUE, pattern = "^\\.", no.. = TRUE)
-
-file.rename(file.path("data", bad_files), file.path("data", stringr::str_remove(bad_files, "^\\.")))
+# bad_files <- list.files("data", all.files = TRUE, pattern = "^\\.", no.. = TRUE)
+#
+# file.rename(file.path("data", bad_files), file.path("data", stringr::str_remove(bad_files, "^\\.")))
 

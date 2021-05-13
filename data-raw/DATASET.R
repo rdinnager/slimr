@@ -32,7 +32,7 @@ recipe_txt <- recipe_txt[order_frame$name]
 
 slim_recipes <- recipe_txt
 
-usethis::use_data(slim_recipes, internal = TRUE, overwrite = TRUE)
+usethis::use_data(slim_recipes, internal = FALSE, overwrite = TRUE)
 
 ## code to generate package logo
 logo_base <- imager::load.image("data-raw/logo_base.png") %>%

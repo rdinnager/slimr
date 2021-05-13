@@ -6,7 +6,7 @@
 \alias{.LF}
 \title{LogFile}
 \format{
-An object of class \code{list} of length 20.
+An object of class \code{environment} of length 20.
 }
 \usage{
 LogFile

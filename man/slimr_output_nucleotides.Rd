@@ -4,12 +4,21 @@
 \alias{slimr_output_nucleotides}
 \title{Utility function to tell SLiM to output Nucleotides}
 \usage{
-slimr_output_nucleotides(name = "seqs", subpops = FALSE, ...)
+slimr_output_nucleotides(
+  name = "seqs",
+  subpops = FALSE,
+  both_genomes = FALSE,
+  inds = NULL,
+  ...
+)
 }
 \arguments{
 \item{name}{Name of output to use to label it in \code{slimr_results object}. Default is \code{"seqs"}.}
 
 \item{subpops}{Should the subpopulation of each sequence be outputted as well?}
+
+\item{inds}{SLiM expression that returns the individuals to get nucleotides from. By default all
+individuals are returned.}
 
 \item{...}{Other arguments to be passed to \code{\link{slimr_output}}}
 }

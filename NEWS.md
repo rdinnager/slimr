@@ -1,4 +1,4 @@
-# slimr (development version)
+# slimr 0.1.0
 
 * SLiM Classes available for help with autocomplete now have nested class objects 
 (e.g. `sim$subpopulations` references a `Subpopulation` object, so you can then 

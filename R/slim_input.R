@@ -149,6 +149,7 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
       dplyr::mutate("mut_nuc" := mut_nuc[real_snps])
   }
 
+  tmp <- tempfile()
   readr::write_delim(muts, tmp, " ", col_names = FALSE)
   muts_txt <- readr::read_lines(tmp) %>%
     paste(collapse = "\n")
@@ -184,6 +185,7 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
   #     dplyr::mutate("age" := ind_age)
   # }
 
+  tmp <- tempfile()
   readr::write_delim(inds, tmp, " ", col_names = FALSE)
   inds_txt <- readr::read_lines(tmp) %>%
     paste(collapse = "\n")

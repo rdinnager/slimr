@@ -637,10 +637,12 @@ slim_process_output <- function(out, data_only = FALSE) {
         dat <- paste0(dat, "\n")
       }
 
-      df <- readr::read_csv(dat,
+      df <- readr::read_csv(I(paste0(stringr::str_replace_all(dat, "\'", "\""),
+                                   "\n", collapse = "")),
                             col_names = c("generation", "name", "expression", "type", "data"),
-                            quote = "\'",
-                            col_types = "icccc")
+                            #quote = "\'",
+                            col_types = "icccc",
+                            num_threads = 1)
 
       end_data <- max(data_lines)
       last_line <- end_data + 1L

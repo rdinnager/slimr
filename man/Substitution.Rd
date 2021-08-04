@@ -6,7 +6,7 @@
 \alias{.S}
 \title{Substitution}
 \format{
-An object of class \code{list} of length 10.
+An object of class \code{environment} of length 10.
 }
 \usage{
 Substitution

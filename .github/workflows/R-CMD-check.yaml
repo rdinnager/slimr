@@ -98,6 +98,12 @@ jobs:
             ${{ github.workspace }}/SLiM
           key: ${{ runner.os }}-build_SLiM-${{ hashFiles('SLiM.zip') }}
 
+      - name: Setup cmake on non-Windows
+        if: runner.os != 'Windows'
+        uses: jwlawson/actions-setup-cmake@v1.9
+        with:
+          github-api-token: ${{ secrets.INSTALL_GITHUB_PAT }}
+
       - name: Install SLiM on Windows Part 1
         if: runner.os == 'Windows' && steps.cache-slim.outputs.cache-hit != 'true'
         shell: wsl-bash {0}

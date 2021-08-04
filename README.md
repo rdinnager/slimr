@@ -12,7 +12,7 @@ status](https://github.com/rdinnager/slimr/workflows/R-CMD-check/badge.svg)](htt
 [![Codecov test
 coverage](https://codecov.io/gh/rdinnager/slimr/branch/master/graph/badge.svg)](https://codecov.io/gh/rdinnager/slimr?branch=master)
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+experimental](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 <!-- badges: end -->
 
 The goal of slimr is to run SLiM population genetics forward simulations
@@ -38,6 +38,14 @@ recipe) from the (excellent) [SLiM](https://messerlab.org/slim/) manual:
 ``` r
 library(slimr)
 #> Welcome to the slimr package for forward population genetics simulation in SLiM. For more information on SLiM please visit https://messerlab.org/slim/ .
+#> 
+#> Attaching package: 'slimr'
+#> The following object is masked from 'package:methods':
+#> 
+#>     initialize
+#> The following object is masked from 'package:base':
+#> 
+#>     interaction
 
 slim_script(
   slim_block(initialize(),

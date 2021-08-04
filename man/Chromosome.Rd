@@ -6,7 +6,7 @@
 \alias{.c}
 \title{Chromosome}
 \format{
-An object of class \code{list} of length 40.
+An object of class \code{environment} of length 40.
 }
 \usage{
 Chromosome

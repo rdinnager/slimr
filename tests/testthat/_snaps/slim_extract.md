@@ -18,12 +18,12 @@
       print(dat_nuc)
     Output
       # A tibble: 4 x 6
-        type           expression               generation name  data      subpops    
-        <chr>          <chr>                         <int> <chr> <list>    <list>     
-      1 slim_nucleoti~ slimr_output_nucleotide~        250 seqs  <DNAStrn~ <chr [1,00~
-      2 slim_nucleoti~ slimr_output_nucleotide~        500 seqs  <DNAStrn~ <chr [1,00~
-      3 slim_nucleoti~ slimr_output_nucleotide~        750 seqs  <DNAStrn~ <chr [1,00~
-      4 slim_nucleoti~ slimr_output_nucleotide~       1000 seqs  <DNAStrn~ <chr [1,00~
+        type             expression                 generation name  data       subpops
+        <chr>            <chr>                           <int> <chr> <list>     <list> 
+      1 slim_nucleotides slimr_output_nucleotides()        250 seqs  <DNAStrnS> <chr [~
+      2 slim_nucleotides slimr_output_nucleotides()        500 seqs  <DNAStrnS> <chr [~
+      3 slim_nucleotides slimr_output_nucleotides()        750 seqs  <DNAStrnS> <chr [~
+      4 slim_nucleotides slimr_output_nucleotides()       1000 seqs  <DNAStrnS> <chr [~
 
 # slim_extract_genome works as expected
 

@@ -94,6 +94,8 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
     resources <- convert_to_wsl_path(resources)
   }
 
+  slim_recipes <- slimr::slim_recipes
+
   recipe_vec <- unlist(slim_recipes)
 
   recipes_using_resources <- purrr::map(resources,
@@ -136,6 +138,54 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
   .resources$temp_slimr_output$file_name <- list()
   .resources$temp_slimr_output$format <- list()
   .resources$loaded_globals <- NULL
+
+
+  ## setup slim class environments
+  .Init <- list2env(.Init, Initialize)
+  .c <- list2env(.c, Chromosome)
+  .G <- list2env(.G, Genome)
+  .GE <- list2env(.GE, GenomicElement)
+  .GET <- list2env(.GET, GenomicElementType)
+  .I <- list2env(.I, Individual)
+  .IT <- list2env(.IT, InteractionType)
+  .LF <- list2env(.LF, LogFile)
+  .M <- list2env(.M, Mutation)
+  .MT <- list2env(.MT, MutationType)
+  .SB <- list2env(.SB, SLiMBuiltin)
+  .SEB <- list2env(.SEB, SLiMEidosBlock)
+  .SS <- list2env(.SS, SLiMSim)
+  .P <- list2env(.P, Subpopulation)
+  .S <- list2env(.S, Substitution)
+
+  ##### make class nesting ############
+  SLiMSim$chromosome <- Chromosome
+  SLiMSim$genomicElementTypes <- GenomicElementType
+  SLiMSim$interactionTypes <- InteractionType
+  SLiMSim$logFiles <- LogFile
+  SLiMSim$mutationTypes <- MutationType
+  SLiMSim$mutations <- Mutation
+  SLiMSim$scriptBlocks <- SLiMEidosBlock
+  SLiMSim$subpopulations <- Subpopulation
+  SLiMSim$substitutions <- Substitution
+
+  Chromosome$genomicElements <- GenomicElement
+
+  Genome$individual <- Individual
+  Genome$mutations <- Mutation
+
+  GenomicElement$genomicElementType <- GenomicElementType
+
+  Individual$genome1 <- Genome
+  Individual$genome2 <- Genome
+  Individual$genomes <- Genome
+  Individual$uniqueMutations <- Mutation
+  Individual$subpopulation <- Subpopulation
+
+  Mutation$mutationType <- MutationType
+
+  Subpopulation$individuals <- Individual
+  Subpopulation$genomes <- Genome
+  Subpopulation$individuals <- Individual
 
 }
 

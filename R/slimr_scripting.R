@@ -593,7 +593,7 @@ slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE
   }
 
   if(reps > 1) {
-    if(length(new_scripts) == 1) {
+    if(inherits(new_scripts, "slimr_script")) {
       new_scripts <- replicate(reps, new_scripts, simplify = FALSE) %>%
         new_slimr_script_coll()
     } else {

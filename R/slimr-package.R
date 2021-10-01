@@ -192,3 +192,13 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
 .onUnload <- function(libname, pkgname) {
   slim_unload_globals()
 }
+
+## usethis namespace: start
+#' @useDynLib slimr, .registration = TRUE
+## usethis namespace: end
+NULL
+
+## usethis namespace: start
+#' @importFrom Rcpp sourceCpp
+## usethis namespace: end
+NULL

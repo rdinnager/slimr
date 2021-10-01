@@ -51,7 +51,8 @@ Imports:
     tidyr,
     zeallot,
     utils,
-    stats
+    stats,
+    Rcpp
 Suggests: 
     covr,
     testthat (>= 2.1.0),
@@ -77,3 +78,5 @@ Suggests:
     withr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+LinkingTo: 
+    Rcpp

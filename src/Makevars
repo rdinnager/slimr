@@ -1,0 +1,18 @@
+PKG_CPPFLAGS = -I./core -I./eidos -I./eidos_zlib -I./gsl -I./treerec \
+-I./gsl/blas -I./gsl/block -I./gsl/cblas -I./gsl/complex -I./gsl/cdf \
+-I./gsl/err -I./gsl/linalg -I./gsl/matrix -I./gsl/randist -I./gsl/rng \
+-I./gsl/specfunc -I./gsl/sys -I./gsl/vector
+PKG_LIBS = -L. -lgsl -leidos_zlib -ltables
+
+GSL_SOURCES = gsl/blas/blas.c gsl/block/init.c gsl/cblas/ddot.c gsl/cblas/dgemv.c gsl/cblas/dtrmv.c gsl/cblas/dtrsv.c gsl/cblas/xerbla.c gsl/cdf/gauss.c gsl/cdf/gaussinv.c gsl/cdf/tdist.c gsl/complex/inline.c gsl/complex/math.c gsl/err/error.c gsl/err/message.c gsl/err/stream.c gsl/linalg/cholesky.c gsl/matrix/copy.c gsl/matrix/init.c gsl/matrix/matrix.c gsl/matrix/rowcol.c gsl/matrix/submatrix.c gsl/matrix/swap.c gsl/randist/beta.c gsl/randist/binomial_tpe.c gsl/randist/cauchy.c gsl/randist/discrete.c gsl/randist/exponential.c gsl/randist/fdist.c gsl/randist/gamma.c gsl/randist/gauss.c gsl/randist/gausszig.c gsl/randist/geometric.c gsl/randist/lognormal.c gsl/randist/multinomial.c gsl/randist/mvgauss.c gsl/randist/poisson.c gsl/randist/shuffle.c gsl/randist/weibull.c gsl/rng/inline.c gsl/rng/mt.c gsl/rng/rng.c gsl/rng/taus.c gsl/specfunc/beta.c gsl/specfunc/elementary.c gsl/specfunc/erfc.c gsl/specfunc/exp.c gsl/specfunc/expint.c gsl/specfunc/gamma_inc.c gsl/specfunc/gamma.c gsl/specfunc/log.c gsl/specfunc/pow_int.c gsl/specfunc/psi.c gsl/specfunc/trig.c gsl/specfunc/zeta.c gsl/sys/coerce.c gsl/sys/fdiv.c gsl/sys/infnan.c gsl/sys/minmax.c gsl/sys/pow_int.c gsl/vector/init.c gsl/vector/oper.c gsl/vector/vector.c
+
+EIDOS_ZLIB_SOURCES = eidos_zlib/adler32.c eidos_zlib/compress.c eidos_zlib/crc32.c eidos_zlib/deflate.c eidos_zlib/gzlib.c eidos_zlib/gzwrite.c eidos_zlib/trees.c eidos_zlib/zutil.c
+
+all: $(SHLIB)
+$(SHLIB): libgsl.a libeidos_zlib.a libtables.a
+
+LIBGSL = $(GSL_SOURCES:.c=.o)
+libgsl.a: $(LIBGSL)
+
+LIBEIDOS_ZLIB = $(EIDOS_ZLIB_SOURCES:.c=.o)
+libeidos_zlib.a: $(LIBEIDOS_ZLIB)

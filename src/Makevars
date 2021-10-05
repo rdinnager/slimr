@@ -1,18 +1,81 @@
-PKG_CPPFLAGS = -I./core -I./eidos -I./eidos_zlib -I./gsl -I./treerec \
--I./gsl/blas -I./gsl/block -I./gsl/cblas -I./gsl/complex -I./gsl/cdf \
--I./gsl/err -I./gsl/linalg -I./gsl/matrix -I./gsl/randist -I./gsl/rng \
--I./gsl/specfunc -I./gsl/sys -I./gsl/vector
-PKG_LIBS = -L. -lgsl -leidos_zlib -ltables
+GSL_INCLUDES = -I./gsl -I./gsl/blas -I./gsl/block -I./gsl/cblas \
+-I./gsl/complex -I./gsl/cdf -I./gsl/err -I./gsl/linalg -I./gsl/matrix \
+-I./gsl/randist -I./gsl/rng -I./gsl/specfunc -I./gsl/sys -I./gsl/vector
+
+EIDOS_ZLIB_INCLUDES = -I./eidos_zlib
+
+KASTORE_INCLUDES = -I./treerec/tskit/kastore
+
+TABLES_INCLUDES = $(GSL_INCLUDES) $(KASTORE_INCLUDES) -I./treerec
 
 GSL_SOURCES = gsl/blas/blas.c gsl/block/init.c gsl/cblas/ddot.c gsl/cblas/dgemv.c gsl/cblas/dtrmv.c gsl/cblas/dtrsv.c gsl/cblas/xerbla.c gsl/cdf/gauss.c gsl/cdf/gaussinv.c gsl/cdf/tdist.c gsl/complex/inline.c gsl/complex/math.c gsl/err/error.c gsl/err/message.c gsl/err/stream.c gsl/linalg/cholesky.c gsl/matrix/copy.c gsl/matrix/init.c gsl/matrix/matrix.c gsl/matrix/rowcol.c gsl/matrix/submatrix.c gsl/matrix/swap.c gsl/randist/beta.c gsl/randist/binomial_tpe.c gsl/randist/cauchy.c gsl/randist/discrete.c gsl/randist/exponential.c gsl/randist/fdist.c gsl/randist/gamma.c gsl/randist/gauss.c gsl/randist/gausszig.c gsl/randist/geometric.c gsl/randist/lognormal.c gsl/randist/multinomial.c gsl/randist/mvgauss.c gsl/randist/poisson.c gsl/randist/shuffle.c gsl/randist/weibull.c gsl/rng/inline.c gsl/rng/mt.c gsl/rng/rng.c gsl/rng/taus.c gsl/specfunc/beta.c gsl/specfunc/elementary.c gsl/specfunc/erfc.c gsl/specfunc/exp.c gsl/specfunc/expint.c gsl/specfunc/gamma_inc.c gsl/specfunc/gamma.c gsl/specfunc/log.c gsl/specfunc/pow_int.c gsl/specfunc/psi.c gsl/specfunc/trig.c gsl/specfunc/zeta.c gsl/sys/coerce.c gsl/sys/fdiv.c gsl/sys/infnan.c gsl/sys/minmax.c gsl/sys/pow_int.c gsl/vector/init.c gsl/vector/oper.c gsl/vector/vector.c
 
-EIDOS_ZLIB_SOURCES = eidos_zlib/adler32.c eidos_zlib/compress.c eidos_zlib/crc32.c eidos_zlib/deflate.c eidos_zlib/gzlib.c eidos_zlib/gzwrite.c eidos_zlib/trees.c eidos_zlib/zutil.c
+EIDOS_ZLIB_SOURCES = eidos_zlib/adler32.c eidos_zlib/compress.c \
+eidos_zlib/crc32.c eidos_zlib/deflate.c eidos_zlib/gzlib.c \
+eidos_zlib/gzwrite.c eidos_zlib/trees.c eidos_zlib/zutil.c
+
+KASTORE_SOURCES = treerec/tskit/kastore/kastore.c
+
+TABLES_SOURCES = treerec/tskit/convert.c treerec/tskit/core.c \
+treerec/tskit/genotypes.c treerec/tskit/haplotype_matching.c \
+treerec/tskit/kastore/kastore.c treerec/tskit/stats.c \
+treerec/tskit/tables.c treerec/tskit/text_input.c treerec/tskit/trees.c
+
+SOURCES = eidos/eidos_ast_node.cpp eidos/eidos_beep.cpp \
+eidos/eidos_call_signature.cpp eidos/eidos_class_Dictionary.cpp \
+eidos/eidos_class_Image.cpp eidos/eidos_class_Object.cpp \
+eidos/eidos_class_TestElement.cpp eidos/eidos_functions.cpp \
+eidos/eidos_globals.cpp eidos/eidos_interpreter.cpp \
+eidos/eidos_property_signature.cpp eidos/eidos_rng.cpp \
+eidos/eidos_script.cpp eidos/eidos_symbol_table.cpp \
+eidos/eidos_test_functions_math.cpp eidos/eidos_test_functions_other.cpp \
+eidos/eidos_test_functions_statistics.cpp \
+eidos/eidos_test_functions_vector.cpp \
+eidos/eidos_test_operators_arithmetic.cpp \
+eidos/eidos_test_operators_comparison.cpp \
+eidos/eidos_test_operators_other.cpp eidos/eidos_test.cpp \
+eidos/eidos_token.cpp eidos/eidos_type_interpreter.cpp \
+eidos/eidos_type_table.cpp eidos/eidos_value.cpp eidos/lodepng.cpp \
+core/chromosome.cpp core/genome.cpp core/genomic_element_type.cpp \
+core/genomic_element.cpp core/individual.cpp core/interaction_type.cpp \
+core/log_file.cpp core/mutation_run.cpp core/mutation_type.cpp \
+core/mutation.cpp core/polymorphism.cpp core/population.cpp \
+core/slim_eidos_block.cpp core/slim_functions.cpp core/slim_globals.cpp \
+core/slim_sim_eidos.cpp core/slim_sim.cpp core/slim_test_core.cpp \
+core/slim_test_genetics.cpp core/slim_test_other.cpp core/slim_test.cpp \
+core/sparse_array.cpp core/subpopulation.cpp core/substitution.cpp
+
+PKG_CFLAGS = -std=c11 -Wno-attributes -Wunused-label -Wimplicit -Wunused-variable -Wunused-value -Wno-pragmas -Wempty-body -Wshadow -Wparentheses -Wmissing-prototypes -Wswitch -Wpointer-sign -Wsign-compare -Wstrict-prototypes -Wno-sign-conversion -Wuninitialized
+PKG_CPPFLAGS = $(GSL_INCLUDES) $(KASTORE_INCLUDES) $(TABLES_INCLUDES) -I./slim -I./eidos -std=c++11 -Wno-attributes -Wunused-label -Wunused-variable -Wunused-value -Wno-pragmas -Wempty-body -Wshadow -Wparentheses -Wswitch -Wsign-compare -Wno-sign-conversion -Wuninitialized
+PKG_LIBS = -L. -lgsl -leidos_zlib -ltables
+
+.PHONY: all libgsl.a libeidos_zlib.a libtables.a
 
 all: $(SHLIB)
 $(SHLIB): libgsl.a libeidos_zlib.a libtables.a
 
 LIBGSL = $(GSL_SOURCES:.c=.o)
+libgsl.a: PKG_CPPFLAGS=$(GSL_INCLUDES)
 libgsl.a: $(LIBGSL)
+	$(AR) -crvs libgsl.a $(LIBGSL)
+	$(RANLIB) $@
 
 LIBEIDOS_ZLIB = $(EIDOS_ZLIB_SOURCES:.c=.o)
+libeidos_zlib.a: PKG_CPPFLAGS=$(EIDOS_ZLIB_INCLUDES)
 libeidos_zlib.a: $(LIBEIDOS_ZLIB)
+	$(AR) -crvs libeidos_zlib.a $(LIBEIDOS_ZLIB)
+	$(RANLIB) $@
+
+LIBKASTORE = $(KASTORE_SOURCES:.ca=.o)
+libkastore.a: PKG_CPPFLAGS=$(KASTORE_INCLUDES)
+libkastore.a: $(LIBKASTORE)
+	$(AR) -crvs libkastore.a $(LIBKASTORE)
+	$(RANLIB) $@
+
+LIBTABLES = $(TABLES_SOURCES:.c=.o)
+libtables.a: PKG_CPPFLAGS=$(TABLES_INCLUDES)
+libtables.a: $(LIBTABLES)
+	$(AR) -crvs libtables.a $(LIBTABLES)
+	$(RANLIB) $@
+
+OBJECTS = $(SOURCES:.cpp=.o)

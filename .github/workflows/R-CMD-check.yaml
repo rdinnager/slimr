@@ -10,8 +10,27 @@ on:
 name: R-CMD-check
 
 jobs:
+
+  Build-SLiM:
+    if: github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '#build-libs')
+    runs-on: ${{ matrix.os }}
+
+    stategy:
+      matrix:
+        include:
+          - {}
+          - {}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download SLiM
+        run: |
+          http://benhaller.com/slim/SLiM_pacman.tar.gz
+
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
+
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
 

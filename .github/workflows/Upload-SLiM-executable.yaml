@@ -25,7 +25,7 @@ jobs:
       - uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: C:/msys642/mingw64/bin/slim.exe
+          file: /mingw64/bin/slim.exe
           overwrite: true
           file_glob: false
           tag: slim-windows-executable

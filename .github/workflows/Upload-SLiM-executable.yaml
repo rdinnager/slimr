@@ -12,9 +12,6 @@ jobs:
         shell: msys2 {0}
     steps:
       - uses: actions/checkout@v2
-      - uses: r-lib/actions/pr-fetch@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup MSYS2 mingw64
         uses: msys2/setup-msys2@v2
         with:

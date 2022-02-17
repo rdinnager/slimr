@@ -24,5 +24,5 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: C:/msys642/mingw64/bin/slim.exe
           overwrite: true
-          file_glob: true
+          file_glob: false
           tag: slim-windows-executable

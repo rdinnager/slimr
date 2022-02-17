@@ -16,12 +16,13 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           update: true
+          location: C:\msys642
           install: >-
             mingw-w64-x86_64-slim-simulator
       - uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: C:/msys64/mingw64/bin/slim.exe
+          file: C:/msys642/mingw64/bin/slim.exe
           overwrite: true
           file_glob: true
           tag: slim-windows-executable

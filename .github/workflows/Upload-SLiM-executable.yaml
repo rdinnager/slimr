@@ -17,7 +17,7 @@ jobs:
         with:
           update: true
           install: >-
-            mingw-w64-${{matrix.env}}-slim-simulator
+            mingw-w64-x86_64-slim-simulator
       - uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}

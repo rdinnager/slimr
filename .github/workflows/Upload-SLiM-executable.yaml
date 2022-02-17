@@ -7,9 +7,6 @@ jobs:
   upload-exec:
     name: upload-exec
     runs-on: windows-2019
-    defaults:
-      run:
-        shell: msys2 {0}
     steps:
       - uses: actions/checkout@v2
       - name: Setup MSYS2 mingw64
@@ -21,11 +18,11 @@ jobs:
             mingw-w64-x86_64-slim-simulator
       - name: debugging
         run: |
-          which slim.exe
+          copy C:/msys642/mingw64/bin/slim.exe .
       - uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: /mingw64/bin/slim.exe
+          file: slim.exe
           overwrite: true
           file_glob: false
           tag: slim-windows-executable

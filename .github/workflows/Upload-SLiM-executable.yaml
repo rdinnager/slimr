@@ -5,7 +5,6 @@ name: Upload-SLiM-executable
 
 jobs:
   upload-exec:
-    if: startsWith(github.event.comment.body, '/upload-exec')
     name: upload-exec
     runs-on: windows-2019
     defaults:

@@ -1,0 +1,32 @@
+on:
+  issue_comment:
+    types: [created]
+
+name: Upload-SLiM-executable
+
+jobs:
+  upload-exec:
+    if: startsWith(github.event.comment.body, '/upload-exec')
+    name: upload-exec
+    runs-on: windows-2019
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/pr-fetch@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup MSYS2 mingw64
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: >-
+            mingw-w64-${{matrix.env}}-slim-simulator
+      - uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: C:/msys64/mingw64/bin/slim.exe
+          overwrite: true
+          file_glob: true
+          tag: slim-windows-executable

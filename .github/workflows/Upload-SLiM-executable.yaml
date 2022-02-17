@@ -19,10 +19,13 @@ jobs:
           location: C:\msys642
           install: >-
             mingw-w64-x86_64-slim-simulator
+      - name: debugging
+        run: |
+          cygpath -m /mingw64/bin/slim.exe
       - uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: C:/msys642/mingw64/bin/slim.exe
+          file: C:/msys642/msys64/mingw64/bin/slim.exe
           overwrite: true
-          file_glob: true
+          file_glob: false
           tag: slim-windows-executable

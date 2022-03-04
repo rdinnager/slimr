@@ -137,40 +137,40 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
                                   throw_error = FALSE,
                                   ...) {
 
-  if(!attr(x, "script_info")$rendered) {
-    rlang::inform("slimr_script is unrendered. Trying to render now...")
-    x <- slim_script_render(x)
-  }
+    if(!attr(x, "script_info")$rendered) {
+      rlang::inform("slimr_script is unrendered. Trying to render now...")
+      x <- slim_script_render(x)
+    }
 
-  script <- as_slim_text(x)
-  end_gen <- attr(x, "script_info")$end_gen
-  output_info <- attr(x, "slimr_output")
+    script <- as_slim_text(x)
+    end_gen <- attr(x, "script_info")$end_gen
+    output_info <- attr(x, "slimr_output")
 
-  if(any(!is.na(output_info$file_name))) {
-    save_to_file <- output_info %>%
-      dplyr::select(.data$output_name, .data$file_name, .data$format) %>%
-      tidyr::drop_na(.data$file_name)
-  } else {
-    save_to_file <- NULL
-  }
+    if(any(!is.na(output_info$file_name))) {
+      save_to_file <- output_info %>%
+        dplyr::select(.data$output_name, .data$file_name, .data$format) %>%
+        tidyr::drop_na(.data$file_name)
+    } else {
+      save_to_file <- NULL
+    }
 
-  slim_run_script(script, end_gen = end_gen,
-                  slim_path = slim_path,
-                  script_file = script_file,
-                  simple_run = simple_run,
-                  capture_output = capture_output,
-                  keep_all_output = keep_all_output,
-                  show_output = show_output,
-                  callbacks = callbacks,
-                  cb_args = cb_args,
-                  new_grdev = new_grdev,
-                  record_graphics = record_graphics,
-                  rec_args = rec_args,
-                  parallel = parallel,
-                  progress = progress,
-                  save_to_file = save_to_file,
-                  throw_error = throw_error,
-                  ...)
+    slim_run_script(script, end_gen = end_gen,
+                    slim_path = slim_path,
+                    script_file = script_file,
+                    simple_run = simple_run,
+                    capture_output = capture_output,
+                    keep_all_output = keep_all_output,
+                    show_output = show_output,
+                    callbacks = callbacks,
+                    cb_args = cb_args,
+                    new_grdev = new_grdev,
+                    record_graphics = record_graphics,
+                    rec_args = rec_args,
+                    parallel = parallel,
+                    progress = progress,
+                    save_to_file = save_to_file,
+                    throw_error = throw_error,
+                    ...)
 
 }
 
@@ -280,6 +280,7 @@ slim_run_script <- function(script_txt,
                             throw_error = FALSE,
                             ...) {
 
+
   platform <- get_os()
 
   if(new_grdev) {
@@ -309,9 +310,9 @@ slim_run_script <- function(script_txt,
 
   slimr_write(script_txt, script_file)
 
-  if(platform == "windows") {
-    script_file <- convert_to_wsl_path(script_file)
-  }
+  # if(platform == "windows") {
+  #   script_file <- convert_to_wsl_path(script_file)
+  # }
 
   slim_p <- setup_slim_process(script_file, slim_path, platform, simple_run, conn = conn)
 
@@ -351,7 +352,7 @@ slim_run_script <- function(script_txt,
       slim_p$poll_io(10000)
 
       if(file_out) {
-        out_lines <- readr::read_lines(conn, skip = curr_line)
+        out_lines <- readr::read_lines(conn, skip = curr_line, lazy = FALSE)
       } else {
         out_lines <- c(leftovers, slim_p$read_output_lines())
       }
@@ -360,7 +361,7 @@ slim_run_script <- function(script_txt,
 
       not_finished <- FALSE
       if(file_out) {
-        out_lines <- readr::read_lines(conn, skip = curr_line)
+        out_lines <- readr::read_lines(conn, skip = curr_line, lazy = FALSE)
       } else {
         out_lines <- c(leftovers, slim_p$read_all_output_lines())
       }
@@ -518,7 +519,8 @@ setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(
     slim_call <- get_slim_call()
   } else {
     if(platform == "windows") {
-      slim_call <- list(call = "wsl", args = c(slim_path, "{script_file}"))
+      #slim_call <- list(call = "wsl", args = c(slim_path, "{script_file}"))
+      slim_call <- list(call = slim_path, args = "{script_file}")
     } else {
       slim_call <- list(call = slim_path, args = "{script_file}")
     }
@@ -637,12 +639,13 @@ slim_process_output <- function(out, data_only = FALSE) {
         dat <- paste0(dat, "\n")
       }
 
-      df <- readr::read_csv(I(paste0(stringr::str_replace_all(dat, "\'", "\""),
+      df <- readr::read_csv(I(paste0(dat,
                                    "\n", collapse = "")),
                             col_names = c("generation", "name", "expression", "type", "data"),
-                            #quote = "\'",
+                            quote = "\'",
                             col_types = "icccc",
-                            num_threads = 1)
+                            num_threads = 1,
+                            lazy = FALSE)
 
       end_data <- max(data_lines)
       last_line <- end_data + 1L
@@ -764,9 +767,9 @@ slim_open <- function(slimr_script,
   suppressWarnings(script_file <- tempfile(fileext = ".txt"))
   slimr_write(script_text, script_file)
 
-  if(platform == "windows") {
-    script_file <- convert_to_wsl_path(script_file)
-  }
+  # if(platform == "windows") {
+  #   script_file <- convert_to_wsl_path(script_file)
+  # }
 
   proc <- processx::run(slim_gui_path, script_file,
                         windows_verbatim_args = TRUE)

@@ -90,9 +90,9 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
   resources <- list.files(system.file("extdata", "recipe_resources", package = "slimr"), full.names = TRUE)
   #resources <- resources[!stringr::str_detect(resources, stringr::fixed("FIN_samples.txt"))]
 
-  if(get_os() == "windows") {
-    resources <- convert_to_wsl_path(resources)
-  }
+  # if(get_os() == "windows") {
+  #   resources <- convert_to_wsl_path(resources)
+  # }
 
   slim_recipes <- slimr::slim_recipes
 

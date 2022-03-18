@@ -18,12 +18,12 @@
       print(dat_nuc)
     Output
       # A tibble: 4 x 6
-        type             expression                 generation name  data       subpops
-        <chr>            <chr>                           <int> <chr> <list>     <list> 
-      1 slim_nucleotides slimr_output_nucleotides()        250 seqs  <DNAStrnS> <chr [~
-      2 slim_nucleotides slimr_output_nucleotides()        500 seqs  <DNAStrnS> <chr [~
-      3 slim_nucleotides slimr_output_nucleotides()        750 seqs  <DNAStrnS> <chr [~
-      4 slim_nucleotides slimr_output_nucleotides()       1000 seqs  <DNAStrnS> <chr [~
+        type             expression                generation name  data       subpops
+        <chr>            <chr>                          <int> <chr> <list>     <list> 
+      1 slim_nucleotides slimr_output_nucleotides~        250 seqs  <DNAStrnS> <chr>  
+      2 slim_nucleotides slimr_output_nucleotides~        500 seqs  <DNAStrnS> <chr>  
+      3 slim_nucleotides slimr_output_nucleotides~        750 seqs  <DNAStrnS> <chr>  
+      4 slim_nucleotides slimr_output_nucleotides~       1000 seqs  <DNAStrnS> <chr>  
 
 # slim_extract_genome works as expected
 
@@ -51,40 +51,40 @@
     Code
       print(dat2)
     Output
-      # A tibble: 100 x 4
-         generation gen_id gen_type mut_list 
-              <int> <chr>  <chr>    <list>   
-       1         20 p*:0   A        <int [1]>
-       2         20 p*:1   A        <int [1]>
-       3         20 p*:2   A        <int [1]>
-       4         20 p*:3   A        <int [1]>
-       5         20 p*:4   A        <int [1]>
-       6         20 p*:5   A        <int [1]>
-       7         20 p*:6   A        <int [1]>
-       8         20 p*:7   A        <int [1]>
-       9         20 p*:8   A        <int [1]>
-      10         20 p*:9   A        <int [1]>
-      # ... with 90 more rows
+      # A tibble: 96 x 4
+         gen_id generation gen_type mut_list 
+         <chr>       <int> <chr>    <list>   
+       1 p*:1           20 A        <int [1]>
+       2 p*:1           40 A        <int [1]>
+       3 p*:1           60 A        <int [1]>
+       4 p*:1           80 A        <int [1]>
+       5 p*:1          100 A        <int [1]>
+       6 p*:2           20 A        <int [1]>
+       7 p*:2           40 A        <int [1]>
+       8 p*:2           60 A        <int [1]>
+       9 p*:2           80 A        <int [1]>
+      10 p*:2          100 A        <int [1]>
+      # ... with 86 more rows
 
 ---
 
     Code
       print(dat3)
     Output
-      # A tibble: 105 x 13
-         generation gen_id gen_type mut_id unique_mut_id mut_type chrome_pos selection
-              <int> <chr>  <chr>     <int>         <int> <chr>         <int>     <dbl>
-       1         20 p*:0   A             0            31 m1            51960         0
-       2         20 p*:1   A            NA            NA <NA>             NA        NA
-       3         20 p*:2   A            NA            NA <NA>             NA        NA
-       4         20 p*:3   A            NA            NA <NA>             NA        NA
-       5         20 p*:4   A            NA            NA <NA>             NA        NA
-       6         20 p*:5   A            NA            NA <NA>             NA        NA
-       7         20 p*:6   A            NA            NA <NA>             NA        NA
-       8         20 p*:7   A            NA            NA <NA>             NA        NA
-       9         20 p*:8   A            NA            NA <NA>             NA        NA
-      10         20 p*:9   A            NA            NA <NA>             NA        NA
-      # ... with 95 more rows, and 5 more variables: dominance <dbl>, subpop <chr>,
+      # A tibble: 101 x 13
+         gen_id generation gen_type mut_id unique_mut_id mut_type chrome_pos selection
+         <chr>       <int> <chr>     <int>         <int> <chr>         <int>     <dbl>
+       1 p*:1           20 A            NA            NA <NA>             NA        NA
+       2 p*:1           40 A            NA            NA <NA>             NA        NA
+       3 p*:1           60 A            NA            NA <NA>             NA        NA
+       4 p*:1           80 A             1           119 m1            83626         0
+       5 p*:1          100 A            NA            NA <NA>             NA        NA
+       6 p*:2           20 A            NA            NA <NA>             NA        NA
+       7 p*:2           40 A            NA            NA <NA>             NA        NA
+       8 p*:2           60 A            NA            NA <NA>             NA        NA
+       9 p*:2           80 A            NA            NA <NA>             NA        NA
+      10 p*:2          100 A             0            46 m1            67286         0
+      # ... with 91 more rows, and 5 more variables: dominance <dbl>, subpop <chr>,
       #   first_gen <int>, prevalence <int>, nucleotide <chr>
 
 # slim_extract_genlight works as expected

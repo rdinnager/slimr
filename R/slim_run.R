@@ -339,7 +339,7 @@ slim_run_script <- function(script_txt,
   data_bound <- dplyr::tibble(NULL)
   cb_every <- 1L
   last_bound <- 0L
-  gen_past <- 0
+  gens_past <- 0
 
   if(file_out) {
     curr_line <- 0L
@@ -352,7 +352,9 @@ slim_run_script <- function(script_txt,
       slim_p$poll_io(10000)
 
       if(file_out) {
-        out_lines <- readr::read_lines(conn, skip = curr_line, lazy = FALSE)
+        # out_lines <- readr::read_lines(conn, skip = curr_line, lazy = FALSE,
+        #                                progress = FALSE)
+        out_lines <- read_out_lines(conn, skip = curr_line)
       } else {
         out_lines <- c(leftovers, slim_p$read_output_lines())
       }
@@ -361,7 +363,9 @@ slim_run_script <- function(script_txt,
 
       not_finished <- FALSE
       if(file_out) {
-        out_lines <- readr::read_lines(conn, skip = curr_line, lazy = FALSE)
+        # out_lines <- readr::read_lines(conn, skip = curr_line, lazy = FALSE,
+        #                                progress = FALSE)
+        out_lines <- read_out_lines(conn, skip = curr_line)
       } else {
         out_lines <- c(leftovers, slim_p$read_all_output_lines())
       }
@@ -422,8 +426,8 @@ slim_run_script <- function(script_txt,
           output_data[[data_i]] <- output_list$data
 
           gen_curr <- max(output_data[[data_i]]$generation)
-          gens_past <- gen_curr - gen_past
-          if(gens_past > cb_every) {
+          gens_past <- gen_curr - gens_past
+          if(!is.null(callbacks) && !is.na(gens_past) && !is.null(gens_past) && gens_past > cb_every) {
             data_bound <- dplyr::bind_rows(output_data[(last_bound + 1L):data_i])
             last_bound <- data_i
             gen_past <- gen_curr
@@ -645,7 +649,8 @@ slim_process_output <- function(out, data_only = FALSE) {
                             quote = "\'",
                             col_types = "icccc",
                             num_threads = 1,
-                            lazy = FALSE)
+                            lazy = FALSE,
+                            progress = FALSE)
 
       end_data <- max(data_lines)
       last_line <- end_data + 1L
@@ -777,4 +782,15 @@ slim_open <- function(slimr_script,
 
 }
 
+read_out_lines <- function(conn, skip = curr_line) {
+  out_lines <- try(readr::read_lines(conn, skip = skip, lazy = FALSE,
+                                 progress = FALSE),
+                   silent = TRUE)
+  while(inherits(out_lines, "try-error")) {
+    out_lines <- try(readr::read_lines(conn, skip = skip, lazy = FALSE,
+                                 progress = FALSE),
+                     silent = TRUE)
+  }
+  out_lines
 
+}

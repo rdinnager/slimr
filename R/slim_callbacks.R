@@ -37,12 +37,45 @@ callbacks$initialize <- function() {
   cb
 }
 
+#' SLiM first() callback
+#'
+#' This callback specifies the code should be called first (before anything else) in the simulation cycle.
+#' For details on exactly when \code{\link{first}()}, \code{\link{early}()} and \code{early()} callbacks are
+#' run during a simulation see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=541}{SLiM Manual: page 541}
+#' for "WF" models, or \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=549}{SLiM Manual: page 549} for "nonWF" models.
+#' @family callbacks
+#' @return None
+#' @export
+#' @section Copyright:
+#' This is documentation for a function in the SLiM software, and has been
+#' modified from the official manual,
+#' which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#' documentation is
+#' Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#' about SLiM can be found
+#' on the official website: \url{https://messerlab.org/slim/}
+#' @author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#' (\email{messer@cornell.edu})
+#' @examples
+#' slim_block(1, early(), {
+#'   sim.addSubpop("p1", 100)
+#' })
+first <- function() {
+  callbacks$first()
+}
+
+callbacks$first <- function() {
+  cb <- "first()"
+  class(cb) <- "callback"
+  cb
+}
+
 #' SLiM early() callback
 #'
 #' This callback specifies the code should be called early in the simulation cycle.
-#' For details on exactly when \code{\link{late}()} and \code{early()} callbacks are
-#' run during a simulation see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=503}{SLiM Manual: page 503}
-#' for "WF" models, or \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=511}{SLiM Manual: page 511} for "nonWF" models.
+#' For details on exactly when \code{\link{first}()}, \code{\link{late}()} and \code{early()} callbacks are
+#' run during a simulation see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=541}{SLiM Manual: page 541}
+#' for "WF" models, or \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=549}{SLiM Manual: page 549} for "nonWF" models.
 #' @family callbacks
 #' @return None
 #' @export
@@ -73,9 +106,9 @@ callbacks$early <- function() {
 #' SLiM late() callback
 #'
 #' This callback specifies the code should be called late in the simulation cycle.
-#' For details on exactly when \code{late()} and \code{\link{early}()} callbacks are
-#' run during a simulation see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=503}{SLiM Manual: page 503}
-#' for "WF" models, or \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=511}{SLiM Manual: page 511} for "nonWF" models.
+#' For details on exactly when \code{\link{first}()}, \code{late()} and \code{\link{early}()} callbacks are
+#' run during a simulation see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=541}{SLiM Manual: page 541}
+#' for "WF" models, or \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=549}{SLiM Manual: page 549} for "nonWF" models.
 #' @family callbacks
 #' @return None
 #' @export

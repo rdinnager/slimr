@@ -73,7 +73,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: msys2 {0}
         run: |
-          cd ${{ github.workspace }}
+          cd /d/a
           wget http://benhaller.com/slim/SLiM.zip
 
       - name: Download SLiM on non-Windows
@@ -101,21 +101,21 @@ jobs:
         if: runner.os == 'Windows' && steps.cache-slim.outputs.cache-hit != 'true'
         shell: msys2 {0}
         run: |
-          cd ${{ github.workspace }}
+          cd /d/a
           unzip -o SLiM.zip
-          cd SLiM\windows_compat\gnulib
+          cd SLiM/windows_compat/gnulib
           touch --date="`date`" aclocal.m4 Makefile.am configure configure.ac config.h.in Makefile.in
-          cd ..\..\..
+          cd ../../..
           mkdir SLiM_build
           cd SLiM_build
-          cmake -G"MSYS Makefiles" -DCMAKE_BUILD_TYPE=Release ..\SLiM
+          cmake -G"MSYS Makefiles" -DCMAKE_BUILD_TYPE=Release ../SLiM
           make -j 2
 
       - name: Install SLiM on Windows Part 2
         if: runner.os == 'Windows'
         shell: wsl-bash {0}
         run: |
-          cd ${{ github.workspace }}
+          cd /d/a
           cd SLiM_build
           make install
           cd ..

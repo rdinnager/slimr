@@ -33,12 +33,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install WSL
-        if: runner.os == 'Windows'
-        uses: Vampire/setup-wsl@v1
-        with:
-          distribution: Ubuntu-20.04
-
       - name: Install macOS system dependencies
         if: runner.os == 'macOS'
         run: |

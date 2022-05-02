@@ -63,7 +63,6 @@ Suggests:
     ggplot2,
     gganimate,
     grDevices,
-    av,
     fansi,
     printr,
     rstudioapi,

@@ -134,6 +134,15 @@ jobs:
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
+        if: runner.os = 'Windows'
+        env:
+          SLIM_HOME: 'C:/Program Files (x86)/SLiM/bin'
+        with:
+          args: 'c("--no-manual", "--as-cran")'
+          error-on: '"error"'
+
+      - uses: r-lib/actions/check-r-package@v2
+        if: runner.os != 'Windows'
         with:
           args: 'c("--no-manual", "--as-cran")'
           error-on: '"error"'

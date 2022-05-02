@@ -1,10 +1,14 @@
 install_path <- function() {
   path <- Sys.getenv("SLIM_HOME")
   if (nzchar(path)) {
-    normalizePath(path, mustWork = FALSE)
+    path <- normalizePath(path, mustWork = FALSE)
   } else {
-    normalizePath(file.path(system.file("", package = "slimr")), mustWork = FALSE)
+    path <- slimr_which("slim", platform)
+    if(path == "") {
+      path <- normalizePath(file.path(system.file("", package = "slimr")), mustWork = FALSE)
+    }
   }
+  path
 }
 
 #' A simple exported version of install_path
@@ -224,11 +228,9 @@ get_slim_dir <- function() {
   if(!is.null(.slim_settings$install_dir)) {
     return(.slim_settings$slim_dir)
   } else {
-    if(Sys.getenv("SLIMR_SLIM_DIR") != "") {
-      return(Sys.getenv("SLIMR_SLIM_DIR"))
-    } else {
-      return("~/slim/bin")
-    }
+
+    return(install_path())
+
   }
 }
 

@@ -37,7 +37,8 @@ test_that("slim_run works with output", {
     ) %>%
       slim_run() -> run_w_out
     cat(run_w_out$output_data$data)
-  })
+  },
+  cnd_class = FALSE)
 
   expect_type(run_w_out$output_data$data, "character")
   expect_identical(run_w_out$exit_status, 0L)

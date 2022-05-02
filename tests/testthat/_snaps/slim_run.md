@@ -15,7 +15,7 @@
       }), slim_block(100, {
         sim.simulationFinished()
       })) %>% slim_run()
-    Message <rlang_message>
+    Message
       
       
       Simulation finished with exit status: 0

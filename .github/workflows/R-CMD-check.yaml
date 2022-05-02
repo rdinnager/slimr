@@ -103,12 +103,12 @@ jobs:
         run: |
           cd ${{ github.workspace }}
           unzip -o SLiM.zip
-          cd SLiM/windows_compat/gnulib
+          cd SLiM\windows_compat\gnulib
           touch --date="`date`" aclocal.m4 Makefile.am configure configure.ac config.h.in Makefile.in
-          cd ../..
-          mkdir Release
-          cd Release
-          cmake -G"MSYS Makefiles" -DCMAKE_BUILD_TYPE=Release ..
+          cd ..\..\..
+          mkdir SLiM_build
+          cd SLiM_build
+          cmake -G"MSYS Makefiles" -DCMAKE_BUILD_TYPE=Release ..\SLiM
           make -j 2
 
       - name: Install SLiM on Windows Part 2
@@ -116,7 +116,7 @@ jobs:
         shell: wsl-bash {0}
         run: |
           cd ${{ github.workspace }}
-          cd SLiM/Release
+          cd SLiM_build
           make install
           cd ..
           rm SLiM.zip

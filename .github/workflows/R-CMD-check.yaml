@@ -58,16 +58,16 @@ jobs:
       - name: Setup MSYS2 on Windows
         if: runner.os == 'Windows' && steps.cache-slim.outputs.cache-hit != 'true'
         uses: msys2/setup-msys2@v2
-          with:
-            msystem: mingw64
-            update: true
-            install: >-
-             git
-             unzip
-             base-devel
-             msys2-devel
-             mingw-w64-x86_64-toolchain
-             mingw-w64-x86_64-cmake
+        with:
+          msystem: mingw64
+          update: true
+          install: >-
+           git
+           unzip
+           base-devel
+           msys2-devel
+           mingw-w64-x86_64-toolchain
+           mingw-w64-x86_64-cmake
 
       - name: Download SLiM on Windows
         if: runner.os == 'Windows'

@@ -96,6 +96,8 @@ slim_run.character <- function(x, slim_path = NULL,
                                throw_error = FALSE,
                                ...) {
 
+  assert_slim_installed()
+
   if(length(x) > 1) {
     rlang::warn("Input has more than one element. Concatenating them with newline separators...")
     x <- paste(x, collapse = "\n")
@@ -136,6 +138,8 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
                                   progress = TRUE,
                                   throw_error = FALSE,
                                   ...) {
+
+    assert_slim_installed()
 
     if(!attr(x, "script_info")$rendered) {
       rlang::inform("slimr_script is unrendered. Trying to render now...")
@@ -192,6 +196,7 @@ slim_run.slimr_script_coll <- function(x, slim_path = NULL,
                                        throw_error = FALSE,
                                        ...) {
 
+  assert_slim_installed()
   assert_package("future")
   assert_package("furrr")
 

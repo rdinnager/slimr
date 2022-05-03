@@ -3,10 +3,7 @@ install_path <- function() {
   if (nzchar(path)) {
     path <- normalizePath(path, mustWork = FALSE)
   } else {
-    path <- slimr_which("slim", platform)
-    if(path == "") {
-      path <- normalizePath(file.path(system.file("", package = "slimr")), mustWork = FALSE)
-    }
+    path <- normalizePath(file.path(system.file("", package = "slimr")), mustWork = FALSE)
   }
   path
 }
@@ -194,29 +191,13 @@ get_slim_call <- function() {
 
   } else {
 
-    platform <- get_os()
-
-    test <- slimr_which("slim", platform)
-
-    if(test != "") {
-      slim_path <- test
-    } else {
-      slim_dir <- get_slim_dir()
-      slim_path <- slimr_which(file.path(slim_dir, "slim"), platform)
-    }
+    slim_path <- slim_get_executable()
 
     if(slim_path == "") {
       slim_call <- NULL
     } else {
-      if(platform == "windows") {
-        # slim_call <- list(call = "wsl",
-        #                   args = c(slim_path, "{script_file}"))
-        slim_call <- list(call = slim_path,
-                          args = "{script_file}")
-      } else {
-        slim_call <- list(call = slim_path,
-                          args = "{script_file}")
-      }
+      slim_call <- list(call = slim_path,
+                        args = "{script_file}")
     }
 
     return(slim_call)
@@ -234,22 +215,30 @@ get_slim_dir <- function() {
   }
 }
 
-slim_is_avail <- function() {
-  os <- get_os()
-  test <- slimr_which("slim", os)
-  if(test == "") {
-    slim_dir <- get_slim_dir()
-    test <- slimr_which(file.path(slim_dir, "slim"), os)
-    if(test != "") {
-      avail <- TRUE
-    } else {
-      avail <- FALSE
-    }
-  } else {
-    avail <- TRUE
+slim_get_executable <- function() {
+  slim_dir <- get_slim_dir()
+  slim_path <- slimr_which(file.path(slim_dir, "slim"))
+  if(slim_path == "" | !file.exists(slim_path)) {
+    slim_path <- slimr_which("slim")
   }
+  slim_path
+}
 
-  avail
+#' Check if SLiM is installed and \code{slimr} can find it
+#'
+#' @return \code{TRUE} if SLiM is found and \code{FALSE} otherwise
+#' @export
+#'
+#' @examples
+#' slim_is_avail()
+slim_is_avail <- function() {
+
+  slim_path <- slim_get_executable()
+  if(slim_path != "" & file.exists(slim_path)) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
 
 }
 
@@ -257,4 +246,10 @@ slim_test <- function() {
 
   test <- slim_run_script(script_file = "--test")
 
+}
+
+assert_slim_installed <- function() {
+  if(!slim_is_avail()) {
+    rlang::abort("SLiM is not installed or can't be found. Please install using slim_setup() or manually by following the instruction at https://messerlab.org/slim/ . If you are sure SLiM is already installed, you can let slimr know where it is by setting the environmental variable SLIM_HOME, e.g. Sys.setenv(SLIM_HOME = 'install_dir'), where install_dir is the directory that contains your SLiM executable (usually slim or slim.exe)")
+  }
 }

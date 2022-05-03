@@ -55,25 +55,7 @@ get_os <- function(){
 #' @param os What operating system are we working in? Must be "windows", "osx", or "linux#', if left blank slimr will try and detrmine it automatically
 #' @return The full path to the executable as a character, or "" if not found.
 #' @noRd
-slimr_which <- function(slim_path, os = c("linux", "osx", "windows")) {
-
-  # if(missing(os)) {
-  #   os <- get_os()
-  # }
-  # if(os == "windows") {
-  #
-  #   suppressWarnings(exe <- system(glue::glue('bash -c "which -a {slim_path}"'),
-  #                                  intern = TRUE,
-  #                                  show.output.on.console = FALSE))
-  #   if(is.null(attr(exe, "status"))) {
-  #     here_it_is <- stringr::str_remove_all(exe, "\n")
-  #   } else {
-  #     here_it_is <- ""
-  #   }
-  # } else {
-  #   here_it_is <- Sys.which(path.expand(slim_path))
-  # }
-
+slimr_which <- function(slim_path) {
   here_it_is <- Sys.which(path.expand(slim_path))
   here_it_is
 }

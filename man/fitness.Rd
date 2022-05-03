@@ -58,6 +58,7 @@ slim_block(fitness(m2), {
 \seealso{
 Other callbacks: 
 \code{\link{early}()},
+\code{\link{first}()},
 \code{\link{initialize}()},
 \code{\link{interaction}()},
 \code{\link{late}()},

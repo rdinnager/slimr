@@ -31,6 +31,7 @@ Available callbacks are:
 \seealso{
 Other callbacks: 
 \code{\link{early}()},
+\code{\link{first}()},
 \code{\link{fitness}()},
 \code{\link{initialize}()},
 \code{\link{interaction}()},

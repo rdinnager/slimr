@@ -26,6 +26,9 @@
 #' @param type Provide a custom type to the output. Used mostly for internal purposes.
 #' @param expression Provide a custom expression to be included with the output.
 #' Used mostly for internal purposes.
+#' @param time_counter Expression used to extract the simulation time from SLiM. By default this
+#' uses the global timing mechanism in SLiM version >4.0: `community.tick`. For versions <4.0,
+#' use `sim.generation` instead (this parameter is for backwards compatability with old SLiM versions)
 #'
 #' @return An expression with the code to be run in SLiM.
 #'
@@ -59,7 +62,8 @@ slimr_output <- function(slimr_expr, name, do_every = 1,
                          file_name = tempfile(fileext = ".txt"),
                          format = c("csv", "fst"),
                          type = NULL,
-                         expression = NULL) {
+                         expression = NULL,
+                         time_counter = community.tick) {
 
   send_to = match.arg(send_to)
   format = match.arg(format)
@@ -80,8 +84,8 @@ slimr_output <- function(slimr_expr, name, do_every = 1,
   if(!is.null(type)) {
 
     new_code <- rlang::expr(
-      if(sim.generation %% !!do_every == 0) {
-        cat("\n<slimr_out:start>\n" + paste(sim.generation) + ",'" +
+      if(!!rlang::enexpr(time_counter) %% !!do_every == 0) {
+        cat("\n<slimr_out:start>\n" + paste(!!rlang::enexpr(time_counter)) + ",'" +
               !!name + "','" + !!expr_txt + "','" + !!type + "','")
         cat(!!slimr_expr)
         cat("'\n<slimr_out:end>\n")
@@ -92,8 +96,8 @@ slimr_output <- function(slimr_expr, name, do_every = 1,
 
     if(slimr_code_detect_output(expr_txt)) {
       new_code <- rlang::expr(
-        if(sim.generation %% !!do_every == 0) {
-          cat("\n<slimr_out:start>\n" + paste(sim.generation) + ",'" +
+        if(!!rlang::enexpr(time_counter) %% !!do_every == 0) {
+          cat("\n<slimr_out:start>\n" + paste(!!rlang::enexpr(time_counter)) + ",'" +
                 !!name + "','" + !!expr_txt + "','" + "slim_output','")
           !!slimr_expr
           cat("'\n<slimr_out:end>\n")
@@ -102,8 +106,8 @@ slimr_output <- function(slimr_expr, name, do_every = 1,
     } else {
 
       new_code <- rlang::expr(
-        if(sim.generation %% !!do_every == 0) {
-          cat("\n<slimr_out:start>\n" + paste(sim.generation) + ",'" +
+        if(!!rlang::enexpr(time_counter) %% !!do_every == 0) {
+          cat("\n<slimr_out:start>\n" + paste(!!rlang::enexpr(time_counter)) + ",'" +
                 !!name + "','" + !!expr_txt + "','")
           str(!!slimr_expr)
           cat("','")

@@ -11,9 +11,9 @@
 #'   slim_block_progress(10),
 #'   slim_block_finish(100)
 #' )
-slim_block_progress <- function(update_every = 1) {
+slim_block_progress <- function(update_every = 1, time_counter = community.tick) {
   slim_block(late(), {
-    slimr_output(sim.generation, "progress", do_every = !!update_every)
+    slimr_output(!!rlang::enexpr(time_counter), "progress", do_every = !!update_every)
   })
 }
 

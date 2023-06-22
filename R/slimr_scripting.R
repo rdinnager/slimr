@@ -75,7 +75,7 @@ slim_script <- function(...) {
                               ~glue::glue(.x, .na = NULL) %>%
                                 as.character())
 
-  code <- vctrs::vec_unchop(script$code)
+  code <- vctrs::list_unchop(script$code)
 
   ## process inlining
   c(code, slimr_inline_attr) %<-% process_inline(code, block_names,
@@ -549,7 +549,6 @@ slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE
                                                      slimr_template_attr = slimr_template_attr,
                                                      replace_NAs = replace_NAs),
                                 .options = furrr::furrr_options(globals = FALSE,
-                                                                lazy = TRUE,
                                                                 seed = TRUE))
     } else {
       new_scripts <- purrr::map(template,
@@ -571,7 +570,6 @@ slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE
       new_scripts <- furrr::future_map(new_scripts,
                                        ~reprocess_script(.x),
                                        .options = furrr::furrr_options(globals = FALSE,
-                                                                       lazy = TRUE,
                                                                        seed = TRUE))
     } else {
       new_scripts <- purrr::map(new_scripts,
@@ -598,7 +596,7 @@ slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE
         new_slimr_script_coll()
     } else {
       new_scripts <- replicate(reps, new_scripts, simplify = FALSE) %>%
-        vctrs::vec_unchop()
+        vctrs::list_unchop()
     }
   }
 

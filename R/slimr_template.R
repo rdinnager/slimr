@@ -79,7 +79,7 @@ process_template <- function(code, block_names) {
                      ~purrr::map(.,
                                  ~ purrr::`%||%`(.x, NA))) %>%
     dplyr::mutate_at(c("var_names", "unquote"),
-                     ~vec_unchop(.))
+                     ~list_unchop(.))
 
   #new_code <- SLiMify_all(template_processed$new_code)
   new_code <- purrr::map(template_processed$new_code,

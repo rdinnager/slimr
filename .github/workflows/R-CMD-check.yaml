@@ -72,9 +72,7 @@ jobs:
 
       - name: Setup cmake on non-Windows
         if: runner.os != 'Windows'
-        uses: jwlawson/actions-setup-cmake@v1.9
-        with:
-          github-api-token: ${{ secrets.INSTALL_GITHUB_PAT }}
+        uses: jwlawson/actions-setup-cmake@v1.14
 
       - name: Install SLiM on Windows Part 1
         if: runner.os == 'Windows' && steps.cache-slim.outputs.cache-hit != 'true'

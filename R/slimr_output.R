@@ -209,7 +209,7 @@ process_output <- function(code, block_names) {
                                  ~ purrr::`%||%`(.x, NA))) %>%
     dplyr::mutate_at(c("code_for_slim", "code_for_display", "output_name",
                        "file_name", "format"),
-                     ~vec_unchop(.))
+                     ~list_unchop(.))
 
   #new_code <- SLiMify_all(output_processed$new_code)
 

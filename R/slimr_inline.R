@@ -137,7 +137,7 @@ process_inline <- function(code, block_names, slimr_inline_attr) {
                      ~purrr::map(.,
                                  ~ purrr::`%||%`(.x, NA))) %>%
     dplyr::mutate_at(c("code_for_slim", "code_for_display"),
-                     ~vec_unchop(.))
+                     ~list_unchop(.))
 
   new_code <- purrr::map(inline_processed$new_code,
                          ~unlist(.x))

@@ -32,7 +32,7 @@ Encoding: UTF-8
 LazyData: true
 URL: https://rdinnager.github.io/slimr, https://rdinnager.github.io/slimr/index.html
 BugReports: https://github.com/rdinnager/slimr/issues
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Language: en-GB
 Depends: 
     R (>= 2.10)

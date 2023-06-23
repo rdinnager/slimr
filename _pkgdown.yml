@@ -132,3 +132,30 @@ reference:
   - contents:
     - slim_code_Rify
     - slim_code_SLiMify
+  - title: Uncategorized
+  - contents:
+    - as_slimr_script
+    - as_slim_text
+    - as_slim_text.slimr_script
+    - code
+    - end_gen
+    - first
+    - get_block
+    - get_slim_call
+    - new_slimr_script_coll
+    - reconstruct
+    - reconstruct.slimr_script
+    - slimr_clip_original
+    - slimr_code
+    - slimr_name
+    - slimr_open_original
+    - slimr_script_coll
+    - slimr_template_info
+    - slimr_write
+    - slim_file
+    - slim_install_path
+    - slim_is_avail
+    - slim_make_pop_input
+    - slim_open
+    - slim_results_to_data
+    - slim_script_duration

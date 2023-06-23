@@ -68,7 +68,7 @@ jobs:
           path: |
             ${{ github.workspace }}/SLiM_build
             ${{ github.workspace }}/SLiM
-          key: ${{ runner.os }}-build_SLiM-${{ hashFiles('SLiM.zip') }}
+          key: ${{ runner.os }}-build_SLiM-${{ hashFiles('**/SLiM.zip') }}
 
       - name: Setup cmake on non-Windows
         if: runner.os != 'Windows'

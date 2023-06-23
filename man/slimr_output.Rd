@@ -12,7 +12,8 @@ slimr_output(
   file_name = tempfile(fileext = ".txt"),
   format = c("csv", "fst"),
   type = NULL,
-  expression = NULL
+  expression = NULL,
+  time_counter = community.tick
 )
 }
 \arguments{
@@ -42,6 +43,10 @@ but there are plans to support "fst" and "disk.frame".}
 
 \item{expression}{Provide a custom expression to be included with the output.
 Used mostly for internal purposes.}
+
+\item{time_counter}{Expression used to extract the simulation time from SLiM. By default this
+uses the global timing mechanism in SLiM version >4.0: `community.tick`. For versions <4.0,
+use `sim.generation` instead (this parameter is for backwards compatability with old SLiM versions)}
 }
 \value{
 An expression with the code to be run in SLiM.

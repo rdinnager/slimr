@@ -179,12 +179,6 @@ Other SLiMSim:
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
-
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
-
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
 }
 \concept{Genome}
 \concept{Individual}

@@ -4,7 +4,7 @@
 \alias{slim_block_progress}
 \title{Insert slim_block to track progress when using slim_run}
 \usage{
-slim_block_progress(update_every = 1)
+slim_block_progress(update_every = 1, time_counter = community.tick)
 }
 \arguments{
 \item{update_every}{How often to update progress, expressed as the number

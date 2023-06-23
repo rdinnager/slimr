@@ -76,6 +76,7 @@ jobs:
 
       - name: Install SLiM on Windows Part 1
         if: runner.os == 'Windows' && steps.cache-slim.outputs.cache-hit != 'true'
+        continue-on-error: true
         shell: msys2 {0}
         run: |
           cd /d/a
@@ -100,6 +101,7 @@ jobs:
 
       - name: Install SLiM on non-Windows Part 1
         if: runner.os != 'Windows' && steps.cache-slim.outputs.cache-hit != 'true'
+        continue-on-error: true
         run: |
           cd ${{ github.workspace }}
           unzip -o SLiM.zip

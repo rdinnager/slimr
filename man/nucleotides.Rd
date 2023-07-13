@@ -32,8 +32,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=536}{SLiM manual: page 536}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=644}{SLiM manual: page
+644}.
 
 Returns the nucleotide sequence for the genome. This is the
 current ancestral sequence, as would be returned by the Chromosome method
@@ -53,11 +54,11 @@ have a length that is a multiple of three); see the ancestralNucleotides()
 documentation for details. If the sequence returned is likely to be long, the
 "string" format will be the most memory-efficient, and may also be the fastest
 (but may be harder to work with). Several helper functions are provided for
-working with sequences, such as nucleotideCounts() to get the counts of A/C/G/
-T nucleotides in a sequence, nucleotideFrequencies() to get the same information
+working with sequences, such as nucleotideCounts() to get the counts of A/C/G/T
+nucleotides in a sequence, nucleotideFrequencies() to get the same information
 as frequencies, and codonsToAminoAcids() to convert a codon sequence (such as
 provided by the codon format described above) to an amino acid sequence; see
-section 24.16.1.
+section 24.17.1.
 }
 \section{Copyright}{
 
@@ -72,7 +73,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Genome: 
-\code{\link{Genome}},
+\code{\link{G}},
 \code{\link{addMutations}()},
 \code{\link{addNewDrawnMutation}()},
 \code{\link{addNewMutation}()},

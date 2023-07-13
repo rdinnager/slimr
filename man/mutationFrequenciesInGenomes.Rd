@@ -26,18 +26,19 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=536}{SLiM manual: page 536}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=643}{SLiM manual: page
+643}.
 
 Return a float vector with the frequencies of all of the Mutation
 objects passed in mutations, within the target Genome vector. If the optional
-mutations argument is NULL (the default), frequencies will be returned for all
-of the active Mutation objects in the simulation - the same Mutation objects,
-and in the same order, as would be returned by the mutations property of sim, in
-other words. See the +mutationCountsInGenomes() method to obtain integer counts
-instead of float frequencies. See also the SLiMSim methods mutationCounts()
-and mutationFrequencies(), which may be more efficient for getting counts/
-frequencies for whole subpopulations or for the whole simulation.
+mutations argument is NULL (the default), frequencies will be returned for
+all of the active Mutation objects in the simulation - the same Mutation
+objects, and in the same order, as would be returned by the mutations property
+of sim, in other words. See the +mutationCountsInGenomes() method to obtain
+integer counts instead of float frequencies. See also the Species methods
+mutationCounts() and mutationFrequencies(), which may be more efficient for
+getting counts/frequencies for whole subpopulations or for the whole simulation.
 }
 \section{Copyright}{
 
@@ -52,7 +53,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Genome: 
-\code{\link{Genome}},
+\code{\link{G}},
 \code{\link{addMutations}()},
 \code{\link{addNewDrawnMutation}()},
 \code{\link{addNewMutation}()},

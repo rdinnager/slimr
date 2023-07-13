@@ -3,7 +3,7 @@
 \name{ancestralNucleotides}
 \alias{ancestralNucleotides}
 \alias{Chromosome$ancestralNucleotides}
-\alias{.c$ancestralNucleotides}
+\alias{.Ch$ancestralNucleotides}
 \title{SLiM method ancestralNucleotides}
 \usage{
 ancestralNucleotides(start, end, format = "string")
@@ -32,8 +32,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=529}{SLiM manual: page 529}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=632}{SLiM manual: page
+632}.
 
 Returns the ancestral nucleotide sequence originally supplied
 to initializeAncestralNucleotides(), including any sequence changes due
@@ -61,7 +62,7 @@ is 1, AAG is 2, AAT is 3, ACA is 4, and on upward to TTT which is 63. If the
 nucleotide sequence AACACATTT is requested in codon format, the codon vector 1
 4 63 will therefore be returned. These codon values can be useful in themselves;
 they can also be passed to codonsToAminoAcids() to translate them into the
-corresponding amino acid sequence if desired (see section 24.16.1).
+corresponding amino acid sequence if desired (see section 24.17.1).
 }
 \section{Copyright}{
 
@@ -76,7 +77,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Chromosome: 
-\code{\link{Chromosome}},
+\code{\link{Ch}},
 \code{\link{drawBreakpoints}()},
 \code{\link{setAncestralNucleotides}()},
 \code{\link{setGeneConversion}()},

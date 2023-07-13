@@ -29,34 +29,36 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=539}{SLiM manual: page 539}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=646}{SLiM manual: page
+646}.
 
 Remove the mutations in mutations from the target genome(s), if they
 are present (if they are not present, they will be ignored). If NULL is passed
 for mutations (which is the default), then all mutations will be removed from
 the target genomes; in this case, substitute must be F (a specific vector of
 mutations to be substituted is required). Note that the Mutation objects removed
-remain valid, and will still be in the simulation's mutation registry (i.e.
-will be returned by SLiMSim's mutations property), until the next generation.
-Changing this will normally affect the fitness values calculated at the end
-of the current generation; if you want current fitness values to be affected,
-you can call SLiMSim's method recalculateFitness() - but see the documentation
+remain valid, and will still be in the simulation's mutation registry (i.e.,
+will be returned by the Species property mutations), until the next tick.
+Removing mutations will normally affect the fitness values calculated at the
+end of the current tick; if you want current fitness values to be affected, you
+can call the Species method recalculateFitness() - but see the documentation
 of that method for caveats. The optional parameter substitute was added in
-SLiM 2.2, with a default of F for backward compatibility. If substitute is
-T, Substitution objects will be created for all of the removed mutations so
-that they are recorded in the simulation as having fixed, just as if they
-had reached fixation and been removed by SLiM's own internal machinery. This
-will occur regardless of whether the mutations have in fact fixed, regardless
-of the convertToSubstitution property of the relevant mutation types, and
-regardless of whether all copies of the mutations have even been removed
-from the simulation (making it possible to create Substitution objects for
-mutations that are still segregating). It is up to the caller to perform
-whatever checks are necessary to preserve the integrity of the simulation's
-records. Typically substitute will only be set to T in the context of calls like
-sim.subpopulations.genomes.removeMutations(muts, T), such that the substituted
-mutations are guaranteed to be entirely removed from circulation. As mentioned
-above, substitute may not be T if mutations is NULL.
+SLiM 2.2, with a default of F for backward compatibility. If substitute is T,
+Substitution objects will be created for all of the removed mutations so that
+they are recorded in the simulation as having fixed, just as if they had reached
+events mutationEffect() interaction() mateChoice() modifyChild() mutation()
+recombination() reproduction() survival() 646 fixation and been removed by
+SLiM's own internal machinery. This will occur regardless of whether the
+mutations have in fact fixed, regardless of the convertToSubstitution property
+of the relevant mutation types, and regardless of whether all copies of the
+mutations have even been removed from the simulation (making it possible to
+create Substitution objects for mutations that are still segregating). It is up
+to the caller to perform whatever checks are necessary to preserve the integrity
+of the simulation's records. Typically substitute will only be set to T in
+the context of calls like sim.subpopulations.genomes.removeMutations(muts, T),
+such that the substituted mutations are guaranteed to be entirely removed from
+circulation. As mentioned above, substitute may not be T if mutations is NULL.
 }
 \section{Copyright}{
 
@@ -71,7 +73,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Genome: 
-\code{\link{Genome}},
+\code{\link{G}},
 \code{\link{addMutations}()},
 \code{\link{addNewDrawnMutation}()},
 \code{\link{addNewMutation}()},

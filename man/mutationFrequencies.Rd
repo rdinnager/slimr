@@ -4,18 +4,24 @@
 \alias{mutationFrequencies}
 \alias{SLiMSim$mutationFrequencies}
 \alias{.SS$mutationFrequencies}
+\alias{Species$mutationFrequencies}
+\alias{.Sp$mutationFrequencies}
 \title{SLiM method mutationFrequencies}
 \usage{
 mutationFrequencies(subpops, mutations)
+
+mutationFrequencies(subpops, mutations)
 }
 \arguments{
-\item{subpops}{An object of type null or Subpopulation object. See details for
-description.}
+\item{subpops}{An object of type null or integer or Subpopulation object. See
+details for description.}
 
 \item{mutations}{An object of type null or Mutation object. The default value is
 \code{NULL}. See details for description.}
 }
 \value{
+An object of type float.
+
 An object of type float.
 }
 \description{
@@ -27,23 +33,56 @@ anything useful when used inside a \code{\link{slim_block}} function further
 nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
+
+Documentation for SLiM function \code{mutationFrequencies}, which is a method of
+the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further
+nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=567}{SLiM manual: page 567}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
 
 Return a float vector with the frequencies of all of the Mutation
-objects passed in mutations, within the Subpopulation objects in subpops.
-The subpops argument is required, but you may pass NULL to get population-
-wide frequencies. If the optional mutations argument is NULL (the default),
+objects passed in mutations, within the Subpopulation objects in subpops. The
+subpops argument is required, but you may pass NULL to get population-wide
+frequencies. If the optional mutations argument is NULL (the default),
 frequencies will be returned for all of the active Mutation objects in
 the simulation - the same Mutation objects, and in the same order, as
 would be returned by the mutations property of sim, in other words. See
 the -mutationCounts() method to obtain integer counts instead of float
 frequencies. See also the Genome methods mutationCountsInGenomes() and
 mutationFrequenciesInGenomes().
+
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=680}{SLiM manual: page
+680}.
+
+Return a float vector with the frequencies of all of the Mutation
+objects passed in mutations, within the Subpopulation objects in subpops. The
+subpops argument is required, but you may pass NULL to get population-wide
+frequencies. Subpopulations may be supplied either as integer IDs, or as
+Subpopulation objects. If the optional mutations argument is NULL (the default),
+frequencies will be returned for all of the active Mutation objects in the
+species - the same Mutation objects, and in the same order, as would be returned
+by the mutations property of sim, in other words. See the -mutationCounts()
+method to obtain integer counts instead of float frequencies. See also the
+Genome methods mutationCountsInGenomes() and mutationFrequenciesInGenomes().
 }
 \section{Copyright}{
+
+This is documentation for a function in the SLiM software, and has been
+reproduced from the official manual,
+which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+
 
 This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
@@ -56,7 +95,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other SLiMSim: 
-\code{\link{SLiMSim}},
+\code{\link{SS}},
 \code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},
@@ -86,9 +125,30 @@ Other SLiMSim:
 \code{\link{treeSeqOutput}()},
 \code{\link{treeSeqRememberIndividuals}()},
 \code{\link{treeSeqSimplify}()}
+
+Other Species: 
+\code{\link{Sp}},
+\code{\link{addSubpop}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{individualsWithPedigreeIDs}()},
+\code{\link{killIndividuals}()},
+\code{\link{mutationCounts}()},
+\code{\link{mutationsOfType}()},
+\code{\link{outputFixedMutations}()},
+\code{\link{outputFull}()},
+\code{\link{outputMutations}()},
+\code{\link{readFromPopulationFile}()},
+\code{\link{recalculateFitness}()},
+\code{\link{registerFitnessEffectCallback}()},
+\code{\link{registerMateChoiceCallback}()},
+\code{\link{registerModifyChildCallback}()},
+\code{\link{registerMutationCallback}()},
+\code{\link{registerMutationEffectCallback}()},
+\code{\link{registerRecombinationCallback}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
 \concept{SLiMSim}
+\concept{Species}

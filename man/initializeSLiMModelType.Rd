@@ -26,18 +26,21 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=523}{SLiM manual: page 523}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=624}{SLiM manual: page
+624}.
 
 Configure the type of SLiM model used for the simulation. At present,
-one of two model types may be selected. If modelType is "WF", SLiM will use a
-Wright-Fisher (WF) model; this is the model type that has always been supported
-by SLiM, and is the model type used if initializeSLiMModelType() is not called.
-If modelType is "nonWF", SLiM will use a non-Wright-Fisher (nonWF) model
-instead; this is a new model type supported by SLiM 3.0 and above (see section
-1.6). If initializeSLiMModelType() is called at all then it must be called
-before any other initialization function, so that SLiM knows from the outset
-which features are enabled and which are not.
+one of two model types may be selected. If modelType is "WF", SLiM will
+use a Wright-Fisher (WF) model; this is the model type that has always been
+supported by SLiM, and is the model type used if initializeSLiMModelType()
+is not called. If modelType is "nonWF", SLiM will use a non-Wright-Fisher
+(nonWF) model instead; this is a new model type supported by SLiM 3.0 and
+above (see section 1.6). events mutationEffect() interaction() mateChoice()
+modifyChild() mutation() recombination() reproduction() survival() 624 If
+initializeSLiMModelType() is called at all then it must be called before any
+other initialization function, so that SLiM knows from the outset which features
+are enabled and which are not.
 }
 \section{Copyright}{
 
@@ -52,7 +55,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Initialize: 
-\code{\link{Initialize}},
+\code{\link{Init}},
 \code{\link{initializeAncestralNucleotides}()},
 \code{\link{initializeGeneConversion}()},
 \code{\link{initializeGenomicElementType}()},
@@ -65,6 +68,7 @@ Other Initialize:
 \code{\link{initializeRecombinationRate}()},
 \code{\link{initializeSLiMOptions}()},
 \code{\link{initializeSex}()},
+\code{\link{initializeSpecies}()},
 \code{\link{initializeTreeSeq}()}
 }
 \author{

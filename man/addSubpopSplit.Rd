@@ -36,8 +36,8 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=566}{SLiM manual: page 566}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
 
 Split off a new subpopulation with id subpopID and size individuals
 derived from subpopulation sourceSubpop. The subpopID parameter may be either
@@ -74,7 +74,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other SLiMSim: 
-\code{\link{SLiMSim}},
+\code{\link{SS}},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{createLogFile}()},

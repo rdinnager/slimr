@@ -1,0 +1,6 @@
+This class represents a type of genomic element, with particular mutation types. The genomic
+element types currently defined in the simulation are defined as global constants with the same
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 647
+names used in the SLiM input file – g1, g2, and so forth. Section 1.5.4 presents an overview of the
+conceptual role of this class.

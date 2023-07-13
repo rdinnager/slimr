@@ -61,21 +61,30 @@ jobs:
           cd ${{ github.workspace }}
           wget http://benhaller.com/slim/SLiM.zip
 
-      - name: Cache SLiM
+      - name: Cache SLiM on Windows
+        id: cache-slim-win
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ github.workspace }}/SLiM_build
+            ${{ github.workspace }}/SLiM
+          key: ${{ runner.os }}-build_SLiM-${{ hashFiles('/d/a/SLiM.zip') }}
+
+      - name: Cache SLiM on non-Windows
         id: cache-slim
         uses: actions/cache@v2
         with:
           path: |
             ${{ github.workspace }}/SLiM_build
             ${{ github.workspace }}/SLiM
-          key: ${{ runner.os }}-build_SLiM-${{ hashFiles('${{ github.workspace }}/SLiM.zip') }}
+          key: ${{ runner.os }}-build_SLiM-${{ hashFiles('SLiM.zip') }}
 
       - name: Setup cmake on non-Windows
         if: runner.os != 'Windows'
         uses: jwlawson/actions-setup-cmake@v1.14
 
       - name: Install SLiM on Windows Part 1
-        if: runner.os == 'Windows' && steps.cache-slim.outputs.cache-hit != 'true'
+        if: runner.os == 'Windows' && steps.cache-slim-win.outputs.cache-hit != 'true'
         continue-on-error: true
         shell: msys2 {0}
         run: |

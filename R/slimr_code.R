@@ -72,7 +72,7 @@ slimr_code_replace_dots <- function(code_one, for_script = FALSE) {
 
 slimr_code_remove_special_classes <- function(code_one) {
   code <- stringr::str_remove_all(code_one,
-                           "(\\.Init|Initialize|\\.SS|SLiMBuiltin)\\$")
+                           "(\\Init|Initialize|\\SB|SLiMBuiltin)\\$")
   code <- stringr::str_remove_all(code,
                                    glue::glue("{.resources$classes_regex}\\$"))
   code

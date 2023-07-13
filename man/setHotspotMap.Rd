@@ -3,7 +3,7 @@
 \name{setHotspotMap}
 \alias{setHotspotMap}
 \alias{Chromosome$setHotspotMap}
-\alias{.c$setHotspotMap}
+\alias{.Ch$setHotspotMap}
 \title{SLiM method setHotspotMap}
 \usage{
 setHotspotMap(multipliers, ends, sex)
@@ -31,8 +31,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=531}{SLiM manual: page 531}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=633}{SLiM manual: page
+633}.
 
 In nucleotide-based models, set the mutation rate multiplier along
 the chromosome. There are two ways to call this method. If the optional ends
@@ -52,12 +53,13 @@ simulations sex may be "M" or "F" instead, in which case the supplied hotspot
 map is used only for that sex. Note that whether sex-specific hotspot maps
 will be used is set by the way that the simulation is initially configured
 with initializeHotspot(), and cannot be changed with this method; so if the
-simulation was set up to use sex-specific hotspot maps then sex must be "M" or
-"F" here, whereas if it was set up not to, then sex must be "*" or unsupplied
-here. If a simulation needs sex-specific hotspot maps only some of the time, the
-male and female maps can simply be set to be identical the rest of the time. The
-hotspot map is normally constant in simulations, so be sure you know what you
-are doing.
+events mutationEffect() interaction() mateChoice() modifyChild() mutation()
+recombination() reproduction() survival() 633 simulation was set up to use
+sex-specific hotspot maps then sex must be "M" or "F" here, whereas if it was
+set up not to, then sex must be "*" or unsupplied here. If a simulation needs
+sex-specific hotspot maps only some of the time, the male and female maps can
+simply be set to be identical the rest of the time. The hotspot map is normally
+constant in simulations, so be sure you know what you are doing.
 }
 \section{Copyright}{
 
@@ -72,7 +74,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Chromosome: 
-\code{\link{Chromosome}},
+\code{\link{Ch}},
 \code{\link{ancestralNucleotides}()},
 \code{\link{drawBreakpoints}()},
 \code{\link{setAncestralNucleotides}()},

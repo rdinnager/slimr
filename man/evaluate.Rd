@@ -6,14 +6,11 @@
 \alias{.IT$evaluate}
 \title{SLiM method evaluate}
 \usage{
-evaluate(subpops, immediate)
+evaluate(subpops)
 }
 \arguments{
-\item{subpops}{An object of type null or Subpopulation object. The default value
-is \code{NULL}. See details for description.}
-
-\item{immediate}{An object of type logical. Must be of length 1 (a singleton).
-The default value is \code{F}. See details for description.}
+\item{subpops}{An object of type integer or Subpopulation object. See details
+for description.}
 }
 \value{
 An object of type void.
@@ -29,53 +26,44 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=550}{SLiM manual: page 550}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=660}{SLiM manual: page
+660}.
 
-Triggers evaluation of the interaction for the subpopulations specified
-by subpops (or for all subpopulations, if subpops is NULL). By default, the
-effects of this may be limited, however, since the underlying implementation may
-choose to postpone some computations lazily. At a minimum, is it guaranteed that
-this method will discard all previously cached data for the subpopulation(s),
-and will cache the current spatial positions of all individuals (so that
-individuals may then move without disturbing the state of the interaction at
-the moment of evaluation). Notably, interaction() callbacks may not be called
-in response to this method; instead, their evaluation may be deferred until
-required to satisfy queries (at which point the generation counter may have
-advanced by one, so be careful with the generation ranges used in defining
-such callbacks). If T is passed for immediate, the interaction will immediately
-and synchronously evaluate all interactions between all individuals in the
-subpopulation(s), calling any applicable interaction() callbacks as necessary
-- if the interaction is spatial (see below). However, depending upon what
-queries are later executed, this may represent considerable wasted computation.
-Immediate evaluation usually generates only a slight performance improvement
-even if the interactions between all pairs of individuals are eventually
-accessed; the main reason to choose immediate evaluation, then, is that deferred
-calculation of interactions would lead to incorrect results due to changes in
-model state. For non-spatial interactions, distances and interaction strengths
-are never cached since such caching would require O(N2) memory and time, which
-is deemed unacceptable in general; for non-spatial interactions, the immediate
-parameter is therefore ignored. You must explicitly call evaluate() at an
-appropriate time in the life cycle before the interaction is used, but after
-any relevant changes have been made to the population. SLiM will invalidate any
-existing interactions after any portion of the generation cycle in which new
-individuals have been born or existing individuals have died. In a WF model,
-these events occur just before late() events execute (see the WF generation
-cycle diagram in chapter 22), so late() events are often the appropriate place
-to put evaluate() calls, but early() events can work too if the interaction is
-not needed until that point in the generation cycle anyway. In nonWF models,
-on the other hand, new offspring are produced just before early() events
-and then individuals die just before late() events (see the nonWF generation
-cycle diagram in chapter 23), so interactions will be invalidated twice during
-each generation cycle. This means that in a nonWF model, an interaction that
-influences reproduction should usually be evaluated in a late() event, while an
-interaction that influences fitness or mortality should usually be evaluated in
-an early() event (and an interaction that affects both may need to be evaluated
-at both times). If an interaction is never evaluated for a given subpopulation,
-it is guaranteed that there will be essentially no memory or computational
-overhead associated with the interaction for that subpopulation. Furthermore,
-attempting to query an interaction for an individual in a subpopulation that has
-not been evaluated is guaranteed to raise an error.
+Snapshots model state in preparation for the use of the interaction,
+for the receiver and exerter subpopulations specified by subpops. The
+subpopulations may be supplied either as integer IDs, or as Subpopulation
+objects. This method will discard all previously cached data for the
+subpopulation(s), and will cache the current spatial positions of all
+individuals they contain (so that the spatial positions of those individuals
+may then change without disturbing the state of the interaction at the moment
+of evaluation). Particular interaction distances and strengths are not computed
+by evaluate(), and interaction() callbacks will not be called in response to
+this method; that work is deferred until required to satisfy a query (at which
+point the tick and cycle counters may have advanced, so be careful with the
+tick ranges used in defining interaction() callbacks). You must explicitly call
+evaluate() at an appropriate time in the tick cycle before the interaction is
+used, but after any relevant changes have been made to the population. SLiM
+will invalidate any existing interactions after any portion of the tick cycle
+in which new individuals have been born or existing individuals have died. In a
+WF model, this occurs just before late() events execute (see the WF tick cycle
+diagram in chapter 22), so late() events are often the appropriate place to put
+evaluate() calls, but first() or early() events can work too if the interaction
+is not needed until that point in the tick cycle anyway. In nonWF models, on
+the other hand, new offspring are produced just before early() events and then
+individuals die just before late() events (see the nonWF tick cycle diagram in
+chapter 23), so interactions will be invalidated twice during each tick cycle.
+This means that in a nonWF model, an interaction that influences reproduction
+should usually be evaluated in a first() event, while an interaction that
+influences fitness or mortality should usually be evaluated in an early() event
+(and an interaction that affects both may need to be evaluated at both times).
+If an interaction is never evaluated for a given subpopulation, it is guaranteed
+that there will be essentially no memory or computational overhead associated
+with the interaction for that events mutationEffect() interaction() mateChoice()
+modifyChild() mutation() recombination() reproduction() survival() 660
+subpopulation. Furthermore, attempting to query an interaction for a receiver or
+exerter in a subpopulation that has not been evaluated is guaranteed to raise an
+error.
 }
 \section{Copyright}{
 
@@ -91,14 +79,18 @@ on the official website: \url{https://messerlab.org/slim/}
 \seealso{
 Other InteractionType: 
 \code{\link{InteractionType}},
-\code{\link{distanceToPoint}()},
+\code{\link{clippedIntegral}()},
+\code{\link{distanceFromPoint}()},
 \code{\link{distance}()},
 \code{\link{drawByStrength}()},
 \code{\link{interactingNeighborCount}()},
 \code{\link{interactionDistance}()},
+\code{\link{localPopulationDensity}()},
 \code{\link{nearestInteractingNeighbors}()},
 \code{\link{nearestNeighborsOfPoint}()},
 \code{\link{nearestNeighbors}()},
+\code{\link{neighborCountOfPoint}()},
+\code{\link{neighborCount}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
 \code{\link{totalOfNeighborStrengths}()},

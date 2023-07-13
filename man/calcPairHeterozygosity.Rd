@@ -38,28 +38,30 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=593}{SLiM manual: page 593}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=707}{SLiM manual: page
+707}.
 
 Calculates the heterozygosity for a pair of genomes; these will
 typically be the two genomes of a diploid individual (individual.genome1 and
 individual.genome2), but any two genomes may be supplied. The calculation can
 be narrowed to apply to only a window - a subrange of the full chromosome - by
 passing the interval bounds [start, end] for the desired window. In this case,
-the vector of mutations used for the calculation will be subset to include
-only mutations within the specified window. The default behavior, with start
-and end of NULL, provides the genome-wide heterozygosity. The implementation
-calcPairHeterozygosity(), viewable with functionSource(), treats every mutation
-as independent in the heterozygosity calculations by default (i.e., with
-infiniteSites=T). If mutations are stacked, the heterozygosity calculated
-therefore depends upon the number of unshared mutations, not the number of
-differing sites. Similarly, if multiple Mutation objects exist in different
-genomes at the same site (whether representing different genetic states,
-or multiple mutational lineages for the same genetic state), each Mutation
-object is treated separately for purposes of the heterozygosity calculation,
-just as if they were at different sites. One could regard FST = 1 − HS HT
-HS HT HT these choices as embodying an infinite-sites interpretation of the
-segregating mutations. In most biologically realistic models, such genetic
+the vector of mutations used for the calculation will be subset to include only
+mutations within the specified window. The default behavior, with start and
+end of NULL, provides the genome-wide heterozygosity. events mutationEffect()
+interaction() mateChoice() modifyChild() mutation() recombination()
+reproduction() survival() 707 The implementation calcPairHeterozygosity(),
+viewable with functionSource(), treats every mutation as independent in
+the heterozygosity calculations by default (i.e., with infiniteSites=T). If
+mutations are stacked, the heterozygosity calculated therefore depends upon the
+number of unshared mutations, not the number of differing sites. Similarly, if
+multiple Mutation objects exist in different genomes at the same site (whether
+representing different genetic states, or multiple mutational lineages for the
+same genetic state), each Mutation object is treated separately for purposes
+of the heterozygosity calculation, just as if they were at different sites.
+One could regard these choices as embodying an infinite-sites interpretation of
+the segregating mutations. In most biologically realistic models, such genetic
 states will be quite rare, and so the impact of this choice will be negligible;
 however, in some models this distinction may be important. The behavior of
 calcPairHeterozygosity() can be switched to calculate based upon the number
@@ -79,9 +81,10 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other SLiMBuiltin: 
-\code{\link{SLiMBuiltin}},
+\code{\link{SB}},
 \code{\link{calcFST}()},
 \code{\link{calcHeterozygosity}()},
+\code{\link{calcInbreedingLoad}()},
 \code{\link{calcVA}()},
 \code{\link{calcWattersonsTheta}()},
 \code{\link{codonsToAminoAcids}()},
@@ -90,7 +93,9 @@ Other SLiMBuiltin:
 \code{\link{mmKimura}()},
 \code{\link{nucleotideCounts}()},
 \code{\link{nucleotideFrequencies}()},
-\code{\link{nucleotidesToCodons}()}
+\code{\link{nucleotidesToCodons}()},
+\code{\link{summarizeIndividuals}()},
+\code{\link{treeSeqMetadata}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

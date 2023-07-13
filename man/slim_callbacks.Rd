@@ -23,6 +23,7 @@ Available callbacks are:
 \item{\code{\link{fitness}}}
 \item{\code{\link{mateChoice}}}
 \item{\code{\link{modifyChild}}}
+\item{\code{\link{mutation}}}
 \item{\code{\link{recombination}}}
 \item{\code{\link{interaction}}}
 \item{\code{\link{reproduction}}}
@@ -38,6 +39,7 @@ Other callbacks:
 \code{\link{late}()},
 \code{\link{mateChoice}()},
 \code{\link{modifyChild}()},
+\code{\link{mutation}()},
 \code{\link{recombination}()},
 \code{\link{reproduction}()}
 }

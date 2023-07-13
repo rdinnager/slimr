@@ -2,10 +2,14 @@
 % Please edit documentation in R/slim_lang.R
 \name{simulationFinished}
 \alias{simulationFinished}
+\alias{Community$simulationFinished}
+\alias{.Co$simulationFinished}
 \alias{SLiMSim$simulationFinished}
 \alias{.SS$simulationFinished}
 \title{SLiM method simulationFinished}
 \usage{
+simulationFinished(void)
+
 simulationFinished(void)
 }
 \arguments{
@@ -13,8 +17,19 @@ simulationFinished(void)
 }
 \value{
 An object of type void.
+
+An object of type void.
 }
 \description{
+Documentation for SLiM function \code{simulationFinished}, which is a method of
+the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further
+nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.
+
 Documentation for SLiM function \code{simulationFinished}, which is a method of
 the SLiM class \code{\link{SLiMSim}}.
 Note that the R function is a stub, it does not do anything in R (except bring
@@ -25,18 +40,32 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=574}{SLiM manual: page 574}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=639}{SLiM manual: page
+639}.
+
+Declare the current simulation finished. Normally SLiM ends a
+simulation when, at the end of a tick, there are no script events or callbacks
+registered for any future tick (excluding scripts with no declared end tick).
+If you wish to end a simulation before this condition is met, a call to
+simulationFinished() will cause the current simulation to end at the end of
+the current tick. For example, a simulation might self-terminate if a test for
+a dynamic equilibrium condition is satisfied. Note that the current tick will
+finish executing; if you want the simulation to stop immediately, you can use
+the Eidos method stop(), which raises an error condition.
+
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
 
 Declare the current simulation finished. Normally SLiM ends a
 simulation when, at the end of a generation, there are no script events or
 callbacks registered for any future generation (excluding scripts with no
 declared end generation). If you wish to end a simulation before this condition
 is met, a call to simulationFinished() will cause the current simulation to
-end at the end of the current generation. For example, a simulation might self-
-terminate if a test for a dynamic equilibrium condition is satisfied. Note that
-the current generation will finish executing; if you want the simulation to
-stop immediately, you can use the Eidos method stop(), which raises an error
+end at the end of the current generation. For example, a simulation might
+self-terminate if a test for a dynamic equilibrium condition is satisfied. Note
+that the current generation will finish executing; if you want the simulation
+to stop immediately, you can use the Eidos method stop(), which raises an error
 condition.
 }
 \section{Copyright}{
@@ -48,11 +77,37 @@ documentation is
 Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
+
+
+This is documentation for a function in the SLiM software, and has been
+reproduced from the official manual,
+which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
 }
 
 \seealso{
+Other Community: 
+\code{\link{Co}},
+\code{\link{createLogFile}()},
+\code{\link{deregisterScriptBlock}()},
+\code{\link{genomicElementTypesWithIDs}()},
+\code{\link{interactionTypesWithIDs}()},
+\code{\link{mutationTypesWithIDs}()},
+\code{\link{outputUsage}()},
+\code{\link{registerEarlyEvent}()},
+\code{\link{registerFirstEvent}()},
+\code{\link{registerInteractionCallback}()},
+\code{\link{registerLateEvent}()},
+\code{\link{rescheduleScriptBlock}()},
+\code{\link{scriptBlocksWithIDs}()},
+\code{\link{speciesWithIDs}()},
+\code{\link{subpopulationsWithIDs}()}
+
 Other SLiMSim: 
-\code{\link{SLiMSim}},
+\code{\link{SS}},
 \code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},
@@ -87,4 +142,5 @@ Other SLiMSim:
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Community}
 \concept{SLiMSim}

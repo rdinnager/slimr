@@ -31,8 +31,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=589}{SLiM manual: page 589}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=703}{SLiM manual: page
+703}.
 
 Returns the amino acid sequence corresponding to the codon sequence
 in codons. Codons should be represented with values in [0, 63] where AAA is 0,
@@ -47,19 +48,21 @@ acid (Aspartate) 4 Cysteine 5 Glutamine 6 Glutamic acid (Glutamate) 7 Glycine
 Proline 15 Serine 16 Threonine 17 Tryptophan 18 Tyrosine 19 Valine 20 There does
 not seem to be a widely used standard for integer coding of amino acids, so SLiM
 just numbers them alphabetically, making stop codons 0. If you want a different
-coding, you can make your own 64-element vector and use it to convert codons to
-whatever integer codes you need. Other integer values of long are reserved for
-future use (to support other codings), and will currently produce an error. When
-long is T or F and paste is T (the default), the amino acid sequence returned
-will be a singleton string, such as "LYATI" (when long is F) or "Leu-Tyr-Ala-
-Thr-Ile" (when long is T). When long is T or F and paste is F, the amino acid
-sequence will instead be returned as a string vector, with one element per amino
-acid, such as "L" "Y" "A" "T" "I" (when long is F) or "Leu" "Tyr" "Ala" "Thr"
-"Ile" (when long is T). Using the paste=T option is considerably faster than
-using paste() in script. This function interprets the supplied codon sequence
-as the sense strand (i.e., the strand that is not transcribed, and which mirrors
-the mRNA's sequence). This uses the standard DNA codon table directly. For
-example, if the nucleotide sequence is CAA TTC, that will correspond to a codon
+coding, you can make your own 64-element vector and use it to convert codons
+to whatever integer codes you need. Other events mutationEffect() interaction()
+mateChoice() modifyChild() mutation() recombination() reproduction() survival()
+703 integer values of long are reserved for future use (to support other
+codings), and will currently produce an error. When long is T or F and paste is
+T (the default), the amino acid sequence returned will be a singleton string,
+such as "LYATI" (when long is F) or "Leu-Tyr-Ala-Thr-Ile" (when long is T).
+When long is T or F and paste is F, the amino acid sequence will instead be
+returned as a string vector, with one element per amino acid, such as "L"
+"Y" "A" "T" "I" (when long is F) or "Leu" "Tyr" "Ala" "Thr" "Ile" (when long
+is T). Using the paste=T option is considerably faster than using paste()
+in script. This function interprets the supplied codon sequence as the sense
+strand (i.e., the strand that is not transcribed, and which mirrors the mRNA's
+sequence). This uses the standard DNA codon table directly. For example,
+if the nucleotide sequence is CAA TTC, that will correspond to a codon
 vector of 16 61, and will result in the amino acid sequence Gln-Phe ("QF").
 (is)codonsToNucleotides(integer codons, [string$ format = "string"]) Returns
 the nucleotide sequence corresponding to the codon sequence supplied in codons.
@@ -84,9 +87,10 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other SLiMBuiltin: 
-\code{\link{SLiMBuiltin}},
+\code{\link{SB}},
 \code{\link{calcFST}()},
 \code{\link{calcHeterozygosity}()},
+\code{\link{calcInbreedingLoad}()},
 \code{\link{calcPairHeterozygosity}()},
 \code{\link{calcVA}()},
 \code{\link{calcWattersonsTheta}()},
@@ -95,7 +99,9 @@ Other SLiMBuiltin:
 \code{\link{mmKimura}()},
 \code{\link{nucleotideCounts}()},
 \code{\link{nucleotideFrequencies}()},
-\code{\link{nucleotidesToCodons}()}
+\code{\link{nucleotidesToCodons}()},
+\code{\link{summarizeIndividuals}()},
+\code{\link{treeSeqMetadata}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

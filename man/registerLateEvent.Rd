@@ -2,10 +2,14 @@
 % Please edit documentation in R/slim_lang.R
 \name{registerLateEvent}
 \alias{registerLateEvent}
+\alias{Community$registerLateEvent}
+\alias{.Co$registerLateEvent}
 \alias{SLiMSim$registerLateEvent}
 \alias{.SS$registerLateEvent}
 \title{SLiM method registerLateEvent}
 \usage{
+registerLateEvent(id, source, start, end)
+
 registerLateEvent(id, source, start, end)
 }
 \arguments{
@@ -20,12 +24,27 @@ singleton). The default value is \code{NULL}. See details for description.}
 
 \item{end}{An object of type null or integer. Must be of length 1 (a singleton).
 The default value is \code{NULL}. See details for description.}
+
+\item{ticksSpec}{An object of type null or Species object. Must be of length 1
+(a singleton). The default value is \code{NULL}. See details for description.}
 }
 \value{
 An object of type SLiMEidosBlock object. Return will be of length 1 (a
 singleton)
+
+An object of type SLiMEidosBlock object. Return will be of length 1 (a
+singleton)
 }
 \description{
+Documentation for SLiM function \code{registerLateEvent}, which is a method of
+the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further
+nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.
+
 Documentation for SLiM function \code{registerLateEvent}, which is a method of
 the SLiM class \code{\link{SLiMSim}}.
 Note that the R function is a stub, it does not do anything in R (except bring
@@ -36,8 +55,24 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=572}{SLiM manual: page 572}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=638}{SLiM manual: page
+638}.
+
+Register a block of Eidos source code, represented as the string
+singleton source, as an Eidos late() event in the current simulation, with
+optional start and end ticks (and, for multispecies models, optional ticks
+specifier ticksSpec) limiting its applicability. The script block will be given
+identifier id (specified as an integer, or as a string symbolic name such as
+"s5"); this may be NULL if there is no need to be able to refer to the block
+later. The registered event is added to the end of the list of registered
+SLiMEidosBlock objects, and is active immediately; it may be eligible to execute
+in the current tick (see section 25.11 for details). The new SLiMEidosBlock will
+be defined as a global variable immediately by this method (see section 24.12),
+and will also be returned by this method.
+
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
 
 Register a block of Eidos source code, represented as the string
 singleton source, as an Eidos late() event in the current simulation, with
@@ -59,11 +94,37 @@ documentation is
 Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
+
+
+This is documentation for a function in the SLiM software, and has been
+reproduced from the official manual,
+which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
 }
 
 \seealso{
+Other Community: 
+\code{\link{Co}},
+\code{\link{createLogFile}()},
+\code{\link{deregisterScriptBlock}()},
+\code{\link{genomicElementTypesWithIDs}()},
+\code{\link{interactionTypesWithIDs}()},
+\code{\link{mutationTypesWithIDs}()},
+\code{\link{outputUsage}()},
+\code{\link{registerEarlyEvent}()},
+\code{\link{registerFirstEvent}()},
+\code{\link{registerInteractionCallback}()},
+\code{\link{rescheduleScriptBlock}()},
+\code{\link{scriptBlocksWithIDs}()},
+\code{\link{simulationFinished}()},
+\code{\link{speciesWithIDs}()},
+\code{\link{subpopulationsWithIDs}()}
+
 Other SLiMSim: 
-\code{\link{SLiMSim}},
+\code{\link{SS}},
 \code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},
@@ -98,4 +159,5 @@ Other SLiMSim:
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Community}
 \concept{SLiMSim}

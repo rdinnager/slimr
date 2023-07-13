@@ -25,8 +25,8 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=575}{SLiM manual: page 575}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
 
 Returns the coalescence state for the recorded tree sequence at
 the last simplification. The returned value is a logical singleton flag,
@@ -37,23 +37,23 @@ the same ancestor at all sites), or F if full coalescence was not observed. For
 simple models, reaching coalescence may indicate that the model has reached an
 equilibrium state, but this may not be true in models that modify the dynamics
 of the model during execution by changing migration rates, introducing new
-mutations programmatically, dictating non-random mating, etc., so be careful
-not to attach more meaning to coalescence than it is due; some models may
-require burn-in beyond coalescence to reach equilibrium, or may not have an
-equilibrium state at all. Also note that some actions by a model, such as adding
-a new subpopulation, may cause the coalescence state to revert from T back
-to F (at the next simplification), so a return value of T may not necessarily
-mean that the model is coalesced at the present moment - only that it was
-coalesced at the last simplification. This method may only be called if tree
-sequence recording has been turned on with initializeTreeSeq(); in addition,
-checkCoalescence=T must have been supplied to initializeTreeSeq(), so that the
-necessary work is done during each tree-sequence simplification. Since this
-method does not perform coalescence checking itself, but instead simply returns
-the coalescence state observed at the last simplification, it may be desirable
-to call treeSeqSimplify() immediately before treeSeqCoalesced() to obtain up-to-
-date information. However, the speed penalty of doing this in every generation
-would be large, and most models do not need this level of precision; usually it
-is sufficient to know that the model has coalesced, without knowing whether that
+mutations programmatically, dictating non-random mating, etc., so be careful not
+to attach more meaning to coalescence than it is due; some models may require
+burn-in beyond coalescence to reach equilibrium, or may not have an equilibrium
+state at all. Also note that some actions by a model, such as adding a new
+subpopulation, may cause the coalescence state to revert from T back to F (at
+the next simplification), so a return value of T may not necessarily mean that
+the model is coalesced at the present moment - only that it was coalesced at the
+last simplification. This method may only be called if tree sequence recording
+has been turned on with initializeTreeSeq(); in addition, checkCoalescence=T
+must have been supplied to initializeTreeSeq(), so that the necessary work
+is done during each tree-sequence simplification. Since this method does not
+perform coalescence checking itself, but instead simply returns the coalescence
+state observed at the last simplification, it may be desirable to call
+treeSeqSimplify() immediately before treeSeqCoalesced() to obtain up-to-date
+information. However, the speed penalty of doing this in every generation would
+be large, and most models do not need this level of precision; usually it is
+sufficient to know that the model has coalesced, without knowing whether that
 happened in the current generation or in a recent preceding generation.
 }
 \section{Copyright}{
@@ -69,7 +69,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other SLiMSim: 
-\code{\link{SLiMSim}},
+\code{\link{SS}},
 \code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},

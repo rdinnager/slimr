@@ -41,8 +41,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=539}{SLiM manual: page 539}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=647}{SLiM manual: page
+647}.
 
 Returns the sum of the selection coefficients of all mutations that
 are of the type specified by mutType, out of all of the mutations in the genome.
@@ -53,17 +54,20 @@ method is provided for speed; it is much faster than the corresponding Eidos
 code. Note that this method also exists on Individual, for cases in which the
 sum across both genomes of an individual is desired.
 
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=546}{SLiM manual: page 546}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=653}{SLiM manual: page
+653}.
 
-Returns the sum of the selection coefficients of all mutations that
-are of the type specified by mutType, out of all of the mutations in the
-genomes of the individual. This is often useful in models that use a particular
-mutation type to represent QTLs with additive effects; in that context,
-sumOfMutationsOfType() will provide the sum of the additive effects of the
-QTLs for the given mutation type. This method is provided for speed; it is much
-faster than the corresponding Eidos code. Note that this method also exists on
-Genome, for cases in which the sum for just one genome is desired.
+Returns the sum of the selection coefficients of all mutations
+that are of the type specified by mutType, out of all of the mutations in
+the genomes of the individual. This is often useful in models that use a
+particular mutation type to represent QTLs with additive effects; in that
+context, sumOfMutationsOfType() will provide the sum of the additive effects
+of the QTLs for the given mutation type. This method is provided for speed; it
+is much faster than the corresponding Eidos code. Note that this method also
+exists on Genome, for cases in which the sum for just one genome is desired.
+events mutationEffect() interaction() mateChoice() modifyChild() mutation()
+recombination() reproduction() survival() 653
 }
 \section{Copyright}{
 
@@ -87,7 +91,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Genome: 
-\code{\link{Genome}},
+\code{\link{G}},
 \code{\link{addMutations}()},
 \code{\link{addNewDrawnMutation}()},
 \code{\link{addNewMutation}()},
@@ -107,7 +111,7 @@ Other Genome:
 \code{\link{removeMutations}()}
 
 Other Individual: 
-\code{\link{Individual}},
+\code{\link{In}},
 \code{\link{containsMutations}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{relatedness}()},

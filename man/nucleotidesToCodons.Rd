@@ -26,8 +26,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=591}{SLiM manual: page 591}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=705}{SLiM manual: page
+705}.
 
 Returns the codon sequence corresponding to the nucleotide sequence
 in sequence. The codon sequence is an integer vector with values from 0 to
@@ -47,28 +48,27 @@ If the choice of format is not driven by other considerations, such as ease
 of manipulation, then the singleton string format will certainly be the most
 memory-efficient for long sequences, and will probably also be the fastest.
 The nucleotide sequence provided must be a multiple of three in length, so that
-it translates to an integral number of codons. 0 α α α α 0 α α α α 0 α α α α
-0 0 β α β β 0 β α α β 0 β β α β 0 (is)randomNucleotides(integer$ length, [Nif
-basis = NULL], [string$ format = "string"]) Generates a new random nucleotide
-sequence with length bases. The four nucleotides ACGT are equally probable
-if basis is NULL (the default); otherwise, basis may be a 4-element integer
-or float vector providing relative fractions for A, C, G, and T respectively
-(these need not sum to 1.0, as they will be normalized). More complex generative
-models such as Markov processes are not supported intrinsically in SLiM at
-this time, but arbitrary generated sequences may always be loaded from files
-on disk. The format parameter controls the format of the returned sequence. It
-may be "string" to obtain the generated sequence as a singleton string (e.g.,
-"TATA"), "char" to obtain it as a string vector of single characters (e.g.,
-"T", "A", "T", "A"), or "integer" to obtain it as an integer vector (e.g., 3,
-0, 3, 0), using SLiM's standard code of A=0, C=1, G=2, T=3. For passing directly
-to initializeAncestralNucleotides(), format "string" (a singleton string) will
-certainly be the most memory-efficient, and probably also the fastest. Memory
-efficiency can be a significant consideration; the nucleotide sequence for a
-chromosome of length 109 will occupy approximately 1 GB of memory when stored
-as a singleton string (with one byte per nucleotide), and much more if stored
-in the other formats. However, the other formats can be easier to work with
-in Eidos, and so may be preferable for relatively short chromosomes if you are
-manipulating the generated sequence.
+it translates to an integral number of codons. (is)randomNucleotides(integer$
+length, [Nif basis = NULL], [string$ format = "string"]) Generates a new
+random nucleotide sequence with length bases. The four nucleotides ACGT are
+equally probable if basis is NULL (the default); otherwise, basis may be a
+4-element integer or float vector providing relative fractions for A, C, G,
+and T respectively (these need not sum to 1.0, as they will be normalized).
+More complex generative models such as Markov processes are not supported
+intrinsically in SLiM at this time, but arbitrary generated sequences may
+always be loaded from files on disk. The format parameter controls the format
+of the returned sequence. It may be "string" to obtain the generated sequence
+as a singleton string (e.g., "TATA"), "char" to obtain it as a string vector
+of single characters (e.g., "T", "A", "T", "A"), or "integer" to obtain it as
+an integer vector (e.g., 3, 0, 3, 0), using SLiM's standard code of A=0, C=1,
+G=2, T=3. For passing directly to initializeAncestralNucleotides(), format
+"string" (a singleton string) will certainly be the most memory-efficient, and
+probably also the fastest. Memory efficiency can be a significant consideration;
+the nucleotide sequence for a chromosome of length 109 will occupy approximately
+1 GB of memory when stored as a singleton string (with one byte per nucleotide),
+and much more if stored in the other formats. However, the other formats can
+be easier to work with in Eidos, and so may be preferable for relatively short
+chromosomes if you are manipulating the generated sequence.
 }
 \section{Copyright}{
 
@@ -83,9 +83,10 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other SLiMBuiltin: 
-\code{\link{SLiMBuiltin}},
+\code{\link{SB}},
 \code{\link{calcFST}()},
 \code{\link{calcHeterozygosity}()},
+\code{\link{calcInbreedingLoad}()},
 \code{\link{calcPairHeterozygosity}()},
 \code{\link{calcVA}()},
 \code{\link{calcWattersonsTheta}()},
@@ -94,7 +95,9 @@ Other SLiMBuiltin:
 \code{\link{mmJukesCantor}()},
 \code{\link{mmKimura}()},
 \code{\link{nucleotideCounts}()},
-\code{\link{nucleotideFrequencies}()}
+\code{\link{nucleotideFrequencies}()},
+\code{\link{summarizeIndividuals}()},
+\code{\link{treeSeqMetadata}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

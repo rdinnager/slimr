@@ -3,7 +3,7 @@
 \name{setAncestralNucleotides}
 \alias{setAncestralNucleotides}
 \alias{Chromosome$setAncestralNucleotides}
-\alias{.c$setAncestralNucleotides}
+\alias{.Ch$setAncestralNucleotides}
 \title{SLiM method setAncestralNucleotides}
 \usage{
 setAncestralNucleotides(sequence)
@@ -26,8 +26,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=530}{SLiM manual: page 530}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=633}{SLiM manual: page
+633}.
 
 This method, which may be called only in nucleotide-based models
 (see section 1.8), replaces the ancestral nucleotide sequence for the
@@ -54,7 +55,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Chromosome: 
-\code{\link{Chromosome}},
+\code{\link{Ch}},
 \code{\link{ancestralNucleotides}()},
 \code{\link{drawBreakpoints}()},
 \code{\link{setGeneConversion}()},

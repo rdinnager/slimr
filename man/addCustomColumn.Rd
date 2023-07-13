@@ -20,7 +20,8 @@ singleton). See details for description.}
 }
 \value{
 An object of type void or void or void or void or void or void or void
-or void or void or void or void or void or void or void or void.
+or void or void or void or void or void or void or void or void or void or void
+or void or logical.
 }
 \description{
 Documentation for SLiM function \code{addCustomColumn}, which is a method of the
@@ -33,8 +34,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=555}{SLiM manual: page 555}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=666}{SLiM manual: page
+666}.
 
 Adds a new data column with its name provided by columnName. The value
 for the column, when a given row is generated, will be produced by the code
@@ -43,9 +45,11 @@ out NA), or a singleton value of any non-object type. The context parameter will
 be set up as a pseudo-parameter, named context, when source is called, allowing
 the same source code to be used to generate values for multiple data columns;
 you might, for example, provide the particular Subpopulation object here that
-you wish source to use for its calculations. This is optional; if the default
-value of NULL is used, then context will be NULL when source is called. See
-addMeanSDColumns() for a useful variant.
+you wish source to use events mutationEffect() interaction() mateChoice()
+modifyChild() mutation() recombination() reproduction() survival() 666 for
+its calculations. This is optional; if the default value of NULL is used, then
+context will be NULL when source is called. See addMeanSDColumns() for a useful
+variant.
 }
 \section{Copyright}{
 
@@ -60,21 +64,25 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other LogFile: 
-\code{\link{LogFile}},
-\code{\link{addGenerationStage}()},
-\code{\link{addGeneration}()},
+\code{\link{LF}},
+\code{\link{addCycleStage}()},
+\code{\link{addCycle}()},
 \code{\link{addKeysAndValuesFrom}()},
 \code{\link{addMeanSDColumns}()},
 \code{\link{addPopulationSexRatio}()},
 \code{\link{addPopulationSize}()},
 \code{\link{addSubpopulationSexRatio}()},
 \code{\link{addSubpopulationSize}()},
+\code{\link{addSuppliedColumn}()},
+\code{\link{addTick}()},
 \code{\link{clearKeysAndValues}()},
 \code{\link{flush}()},
 \code{\link{logRow}()},
 \code{\link{setFilePath}()},
 \code{\link{setLogInterval}()},
-\code{\link{setValue}()}
+\code{\link{setSuppliedValue}()},
+\code{\link{setValue}()},
+\code{\link{willAutolog}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

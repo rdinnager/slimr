@@ -27,13 +27,14 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=579}{SLiM manual: page 579}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=691}{SLiM manual: page
+691}.
 
 Generates a new offspring individual from the given parent by
 clonal reproduction, queues it for addition to the target subpopulation, and
 returns it. The new offspring will not be visible as a member of the target
-subpopulation until the end of the offspring generation life cycle stage.
+subpopulation until the end of the offspring generation tick cycle stage.
 The subpopulation of parent will be used to locate applicable mutation() and
 modifyChild() callbacks governing the generation of the offspring individual.
 Note that this method is only for use in nonWF models. See addCrossed() for
@@ -52,7 +53,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
 \code{\link{addRecombinant}()},
@@ -77,6 +78,7 @@ Other Subpopulation:
 \code{\link{setSpatialBounds}()},
 \code{\link{setSubpopulationSize}()},
 \code{\link{spatialMapColor}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{subsetIndividuals}()},
 \code{\link{takeMigrants}()}

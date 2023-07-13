@@ -13,7 +13,8 @@ logRow(void)
 }
 \value{
 An object of type void or void or void or void or void or void or void
-or void or void or void or void or void or void or void or void.
+or void or void or void or void or void or void or void or void or void or void
+or void or logical.
 }
 \description{
 Documentation for SLiM function \code{logRow}, which is a method of the SLiM
@@ -26,15 +27,16 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=556}{SLiM manual: page 556}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
+668}.
 
 This logs a new row of data, by evaluating all of the generators added
 to the LogFile with add...() calls. Note that the new row may be buffered, and
 thus may not be written out to disk immediately; see flush(). This method may
 be used instead of, or in conjunction with, automatic logging. You can get the
-LogFile instance, in order to call logRow() on it, from sim.logFiles, or you can
-remember it in a global constant with defineConstant().
+LogFile instance, in order to call logRow() on it, from community.logFiles, or
+you can remember it in a global constant with defineConstant().
 }
 \section{Copyright}{
 
@@ -49,21 +51,25 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other LogFile: 
-\code{\link{LogFile}},
+\code{\link{LF}},
 \code{\link{addCustomColumn}()},
-\code{\link{addGenerationStage}()},
-\code{\link{addGeneration}()},
+\code{\link{addCycleStage}()},
+\code{\link{addCycle}()},
 \code{\link{addKeysAndValuesFrom}()},
 \code{\link{addMeanSDColumns}()},
 \code{\link{addPopulationSexRatio}()},
 \code{\link{addPopulationSize}()},
 \code{\link{addSubpopulationSexRatio}()},
 \code{\link{addSubpopulationSize}()},
+\code{\link{addSuppliedColumn}()},
+\code{\link{addTick}()},
 \code{\link{clearKeysAndValues}()},
 \code{\link{flush}()},
 \code{\link{setFilePath}()},
 \code{\link{setLogInterval}()},
-\code{\link{setValue}()}
+\code{\link{setSuppliedValue}()},
+\code{\link{setValue}()},
+\code{\link{willAutolog}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

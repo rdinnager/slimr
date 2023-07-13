@@ -142,21 +142,23 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
 
 
   ## setup slim class environments
-  .Init <- list2env(.Init, Initialize)
-  .c <- list2env(.c, Chromosome)
-  .G <- list2env(.G, Genome)
-  .GE <- list2env(.GE, GenomicElement)
-  .GET <- list2env(.GET, GenomicElementType)
-  .I <- list2env(.I, Individual)
-  .IT <- list2env(.IT, InteractionType)
-  .LF <- list2env(.LF, LogFile)
-  .M <- list2env(.M, Mutation)
-  .MT <- list2env(.MT, MutationType)
-  .SB <- list2env(.SB, SLiMBuiltin)
-  .SEB <- list2env(.SEB, SLiMEidosBlock)
-  .SS <- list2env(.SS, SLiMSim)
-  .P <- list2env(.P, Subpopulation)
-  .S <- list2env(.S, Substitution)
+  Init <- list2env(.Init, Initialize)
+  Ch <- list2env(.Ch, Chromosome)
+  Co <- list2env(.Co, Community)
+  G <- list2env(.G, Genome)
+  GE <- list2env(.GE, GenomicElement)
+  GET <- list2env(.GET, GenomicElementType)
+  In <- list2env(.I, Individual)
+  IT <- list2env(.IT, InteractionType)
+  LF <- list2env(.LF, LogFile)
+  M <- list2env(.M, Mutation)
+  MT <- list2env(.MT, MutationType)
+  SB <- list2env(.SB, SLiMBuiltin)
+  SEB <- list2env(.SEB, SLiMEidosBlock)
+  SS <- list2env(.SS, SLiMSim)
+  Sp <- list2env(.Sp, Species)
+  P <- list2env(.P, Subpopulation)
+  S <- list2env(.S, Substitution)
 
   ##### make class nesting ############
   SLiMSim$chromosome <- Chromosome

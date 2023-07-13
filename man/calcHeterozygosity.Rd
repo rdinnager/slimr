@@ -34,28 +34,32 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=593}{SLiM manual: page 593}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=707}{SLiM manual: page
+707}.
 
 Calculates the heterozygosity for a vector of genomes, based upon
-the frequencies of mutations in the genomes. Often genomes will be all of
-the genomes in a subpopulation, or in the entire population, but any genome
-vector may be used. By default, with muts=NULL, the calculation is based upon
-all mutations in the simulation; the calculation can instead be based upon a
-subset of mutations, such as mutations of a specific mutation type, by passing
-the desired vector of mutations for muts. The calculation can be narrowed
-to apply to only a window - a subrange of the full chromosome - by passing
-the interval bounds [start, end] for the desired window. In this case, the
-vector of mutations used for the calculation will be subset to include only
-mutations within the specified window. The default behavior, with start and
-end of NULL, provides the genome-wide heterozygosity. The implementation of
-calcHeterozygosity(), viewable with functionSource(), treats every mutation as
-independent in the heterozygosity calculations. One could regard this choice
-as embodying an infinite-sites interpretation of the segregating mutations.
-In most biologically realistic models, such genetic states will be quite rare,
-and so the impact of this choice will be negligible; however, in some models
-this distinction may be important. See calcPairHeterozygosity() for further
-discussion.
+the frequencies of mutations in the genomes. The result is the expected
+heterozygosity, for the individuals to which the genomes belong, assuming that
+they are under Hardy-Weinberg equilibrium; this can be compared to the observed
+heterozygosity of an individual, as calculated by calcPairHeterozygosity().
+Often genomes will be all of the genomes in a subpopulation, or in the entire
+population, but any genome vector may be used. By default, with muts=NULL,
+the calculation is based upon all mutations in the simulation; the calculation
+can instead be based upon a subset of mutations, such as mutations of a
+specific mutation type, by passing the desired vector of mutations for muts.
+The calculation can be narrowed to apply to only a window - a subrange of the
+full chromosome - by passing the interval bounds [start, end] for the desired
+window. In this case, the vector of mutations used for the calculation will
+be subset to include only mutations within the specified window. The default
+behavior, with start and end of NULL, provides the genome-wide heterozygosity.
+The implementation of calcHeterozygosity(), viewable with functionSource(),
+treats every mutation as independent in the heterozygosity calculations.
+One could regard this choice as embodying an infinite-sites interpretation
+of the segregating mutations. In most biologically realistic models, such
+genetic states will be quite rare, and so the impact of this choice will be
+negligible; however, in some models this distinction may be important. See
+calcPairHeterozygosity() for further discussion.
 }
 \section{Copyright}{
 
@@ -70,8 +74,9 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other SLiMBuiltin: 
-\code{\link{SLiMBuiltin}},
+\code{\link{SB}},
 \code{\link{calcFST}()},
+\code{\link{calcInbreedingLoad}()},
 \code{\link{calcPairHeterozygosity}()},
 \code{\link{calcVA}()},
 \code{\link{calcWattersonsTheta}()},
@@ -81,7 +86,9 @@ Other SLiMBuiltin:
 \code{\link{mmKimura}()},
 \code{\link{nucleotideCounts}()},
 \code{\link{nucleotideFrequencies}()},
-\code{\link{nucleotidesToCodons}()}
+\code{\link{nucleotidesToCodons}()},
+\code{\link{summarizeIndividuals}()},
+\code{\link{treeSeqMetadata}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

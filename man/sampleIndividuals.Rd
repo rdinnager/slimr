@@ -44,32 +44,33 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=586}{SLiM manual: page 586}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=699}{SLiM manual: page
+699}.
 
 Returns a vector of individuals, of size less than or equal to
 parameter size, sampled from the individuals in the target subpopulation.
 Sampling is done without replacement if replace is F (the default), or with
-replacement if replace is T. The remaining parameters specify constraints upon
-the pool of individuals that will be considered candidates for the sampling.
-Parameter exclude, if non- NULL, may specify a specific individual that
-should not be considered a candidate (typically the focal individual in some
-operation). Parameter sex, if non-NULL, may specify a sex ("M" or "F") for
-the individuals to be drawn, in sexual models. Parameter tag, if non-NULL,
+replacement if replace is T. The remaining parameters specify constraints
+upon the pool of individuals that will be considered candidates for the
+sampling. Parameter exclude, if non- NULL, may specify a speciﬁc individual
+that should not be considered a candidate (typically the focal individual in
+some operation). Parameter sex, if non-NULL, may specify a sex ("M" or "F")
+for the individuals to be drawn, in sexual models. Parameter tag, if non-NULL,
 may specify a tag value for the individuals to be drawn. Parameters minAge and
 maxAge, if non-NULL, may specify a minimum or maximum age for the individuals
 to be drawn, in nonWF models. Parameter migrant, if non-NULL, may specify a
-required value for the migrant property of the individuals to be drawn (so T
-will require that individuals be migrants, F will require that they not be).
-If the candidate pool is smaller than the requested sample size, all eligible
-candidates will be returned (in randomized order); the result will be a zero-
-length vector if no eligible candidates exist (unlike sample()). This method
-is similar to getting the individuals property of the subpopulation, using
-operator [] to select only individuals with the desired properties, and then
-using sample() to sample from that candidate pool. However, besides being much
-simpler than the equivalent Eidos code, it is also much faster, and it does not
-fail if less than the full sample size is available. See subsetIndividuals() for
-a similar method that returns a full subset, rather than a sample.
+required value for the migrant property of the individuals to be drawn (so
+T will require that individuals be migrants, F will require that they not
+be). If the candidate pool is smaller than the requested sample size, all
+eligible candidates will be returned (in randomized order); the result will be
+a zero-length vector if no eligible candidates exist (unlike sample()). This
+method is similar to getting the individuals property of the subpopulation,
+using operator [] to select only individuals with the desired properties, and
+then using sample() to sample from that candidate pool. However, besides being
+much simpler than the equivalent Eidos code, it is also much faster, and it does
+not fail if less than the full sample size is available. See subsetIndividuals()
+for a similar method that returns a full subset, rather than a sample.
 }
 \section{Copyright}{
 
@@ -84,7 +85,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
@@ -109,6 +110,7 @@ Other Subpopulation:
 \code{\link{setSpatialBounds}()},
 \code{\link{setSubpopulationSize}()},
 \code{\link{spatialMapColor}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{subsetIndividuals}()},
 \code{\link{takeMigrants}()}

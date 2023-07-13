@@ -29,13 +29,16 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=591}{SLiM manual: page 591}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=704}{SLiM manual: page
+704}.
 
 Returns a mutation matrix representing a Kimura (1980) model with
 transition rate alpha and transversion rate beta: This 2×2 matrix is suitable
 for use with initializeGenomicElementType(). Note that the actual mutation rate
-produced by this model is alpha+2*beta.
+produced by this model is alpha+2*beta. 0 α α α α 0 α α α α 0 α α α α 0 0 β α
+β β 0 β α α β 0 β β α β 0 events mutationEffect() interaction() mateChoice()
+modifyChild() mutation() recombination() reproduction() survival() 704
 }
 \section{Copyright}{
 
@@ -50,9 +53,10 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other SLiMBuiltin: 
-\code{\link{SLiMBuiltin}},
+\code{\link{SB}},
 \code{\link{calcFST}()},
 \code{\link{calcHeterozygosity}()},
+\code{\link{calcInbreedingLoad}()},
 \code{\link{calcPairHeterozygosity}()},
 \code{\link{calcVA}()},
 \code{\link{calcWattersonsTheta}()},
@@ -61,7 +65,9 @@ Other SLiMBuiltin:
 \code{\link{mmJukesCantor}()},
 \code{\link{nucleotideCounts}()},
 \code{\link{nucleotideFrequencies}()},
-\code{\link{nucleotidesToCodons}()}
+\code{\link{nucleotidesToCodons}()},
+\code{\link{summarizeIndividuals}()},
+\code{\link{treeSeqMetadata}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

@@ -12,8 +12,8 @@ calcVA(individuals, mutType)
 \item{individuals}{An object of type Individual object. See details for
 description.}
 
-\item{mutType}{An object of type MutationType object. Must be of length 1 (a
-singleton). See details for description.}
+\item{mutType}{An object of type integer or MutationType object. Must be of
+length 1 (a singleton). See details for description.}
 }
 \value{
 An object of type float. Return will be of length 1 (a singleton)
@@ -29,18 +29,21 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=594}{SLiM manual: page 594}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=708}{SLiM manual: page
+708}.
 
 Calculates VA, the additive genetic variance, among a vector
 individuals, in a particular mutation type mutType that represents quantitative
-trait loci (QTLs) influencing a quantitative phenotypic trait. This function
-assumes that mutations of type mutType encode their effect size upon the
-quantitative trait in their selectionCoeff property, as is fairly standard
-in SLiM (see, e.g., section 13.2). The implementation of calcVA(), which is
-viewable with functionSource(), is quite simple; if effect sizes are stored
-elsewhere (such as with setValue(), as in section 13.5), a new user-defined
-function following the pattern of calcVA() can easily be written.
+trait loci (QTLs) influencing a quantitative phenotypic trait. The mutType
+parameter may be either an integer representing the ID of the desired mutation
+type, or a MutationType object specified directly. This function assumes
+that mutations of type mutType encode their effect size upon the quantitative
+trait in their selectionCoeff property, as is fairly standard in SLiM (see,
+e.g., section 13.2). The implementation of calcVA(), which is viewable with
+functionSource(), is quite simple; if effect sizes are stored elsewhere (such as
+with setValue(), as in section 13.5), a new user-defined function following the
+pattern of calcVA() can easily be written.
 }
 \section{Copyright}{
 
@@ -55,9 +58,10 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other SLiMBuiltin: 
-\code{\link{SLiMBuiltin}},
+\code{\link{SB}},
 \code{\link{calcFST}()},
 \code{\link{calcHeterozygosity}()},
+\code{\link{calcInbreedingLoad}()},
 \code{\link{calcPairHeterozygosity}()},
 \code{\link{calcWattersonsTheta}()},
 \code{\link{codonsToAminoAcids}()},
@@ -66,7 +70,9 @@ Other SLiMBuiltin:
 \code{\link{mmKimura}()},
 \code{\link{nucleotideCounts}()},
 \code{\link{nucleotideFrequencies}()},
-\code{\link{nucleotidesToCodons}()}
+\code{\link{nucleotidesToCodons}()},
+\code{\link{summarizeIndividuals}()},
+\code{\link{treeSeqMetadata}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

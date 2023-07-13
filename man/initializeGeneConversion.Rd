@@ -41,19 +41,22 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=517}{SLiM manual: page 517}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=618}{SLiM manual: page
+618}.
 
 Calling this function switches the recombination model from a "simple
 crossover" model to a "double-stranded break (DSB)" model, and configures
-the details of the gene conversion tracts that will therefore be modeled (see
-section 1.5.6 for discussion of these models). The fraction of DSBs that will
-be modeled as non-crossover events is given by nonCrossoverFraction. The mean
-length of gene conversion tracts (whether associated with crossover or non-
-crossover events) is given by meanLength; the actual extent of a gene conversion
-tract will be the sum of two independent draws from a geometric distribution
-with mean meanLength/2. The fraction of gene conversion tracts that are modeled
-as "simple" is given by simpleConversionFraction; the remainder will be modeled
+the details of the gene conversion tracts that will therefore be modeled
+(see section 1.5.6 for discussion of these models). The fraction of DSBs that
+will be modeled as non-crossover events is given by nonCrossoverFraction.
+The mean length of gene conversion tracts (whether associated with crossover
+or non-crossover events) is given by meanLength; the actual extent of a gene
+conversion tract will be the sum of two independent draws from a geometric
+distribution with mean meanLength/2. The fraction of gene conversion tracts
+that events mutationEffect() interaction() mateChoice() modifyChild()
+mutation() recombination() reproduction() survival() 618 are modeled as
+"simple" is given by simpleConversionFraction; the remainder will be modeled
 as "complex", involving repair of heteroduplex mismatches. Finally, the GC bias
 during heteroduplex mismatch repair is given by bias, with the default of 0.0
 indicating no bias, 1.0 indicating an absolute preference for G/C mutations
@@ -75,7 +78,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Initialize: 
-\code{\link{Initialize}},
+\code{\link{Init}},
 \code{\link{initializeAncestralNucleotides}()},
 \code{\link{initializeGenomicElementType}()},
 \code{\link{initializeGenomicElement}()},
@@ -88,6 +91,7 @@ Other Initialize:
 \code{\link{initializeSLiMModelType}()},
 \code{\link{initializeSLiMOptions}()},
 \code{\link{initializeSex}()},
+\code{\link{initializeSpecies}()},
 \code{\link{initializeTreeSeq}()}
 }
 \author{

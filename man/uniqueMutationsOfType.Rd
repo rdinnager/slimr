@@ -26,8 +26,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=546}{SLiM manual: page 546}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=654}{SLiM manual: page
+654}.
 
 Returns an object vector of all the mutations that are of the type
 specified by mutType, out of all of the mutations in the individual. Mutations
@@ -36,9 +37,9 @@ and the mutations will be given in sorted order by position, so this method
 is similar to sortBy(unique(individual.genomes.mutationsOfType(mutType)),
 "position"). It is not identical to that call, only because if multiple
 mutations exist at the exact same position, they may be sorted differently
-by this method than they would be by sortBy(). If you just need a count of
-the matching Mutation objects, rather than a vector of the matches, use -
-countOfMutationsOfType(). This method is provided for speed; it is much
+by this method than they would be by sortBy(). If you just need a count
+of the matching Mutation objects, rather than a vector of the matches, use
+-countOfMutationsOfType(). This method is provided for speed; it is much
 faster than the corresponding Eidos code. Indeed, it is faster than just
 individual.genomes.mutationsOfType(mutType), and gives uniquing and sorting
 on top of that, so it is advantageous unless duplicate entries for homozygous
@@ -57,7 +58,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Individual: 
-\code{\link{Individual}},
+\code{\link{In}},
 \code{\link{containsMutations}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{relatedness}()},

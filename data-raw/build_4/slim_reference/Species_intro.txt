@@ -1,0 +1,3 @@
+This class represents a species in a SLiM simulation. In a single-species model, the single
+Species instance is defined as a global constant named sim; in multispecies models, each Species
+instance is defined as a global constant with the same name as the species.

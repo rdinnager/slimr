@@ -50,14 +50,14 @@
 #'              }),
 #'   slim_block(100,
 #'              {
-#'                slimr_output(p1.outputVCFSample(sampleSize = 10), name = "VCF");
+#'                r_output(p1.outputVCFSample(sampleSize = 10), name = "VCF");
 #'                sim.simulationFinished();
 #'              })
 #' ) %>%
 #' slim_run() -> run_w_out
 #'
 #' cat(run_w_out$output_data$data[[1]])
-slimr_output <- function(slimr_expr, name, do_every = 1,
+r_output <- function(slimr_expr, name, do_every = 1,
                          send_to = c("data", "file"),
                          file_name = tempfile(fileext = ".txt"),
                          format = c("csv", "fst"),
@@ -147,6 +147,10 @@ slimr_output <- function(slimr_expr, name, do_every = 1,
 
 }
 
+#' @rdname r_output
+#' @export
+slimr_output <- r_output
+
 sout <- function(slimr_expr, name, do_every = NULL,
                  send_to = c("data", "file"),
                  file_name = tempfile(fileext = ".txt"),
@@ -222,11 +226,15 @@ process_output <- function(code, block_names) {
 #' Utility function to tell SLiM to output its outputFull() output
 #'
 #' @param name Name of output to use to label it in \code{slimr_results object}. Default is \code{"full_output"}
-#' @param ... Other arguments to be passed to \code{\link{slimr_output}}
+#' @param ... Other arguments to be passed to \code{\link{r_output}}
 #' @export
-slimr_output_full <- function(name = "full_output", ...) {
-  slimr_output(sim.outputFull(), name)
+r_output_full <- function(name = "full_output", ...) {
+  r_output(sim.outputFull(), name)
 }
+
+#' @rdname r_output_full
+#' export
+slimr_output_full <- r_output_full
 
 
 #' Utility function to tell SLiM to output Nucleotides
@@ -235,10 +243,10 @@ slimr_output_full <- function(name = "full_output", ...) {
 #' @param subpops Should the subpopulation of each sequence be outputted as well?
 #' @param inds SLiM expression that returns the individuals to get nucleotides from. By default all
 #' individuals are returned.
-#' @param ... Other arguments to be passed to \code{\link{slimr_output}}
+#' @param ... Other arguments to be passed to \code{\link{r_output}}
 #' @return None
 #' @export
-slimr_output_nucleotides <- function(name = "seqs", subpops = FALSE, both_genomes = FALSE, inds = NULL, ...) {
+r_output_nucleotides <- function(name = "seqs", subpops = FALSE, both_genomes = FALSE, inds = NULL, ...) {
 
   inds <- rlang::enexpr(inds)
   if(is.null(inds)) {
@@ -284,18 +292,22 @@ slimr_output_nucleotides <- function(name = "seqs", subpops = FALSE, both_genome
   }
 }
 
+#' @rdname r_output_nucleotides
+#' @export
+slimr_output_nucleotides <- r_output_nucleotides
+
 #' Utility function to tell SLiM to output coordinates from spatial simulations
 #'
 #' @param dimensionality What dimensionality should be output? Can be
 #' "x", "xy", or "xyz".
-#' @param ... Other arguments to be passed to \code{\link{slimr_output}}
+#' @param ... Other arguments to be passed to \code{\link{r_output}}
 #' @details Outputs x, y, and z coordinates as separate entries in \code{slimr_results},
 #' with names "x", "y", and "z".
 #'
 #' @return None
 #'
 #' @export
-slimr_output_coords <- function(dimensionality = c("x", "xy", "xyz"),
+r_output_coords <- function(dimensionality = c("x", "xy", "xyz"),
                                 ...) {
 
   out <- slimr_output(sim.subpopulations.individuals.x,
@@ -317,22 +329,29 @@ slimr_output_coords <- function(dimensionality = c("x", "xy", "xyz"),
 
 }
 
+#' @rdname r_output_coords
+#' @export
+slimr_output_coords <- r_output_coords
+
 #' Utility function to tell SLim to output sexes of individuals
 #'
 #' @param name Name of output to use to label it in \code{slimr_results object}. Default is \code{"sex"}.
 #'
-#' @param ... Other arguments to be passed to \code{\link{slimr_output}}
+#' @param ... Other arguments to be passed to \code{\link{r_output}}
 #'
 #' @return None
 #'
 #' @export
-slimr_output_sex <- function(name = "sex", ...) {
+r_output_sex <- function(name = "sex", ...) {
 
-  slimr_output(sim.subpopulations.individuals.sex,
-               name, ...)
+  r_output(sim.subpopulations.individuals.sex,
+           name, ...)
 
 }
 
+#' @rdname r_output_sex
+#' @export
+slimr_output_sex <- r_output_sex
 
 #' Utility function to tell SLiM to output SNP format data
 #'
@@ -340,13 +359,13 @@ slimr_output_sex <- function(name = "sex", ...) {
 #'
 #' @param name Name of output to use to label it in \code{slimr_results object}. Default is \code{"snp"}.
 #' @param subpops Should the subpopulation of each sequence be outputted as well?
-#' @param ... Other arguments to be passed to \code{\link{slimr_output}}
+#' @param ... Other arguments to be passed to \code{\link{r_output}}
 #'
 #' @return None
 #' @export
 #'
 #' @examples
-slimr_output_snp <- function(name = "snp", subpops = FALSE, ...) {
+r_output_snp <- function(name = "snp", subpops = FALSE, ...) {
   if(subpops) {
     snp_out <- slimr_output(paste(size(sim.subpopulations.individuals),
                                   size(sim.mutations),
@@ -377,3 +396,7 @@ slimr_output_snp <- function(name = "snp", subpops = FALSE, ...) {
     return(list(snp_out, pos_out))
   }
 }
+
+#' @rdname r_output_snp
+#' @export
+slimr_output_snp <- r_output_snp

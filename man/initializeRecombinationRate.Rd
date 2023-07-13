@@ -31,48 +31,49 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=522}{SLiM manual: page 522}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=623}{SLiM manual: page
+623}.
 
-Set the recombination rate per base position per generation along the
-chromosome. To be precise, this recombination rate is the probability that a
-breakpoint will occur between one base and the next base; note that this is
-different from how the mutation rate is defined (see initializeMutationRate()).
-All rates must be in the interval [0.0, 0.5]. A rate of 0.5 implies complete
-independence between the adjacent bases, which might be used to implement
-independent assortment of loci located on different chromosomes (see the
-example below). Whether a breakpoint occurs between two bases is then, in
-effect, determined by a binomial draw with a single trial and the given rate
-as probability (but under the hood SLiM uses a mathematically equivalent but
-much more efficient strategy). Unlike the mutational process in SLiM, then,
-which can generate more than one mutation at a given site (in one generation/
-genome), the recombinational process in SLiM will never generate more then
-one crossover between one base and the next (in one generation/genome), and
-a supplied rate of 0.5 will therefore result in an actual probability of 0.5
-for a crossover at the relevant position. (Note that this was not true in SLiM
-2.x and earlier, however; their implementation of recombination resulted in a
-crossover probability of about 39.3% for a rate of 0.5, due to the use of an
-inaccurate approximation method. Recombination rates lower than about 0.01 would
-have been essentially exact, since the approximation error became large only
-as the rate approached 0.5.) There are two ways to call this function. If the
-optional ends parameter is NULL (the default), then rates must be a singleton
-value that specifies a single recombination rate to be used along the entire
-chromosome. If, on the other hand, ends is supplied, then rates and ends must
-be the same length, and the values in ends must be specified in ascending
-order. In that case, rates and ends taken together specify the recombination
-rates to be used along successive contiguous stretches of the chromosome, from
-beginning to end; the last position specified in ends should extend to the end
-of the chromosome (i.e. at least to the end of the last genomic element, if
-not further). Note that a recombination rate of 1 centimorgan/Mbp corresponds
-to a recombination rate of 1e-8 in the units used by SLiM. For example, if the
-following call is made: initializeRecombinationRate(c(0, 0.5, 0), c(5000, 5001,
-9999)); then the result is that the recombination rates between bases 0 / 1,
-1 / 2, ..., 4999 / 5000 will be 0, the rate between bases 5000 / 5001 will be
-0.5, and the rate between bases 5001 / 5002 onward (up to 9998 / 9999) will
-again be 0. Setting the recombination rate between one specific pair of bases
-to 0.5 forces recombination to occur with a probability of 0.5 between those
-bases, which effectively breaks the simulated locus into separate chromosomes
-at that point; this example effectively has one simulated chromosome from base
+Set the recombination rate per base position per gamete. To be precise,
+this recombination rate is the probability that a breakpoint will occur between
+one base and the next base; note that this is different from how the mutation
+rate is defined (see initializeMutationRate()). All rates must be in the
+interval [0.0, 0.5]. A rate of 0.5 implies complete independence between the
+adjacent bases, which might be used to implement independent assortment of loci
+located on different chromosomes (see events mutationEffect() interaction()
+mateChoice() modifyChild() mutation() recombination() reproduction() survival()
+623 the example below). Whether a breakpoint occurs between two bases is then,
+in effect, determined by a binomial draw with a single trial and the given
+rate as probability (but under the hood SLiM uses a mathematically equivalent
+but much more efficient strategy). The recombinational process in SLiM will
+never generate more then one crossover between one base and the next (in one
+generation/ genome), and a supplied rate of 0.5 will therefore result in an
+actual probability of 0.5 for a crossover at the relevant position. (Note that
+this was not true in SLiM 2.x and earlier, however; their implementation of
+recombination resulted in a crossover probability of about 39.3% for a rate
+of 0.5, due to the use of an inaccurate approximation method. Recombination
+rates lower than about 0.01 would have been essentially exact, since the
+approximation error became large only as the rate approached 0.5.) There
+are two ways to call this function. If the optional ends parameter is NULL
+(the default), then rates must be a singleton value that specifies a single
+recombination rate to be used along the entire chromosome. If, on the other
+hand, ends is supplied, then rates and ends must be the same length, and
+the values in ends must be specified in ascending order. In that case, rates
+and ends taken together specify the recombination rates to be used along
+successive contiguous stretches of the chromosome, from beginning to end; the
+last position specified in ends should extend to the end of the chromosome
+(i.e. at least to the end of the last genomic element, if not further). Note
+that a recombination rate of 1 centimorgan/Mbp corresponds to a recombination
+rate of 1e-8 in the units used by SLiM. For example, if the following call
+is made: initializeRecombinationRate(c(0, 0.5, 0), c(5000, 5001, 9999)); then
+the result is that the recombination rates between bases 0 / 1, 1 / 2, ...,
+4999 / 5000 will be 0, the rate between bases 5000 / 5001 will be 0.5, and
+the rate between bases 5001 / 5002 onward (up to 9998 / 9999) will again be
+0. Setting the recombination rate between one specific pair of bases to 0.5
+forces recombination to occur with a probability of 0.5 between those bases,
+which effectively breaks the simulated locus into separate chromosomes at
+that point; this example effectively has one simulated chromosome from base
 position 0 to 5000, and another from 5001 to 9999. If the optional sex parameter
 is "*" (the default), then the supplied recombination rate map will be used
 for both sexes (which is the only option for hermaphroditic simulations). In
@@ -94,7 +95,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Initialize: 
-\code{\link{Initialize}},
+\code{\link{Init}},
 \code{\link{initializeAncestralNucleotides}()},
 \code{\link{initializeGeneConversion}()},
 \code{\link{initializeGenomicElementType}()},
@@ -107,6 +108,7 @@ Other Initialize:
 \code{\link{initializeSLiMModelType}()},
 \code{\link{initializeSLiMOptions}()},
 \code{\link{initializeSex}()},
+\code{\link{initializeSpecies}()},
 \code{\link{initializeTreeSeq}()}
 }
 \author{

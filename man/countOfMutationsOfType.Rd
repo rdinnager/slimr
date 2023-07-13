@@ -8,8 +8,12 @@
 \alias{.I$countOfMutationsOfType}
 \alias{SLiMSim$countOfMutationsOfType}
 \alias{.SS$countOfMutationsOfType}
+\alias{Species$countOfMutationsOfType}
+\alias{.Sp$countOfMutationsOfType}
 \title{SLiM method countOfMutationsOfType}
 \usage{
+countOfMutationsOfType(mutType)
+
 countOfMutationsOfType(mutType)
 
 countOfMutationsOfType(mutType)
@@ -21,6 +25,8 @@ countOfMutationsOfType(mutType)
 length 1 (a singleton). See details for description.}
 }
 \value{
+An object of type integer. Return will be of length 1 (a singleton)
+
 An object of type integer. Return will be of length 1 (a singleton)
 
 An object of type integer. Return will be of length 1 (a singleton)
@@ -54,10 +60,20 @@ anything useful when used inside a \code{\link{slim_block}} function further
 nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
+
+Documentation for SLiM function \code{countOfMutationsOfType}, which is a method
+of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further
+nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=536}{SLiM manual: page 536}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=643}{SLiM manual: page
+643}.
 
 Returns the number of mutations that are of the type specified by
 mutType, out of all of the mutations in the genome. If you need a vector of the
@@ -65,8 +81,9 @@ matching Mutation objects, rather than just a count, use -mutationsOfType().
 This method is provided for speed; it is much faster than the corresponding
 Eidos code.
 
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=545}{SLiM manual: page 545}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=652}{SLiM manual: page
+652}.
 
 Returns the number of mutations that are of the type specified by
 mutType, out of all of the mutations in the individual (in both of its genomes;
@@ -75,8 +92,8 @@ of the matching Mutation objects, rather than just a count, you should probably
 use uniqueMutationsOfType(). This method is provided for speed; it is much
 faster than the corresponding Eidos code.
 
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=566}{SLiM manual: page 566}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
 
 Returns the number of mutations that are of the type specified
 by mutType, out of all of the mutations that are currently active in the
@@ -85,8 +102,29 @@ just a count, use -mutationsOfType(). This method is often used to determine
 whether an introduced mutation is still active (as opposed to being either
 lost or fixed). This method is provided for speed; it is much faster than the
 corresponding Eidos code.
+
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=679}{SLiM manual: page
+679}.
+
+Returns the number of mutations that are of the type specified by
+mutType, out of all of the mutations that are currently active in the species.
+If you need a vector of the matching Mutation objects, rather than just a
+count, use -mutationsOfType(). This method is often used to determine whether an
+introduced mutation is still active (as opposed to being either lost or fixed).
+This method is provided for speed; it is much faster than the corresponding
+Eidos code.
 }
 \section{Copyright}{
+
+This is documentation for a function in the SLiM software, and has been
+reproduced from the official manual,
+which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+
 
 This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
@@ -117,7 +155,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Genome: 
-\code{\link{Genome}},
+\code{\link{G}},
 \code{\link{addMutations}()},
 \code{\link{addNewDrawnMutation}()},
 \code{\link{addNewMutation}()},
@@ -137,7 +175,7 @@ Other Genome:
 \code{\link{sumOfMutationsOfType}()}
 
 Other Individual: 
-\code{\link{Individual}},
+\code{\link{In}},
 \code{\link{containsMutations}()},
 \code{\link{relatedness}()},
 \code{\link{setSpatialPosition}()},
@@ -145,7 +183,7 @@ Other Individual:
 \code{\link{uniqueMutationsOfType}()}
 
 Other SLiMSim: 
-\code{\link{SLiMSim}},
+\code{\link{SS}},
 \code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{createLogFile}()},
@@ -175,6 +213,26 @@ Other SLiMSim:
 \code{\link{treeSeqOutput}()},
 \code{\link{treeSeqRememberIndividuals}()},
 \code{\link{treeSeqSimplify}()}
+
+Other Species: 
+\code{\link{Sp}},
+\code{\link{addSubpop}()},
+\code{\link{individualsWithPedigreeIDs}()},
+\code{\link{killIndividuals}()},
+\code{\link{mutationCounts}()},
+\code{\link{mutationFrequencies}()},
+\code{\link{mutationsOfType}()},
+\code{\link{outputFixedMutations}()},
+\code{\link{outputFull}()},
+\code{\link{outputMutations}()},
+\code{\link{readFromPopulationFile}()},
+\code{\link{recalculateFitness}()},
+\code{\link{registerFitnessEffectCallback}()},
+\code{\link{registerMateChoiceCallback}()},
+\code{\link{registerModifyChildCallback}()},
+\code{\link{registerMutationCallback}()},
+\code{\link{registerMutationEffectCallback}()},
+\code{\link{registerRecombinationCallback}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
@@ -183,3 +241,4 @@ Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 \concept{Genome}
 \concept{Individual}
 \concept{SLiMSim}
+\concept{Species}

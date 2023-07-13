@@ -25,30 +25,33 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=584}{SLiM manual: page 584}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=697}{SLiM manual: page
+697}.
 
 Returns a revised version of point that has been brought inside
-the periodic spatial boundaries of the subpopulation (as specified by the
+the periodic spatial boundaries of the subpopulation (as speciﬁed by the
 periodicity parameter of initializeSLiMOptions()) by wrapping around periodic
 spatial boundaries. In brief, if a coordinate of point lies beyond a periodic
-spatial boundary, that coordinate is wrapped around the boundary, so that it
-lies inside the spatial extent by the same magnitude that it previously lay
-outside, but on the opposite side of the space; in effect, the two edges of
-the periodic spatial boundary are seamlessly joined. This is done iteratively
-until all coordinates lie inside the subpopulation's periodic boundaries. Note
-that non-periodic spatial boundaries are not enforced by this method; they
-should be enforced using pointReflected(), pointStopped(), or some other means
-of enforcing boundary constraints (which can be used after pointPeriodic() to
-bring the remaining coordinates into bounds; coordinates already brought into
-bounds by pointPeriodic() will be unaffected by those calls). This method is
-useful for implementing periodic boundary conditions. This may only be called
-in simulations for which continuous space and at least one periodic spatial
-dimension have been enabled with initializeSLiMOptions(). The length of point
-must be an exact multiple of the dimensionality of the simulation; in other
-words, point may contain values comprising more than one point. In this case,
-each point will be processed as described above and a new vector containing all
-of the processed points will be returned.
+events mutationEffect() interaction() mateChoice() modifyChild() mutation()
+recombination() reproduction() survival() 697 spatial boundary, that coordinate
+is wrapped around the boundary, so that it lies inside the spatial extent by
+the same magnitude that it previously lay outside, but on the opposite side
+of the space; in effect, the two edges of the periodic spatial boundary are
+seamlessly joined. This is done iteratively until all coordinates lie inside the
+subpopulation's periodic boundaries. Note that non-periodic spatial boundaries
+are not enforced by this method; they should be enforced using pointReflected(),
+pointStopped(), or some other means of enforcing boundary constraints (which
+can be used after pointPeriodic() to bring the remaining coordinates into
+bounds; coordinates already brought into bounds by pointPeriodic() will be
+unaffected by those calls). This method is useful for implementing periodic
+boundary conditions. This may only be called in simulations for which continuous
+space and at least one periodic spatial dimension have been enabled with
+initializeSLiMOptions(). The length of point must be an exact multiple of the
+dimensionality of the simulation; in other words, point may contain values
+comprising more than one point. In this case, each point will be processed as
+described above and a new vector containing all of the processed points will be
+returned.
 }
 \section{Copyright}{
 
@@ -63,7 +66,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
@@ -88,6 +91,7 @@ Other Subpopulation:
 \code{\link{setSpatialBounds}()},
 \code{\link{setSubpopulationSize}()},
 \code{\link{spatialMapColor}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{subsetIndividuals}()},
 \code{\link{takeMigrants}()}

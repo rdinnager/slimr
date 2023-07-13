@@ -36,8 +36,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=592}{SLiM manual: page 592}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=706}{SLiM manual: page
+706}.
 
 Calculates the FST between two Genome vectors - typically, but not
 necessarily, the genomes that constitute two different subpopulations (which
@@ -50,27 +51,35 @@ calculation can be narrowed to apply to only a window - a subrange of the
 full chromosome - by passing the interval bounds [start, end] for the desired
 window. In this case, the vector of mutations used for the calculation will
 be subset to include only mutations within the specified window. The default
-behavior, with start and end of NULL, provides the genome-wide FST, which
-is often used to assess the overall level of genetic divergence between
-sister species or allopatric subpopulations. The code for calcFST() is just
-an Eidos implementation of Wright's definition of FST: where is the average
-heterozygosity in the two subpopulations, and is the total heterozygosity
-when both subpopulations are combined. In this implementation, the two genome
-vectors are weighted equally, not weighted by their size. The implementation
-of calcFST(), viewable with functionSource(), treats every mutation in muts
-as independent in the heterozygosity calculations. If mutations are stacked,
-the heterozygosity calculated is by mutation, not by site. Similarly, if
-multiple Mutation objects exist in different genomes at the same site (whether
-representing different genetic states, or multiple mutational lineages for the
-same genetic state), each Mutation object is treated separately for purposes
-of the heterozygosity calculation, just as if they were at different sites.
-One could regard these choices as embodying an infinite-sites interpretation
-of the segregating mutations. In most biologically realistic models, such
-genetic states will be quite rare, and so the impact of these choices will be
-negligible; however, in some models these distinctions may be important. It is
-also worth noting that mutations that are at a frequency of 0.0 or 1.0 across
-the two subpopulations are excluded from the calculation, because for such
-mutations is zero and the result is therefore undefined.
+behavior, with start and end of NULL, provides the genome-wide FST, which is
+often used to assess the overall level of genetic divergence between sister
+species or allopatric subpopulations. The code for calcFST() is, roughly, an
+Eidos implementation of Wright's definition of FST (but see below for further
+discussion and clarification): where HS is the average heterozygosity in the two
+subpopulations, and HT is the total heterozygosity when both subpopulations are
+combined. In this implementation, the two genome vectors are weighted equally,
+not weighted by their size. In SLiM 3, the implementation followed Wright's
+definition closely, and returned the average of ratios: mean(1.0 - H_s/H_t),
+in the Eidos code. In SLiM 4, it returns the ratio of averages instead: 1.0
+- mean(H_s)/mean(H_t). In other words, the FST value reported by SLiM 4 is an
+average across the specified mutations in the two sets of genomes, where H_s and
+H_t are first averaged across all specified mutations prior to taking the ratio
+of the two. This ratio of averages is less biased than the average of ratios,
+and and is generally considered to be best practice (see, e.g., Bhatia et al.,
+2013). This means that the behavior of calcFST() differs between SLiM 3 and SLiM
+4. The implementation of calcFST(), viewable with functionSource(), treats every
+mutation in muts as independent in the heterozygosity calculations; in other
+words, if mutations are stacked, the heterozygosity calculated is by mutation,
+not by site. Similarly, if multiple Mutation objects exist in different genomes
+at the same site (whether representing different genetic states, or multiple
+mutational lineages for the same genetic state), each Mutation object is
+treated separately for purposes of the heterozygosity calculation, just as if
+they were at different sites. One could regard these choices as embodying an
+infinite-sites interpretation of the segregating mutations. In most biologically
+realistic models, such genetic states will be quite rare, and so the impact of
+these choices will be negligible; however, in some models these distinctions may
+be important. FST = 1 − HS HT events mutationEffect() interaction() mateChoice()
+modifyChild() mutation() recombination() reproduction() survival() 706
 }
 \section{Copyright}{
 
@@ -85,8 +94,9 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other SLiMBuiltin: 
-\code{\link{SLiMBuiltin}},
+\code{\link{SB}},
 \code{\link{calcHeterozygosity}()},
+\code{\link{calcInbreedingLoad}()},
 \code{\link{calcPairHeterozygosity}()},
 \code{\link{calcVA}()},
 \code{\link{calcWattersonsTheta}()},
@@ -96,7 +106,9 @@ Other SLiMBuiltin:
 \code{\link{mmKimura}()},
 \code{\link{nucleotideCounts}()},
 \code{\link{nucleotideFrequencies}()},
-\code{\link{nucleotidesToCodons}()}
+\code{\link{nucleotidesToCodons}()},
+\code{\link{summarizeIndividuals}()},
+\code{\link{treeSeqMetadata}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

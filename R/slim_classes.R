@@ -12,62 +12,121 @@
 "slim_classes"
 
 Initialize <- new.env()
+Init <- Initialize
 Chromosome <- new.env()
+Ch <- Chromosome
+Community <- new.env()
+Co <- Community
 Genome <- new.env()
+G <- Genome
 GenomicElement <- new.env()
+GE <- GenomicElement
 GenomicElementType <- new.env()
+GET <- GenomicElementType
 Individual <- new.env()
+In <- Individual
 InteractionType <- new.env()
+IT <- InteractionType
 LogFile <- new.env()
+LF <- LogFile
 Mutation <- new.env()
+M <- Mutation
 MutationType <- new.env()
+MT <- MutationType
 SLiMBuiltin <- new.env()
+SB <- SLiMBuiltin
 SLiMEidosBlock <- new.env()
+SEB <- SLiMEidosBlock
 SLiMSim <- new.env()
+SS <- SLiMSim
+Species <- new.env()
+Sp <- Species
 Subpopulation <- new.env()
+P <- Subpopulation
 Substitution <- new.env()
+S <- Substitution
 
+#'@name Init
+#'@rdname Initialize
 #'@export
-"Initialize"
+NULL
 
+#'@name Ch
+#'@rdname Chromosome
 #'@export
-"Chromosome"
+NULL
 
+#'@name Co
+#'@rdname Community
 #'@export
-"Genome"
+NULL
 
+#'@name G
+#'@rdname Genome
 #'@export
-"GenomicElement"
+NULL
 
+#'@name GE
+#'@rdname GenomicElement
 #'@export
-"GenomicElementType"
+NULL
 
+#'@name GET
+#'@rdname GenomicElementType
 #'@export
-"Individual"
+NULL
 
+#'@name In
+#'@rdname Individual
 #'@export
-"InteractionType"
+NULL
 
+#'@name IT
+#'@rdname Interactiontype
 #'@export
-"LogFile"
+NULL
 
+#'@name LF
+#'@rdname LogFile
 #'@export
-"Mutation"
+NULL
 
+#'@name M
+#'@rdname Mutation
 #'@export
-"MutationType"
+NULL
 
+#'@name MT
+#'@rdname MutationType
 #'@export
-"SLiMBuiltin"
+NULL
 
+#'@name SB
+#'@rdname SLiMBuiltin
 #'@export
-"SLiMEidosBlock"
+NULL
 
+#'@name SEB
+#'@rdname SLiMEidosBlock
 #'@export
-"SLiMSim"
+NULL
 
+#'@name SS
+#'@rdname SLiMSim
 #'@export
-"Subpopulation"
+NULL
 
+#'@name Sp
+#'@rdname Species
 #'@export
-"Substitution"
+NULL
+
+#'@name P
+#'@rdname Subpopulation
+#'@export
+NULL
+
+#'@name S
+#'@rdname Substitution
+#'@export
+NULL

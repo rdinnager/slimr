@@ -6,10 +6,14 @@
 \alias{.IT$totalOfNeighborStrengths}
 \title{SLiM method totalOfNeighborStrengths}
 \usage{
-totalOfNeighborStrengths(individuals)
+totalOfNeighborStrengths(receivers, exerterSubpop)
 }
 \arguments{
-\item{individuals}{An object of type Individual object. See details for
+\item{receivers}{An object of type Individual object. See details for
+description.}
+
+\item{exerterSubpop}{An object of type null or Subpopulation object. Must be
+of length 1 (a singleton). The default value is \code{NULL}. See details for
 description.}
 }
 \value{
@@ -26,30 +30,41 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=553}{SLiM manual: page 553}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=664}{SLiM manual: page
+664}.
 
 Returns a vector of the total interaction strength felt by each
-individual in individuals, which does not need to be a singleton; indeed, it
-can be a vector of all of the individuals in a given subpopulation. However,
-all of the individuals in individuals must be in the same subpopulation. For
-one individual, this is essentially the same as calling nearestNeighbors() with
-a large count so as to obtain the complete vector of all neighbors, calling
-strength() for each of those interactions to get each interaction strength,
-and adding those interaction strengths together with sum(). This method is
-much faster than that implementation, however, since all of that work is
-done as a single operation. Also, totalOfNeighborStrengths() can total up
-interactions for more than one focal individual in a single call. Similarly,
-for one individual this is essentially the same as calling strength() to get the
-interaction strengths between the focal individual and all other individuals,
-and then calling sum(). Again, this method should be much faster, since this
-algorithm looks only at neighbors, whereas calling strength() directly assesses
-interaction strengths with all other individuals. This will make a particularly
-large difference when the subpopulation size is large and the maximum distance
-of the InteractionType is small. If the needed interaction strengths have
-already been calculated, those cached values are simply used. Otherwise, calling
-this method triggers evaluation of the needed interactions, including calls to
-any applicable interaction() callbacks.
+individual in receivers by the exerters in exerterSubpop (or, if that is
+NULL, then by all individuals in the receiver's subpopulation). The receivers
+parameter does not need to be a singleton; indeed, it can be a vector of
+all of the individuals in a given subpopulation. All of the receivers must
+belong to a single subpopulation, and all of the exerters must belong to
+a single subpopulation, but those two subpopulations do not need to be
+the same. The evaluate() method must have been previously called for the
+receiver and exerter subpopulations, and positions saved at evaluation
+time will be used. If the InteractionType is non- spatial, this method
+may not be called. For one individual, this is essentially the same as
+calling nearestInteractingNeighbors() with a large count so as to obtain the
+complete vector of all interacting neighbors, calling strength() for each
+of those interactions to get each interaction strength, and adding those
+interaction strengths together with sum(). This method is much faster than
+that implementation, however, since all of that work is done as a single
+operation. Also, totalOfNeighborStrengths() can total up interactions for
+more than one receiver in a single call. events mutationEffect() interaction()
+mateChoice() modifyChild() mutation() recombination() reproduction() survival()
+664 Similarly, for one individual this is essentially the same as calling
+strength() to get the interaction strengths between a receiver and all
+individuals in the exerter subpopulation, and then calling sum(). Again, this
+method should be much faster, since this algorithm looks only at neighbors,
+whereas calling strength() directly assesses interaction strengths with all
+other individuals. This will make a particularly large difference when the
+subpopulation size is large and the maximum distance of the InteractionType is
+small. See localPopulationDensity() for a related method that calculates the
+total interaction strength divided by the amount of "interaction field" present
+for an individual (i.e., the integral of the interaction function clipped to the
+spatial bounds of the subpopulation) to provide an estimate of the "interaction
+density" felt by an individual.
 }
 \section{Copyright}{
 
@@ -65,15 +80,19 @@ on the official website: \url{https://messerlab.org/slim/}
 \seealso{
 Other InteractionType: 
 \code{\link{InteractionType}},
-\code{\link{distanceToPoint}()},
+\code{\link{clippedIntegral}()},
+\code{\link{distanceFromPoint}()},
 \code{\link{distance}()},
 \code{\link{drawByStrength}()},
 \code{\link{evaluate}()},
 \code{\link{interactingNeighborCount}()},
 \code{\link{interactionDistance}()},
+\code{\link{localPopulationDensity}()},
 \code{\link{nearestInteractingNeighbors}()},
 \code{\link{nearestNeighborsOfPoint}()},
 \code{\link{nearestNeighbors}()},
+\code{\link{neighborCountOfPoint}()},
+\code{\link{neighborCount}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
 \code{\link{unevaluate}()}

@@ -33,50 +33,52 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=579}{SLiM manual: page 579}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=691}{SLiM manual: page
+691}.
 
 Generates a new offspring individual from the given parents
 by biparental sexual reproduction, queues it for addition to the target
-subpopulation, and returns it. The new offspring will not be visible as a
-member of the target subpopulation until the end of the offspring generation
-life cycle stage. Attempting to use a newly generated offspring individual
-as a mate, or to reference it as a member of the target subpopulation in any
-other way, will result in an error. In most models the returned individual is
-not used, but it is provided for maximal generality and flexibility. The new
-offspring individual is generated from parent1 and parent2 by crossing them. In
-sexual models parent1 must be female and parent2 must be male; in hermaphroditic
-models, parent1 and parent2 are unrestricted. If parent1 and parent2 are the
-same individual in a hermaphroditic model, that parent self-fertilizes, or
-"selfs", to generate the offspring sexually (note this is not the same as
-clonal reproduction). Such selfing is considered "incidental" by addCrossed(),
-however; if the preventIncidentalSelfing flag of initializeSLiMOptions() is
-T, supplying the same individual for parent1 and parent2 is an error (you must
-check for and prevent incidental selfing if you set that flag in a nonWF model).
-If non-incidental selfing is desired, addSelfed() should be used instead.
-The sex parameter specifies the sex of the offspring. A value of NULL means
-"make the default choice"; in non-sexual models it is the only legal value
-for sex, and does nothing, whereas in sexual models it causes male or female
-to be chosen with equal probability. A value of "M" or "F" for sex specifies
-that the offspring should be male or female, respectively. Finally, a float
-value from 0.0 to 1.0 for sex provides the probability that the offspring will
-be male; a value of 0.0 will produce a female, a value of 1.0 will produce
-a male, and for intermediate values SLiM will draw the sex of the offspring
-randomly according to the specified probability. Unless you wish the bias the
-sex ratio of offspring, the default value of NULL should generally be used.
-Note that any defined, active, and applicable recombination(), mutation(), and
-modifyChild() callbacks will be called as a side effect of calling this method,
-before this method even returns. For recombination() and mutation() callbacks,
-the subpopulation of the parent that is generating a given gamete is used;
-for modifyChild() callbacks the situation is more complex. In most biparental
-mating events, parent1 and parent2 will belong to the same subpopulation,
-and modifyChild() callbacks for that subpopulation will be used, just as in
-WF models. In certain models (such as models of pollen flow and broadcast
-spawning), however, biparental mating may occur between parents that are not
-from the same subpopulation; that is legal in nonWF models, and in that case,
-modifyChild() callbacks for the subpopulation of parent1 are used (since that
-is the maternal parent). If the modifyChild() callback process results in
-rejection of the proposed child (see section 25.4), a new offspring individual
+subpopulation, and returns it. The new offspring will not be visible as a member
+of the target subpopulation until the end of the offspring generation tick cycle
+stage. Attempting to use a newly generated offspring individual as a mate, or to
+reference it as a member of events mutationEffect() interaction() mateChoice()
+modifyChild() mutation() recombination() reproduction() survival() 691 the
+target subpopulation in any other way, will result in an error. In most models
+the returned individual is not used, but it is provided for maximal generality
+and flexibility. The new offspring individual is generated from parent1 and
+parent2 by crossing them. In sexual models parent1 must be female and parent2
+must be male; in hermaphroditic models, parent1 and parent2 are unrestricted.
+If parent1 and parent2 are the same individual in a hermaphroditic model,
+that parent self-fertilizes, or "selfs", to generate the offspring sexually
+(note this is not the same as clonal reproduction). Such selfing is considered
+"incidental" by addCrossed(), however; if the preventIncidentalSelfing flag
+of initializeSLiMOptions() is T, supplying the same individual for parent1
+and parent2 is an error (you must check for and prevent incidental selfing
+if you set that flag in a nonWF model). If non-incidental selfing is desired,
+addSelfed() should be used instead. The sex parameter specifies the sex of the
+offspring. A value of NULL means "make the default choice"; in non-sexual models
+it is the only legal value for sex, and does nothing, whereas in sexual models
+it causes male or female to be chosen with equal probability. A value of "M" or
+"F" for sex specifies that the offspring should be male or female, respectively.
+Finally, a float value from 0.0 to 1.0 for sex provides the probability that
+the offspring will be male; a value of 0.0 will produce a female, a value of
+1.0 will produce a male, and for intermediate values SLiM will draw the sex of
+the offspring randomly according to the specified probability. Unless you wish
+the bias the sex ratio of offspring, the default value of NULL should generally
+be used. Note that any defined, active, and applicable recombination(),
+mutation(), and modifyChild() callbacks will be called as a side effect of
+calling this method, before this method even returns. For recombination() and
+mutation() callbacks, the subpopulation of the parent that is generating a
+given gamete is used; for modifyChild() callbacks the situation is more complex.
+In most biparental mating events, parent1 and parent2 will belong to the same
+subpopulation, and modifyChild() callbacks for that subpopulation will be used,
+just as in WF models. In certain models (such as models of pollen flow and
+broadcast spawning), however, biparental mating may occur between parents that
+are not from the same subpopulation; that is legal in nonWF models, and in that
+case, modifyChild() callbacks for the subpopulation of parent1 are used (since
+that is the maternal parent). If the modifyChild() callback process results in
+rejection of the proposed child (see section 25.5), a new offspring individual
 will not be generated, and this method will return NULL. To force the generation
 of an offspring individual from a given pair of parents, you could loop until
 addCrossed() succeeds, but note that if your modifyChild() callback rejects
@@ -105,7 +107,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addEmpty}()},
 \code{\link{addRecombinant}()},
@@ -130,6 +132,7 @@ Other Subpopulation:
 \code{\link{setSpatialBounds}()},
 \code{\link{setSubpopulationSize}()},
 \code{\link{spatialMapColor}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{subsetIndividuals}()},
 \code{\link{takeMigrants}()}

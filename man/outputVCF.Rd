@@ -44,8 +44,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=537}{SLiM manual: page 537}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=645}{SLiM manual: page
+645}.
 
 Output the target genomes in VCF format (see sections 26.2.3, 26.2.4,
 and 26.3.3 for output format details). The target genomes are treated as pairs
@@ -62,7 +63,7 @@ outputMultiallelics, simplifyNucleotides, and outputNonnucleotides affect
 the format of the output produced; see sections 26.2.3 and 26.2.4 for further
 discussion. See outputMS() and output() for other output formats. Output is
 generally done in a late() event, so that the output reflects the state of the
-simulation at the end of a generation.
+simulation at the end of a tick.
 }
 \section{Copyright}{
 
@@ -77,7 +78,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Genome: 
-\code{\link{Genome}},
+\code{\link{G}},
 \code{\link{addMutations}()},
 \code{\link{addNewDrawnMutation}()},
 \code{\link{addNewMutation}()},

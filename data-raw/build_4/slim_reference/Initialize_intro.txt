@@ -1,0 +1,63 @@
+Before a SLiM simulation can be run, the various classes underlying the simulation need to be
+set up with an initial configuration. Simulation configuration in SLiM is done in initialize()
+callbacks that run prior to the beginning of simulation execution. Eidos callbacks are discussed
+more broadly in chapter 25, but for our present purposes, the idea is very simple. In your input
+file, you can write something like this:
+initialize()
+{
+...
+}
+The initialize() declaration specifies that the script block is to be executed as an
+initialize() callback before the simulation starts. The script between the braces {} would set up
+various aspects of the simulation by calling initialization functions. These are SLiM functions that
+may be called only in an initialize() callback, and their names begin with initialize to mark
+them clearly as such. You may also use other Eidos functionality in these callbacks; for example,
+you might automate generating a complex genetic structure containing many genes by using a for
+loop.
+In general, it is required for a species to set up its genetic structure in an initialize() callback
+with calls to initializeMutationRate(), initializeRecombinationRate(),
+initializeMutationType(), initializeGenomicElementType(), and
+initializeGenomicElement(); species must call all of these, setting up at least one mutation type,
+at least one genomic element type, and at least one genomic element. The exception to this
+general rule is for species that have no genetics at all – species that are modeled purely on an
+ecological/behavioral level. Such species may be defined by calling none of those initialization
+functions; in this case, SLiM will default to a zero-length chromosome with mutation and
+recombination rates of zero. A middle ground between these two configuration paths is not
+allowed; either a species has no genetics, or it fully defines its genetics.
+One thing worth mentioning is that in the context of an initialize() callback, the sim global
+representing the species being simulated is not defined. This is because the state of the simulation
+is not yet constructed fully, and accessing partially constructed state would not be safe. (Similarly,
+in multispecies models, the community object and the objects representing individual species are
+not yet defined.)
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 617
+The above initialize() callback syntax implicitly declares a single species, with the default
+name of sim, and therefore sets up a single-species model. It is also possible to explicitly declare a
+species, which is done with this extended syntax (using a species name of fox as an example):
+species fox initialize() { ... }
+This sets up a multispecies model (although it might, in fact, declare only a single species, fox;
+the term “multispecies”, in SLiM parlance, really means “explicitly declared species”, but
+multispecies models almost always do contain multiple species, so the distinction is unimportant).
+See section 1.9 and chapter 19 for further discussion of multispecies models; in most respects they
+work identically to single-species models, so we will tend to focus on the single-species case in
+the reference documentation, with a species name of sim, for simplicity and clarity.
+In single-species models all initialization can be done in a single initialize() callback (or you
+can have more than one, if you wish). In multispecies models, each species must be initialized
+with its own callback(s), as shown above. In addition, multispecies models also support an
+optional community-level initialization callback that is declared as follows:
+species all initialize() { ... }
+These callbacks, technically called non-species-specific initialize() callbacks, provide a
+place for community-level initialization to occur. They are run before any species-specific
+initialize() callbacks are run, so you might wish to set up all of your model parameters in one,
+providing a single location for all parameters. In multispecies models, the initialization functions
+initializeSLiMModelType() and initializeInteractionType() may only be called from a nonspecies-
+specific initialize() callback, since those aspects of model configuration span the entire
+community. In single-species models, these functions may be called from an ordinary
+initialize() callback for simplicity and backward compatibility.
+Once all initialize() callbacks have executed, in the order in which they are specified in the
+SLiM input file, the simulation will begin. The tick number at which it starts is determined by the
+Eidos events you have defined (see section 25.1); the first tick in which an Eidos event is scheduled
+to execute is the tick at which the simulation starts. Similarly, the simulation will terminate after
+the last tick for which a script block (either an event or a callback) is registered to execute, unless
+the stop() function or the simulationFinished() method of Community or Species are called to
+end the simulation earlier.

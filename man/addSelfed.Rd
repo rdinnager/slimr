@@ -27,21 +27,22 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=581}{SLiM manual: page 581}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=694}{SLiM manual: page
+694}.
 
-Generates a new offspring individual from the given parent by selfing,
+Generates a new offspring individual from the given parent by selﬁng,
 queues it for addition to the target subpopulation, and returns it. The new
 offspring will not be visible as a member of the target subpopulation until
-the end of the offspring generation life cycle stage. The subpopulation of
+the end of the offspring generation tick cycle stage. The subpopulation of
 parent will be used to locate applicable mutation(), recombination(), and
 modifyChild() callbacks governing the generation of the offspring individual.
-Since selfing requires that parent act as a source of both a male and a female
+Since selﬁng requires that parent act as a source of both a male and a female
 gamete, this method may be called only in hermaphroditic models; calling it in
 sexual models will result in an error. This method represents a non-incidental
-selfing event, so the preventIncidentalSelfing flag of initializeSLiMOptions()
+selﬁng event, so the preventIncidentalSelfing ﬂag of initializeSLiMOptions()
 has no effect on this method (in contrast to the behavior of addCrossed(), where
-selfing is assumed to be incidental). Note that this method is only for use in
+selﬁng is assumed to be incidental). Note that this method is only for use in
 nonWF models. See addCrossed() for further general notes on the addition of new
 offspring individuals.
 }
@@ -58,7 +59,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
@@ -83,6 +84,7 @@ Other Subpopulation:
 \code{\link{setSpatialBounds}()},
 \code{\link{setSubpopulationSize}()},
 \code{\link{spatialMapColor}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{subsetIndividuals}()},
 \code{\link{takeMigrants}()}

@@ -1,0 +1,28 @@
+genomePedigreeID => (integer$)
+If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
+genomePedigreeID is a unique non-negative identifier for each genome in a simulation, never re-
+used throughout the duration of the simulation run. Furthermore, the genomePedigreeID of a given
+genome will be equal to either (2*pedigreeID) or (2*pedigreeID + 1) of the individual that the
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 639
+genome belongs to (the former for the first genome of the individual, the latter for the second genome
+of the individual); this invariant relationship is guaranteed. If pedigree tracking is not enabled, this
+property is unavailable.
+genomeType => (string$)
+The type of chromosome represented by this genome; one of "A", "X", or "Y".
+individual => (object<Individual>$)
+The Individual object to which this genome belongs.
+isNullGenome => (logical$)
+T if the genome is a “null” genome, F if it is an ordinary genome object. When a sex chromosome (X
+or Y) is simulated, the other sex chromosome also exists in the simulation, but it is a “null” genome
+that does not carry any mutations. Instead, it is a placeholder, present to allow SLiM’s code to operate
+in much the same way as it does when an autosome is simulated. Null genomes should not be
+accessed or manipulated.
+mutations => (object<Mutation>)
+All of the Mutation objects present in this genome.
+tag <–> (integer$)
+A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read
+it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value
+prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.
+Note that the Genome objects used by SLiM are new with every new individual, so the tag value of
+each new offspring generated in each tick will be initially undefined.

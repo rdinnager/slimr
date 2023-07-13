@@ -25,21 +25,24 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=585}{SLiM manual: page 585}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=698}{SLiM manual: page
+698}.
 
 Removes this subpopulation from the model. The subpopulation is
 immediately removed from the list of active subpopulations, and the symbol
-representing the subpopulation is undefined. The subpopulation object itself
+representing the subpopulation is undeﬁned. The subpopulation object itself
 remains unchanged until children are next generated (at which point it is
 deallocated), but it is no longer part of the simulation and should not be
 used. Note that this method is only for use in nonWF models, in which there
-is a distinction between a subpopulation being empty and a subpopulation being
-removed from the simulation; an empty subpopulation may be re-colonized by
-migrants, whereas as a removed subpopulation no longer exists at all. WF models
-do not make this distinction; when a subpopulation is empty it is automatically
-removed. WF models should therefore call setSubpopulationSize(0) instead of this
-method; setSubpopulationSize() is the standard way for WF models to change the
+is a distinction between a subpopulation being empty and a subpopulation
+being removed from the simulation; an empty subpopulation may be re-colonized
+by migrants, whereas as a removed subpopulation no longer exists at all.
+WF models do not make this distinction; when a subpopulation is empty it is
+events mutationEffect() interaction() mateChoice() modifyChild() mutation()
+recombination() reproduction() survival() 698 automatically removed. WF
+models should therefore call setSubpopulationSize(0) instead of this method;
+setSubpopulationSize() is the standard way for WF models to change the
 subpopulation size, including to a size of 0.
 }
 \section{Copyright}{
@@ -55,7 +58,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
@@ -80,6 +83,7 @@ Other Subpopulation:
 \code{\link{setSpatialBounds}()},
 \code{\link{setSubpopulationSize}()},
 \code{\link{spatialMapColor}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{subsetIndividuals}()},
 \code{\link{takeMigrants}()}

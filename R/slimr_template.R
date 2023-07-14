@@ -16,7 +16,7 @@
 #' @details Note that this function is only designed to be used inside a \code{\link{slim_block}} function call. If run in any other
 #' situation, it won't really do anything, just returning a reference to the placemarker that would have been inserted if run in
 #' its correct context.
-slimr_template <- function(var_name, default = NULL, unquote_strings = FALSE) {
+r_template <- function(var_name, default = NULL, unquote_strings = FALSE) {
   .resources$temp_slimr_template$var_name <- c(.resources$temp_slimr_template$var_name,
                                                var_name)
   .resources$temp_slimr_template$default <- c(.resources$temp_slimr_template$default,
@@ -27,12 +27,18 @@ slimr_template <- function(var_name, default = NULL, unquote_strings = FALSE) {
   rlang::sym(paste0("..", var_name, ".."))
 }
 
+#' @rdname r_template
+#' @export
+slimr_template <- r_template
+
 stmplt <- function(var_name, default = NULL, unquote_strings = FALSE) {
   slimr_template(var_name, default, unquote_strings)
 }
 
 tmplt_replace <- function(code) {
   code <- stringr::str_replace_all(code, "slimr_template", "!!slimr_template")
+  code <- stringr::str_replace_all(code, "([^m])r_template", "\\1!!r_template")
+  code <- stringr::str_replace_all(code, "^r_template", "!!r_template")
   code <- stringr::str_replace_all(code, "stmplt", "!!stmplt")
   code_expr <- rlang::parse_exprs(paste(code, collapse = ""))
 

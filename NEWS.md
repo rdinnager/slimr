@@ -1,3 +1,7 @@
+# slimr 0.2.0
+
+* slimr now fully supports SLiM versions 4.0 and greater, including support for multispecies models (though these have been extensively tested yet)
+
 # slimr 0.1.0
 
 * SLiM Classes available for help with autocomplete now have nested class objects 

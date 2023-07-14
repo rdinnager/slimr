@@ -161,6 +161,8 @@ sout <- function(slimr_expr, name, do_every = NULL,
 
 out_replace <- function(code) {
   code <- stringr::str_replace_all(code, "slimr_output", "!!slimr_output")
+  code <- stringr::str_replace_all(code, "([^m])r_output", "\\1!!r_output")
+  code <- stringr::str_replace_all(code, "^r_output", "!!r_output")
   code <- stringr::str_replace_all(code, "sout", "!!sout")
   code_expr <- rlang::parse_exprs(paste(code, collapse = "\n"))
   code <- purrr::map(code_expr, ~rlang::expr_interp(.x)) %>%

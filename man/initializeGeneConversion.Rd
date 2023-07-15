@@ -53,17 +53,16 @@ will be modeled as non-crossover events is given by nonCrossoverFraction.
 The mean length of gene conversion tracts (whether associated with crossover
 or non-crossover events) is given by meanLength; the actual extent of a gene
 conversion tract will be the sum of two independent draws from a geometric
-distribution with mean meanLength/2. The fraction of gene conversion tracts
-that events mutationEffect() interaction() mateChoice() modifyChild()
-mutation() recombination() reproduction() survival() 618 are modeled as
-"simple" is given by simpleConversionFraction; the remainder will be modeled
-as "complex", involving repair of heteroduplex mismatches. Finally, the GC bias
-during heteroduplex mismatch repair is given by bias, with the default of 0.0
-indicating no bias, 1.0 indicating an absolute preference for G/C mutations
-over A/T mutations, and -1.0 indicating an absolute preference for A/T mutations
-over G/C mutations. A non-zero bias may only be set in nucleotide-based models
-(see section 1.8). This function, and the way that gene conversion is modeled,
-fundamentally changed in SLiM 3.3; see section 1.5.6 for discussion.
+distribution with mean meanLength/2. The fraction of gene conversion tracts that
+are modeled as "simple" is given by simpleConversionFraction; the remainder will
+be modeled as "complex", involving repair of heteroduplex mismatches. Finally,
+the GC bias during heteroduplex mismatch repair is given by bias, with the
+default of 0.0 indicating no bias, 1.0 indicating an absolute preference for
+G/C mutations over A/T mutations, and -1.0 indicating an absolute preference
+for A/T mutations over G/C mutations. A non-zero bias may only be set in
+nucleotide-based models (see section 1.8). This function, and the way that gene
+conversion is modeled, fundamentally changed in SLiM 3.3; see section 1.5.6 for
+discussion.
 }
 \section{Copyright}{
 

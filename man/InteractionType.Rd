@@ -75,8 +75,6 @@ interactions with large population sizes can therefore be very expensive,
 although
 InteractionType goes to considerable lengths to minimize the overhead. To reduce
 this
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 654
 computational burden for your models, it is essential to reduce N, M or both.
 Spatial interactions
 can have - and almost always should have - a maximum distance, which allows them
@@ -172,8 +170,6 @@ probably interact with a strength of zero (because typically N >> M, because few
 individuals fall
 within the maximum interaction radius from a given individual). In SLiM 4, the
 full sparse array of
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 655
 interactions is no longer calculated (as it was in SLiM 3); instead, single rows
 of the sparse array
 are calculated on demand, providing most of the benefits of the data structure
@@ -264,8 +260,6 @@ containing exerters and receivers before it will respond to queries regarding
 individuals in those
 subpopulations; querying with exerters or receivers whose subpopulations have
 not been
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 656
 evaluated will result in an error. Calling evaluate() causes the positions of
 all receivers and
 exerters to be cached, thus defining a snapshot in time that the InteractionType
@@ -315,8 +309,6 @@ Consider whether you want to query for neighbors (all individual near the
 receiver), for
 interacting neighbors (nearby individuals that exert an interaction strength
 upon the receiver,
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 657
 regardless of what that strength is), or for something about the actual
 interaction strengths. In
 general, the simpler queries will be faster; finding neighbors is faster than

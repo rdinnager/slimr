@@ -34,10 +34,8 @@ Documentation for this function can be found in the official
 \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
 668}.
 
-This Dictionary method has an override in LogFile to make it illegal
-to call, since LogFile manages its Dictionary entries. events mutationEffect()
-interaction() mateChoice() modifyChild() mutation() recombination()
-reproduction() survival() 668
+This Dictionary method has an override in LogFile to make it illegal to
+call, since LogFile manages its Dictionary entries.
 }
 \section{Copyright}{
 

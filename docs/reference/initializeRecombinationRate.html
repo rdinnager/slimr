@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -116,21 +116,21 @@ default value is <code>"*"</code>. See details for description.</p></dd>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Documentation for this function can be found in the official <a href="http://%0Abenhaller.com/slim/SLiM_Manual.pdf#page=522" class="external-link">SLiM manual: page 522</a>.</p>
-<p>Set the recombination rate per base position per generation along the
-chromosome. To be precise, this recombination rate is the probability that a
-breakpoint will occur between one base and the next base; note that this is
-different from how the mutation rate is defined (see initializeMutationRate()).
-All rates must be in the interval [0.0, 0.5]. A rate of 0.5 implies complete
-independence between the adjacent bases, which might be used to implement
-independent assortment of loci located on different chromosomes (see the
-example below). Whether a breakpoint occurs between two bases is then, in
-effect, determined by a binomial draw with a single trial and the given rate
-as probability (but under the hood SLiM uses a mathematically equivalent but
-much more efficient strategy). Unlike the mutational process in SLiM, then,
-which can generate more than one mutation at a given site (in one generation/
-genome), the recombinational process in SLiM will never generate more then
-one crossover between one base and the next (in one generation/genome), and
+    <p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=623" class="external-link">SLiM manual: page
+623</a>.</p>
+<p>Set the recombination rate per base position per gamete. To be
+precise, this recombination rate is the probability that a breakpoint will
+occur between one base and the next base; note that this is different from how
+the mutation rate is defined (see initializeMutationRate()). All rates must
+be in the interval [0.0, 0.5]. A rate of 0.5 implies complete independence
+between the adjacent bases, which might be used to implement independent
+assortment of loci located on different chromosomes (see the example below).
+Whether a breakpoint occurs between two bases is then, in effect, determined
+by a binomial draw with a single trial and the given rate as probability (but
+under the hood SLiM uses a mathematically equivalent but much more efficient
+strategy). The recombinational process in SLiM will never generate more then
+one crossover between one base and the next (in one generation/ genome), and
 a supplied rate of 0.5 will therefore result in an actual probability of 0.5
 for a crossover at the relevant position. (Note that this was not true in SLiM
 2.x and earlier, however; their implementation of recombination resulted in a
@@ -179,7 +179,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Initialize: 
-<code><a href="Initialize.html">Initialize</a></code>,
+<code><a href="Initialize.html">Init</a></code>,
 <code><a href="initializeAncestralNucleotides.html">initializeAncestralNucleotides</a>()</code>,
 <code><a href="initializeGeneConversion.html">initializeGeneConversion</a>()</code>,
 <code><a href="initializeGenomicElementType.html">initializeGenomicElementType</a>()</code>,
@@ -192,6 +192,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="initializeSLiMModelType.html">initializeSLiMModelType</a>()</code>,
 <code><a href="initializeSLiMOptions.html">initializeSLiMOptions</a>()</code>,
 <code><a href="initializeSex.html">initializeSex</a>()</code>,
+<code><a href="initializeSpecies.html">initializeSpecies</a>()</code>,
 <code><a href="initializeTreeSeq.html">initializeTreeSeq</a>()</code></p></div>
     </div>
     <div id="author">
@@ -212,7 +213,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

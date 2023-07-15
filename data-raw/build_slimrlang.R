@@ -115,7 +115,7 @@ slim_lang_intros <- c(initialize_intro, builtin_intro,
 nms <- names(slim_lang_intros)
 
 slim_lang_intros <- stringr::str_replace_all(slim_lang_intros, "\nTOC.*?\n", "\n")
-slim_lang_intros <- stringr::str_replace_all(slim_lang_intros, "\nEidos events.*?\n", "\n")
+slim_lang_intros <- stringr::str_replace_all(slim_lang_intros, "\nevents.*?\n", "\n")
 
 names(slim_lang_intros) <- nms
 
@@ -189,7 +189,7 @@ find_man_page <- function(func_name, man_txt, pages = NULL) {
 extract_methods <- function(txt, init = FALSE, pages = NULL, SLiMSim = FALSE) {
 
   txt <- stringr::str_replace_all(txt, "\nTOC.*?\n", "\n")
-  txt <- stringr::str_replace_all(txt, "\nEidos events.*?\n", "\n")
+  txt <- stringr::str_replace_all(txt, "\nevents.*?\n", "\n")
   if(init) {
     txt <- stringr::str_replace_all(txt, "\n((?!\\((void|object|integer|float|logical|string|numeric|\\*|\\+)))", " \\1")
   } else {
@@ -440,7 +440,7 @@ slim_lang_properties_txt <- purrr::map(slim_lang_properties_txtfiles,
 # txt <- slim_lang_properties_txt[[1]]
 extract_properties <- function(txt) {
   txt <- stringr::str_replace_all(txt, "\nTOC.*?\n", "\n")
-  txt <- stringr::str_replace_all(txt, "\nEidos events.*?\n", "\n")
+  txt <- stringr::str_replace_all(txt, "\nevents.*?\n", "\n")
   txt <- stringr::str_split(txt, "\n")[[1]]
   props <- stringr::str_which(txt,
                       "(.*?) (\\<\\–\\>|\\=\\>) \\((.*?)\\)",

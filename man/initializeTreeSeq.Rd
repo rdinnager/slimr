@@ -75,28 +75,26 @@ of the recorded tree sequence occurs. This is a speed-memory tradeoff:
 more frequent simplification (lower simplificationRatio or smaller
 simplificationInterval) means the stored tree sequences will use less
 memory, but at a cost of somewhat longer run times. Conversely, a larger
-simplificationRatio or simplificationInterval means that SLiM will wait
-longer between simplifications. There are three ways these parameters can
-be used. With the first option, with a non- NULL simplificationRatio and
-a NULL value for simplificationInterval, SLiM will try to find an optimal
-tick interval for simplification such that the ratio of the memory used by
-the tree sequence tables, (before:after) simplification, is close to the
-requested ratio. The default of 10 (used if both simplificationRatio and
-simplificationInterval are NULL) thus requests that SLiM try to find a tick
-interval such that the maximum size of the stored tree sequences is ten times
-the size after simplification. INF may be supplied to indicate that automatic
-simplification should never occur; 0 may be supplied to indicate that automatic
-simplification should be performed at the end of every tick. Alternatively -
-the second option - simplificationRatio may be NULL and simplificationInterval
-may be set to the interval, in ticks, between simplifications. This may
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 627 provide more reliable performance,
-but the interval must be chosen carefully to avoid exceeding the available
-memory. The simplificationInterval value may be a very large number to
-specify that simplification should never occur (not INF, though, since it is
-an integer value), or 1 to simplify every tick. Finally - the third option -
-both parameters may be non-NULL, in which case simplificationRatio is used as
-described above, while simplificationInterval provides the initial interval
+simplificationRatio or simplificationInterval means that SLiM will wait longer
+between simplifications. There are three ways these parameters can be used.
+With the first option, with a non- NULL simplificationRatio and a NULL value
+for simplificationInterval, SLiM will try to find an optimal tick interval
+for simplification such that the ratio of the memory used by the tree sequence
+tables, (before:after) simplification, is close to the requested ratio. The
+default of 10 (used if both simplificationRatio and simplificationInterval are
+NULL) thus requests that SLiM try to find a tick interval such that the maximum
+size of the stored tree sequences is ten times the size after simplification.
+INF may be supplied to indicate that automatic simplification should never
+occur; 0 may be supplied to indicate that automatic simplification should
+be performed at the end of every tick. Alternatively - the second option -
+simplificationRatio may be NULL and simplificationInterval may be set to the
+interval, in ticks, between simplifications. This may provide more reliable
+performance, but the interval must be chosen carefully to avoid exceeding the
+available memory. The simplificationInterval value may be a very large number
+to specify that simplification should never occur (not INF, though, since it
+is an integer value), or 1 to simplify every tick. Finally - the third option
+- both parameters may be non-NULL, in which case simplificationRatio is used
+as described above, while simplificationInterval provides the initial interval
 first used by SLiM (and then subsequently increased or decreased to try to match
 the requested simplification ratio). The default initial interval, used when
 simplificationInterval is NULL, is usually 20; this is chosen to be relatively

@@ -86,9 +86,7 @@ is a constant, so it is not modifiable. \strong{Property Description:} The
 MutationType objects being used in the species. }
 \item{mutations}{A property of type Mutation object. This property is a
 constant, so it is not modifiable. \strong{Property Description:} The Mutation
-objects that are currently active in the species. events mutationEffect()
-interaction() mateChoice() modifyChild() mutation() recombination()
-reproduction() survival() 677 }
+objects that are currently active in the species. }
 \item{name}{A property of type string. It is of length one (a singleton). This
 property is a constant, so it is not modifiable. \strong{Property Description:}
 A human-readable string name for the subpopulation. This is always the declared

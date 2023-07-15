@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -89,18 +89,18 @@ full SLiM script.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">nearestNeighborsOfPoint</span><span class="op">(</span><span class="va">subpop</span>, <span class="va">point</span>, <span class="va">count</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">nearestNeighborsOfPoint</span><span class="op">(</span><span class="va">point</span>, <span class="va">exerterSubpop</span>, <span class="va">count</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>subpop</dt>
-<dd><p>An object of type Subpopulation object. Must be of length 1 (a
-singleton). See details for description.</p></dd>
-
-
-<dt>point</dt>
+    <dl><dt>point</dt>
 <dd><p>An object of type float. See details for description.</p></dd>
+
+
+<dt>exerterSubpop</dt>
+<dd><p>An object of type integer or Subpopulation object. Must be
+of length 1 (a singleton). See details for description.</p></dd>
 
 
 <dt>count</dt>
@@ -116,14 +116,20 @@ default value is <code>1</code>. See details for description.</p></dd>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Documentation for this function can be found in the official <a href="http://%0Abenhaller.com/slim/SLiM_Manual.pdf#page=552" class="external-link">SLiM manual: page 552</a>.</p>
-<p>Returns up to count individuals in subpop that are spatially closest to
-point, according to the distance metric of the InteractionType. To obtain all of
-the individuals within the maximum interaction distance of point, simply pass a
-value for count that is greater than or equal to the size of subpop. Note that
-if fewer than count individuals are within the maximum interaction distance, the
-vector returned may be shorter than count, or even zero-length; it is important
-to check for this possibility even when requesting a single neighbor.</p>
+    <p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=663" class="external-link">SLiM manual: page
+663</a>.</p>
+<p>Returns up to count individuals in exerterSubpop that are spatially
+closest to point, according to the distance metric of the InteractionType. The
+subpopulation may be supplied either as an integer ID, or as a Subpopulation
+object. To obtain all of the individuals within the maximum interaction distance
+of point, simply pass a value for count that is greater than or equal to the
+size of exerterSubpop. Note that if fewer than count individuals are within the
+maximum interaction distance, the vector returned may be shorter than count,
+or even zero-length; it is important to check for this possibility even when
+requesting a single neighbor. The evaluate() method must have been previously
+called for exerterSubpop, and positions saved at evaluation time will be used.
+If the InteractionType is non-spatial, this method may not be called.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -141,14 +147,18 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <h2>See also</h2>
     <div class="dont-index"><p>Other InteractionType: 
 <code><a href="InteractionType.html">InteractionType</a></code>,
-<code><a href="distanceToPoint.html">distanceToPoint</a>()</code>,
+<code><a href="clippedIntegral.html">clippedIntegral</a>()</code>,
+<code><a href="distanceFromPoint.html">distanceFromPoint</a>()</code>,
 <code><a href="distance.html">distance</a>()</code>,
 <code><a href="drawByStrength.html">drawByStrength</a>()</code>,
 <code><a href="evaluate.html">evaluate</a>()</code>,
 <code><a href="interactingNeighborCount.html">interactingNeighborCount</a>()</code>,
 <code><a href="interactionDistance.html">interactionDistance</a>()</code>,
+<code><a href="localPopulationDensity.html">localPopulationDensity</a>()</code>,
 <code><a href="nearestInteractingNeighbors.html">nearestInteractingNeighbors</a>()</code>,
 <code><a href="nearestNeighbors.html">nearestNeighbors</a>()</code>,
+<code><a href="neighborCountOfPoint.html">neighborCountOfPoint</a>()</code>,
+<code><a href="neighborCount.html">neighborCount</a>()</code>,
 <code><a href="setInteractionFunction.html">setInteractionFunction</a>()</code>,
 <code><a href="strength.html">strength</a>()</code>,
 <code><a href="totalOfNeighborStrengths.html">totalOfNeighborStrengths</a>()</code>,
@@ -172,7 +182,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

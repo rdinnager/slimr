@@ -91,9 +91,8 @@ The color used to display mutations of this type in SLiMgui. Outside of
 SLiMgui, this property still exists, but is not used by SLiM. Colors may be
 specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see
 the Eidos manual). If color is the empty string, "", SLiMgui's default
-(selection-coefficient-based) color scheme is used; this is the default for
-new MutationType objects. events mutationEffect() interaction() mateChoice()
-modifyChild() mutation() recombination() reproduction() survival() 671 }
+(selection-coefficient-based) color scheme is used; this is the default for new
+MutationType objects. }
 \item{colorSubstitution}{A property of type string. It is of length one (a
 singleton). This property is a variable, so it is modifiable. \strong{Property
 Description:} The color used to display substitutions of this type in SLiMgui
@@ -153,17 +152,16 @@ affected, you can call the Species method recalculateFitness() - but see the
 documentation of that method for caveats. Note that the dominance coefficient
 is not bounded. A dominance coefficient greater than 1.0 may be used to achieve
 an overdominance effect. By making the selection coefficient very small and
-the events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 672 dominance coefficient very large,
-an overdominance scenario in which both homozygotes have the same fitness may
-be approximated, to a nearly arbitrary degree of precision. Note that this
-property has a quirk: it is stored internally in SLiM using a single-precision
-float, not the double-precision float type normally used by Eidos. This means
-that if you set a mutation type muttype's dominance coefficient to some number
-x, muttype.dominanceCoeff==x may be F due to floating-point rounding error.
-Comparisons of floating-point numbers for exact equality is often a bad idea,
-but this is one case where it may fail unexpectedly. Instead, it is recommended
-to use the id or tag properties to identify particular mutation types. }
+the dominance coefficient very large, an overdominance scenario in which both
+homozygotes have the same fitness may be approximated, to a nearly arbitrary
+degree of precision. Note that this property has a quirk: it is stored
+internally in SLiM using a single-precision float, not the double-precision
+float type normally used by Eidos. This means that if you set a mutation type
+muttype's dominance coefficient to some number x, muttype.dominanceCoeff==x may
+be F due to floating-point rounding error. Comparisons of floating-point numbers
+for exact equality is often a bad idea, but this is one case where it may fail
+unexpectedly. Instead, it is recommended to use the id or tag properties to
+identify particular mutation types. }
 \item{haploidDominanceCoeff}{A property of type float. It is of length
 one (a singleton). This property is a variable, so it is modifiable.
 \strong{Property Description:} The dominance coefficient used for mutations
@@ -200,31 +198,29 @@ mutation types in a given stacking group must have the same mutationStackPolicy
 value, which defines the stacking behavior of all mutations of the mutation
 types in the stacking group. In other words, one stacking group might allow
 its mutations to stack, while another stacking group might not, but the
-policy within each stacking group must be unambiguous. This property is "s"
-by default, indicating that mutations in this stacking group should be allowed
-to stack without restriction. If the policy is set to "f", the first mutation
-of stacking group at a given site is retained; further mutations of this
-stacking group at the same site are discarded with no effect. This can be
-useful for modeling one-way changes; once a gene is disabled by a premature
-stop codon, for example, you might wish to assume, for simplicity, that
-further mutations cannot alter that fact. If the policy is set to "l", the last
-mutation of this stacking group at a given site is retained; earlier mutation
-of this stacking group at the same site are discarded. This can be useful
-for modeling an "infinite- alleles" scenario in which every new mutation at
-a site generates a completely new allele, rather than retaining the previous
-mutations at the site. The mutation stacking policy applies only within the
-given mutation type's stacking group; mutations of different stacking groups
-are always allowed to stack in SLiM. The policy applies to all mutations added
-to the model after the policy is set, whether those mutations are introduced
-by calls such as addMutation(), addNewMutation(), or addNewDrawnMutation(),
-or are added by SLiM's own mutation-generation machinery. However, no attempt
-is made to enforce the policy for mutations already existing at the time the
-policy is set; typically, therefore, the policy is set in an initialize()
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 673 callback so that it applies
-throughout the simulation. The policy is also not enforced upon the mutations
-loaded from a file with readFromPopulationFile(); such mutations were governed
-by whatever stacking policy was in effect when the population file was
+policy within each stacking group must be unambiguous. This property is "s" by
+default, indicating that mutations in this stacking group should be allowed to
+stack without restriction. If the policy is set to "f", the first mutation of
+stacking group at a given site is retained; further mutations of this stacking
+group at the same site are discarded with no effect. This can be useful for
+modeling one-way changes; once a gene is disabled by a premature stop codon,
+for example, you might wish to assume, for simplicity, that further mutations
+cannot alter that fact. If the policy is set to "l", the last mutation of this
+stacking group at a given site is retained; earlier mutation of this stacking
+group at the same site are discarded. This can be useful for modeling an
+"infinite- alleles" scenario in which every new mutation at a site generates
+a completely new allele, rather than retaining the previous mutations at the
+site. The mutation stacking policy applies only within the given mutation type's
+stacking group; mutations of different stacking groups are always allowed to
+stack in SLiM. The policy applies to all mutations added to the model after
+the policy is set, whether those mutations are introduced by calls such as
+addMutation(), addNewMutation(), or addNewDrawnMutation(), or are added by
+SLiM's own mutation-generation machinery. However, no attempt is made to
+enforce the policy for mutations already existing at the time the policy is
+set; typically, therefore, the policy is set in an initialize() callback so that
+it applies throughout the simulation. The policy is also not enforced upon the
+mutations loaded from a file with readFromPopulationFile(); such mutations were
+governed by whatever stacking policy was in effect when the population file was
 generated. In nucleotide-based models, the stacking policy for nucleotide-based
 mutation types is always "l", and cannot be changed. This ensures that new
 nucleotide mutations always replace the previous nucleotide at a site, and that

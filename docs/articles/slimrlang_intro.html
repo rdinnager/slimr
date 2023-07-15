@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,36 +40,33 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
+      <a href="../articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
+      <a href="../articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
       <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/simple_nucleotide_example.html">Simple Example of a Simulation using Nucleotides</a>
     </li>
     <li>
       <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
@@ -80,7 +79,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/rdinnager/slimr/">
+  <a href="https://github.com/rdinnager/slimr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -95,13 +94,14 @@
 
       
 
-      </header><script src="slimrlang_intro_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Introduction to slimr: Writing SLiM scripts from R</h1>
+      <h1 data-toc-skip>Introduction to slimr: Writing SLiM scripts from
+R</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/rdinnager/slimr/blob/master/vignettes/slimrlang_intro.Rmd"><code>vignettes/slimrlang_intro.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rdinnager/slimr/blob/HEAD/vignettes/slimrlang_intro.Rmd" class="external-link"><code>vignettes/slimrlang_intro.Rmd</code></a></small>
       <div class="hidden name"><code>slimrlang_intro.Rmd</code></div>
 
     </div>
@@ -111,12 +111,28 @@
 <style type="text/css" scoped>
 PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
 </style>
-<p>This vignette introduces the <code>slimr</code> package. <code>slimr</code> has the goal of making it easy to write scripts for the population genetics simulation software and programming language <a href="https://messerlab.org/slim/">SLiM</a>. <code>slimr</code> offers tools to get R objects and generated model parameters into SLiM, as well as to help SLiM generate R friendly output for post-simulation analysis. It also provides tools for working with existing SLiM scripts as well as running, monitoring, and visualising SLiM simulations in realtime and directly from R, as well as post-processing in R.</p>
-<div id="writing-slim-scripts" class="section level1">
-<h1 class="hasAnchor">
-<a href="#writing-slim-scripts" class="anchor"></a>Writing SLiM Scripts</h1>
-<p>To write a SLiM script in <code>slimr</code> you must wrap your SLiM code in <code>slim_block</code> function calls, which are then nested in a <code>slim_script</code> function call. The API for <code>slimr</code> has been designed to mimic as close as possible the way that scripts are written in SLiM itself. To get you started we will use an example. SLiM has an extremely extensive manual that includes a large number (around 150!) of example scripts to help users learn the language. We will take advantage of this resource and try to write a few of the manual’s scripts using the <code>slimr</code> approach.</p>
-<p>This is the first SLiM script (referred to as ‘recipes’) in the SLiM manual:</p>
+<p>This vignette introduces the <code>slimr</code> package.
+<code>slimr</code> has the goal of making it easy to write scripts for
+the population genetics simulation software and programming language <a href="https://messerlab.org/slim/" class="external-link">SLiM</a>. <code>slimr</code> offers
+tools to get R objects and generated model parameters into SLiM, as well
+as to help SLiM generate R friendly output for post-simulation analysis.
+It also provides tools for working with existing SLiM scripts as well as
+running, monitoring, and visualising SLiM simulations in realtime and
+directly from R, as well as post-processing in R.</p>
+<div class="section level2">
+<h2 id="writing-slim-scripts">Writing SLiM Scripts<a class="anchor" aria-label="anchor" href="#writing-slim-scripts"></a>
+</h2>
+<p>To write a SLiM script in <code>slimr</code> you must wrap your SLiM
+code in <code>slim_block</code> function calls, which are then nested in
+a <code>slim_script</code> function call. The API for <code>slimr</code>
+has been designed to mimic as close as possible the way that scripts are
+written in SLiM itself. To get you started we will use an example. SLiM
+has an extremely extensive manual that includes a large number (around
+150!) of example scripts to help users learn the language. We will take
+advantage of this resource and try to write a few of the manual’s
+scripts using the <code>slimr</code> approach.</p>
+<p>This is the first SLiM script (referred to as ‘recipes’) in the SLiM
+manual:</p>
 <pre><code>// set up a simple neutral simulation
 initialize()
 {
@@ -141,805 +157,864 @@ initialize()
 {
   sim.simulationFinished();
 }</code></pre>
-<p>So how would we write this script in <code>slimr</code>? Like this:</p>
+<p>So how would we write this script in <code>slimr</code>? Like
+this:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rdinnager.github.io/slimr">slimr</a></span><span class="op">)</span>
-<span class="co">#&gt; Welcome to the slimr package for forward population genetics simulation in SLiM. For more information on SLiM please visit https://messerlab.org/slim/ .</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'slimr'</span>
-<span class="co">#&gt; The following object is masked from 'package:methods':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     initialize</span>
-<span class="co">#&gt; The following object is masked from 'package:base':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     interaction</span>
-
-<span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span>
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../reference/initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,
-             <span class="op">{</span>
-               <span class="co">## set the overall mutation rate</span>
-               <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">1e-7</span><span class="op">)</span>; 
-               <span class="co">## m1 mutation type: neutral</span>
-               <span class="fu"><a href="../reference/initializeMutationType.html">initializeMutationType</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;
-               <span class="co">## g1 genomic element type: uses m1 for all mutations</span>
-               <span class="fu"><a href="../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fl">1.0</span><span class="op">)</span>;
-               <span class="co">## uniform chromosome of length 100 kb</span>
-               <span class="fu"><a href="../reference/initializeGenomicElement.html">initializeGenomicElement</a></span><span class="op">(</span><span class="va">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span><span class="op">)</span>;
-               <span class="co">## uniform recombination along the chromosome</span>
-               <span class="fu"><a href="../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span><span class="op">(</span><span class="fl">1e-8</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>,
-             <span class="op">{</span>
-               <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">500</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">10000</span>,
-             <span class="op">{</span>
-               <span class="fu">sim.simulationFinished</span><span class="op">(</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>
-<span class="op">)</span> <span class="op">-&gt;</span> <span class="va">script_1</span>
-
-<span class="va">script_1</span></code></pre></div>
-<pre class="fansi fansi-output"><code>#&gt; &lt;slimr_script[3]&gt;
-#&gt; <span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-07)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">99999)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-</span></code></pre>
-<p>It is as simple as that at its most basic. <code>slim_script</code> returns a <code>slimr_script</code> object which has a print method that prints out the final SLiM script in a pretty fashion. You can see that the output above is quite similar to the original SLiM code from the manual recipe. The one difference is the block names, highlighted in cyan. These are added internally by <code>slimr</code> to keep track of code blocks. These names can be used in some other <code>slimr</code> functions, for example, to refer to particular code blocks for modification. You can also add block ‘ids’ inside of SLiM code, which can be referred to within SLiM code. These are also fully supported by <code>slimr</code> and are kept track of alongside the <code>slimr</code> code block names. More on this later.</p>
-<p>The SLiM language is similar enough to R that most of it works out of the box without any modification. However, there are a few places that SLiM is different enough that <code>slimr</code> has had to put in some slight modifications. We will learn about these differences throughout this vignette. At the moment however, let’s go through the typical structure of a SLiM script and the <code>slimr</code> version of it.</p>
-<p>Now, the script above is just the simplest way to write a SLiM script in R, which is mostly just verbatim using the SLiM language syntax. However, if you write your script this way, you will have to be very familiar with the SLiM language, something which I personally am not yet. In order to make it easier to write SLiM scripts in R, <code>slimr</code> offers real-time code completion and SLiM function documentation. In order to make this work within R however, you will need to code your SLiM scripts slightly differently. This is a consequence of the object-oriented approach of SLiM, which makes heavy use of classes, methods and properties. Because R does not know the classes of object which will only be determined after the script is run within SLiM, you, the user, must specify what class an object is in order for R to know what functions and properties are available to that class, to enable autocompletion. To do this you can make use of the special operator <code><a href="../reference/%.%.html">%.%</a></code>, which mimics the <code>.</code> operator within SLiM. SLiM, like Python, uses the <code>.</code> operator to specify that a method or property after the <code>.</code> belongs to the object before the <code>.</code>. It plays a similar role to that of <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> in R. An example of this in the above script is these lines:</p>
-<pre><code>sim.addSubpop("p1", 500);</code></pre>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rdinnager.github.io/slimr">slimr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Welcome to the slimr package for forward population genetics simulation in SLiM. For more information on SLiM please visit https://messerlab.org/slim/ .</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'slimr'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:methods':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     initialize</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     interaction</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../reference/callback_initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="co">## set the overall mutation rate</span></span>
+<span>               <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">1e-7</span><span class="op">)</span>; </span>
+<span>               <span class="co">## m1 mutation type: neutral</span></span>
+<span>               <span class="fu"><a href="../reference/initializeMutationType.html">initializeMutationType</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;</span>
+<span>               <span class="co">## g1 genomic element type: uses m1 for all mutations</span></span>
+<span>               <span class="fu"><a href="../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fl">1.0</span><span class="op">)</span>;</span>
+<span>               <span class="co">## uniform chromosome of length 100 kb</span></span>
+<span>               <span class="fu"><a href="../reference/initializeGenomicElement.html">initializeGenomicElement</a></span><span class="op">(</span><span class="va">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span><span class="op">)</span>;</span>
+<span>               <span class="co">## uniform recombination along the chromosome</span></span>
+<span>               <span class="fu"><a href="../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span><span class="op">(</span><span class="fl">1e-8</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">500</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">10000</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="fu">sim.simulationFinished</span><span class="op">(</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">script_1</span></span>
+<span></span>
+<span><span class="va">script_1</span></span></code></pre></div>
+<pre class="fansi fansi-output"><code><span><span class="co">#&gt; &lt;slimr_script[3]&gt;</span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-07);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 99999);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span></code></pre>
+<p>It is as simple as that at its most basic. <code>slim_script</code>
+returns a <code>slimr_script</code> object which has a print method that
+prints out the final SLiM script in a pretty fashion. You can see that
+the output above is quite similar to the original SLiM code from the
+manual recipe. The one difference is the block names, highlighted in
+cyan. These are added internally by <code>slimr</code> to keep track of
+code blocks. These names can be used in some other <code>slimr</code>
+functions, for example, to refer to particular code blocks for
+modification. You can also add block ‘ids’ inside of SLiM code, which
+can be referred to within SLiM code. These are also fully supported by
+<code>slimr</code> and are kept track of alongside the
+<code>slimr</code> code block names. More on this later.</p>
+<p>The SLiM language is similar enough to R that most of it works out of
+the box without any modification. However, there are a few places that
+SLiM is different enough that <code>slimr</code> has had to put in some
+slight modifications. We will learn about these differences throughout
+this vignette. At the moment however, let’s go through the typical
+structure of a SLiM script and the <code>slimr</code> version of it.</p>
+<p>Now, the script above is just the simplest way to write a SLiM script
+in R, which is mostly just verbatim using the SLiM language syntax.
+However, if you write your script this way, you will have to be very
+familiar with the SLiM language, something which I personally am not
+yet. In order to make it easier to write SLiM scripts in R,
+<code>slimr</code> offers real-time code completion and SLiM function
+documentation. In order to make this work within R however, you will
+need to code your SLiM scripts slightly differently. This is a
+consequence of the object-oriented approach of SLiM, which makes heavy
+use of classes, methods and properties. Because R does not know the
+classes of object which will only be determined after the script is run
+within SLiM, you, the user, must specify what class an object is in
+order for R to know what functions and properties are available to that
+class, to enable autocompletion. To do this you can make use of the
+special operator <code>%.%</code>, which mimics the <code>.</code>
+operator within SLiM. SLiM, like Python, uses the <code>.</code>
+operator to specify that a method or property after the <code>.</code>
+belongs to the object before the <code>.</code>. It plays a similar role
+to that of <code>$</code> in R. An example of this in the above script
+is these lines:</p>
+<pre><code><span><span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">500</span><span class="op">)</span>;</span></code></pre>
 <p>and</p>
-<pre><code>sim.simulationFinished()</code></pre>
-<p>In SLiM, <code>sim</code> is a global object of class <code>SLiMSim</code>, which has a number of methods and properties associated with it. You can rewrite the above statements in <code>slimr</code> in the following way, which will then allow you to use autocompletion:</p>
+<pre><code><span><span class="fu">sim.simulationFinished</span><span class="op">(</span><span class="op">)</span></span></code></pre>
+<p>In SLiM, <code>sim</code> is a global object of class
+<code>SLiMSim</code>, which has a number of methods and properties
+associated with it. You can rewrite the above statements in
+<code>slimr</code> in the following way, which will then allow you to
+use autocompletion:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">sim</span><span class="op">%.%</span><span class="va">SLiMSim</span><span class="op">$</span><span class="fu">addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">500</span><span class="op">)</span>;</code></pre></div>
+<code class="sourceCode R"><span></span>
+<span><span class="va">sim</span><span class="op"><a href="../reference/grapes-.-grapes.html">%.%</a></span><span class="va">SLiMSim</span><span class="op">$</span><span class="fu">addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">500</span><span class="op">)</span>;</span></code></pre></div>
 <p>and</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">sim</span><span class="op">%.%</span><span class="va">SLiMSim</span><span class="op">$</span><span class="fu">simulationFinished</span><span class="op">(</span><span class="op">)</span>;</code></pre></div>
-<p>Simply replace the <code>.</code> with <code><a href="../reference/%.%.html">%.%</a></code>, then specify the class of object, in this case <code>SLiMSim</code>, followed by the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> operator for R. The <code>SLiMSim</code> object contains all the available methods and properties for its class. There is a similar object for all SLiM classes. Note also that all SLiM class objects in <code>slimr</code> have an abbreviated alias to save typing. For <code>SLiMSim</code> this is <code>.SS</code>, so you could type instead <code>sim%.%.SS$simulationFinished();</code> for example. Using this way of coding let’s you use autocomplete. Try typing just <code>sim%.%.SS</code> for example and (if using RStudio) you should see this:</p>
-<div class="figure">
-<img src="figures/autocomplete_SS_1.png" alt=""><p class="caption">Autocomplete for .SS class object</p>
+<code class="sourceCode R"><span></span>
+<span><span class="va">sim</span><span class="op"><a href="../reference/grapes-.-grapes.html">%.%</a></span><span class="va">SLiMSim</span><span class="op">$</span><span class="fu">simulationFinished</span><span class="op">(</span><span class="op">)</span>;</span></code></pre></div>
+<p>Simply replace the <code>.</code> with <code>%.%</code>, then specify
+the class of object, in this case <code>SLiMSim</code>, followed by the
+<code>$</code> operator for R. The <code>SLiMSim</code> object contains
+all the available methods and properties for its class. There is a
+similar object for all SLiM classes. Note also that all SLiM class
+objects in <code>slimr</code> have an abbreviated alias to save typing.
+For <code>SLiMSim</code> this is <code>SS</code>, so you could type
+instead <code>sim%.%SS$simulationFinished();</code> for example. Using
+this way of coding let’s you use autocomplete. Try typing just
+<code>sim%.%SS</code> for example and (if using RStudio) you should see
+this:</p>
+<div class="float">
+<img src="figures/autocomplete_SS_1.png" alt="Autocomplete for SS class object"><div class="figcaption">Autocomplete for SS class object</div>
 </div>
-<p>The popup gives you a list of all methods (and properties further down) of the class. If you begin typing this list will be narrowed down further. Once you’ve chosen a method to use, you can press the <code>tab</code> key to bring up the arguments that the method accepts, like this:</p>
-<div class="figure">
-<img src="figures/autocomplete_SS_2.png" alt=""><p class="caption">Autocomplete for .SS class object arguments</p>
+<p>The popup gives you a list of all methods (and properties further
+down) of the class. If you begin typing this list will be narrowed down
+further. Once you’ve chosen a method to use, you can press the
+<code>tab</code> key to bring up the arguments that the method accepts,
+like this:</p>
+<div class="float">
+<img src="figures/autocomplete_SS_2.png" alt="Autocomplete for .SS class object arguments"><div class="figcaption">Autocomplete for .SS class object
+arguments</div>
 </div>
-<p>To get help on this method, including full descriptions of the arguments, in RStudio, place you cursor over the function text and press the <code>F1</code> key. You can also simply run the function with no arguments or type <code>?.SS$addSubpop</code> or <code>help(".SS$addSubPop")</code>, all of which will bring up the documentation for this SLiM function.</p>
+<p>To get help on this method, including full descriptions of the
+arguments, in RStudio, place you cursor over the function text and press
+the <code>F1</code> key. You can also simply run the function with no
+arguments or type <code>?SS$addSubpop</code> or
+<code>help("SS$addSubPop")</code>, all of which will bring up the
+documentation for this SLiM function.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/help.html">help</a></span><span class="op">(</span><span class="st">".SS$addSubpop"</span><span class="op">)</span></code></pre></div>
-<div class="r-help-page">
-<table class="table"><tr>
-<td>
-addSubpop
-</td>
-<td style="text-align: right;">
-R Documentation
-</td>
-</tr></table>
-<h2>
-SLiM method addSubpop
-</h2>
-<h3>
-Description
-</h3>
-<p>
-Documentation for SLiM function <code>addSubpop</code>, which is a method of the SLiM class <code>SLiMSim</code>. Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do anything useful when used inside a <code>slim_block</code> function further nested in a <code>slim_script</code> function call, where it will be translated into valid SLiM code as part of a full SLiM script.
-</p>
-<h3>
-Usage
-</h3>
-<pre class="r">
-addSubpop(subpopID, size, sexRatio)
-</pre>
-<h3>
-Arguments
-</h3>
-<table class="table">
-<tr valign="top">
-<td>
-<code>subpopID</code>
-</td>
-<td>
-<p>
-An object of type integer or string. Must be of length 1 (a singleton). See details for description.
-</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<code>size</code>
-</td>
-<td>
-<p>
-An object of type integer. Must be of length 1 (a singleton). See details for description.
-</p>
-</td>
-</tr>
-<tr valign="top">
-<td>
-<code>sexRatio</code>
-</td>
-<td>
-<p>
-An object of type float. Must be of length 1 (a singleton). The default value is <code>0.5</code>. See details for description.
-</p>
-</td>
-</tr>
-</table>
-<h3>
-Details
-</h3>
-<p>
-Documentation for this function can be found in the official <a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=566">SLiM manual: page 566</a>.
-</p>
-<p>
-Add a new subpopulation with id subpopID and size individuals. The subpopID parameter may be either an integer giving the ID of the new subpopulation, or a string giving the name of the new subpopulation (such as “p5” to specify an ID of 5). Only if sex is enabled in the simulation, the initial sex ratio may optionally be specified as sexRatio (as the male fraction, M:M+F); if it is not specified, a default of 0.5 is used. The new subpopulation will be defined as a global variable immediately by this method (see section 24.14), and will also be returned by this method. Subpopulations added by this method will initially consist of individuals with empty genomes. In order to model subpopulations that split from an already existing subpopulation, use addSubpopSplit().
-</p>
-<h3>
-Value
-</h3>
-<p>
-An object of type Subpopulation object. Return will be of length 1 (a singleton)
-</p>
-<h3>
-Copyright
-</h3>
-<p>
-This is documentation for a function in the SLiM software, and has been reproduced from the official manual, which can be found here: <a href="http://benhaller.com/slim/SLiM_Manual.pdf">http://benhaller.com/slim/SLiM_Manual.pdf</a>. This documentation is Copyright Â© 2016-2020 Philipp Messer. All rights reserved. More information about SLiM can be found on the official website: <a href="https://messerlab.org/slim/">https://messerlab.org/slim/</a>
-</p>
-<h3>
-Author(s)
-</h3>
-<p>
-Benjamin C Haller (<a href="mailto:bhaller@benhaller.com">bhaller@benhaller.com</a>) and Philipp W Messer (<a href="mailto:messer@cornell.edu">messer@cornell.edu</a>)
-</p>
-<h3>
-See Also
-</h3>
-<p>
-Other SLiMSim: <code>SLiMSim</code>, <code><a href="../reference/addSubpopSplit.html">addSubpopSplit()</a></code>, <code><a href="../reference/countOfMutationsOfType.html">countOfMutationsOfType()</a></code>, <code><a href="../reference/createLogFile.html">createLogFile()</a></code>, <code><a href="../reference/deregisterScriptBlock.html">deregisterScriptBlock()</a></code>, <code><a href="../reference/mutationCounts.html">mutationCounts()</a></code>, <code><a href="../reference/mutationFrequencies.html">mutationFrequencies()</a></code>, <code><a href="../reference/mutationsOfType.html">mutationsOfType()</a></code>, <code><a href="../reference/outputFixedMutations.html">outputFixedMutations()</a></code>, <code><a href="../reference/outputFull.html">outputFull()</a></code>, <code><a href="../reference/outputMutations.html">outputMutations()</a></code>, <code><a href="../reference/outputUsage.html">outputUsage()</a></code>, <code><a href="../reference/readFromPopulationFile.html">readFromPopulationFile()</a></code>, <code><a href="../reference/recalculateFitness.html">recalculateFitness()</a></code>, <code><a href="../reference/registerEarlyEvent.html">registerEarlyEvent()</a></code>, <code><a href="../reference/registerFitnessCallback.html">registerFitnessCallback()</a></code>, <code><a href="../reference/registerInteractionCallback.html">registerInteractionCallback()</a></code>, <code><a href="../reference/registerLateEvent.html">registerLateEvent()</a></code>, <code><a href="../reference/registerMateChoiceCallback.html">registerMateChoiceCallback()</a></code>, <code><a href="../reference/registerModifyChildCallback.html">registerModifyChildCallback()</a></code>, <code><a href="../reference/registerMutationCallback.html">registerMutationCallback()</a></code>, <code><a href="../reference/registerRecombinationCallback.html">registerRecombinationCallback()</a></code>, <code><a href="../reference/registerReproductionCallback.html">registerReproductionCallback()</a></code>, <code><a href="../reference/rescheduleScriptBlock.html">rescheduleScriptBlock()</a></code>, <code><a href="../reference/simulationFinished.html">simulationFinished()</a></code>, <code><a href="../reference/subsetMutations.html">subsetMutations()</a></code>, <code><a href="../reference/treeSeqCoalesced.html">treeSeqCoalesced()</a></code>, <code><a href="../reference/treeSeqOutput.html">treeSeqOutput()</a></code>, <code><a href="../reference/treeSeqRememberIndividuals.html">treeSeqRememberIndividuals()</a></code>, <code><a href="../reference/treeSeqSimplify.html">treeSeqSimplify()</a></code>
-</p>
-</div>
-<p>There is also two special classes which are not actually classes in SLiM itself, but they are used in <code>slimr</code> to keep particular types of SLiM function together. These are <code>Initialize</code> (or <code>.Init</code>) and <code>SLiMBuiltin</code> (or <code>.SB</code>). The <code>Initialize</code> object contains SLiM functions that can only be used in the <code><a href="../reference/initialize.html">initialize()</a></code> block of SLiM code (more on this later). <code>SLiMBuiltin</code> contains miscellaneous functions built in to SLiM which are not part of any SLiM class.</p>
-<p>Admittedly, using these extra R objects in the code does make it look somewhat less elegant, and also makes it no longer directly valid SLiM code. But don’t worry, <code>slimr</code> knows how to transform this syntax back into proper SLiM code, which you can see by printing out the resulting <code>slim_script</code> object.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/help.html" class="external-link">help</a></span><span class="op">(</span><span class="st">"SS$addSubpop"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; No documentation for 'SS$addSubpop' in specified packages and libraries</span></span></code></pre></div>
+<p>There is also two special classes which are not actually classes in
+SLiM itself, but they are used in <code>slimr</code> to keep particular
+types of SLiM function together. These are <code>Initialize</code> (or
+<code>Init</code>) and <code>SLiMBuiltin</code> (or <code>SB</code>).
+The <code>Initialize</code> object contains SLiM functions that can only
+be used in the <code><a href="../reference/callback_initialize.html">initialize()</a></code> block of SLiM code (more on
+this later). <code>SLiMBuiltin</code> contains miscellaneous functions
+built in to SLiM which are not part of any SLiM class.</p>
+<p>Admittedly, using these extra R objects in the code does make it look
+somewhat less elegant, and also makes it no longer directly valid SLiM
+code. But don’t worry, <code>slimr</code> knows how to transform this
+syntax back into proper SLiM code, which you can see by printing out the
+resulting <code>slim_script</code> object.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span>
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../reference/initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,
-             <span class="op">{</span>
-               <span class="co">## set the overall mutation rate</span>
-               <span class="va">.Init</span><span class="op">$</span><span class="fu">initializeMutationRate</span><span class="op">(</span><span class="fl">1e-7</span><span class="op">)</span>; 
-               <span class="co">## m1 mutation type: neutral</span>
-               <span class="va">.Init</span><span class="op">$</span><span class="fu">initializeMutationType</span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;
-               <span class="co">## g1 genomic element type: uses m1 for all mutations</span>
-               <span class="va">.Init</span><span class="op">$</span><span class="fu">initializeGenomicElementType</span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fl">1.0</span><span class="op">)</span>;
-               <span class="co">## uniform chromosome of length 100 kb</span>
-               <span class="va">.Init</span><span class="op">$</span><span class="fu">initializeGenomicElement</span><span class="op">(</span><span class="va">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span><span class="op">)</span>;
-               <span class="co">## uniform recombination along the chromosome</span>
-               <span class="va">.Init</span><span class="op">$</span><span class="fu">initializeRecombinationRate</span><span class="op">(</span><span class="fl">1e-8</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>,
-             <span class="op">{</span>
-               <span class="va">sim</span><span class="op">%.%</span><span class="va">.SS</span><span class="op">$</span><span class="fu">addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">500</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">10000</span>,
-             <span class="op">{</span>
-               <span class="va">sim</span><span class="op">%.%</span><span class="va">.SS</span><span class="op">$</span><span class="fu">simulationFinished</span><span class="op">(</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>
-<span class="op">)</span> <span class="op">-&gt;</span> <span class="va">script_2</span>
-
-<span class="va">script_2</span></code></pre></div>
-<pre class="fansi fansi-output"><code>#&gt; &lt;slimr_script[3]&gt;
-#&gt; <span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">.Init.initializeMutationRate</span><span style="color: #0000BB;">(1e-07)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">.Init.initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">.Init.initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">.Init.initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">99999)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">.Init.initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">si..SS.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">si..SS.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-</span></code></pre>
-<p>Okay, next up, let’s see some of the neat stuff we can do to manipulate these SLiM scripts in R. First, we will see how to use R to fill in parts of the SLiM script with data from R. This is accomplished using the <code>slimr_template</code> function, which can be used to insert R generated data into a SLiM script.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../reference/callback_initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="co">## set the overall mutation rate</span></span>
+<span>               <span class="va">Init</span><span class="op">$</span><span class="fu">initializeMutationRate</span><span class="op">(</span><span class="fl">1e-7</span><span class="op">)</span>; </span>
+<span>               <span class="co">## m1 mutation type: neutral</span></span>
+<span>               <span class="va">Init</span><span class="op">$</span><span class="fu">initializeMutationType</span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;</span>
+<span>               <span class="co">## g1 genomic element type: uses m1 for all mutations</span></span>
+<span>               <span class="va">Init</span><span class="op">$</span><span class="fu">initializeGenomicElementType</span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fl">1.0</span><span class="op">)</span>;</span>
+<span>               <span class="co">## uniform chromosome of length 100 kb</span></span>
+<span>               <span class="va">Init</span><span class="op">$</span><span class="fu">initializeGenomicElement</span><span class="op">(</span><span class="va">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span><span class="op">)</span>;</span>
+<span>               <span class="co">## uniform recombination along the chromosome</span></span>
+<span>               <span class="va">Init</span><span class="op">$</span><span class="fu">initializeRecombinationRate</span><span class="op">(</span><span class="fl">1e-8</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="va">sim</span><span class="op"><a href="../reference/grapes-.-grapes.html">%.%</a></span><span class="va">SS</span><span class="op">$</span><span class="fu">addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">500</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">10000</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="va">sim</span><span class="op"><a href="../reference/grapes-.-grapes.html">%.%</a></span><span class="va">SS</span><span class="op">$</span><span class="fu">simulationFinished</span><span class="op">(</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">script_2</span></span>
+<span></span>
+<span><span class="va">script_2</span></span></code></pre></div>
+<pre class="fansi fansi-output"><code><span><span class="co">#&gt; &lt;slimr_script[3]&gt;</span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-07);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 99999);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span></code></pre>
+<p>Okay, next up, let’s see some of the neat stuff we can do to
+manipulate these SLiM scripts in R. First, we will see how to use R to
+fill in parts of the SLiM script with data from R. This is accomplished
+using the <code>slimr_template</code> function, which can be used to
+insert R generated data into a SLiM script.</p>
 </div>
-<div id="templating" class="section level1">
-<h1 class="hasAnchor">
-<a href="#templating" class="anchor"></a>Templating</h1>
-<p>This is the simplest to get a SLiM script which has elements that can be filled in later with a templating mechanism. So, how does that work? Well, anywhere we want something in the SLiM script to be ‘in-fillable’, that is, to contain a variable section of the script that we can subsitute data into later, you can use the <code>slimr_template</code> function in place of what was formerly a hard-coded value. Here is an example using the same recipe as above, but in this case we want to be able to fill-in the genome size and the muation rate later:</p>
+<div class="section level2">
+<h2 id="templating">Templating<a class="anchor" aria-label="anchor" href="#templating"></a>
+</h2>
+<p>This is the simplest to get a SLiM script which has elements that can
+be filled in later with a templating mechanism. So, how does that work?
+Well, anywhere we want something in the SLiM script to be ‘in-fillable’,
+that is, to contain a variable section of the script that we can
+subsitute data into later, you can use the <code>slimr_template</code>
+function in place of what was formerly a hard-coded value. Here is an
+example using the same recipe as above, but in this case we want to be
+able to fill-in the genome size and the muation rate later:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span>
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../reference/initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,
-             <span class="op">{</span>
-               <span class="co">## set the overall mutation rate (default = 1e-7)</span>
-               <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span> <span class="fu"><a href="../reference/slimr_template.html">slimr_template</a></span><span class="op">(</span><span class="st">"mut_rate"</span>, <span class="fl">1e-7</span><span class="op">)</span> <span class="op">)</span>; 
-               <span class="co">## m1 mutation type: neutral</span>
-               <span class="fu"><a href="../reference/initializeMutationType.html">initializeMutationType</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;
-               <span class="co">## g1 genomic element type: uses m1 for all mutations</span>
-               <span class="fu"><a href="../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fl">1.0</span><span class="op">)</span>;
-               <span class="co">## uniform chromosome of length "genome_size" (default = 99999)</span>
-               <span class="fu"><a href="../reference/initializeGenomicElement.html">initializeGenomicElement</a></span><span class="op">(</span><span class="va">g1</span>, <span class="fl">0</span>, <span class="fu"><a href="../reference/slimr_template.html">slimr_template</a></span><span class="op">(</span><span class="st">"genome_size"</span>, <span class="fl">99999</span><span class="op">)</span> <span class="op">)</span>;
-               <span class="co">## uniform recombination along the chromosome</span>
-               <span class="fu"><a href="../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span><span class="op">(</span><span class="fl">1e-8</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>,
-             <span class="op">{</span>
-               <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">500</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">10000</span>,
-             <span class="op">{</span>
-               <span class="fu">sim.simulationFinished</span><span class="op">(</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>
-<span class="op">)</span> <span class="op">-&gt;</span> <span class="va">script_temp</span>
-
-<span class="va">script_temp</span></code></pre></div>
-<pre class="fansi fansi-output"><code>#&gt; &lt;slimr_script[3]&gt;
-#&gt; <span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(</span><span style="color: #00BB00;">..mut_rate..</span><span style="color: #0000BB;">)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #00BB00;">..genome_size..</span><span style="color: #0000BB;">)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; This slimr_script has templating in block(s) </span><span style="background-color: #00BBBB;font-weight: bold;">block_init</span><span> for
-#&gt; variables </span><span style="color: #00BB00;">mut_rate</span><span> and </span><span style="color: #00BB00;">genome_size</span><span>.
-</span></code></pre>
-<p>The first argument to <code>slimr_template</code> provides a name for the variable that will later be used to label values for replacement. The second argument provides a default value. Anytime this script is used without providing values for the templated variables, the default values will be used. This argument is optional, and if not provided, an error will be thrown if any variables have no values provided when later using this script. The above printed script shows that it is templated by printing a message describing the details below it, as well as inserting the templated variables in the script with green <code>..x..</code>, where <code>x</code> is the name of the variable. Replacing values is now as simple as running <code>slim_script_render</code>.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../reference/callback_initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="co">## set the overall mutation rate (default = 1e-7)</span></span>
+<span>               <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span> <span class="fu"><a href="../reference/r_template.html">slimr_template</a></span><span class="op">(</span><span class="st">"mut_rate"</span>, <span class="fl">1e-7</span><span class="op">)</span> <span class="op">)</span>; </span>
+<span>               <span class="co">## m1 mutation type: neutral</span></span>
+<span>               <span class="fu"><a href="../reference/initializeMutationType.html">initializeMutationType</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;</span>
+<span>               <span class="co">## g1 genomic element type: uses m1 for all mutations</span></span>
+<span>               <span class="fu"><a href="../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fl">1.0</span><span class="op">)</span>;</span>
+<span>               <span class="co">## uniform chromosome of length "genome_size" (default = 99999)</span></span>
+<span>               <span class="fu"><a href="../reference/initializeGenomicElement.html">initializeGenomicElement</a></span><span class="op">(</span><span class="va">g1</span>, <span class="fl">0</span>, <span class="fu"><a href="../reference/r_template.html">slimr_template</a></span><span class="op">(</span><span class="st">"genome_size"</span>, <span class="fl">99999</span><span class="op">)</span> <span class="op">)</span>;</span>
+<span>               <span class="co">## uniform recombination along the chromosome</span></span>
+<span>               <span class="fu"><a href="../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span><span class="op">(</span><span class="fl">1e-8</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">500</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">10000</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="fu">sim.simulationFinished</span><span class="op">(</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">script_temp</span></span>
+<span></span>
+<span><span class="va">script_temp</span></span></code></pre></div>
+<pre class="fansi fansi-output"><code><span><span class="co">#&gt; &lt;slimr_script[3]&gt;</span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(..mut_rate..);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, ..genome_size..);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; This slimr_script has templating in block(s) block_init for</span></span>
+<span><span class="co">#&gt; variables mut_rate and genome_size.</span></span></code></pre>
+<p>The first argument to <code>slimr_template</code> provides a name for
+the variable that will later be used to label values for replacement.
+The second argument provides a default value. Anytime this script is
+used without providing values for the templated variables, the default
+values will be used. This argument is optional, and if not provided, an
+error will be thrown if any variables have no values provided when later
+using this script. The above printed script shows that it is templated
+by printing a message describing the details below it, as well as
+inserting the templated variables in the script with green
+<code>..x..</code>, where <code>x</code> is the name of the variable.
+Replacing values is now as simple as running
+<code>slim_script_render</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">single_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">script_temp</span>, 
-                                     template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mut_rate <span class="op">=</span> <span class="fl">1e-6</span>, genome_size <span class="op">=</span> <span class="fl">1999</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">single_script</span></code></pre></div>
-<pre class="fansi fansi-output"><code>#&gt; &lt;slimr_script[3]&gt;
-#&gt; <span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-06)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">1999)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-</span></code></pre>
-<p>So we can see that we now have a <code>slimr_script</code> object where our templated variables have been replaced! <code>slim_script_render</code> can also render multiple different values for the templated variables at the same time. To do this we can just pass in a list of lists (or a data.frame), where each element at the top level has a different set of values, and <code>slim_script_render</code> will return a <code>slimr_script_coll</code> object, which stands for a slimr script collection. Let’s try it.</p>
+<code class="sourceCode R"><span><span class="va">single_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">script_temp</span>, </span>
+<span>                                     template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mut_rate <span class="op">=</span> <span class="fl">1e-6</span>, genome_size <span class="op">=</span> <span class="fl">1999</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">single_script</span></span></code></pre></div>
+<pre class="fansi fansi-output"><code><span><span class="co">#&gt; &lt;slimr_script[3]&gt;</span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-06);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 1999);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span></code></pre>
+<p>So we can see that we now have a <code>slimr_script</code> object
+where our templated variables have been replaced!
+<code>slim_script_render</code> can also render multiple different
+values for the templated variables at the same time. To do this we can
+just pass in a list of lists (or a data.frame), where each element at
+the top level has a different set of values, and
+<code>slim_script_render</code> will return a
+<code>slimr_script_coll</code> object, which stands for a slimr script
+collection. Let’s try it.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">multi_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">script_temp</span>,
-                                    template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-                                        <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mut_rate <span class="op">=</span> <span class="fl">1e-5</span>, genome_size <span class="op">=</span> <span class="fl">1999</span><span class="op">)</span>,
-                                        <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mut_rate <span class="op">=</span> <span class="fl">1e-6</span>, genome_size <span class="op">=</span> <span class="fl">2999</span><span class="op">)</span>,
-                                        <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mut_rate <span class="op">=</span> <span class="fl">1e-7</span>, genome_size <span class="op">=</span> <span class="fl">3999</span><span class="op">)</span>
-                                    <span class="op">)</span><span class="op">)</span>
-
-<span class="va">multi_script</span></code></pre></div>
-<pre class="fansi fansi-output"><code>#&gt; &lt;slimr_script_coll[3]&gt;
-#&gt; &lt;1&gt;
-#&gt; 
-#&gt; <span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-05)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">1999)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; &lt;2&gt;
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-06)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">2999)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; &lt;3&gt;
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-07)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">3999)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-</span></code></pre>
-<p>To save typing you can also just include <code>..x..</code> specifications in the SLiM code and this will be recognized as a templated variable. The disadvantage of this though is that you cannot specify a default value, which can be pretty handy. Default values are useful if, for example, you want to prototype a templated script, the default values can serve as “test” values that will be filled in automatically every time you want to test the script. Another potential use is so that you only have to specify some of your variables in your call to <code>slim_script_render</code>, in which case, anything you don’t specify will take their default values. Additionally <code>slim_script_render</code> has an argument that allows you to use the default values in the case of a missing value in the data you supply (such as in the data.frame style specification). Let’s look at an example of both of these scenarios.</p>
+<code class="sourceCode R"><span><span class="va">multi_script</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">script_temp</span>,</span>
+<span>                                    template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>                                        <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mut_rate <span class="op">=</span> <span class="fl">1e-5</span>, genome_size <span class="op">=</span> <span class="fl">1999</span><span class="op">)</span>,</span>
+<span>                                        <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mut_rate <span class="op">=</span> <span class="fl">1e-6</span>, genome_size <span class="op">=</span> <span class="fl">2999</span><span class="op">)</span>,</span>
+<span>                                        <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mut_rate <span class="op">=</span> <span class="fl">1e-7</span>, genome_size <span class="op">=</span> <span class="fl">3999</span><span class="op">)</span></span>
+<span>                                    <span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">multi_script</span></span></code></pre></div>
+<pre class="fansi fansi-output"><code><span><span class="co">#&gt; &lt;slimr_script_coll[3]&gt;</span></span>
+<span><span class="co">#&gt; &lt;1&gt;</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-05);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 1999);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; &lt;2&gt;</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-06);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 2999);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; &lt;3&gt;</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-07);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 3999);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span></code></pre>
+<p>To save typing you can also just include <code>..x..</code>
+specifications in the SLiM code and this will be recognized as a
+templated variable. The disadvantage of this though is that you cannot
+specify a default value, which can be pretty handy. Default values are
+useful if, for example, you want to prototype a templated script, the
+default values can serve as “test” values that will be filled in
+automatically every time you want to test the script. Another potential
+use is so that you only have to specify some of your variables in your
+call to <code>slim_script_render</code>, in which case, anything you
+don’t specify will take their default values. Additionally
+<code>slim_script_render</code> has an argument that allows you to use
+the default values in the case of a missing value in the data you supply
+(such as in the data.frame style specification). Let’s look at an
+example of both of these scenarios.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">script_partial</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">script_temp</span>,
-                                    template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-                                        <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mut_rate <span class="op">=</span> <span class="fl">1e-5</span><span class="op">)</span>,
-                                        <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>genome_size <span class="op">=</span> <span class="fl">2999</span><span class="op">)</span>
-                                      <span class="op">)</span><span class="op">)</span>
-
-<span class="va">script_partial</span></code></pre></div>
-<pre class="fansi fansi-output"><code>#&gt; &lt;slimr_script_coll[2]&gt;
-#&gt; &lt;1&gt;
-#&gt; 
-#&gt; <span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-05)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">99999)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; &lt;2&gt;
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-07)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">2999)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-</span></code></pre>
-<p>Warnings are generated to help prevent unexpected behaviour. For example if you simply misspelled one of the templated variable names in the template, this would be replaced by the default value. And without the above warnings you would never know that it happened. If you intended to specify all templated variables but you get this warning, check that the template you specified is correct! As we mentioned above, using a <code>data.frame</code> as a template is also possible. Here is an example.</p>
+<code class="sourceCode R"><span><span class="va">script_partial</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">script_temp</span>,</span>
+<span>                                    template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>                                        <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mut_rate <span class="op">=</span> <span class="fl">1e-5</span><span class="op">)</span>,</span>
+<span>                                        <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>genome_size <span class="op">=</span> <span class="fl">2999</span><span class="op">)</span></span>
+<span>                                      <span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">script_partial</span></span></code></pre></div>
+<pre class="fansi fansi-output"><code><span><span class="co">#&gt; &lt;slimr_script_coll[2]&gt;</span></span>
+<span><span class="co">#&gt; &lt;1&gt;</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-05);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 99999);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; &lt;2&gt;</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-07);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 2999);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span></code></pre>
+<p>Warnings are generated to help prevent unexpected behaviour. For
+example if you simply misspelled one of the templated variable names in
+the template, this would be replaced by the default value. And without
+the above warnings you would never know that it happened. If you
+intended to specify all templated variables but you get this warning,
+check that the template you specified is correct! As we mentioned above,
+using a <code>data.frame</code> as a template is also possible. Here is
+an example.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">script_temp_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">script_temp</span>,
-                                      template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
-                                        mut_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1e-5</span>, <span class="cn">NA</span>, <span class="fl">1e-6</span>, <span class="fl">1e-7</span><span class="op">)</span>,
-                                        genome_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2000</span>, <span class="fl">3000</span>, <span class="cn">NA</span>, <span class="fl">5000</span><span class="op">)</span>
-                                      <span class="op">)</span>
-                                      <span class="op">)</span>
-
-<span class="va">script_temp_df</span></code></pre></div>
-<pre class="fansi fansi-output"><code>#&gt; &lt;slimr_script_coll[4]&gt;
-#&gt; &lt;1&gt;
-#&gt; 
-#&gt; <span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-05)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">2000)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; &lt;2&gt;
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-07)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">3000)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; &lt;3&gt;
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-06)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">99999)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; 
-#&gt; &lt;...&gt;
-#&gt; 
-#&gt; and 1 more.
-</span></code></pre>
-<p>So in this case the default settings are to not replace NAs, because in some cases NA may be a valid value you want to insert in a SLiM script (rarely). You can change this behaviour by setting <code>replace_NAs = TRUE</code>.</p>
+<code class="sourceCode R"><span></span>
+<span><span class="va">script_temp_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">script_temp</span>,</span>
+<span>                                      template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>                                        mut_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1e-5</span>, <span class="cn">NA</span>, <span class="fl">1e-6</span>, <span class="fl">1e-7</span><span class="op">)</span>,</span>
+<span>                                        genome_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2000</span>, <span class="fl">3000</span>, <span class="cn">NA</span>, <span class="fl">5000</span><span class="op">)</span></span>
+<span>                                      <span class="op">)</span></span>
+<span>                                      <span class="op">)</span></span>
+<span></span>
+<span><span class="va">script_temp_df</span></span></code></pre></div>
+<pre class="fansi fansi-output"><code><span><span class="co">#&gt; &lt;slimr_script_coll[4]&gt;</span></span>
+<span><span class="co">#&gt; &lt;1&gt;</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-05);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 2000);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; &lt;2&gt;</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-07);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 3000);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; &lt;3&gt;</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-06);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 99999);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; &lt;...&gt;</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; and 1 more.</span></span></code></pre>
+<p>So in this case the default settings are to not replace NAs, because
+in some cases NA may be a valid value you want to insert in a SLiM
+script (rarely). You can change this behaviour by setting
+<code>replace_NAs = TRUE</code>.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">script_temp_df2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">script_temp</span>,
-                                      template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
-                                        mut_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1e-5</span>, <span class="cn">NA</span>, <span class="fl">1e-6</span>, <span class="fl">1e-7</span><span class="op">)</span>,
-                                        genome_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2000</span>, <span class="fl">3000</span>, <span class="cn">NA</span>, <span class="fl">5000</span><span class="op">)</span>
-                                      <span class="op">)</span>,
-                                      replace_NAs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="va">script_temp_df2</span></code></pre></div>
-<pre class="fansi fansi-output"><code>#&gt; &lt;slimr_script_coll[4]&gt;
-#&gt; &lt;1&gt;
-#&gt; 
-#&gt; <span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-05)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">2000)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; &lt;2&gt;
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-07)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">3000)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; &lt;3&gt;
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-06)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">99999)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; 
-#&gt; &lt;...&gt;
-#&gt; 
-#&gt; and 1 more.
-</span></code></pre>
-<p>Now all values have been replaced, either by their values in the <code>data.frame</code> or by their defaults in the case that the <code>data.frame</code> value was missing. This example also shows the default print maximum for <code>slimr_script_coll</code> objects is 3. To see the remaining <code>slimr_script</code> you can either use <code><a href="https://rdrr.io/r/base/print.html">print(script_temp_df2, max_show = 4)</a></code> or you can subset in the standard way, e.g:</p>
+<code class="sourceCode R"><span></span>
+<span><span class="va">script_temp_df2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">script_temp</span>,</span>
+<span>                                      template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>                                        mut_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1e-5</span>, <span class="cn">NA</span>, <span class="fl">1e-6</span>, <span class="fl">1e-7</span><span class="op">)</span>,</span>
+<span>                                        genome_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2000</span>, <span class="fl">3000</span>, <span class="cn">NA</span>, <span class="fl">5000</span><span class="op">)</span></span>
+<span>                                      <span class="op">)</span>,</span>
+<span>                                      replace_NAs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">script_temp_df2</span></span></code></pre></div>
+<pre class="fansi fansi-output"><code><span><span class="co">#&gt; &lt;slimr_script_coll[4]&gt;</span></span>
+<span><span class="co">#&gt; &lt;1&gt;</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-05);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 2000);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; &lt;2&gt;</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-07);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 3000);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; &lt;3&gt;</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-06);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 99999);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; &lt;...&gt;</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; and 1 more.</span></span></code></pre>
+<p>Now all values have been replaced, either by their values in the
+<code>data.frame</code> or by their defaults in the case that the
+<code>data.frame</code> value was missing. This example also shows the
+default print maximum for <code>slimr_script_coll</code> objects is 3.
+To see the remaining <code>slimr_script</code> you can either use
+<code>print(script_temp_df2, max_show = 4)</code> or you can subset in
+the standard way, e.g:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">script_temp_df2</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></code></pre></div>
-<pre class="fansi fansi-output"><code>#&gt; &lt;slimr_script_coll[2]&gt;
-#&gt; &lt;1&gt;
-#&gt; 
-#&gt; <span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-06)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">99999)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; &lt;2&gt;
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-07)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">5000)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-</span></code></pre>
-<p>If you want to check what the template settings for a <code>slimr_script</code> are, use <code><a href="../reference/slimr_template_info.html">slimr_template_info()</a></code>.</p>
+<code class="sourceCode R"><span><span class="va">script_temp_df2</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span></code></pre></div>
+<pre class="fansi fansi-output"><code><span><span class="co">#&gt; &lt;slimr_script_coll[2]&gt;</span></span>
+<span><span class="co">#&gt; &lt;1&gt;</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-06);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 99999);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; &lt;2&gt;</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-07);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 5000);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span></code></pre>
+<p>If you want to check what the template settings for a
+<code>slimr_script</code> are, use
+<code><a href="../reference/slimr_template_info.html">slimr_template_info()</a></code>.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/slimr_template_info.html">slimr_template_info</a></span><span class="op">(</span><span class="va">script_temp</span><span class="op">)</span>
-<span class="co">#&gt; $block_init</span>
-<span class="co">#&gt; $block_init$mut_rate</span>
-<span class="co">#&gt; [1] 1e-07</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $block_init$genome_size</span>
-<span class="co">#&gt; [1] 99999</span></code></pre></div>
-<p>There is one additional argument to <code>slimr_template</code> that we haven’t talked about yet, which is called <code>unquote_strings</code>. This option allows you to insert unquoted string values in a template. The default value, which is <code>FALSE</code>, means that <code>slimr_template</code> assumes that any variables of class “character” to be inserted are meant to be quoted in the SLiM script, so they will be treated as literal strings by SLiM. However, in some cases you may wish to use character values to insert references to SLiM objects themselves, in which case, they must be unquoted. As an example, perhaps you want to refer to different Subpopulations in a SLiM script dynamically using templating. To do this we can set <code>unquote_strings = TRUE</code>. As an example if we want to refer to a Subpopulation dynamically, and we don’t use <code>unquote_strings = TRUE</code>:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/slimr_template_info.html">slimr_template_info</a></span><span class="op">(</span><span class="va">script_temp</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $block_init</span></span>
+<span><span class="co">#&gt; $block_init$mut_rate</span></span>
+<span><span class="co">#&gt; [1] 1e-07</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $block_init$genome_size</span></span>
+<span><span class="co">#&gt; [1] 99999</span></span></code></pre></div>
+<p>There is one additional argument to <code>slimr_template</code> that
+we haven’t talked about yet, which is called
+<code>unquote_strings</code>. This option allows you to insert unquoted
+string values in a template. The default value, which is
+<code>FALSE</code>, means that <code>slimr_template</code> assumes that
+any variables of class “character” to be inserted are meant to be quoted
+in the SLiM script, so they will be treated as literal strings by SLiM.
+However, in some cases you may wish to use character values to insert
+references to SLiM objects themselves, in which case, they must be
+unquoted. As an example, perhaps you want to refer to different
+Subpopulations in a SLiM script dynamically using templating. To do this
+we can set <code>unquote_strings = TRUE</code>. As an example if we want
+to refer to a Subpopulation dynamically, and we don’t use
+<code>unquote_strings = TRUE</code>:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span>
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../reference/initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,
-             <span class="op">{</span>
-               <span class="co">## set the overall mutation rate (default = 1e-7)</span>
-               <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">1e-7</span><span class="op">)</span>; 
-               <span class="co">## m1 mutation type: neutral</span>
-               <span class="fu"><a href="../reference/initializeMutationType.html">initializeMutationType</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;
-               <span class="co">## g1 genomic element type: uses m1 for all mutations</span>
-               <span class="fu"><a href="../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fl">1.0</span><span class="op">)</span>;
-               <span class="co">## uniform chromosome of length "genome_size" (default = 99999)</span>
-               <span class="fu"><a href="../reference/initializeGenomicElement.html">initializeGenomicElement</a></span><span class="op">(</span><span class="va">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span><span class="op">)</span>;
-               <span class="co">## uniform recombination along the chromosome</span>
-               <span class="fu"><a href="../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span><span class="op">(</span><span class="fl">1e-8</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>,
-             <span class="op">{</span>
-               <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">500</span><span class="op">)</span>;
-               <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p2"</span>, <span class="fl">200</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">..</span>, <span class="fu"><a href="../reference/late.html">late</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span>
-               <span class="fu"><a href="../reference/slimr_template.html">slimr_template</a></span><span class="op">(</span><span class="st">"subpop"</span>, <span class="st">"p1"</span><span class="op">)</span><span class="op">%.%</span><span class="va">.P</span><span class="op">$</span><span class="va">fitnessScaling</span> <span class="op">=</span> <span class="fl">0.5</span>
-             <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">10000</span>,
-             <span class="op">{</span>
-               <span class="fu">sim.simulationFinished</span><span class="op">(</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>
-<span class="op">)</span> <span class="op">-&gt;</span> <span class="va">script_q</span>
-
-<span class="va">script_q</span></code></pre></div>
-<pre class="fansi fansi-output"><code>#&gt; &lt;slimr_script[4]&gt;
-#&gt; <span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-07)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">99999)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p2"</span><span>, </span><span style="color: #0000BB;">200)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>1:10000 late() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BB00;">..subpop..</span><span>.P.fitnessScaling </span><span style="color: #00BB00;">=</span><span> </span><span style="color: #0000BB;">0.5</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_4:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; This slimr_script has templating in block(s) </span><span style="background-color: #00BBBB;font-weight: bold;">block_3</span><span> for
-#&gt; variables </span><span style="color: #00BB00;">subpop</span><span>.
-</span></code></pre>
-<p>If we try and replace the Subpopulation now, we will get invalid SLiM code:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../reference/callback_initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="co">## set the overall mutation rate (default = 1e-7)</span></span>
+<span>               <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">1e-7</span><span class="op">)</span>; </span>
+<span>               <span class="co">## m1 mutation type: neutral</span></span>
+<span>               <span class="fu"><a href="../reference/initializeMutationType.html">initializeMutationType</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;</span>
+<span>               <span class="co">## g1 genomic element type: uses m1 for all mutations</span></span>
+<span>               <span class="fu"><a href="../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fl">1.0</span><span class="op">)</span>;</span>
+<span>               <span class="co">## uniform chromosome of length "genome_size" (default = 99999)</span></span>
+<span>               <span class="fu"><a href="../reference/initializeGenomicElement.html">initializeGenomicElement</a></span><span class="op">(</span><span class="va">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span><span class="op">)</span>;</span>
+<span>               <span class="co">## uniform recombination along the chromosome</span></span>
+<span>               <span class="fu"><a href="../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span><span class="op">(</span><span class="fl">1e-8</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">500</span><span class="op">)</span>;</span>
+<span>               <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p2"</span>, <span class="fl">200</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">..</span>, <span class="fu"><a href="../reference/late.html">late</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span></span>
+<span>               <span class="fu"><a href="../reference/r_template.html">slimr_template</a></span><span class="op">(</span><span class="st">"subpop"</span>, <span class="st">"p1"</span><span class="op">)</span><span class="op"><a href="../reference/grapes-.-grapes.html">%.%</a></span><span class="va">.P</span><span class="op">$</span><span class="va">fitnessScaling</span> <span class="op">=</span> <span class="fl">0.5</span></span>
+<span>             <span class="op">}</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">10000</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="fu">sim.simulationFinished</span><span class="op">(</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">script_q</span></span>
+<span></span>
+<span><span class="va">script_q</span></span></code></pre></div>
+<pre class="fansi fansi-output"><code><span><span class="co">#&gt; &lt;slimr_script[4]&gt;</span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-07);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 99999);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p2", 200);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:1:10000 late() {</span></span>
+<span><span class="co">#&gt;     ..subpop....fitnessScaling = 0.5;</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_4:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; This slimr_script has templating in block(s) block_3 for</span></span>
+<span><span class="co">#&gt; variables subpop.</span></span></code></pre>
+<p>If we try and replace the Subpopulation now, we will get invalid SLiM
+code:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu"><a href="../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">script_q</span>, template <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>subpop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"p1"</span>, <span class="st">"p2"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; &lt;slimr_script_coll[2]&gt;</span>
-<span class="co">#&gt; Error in parse(text = code, keep.source = TRUE): &lt;text&gt;:2:5: unexpected INCOMPLETE_STRING</span>
-<span class="co">#&gt; 2:     "p1..P.fitnessScaling = 0.5;</span>
-<span class="co">#&gt; 3: }</span>
-<span class="co">#&gt;        ^</span></code></pre></div>
-<p>Since this is also invalid R code, we get a parsing error. Now, if we use <code>unquote_strings = TRUE</code>:</p>
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">script_q</span>, template <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>subpop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"p1"</span>, <span class="st">"p2"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;slimr_script_coll[2]&gt;</span></span>
+<span><span class="co">#&gt; Error in parse(text = code, keep.source = TRUE): &lt;text&gt;:2:9: unexpected symbol</span></span>
+<span><span class="co">#&gt; 1: {</span></span>
+<span><span class="co">#&gt; 2:     "p1"..fitnessScaling</span></span>
+<span><span class="co">#&gt;            ^</span></span></code></pre></div>
+<p>Since this is also invalid R code, we get a parsing error. Now, if we
+use <code>unquote_strings = TRUE</code>:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span>
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../reference/initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,
-             <span class="op">{</span>
-               <span class="co">## set the overall mutation rate (default = 1e-7)</span>
-               <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">1e-7</span><span class="op">)</span>; 
-               <span class="co">## m1 mutation type: neutral</span>
-               <span class="fu"><a href="../reference/initializeMutationType.html">initializeMutationType</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;
-               <span class="co">## g1 genomic element type: uses m1 for all mutations</span>
-               <span class="fu"><a href="../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fl">1.0</span><span class="op">)</span>;
-               <span class="co">## uniform chromosome of length "genome_size" (default = 99999)</span>
-               <span class="fu"><a href="../reference/initializeGenomicElement.html">initializeGenomicElement</a></span><span class="op">(</span><span class="va">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span><span class="op">)</span>;
-               <span class="co">## uniform recombination along the chromosome</span>
-               <span class="fu"><a href="../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span><span class="op">(</span><span class="fl">1e-8</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>,
-             <span class="op">{</span>
-               <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">500</span><span class="op">)</span>;
-               <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p2"</span>, <span class="fl">200</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">..</span>, <span class="fu"><a href="../reference/late.html">late</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span>
-               <span class="fu"><a href="../reference/slimr_template.html">slimr_template</a></span><span class="op">(</span><span class="st">"subpop"</span>, <span class="st">"p1"</span>, unquote_strings <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">%.%</span><span class="va">.P</span><span class="op">$</span><span class="va">fitnessScaling</span> <span class="op">=</span> <span class="fl">0.5</span>
-             <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">10000</span>,
-             <span class="op">{</span>
-               <span class="fu">sim.simulationFinished</span><span class="op">(</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>
-<span class="op">)</span> <span class="op">-&gt;</span> <span class="va">script_uq</span>
-
-<span class="fu"><a href="../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">script_uq</span>, template <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>subpop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"p1"</span>, <span class="st">"p2"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre class="fansi fansi-output"><code>#&gt; &lt;slimr_script_coll[2]&gt;
-#&gt; &lt;1&gt;
-#&gt; 
-#&gt; <span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-07)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">99999)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p2"</span><span>, </span><span style="color: #0000BB;">200)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>1:10000 late() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     p..P.fitnessScaling </span><span style="color: #00BB00;">=</span><span> </span><span style="color: #0000BB;">0.5</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_4:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; &lt;2&gt;
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-07)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">99999)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p2"</span><span>, </span><span style="color: #0000BB;">200)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>1:10000 late() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     p..P.fitnessScaling </span><span style="color: #00BB00;">=</span><span> </span><span style="color: #0000BB;">0.5</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_4:</span><span>10000 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-</span></code></pre>
-<p>Now we get two <code>slimr_script</code>s with correct SLiM syntax!</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../reference/callback_initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="co">## set the overall mutation rate (default = 1e-7)</span></span>
+<span>               <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">1e-7</span><span class="op">)</span>; </span>
+<span>               <span class="co">## m1 mutation type: neutral</span></span>
+<span>               <span class="fu"><a href="../reference/initializeMutationType.html">initializeMutationType</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;</span>
+<span>               <span class="co">## g1 genomic element type: uses m1 for all mutations</span></span>
+<span>               <span class="fu"><a href="../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fl">1.0</span><span class="op">)</span>;</span>
+<span>               <span class="co">## uniform chromosome of length "genome_size" (default = 99999)</span></span>
+<span>               <span class="fu"><a href="../reference/initializeGenomicElement.html">initializeGenomicElement</a></span><span class="op">(</span><span class="va">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span><span class="op">)</span>;</span>
+<span>               <span class="co">## uniform recombination along the chromosome</span></span>
+<span>               <span class="fu"><a href="../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span><span class="op">(</span><span class="fl">1e-8</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">500</span><span class="op">)</span>;</span>
+<span>               <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p2"</span>, <span class="fl">200</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">..</span>, <span class="fu"><a href="../reference/late.html">late</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span></span>
+<span>               <span class="fu"><a href="../reference/r_template.html">slimr_template</a></span><span class="op">(</span><span class="st">"subpop"</span>, <span class="st">"p1"</span>, unquote_strings <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op"><a href="../reference/grapes-.-grapes.html">%.%</a></span><span class="va">.P</span><span class="op">$</span><span class="va">fitnessScaling</span> <span class="op">=</span> <span class="fl">0.5</span></span>
+<span>             <span class="op">}</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">10000</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="fu">sim.simulationFinished</span><span class="op">(</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">script_uq</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">script_uq</span>, template <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>subpop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"p1"</span>, <span class="st">"p2"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre class="fansi fansi-output"><code><span><span class="co">#&gt; &lt;slimr_script_coll[2]&gt;</span></span>
+<span><span class="co">#&gt; &lt;1&gt;</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-07);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 99999);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p2", 200);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:1:10000 late() {</span></span>
+<span><span class="co">#&gt;     p1..fitnessScaling = 0.5;</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_4:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; &lt;2&gt;</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-07);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 99999);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p2", 200);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:1:10000 late() {</span></span>
+<span><span class="co">#&gt;     p2..fitnessScaling = 0.5;</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_4:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span></code></pre>
+<p>Now we get two <code>slimr_script</code>s with correct SLiM
+syntax!</p>
 </div>
-<div id="generating-r-friendly-output" class="section level1">
-<h1 class="hasAnchor">
-<a href="#generating-r-friendly-output" class="anchor"></a>Generating R-friendly Output</h1>
-<p>We can also use special <code>slimr</code> functions to make SLiM generate output that can easily be read back into R as data. This works best in conjunction with <code>slimr</code>, which can run SLiM and pull any output into R while it is running. To do this, use the <code>slimr_output</code> function inside the <code>slimr</code> code to wrap any parts of it you want outputted. <code>slimr_output</code> is context-aware; if you wrap a SLiM object, the object will be converted into a string (using SLiM’s <code>paste</code> function) and then sent to the output stream; if you wrap a SLiM output function (such as <code>outputFull</code> or <code>outputVCF</code>), its output will be sent directly to the output stream without conversion (since it is already output strings). Let’s try adding some output to our SLiM script.</p>
+<div class="section level2">
+<h2 id="generating-r-friendly-output">Generating R-friendly Output<a class="anchor" aria-label="anchor" href="#generating-r-friendly-output"></a>
+</h2>
+<p>We can also use special <code>slimr</code> functions to make SLiM
+generate output that can easily be read back into R as data. This works
+best in conjunction with <code>slimr</code>, which can run SLiM and pull
+any output into R while it is running. To do this, use the
+<code>slimr_output</code> function inside the <code>slimr</code> code to
+wrap any parts of it you want outputted. <code>slimr_output</code> is
+context-aware; if you wrap a SLiM object, the object will be converted
+into a string (using SLiM’s <code>paste</code> function) and then sent
+to the output stream; if you wrap a SLiM output function (such as
+<code>outputFull</code> or <code>outputVCF</code>), its output will be
+sent directly to the output stream without conversion (since it is
+already output strings). Let’s try adding some output to our SLiM
+script.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span>
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../reference/initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,
-             <span class="op">{</span>
-               <span class="co">## set the overall mutation rate</span>
-               <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">1e-7</span><span class="op">)</span>; 
-               <span class="co">## m1 mutation type: neutral</span>
-               <span class="fu"><a href="../reference/initializeMutationType.html">initializeMutationType</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;
-               <span class="co">## g1 genomic element type: uses m1 for all mutations</span>
-               <span class="fu"><a href="../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fl">1.0</span><span class="op">)</span>;
-               <span class="co">## uniform chromosome of length 100 kb</span>
-               <span class="fu"><a href="../reference/initializeGenomicElement.html">initializeGenomicElement</a></span><span class="op">(</span><span class="va">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span><span class="op">)</span>;
-               <span class="co">## uniform recombination along the chromosome</span>
-               <span class="fu"><a href="../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span><span class="op">(</span><span class="fl">1e-8</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>,
-             <span class="op">{</span>
-               <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">500</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">..</span>, <span class="fu"><a href="../reference/late.html">late</a></span><span class="op">(</span><span class="op">)</span>, 
-             <span class="op">{</span>
-               <span class="co">## output sample of 10 individuals' genomes in VCF format</span>
-               <span class="fu"><a href="../reference/slimr_output.html">slimr_output</a></span><span class="op">(</span><span class="va">p1</span><span class="op">%.%</span><span class="va">.P</span><span class="op">$</span><span class="fu">outputVCFSample</span><span class="op">(</span>sampleSize <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"VCF"</span><span class="op">)</span>;
-               <span class="fu">catn</span><span class="op">(</span><span class="st">"Another successful round of evolution completed!"</span><span class="op">)</span>
-               
-              <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">100</span>,
-             <span class="op">{</span>
-               <span class="fu">sim.simulationFinished</span><span class="op">(</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>
-<span class="op">)</span> <span class="op">-&gt;</span> <span class="va">script_w_out</span>
-
-<span class="va">script_w_out</span></code></pre></div>
-<pre class="fansi fansi-output"><code>#&gt; &lt;slimr_script[4]&gt;
-#&gt; <span style="background-color: #00BBBB;font-weight: bold;">block_init:</span><span>initialize() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationRate</span><span style="color: #0000BB;">(1e-07)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeMutationType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span><span>, </span><span style="color: #0000BB;">0.5</span><span>, </span><span style="color: #BBBB00;">"f"</span><span>, </span><span style="color: #0000BB;">0)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span><span>, m1, </span><span style="color: #0000BB;">1)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span><span>g1, </span><span style="color: #0000BB;">0</span><span>, </span><span style="color: #0000BB;">99999)</span><span>;
-#&gt;     </span><span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_2:</span><span>1 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span><span>, </span><span style="color: #0000BB;">500)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_3:</span><span>1:100 late() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #0000BB;">{</span><span style="color: #00BBBB;">p..P.outputVCFSample(</span><span>sampleSize = </span><span style="color: #0000BB;">10</span><span style="color: #00BBBB;">)</span><span> </span><span style="color: #00BB00;">-&gt;</span><span> VCF</span><span style="color: #0000BB;">}</span><span>
-#&gt;     </span><span style="color: #00BBBB;">catn</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"Another successful round of evolution completed!"</span><span style="color: #0000BB;">)</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-#&gt; 
-#&gt; </span><span style="background-color: #00BBBB;font-weight: bold;">block_4:</span><span>100 early() </span><span style="color: #BBBB00;">{</span><span>
-#&gt;     </span><span style="color: #00BBBB;">sim.simulationFinished</span><span style="color: #0000BB;">()</span><span>;
-#&gt; </span><span style="color: #BBBB00;">}</span><span>
-</span></code></pre>
-<p>Now if you happen to have <code>slimr</code> installed and setup you can run this script through slim and see what that output looks like. To see examples of using <code>slim_run</code>, see the vignette titles “Simple Example using Migration and F<sub>st</sub>”.</p>
+<code class="sourceCode R"><span></span>
+<span><span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="../reference/callback_initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="co">## set the overall mutation rate</span></span>
+<span>               <span class="fu"><a href="../reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">1e-7</span><span class="op">)</span>; </span>
+<span>               <span class="co">## m1 mutation type: neutral</span></span>
+<span>               <span class="fu"><a href="../reference/initializeMutationType.html">initializeMutationType</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;</span>
+<span>               <span class="co">## g1 genomic element type: uses m1 for all mutations</span></span>
+<span>               <span class="fu"><a href="../reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fl">1.0</span><span class="op">)</span>;</span>
+<span>               <span class="co">## uniform chromosome of length 100 kb</span></span>
+<span>               <span class="fu"><a href="../reference/initializeGenomicElement.html">initializeGenomicElement</a></span><span class="op">(</span><span class="va">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span><span class="op">)</span>;</span>
+<span>               <span class="co">## uniform recombination along the chromosome</span></span>
+<span>               <span class="fu"><a href="../reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span><span class="op">(</span><span class="fl">1e-8</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">500</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">..</span>, <span class="fu"><a href="../reference/late.html">late</a></span><span class="op">(</span><span class="op">)</span>, </span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="co">## output sample of 10 individuals' genomes in VCF format</span></span>
+<span>               <span class="fu"><a href="../reference/r_output.html">slimr_output</a></span><span class="op">(</span><span class="va">p1</span><span class="op"><a href="../reference/grapes-.-grapes.html">%.%</a></span><span class="va">.P</span><span class="op">$</span><span class="fu">outputVCFSample</span><span class="op">(</span>sampleSize <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, name <span class="op">=</span> <span class="st">"VCF"</span><span class="op">)</span>;</span>
+<span>               <span class="fu">catn</span><span class="op">(</span><span class="st">"Another successful round of evolution completed!"</span><span class="op">)</span></span>
+<span>               </span>
+<span>              <span class="op">}</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">100</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="fu">sim.simulationFinished</span><span class="op">(</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">script_w_out</span></span>
+<span></span>
+<span><span class="va">script_w_out</span></span></code></pre></div>
+<pre class="fansi fansi-output"><code><span><span class="co">#&gt; &lt;slimr_script[4]&gt;</span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-07);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 99999);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:1:100 late() {</span></span>
+<span><span class="co">#&gt;     {p1..outputVCFSample(sampleSize = 10) -&gt; VCF}</span></span>
+<span><span class="co">#&gt;     catn("Another successful round of evolution completed!");</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_4:100 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span></code></pre>
+<p>Now if you happen to have <code>slimr</code> installed and setup you
+can run this script through slim and see what that output looks like. To
+see examples of using <code>slim_run</code>, see the vignette titles
+“Simple Example using Migration and F<sub>st</sub>”.</p>
 </div>
   </div>
 
@@ -954,11 +1029,13 @@ Other SLiMSim: <code>SLiMSim</code>, <code><a href="../reference/addSubpopSplit.
 
 
       <footer><div class="copyright">
-  <p>Developed by Russell Dinnage, Stephen Sarre, Bernd Gruber, Richard Duncan.</p>
+  <p></p>
+<p>Developed by Russell Dinnage, Stephen Sarre, Bernd Gruber, Richard Duncan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -966,6 +1043,8 @@ Other SLiMSim: <code>SLiMSim</code>, <code><a href="../reference/addSubpopSplit.
 
   
 
+
+  
 
   </body>
 </html>

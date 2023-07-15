@@ -43,24 +43,22 @@ belong to a single subpopulation, and all of the exerters must belong to
 a single subpopulation, but those two subpopulations do not need to be
 the same. The evaluate() method must have been previously called for the
 receiver and exerter subpopulations, and positions saved at evaluation
-time will be used. If the InteractionType is non- spatial, this method
-may not be called. For one individual, this is essentially the same as
-calling nearestInteractingNeighbors() with a large count so as to obtain the
-complete vector of all interacting neighbors, calling strength() for each
-of those interactions to get each interaction strength, and adding those
-interaction strengths together with sum(). This method is much faster than
-that implementation, however, since all of that work is done as a single
-operation. Also, totalOfNeighborStrengths() can total up interactions for
-more than one receiver in a single call. events mutationEffect() interaction()
-mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-664 Similarly, for one individual this is essentially the same as calling
-strength() to get the interaction strengths between a receiver and all
-individuals in the exerter subpopulation, and then calling sum(). Again, this
-method should be much faster, since this algorithm looks only at neighbors,
-whereas calling strength() directly assesses interaction strengths with all
-other individuals. This will make a particularly large difference when the
-subpopulation size is large and the maximum distance of the InteractionType is
-small. See localPopulationDensity() for a related method that calculates the
+time will be used. If the InteractionType is non- spatial, this method may
+not be called. For one individual, this is essentially the same as calling
+nearestInteractingNeighbors() with a large count so as to obtain the complete
+vector of all interacting neighbors, calling strength() for each of those
+interactions to get each interaction strength, and adding those interaction
+strengths together with sum(). This method is much faster than that
+implementation, however, since all of that work is done as a single operation.
+Also, totalOfNeighborStrengths() can total up interactions for more than one
+receiver in a single call. Similarly, for one individual this is essentially the
+same as calling strength() to get the interaction strengths between a receiver
+and all individuals in the exerter subpopulation, and then calling sum().
+Again, this method should be much faster, since this algorithm looks only at
+neighbors, whereas calling strength() directly assesses interaction strengths
+with all other individuals. This will make a particularly large difference when
+the subpopulation size is large and the maximum distance of the InteractionType
+is small. See localPopulationDensity() for a related method that calculates the
 total interaction strength divided by the amount of "interaction field" present
 for an individual (i.e., the integral of the interaction function clipped to the
 spatial bounds of the subpopulation) to provide an estimate of the "interaction

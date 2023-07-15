@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -89,13 +89,23 @@ full SLiM script.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">addEmpty</span><span class="op">(</span><span class="va">sex</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">addEmpty</span><span class="op">(</span><span class="va">sex</span>, <span class="va">genome1Null</span>, <span class="va">genome2Null</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>sex</dt>
 <dd><p>An object of type null or float or string. Must be of length 1 (a
+singleton). The default value is <code>NULL</code>. See details for description.</p></dd>
+
+
+<dt>genome1Null</dt>
+<dd><p>An object of type null or logical. Must be of length 1 (a
+singleton). The default value is <code>NULL</code>. See details for description.</p></dd>
+
+
+<dt>genome2Null</dt>
+<dd><p>An object of type null or logical. Must be of length 1 (a
 singleton). The default value is <code>NULL</code>. See details for description.</p></dd>
 
 </dl></div>
@@ -108,19 +118,34 @@ singleton). The default value is <code>NULL</code>. See details for description.
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Documentation for this function can be found in the official <a href="http://%0Abenhaller.com/slim/SLiM_Manual.pdf#page=580" class="external-link">SLiM manual: page 580</a>.</p>
+    <p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=692" class="external-link">SLiM manual: page
+692</a>.</p>
 <p>Generates a new offspring individual with empty genomes (i.e.,
 containing no mutations), queues it for addition to the target subpopulation,
-and returns it. The new offspring will not be visible as a member of the target
-subpopulation until the end of the offspring generation life cycle stage. No
-recombination() or mutation() callbacks will be called. The target subpopulation
-will be used to locate applicable modifyChild() callbacks governing the
-generation of the offspring individual (unlike the other addX() methods, because
-there is no parental individual to reference). The offspring is considered
-to have no parents for the purposes of pedigree tracking. The sex parameter
-is treated as in addCrossed(). Note that this method is only for use in nonWF
-models. See addCrossed() for further general notes on the addition of new
-offspring individuals.</p>
+and returns it. The new offspring will not be visible as a member of the
+target subpopulation until the end of the offspring generation tick cycle
+stage. No recombination() or mutation() callbacks will be called. The target
+subpopulation will be used to locate applicable modifyChild() callbacks
+governing the generation of the offspring individual (unlike the other addX()
+methods, because there is no parental individual to reference). The offspring
+is considered to have no parents for the purposes of pedigree tracking. The
+sex parameter is treated as in addCrossed(). By default - when genome1Null
+and genome2Null are both NULL - null genomes will be generated instead of
+empty genomes only in sex-chromosome simulations, where the sex chromosome
+that is not being simulated is represented by a null genome; otherwise, empty
+genomes rather than null genomes will be created. This default behavior can be
+changed by passing T or F for genome1Null or genome2Null, which will force the
+corresponding offspring genome to be null (T) or non-null (F). The behavior
+in sex-chromosome simulations cannot be changed, since the presence of null
+genomes there is dictated by sex, but T or F may be passed as long as it matches
+what SLiM would do anyway. In all other simulations there is little point in
+passing F (since that would be the default behavior anyway), but passing T can
+be used to make one or both genomes be null genomes, which can be useful for,
+e.g., modeling haploids (for which, by convention, the second genome is usually
+a null genome in SLiM). Note that this method is only for use in nonWF models.
+See addCrossed() for further general notes on the addition of new offspring
+individuals.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -137,7 +162,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Subpopulation: 
-<code><a href="Subpopulation.html">Subpopulation</a></code>,
+<code><a href="Subpopulation.html">P</a></code>,
 <code><a href="addCloned.html">addCloned</a>()</code>,
 <code><a href="addCrossed.html">addCrossed</a>()</code>,
 <code><a href="addRecombinant.html">addRecombinant</a>()</code>,
@@ -162,6 +187,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="setSpatialBounds.html">setSpatialBounds</a>()</code>,
 <code><a href="setSubpopulationSize.html">setSubpopulationSize</a>()</code>,
 <code><a href="spatialMapColor.html">spatialMapColor</a>()</code>,
+<code><a href="spatialMapImage.html">spatialMapImage</a>()</code>,
 <code><a href="spatialMapValue.html">spatialMapValue</a>()</code>,
 <code><a href="subsetIndividuals.html">subsetIndividuals</a>()</code>,
 <code><a href="takeMigrants.html">takeMigrants</a>()</code></p></div>
@@ -184,7 +210,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

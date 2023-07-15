@@ -1,5 +1,5 @@
-pandoc: 2.19.2
-pkgdown: 2.0.6
+pandoc: 3.1.1
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   Custom_vis: Custom_vis.html
@@ -7,7 +7,7 @@ articles:
   installing_SLiM_for_slimr: installing_SLiM_for_slimr.html
   simple_nucleotide_example: simple_nucleotide_example.html
   slimrlang_intro: slimrlang_intro.html
-last_built: 2023-06-23T20:31Z
+last_built: 2023-07-15T02:14Z
 urls:
   reference: https://rdinnager.github.io/slimr/reference
   article: https://rdinnager.github.io/slimr/articles

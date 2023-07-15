@@ -56,20 +56,18 @@ selectionCoeff, position, originTick (which may be NULL, the default, to specify
 the current tick; otherwise, beginning in SLiM 3.5, it must be equal to the
 current tick anyway, as other uses of this property have been deprecated), and
 originSubpop (specified by the Subpopulation object or by integer identifier,
-or by NULL, the default, to specify the subpopulation to which the first
-target genome belongs). If originSubpop is supplied as an integer, it is
-intentionally not checked events mutationEffect() interaction() mateChoice()
-modifyChild() mutation() recombination() reproduction() survival() 641 for
-validity; you may use arbitrary values of originSubpop to "tag" the mutations
-that you create (see section 24.10.1). The addNewDrawnMutation() method
-may be used instead if you wish selection coefficients to be drawn from the
-mutation types of the mutations. In non-nucleotide-based models, mutationType
-will always be a non-nucleotide-based mutation type, and so nucleotide must
-be NULL (the default). In a nucleotide-based model, mutationType might still
-be non-nucleotide-based (in which case nucleotide must still be NULL), or
-mutationType might be nucleotide-based, in which case a non-NULL value must
-be supplied for nucleotide, specifying the nucleotide(s) to be associated with
-the new mutation(s). Nucleotides may be specified with string values ("A",
+or by NULL, the default, to specify the subpopulation to which the first target
+genome belongs). If originSubpop is supplied as an integer, it is intentionally
+not checked for validity; you may use arbitrary values of originSubpop to "tag"
+the mutations that you create (see section 24.10.1). The addNewDrawnMutation()
+method may be used instead if you wish selection coefficients to be drawn
+from the mutation types of the mutations. In non-nucleotide-based models,
+mutationType will always be a non-nucleotide-based mutation type, and so
+nucleotide must be NULL (the default). In a nucleotide-based model, mutationType
+might still be non-nucleotide-based (in which case nucleotide must still be
+NULL), or mutationType might be nucleotide-based, in which case a non-NULL value
+must be supplied for nucleotide, specifying the nucleotide(s) to be associated
+with the new mutation(s). Nucleotides may be specified with string values ("A",
 "C", "G", or "T"), or with integer values (A=0, C=1, G=2, T=3). If a nucleotide
 mutation already exists at the mutating position, it is replaced automatically
 in accordance with the stacking policy for nucleotide- based mutation types. No

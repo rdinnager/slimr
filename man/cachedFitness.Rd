@@ -39,12 +39,10 @@ are in the middle of being set up. In WF models, it is also an error to call
 cachedFitness() from a late() event, because ﬁtness values for the new offspring
 generation have not yet been calculated and are undeﬁned. In nonWF models,
 the population may be a mixture of new and old individuals, so instead, NAN
-will be returned as the ﬁtness of any new individuals whose ﬁtness has not yet
-been calculated. When new events mutationEffect() interaction() mateChoice()
-modifyChild() mutation() recombination() reproduction() survival() 694
-subpopulations are ﬁrst created with addSubpop() or addSubpopSplit(), the ﬁtness
-of all of the newly created individuals is considered to be 1.0 until ﬁtness
-values are recalculated.
+will be returned as the ﬁtness of any new individuals whose ﬁtness has not
+yet been calculated. When new subpopulations are ﬁrst created with addSubpop()
+or addSubpopSplit(), the ﬁtness of all of the newly created individuals is
+considered to be 1.0 until ﬁtness values are recalculated.
 }
 \section{Copyright}{
 

@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -117,16 +117,18 @@ singleton). The default value is <code>NULL</code>. See details for description.
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Documentation for this function can be found in the official <a href="http://%0Abenhaller.com/slim/SLiM_Manual.pdf#page=581" class="external-link">SLiM manual: page 581</a>.</p>
+    <p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=695" class="external-link">SLiM manual: page
+695</a>.</p>
 <p>This method customizes the display of the subpopulation in SLiMgui's
 Population Visualization graph. When this method is called by a model running
 outside SLiMgui, it will do nothing except type- checking and bounds-checking
 its arguments. When called by a model running in SLiMgui, the position,
-size, and color of the subpopulation's displayed circle can be controlled as
-specified below. The center parameter sets the coordinates of the center of
-the subpopulation's displayed circle; it must be a float vector of length two,
-such that center[0] provides the x-coordinate and center[1] provides the y-
-coordinate. The square central area of the Population Visualization occupies
+size, and color of the subpopulation's displayed circle can be controlled
+as speciﬁed below. The center parameter sets the coordinates of the center
+of the subpopulation's displayed circle; it must be a float vector of length
+two, such that center[0] provides the x-coordinate and center[1] provides the
+y-coordinate. The square central area of the Population Visualization occupies
 scaled coordinates in [0,1] for both x and y, so the values in center must
 be within those bounds. If a value of NULL is provided, SLiMgui's default
 center will be used (which currently arranges subpopulations in a circle).
@@ -138,9 +140,9 @@ will be used; this is equivalent to supplying a scale of 1.0. Typically the
 same scale value should be used by all subpopulations, to scale all of their
 circles up or down uniformly, but that is not required. The color parameter
 sets the color to be used for the displayed subpopulation's circle. Colors may
-be specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see
+be speciﬁed by name, or with hexadecimal RGB values of the form "#RRGGBB" (see
 the Eidos manual). If color is NULL or the empty string, "", SLiMgui's default
-(fitness-based) color will be used.</p>
+(ﬁtness-based) color will be used.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -157,7 +159,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Subpopulation: 
-<code><a href="Subpopulation.html">Subpopulation</a></code>,
+<code><a href="Subpopulation.html">P</a></code>,
 <code><a href="addCloned.html">addCloned</a>()</code>,
 <code><a href="addCrossed.html">addCrossed</a>()</code>,
 <code><a href="addEmpty.html">addEmpty</a>()</code>,
@@ -182,6 +184,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="setSpatialBounds.html">setSpatialBounds</a>()</code>,
 <code><a href="setSubpopulationSize.html">setSubpopulationSize</a>()</code>,
 <code><a href="spatialMapColor.html">spatialMapColor</a>()</code>,
+<code><a href="spatialMapImage.html">spatialMapImage</a>()</code>,
 <code><a href="spatialMapValue.html">spatialMapValue</a>()</code>,
 <code><a href="subsetIndividuals.html">subsetIndividuals</a>()</code>,
 <code><a href="takeMigrants.html">takeMigrants</a>()</code></p></div>
@@ -204,7 +207,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

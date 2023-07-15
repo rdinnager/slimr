@@ -34,16 +34,14 @@ Immediately kills the individuals in individuals. This removes them
 from their subpopulation and gives them an index value of -1. The Individual
 objects are not freed immediately, since references to them could still exist
 in local Eidos variables; instead, the individuals are kept in a temporary
-"graveyard" until they can be freed safely. It therefore continues to be
-safe to use them and their genomes, except that accessing their subpopulation
-property will raise an error since they no longer have a subpopulation.
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 679 Note that the indices and
-order of individuals and genomes in all source subpopulations will change
-unpredictably as a side effect of this method. All evaluated interactions are
-invalidated as a side effect of calling this method. Note that this method is
-only for use in nonWF models, in which mortality is managed manually by the
-model script. In WF models, mortality is managed automatically by the SLiM
+"graveyard" until they can be freed safely. It therefore continues to be safe to
+use them and their genomes, except that accessing their subpopulation property
+will raise an error since they no longer have a subpopulation. Note that the
+indices and order of individuals and genomes in all source subpopulations will
+change unpredictably as a side effect of this method. All evaluated interactions
+are invalidated as a side effect of calling this method. Note that this method
+is only for use in nonWF models, in which mortality is managed manually by
+the model script. In WF models, mortality is managed automatically by the SLiM
 core when the new offspring generation becomes the parental generation and the
 previous parental generation dies; mortality does not otherwise occur in WF
 models. In nonWF models, mortality normally occurs during the survival stage

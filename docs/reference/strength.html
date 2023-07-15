@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -112,25 +112,28 @@ is <code>NULL</code>. See details for description.</p></dd>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Documentation for this function can be found in the official <a href="http://%0Abenhaller.com/slim/SLiM_Manual.pdf#page=552" class="external-link">SLiM manual: page 552</a>.</p>
+    <p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=664" class="external-link">SLiM manual: page
+664</a>.</p>
 <p>Returns a vector containing the interaction strengths exerted upon
 receiver by the individuals in exerters. If exerters is NULL (the default),
 then a vector of the interaction strengths exerted by all individuals in the
 subpopulation of receiver (including receiver itself) is returned; this case
-may be handled much more efficiently than if a vector of all individuals in
-the subpopulation is explicitly provided. If the strengths of interactions
-exerted by a single individual upon multiple individuals is needed instead
-(the inverse of what this method provides), multiple calls to this method will
-be necessary, one per pairwise interaction queried; the interaction engine
-is not optimized for the inverse case, and so it will likely be quite slow
-to compute. If the interaction is reciprocal and sex-symmetric, the opposite
-query should provide identical results in a single efficient call (because then
-the interactions exerted are equal to the interactions received); otherwise,
-the best approach might be to define a second interaction type representing
-the inverse interaction that you wish to be able to query efficiently. If the
-needed interaction strengths have already been calculated, those cached values
-are simply returned. Otherwise, calling this method triggers evaluation of the
-needed interactions, including calls to any applicable interaction() callbacks.</p>
+may be handled much more efficiently than if a vector of all individuals
+in the subpopulation is explicitly provided. Otherwise, all individuals in
+exerters must belong to a single subpopulation (but not necessarily the same
+subpopulation as receiver). The evaluate() method must have been previously
+called for the receiver and exerter subpopulations, and positions saved at
+evaluation time will be used. If the strengths of interactions exerted by a
+single individual upon multiple individuals are needed instead (the inverse of
+what this method provides), multiple calls to this method will be necessary,
+one per pairwise interaction queried; the interaction engine is not optimized
+for the inverse case, and so it will likely be quite slow to compute. If the
+interaction is reciprocal and sex-symmetric, the opposite query should provide
+identical results in a single efficient call (because then the interactions
+exerted are equal to the interactions received); otherwise, the best approach
+might be to define a second interaction type representing the inverse
+interaction that you wish to be able to query efficiently.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -148,15 +151,19 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <h2>See also</h2>
     <div class="dont-index"><p>Other InteractionType: 
 <code><a href="InteractionType.html">InteractionType</a></code>,
-<code><a href="distanceToPoint.html">distanceToPoint</a>()</code>,
+<code><a href="clippedIntegral.html">clippedIntegral</a>()</code>,
+<code><a href="distanceFromPoint.html">distanceFromPoint</a>()</code>,
 <code><a href="distance.html">distance</a>()</code>,
 <code><a href="drawByStrength.html">drawByStrength</a>()</code>,
 <code><a href="evaluate.html">evaluate</a>()</code>,
 <code><a href="interactingNeighborCount.html">interactingNeighborCount</a>()</code>,
 <code><a href="interactionDistance.html">interactionDistance</a>()</code>,
+<code><a href="localPopulationDensity.html">localPopulationDensity</a>()</code>,
 <code><a href="nearestInteractingNeighbors.html">nearestInteractingNeighbors</a>()</code>,
 <code><a href="nearestNeighborsOfPoint.html">nearestNeighborsOfPoint</a>()</code>,
 <code><a href="nearestNeighbors.html">nearestNeighbors</a>()</code>,
+<code><a href="neighborCountOfPoint.html">neighborCountOfPoint</a>()</code>,
+<code><a href="neighborCount.html">neighborCount</a>()</code>,
 <code><a href="setInteractionFunction.html">setInteractionFunction</a>()</code>,
 <code><a href="totalOfNeighborStrengths.html">totalOfNeighborStrengths</a>()</code>,
 <code><a href="unevaluate.html">unevaluate</a>()</code></p></div>
@@ -179,7 +186,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

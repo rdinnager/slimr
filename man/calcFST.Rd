@@ -78,8 +78,7 @@ they were at different sites. One could regard these choices as embodying an
 infinite-sites interpretation of the segregating mutations. In most biologically
 realistic models, such genetic states will be quite rare, and so the impact of
 these choices will be negligible; however, in some models these distinctions may
-be important. FST = 1 − HS HT events mutationEffect() interaction() mateChoice()
-modifyChild() mutation() recombination() reproduction() survival() 706
+be important. FST = 1 − HS HT
 }
 \section{Copyright}{
 

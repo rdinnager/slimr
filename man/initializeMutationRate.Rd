@@ -74,12 +74,11 @@ only option for hermaphroditic simulations). In sexual simulations sex may be
 for that sex (i.e., when generating a gamete from a parent of that sex). In this
 case, two calls must be made to initializeMutationRate(), one for each sex, even
 if a rate of zero is desired for the other sex; no default mutation rate map
-is supplied. events mutationEffect() interaction() mateChoice() modifyChild()
-mutation() recombination() reproduction() survival() 622 In nucleotide-based
-models, initializeMutationRate() may not be called. Instead, the desired
-sequence-based mutation rate(s) should be expressed in the mutationMatrix
-parameter to initializeGenomicElementType(). If variation in the mutation rate
-along the chromosome is desired, initializeHotspotMap() should be used.
+is supplied. In nucleotide-based models, initializeMutationRate() may not be
+called. Instead, the desired sequence-based mutation rate(s) should be expressed
+in the mutationMatrix parameter to initializeGenomicElementType(). If variation
+in the mutation rate along the chromosome is desired, initializeHotspotMap()
+should be used.
 }
 \section{Copyright}{
 

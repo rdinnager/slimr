@@ -36,13 +36,11 @@ Returns the number of individuals in exerterSubpop that are within
 the maximum interaction distance according to the distance metric of the
 InteractionType. The subpopulation may be supplied either as an integer ID,
 or as a Subpopulation object. The evaluate() method must have been previously
-called for exerterSubpop, and positions saved at evaluation time will be
-used. If the InteractionType is non-spatial, this method may not be called.
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 663 This method is similar to
-nearestNeighborsOfPoint() (when passed a large count so as to guarantee that
-all neighbors are returned), but this method returns only a count of the
-individuals, not a vector containing the individuals.
+called for exerterSubpop, and positions saved at evaluation time will be used.
+If the InteractionType is non-spatial, this method may not be called. This
+method is similar to nearestNeighborsOfPoint() (when passed a large count so as
+to guarantee that all neighbors are returned), but this method returns only a
+count of the individuals, not a vector containing the individuals.
 }
 \section{Copyright}{
 

@@ -20,8 +20,6 @@ blocks can be created programmatically and registered with the simulation, and
 registered script
 blocks can be deregistered; see the ‑register...() and ‑deregisterScriptBlock()
 methods of
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 674
 Community and Species in sections 24.3.2 and 24.14.2. The currently executing
 script block is
 available through the self global; see section 25.11.
@@ -83,9 +81,8 @@ it is set by preceding the definition of an event with a ticks specifier, of the
 form ticks <species-name>. }
 \item{type}{A property of type string. It is of length one (a singleton). This
 property is a constant, so it is not modifiable. \strong{Property Description:}
-The type of the script block; this will be "first", "early", or "late" for the
-three types of Eidos events, or "initialize", "fitnessEffect", "interaction",
-"mateChoice", "modifyChild", "mutation", "mutationEffect", "recombination",
+The type of the script block; this will be "first", "early", or "late" for
+the three types of Eidos "mutation", "mutationEffect", "recombination",
 "reproduction", or "survival" for the respective types of Eidos callbacks (see
 section 24.1 and chapter 25).}
 

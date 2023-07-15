@@ -39,22 +39,20 @@ not clip the interaction function. The interaction function is also clipped to
 the interaction's maximum distance; that distance must be less than half of the
 extent of the spatial bounds in each dimension (so that, for a given dimension,
 the interaction function is clipped by the spatial bounds on only one side),
-otherwise events mutationEffect() interaction() mateChoice() modifyChild()
-mutation() recombination() reproduction() survival() 658 an error is raised.
-Note that for sex-specific interaction types, the sex of the receiver does
-not matter; an individual might not actually receive any interactions because
-of its sex, but it is still considered to have the same interaction function
-integral. If receivers is NULL, the maximal integral is returned, as would
-be experienced by an individual farther than the maximum distance from any
-edge. The evaluate() method must have been previously called for the receiver
-subpopulation, and positions saved at evaluation time will be used. If the
-InteractionType is non-spatial, this method may not be called. The computed
-value of the integral is not exact; it is calculated by an approximate numerical
-method designed to be fast, but the error should be fairly small (typically
-less than 1% from the true value). A large amount of computation will occur the
-first time this method is called (perhaps taking more than a second, depending
-upon hardware), but subsequent calls should be very fast. This method does
-not invoke interaction() callbacks; the calculated integrals are only for
+otherwise an error is raised. Note that for sex-specific interaction types, the
+sex of the receiver does not matter; an individual might not actually receive
+any interactions because of its sex, but it is still considered to have the
+same interaction function integral. If receivers is NULL, the maximal integral
+is returned, as would be experienced by an individual farther than the maximum
+distance from any edge. The evaluate() method must have been previously called
+for the receiver subpopulation, and positions saved at evaluation time will be
+used. If the InteractionType is non-spatial, this method may not be called. The
+computed value of the integral is not exact; it is calculated by an approximate
+numerical method designed to be fast, but the error should be fairly small
+(typically less than 1% from the true value). A large amount of computation will
+occur the first time this method is called (perhaps taking more than a second,
+depending upon hardware), but subsequent calls should be very fast. This method
+does not invoke interaction() callbacks; the calculated integrals are only for
 the interaction function itself, and so will not be accurate if interaction()
 callbacks modify the relationship between distance and interaction strength. For
 this reason, the overhead of the first call will not reoccur when individuals

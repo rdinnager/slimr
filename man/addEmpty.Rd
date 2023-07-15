@@ -39,30 +39,29 @@ Documentation for this function can be found in the official
 
 Generates a new offspring individual with empty genomes (i.e.,
 containing no mutations), queues it for addition to the target subpopulation,
-and returns it. The new offspring will not be visible as a member of the target
-subpopulation until the end of the offspring generation tick cycle stage. No
-recombination() or mutation() callbacks will be called. The target subpopulation
-will be used to locate applicable modifyChild() callbacks governing the
-generation of the offspring individual (unlike the other addX() methods, because
-there is no parental individual to reference). The offspring is considered to
-have no parents for the purposes of pedigree tracking. The sex parameter is
-treated as in addCrossed(). events mutationEffect() interaction() mateChoice()
-modifyChild() mutation() recombination() reproduction() survival() 692 By
-default - when genome1Null and genome2Null are both NULL - null genomes will
-be generated instead of empty genomes only in sex-chromosome simulations, where
-the sex chromosome that is not being simulated is represented by a null genome;
-otherwise, empty genomes rather than null genomes will be created. This default
-behavior can be changed by passing T or F for genome1Null or genome2Null, which
-will force the corresponding offspring genome to be null (T) or non-null (F).
-The behavior in sex-chromosome simulations cannot be changed, since the presence
-of null genomes there is dictated by sex, but T or F may be passed as long as
-it matches what SLiM would do anyway. In all other simulations there is little
-point in passing F (since that would be the default behavior anyway), but
-passing T can be used to make one or both genomes be null genomes, which can be
-useful for, e.g., modeling haploids (for which, by convention, the second genome
-is usually a null genome in SLiM). Note that this method is only for use in
-nonWF models. See addCrossed() for further general notes on the addition of new
-offspring individuals.
+and returns it. The new offspring will not be visible as a member of the
+target subpopulation until the end of the offspring generation tick cycle
+stage. No recombination() or mutation() callbacks will be called. The target
+subpopulation will be used to locate applicable modifyChild() callbacks
+governing the generation of the offspring individual (unlike the other addX()
+methods, because there is no parental individual to reference). The offspring
+is considered to have no parents for the purposes of pedigree tracking. The
+sex parameter is treated as in addCrossed(). By default - when genome1Null
+and genome2Null are both NULL - null genomes will be generated instead of
+empty genomes only in sex-chromosome simulations, where the sex chromosome
+that is not being simulated is represented by a null genome; otherwise, empty
+genomes rather than null genomes will be created. This default behavior can be
+changed by passing T or F for genome1Null or genome2Null, which will force the
+corresponding offspring genome to be null (T) or non-null (F). The behavior
+in sex-chromosome simulations cannot be changed, since the presence of null
+genomes there is dictated by sex, but T or F may be passed as long as it matches
+what SLiM would do anyway. In all other simulations there is little point in
+passing F (since that would be the default behavior anyway), but passing T can
+be used to make one or both genomes be null genomes, which can be useful for,
+e.g., modeling haploids (for which, by convention, the second genome is usually
+a null genome in SLiM). Note that this method is only for use in nonWF models.
+See addCrossed() for further general notes on the addition of new offspring
+individuals.
 }
 \section{Copyright}{
 

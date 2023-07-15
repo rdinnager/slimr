@@ -44,11 +44,10 @@ initializeSLiMOptions(keepPedigrees=T), genomePedigreeID is a unique
 non-negative identifier for each genome in a simulation, never re- used
 throughout the duration of the simulation run. Furthermore, the genomePedigreeID
 of a given genome will be equal to either (2*pedigreeID) or (2*pedigreeID + 1)
-of the individual that the events mutationEffect() interaction() mateChoice()
-modifyChild() mutation() recombination() reproduction() survival() 639 genome
-belongs to (the former for the first genome of the individual, the latter for
-the second genome of the individual); this invariant relationship is guaranteed.
-If pedigree tracking is not enabled, this property is unavailable. }
+of the individual that the genome belongs to (the former for the first genome
+of the individual, the latter for the second genome of the individual); this
+invariant relationship is guaranteed. If pedigree tracking is not enabled, this
+property is unavailable. }
 \item{genomeType}{A property of type string. It is of length one (a singleton).
 This property is a constant, so it is not modifiable. \strong{Property
 Description:} The type of chromosome represented by this genome; one of "A",

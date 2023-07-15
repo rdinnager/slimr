@@ -79,9 +79,7 @@ hotspotEndPositionsF and hotspotEndPositionsM. }
 \item{hotspotEndPositionsF}{A property of type integer. This property is a
 constant, so it is not modifiable. \strong{Property Description:} The end
 positions for hotspot map regions for females, when using sex-specific hotspot
-maps; unavailable otherwise. See hotspotEndPositions for further explanation.
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 629 }
+maps; unavailable otherwise. See hotspotEndPositions for further explanation. }
 \item{hotspotEndPositionsM}{A property of type integer. This property is a
 constant, so it is not modifiable. \strong{Property Description:} The end
 positions for hotspot map regions for males, when using sex-specific hotspot
@@ -141,19 +139,16 @@ unavailable in nucleotide-based models. }
 so it is not modifiable. \strong{Property Description:} The mutation rate for
 each of the mutation rate regions specified by mutationEndPositionsM, when
 using sex-specific mutation rate maps; unavailable otherwise. This property is
-unavailable in nucleotide-based models. events mutationEffect() interaction()
-mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-630 }
+unavailable in nucleotide-based models. }
 \item{overallMutationRate}{A property of type float. It is of length
 one (a singleton). This property is a constant, so it is not modifiable.
 \strong{Property Description:} The overall mutation rate across the whole
-chromosome determining the overall number of mutation events that will occur
-anywhere in the chromosome, as calculated from the individual mutation ranges
-and rates as well as the coverage of the chromosome by genomic elements (since
-mutations are only generated within genomic elements, regardless of the mutation
-rate map). When using sex- specific mutation rate maps, this property will
-unavailable; see overallMutationRateF and overallMutationRateM. This property is
-unavailable in nucleotide-based models. }
+chromosome determining the overall number of mutation ranges and rates as well
+as the coverage of the chromosome by genomic elements (since mutations are only
+generated within genomic elements, regardless of the mutation rate map). When
+using sex- specific mutation rate maps, this property will unavailable; see
+overallMutationRateF and overallMutationRateM. This property is unavailable in
+nucleotide-based models. }
 \item{overallMutationRateF}{A property of type float. It is of length
 one (a singleton). This property is a constant, so it is not modifiable.
 \strong{Property Description:} The overall mutation rate for females, when using
@@ -204,10 +199,8 @@ further explanation. }
 \item{recombinationRates}{A property of type float. This property is a constant,
 so it is not modifiable. \strong{Property Description:} The recombination rate
 for each of the recombination regions specified by recombinationEndPositions.
-When using sex-specific recombination maps, this property will unavailable;
-see recombinationRatesF and recombinationRatesM. events mutationEffect()
-interaction() mateChoice() modifyChild() mutation() recombination()
-reproduction() survival() 631 }
+When using sex-specific recombination maps, this property will unavailable; see
+recombinationRatesF and recombinationRatesM. }
 \item{recombinationRatesF}{A property of type float. This property is
 a constant, so it is not modifiable. \strong{Property Description:} The
 recombination rate for each of the recombination regions specified by

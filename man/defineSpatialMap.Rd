@@ -72,40 +72,38 @@ map as seen in SLiMgui. This is a change in behavior from versions prior to SLiM
 used directly as spatial maps, achieving the expected orientation, with no need
 for transposition or ﬂipping. If the spatial map is a three-dimensional array,
 it is read as successive z-axis "planes", each of which is a two-dimensional
-matrix that is treated as described above. Moving on to the other parameters
-of defineSpatialMap(): if interpolate is F, values across the spatial map are
-not interpolated; the value at a given point is equal to the nearest value
-deﬁned by the grid of values speciﬁed. If interpolate is T, values across the
-spatial map will be interpolated (using events mutationEffect() interaction()
-mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-695 linear, bilinear, or trilinear interpolation as appropriate) to produce
-spatially continuous variation in values. In either case, the corners of the
-value grid are exactly aligned with the corners of the spatial boundaries of the
-subpopulation as speciﬁed by setSpatialBoundary(), and the value grid is then
-stretched across the spatial extent of the subpopulation in such a manner as to
-produce equal spacing between the values along each dimension. The setting of
-interpolation only affects how values between these grid points are calculated:
-by nearest-neighbor, or by linear interpolation. Interpolation of spatial maps
-with periodic boundaries is not handled specially; to ensure that the edges
-of a periodic spatial map join smoothly, simply ensure that the grid values
-at the edges of the map are identical, since they will be coincident after
-periodic wrapping. The valueRange and colors parameters travel together; either
-both are unspeciﬁed, or both are speciﬁed. They control how map values will be
-transformed into colors, by SLiMgui and by the spatialMapColor() method. The
-valueRange parameter establishes the color-mapped range of spatial map values,
-as a vector of length two specifying a minimum and maximum; this does not
-need to match the actual range of values in the map. The colors parameter then
-establishes the corresponding colors for values within the interval deﬁned by
-valueRange: values less than or equal to valueRange[0] will map to colors[0],
-values greater than or equal to valueRange[1] will map to the last colors value,
-and intermediate values will shade continuously through the speciﬁed vector
-of colors, with interpolation between adjacent colors to produce a continuous
-spectrum. This is much simpler than it sounds in this description; see the
-recipes in chapter 15 for an illustration of its use. Note that at present,
-SLiMgui will only display spatial maps of spatiality "x", "y", or "xy"; the
-color- mapping parameters will simply be ignored by SLiMgui for other spatiality
-values (even if the spatiality is a superset of these values; SLiMgui will
-not attempt to display an "xyz" spatial map, for example, since it has no
+matrix that is treated as described above. Moving on to the other parameters of
+defineSpatialMap(): if interpolate is F, values across the spatial map are not
+interpolated; the value at a given point is equal to the nearest value deﬁned
+by the grid of values speciﬁed. If interpolate is T, values across the spatial
+map will be interpolated (using linear, bilinear, or trilinear interpolation
+as appropriate) to produce spatially continuous variation in values. In either
+case, the corners of the value grid are exactly aligned with the corners of the
+spatial boundaries of the subpopulation as speciﬁed by setSpatialBoundary(), and
+the value grid is then stretched across the spatial extent of the subpopulation
+in such a manner as to produce equal spacing between the values along each
+dimension. The setting of interpolation only affects how values between these
+grid points are calculated: by nearest-neighbor, or by linear interpolation.
+Interpolation of spatial maps with periodic boundaries is not handled specially;
+to ensure that the edges of a periodic spatial map join smoothly, simply ensure
+that the grid values at the edges of the map are identical, since they will be
+coincident after periodic wrapping. The valueRange and colors parameters travel
+together; either both are unspeciﬁed, or both are speciﬁed. They control how map
+values will be transformed into colors, by SLiMgui and by the spatialMapColor()
+method. The valueRange parameter establishes the color-mapped range of spatial
+map values, as a vector of length two specifying a minimum and maximum; this
+does not need to match the actual range of values in the map. The colors
+parameter then establishes the corresponding colors for values within the
+interval deﬁned by valueRange: values less than or equal to valueRange[0] will
+map to colors[0], values greater than or equal to valueRange[1] will map to the
+last colors value, and intermediate values will shade continuously through the
+speciﬁed vector of colors, with interpolation between adjacent colors to produce
+a continuous spectrum. This is much simpler than it sounds in this description;
+see the recipes in chapter 15 for an illustration of its use. Note that at
+present, SLiMgui will only display spatial maps of spatiality "x", "y", or
+"xy"; the color- mapping parameters will simply be ignored by SLiMgui for other
+spatiality values (even if the spatiality is a superset of these values; SLiMgui
+will not attempt to display an "xyz" spatial map, for example, since it has no
 way to choose which 2D slice through the xyz space it ought to display). The
 spatialMapColor() method will return translated color strings for any spatial
 map, however, even if SLiMgui is unable to display the spatial map. If there are

@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -107,7 +107,9 @@ length 1 (a singleton). See details for description.</p></dd>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Documentation for this function can be found in the official <a href="http://%0Abenhaller.com/slim/SLiM_Manual.pdf#page=546" class="external-link">SLiM manual: page 546</a>.</p>
+    <p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=654" class="external-link">SLiM manual: page
+654</a>.</p>
 <p>Returns an object vector of all the mutations that are of the type
 specified by mutType, out of all of the mutations in the individual. Mutations
 present in both genomes will occur only once in the result of this method,
@@ -115,9 +117,9 @@ and the mutations will be given in sorted order by position, so this method
 is similar to sortBy(unique(individual.genomes.mutationsOfType(mutType)),
 "position"). It is not identical to that call, only because if multiple
 mutations exist at the exact same position, they may be sorted differently
-by this method than they would be by sortBy(). If you just need a count of
-the matching Mutation objects, rather than a vector of the matches, use -
-countOfMutationsOfType(). This method is provided for speed; it is much
+by this method than they would be by sortBy(). If you just need a count
+of the matching Mutation objects, rather than a vector of the matches, use
+-countOfMutationsOfType(). This method is provided for speed; it is much
 faster than the corresponding Eidos code. Indeed, it is faster than just
 individual.genomes.mutationsOfType(mutType), and gives uniquing and sorting
 on top of that, so it is advantageous unless duplicate entries for homozygous
@@ -138,7 +140,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Individual: 
-<code><a href="Individual.html">Individual</a></code>,
+<code><a href="Individual.html">In</a></code>,
 <code><a href="containsMutations.html">containsMutations</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
 <code><a href="relatedness.html">relatedness</a>()</code>,
@@ -163,7 +165,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

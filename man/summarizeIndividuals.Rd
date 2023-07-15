@@ -60,74 +60,71 @@ of information related to the individuals in individuals. In essence, those
 individuals are assigned into bins according to their spatial position, and
 then a summary value for each bin is calculated based upon the individuals
 each bin contains. The individuals might be binned in one dimension (resulting
-in a vector of summary events mutationEffect() interaction() mateChoice()
-modifyChild() mutation() recombination() reproduction() survival() 708 values),
-in two dimensions (resulting in a matrix), or in three dimensions (resulting in
-an array). Typically the spatiality of the result (the dimensions into which the
-individuals are binned) will match the dimensionality of the model, as indicated
-by the default value of NULL for the optional spatiality parameter; for example,
-a two-dimensional ("xy") model would by default produce a two-dimensional
-matrix as a summary. However, a spatiality that is more restrictive than the
-model dimensionality may be passed; for example, in a two-dimensional ("xy")
-model a spatiality of "y" could be passed to summarize individuals into a
-vector, rather than a matrix, assigning them to bins based only upon their y
-position (i.e., the value of their y property). Whatever spatiality is chosen,
-the parameter dim provides the dimensions of the desired result, in the same
-form that the dim() function does: first the number of rows, then the number
-of columns, and then the number of planes, as needed (see the Eidos manual for
-discussion of matrices, arrays, and dim()). The length of dims must match the
-requested spatiality; for spatiality "xy", for example, dims might be c(50,100)
-to request that the returned matrix have 50 rows and 100 columns. The result
-vector/matrix/array is in the correct orientation to be directly usable as a
-spatial map, by passing it to the defineSpatialMap() method of Subpopulation.
-For further discussion of dimensionality and spatiality, see section 24.1
-on initializeInteractionType(), and section 24.8 on InteractionType. The
-spatialBounds parameter defines the spatial boundaries within which the
-individuals are binned. Typically this is the spatial bounds of a particular
-subpopulation, within which the individuals reside; for individuals in p1, for
-example, you would likely pass p1.spatialBounds for this. However, this is not
-required; individuals may come from any or all subpopulations in the model, and
-spatialBounds may be any bounds of non-zero area (if an individual falls outside
-of the given spatial bounds, it is excluded, as if it were not in individuals
-at all). If you have multiple subpopulations that conceptually reside within
-the same overall coordinate space, for example, that can be accommodated here.
-The bounds are supplied in the dimensionality of the model, in the same form
-as for Subpopulation; for an "xy" model, for example, they are supplied as a
-four-element vector of the form c(x0, y0, x1, y1) even if the summary is being
-produced with spatiality "y". To produce the result, a grid with dimensions
-defined by dims is conceptually stretched out across the given spatial bounds,
-such that the centers of the edge and corner grid squares are aligned with
-the limits of the spatial bounds. This matches the way that defineSpatialMap()
-defines its maps; see section 15.11 for illustration. The particular summary
-produced depends upon the parameters operation and empty. Consider a single grid
-square represented by a single element in the result. That grid square contains
-zero or more of the individuals in individuals. If it contains zero individuals
-and empty is not NULL, the empty value is used for the result, regardless of
-operation, providing specific, separate control over the treatment of empty
-grid squares. If empty is NULL, this separate control over the treatment of
-empty grid squares is declined; empty grid squares will be handled through
-the standard mechanism described next. In all other cases for the given grid
-square - when it contains more than zero individuals, or when empty is NULL -
-operation is executed as an Eidos lambda, a small snippet of code, supplied as
-a singleton string, that is executed in a manner similar to a function call.
-Within the execution of the operation lambda, a constant named individuals is
-defined to be the focal individuals being evaluated - all of the individuals
-within that grid square. This lambda should evaluate to a singleton logical,
-integer, or float value, comprising the result value for the grid square; these
-types will all be coerced to float (T being 1 and F being 0). Two examples
-may illustrate the use of empty and operation. To produce a summary indicating
-presence/absence, simply use the default of 0.0 for empty, and "1.0; " (or "1;",
-or "T;") for operation. This will produce 0.0 for empty grid squares, and 1.0
-for those that contain at least one individual. Note that the use of empty is
-essential here, because operation doesn't even check whether individuals are
-present or not. To produce a summary with a count of the number of individuals
-in each grid square, again use the default of 0.0 for empty, but now use an
-operation of "individuals.size();", counting the number of individuals in each
-grid square. In this case, empty could be NULL instead and operation would
-still produce the correct result; but using empty makes summarizeIndividuals()
-more efficient since it allows the execution of operation to be skipped for
-those squares. events mutationEffect() interaction() mateChoice() modifyChild()
-mutation() recombination() reproduction() survival() 709 Lambdas are not limited
+in a vector of summary values), in two dimensions (resulting in a matrix), or
+in three dimensions (resulting in an array). Typically the spatiality of the
+result (the dimensions into which the individuals are binned) will match the
+dimensionality of the model, as indicated by the default value of NULL for the
+optional spatiality parameter; for example, a two-dimensional ("xy") model would
+by default produce a two-dimensional matrix as a summary. However, a spatiality
+that is more restrictive than the model dimensionality may be passed; for
+example, in a two-dimensional ("xy") model a spatiality of "y" could be passed
+to summarize individuals into a vector, rather than a matrix, assigning them
+to bins based only upon their y position (i.e., the value of their y property).
+Whatever spatiality is chosen, the parameter dim provides the dimensions of the
+desired result, in the same form that the dim() function does: first the number
+of rows, then the number of columns, and then the number of planes, as needed
+(see the Eidos manual for discussion of matrices, arrays, and dim()). The length
+of dims must match the requested spatiality; for spatiality "xy", for example,
+dims might be c(50,100) to request that the returned matrix have 50 rows and
+100 columns. The result vector/matrix/array is in the correct orientation to
+be directly usable as a spatial map, by passing it to the defineSpatialMap()
+method of Subpopulation. For further discussion of dimensionality and
+spatiality, see section 24.1 on initializeInteractionType(), and section 24.8
+on InteractionType. The spatialBounds parameter defines the spatial boundaries
+within which the individuals are binned. Typically this is the spatial bounds of
+a particular subpopulation, within which the individuals reside; for individuals
+in p1, for example, you would likely pass p1.spatialBounds for this. However,
+this is not required; individuals may come from any or all subpopulations in the
+model, and spatialBounds may be any bounds of non-zero area (if an individual
+falls outside of the given spatial bounds, it is excluded, as if it were not
+in individuals at all). If you have multiple subpopulations that conceptually
+reside within the same overall coordinate space, for example, that can be
+accommodated here. The bounds are supplied in the dimensionality of the model,
+in the same form as for Subpopulation; for an "xy" model, for example, they
+are supplied as a four-element vector of the form c(x0, y0, x1, y1) even if
+the summary is being produced with spatiality "y". To produce the result, a
+grid with dimensions defined by dims is conceptually stretched out across the
+given spatial bounds, such that the centers of the edge and corner grid squares
+are aligned with the limits of the spatial bounds. This matches the way that
+defineSpatialMap() defines its maps; see section 15.11 for illustration. The
+particular summary produced depends upon the parameters operation and empty.
+Consider a single grid square represented by a single element in the result.
+That grid square contains zero or more of the individuals in individuals. If
+it contains zero individuals and empty is not NULL, the empty value is used for
+the result, regardless of operation, providing specific, separate control over
+the treatment of empty grid squares. If empty is NULL, this separate control
+over the treatment of empty grid squares is declined; empty grid squares will
+be handled through the standard mechanism described next. In all other cases
+for the given grid square - when it contains more than zero individuals, or
+when empty is NULL - operation is executed as an Eidos lambda, a small snippet
+of code, supplied as a singleton string, that is executed in a manner similar
+to a function call. Within the execution of the operation lambda, a constant
+named individuals is defined to be the focal individuals being evaluated -
+all of the individuals within that grid square. This lambda should evaluate
+to a singleton logical, integer, or float value, comprising the result value
+for the grid square; these types will all be coerced to float (T being 1 and
+F being 0). Two examples may illustrate the use of empty and operation. To
+produce a summary indicating presence/absence, simply use the default of 0.0
+for empty, and "1.0; " (or "1;", or "T;") for operation. This will produce
+0.0 for empty grid squares, and 1.0 for those that contain at least one
+individual. Note that the use of empty is essential here, because operation
+doesn't even check whether individuals are present or not. To produce a summary
+with a count of the number of individuals in each grid square, again use the
+default of 0.0 for empty, but now use an operation of "individuals.size();",
+counting the number of individuals in each grid square. In this case, empty
+could be NULL instead and operation would still produce the correct result;
+but using empty makes summarizeIndividuals() more efficient since it allows the
+execution of operation to be skipped for those squares. Lambdas are not limited
 in their complexity; they can use if, for, etc., and can call methods and
 functions. A typical operation to compute the mean phenotype in a quantitative
 genetic model that stores phenotype values in tagF, for example, would be

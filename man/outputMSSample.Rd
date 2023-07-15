@@ -73,10 +73,9 @@ in every sampled genome, and are thus apparently ﬁxed). These may be ﬁltered
 out with filterMonomorphic = T if desired; note that this option means that
 some mutations that do exist in the sampled genomes might not be included in the
 output, simply because they exist in every sampled genome. See outputSample()
-and outputVCFSample() for other output formats. Output is generally done in
-a late() event, so that the output reﬂects the state of the simulation at the
-end of a tick. events mutationEffect() interaction() mateChoice() modifyChild()
-mutation() recombination() reproduction() survival() 696
+and outputVCFSample() for other output formats. Output is generally done in a
+late() event, so that the output reﬂects the state of the simulation at the end
+of a tick.
 }
 \section{Copyright}{
 

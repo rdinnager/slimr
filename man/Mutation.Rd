@@ -67,20 +67,18 @@ This property is a constant, so it is not modifiable. \strong{Property
 Description:} The position in the chromosome of this mutation. }
 \item{selectionCoeff}{A property of type float. It is of length one
 (a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The selection coefficient of the mutation,
-drawn from the distribution of fitness effects of its MutationType. If a
-mutation has a selectionCoeff of s, the multiplicative fitness effect of the
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 669 mutation in a homozygote is
-1+s; in a heterozygote it is 1+hs, where h is the dominance coefficient kept
-by the mutation type (see section 24.11.1). Note that this property has a
-quirk: it is stored internally in SLiM using a single-precision float, not the
-double-precision float type normally used by Eidos. This means that if you set a
-mutation mut's selection coefficient to some number x, mut.selectionCoeff==x may
-be F due to floating-point rounding error. Comparisons of floating-point numbers
-for exact equality is often a bad idea, but this is one case where it may fail
-unexpectedly. Instead, it is recommended to use the id or tag properties to
-identify particular mutations. }
+\strong{Property Description:} The selection coefficient of the mutation, drawn
+from the distribution of fitness effects of its MutationType. If a mutation
+has a selectionCoeff of s, the multiplicative fitness effect of the mutation
+in a homozygote is 1+s; in a heterozygote it is 1+hs, where h is the dominance
+coefficient kept by the mutation type (see section 24.11.1). Note that this
+property has a quirk: it is stored internally in SLiM using a single-precision
+float, not the double-precision float type normally used by Eidos. This means
+that if you set a mutation mut's selection coefficient to some number x,
+mut.selectionCoeff==x may be F due to floating-point rounding error. Comparisons
+of floating-point numbers for exact equality is often a bad idea, but this is
+one case where it may fail unexpectedly. Instead, it is recommended to use the
+id or tag properties to identify particular mutations. }
 \item{subpopID}{A property of type integer. It is of length one (a singleton).
 This property is a variable, so it is modifiable. \strong{Property Description:}
 The identifier of the subpopulation in which this mutation arose. This property

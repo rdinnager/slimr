@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -108,19 +108,21 @@ singleton). See details for description.</p></dd>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Documentation for this function can be found in the official <a href="http://%0Abenhaller.com/slim/SLiM_Manual.pdf#page=581" class="external-link">SLiM manual: page 581</a>.</p>
-<p>Generates a new offspring individual from the given parent by selfing,
+    <p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=694" class="external-link">SLiM manual: page
+694</a>.</p>
+<p>Generates a new offspring individual from the given parent by selﬁng,
 queues it for addition to the target subpopulation, and returns it. The new
 offspring will not be visible as a member of the target subpopulation until
-the end of the offspring generation life cycle stage. The subpopulation of
+the end of the offspring generation tick cycle stage. The subpopulation of
 parent will be used to locate applicable mutation(), recombination(), and
 modifyChild() callbacks governing the generation of the offspring individual.
-Since selfing requires that parent act as a source of both a male and a female
+Since selﬁng requires that parent act as a source of both a male and a female
 gamete, this method may be called only in hermaphroditic models; calling it in
 sexual models will result in an error. This method represents a non-incidental
-selfing event, so the preventIncidentalSelfing flag of initializeSLiMOptions()
+selﬁng event, so the preventIncidentalSelfing ﬂag of initializeSLiMOptions()
 has no effect on this method (in contrast to the behavior of addCrossed(), where
-selfing is assumed to be incidental). Note that this method is only for use in
+selﬁng is assumed to be incidental). Note that this method is only for use in
 nonWF models. See addCrossed() for further general notes on the addition of new
 offspring individuals.</p>
     </div>
@@ -139,7 +141,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Subpopulation: 
-<code><a href="Subpopulation.html">Subpopulation</a></code>,
+<code><a href="Subpopulation.html">P</a></code>,
 <code><a href="addCloned.html">addCloned</a>()</code>,
 <code><a href="addCrossed.html">addCrossed</a>()</code>,
 <code><a href="addEmpty.html">addEmpty</a>()</code>,
@@ -164,6 +166,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="setSpatialBounds.html">setSpatialBounds</a>()</code>,
 <code><a href="setSubpopulationSize.html">setSubpopulationSize</a>()</code>,
 <code><a href="spatialMapColor.html">spatialMapColor</a>()</code>,
+<code><a href="spatialMapImage.html">spatialMapImage</a>()</code>,
 <code><a href="spatialMapValue.html">spatialMapValue</a>()</code>,
 <code><a href="subsetIndividuals.html">subsetIndividuals</a>()</code>,
 <code><a href="takeMigrants.html">takeMigrants</a>()</code></p></div>
@@ -186,7 +189,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

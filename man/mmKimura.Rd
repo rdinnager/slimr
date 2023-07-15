@@ -36,9 +36,8 @@ Documentation for this function can be found in the official
 Returns a mutation matrix representing a Kimura (1980) model with
 transition rate alpha and transversion rate beta: This 2×2 matrix is suitable
 for use with initializeGenomicElementType(). Note that the actual mutation rate
-produced by this model is alpha+2*beta. 0 α α α α 0 α α α α 0 α α α α 0 0 β α
-β β 0 β α α β 0 β β α β 0 events mutationEffect() interaction() mateChoice()
-modifyChild() mutation() recombination() reproduction() survival() 704
+produced by this model is alpha+2*beta. 0 α α α α 0 α α α α 0 α α α α 0 0 β α β
+β 0 β α α β 0 β β α β 0
 }
 \section{Copyright}{
 

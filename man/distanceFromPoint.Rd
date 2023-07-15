@@ -35,27 +35,26 @@ Documentation for this function can be found in the official
 Returns a vector containing distances between the point given by
 the spatial coordinates in point, which may be thought of as the "receiver",
 and individuals in exerters. The point vector is interpreted as providing
-coordinates precisely as specified by the spatiality of the interaction type;
-if the interaction type's spatiality is "xz", for example, then point[0]
-is assumed to be an x value, and point[1] is assumed to be a z value. Be
-careful; this means that in general it is not safe to pass an individual's
-spatialPosition property for point, for example (although it is safe if the
-spatiality of the interaction matches the dimensionality of the simulation). A
-coordinate for a periodic spatial dimension must be within the spatial bounds
-for that dimension, since coordinates outside of periodic bounds are meaningless
-(pointPeriodic() may be used to ensure this); coordinates for non-periodic
-spatial dimensions are not restricted. All individuals in exerters must belong
-to a single events mutationEffect() interaction() mateChoice() modifyChild()
-mutation() recombination() reproduction() survival() 659 subpopulation; the
-evaluate() method must have been previously called for that subpopulation,
-and positions saved at evaluation time will be used. If the InteractionType is
-non-spatial, this method may not be called. The vector point must be exactly
-as long as the spatiality of the InteractionType. Importantly, distances are
-calculated according to the spatiality of the InteractionType (as declared in
-initializeInteractionType()) not the dimensionality of the model as a whole (as
-declared in initializeSLiMOptions()). The distances are therefore interaction
-distances: the distances that are used to calculate interaction strengths. This
-method replaces the distanceToPoint() method that existed prior to SLiM 4.
+coordinates precisely as specified by the spatiality of the interaction type; if
+the interaction type's spatiality is "xz", for example, then point[0] is assumed
+to be an x value, and point[1] is assumed to be a z value. Be careful; this
+means that in general it is not safe to pass an individual's spatialPosition
+property for point, for example (although it is safe if the spatiality of the
+interaction matches the dimensionality of the simulation). A coordinate for a
+periodic spatial dimension must be within the spatial bounds for that dimension,
+since coordinates outside of periodic bounds are meaningless (pointPeriodic()
+may be used to ensure this); coordinates for non-periodic spatial dimensions
+are not restricted. All individuals in exerters must belong to a single
+subpopulation; the evaluate() method must have been previously called for that
+subpopulation, and positions saved at evaluation time will be used. If the
+InteractionType is non-spatial, this method may not be called. The vector point
+must be exactly as long as the spatiality of the InteractionType. Importantly,
+distances are calculated according to the spatiality of the InteractionType (as
+declared in initializeInteractionType()) not the dimensionality of the model as
+a whole (as declared in initializeSLiMOptions()). The distances are therefore
+interaction distances: the distances that are used to calculate interaction
+strengths. This method replaces the distanceToPoint() method that existed prior
+to SLiM 4.
 }
 \section{Copyright}{
 

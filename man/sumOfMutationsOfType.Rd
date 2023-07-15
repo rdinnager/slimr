@@ -58,16 +58,14 @@ Documentation for this function can be found in the official
 \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=653}{SLiM manual: page
 653}.
 
-Returns the sum of the selection coefficients of all mutations
-that are of the type specified by mutType, out of all of the mutations in
-the genomes of the individual. This is often useful in models that use a
-particular mutation type to represent QTLs with additive effects; in that
-context, sumOfMutationsOfType() will provide the sum of the additive effects
-of the QTLs for the given mutation type. This method is provided for speed; it
-is much faster than the corresponding Eidos code. Note that this method also
-exists on Genome, for cases in which the sum for just one genome is desired.
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 653
+Returns the sum of the selection coefficients of all mutations that
+are of the type specified by mutType, out of all of the mutations in the
+genomes of the individual. This is often useful in models that use a particular
+mutation type to represent QTLs with additive effects; in that context,
+sumOfMutationsOfType() will provide the sum of the additive effects of the
+QTLs for the given mutation type. This method is provided for speed; it is much
+faster than the corresponding Eidos code. Note that this method also exists on
+Genome, for cases in which the sum for just one genome is desired.
 }
 \section{Copyright}{
 

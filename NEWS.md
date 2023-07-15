@@ -1,6 +1,10 @@
 # slimr 0.2.0
 
-* slimr now fully supports SLiM versions 4.0 and greater, including support for multispecies models (though these have been extensively tested yet)
+* slimr now fully supports SLiM versions 4.0 and greater, including support for 
+multispecies models (though these have been extensively tested yet)
+* slimr verbs are now prefixed with `r_` (e.g. `r_output`, `r_inline`, `r_template`). 
+The old version `slimr_` prefixed version are still available for backwards 
+compatibility, but should be considered soft-deprecated
 
 # slimr 0.1.0
 

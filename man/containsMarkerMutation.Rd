@@ -43,21 +43,19 @@ below). This method is, as its name suggests, intended for checking for
 "marker mutations": mutations of a special mutation type that are not literally
 mutations in the usual sense, but instead are added in to particular genomes
 to mark them as possessing some property. Marker mutations are not typically
-added by SLiM's mutation-generating machinery; instead they are added
-explicitly with addNewMutation() or addNewDrawnMutation() at a known, constant
-position in the genome. This method provides a check for whether a marker
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 642 mutation of a given type exists
-in a particular genome; because the position to check is known in advance, that
-check can be done much faster than the equivalent check with containsMutations()
-or countOfMutationsOfType(), using a binary search of the genome. See section
-14.4 for one example of a model that uses marker mutations - in that case, to
-mark chromosomes that possess an inversion. If returnMutation is T (an option
-added in SLiM 3), this method returns the actual mutation found, rather than
-just T or F. More specifically, the first mutation found of mutType at position
-will be returned; if more than one such mutation exists in the target genome,
-which one is returned is not defined. If returnMutation is T and no mutation of
-mutType is found at position, NULL will be returned.
+added by SLiM's mutation-generating machinery; instead they are added explicitly
+with addNewMutation() or addNewDrawnMutation() at a known, constant position
+in the genome. This method provides a check for whether a marker mutation of a
+given type exists in a particular genome; because the position to check is known
+in advance, that check can be done much faster than the equivalent check with
+containsMutations() or countOfMutationsOfType(), using a binary search of the
+genome. See section 14.4 for one example of a model that uses marker mutations
+- in that case, to mark chromosomes that possess an inversion. If returnMutation
+is T (an option added in SLiM 3), this method returns the actual mutation found,
+rather than just T or F. More specifically, the first mutation found of mutType
+at position will be returned; if more than one such mutation exists in the
+target genome, which one is returned is not defined. If returnMutation is T and
+no mutation of mutType is found at position, NULL will be returned.
 }
 \section{Copyright}{
 

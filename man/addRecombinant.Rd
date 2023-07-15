@@ -86,44 +86,42 @@ inferred from the sex of the individuals possessing the parental strands, even
 when the reproductive mode is essentially clonal from a single parent, since
 such inference would be ambiguous in the general case. Similarly, the offspring
 is considered to have no parents for the purposes of pedigree tracking, since
-there may be more than two "parents" in the general case. When modeling the X
-or Y, strand1 and strand2 must be X genomes (or NULL), and strand3 and strand4
-must both be X genomes or both be Y genomes (or NULL). events mutationEffect()
-interaction() mateChoice() modifyChild() mutation() recombination()
-reproduction() survival() 693 These semantics allow several uses for
-addRecombinant(). When all strands are non-NULL, it is similar to addCrossed()
-except that the recombination breakpoints are speciﬁed explicitly, allowing
-very precise offspring generation without having to override SLiM's breakpoint
-generation with a recombination() callback. When only strand1 and strand3
-are supplied, it is very similar to addCloned(), creating a clonal offspring,
-except that the two parental genomes need not belong to the same individual
-(whatever that might mean biologically). Supplying only strand1 is useful for
-modeling clonally reproducing haploids; the second genome of every offspring
-will be kept empty and will not receive new mutations. For a model of clonally
-reproducing haploids that undergo horizontal gene transfer (HGT), supplying
-only strand1 and strand2 will allow HGT from strand2 to replace segments of
-an otherwise clonal copy of strand1, while the second genome of the generated
-offspring will again be kept empty; this could be useful for modeling bacterial
-conjugation, for example. Other variations are also possible. The value of the
-meanParentAge property of the generated offspring is calculated from the mean
-parent age of each of its two genomes (whether they turn out to be null genomes
-or not); that may be an average of two values (if both offspring genomes have
-at least one parent), a single value (if one offspring genome has no parent),
-or no values (if both offspring genomes have no parent, in which case 0.0
-results). The mean parent age of a given offspring genome is the mean of the
-ages of the parents of the two strands used to generate that offspring genome;
-if one strand is NULL then the mean parent age for that offspring genome is the
-age of the parent of the non-NULL strand, while if both strands are NULL then
-that offspring genome is parentless and is not used in the ﬁnal calculation.
-In other words, if one offspring genome has two parents with ages A and B, and
-the other offspring genome has one parent with age C, the meanParentAge of the
-offspring will be (A+B+C+C) / 4, not (A+B+C) / 3. Note that gene conversion
-tracts are not explicitly supported by this method; the breaks vectors provide
-crossover breakpoints, which may be used to implement crossovers or simple gene
-conversion tracts. There is no way to specify complex gene conversion tracts
-with heteroduplex mismatch repair. Note that this method is only for use in
-nonWF models. See addCrossed() for further general notes on the addition of new
-offspring individuals.
+there may be more than two "parents" in the general case. When modeling the X or
+Y, strand1 and strand2 must be X genomes (or NULL), and strand3 and strand4 must
+both be X genomes or both be Y genomes (or NULL). These semantics allow several
+uses for addRecombinant(). When all strands are non-NULL, it is similar to
+addCrossed() except that the recombination breakpoints are speciﬁed explicitly,
+allowing very precise offspring generation without having to override SLiM's
+breakpoint generation with a recombination() callback. When only strand1 and
+strand3 are supplied, it is very similar to addCloned(), creating a clonal
+offspring, except that the two parental genomes need not belong to the same
+individual (whatever that might mean biologically). Supplying only strand1 is
+useful for modeling clonally reproducing haploids; the second genome of every
+offspring will be kept empty and will not receive new mutations. For a model
+of clonally reproducing haploids that undergo horizontal gene transfer (HGT),
+supplying only strand1 and strand2 will allow HGT from strand2 to replace
+segments of an otherwise clonal copy of strand1, while the second genome of the
+generated offspring will again be kept empty; this could be useful for modeling
+bacterial conjugation, for example. Other variations are also possible. The
+value of the meanParentAge property of the generated offspring is calculated
+from the mean parent age of each of its two genomes (whether they turn out
+to be null genomes or not); that may be an average of two values (if both
+offspring genomes have at least one parent), a single value (if one offspring
+genome has no parent), or no values (if both offspring genomes have no parent,
+in which case 0.0 results). The mean parent age of a given offspring genome
+is the mean of the ages of the parents of the two strands used to generate
+that offspring genome; if one strand is NULL then the mean parent age for that
+offspring genome is the age of the parent of the non-NULL strand, while if both
+strands are NULL then that offspring genome is parentless and is not used in
+the ﬁnal calculation. In other words, if one offspring genome has two parents
+with ages A and B, and the other offspring genome has one parent with age C,
+the meanParentAge of the offspring will be (A+B+C+C) / 4, not (A+B+C) / 3. Note
+that gene conversion tracts are not explicitly supported by this method; the
+breaks vectors provide crossover breakpoints, which may be used to implement
+crossovers or simple gene conversion tracts. There is no way to specify complex
+gene conversion tracts with heteroduplex mismatch repair. Note that this method
+is only for use in nonWF models. See addCrossed() for further general notes on
+the addition of new offspring individuals.
 }
 \section{Copyright}{
 

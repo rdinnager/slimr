@@ -61,8 +61,6 @@ individuals property of the subpopulation, and then using operator [] to select
 only individuals with the desired properties; besides being much simpler than
 the equivalent Eidos code, it is also much faster. See sampleIndividuals() for a
 similar method that returns a sample taken from a chosen subset of individuals.
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 701
 }
 \section{Copyright}{
 

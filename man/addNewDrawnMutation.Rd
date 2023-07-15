@@ -59,14 +59,12 @@ checked for validity; you may use arbitrary values of originSubpop to "tag" the
 mutations that you create (see section 24.10.1). The selection coefficients of
 the mutations are drawn from their mutation types; addNewMutation() may be used
 instead if you wish to specify selection coefficients. In non-nucleotide-based
-models, mutationType will always be a non-nucleotide-based mutation type,
-and so nucleotide must be NULL (the default). In a nucleotide-based model,
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 640 mutationType might still
-be non-nucleotide-based (in which case nucleotide must still be NULL), or
-mutationType might be nucleotide-based, in which case a non-NULL value must
-be supplied for nucleotide, specifying the nucleotide(s) to be associated with
-the new mutation(s). Nucleotides may be specified with string values ("A",
+models, mutationType will always be a non-nucleotide-based mutation type, and so
+nucleotide must be NULL (the default). In a nucleotide-based model, mutationType
+might still be non-nucleotide-based (in which case nucleotide must still be
+NULL), or mutationType might be nucleotide-based, in which case a non-NULL value
+must be supplied for nucleotide, specifying the nucleotide(s) to be associated
+with the new mutation(s). Nucleotides may be specified with string values ("A",
 "C", "G", or "T"), or with integer values (A=0, C=1, G=2, T=3). If a nucleotide
 mutation already exists at the mutating position, it is replaced automatically
 in accordance with the stacking policy for nucleotide- based mutation types. No

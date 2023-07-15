@@ -12,8 +12,6 @@ This class represents a single simulated individual. Individuals in
 SLiM are diploid, and thus
 contain two Genome objects. Most functionality in SLiM is contained in the
 Genome class; the
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 648
 Individual class is mostly a convenient way to treat the pairs of genomes
 associated with an
 individual as a single object, and to associate a tag value with individuals.
@@ -87,10 +85,9 @@ The index of the individual in the individuals vector of its Subpopulation. }
 \strong{Property Description:} The average age of the parents of this
 individual, measured in cycles. Parentless individuals will have a meanParentAge
 of 0.0. The mean parent age is determined when a new offspring is generated,
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 649 from the age property of the
-parent or parents involved in generating the offspring. For addRecombinant()
-that is somewhat complex; see that method for details. }
+from the age property of the parent or parents involved in generating the
+offspring. For addRecombinant() that is somewhat complex; see that method for
+details. }
 \item{migrant}{A property of type logical. It is of length one (a singleton).
 This property is a constant, so it is not modifiable. \strong{Property
 Description:} Set to T if the individual is a recent migrant, F otherwise. The
@@ -146,18 +143,16 @@ simulation (i.e., for hermaphrodites), otherwise "F" or "M" as appropriate. }
 \item{spatialPosition}{A property of type float. This property is a constant,
 so it is not modifiable. \strong{Property Description:} The spatial position
 of the individual. The length of the spatialPosition property (the number
-of coordinates in the spatial position of an individual) depends upon
-the spatial dimensionality declared with initializeSLiMOptions(). If the
-spatial dimensionality is zero (as it is by default), it is an error to
-access this property. The elements of this property are identical to the
-values of the x, y, and z properties (if those properties are encompassed
-by the spatial dimensionality of the simulation). In other words, if the
-declared dimensionality is "xy", the individual.spatialPosition property is
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 650 equivalent to c(individual.x,
-individual.y); individual.z is not used since it is not encompassed by
-the simulation's dimensionality. This property cannot be set, but the
-setSpatialPosition() method may be used to achieve the same thing. }
+of coordinates in the spatial position of an individual) depends upon the
+spatial dimensionality declared with initializeSLiMOptions(). If the spatial
+dimensionality is zero (as it is by default), it is an error to access
+this property. The elements of this property are identical to the values
+of the x, y, and z properties (if those properties are encompassed by the
+spatial dimensionality of the simulation). In other words, if the declared
+dimensionality is "xy", the individual.spatialPosition property is equivalent
+to c(individual.x, individual.y); individual.z is not used since it is not
+encompassed by the simulation's dimensionality. This property cannot be set, but
+the setSpatialPosition() method may be used to achieve the same thing. }
 \item{subpopulation}{A property of type Subpopulation object. It is of length
 one (a singleton). This property is a constant, so it is not modifiable.
 \strong{Property Description:} The Subpopulation object to which the individual
@@ -213,18 +208,16 @@ represent the x coordinate of the individual in space. If continuous space is
 not enabled, you may use x as an additional tag value of type float. }
 \item{y}{A property of type float. It is of length one (a singleton). This
 property is a variable, so it is modifiable. \strong{Property Description:}
-A user-defined float value. The value of y is initially undefined (i.e.,
-has an effectively random value that could be different every time you run
-your model); if you wish it to have a defined value, you must arrange that
-yourself by explicitly setting its value prior to using it elsewhere in your
-code, typically in a modifyChild() callback. The value of y is not used by
-SLiM unless the optional events mutationEffect() interaction() mateChoice()
-modifyChild() mutation() recombination() reproduction() survival() 651
-"continuous space" facility is enabled with the dimensionality parameter to
-initializeSLiMOptions(), in which case y will be understood to represent the y
-coordinate of the individual in space (if the dimensionality is "xy" or "xyz").
-If continuous space is not enabled, or the dimensionality is not "xy" or "xyz",
-you may use y as an additional tag value of type float. }
+A user-defined float value. The value of y is initially undefined (i.e., has
+an effectively random value that could be different every time you run your
+model); if you wish it to have a defined value, you must arrange that yourself
+by explicitly setting its value prior to using it elsewhere in your code,
+typically in a modifyChild() callback. The value of y is not used by SLiM unless
+the optional "continuous space" facility is enabled with the dimensionality
+parameter to initializeSLiMOptions(), in which case y will be understood to
+represent the y coordinate of the individual in space (if the dimensionality is
+"xy" or "xyz"). If continuous space is not enabled, or the dimensionality is not
+"xy" or "xyz", you may use y as an additional tag value of type float. }
 \item{z}{A property of type float. It is of length one (a singleton). This
 property is a variable, so it is modifiable. \strong{Property Description:}
 A user-defined float value. The value of z is initially undefined (i.e., has

@@ -65,11 +65,9 @@ specified by mutType, out of all of the mutations in the genome. If you just
 need a count of the matching Mutation objects, rather than a vector of the
 matches, use -countOfMutationsOfType(); if you need just the positions of
 matching Mutation objects, use -positionsOfMutationsOfType(); and if you are
-aiming for a sum of the selection coefficients of matching Mutation objects,
-use -sumOfMutationsOfType(). This method is provided for speed; it is much
-faster than the corresponding Eidos code. events mutationEffect() interaction()
-mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-643
+aiming for a sum of the selection coefficients of matching Mutation objects, use
+-sumOfMutationsOfType(). This method is provided for speed; it is much faster
+than the corresponding Eidos code.
 
 Documentation for this function can be found in the official
 \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.

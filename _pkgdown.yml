@@ -10,12 +10,12 @@ reference:
   - subtitle: Main slimr verbs
     desc: The three main functions that can be called inside `slim_block` calls for metaprogramming
   - contents:
-    - slimr_output
-    - slimr_inline
-    - slimr_template
-  - subtitle: slimr_output_ special variants
+    - r_output
+    - r_inline
+    - r_template
+  - subtitle: r_output_ special variants
   - contents:
-    - starts_with("slimr_output_")
+    - starts_with("r_output_")
   - subtitle: slimr_block_ verbs
     desc: These function generate full code blocks and can be used inside `slim_script` calls.
   - contents:
@@ -62,20 +62,35 @@ reference:
       autocomplete what methods or properties are available for a class
   - contents:
     - Chromosome
+    - Ch
     - Genome
+    - G
     - GenomicElement
+    - GE
     - GenomicElementType
+    - GET
     - Individual
+    - In
     - Initialize
+    - Init
     - InteractionType
+    - IT
     - LogFile
+    - LF
     - Mutation
+    - M
     - MutationType
+    - MT
     - SLiMBuiltin
+    - SB
     - SLiMEidosBlock
+    - SEB
     - SLiMSim
+    - SS
     - Subpopulation
+    - P
     - Substitution
+    - S
     - slim_classes
   - title: SLiM Class Methods
     desc: >
@@ -86,6 +101,9 @@ reference:
   - subtitle: Chromosome
   - contents:
     - has_concept("Chromosome")
+  - subtitle: Community
+  - contents:
+    - has_concept("Community")
   - subtitle: Genome
   - contents:
     - has_concept("Genome")
@@ -122,6 +140,9 @@ reference:
   - subtitle: SLiMSim
   - contents:
     - has_concept("SLiMSim")
+  - subtitle: Species
+  - contents:
+    - has_concept("Species")
   - subtitle: Subpopulation
   - contents:
     - has_concept("Subpopulation")

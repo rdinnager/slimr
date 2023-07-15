@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -100,8 +100,8 @@ description.</p></dd>
 
 
 <dt>mutType</dt>
-<dd><p>An object of type MutationType object. Must be of length 1 (a
-singleton). See details for description.</p></dd>
+<dd><p>An object of type integer or MutationType object. Must be of
+length 1 (a singleton). See details for description.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -112,16 +112,20 @@ singleton). See details for description.</p></dd>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Documentation for this function can be found in the official <a href="http://%0Abenhaller.com/slim/SLiM_Manual.pdf#page=594" class="external-link">SLiM manual: page 594</a>.</p>
+    <p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=708" class="external-link">SLiM manual: page
+708</a>.</p>
 <p>Calculates VA, the additive genetic variance, among a vector
 individuals, in a particular mutation type mutType that represents quantitative
-trait loci (QTLs) influencing a quantitative phenotypic trait. This function
-assumes that mutations of type mutType encode their effect size upon the
-quantitative trait in their selectionCoeff property, as is fairly standard
-in SLiM (see, e.g., section 13.2). The implementation of calcVA(), which is
-viewable with functionSource(), is quite simple; if effect sizes are stored
-elsewhere (such as with setValue(), as in section 13.5), a new user-defined
-function following the pattern of calcVA() can easily be written.</p>
+trait loci (QTLs) influencing a quantitative phenotypic trait. The mutType
+parameter may be either an integer representing the ID of the desired mutation
+type, or a MutationType object specified directly. This function assumes
+that mutations of type mutType encode their effect size upon the quantitative
+trait in their selectionCoeff property, as is fairly standard in SLiM (see,
+e.g., section 13.2). The implementation of calcVA(), which is viewable with
+functionSource(), is quite simple; if effect sizes are stored elsewhere (such as
+with setValue(), as in section 13.5), a new user-defined function following the
+pattern of calcVA() can easily be written.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -138,9 +142,10 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other SLiMBuiltin: 
-<code><a href="SLiMBuiltin.html">SLiMBuiltin</a></code>,
+<code><a href="SLiMBuiltin.html">SB</a></code>,
 <code><a href="calcFST.html">calcFST</a>()</code>,
 <code><a href="calcHeterozygosity.html">calcHeterozygosity</a>()</code>,
+<code><a href="calcInbreedingLoad.html">calcInbreedingLoad</a>()</code>,
 <code><a href="calcPairHeterozygosity.html">calcPairHeterozygosity</a>()</code>,
 <code><a href="calcWattersonsTheta.html">calcWattersonsTheta</a>()</code>,
 <code><a href="codonsToAminoAcids.html">codonsToAminoAcids</a>()</code>,
@@ -149,7 +154,9 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="mmKimura.html">mmKimura</a>()</code>,
 <code><a href="nucleotideCounts.html">nucleotideCounts</a>()</code>,
 <code><a href="nucleotideFrequencies.html">nucleotideFrequencies</a>()</code>,
-<code><a href="nucleotidesToCodons.html">nucleotidesToCodons</a>()</code></p></div>
+<code><a href="nucleotidesToCodons.html">nucleotidesToCodons</a>()</code>,
+<code><a href="summarizeIndividuals.html">summarizeIndividuals</a>()</code>,
+<code><a href="treeSeqMetadata.html">treeSeqMetadata</a>()</code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -169,7 +176,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

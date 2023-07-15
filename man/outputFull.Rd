@@ -101,34 +101,35 @@ spatialPositions is T, spatial position information will be output if it is
 available (see section 26.1.1 for format details). If the simulation does not
 have continuous space enabled, the spatialPositions parameter will be ignored.
 Positional information may be output for all output destinations - the Eidos
-output stream, a text file, or a binary file. Beginning with SLiM 3.0, the
-ages parameter may be used to control the output of the ages of individuals in
-nonWF simulations. If ages is F, the output will not contain ages, preserving
-backward compatibility with the output format of SLiM 2.1 and later. If ages
-is T, ages will be output for nonWF models (see section 26.1.1 for format
-details). In WF simulations, the ages parameter will be ignored. Beginning with
-SLiM 3.3, the ancestralNucleotides parameter may be used to control the output
-of the ancestral nucleotide sequence in nucleotide-based models (see section
-26.1.1 for format details). If ancestralNucleotides is F, the output will not
-contain ancestral nucleotide information, and so the ancestral sequence will
-not be restored correctly if the saved file is loaded with readPopulationFile().
-This option is provided because the ancestral sequence may be quite large,
-for models with a long chromosome (e.g., 1 GB if the chromosome is 109 bases
-long, when saved in text format, or 0.25 GB when saved in binary format).
-If the model is not nucleotide-based (as enabled with the nucleotideBased
-parameter to initializeSLiMOptions()), the ancestralNucleotides parameter will
-be ignored. Note that in nucleotide-based models the output format will always
-include the nucleotides associated with any nucleotide-based mutations; the
-ancestralNucleotides flag governs only the ancestral sequence. Beginning with
-SLiM 3.5, the pedigreeIDs parameter may be used to request that pedigree IDs
-be written out (and read in by readFromPopulationFile(), subsequently). This
-option is turned off (F) by default, to preserve backward compatibility; if
-it is turned on (T), different file version values will be used, and backward
-compatibility with previous versions of SLiM will be lost (see section 26.1.1).
-This option may only be used if SLiM's optional pedigree tracking has been
-turned on with initializeSLiMOptions(keepPedigrees=T). Output is generally done
-in a late() event, so that the output reflects the state of the simulation at
-the end of a generation.
+output stream, a text file, or a binary file. Beginning with SLiM 3.0, the ages
+parameter may be used to control the output of the ages of individuals in nonWF
+simulations. If ages is F, the output will not contain ages, preserving backward
+compatibility with the output format of SLiM 2.1 and later. If ages is T, ages
+will be output for nonWF models (see section 26.1.1 for format details). In
+WF simulations, the ages parameter will be ignored. Beginning with SLiM 3.3,
+the ancestralNucleotides parameter may be used to control the output of the
+ancestral nucleotide sequence in nucleotide-based models (see section 26.1.1
+for format details). If ancestralNucleotides is F, the output will not contain
+ancestral nucleotide information, and so the ancestral sequence will not be
+restored correctly if the saved file is loaded with readPopulationFile(). This
+option is provided because the ancestral sequence may be quite large, Eidos
+events fitness() mateChoice() modifyChild() recombination() interaction()
+reproduction() 568 for models with a long chromosome (e.g., 1 GB if the
+chromosome is 109 bases long, when saved in text format, or 0.25 GB when saved
+in binary format). If the model is not nucleotide-based (as enabled with the
+nucleotideBased parameter to initializeSLiMOptions()), the ancestralNucleotides
+parameter will be ignored. Note that in nucleotide-based models the output
+format will always include the nucleotides associated with any nucleotide-based
+mutations; the ancestralNucleotides flag governs only the ancestral sequence.
+Beginning with SLiM 3.5, the pedigreeIDs parameter may be used to request
+that pedigree IDs be written out (and read in by readFromPopulationFile(),
+subsequently). This option is turned off (F) by default, to preserve backward
+compatibility; if it is turned on (T), different file version values will be
+used, and backward compatibility with previous versions of SLiM will be lost
+(see section 26.1.1). This option may only be used if SLiM's optional pedigree
+tracking has been turned on with initializeSLiMOptions(keepPedigrees=T). Output
+is generally done in a late() event, so that the output reflects the state of
+the simulation at the end of a generation.
 
 Documentation for this function can be found in the official
 \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=681}{SLiM manual: page
@@ -158,34 +159,33 @@ for format details). If the species does not have continuous space enabled,
 the spatialPositions parameter will be ignored. Positional information may
 be output for all output destinations - the Eidos output stream, a text file,
 or a binary file. Beginning with SLiM 3.0, the ages parameter may be used to
-control the output of the ages of individuals in nonWF simulations. If ages
-is F, the output will not contain ages, preserving backward compatibility
-with the output format of SLiM 2.1 and later. If ages is T, ages will be
-output for nonWF models (see section 26.1.1 for format details). In WF
-simulations, the ages parameter will be ignored. Beginning with SLiM 3.3,
-the ancestralNucleotides parameter may be used to control the output of the
-ancestral nucleotide sequence in nucleotide-based models (see section 26.1.1
-for format details). If ancestralNucleotides is F, the output will not contain
-ancestral nucleotide information, and so the ancestral sequence will not be
-restored correctly if the saved file is loaded with readPopulationFile().
-This option is provided because the ancestral sequence may be quite large,
-for models with a long chromosome (e.g., 1 GB if the chromosome is 109 bases
-long, when saved in text format, or 0.25 GB when saved in binary format).
-If the model is not nucleotide-based (as enabled with the nucleotideBased
-parameter to initializeSLiMOptions()), the ancestralNucleotides parameter will
-be ignored. Note that in nucleotide-based models the output format will always
-include the nucleotides associated with any nucleotide-based mutations; the
-ancestralNucleotides flag governs only the ancestral sequence. Beginning with
-SLiM 3.5, the pedigreeIDs parameter may be used to request that pedigree IDs
-be written out (and read in by readFromPopulationFile(), subsequently). This
-option is turned off (F) by default, to preserve backward compatibility; if
-it is turned on (T), different file version values will be used, and backward
-compatibility with previous versions of SLiM will be lost (see section 26.1.1).
-This option may only be used if SLiM's optional pedigree tracking has been
-enabled with initializeSLiMOptions(keepPedigrees=T). Output is generally done in
-a late() event, so that the output reflects the state of the simulation at the
-end of a tick. events mutationEffect() interaction() mateChoice() modifyChild()
-mutation() recombination() reproduction() survival() 681
+control the output of the ages of individuals in nonWF simulations. If ages is
+F, the output will not contain ages, preserving backward compatibility with the
+output format of SLiM 2.1 and later. If ages is T, ages will be output for nonWF
+models (see section 26.1.1 for format details). In WF simulations, the ages
+parameter will be ignored. Beginning with SLiM 3.3, the ancestralNucleotides
+parameter may be used to control the output of the ancestral nucleotide
+sequence in nucleotide-based models (see section 26.1.1 for format details).
+If ancestralNucleotides is F, the output will not contain ancestral nucleotide
+information, and so the ancestral sequence will not be restored correctly if the
+saved file is loaded with readPopulationFile(). This option is provided because
+the ancestral sequence may be quite large, for models with a long chromosome
+(e.g., 1 GB if the chromosome is 109 bases long, when saved in text format, or
+0.25 GB when saved in binary format). If the model is not nucleotide-based (as
+enabled with the nucleotideBased parameter to initializeSLiMOptions()), the
+ancestralNucleotides parameter will be ignored. Note that in nucleotide-based
+models the output format will always include the nucleotides associated with
+any nucleotide-based mutations; the ancestralNucleotides flag governs only
+the ancestral sequence. Beginning with SLiM 3.5, the pedigreeIDs parameter
+may be used to request that pedigree IDs be written out (and read in by
+readFromPopulationFile(), subsequently). This option is turned off (F)
+by default, to preserve backward compatibility; if it is turned on (T),
+different file version values will be used, and backward compatibility with
+previous versions of SLiM will be lost (see section 26.1.1). This option
+may only be used if SLiM's optional pedigree tracking has been enabled with
+initializeSLiMOptions(keepPedigrees=T). Output is generally done in a late()
+event, so that the output reflects the state of the simulation at the end of a
+tick.
 }
 \section{Copyright}{
 

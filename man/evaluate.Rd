@@ -59,11 +59,9 @@ influences fitness or mortality should usually be evaluated in an early() event
 (and an interaction that affects both may need to be evaluated at both times).
 If an interaction is never evaluated for a given subpopulation, it is guaranteed
 that there will be essentially no memory or computational overhead associated
-with the interaction for that events mutationEffect() interaction() mateChoice()
-modifyChild() mutation() recombination() reproduction() survival() 660
-subpopulation. Furthermore, attempting to query an interaction for a receiver or
-exerter in a subpopulation that has not been evaluated is guaranteed to raise an
-error.
+with the interaction for that subpopulation. Furthermore, attempting to query
+an interaction for a receiver or exerter in a subpopulation that has not been
+evaluated is guaranteed to raise an error.
 }
 \section{Copyright}{
 

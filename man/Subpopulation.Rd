@@ -88,9 +88,8 @@ without the complexity and performance overhead of implementing such a callback.
 To scale the fitness of individuals by different (individual-specific) factors,
 see the fitnessScaling property of Individual. The value of fitnessScaling is
 reset to 1.0 every tick, so that any scaling factor set lasts for only a single
-tick. This reset occurs immediately after fitness values are calculated, in
-both WF and nonWF models. events mutationEffect() interaction() mateChoice()
-modifyChild() mutation() recombination() reproduction() survival() 689 }
+tick. This reset occurs immediately after fitness values are calculated, in both
+WF and nonWF models. }
 \item{genomes}{A property of type Genome object. This property is a constant,
 so it is not modifiable. \strong{Property Description:} All of the genomes
 contained by the subpopulation; there are two genomes per diploid individual. }
@@ -152,16 +151,15 @@ A human-readable string name for the subpopulation. By default, this is the
 subpopulation's symbol as a string; for subpopulation p3, for example, name
 defaults to "p3". However, it may be set to whatever you wish except that
 subpopulation names must be unique across time (two different subpopulations
-may not both have the name "foo", even if they never exist at the same time).
-A subpopulation's name may appear as a label in SLiMgui, and it can be useful
-in generating output, events mutationEffect() interaction() mateChoice()
-modifyChild() mutation() recombination() reproduction() survival() 690
-debugging, and other purposes. When tree-sequence recording is enabled, name
-is persisted in the subpopulation's metadata in tree-sequence output, and
-can then be used in Python to identify the subpopulation; if you plan to take
-advantage of that feature, name should follow the syntax of Python identifiers:
-starting with a letter or underscore [a-zA-Z_], followed by letters, digits, or
-underscores [a-zA-Z0-9_], without spaces, hyphens, or other characters. }
+may not both have the name "foo", even if they never exist at the same time). A
+subpopulation's name may appear as a label in SLiMgui, and it can be useful in
+generating output, debugging, and other purposes. When tree-sequence recording
+is enabled, name is persisted in the subpopulation's metadata in tree-sequence
+output, and can then be used in Python to identify the subpopulation; if
+you plan to take advantage of that feature, name should follow the syntax of
+Python identifiers: starting with a letter or underscore [a-zA-Z_], followed by
+letters, digits, or underscores [a-zA-Z0-9_], without spaces, hyphens, or other
+characters. }
 \item{selfingRate}{A property of type float. It is of length one (a singleton).
 This property is a constant, so it is not modifiable. \strong{Property
 Description:} The expected value of the fraction of children in the next

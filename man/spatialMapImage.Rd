@@ -57,31 +57,29 @@ will be sampled from the spatial map at the center of each of these pixels.
 If centers is F (the default), a width × height grid of lines will be overlaid
 on top of the spatial map, and values will be sampled from the spatial map
 at the vertices of the grid. If interpolation is not enabled for the spatial
-map, these two options will both recover the original matrix of values used to
-define the spatial map (assuming, here and below, that events mutationEffect()
-interaction() mateChoice() modifyChild() mutation() recombination()
-reproduction() survival() 700 width and height are NULL). If interpolation is
-enabled for the spatial map, however, centers == F will recover the original
-values, but will not capture the "typical" value of each pixel in the image;
-centers == T, on the other hand, will not recover the original values, but will
-capture the "typical" value of each pixel in the image (i.e., the value at the
-center of each pixel, as produced by interpolation). The figures in section
-15.11 may be helpful for visualizing the difference between these options; the
-overlaid grids span the full extent of the spatial map, just as shown in that
-section. If color is T (the default), the valueRange and colors parameters
-supplied to defineSpatialMap() will be used to translate map values to RGB color
-values as described in the documentation of that method, providing the same
-appearance as in SLiMgui; of course those parameters must have been supplied,
-otherwise an error will result. If color is F, on the other hand, a grayscale
-image will be produced that directly reflects the map values without color
-translation. In this case, this method needs to translate map values, which
-can have any float value, into grayscale pixel values that are integers in [0,
-255]. To do so, the map values are multiplied by 255.0, clamped to [0.0, 255.0],
-and then rounded to the nearest integer. This translation scheme essentially
-assumes that map values are in [0, 1]; for spatial maps that were defined using
-the floatK channel of a grayscale PNG image, this should recover the original
-image's pixel values. (If a different translation scheme is desired, color=T
-with the desired valueRange and colors should be used.)
+map, these two options will both recover the original matrix of values used
+to define the spatial map (assuming, here and below, that width and height are
+NULL). If interpolation is enabled for the spatial map, however, centers == F
+will recover the original values, but will not capture the "typical" value of
+each pixel in the image; centers == T, on the other hand, will not recover the
+original values, but will capture the "typical" value of each pixel in the image
+(i.e., the value at the center of each pixel, as produced by interpolation). The
+figures in section 15.11 may be helpful for visualizing the difference between
+these options; the overlaid grids span the full extent of the spatial map,
+just as shown in that section. If color is T (the default), the valueRange and
+colors parameters supplied to defineSpatialMap() will be used to translate map
+values to RGB color values as described in the documentation of that method,
+providing the same appearance as in SLiMgui; of course those parameters must
+have been supplied, otherwise an error will result. If color is F, on the other
+hand, a grayscale image will be produced that directly reflects the map values
+without color translation. In this case, this method needs to translate map
+values, which can have any float value, into grayscale pixel values that are
+integers in [0, 255]. To do so, the map values are multiplied by 255.0, clamped
+to [0.0, 255.0], and then rounded to the nearest integer. This translation
+scheme essentially assumes that map values are in [0, 1]; for spatial maps that
+were defined using the floatK channel of a grayscale PNG image, this should
+recover the original image's pixel values. (If a different translation scheme is
+desired, color=T with the desired valueRange and colors should be used.)
 }
 \section{Copyright}{
 

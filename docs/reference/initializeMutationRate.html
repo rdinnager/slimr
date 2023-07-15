@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -116,27 +116,28 @@ default value is <code>"*"</code>. See details for description.</p></dd>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Documentation for this function can be found in the official <a href="http://%0Abenhaller.com/slim/SLiM_Manual.pdf#page=520" class="external-link">SLiM manual: page 520</a>.</p>
-<p>Set the mutation rate per base position per generation along the
-chromosome. To be precise, this mutation rate is the expected mean number of
-mutations that will occur per base position per generation (per new offspring
-genome being generated); note that this is different from how the recombination
-rate is defined (see initializeRecombinationRate()). The number of mutations
-that actually occurs at a given base position when generating an offspring
-genome is, in effect, drawn from a Poisson distribution with that expected
-mean (but under the hood SLiM uses a mathematically equivalent but much more
-efficient strategy). It is possible for this Poisson draw to indicate that two
-or more new mutations have arisen at the same base position, particularly when
-the mutation rate is very high; in this case, the new mutations will be added to
-the site one at a time, and as always the mutation stacking policy (see section
-1.5.3) will be followed. There are two ways to call this function. If the
-optional ends parameter is NULL (the default), then rates must be a singleton
-value that specifies a single mutation rate to be used along the entire
-chromosome. If, on the other hand, ends is supplied, then rates and ends must be
-the same length, and the values in ends must be specified in ascending order. In
-that case, rates and ends taken together specify the mutation rates to be used
-along successive contiguous stretches of the chromosome, from beginning to end;
-the last position specified in ends should extend to the end of the chromosome
+    <p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=622" class="external-link">SLiM manual: page
+622</a>.</p>
+<p>Set the mutation rate per base position per gamete. To be precise, this
+mutation rate is the expected mean number of mutations that will occur per base
+position per gamete; note that this is different from how the recombination rate
+is defined (see initializeRecombinationRate()). The number of mutations that
+actually occurs at a given base position when generating an offspring genome
+is, in effect, drawn from a Poisson distribution with that expected mean (but
+under the hood SLiM uses a mathematically equivalent but much more efficient
+strategy). It is possible for this Poisson draw to indicate that two or more new
+mutations have arisen at the same base position, particularly when the mutation
+rate is very high; in this case, the new mutations will be added to the site
+one at a time, and as always the mutation stacking policy (see section 1.5.3)
+will be followed. There are two ways to call this function. If the optional
+ends parameter is NULL (the default), then rates must be a singleton value
+that specifies a single mutation rate to be used along the entire chromosome.
+If, on the other hand, ends is supplied, then rates and ends must be the same
+length, and the values in ends must be specified in ascending order. In that
+case, rates and ends taken together specify the mutation rates to be used along
+successive contiguous stretches of the chromosome, from beginning to end; the
+last position specified in ends should extend to the end of the chromosome
 (i.e. at least to the end of the last genomic element, if not further). For
 example, if the following call is made: initializeMutationRate(c(1e-7, 2.5e-8),
 c(5000, 9999)); then the result is that the mutation rate for bases 0...5000
@@ -178,7 +179,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Initialize: 
-<code><a href="Initialize.html">Initialize</a></code>,
+<code><a href="Initialize.html">Init</a></code>,
 <code><a href="initializeAncestralNucleotides.html">initializeAncestralNucleotides</a>()</code>,
 <code><a href="initializeGeneConversion.html">initializeGeneConversion</a>()</code>,
 <code><a href="initializeGenomicElementType.html">initializeGenomicElementType</a>()</code>,
@@ -191,6 +192,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="initializeSLiMModelType.html">initializeSLiMModelType</a>()</code>,
 <code><a href="initializeSLiMOptions.html">initializeSLiMOptions</a>()</code>,
 <code><a href="initializeSex.html">initializeSex</a>()</code>,
+<code><a href="initializeSpecies.html">initializeSpecies</a>()</code>,
 <code><a href="initializeTreeSeq.html">initializeTreeSeq</a>()</code></p></div>
     </div>
     <div id="author">
@@ -211,7 +213,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

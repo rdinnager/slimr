@@ -115,11 +115,9 @@ effectively disable automatic flushing, except at the end of the simulation (but
 be aware that this may use a large amount of memory for large log files). In
 any case, the log file will be created immediately, with its requested initial
 contents; the initial write is not buffered. When compression is not enabled,
-the flushInterval setting is ignored. events mutationEffect() interaction()
-mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-636 The LogFile documentation discusses how to configure and use LogFile to
-write out the data you are interested in from your simulation; see section
-24.10.
+the flushInterval setting is ignored. The LogFile documentation discusses how to
+configure and use LogFile to write out the data you are interested in from your
+simulation; see section 24.10.
 
 Documentation for this function can be found in the official
 \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
@@ -136,31 +134,32 @@ zlib as they are written, and the standard .gz extension for gzip-compressed
 files will be appended to the filename in filePath if it is not already present.
 The sep parameter specifies the separator between data values within a row.
 The default of "," will generate a "comma-separated value" (CSV) file, while
-passing sep="\\t" will use a tab separator instead to generate a "tab-separated
-value" (TSV) file. Other values for sep may also be used, but are less standard.
-LogTable supports periodic automatic logging of a new row of data, enabled
-by supplying a non-NULL value for logInterval. In this case, a new row will
-be logged (as if logRow() were called on the LogFile) at the end of every
-logInterval generations (just before the generation counter increments, in both
-WF and nonWF models), starting at the end of the generation in which the LogFile
-was created. A logInterval of 1 will cause automatic logging at the end of every
-generation, whereas a logInterval of NULL disables automatic logging. Automatic
-logging can always be disabled or reconfigured later with the LogFile method
-setLogInterval(), or logging can be triggered manually by calling logRow().
-When compression is enabled, LogFile flushes new data lazily by default, for
-performance reasons, buffering data for multiple rows before writing to disk.
-Passing a non-NULL value for flushInterval requests a flush every flushInterval
-rows (with a value of 1 providing unbuffered operation). Note that flushing
-very frequently will likely result in both lower performance and a larger
-final file size (in one simple test, 48943 bytes instead of 4280 bytes, or
-more than a 10× increase in size). Alternatively, passing a very large value
-for flushInterval will effectively disable automatic flushing, except at the
-end of the simulation (but be aware that this may use a large amount of memory
-for large log files). In any case, the log file will be created immediately,
-with its requested initial contents; the initial write is not buffered. When
-compression is not enabled, the flushInterval setting is ignored. The LogFile
-documentation discusses how to configure and use LogFile to write out the data
-you are interested in from your simulation; see section 24.9.
+passing sep="\\t" will use a tab separator Eidos events fitness() mateChoice()
+modifyChild() recombination() interaction() reproduction() 566 instead to
+generate a "tab-separated value" (TSV) file. Other values for sep may also be
+used, but are less standard. LogTable supports periodic automatic logging of a
+new row of data, enabled by supplying a non-NULL value for logInterval. In this
+case, a new row will be logged (as if logRow() were called on the LogFile) at
+the end of every logInterval generations (just before the generation counter
+increments, in both WF and nonWF models), starting at the end of the generation
+in which the LogFile was created. A logInterval of 1 will cause automatic
+logging at the end of every generation, whereas a logInterval of NULL disables
+automatic logging. Automatic logging can always be disabled or reconfigured
+later with the LogFile method setLogInterval(), or logging can be triggered
+manually by calling logRow(). When compression is enabled, LogFile flushes new
+data lazily by default, for performance reasons, buffering data for multiple
+rows before writing to disk. Passing a non-NULL value for flushInterval requests
+a flush every flushInterval rows (with a value of 1 providing unbuffered
+operation). Note that flushing very frequently will likely result in both
+lower performance and a larger final file size (in one simple test, 48943 bytes
+instead of 4280 bytes, or more than a 10× increase in size). Alternatively,
+passing a very large value for flushInterval will effectively disable automatic
+flushing, except at the end of the simulation (but be aware that this may use
+a large amount of memory for large log files). In any case, the log file will
+be created immediately, with its requested initial contents; the initial write
+is not buffered. When compression is not enabled, the flushInterval setting is
+ignored. The LogFile documentation discusses how to configure and use LogFile to
+write out the data you are interested in from your simulation; see section 24.9.
 }
 \section{Copyright}{
 

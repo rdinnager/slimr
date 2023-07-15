@@ -61,10 +61,8 @@ This property is a constant, so it is not modifiable. \strong{Property
 Description:} The position in the chromosome of this mutation. }
 \item{selectionCoeff}{A property of type float. It is of length one
 (a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The selection coefficient of the mutation,
-drawn from the distribution of fitness effects of its MutationType. events
-mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 702 }
+\strong{Property Description:} The selection coefficient of the mutation, drawn
+from the distribution of fitness effects of its MutationType. }
 \item{subpopID}{A property of type integer. It is of length one (a singleton).
 This property is a variable, so it is modifiable. \strong{Property Description:}
 The identifier of the subpopulation in which this mutation arose. This value

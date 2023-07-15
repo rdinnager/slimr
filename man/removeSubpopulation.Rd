@@ -35,14 +35,12 @@ representing the subpopulation is undeﬁned. The subpopulation object itself
 remains unchanged until children are next generated (at which point it is
 deallocated), but it is no longer part of the simulation and should not be
 used. Note that this method is only for use in nonWF models, in which there
-is a distinction between a subpopulation being empty and a subpopulation
-being removed from the simulation; an empty subpopulation may be re-colonized
-by migrants, whereas as a removed subpopulation no longer exists at all.
-WF models do not make this distinction; when a subpopulation is empty it is
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 698 automatically removed. WF
-models should therefore call setSubpopulationSize(0) instead of this method;
-setSubpopulationSize() is the standard way for WF models to change the
+is a distinction between a subpopulation being empty and a subpopulation being
+removed from the simulation; an empty subpopulation may be re-colonized by
+migrants, whereas as a removed subpopulation no longer exists at all. WF models
+do not make this distinction; when a subpopulation is empty it is automatically
+removed. WF models should therefore call setSubpopulationSize(0) instead of this
+method; setSubpopulationSize() is the standard way for WF models to change the
 subpopulation size, including to a size of 0.
 }
 \section{Copyright}{

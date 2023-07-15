@@ -58,11 +58,12 @@ for the mutations to be returned (either as a string, "A" / "C" / "G" / "T",
 or as an integer, 0 / 1 / 2 / 3 respectively). Parameter tag, if non-NULL,
 may specify a tag value for the mutations to be returned. Parameter id, if
 non-NULL, may specify a required value for the id property of the mutations
-to be returned. This method is shorthand for getting the mutations property of
-the subpopulation, and then using operator [] to select only mutations with the
-desired properties; besides being much simpler than the equivalent Eidos code,
-it is also much faster. Note that if you only need to select on mutation type,
-the mutationsOfType() method will be even faster.
+to be returned. This method is shorthand for getting the mutations property
+of the subpopulation, and then using operator [] to select only mutations with
+the desired properties; besides being much simpler than the equivalent Eidos
+code, it is also much faster. Note that if you only need to select on mutation
+type, the mutationsOfType() method will be even faster. Eidos events fitness()
+mateChoice() modifyChild() recombination() interaction() reproduction() 574
 }
 \section{Copyright}{
 

@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -106,16 +106,18 @@ full SLiM script.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Documentation for this function can be found in the official <a href="http://%0Abenhaller.com/slim/SLiM_Manual.pdf#page=533" class="external-link">SLiM manual: page 533</a>.</p>
+    <p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=640" class="external-link">SLiM manual: page
+640</a>.</p>
 <p>Add the existing mutations in mutations to the genome, if they are
 not already present (if they are already present, they will be ignored), and
 if the addition is not prevented by the mutation stacking policy (see the
-mutationStackPolicy property of MutationType, section 24.10.1). Calling this
-will normally affect the fitness values calculated at the end of the current
-generation; if you want current fitness values to be affected, you can call
-SLiMSim's method recalculateFitness() - but see the documentation of that
+mutationStackPolicy property of MutationType, section 24.11.1). Calling this
+will normally affect the fitness values calculated toward the end of the
+current tick; if you want current fitness values to be affected, you can call
+the Species method recalculateFitness() - but see the documentation of that
 method for caveats. Note that in nonWF models that use tree-sequence recording,
-mutations cannot be added to an individual after the generation in which the
+mutations cannot be added to an individual after the tick in which the
 individual is created (i.e., when the age of the individual is greater than 0),
 to prevent the possibility of inconsistencies in the recorded tree sequence.</p>
     </div>
@@ -134,7 +136,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Genome: 
-<code><a href="Genome.html">Genome</a></code>,
+<code><a href="Genome.html">G</a></code>,
 <code><a href="addNewDrawnMutation.html">addNewDrawnMutation</a>()</code>,
 <code><a href="addNewMutation.html">addNewMutation</a>()</code>,
 <code><a href="containsMarkerMutation.html">containsMarkerMutation</a>()</code>,
@@ -171,7 +173,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

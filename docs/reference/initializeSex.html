@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -89,19 +89,14 @@ full SLiM script.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">initializeSex</span><span class="op">(</span><span class="va">chromosomeType</span>, <span class="va">xDominanceCoeff</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">initializeSex</span><span class="op">(</span><span class="va">chromosomeType</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>chromosomeType</dt>
-<dd><p>An object of type string or numeric. Must be of length 1
-(a singleton). See details for description.</p></dd>
-
-
-<dt>xDominanceCoeff</dt>
-<dd><p>An object of type string or numeric. Must be of length 1
-(a singleton). The default value is <code>1</code>. See details for description.</p></dd>
+<dd><p>An object of type string. Must be of length 1 (a
+singleton). See details for description.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -112,17 +107,21 @@ full SLiM script.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Documentation for this function can be found in the official <a href="http://%0Abenhaller.com/slim/SLiM_Manual.pdf#page=523" class="external-link">SLiM manual: page 523</a>.</p>
+    <p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=624" class="external-link">SLiM manual: page
+624</a>.</p>
 <p>Enable and configure sex in the simulation. The argument chromosomeType
 gives the type of chromosome to be simulated; this should be "A", "X", or "Y".
-If the chromosomeType is "X", the optional xDominanceCoeff parameter can supply
-the dominance coefficient used when a mutation is present in an XY male, and is
-thus "heterozygous" (but in a different sense than the heterozygosity of an XX
-female with one copy of the mutation). Calling this function has the side effect
-of enabling sex in the simulation; individuals will be male and female (rather
-than hermaphroditic) regardless of the chromosomeType chosen for simulation.
-There is no way to disable sex once it has been enabled; if you don't want to
-have sex, don't call this function.</p>
+Calling this function has the side effect of enabling sex in the simulation;
+individuals will be male and female (rather than hermaphroditic) regardless of
+the chromosomeType chosen for simulation. There is no way to disable sex once
+it has been enabled; if you don't want to have sex, don't call this function.
+The xDominanceCoeff parameter has been deprecated and removed. In SLiM 3.7 and
+later, use the haploidDominanceCoeff property of MutationType instead. If the
+chromosomeType is "X", the optional xDominanceCoeff parameter can supply the
+dominance coefficient used when a mutation is present in an XY male, and is thus
+"heterozygous" (but in a different sense than the heterozygosity of an XX female
+with one copy of the mutation).</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -139,7 +138,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Initialize: 
-<code><a href="Initialize.html">Initialize</a></code>,
+<code><a href="Initialize.html">Init</a></code>,
 <code><a href="initializeAncestralNucleotides.html">initializeAncestralNucleotides</a>()</code>,
 <code><a href="initializeGeneConversion.html">initializeGeneConversion</a>()</code>,
 <code><a href="initializeGenomicElementType.html">initializeGenomicElementType</a>()</code>,
@@ -152,6 +151,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="initializeRecombinationRate.html">initializeRecombinationRate</a>()</code>,
 <code><a href="initializeSLiMModelType.html">initializeSLiMModelType</a>()</code>,
 <code><a href="initializeSLiMOptions.html">initializeSLiMOptions</a>()</code>,
+<code><a href="initializeSpecies.html">initializeSpecies</a>()</code>,
 <code><a href="initializeTreeSeq.html">initializeTreeSeq</a>()</code></p></div>
     </div>
     <div id="author">
@@ -172,7 +172,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -54,11 +54,9 @@ and exerter subpopulations, and positions saved at evaluation time will be
 used. If the InteractionType is non-spatial, this method may not be called.
 Note that this method uses interaction eligibility as a criterion; it will not
 return neighbors that cannot exert an interaction upon the receiver (due to
-sex-segregation, e.g.). (It will also never return the receiver as a neighbor
-of itself.) To find all neighbors of the receiver, whether they can interact
-with it or not, use nearestNeighbors(). events mutationEffect() interaction()
-mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-662
+sex-segregation, e.g.). (It will also never return the receiver as a neighbor of
+itself.) To find all neighbors of the receiver, whether they can interact with
+it or not, use nearestNeighbors().
 }
 \section{Copyright}{
 

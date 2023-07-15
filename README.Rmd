@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# slimr <img src='man/figures/logo.png' align="right" height="278" />
+# slimr <img src='man/figures/logo.png' style="float:right; height:278px;"/>
 
 [https://rdinnager.github.io/slimr/](https://rdinnager.github.io/slimr/)
 

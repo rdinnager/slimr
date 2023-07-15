@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,36 +40,33 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
+      <a href="../articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="../articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
+      <a href="../articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
       <a href="../articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
+    </li>
+    <li>
+      <a href="../articles/simple_nucleotide_example.html">Simple Example of a Simulation using Nucleotides</a>
     </li>
     <li>
       <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
@@ -80,7 +79,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/rdinnager/slimr/">
+  <a href="https://github.com/rdinnager/slimr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -95,13 +94,13 @@
 
       
 
-      </header><script src="installing_SLiM_for_slimr_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>How to Install SLiM for Use with slimr</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/rdinnager/slimr/blob/master/vignettes/installing_SLiM_for_slimr.Rmd"><code>vignettes/installing_SLiM_for_slimr.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rdinnager/slimr/blob/HEAD/vignettes/installing_SLiM_for_slimr.Rmd" class="external-link"><code>vignettes/installing_SLiM_for_slimr.Rmd</code></a></small>
       <div class="hidden name"><code>installing_SLiM_for_slimr.Rmd</code></div>
 
     </div>
@@ -109,15 +108,27 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rdinnager.github.io/slimr">slimr</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p>This vignette will try and guide you through installing SLiM on your machine to use with <code>slimr</code>.</p>
-<p>After installing <code>slimr</code> and loading it for the first time you will probably see the following message:</p>
-<pre><code>#&gt; Welcome to the slimr package. slimr requires SLiM population genetics forward simulation software. Run slim_setup() for slimr to attempt to download and install the package automatically. If that doesn't work, try installing manually by going to https://messerlab.org/slim/ and following the instructions.</code></pre>
-<p>This let’s you know that SLiM is not yet installed, and you will need to install it in order to use much of the functionality of <code>slimr</code>. It suggests trying the function <code><a href="../reference/slim_setup.html">slim_setup()</a></code>. It should work on any platform, though it has only been tested extensively on Windows and Linux.</p>
-<div id="installing-on-windows" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installing-on-windows" class="anchor"></a>Installing on Windows</h2>
-<p>Since SLiM is only available for unix based systems, in order to use SLiM on Windows, you will need to have Windows Subsystem for Linux (WSL) installed on your system. WSL is available for Windows 10. If it is not already installed, you can follow the directions here to install it: <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">https://docs.microsoft.com/en-us/windows/wsl/install-win10</a>. We recommend that you install the newest Ubuntu flavour when choosing a linux distribution, as <code>slimr</code> has only been tested on Ubuntu WSL.</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rdinnager.github.io/slimr">slimr</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>This vignette will try and guide you through installing SLiM on your
+machine to use with <code>slimr</code>.</p>
+<p>After installing <code>slimr</code> and loading it for the first time
+you will probably see the following message:</p>
+<pre><code><span><span class="co">#&gt; Welcome to the slimr package. slimr requires SLiM population genetics forward simulation software. Run slim_setup() for slimr to attempt to download and install the package automatically. If that doesn't work, try installing manually by going to https://messerlab.org/slim/ and following the instructions.</span></span></code></pre>
+<p>This let’s you know that SLiM is not yet installed, and you will need
+to install it in order to use much of the functionality of
+<code>slimr</code>. It suggests trying the function
+<code><a href="../reference/slim_setup.html">slim_setup()</a></code>. It should work on any platform, though it has
+only been tested extensively on Windows and Linux.</p>
+<div class="section level2">
+<h2 id="installing-on-windows">Installing on Windows<a class="anchor" aria-label="anchor" href="#installing-on-windows"></a>
+</h2>
+<p>Since SLiM is only available for unix based systems, in order to use
+SLiM on Windows, you will need to have Windows Subsystem for Linux (WSL)
+installed on your system. WSL is available for Windows 10. If it is not
+already installed, you can follow the directions here to install it: <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10" class="external-link">https://docs.microsoft.com/en-us/windows/wsl/install-win10</a>.
+We recommend that you install the newest Ubuntu flavour when choosing a
+linux distribution, as <code>slimr</code> has only been tested on Ubuntu
+WSL.</p>
 </div>
   </div>
 
@@ -132,11 +143,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Russell Dinnage, Stephen Sarre, Bernd Gruber, Richard Duncan.</p>
+  <p></p>
+<p>Developed by Russell Dinnage, Stephen Sarre, Bernd Gruber, Richard Duncan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -144,6 +157,8 @@
 
   
 
+
+  
 
   </body>
 </html>

@@ -32,14 +32,15 @@ full SLiM script.
 Documentation for this function can be found in the official
 \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
 
-Mark the individuals specified by individuals to be kept across
-tree sequence table simplification. This method may only be called if tree
-sequence recording has been turned on with initializeTreeSeq(). All currently
-living individuals are always kept across simplification; this method does
-not need to be called, and indeed should not be called, for that purpose.
-Instead, treeSeqRememberIndividuals() allows any individual, including dead
-individuals, to be kept in the final tree sequence. Typically this would be
-used, for example, to keep particular individuals that you wanted to be able
+Mark the individuals specified by individuals to be kept across tree
+sequence table simplification. This method may only be called if tree sequence
+recording has been turned on with initializeTreeSeq(). All currently living
+individuals are always kept across simplification; this method does not need
+to be called, and indeed should not be called, for that purpose. Instead,
+treeSeqRememberIndividuals() allows any individual, including dead individuals,
+to be kept in Eidos events fitness() mateChoice() modifyChild() recombination()
+interaction() reproduction() 575 the final tree sequence. Typically this would
+be used, for example, to keep particular individuals that you wanted to be able
 to trace ancestry back to in later analysis. However, this is not the typical
 usage pattern for tree sequence recording; most models will not need to call
 this method. There are two ways to keep individuals across simplification.

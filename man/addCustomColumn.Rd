@@ -45,11 +45,9 @@ out NA), or a singleton value of any non-object type. The context parameter will
 be set up as a pseudo-parameter, named context, when source is called, allowing
 the same source code to be used to generate values for multiple data columns;
 you might, for example, provide the particular Subpopulation object here that
-you wish source to use events mutationEffect() interaction() mateChoice()
-modifyChild() mutation() recombination() reproduction() survival() 666 for
-its calculations. This is optional; if the default value of NULL is used, then
-context will be NULL when source is called. See addMeanSDColumns() for a useful
-variant.
+you wish source to use for its calculations. This is optional; if the default
+value of NULL is used, then context will be NULL when source is called. See
+addMeanSDColumns() for a useful variant.
 }
 \section{Copyright}{
 

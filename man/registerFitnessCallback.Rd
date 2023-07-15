@@ -59,7 +59,8 @@ later. The registered callback is added to the end of the list of registered
 SLiMEidosBlock objects, and is active immediately; it may be eligible to execute
 in the current generation (see section 25.9 for details). The new SLiMEidosBlock
 will be defined as a global variable immediately by this method (see section
-24.11), and will also be returned by this method.
+24.11), and will also be returned by this method. Eidos events fitness()
+mateChoice() modifyChild() recombination() interaction() reproduction() 571
 }
 \section{Copyright}{
 

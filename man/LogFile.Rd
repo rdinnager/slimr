@@ -49,8 +49,6 @@ with addSuppliedColumn(). LogFile expects to be fully configured, with calls to
 add...()
 methods to add generators, before the first row of data is written out, to
 ensure consistency in the
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 665
 file's data. When the first row of data is written (or buffered), the LogFile's
 configuration will then
 be frozen, and calls to add...() will no longer be allowed. Columns will be

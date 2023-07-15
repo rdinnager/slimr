@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -121,26 +121,31 @@ The default value is <code>NULL</code>. See details for description.</p></dd>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Documentation for this function can be found in the official <a href="http://%0Abenhaller.com/slim/SLiM_Manual.pdf#page=593" class="external-link">SLiM manual: page 593</a>.</p>
+    <p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=707" class="external-link">SLiM manual: page
+707</a>.</p>
 <p>Calculates the heterozygosity for a vector of genomes, based upon
-the frequencies of mutations in the genomes. Often genomes will be all of
-the genomes in a subpopulation, or in the entire population, but any genome
-vector may be used. By default, with muts=NULL, the calculation is based upon
-all mutations in the simulation; the calculation can instead be based upon a
-subset of mutations, such as mutations of a specific mutation type, by passing
-the desired vector of mutations for muts. The calculation can be narrowed
-to apply to only a window - a subrange of the full chromosome - by passing
-the interval bounds [start, end] for the desired window. In this case, the
-vector of mutations used for the calculation will be subset to include only
-mutations within the specified window. The default behavior, with start and
-end of NULL, provides the genome-wide heterozygosity. The implementation of
-calcHeterozygosity(), viewable with functionSource(), treats every mutation as
-independent in the heterozygosity calculations. One could regard this choice
-as embodying an infinite-sites interpretation of the segregating mutations.
-In most biologically realistic models, such genetic states will be quite rare,
-and so the impact of this choice will be negligible; however, in some models
-this distinction may be important. See calcPairHeterozygosity() for further
-discussion.</p>
+the frequencies of mutations in the genomes. The result is the expected
+heterozygosity, for the individuals to which the genomes belong, assuming that
+they are under Hardy-Weinberg equilibrium; this can be compared to the observed
+heterozygosity of an individual, as calculated by calcPairHeterozygosity().
+Often genomes will be all of the genomes in a subpopulation, or in the entire
+population, but any genome vector may be used. By default, with muts=NULL,
+the calculation is based upon all mutations in the simulation; the calculation
+can instead be based upon a subset of mutations, such as mutations of a
+specific mutation type, by passing the desired vector of mutations for muts.
+The calculation can be narrowed to apply to only a window - a subrange of the
+full chromosome - by passing the interval bounds [start, end] for the desired
+window. In this case, the vector of mutations used for the calculation will
+be subset to include only mutations within the specified window. The default
+behavior, with start and end of NULL, provides the genome-wide heterozygosity.
+The implementation of calcHeterozygosity(), viewable with functionSource(),
+treats every mutation as independent in the heterozygosity calculations.
+One could regard this choice as embodying an infinite-sites interpretation
+of the segregating mutations. In most biologically realistic models, such
+genetic states will be quite rare, and so the impact of this choice will be
+negligible; however, in some models this distinction may be important. See
+calcPairHeterozygosity() for further discussion.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -157,8 +162,9 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other SLiMBuiltin: 
-<code><a href="SLiMBuiltin.html">SLiMBuiltin</a></code>,
+<code><a href="SLiMBuiltin.html">SB</a></code>,
 <code><a href="calcFST.html">calcFST</a>()</code>,
+<code><a href="calcInbreedingLoad.html">calcInbreedingLoad</a>()</code>,
 <code><a href="calcPairHeterozygosity.html">calcPairHeterozygosity</a>()</code>,
 <code><a href="calcVA.html">calcVA</a>()</code>,
 <code><a href="calcWattersonsTheta.html">calcWattersonsTheta</a>()</code>,
@@ -168,7 +174,9 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="mmKimura.html">mmKimura</a>()</code>,
 <code><a href="nucleotideCounts.html">nucleotideCounts</a>()</code>,
 <code><a href="nucleotideFrequencies.html">nucleotideFrequencies</a>()</code>,
-<code><a href="nucleotidesToCodons.html">nucleotidesToCodons</a>()</code></p></div>
+<code><a href="nucleotidesToCodons.html">nucleotidesToCodons</a>()</code>,
+<code><a href="summarizeIndividuals.html">summarizeIndividuals</a>()</code>,
+<code><a href="treeSeqMetadata.html">treeSeqMetadata</a>()</code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -188,7 +196,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

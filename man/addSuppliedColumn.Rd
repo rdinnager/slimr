@@ -38,12 +38,10 @@ value may (optionally) be provided by calling setSuppliedValue() with a value
 for columnName. That value will be used for the column the next time a row is
 generated (whether automatically or by a call to logRow()), and the column's
 value will subsequently be undefined again. In other words, for any given logged
-row the default of NA may be events mutationEffect() interaction() mateChoice()
-modifyChild() mutation() recombination() reproduction() survival() 667 kept, or
-a different value may be supplied. This allows the value for the column to be
-set at any point during the tick cycle, which can be convenient if the column's
-value depends upon transient state that is no longer available at the time the
-row is logged.
+row the default of NA may be kept, or a different value may be supplied. This
+allows the value for the column to be set at any point during the tick cycle,
+which can be convenient if the column's value depends upon transient state that
+is no longer available at the time the row is logged.
 }
 \section{Copyright}{
 

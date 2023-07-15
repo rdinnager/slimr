@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -107,19 +107,21 @@ singleton). See details for description.</p></dd>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Documentation for this function can be found in the official <a href="http://%0Abenhaller.com/slim/SLiM_Manual.pdf#page=558" class="external-link">SLiM manual: page 558</a>.</p>
+    <p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=670" class="external-link">SLiM manual: page
+670</a>.</p>
 <p>Set the selection coefficient of the mutation to selectionCoeff. The
 selection coefficient will be changed for all individuals that possess the
 mutation, since they all share a single Mutation object (note that the dominance
 coefficient will remain unchanged, as it is determined by the mutation type).
 This is normally a constant in simulations, so be sure you know what you are
-doing; often setting up a fitness() callback (see section 25.2) is preferable,
-in order to modify the selection coefficient in a more limited and controlled
-fashion (see section 10.5 for further discussion of this point). Changing this
-will normally affect the fitness values calculated at the end of the current
-generation; if you want current fitness values to be affected, you can call
-SLiMSim's method recalculateFitness() - but see the documentation of that method
-for caveats.</p>
+doing; often setting up a mutationEffect() callback (see section 25.2) is
+preferable, in order to modify the selection coefficient in a more limited and
+controlled fashion (see section 10.5 for further discussion of this point).
+Changing this will normally affect the fitness values calculated toward the end
+of the current tick; if you want current fitness values to be affected, you can
+call the Species method recalculateFitness() - but see the documentation of that
+method for caveats.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -136,7 +138,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Mutation: 
-<code><a href="Mutation.html">Mutation</a></code>,
+<code><a href="Mutation.html">M</a></code>,
 <code><a href="setMutationType.html">setMutationType</a>()</code></p></div>
     </div>
     <div id="author">
@@ -157,7 +159,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

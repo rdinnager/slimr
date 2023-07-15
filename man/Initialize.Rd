@@ -60,8 +60,6 @@ not be safe. (Similarly,
 in multispecies models, the community object and the objects representing
 individual species are
 not yet defined.)
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 617
 The above initialize() callback syntax implicitly declares a single species,
 with the default
 name of sim, and therefore sets up a single-species model. It is also possible
@@ -108,6 +106,8 @@ Once all initialize() callbacks have executed, in the order in which they are
 specified in the
 SLiM input file, the simulation will begin. The tick number at which it starts
 is determined by the
+Eidos events you have defined (see section 25.1); the first tick in which an
+Eidos event is scheduled
 to execute is the tick at which the simulation starts. Similarly, the simulation
 will terminate after
 the last tick for which a script block (either an event or a callback) is

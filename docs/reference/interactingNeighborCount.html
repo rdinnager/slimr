@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -89,13 +89,19 @@ full SLiM script.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">interactingNeighborCount</span><span class="op">(</span><span class="va">individuals</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">interactingNeighborCount</span><span class="op">(</span><span class="va">receivers</span>, <span class="va">exerterSubpop</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>individuals</dt>
+    <dl><dt>receivers</dt>
 <dd><p>An object of type Individual object. See details for
+description.</p></dd>
+
+
+<dt>exerterSubpop</dt>
+<dd><p>An object of type null or Subpopulation object. Must be
+of length 1 (a singleton). The default value is <code>NULL</code>. See details for
 description.</p></dd>
 
 </dl></div>
@@ -107,21 +113,29 @@ description.</p></dd>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Documentation for this function can be found in the official <a href="http://%0Abenhaller.com/slim/SLiM_Manual.pdf#page=551" class="external-link">SLiM manual: page 551</a>.</p>
-<p>Returns the number of interacting individuals for each individual
-in individuals, within the maximum interaction distance according to the
-distance metric of the InteractionType. More specifically, this method counts
-the number of individuals which can exert an interaction upon each focal
-individual; it does not count individuals which only feel an interaction from
-a focal individual. This method is similar to nearestInteractingNeighbors()
-(when passed a large count so as to guarantee that all interacting individuals
-are returned), but this method returns only a count of the interacting
-individuals, not a vector containing the individuals. This method may also be
-called in a vectorized fashion, with a non-singleton vector of individuals,
-unlike nearestInteractingNeighbors(). Note that this method uses interaction
-eligibility as a criterion; it will not count neighbors that cannot exert an
-interaction upon a focal individual (due to sex-segregation, e.g.). (It also
-does not count a focal individual as a neighbor of itself.)</p>
+    <p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=661" class="external-link">SLiM manual: page
+661</a>.</p>
+<p>Returns the number of interacting individuals for each individual in
+receivers, within the maximum interaction distance according to the distance
+metric of the InteractionType, from among the exerters in exerterSubpop (or, if
+that is NULL, then from among all individuals in the receiver's subpopulation).
+More specifically, this method counts the number of individuals which can exert
+an interaction upon each receiver. All of the receivers must belong to a single
+subpopulation, and all of the exerters must belong to a single subpopulation,
+but those two subpopulations do not need to be the same. The evaluate() method
+must have been previously called for the receiver and exerter subpopulations,
+and positions saved at evaluation time will be used. This method is similar to
+nearestInteractingNeighbors() (when passed a large count so as to guarantee that
+all interacting individuals are returned), but this method returns only a count
+of the interacting individuals, not a vector containing the individuals. This
+method may also be called in a vectorized fashion, with a non-singleton vector
+of individuals, unlike nearestInteractingNeighbors(). Note that this method uses
+interaction eligibility as a criterion; it will not count neighbors that cannot
+exert an interaction upon a receiver (due to sex-segregation, e.g.). (It also
+does not count a receiver as a neighbor of itself.) If a count of all neighbors
+is desired, rather than just interacting neighbors, use neighborCount(). If the
+InteractionType is non-spatial, this method may not be called.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -139,14 +153,18 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <h2>See also</h2>
     <div class="dont-index"><p>Other InteractionType: 
 <code><a href="InteractionType.html">InteractionType</a></code>,
-<code><a href="distanceToPoint.html">distanceToPoint</a>()</code>,
+<code><a href="clippedIntegral.html">clippedIntegral</a>()</code>,
+<code><a href="distanceFromPoint.html">distanceFromPoint</a>()</code>,
 <code><a href="distance.html">distance</a>()</code>,
 <code><a href="drawByStrength.html">drawByStrength</a>()</code>,
 <code><a href="evaluate.html">evaluate</a>()</code>,
 <code><a href="interactionDistance.html">interactionDistance</a>()</code>,
+<code><a href="localPopulationDensity.html">localPopulationDensity</a>()</code>,
 <code><a href="nearestInteractingNeighbors.html">nearestInteractingNeighbors</a>()</code>,
 <code><a href="nearestNeighborsOfPoint.html">nearestNeighborsOfPoint</a>()</code>,
 <code><a href="nearestNeighbors.html">nearestNeighbors</a>()</code>,
+<code><a href="neighborCountOfPoint.html">neighborCountOfPoint</a>()</code>,
+<code><a href="neighborCount.html">neighborCount</a>()</code>,
 <code><a href="setInteractionFunction.html">setInteractionFunction</a>()</code>,
 <code><a href="strength.html">strength</a>()</code>,
 <code><a href="totalOfNeighborStrengths.html">totalOfNeighborStrengths</a>()</code>,
@@ -170,7 +188,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -106,7 +106,8 @@ full SLiM script.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Documentation for this function can be found in the official <a href="http://%0Abenhaller.com/slim/SLiM_Manual.pdf#page=575" class="external-link">SLiM manual: page 575</a>.</p>
+    <p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=NA" class="external-link">SLiM manual: page NA</a>.</p>
 <p>Returns the coalescence state for the recorded tree sequence at
 the last simplification. The returned value is a logical singleton flag,
 T to indicate that full coalescence was observed at the last treesequence
@@ -116,23 +117,23 @@ the same ancestor at all sites), or F if full coalescence was not observed. For
 simple models, reaching coalescence may indicate that the model has reached an
 equilibrium state, but this may not be true in models that modify the dynamics
 of the model during execution by changing migration rates, introducing new
-mutations programmatically, dictating non-random mating, etc., so be careful
-not to attach more meaning to coalescence than it is due; some models may
-require burn-in beyond coalescence to reach equilibrium, or may not have an
-equilibrium state at all. Also note that some actions by a model, such as adding
-a new subpopulation, may cause the coalescence state to revert from T back
-to F (at the next simplification), so a return value of T may not necessarily
-mean that the model is coalesced at the present moment - only that it was
-coalesced at the last simplification. This method may only be called if tree
-sequence recording has been turned on with initializeTreeSeq(); in addition,
-checkCoalescence=T must have been supplied to initializeTreeSeq(), so that the
-necessary work is done during each tree-sequence simplification. Since this
-method does not perform coalescence checking itself, but instead simply returns
-the coalescence state observed at the last simplification, it may be desirable
-to call treeSeqSimplify() immediately before treeSeqCoalesced() to obtain up-to-
-date information. However, the speed penalty of doing this in every generation
-would be large, and most models do not need this level of precision; usually it
-is sufficient to know that the model has coalesced, without knowing whether that
+mutations programmatically, dictating non-random mating, etc., so be careful not
+to attach more meaning to coalescence than it is due; some models may require
+burn-in beyond coalescence to reach equilibrium, or may not have an equilibrium
+state at all. Also note that some actions by a model, such as adding a new
+subpopulation, may cause the coalescence state to revert from T back to F (at
+the next simplification), so a return value of T may not necessarily mean that
+the model is coalesced at the present moment - only that it was coalesced at the
+last simplification. This method may only be called if tree sequence recording
+has been turned on with initializeTreeSeq(); in addition, checkCoalescence=T
+must have been supplied to initializeTreeSeq(), so that the necessary work
+is done during each tree-sequence simplification. Since this method does not
+perform coalescence checking itself, but instead simply returns the coalescence
+state observed at the last simplification, it may be desirable to call
+treeSeqSimplify() immediately before treeSeqCoalesced() to obtain up-to-date
+information. However, the speed penalty of doing this in every generation would
+be large, and most models do not need this level of precision; usually it is
+sufficient to know that the model has coalesced, without knowing whether that
 happened in the current generation or in a recent preceding generation.</p>
     </div>
     <div id="copyright">
@@ -150,7 +151,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other SLiMSim: 
-<code><a href="SLiMSim.html">SLiMSim</a></code>,
+<code><a href="SLiMSim.html">SS</a></code>,
 <code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="addSubpop.html">addSubpop</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
@@ -199,7 +200,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

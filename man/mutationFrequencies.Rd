@@ -47,16 +47,17 @@ full SLiM script.
 Documentation for this function can be found in the official
 \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
 
-Return a float vector with the frequencies of all of the Mutation
-objects passed in mutations, within the Subpopulation objects in subpops. The
-subpops argument is required, but you may pass NULL to get population-wide
-frequencies. If the optional mutations argument is NULL (the default),
-frequencies will be returned for all of the active Mutation objects in
-the simulation - the same Mutation objects, and in the same order, as
-would be returned by the mutations property of sim, in other words. See
-the -mutationCounts() method to obtain integer counts instead of float
-frequencies. See also the Genome methods mutationCountsInGenomes() and
-mutationFrequenciesInGenomes().
+Return a float vector with the frequencies of all of the
+Mutation objects passed in mutations, within the Subpopulation objects in
+subpops. The subpops argument is required, but you may pass NULL to get
+population-wide frequencies. If the optional mutations argument is NULL
+(the default), frequencies will be returned for all of the active Mutation
+objects in the simulation - the same Mutation objects, and in the same
+order, as would be returned by the mutations property of sim, in other
+words. See the -mutationCounts() method to obtain integer counts instead
+of float frequencies. See also the Genome methods mutationCountsInGenomes()
+and mutationFrequenciesInGenomes(). Eidos events fitness() mateChoice()
+modifyChild() recombination() interaction() reproduction() 567
 
 Documentation for this function can be found in the official
 \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=680}{SLiM manual: page

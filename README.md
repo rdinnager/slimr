@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# slimr <img src='man/figures/logo.png' align="right" height="278" />
+# slimr <img src='man/figures/logo.png' style="float:right; height:278px;"/>
 
 <https://rdinnager.github.io/slimr/>
 
@@ -9,8 +9,6 @@
 
 [![R build
 status](https://github.com/rdinnager/slimr/workflows/R-CMD-check/badge.svg)](https://github.com/rdinnager/slimr/actions)
-[![Codecov test
-coverage](https://codecov.io/gh/rdinnager/slimr/branch/master/graph/badge.svg)](https://codecov.io/gh/rdinnager/slimr?branch=master)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 <!-- badges: end -->

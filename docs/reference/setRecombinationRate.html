@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -116,29 +116,31 @@ default value is <code>"*"</code>. See details for description.</p></dd>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Documentation for this function can be found in the official <a href="http://%0Abenhaller.com/slim/SLiM_Manual.pdf#page=532" class="external-link">SLiM manual: page 532</a>.</p>
-<p>Set the recombination rate per base position per generation along the
-chromosome. All rates must be in the interval [0.0, 0.5]. There are two ways
-to call this method. If the optional ends parameter is NULL (the default), then
-rates must be a singleton value that specifies a single recombination rate to
-be used along the entire chromosome. If, on the other hand, ends is supplied,
-then rates and ends must be the same length, and the values in ends must be
-specified in ascending order. In that case, rates and ends taken together
-specify the recombination rates to be used along successive contiguous stretches
-of the chromosome, from beginning to end; the last position specified in ends
-should extend to the end of the chromosome (as previously determined, during
-simulation initialization). See the initializeRecombinationRate() function for
-further discussion of precisely how these rates and positions are interpreted.
-If the optional sex parameter is "*" (the default), then the supplied
-recombination rate map will be used for both sexes (which is the only option
-for hermaphroditic simulations). In sexual simulations sex may be "M" or "F"
-instead, in which case the supplied recombination map is used only for that sex.
-Note that whether sex-specific recombination maps will be used is set by the way
-that the simulation is initially configured with initializeRecombinationRate(),
-and cannot be changed with this method; so if the simulation was set up to use
-sex-specific recombination maps then sex must be "M" or "F" here, whereas if
-it was set up not to, then sex must be "*" or unsupplied here. If a simulation
-needs sex-specific recombination maps only some of the time, the male and female
+    <p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=634" class="external-link">SLiM manual: page
+634</a>.</p>
+<p>Set the recombination rate per base position per gamete. All rates must
+be in the interval [0.0, 0.5]. There are two ways to call this method. If the
+optional ends parameter is NULL (the default), then rates must be a singleton
+value that specifies a single recombination rate to be used along the entire
+chromosome. If, on the other hand, ends is supplied, then rates and ends must
+be the same length, and the values in ends must be specified in ascending order.
+In that case, rates and ends taken together specify the recombination rates to
+be used along successive contiguous stretches of the chromosome, from beginning
+to end; the last position specified in ends should extend to the end of the
+chromosome (as previously determined, during simulation initialization). See
+the initializeRecombinationRate() function for further discussion of precisely
+how these rates and positions are interpreted. If the optional sex parameter
+is "*" (the default), then the supplied recombination rate map will be used
+for both sexes (which is the only option for hermaphroditic simulations). In
+sexual simulations sex may be "M" or "F" instead, in which case the supplied
+recombination map is used only for that sex. Note that whether sex-specific
+recombination maps will be used is set by the way that the simulation is
+initially configured with initializeRecombinationRate(), and cannot be
+changed with this method; so if the simulation was set up to use sex-specific
+recombination maps then sex must be "M" or "F" here, whereas if it was set
+up not to, then sex must be "*" or unsupplied here. If a simulation needs
+sex-specific recombination maps only some of the time, the male and female
 maps can simply be set to be identical the rest of the time. The recombination
 intervals are normally a constant in simulations, so be sure you know what you
 are doing.</p>
@@ -158,7 +160,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Chromosome: 
-<code><a href="Chromosome.html">Chromosome</a></code>,
+<code><a href="Chromosome.html">Ch</a></code>,
 <code><a href="ancestralNucleotides.html">ancestralNucleotides</a>()</code>,
 <code><a href="drawBreakpoints.html">drawBreakpoints</a>()</code>,
 <code><a href="setAncestralNucleotides.html">setAncestralNucleotides</a>()</code>,
@@ -184,7 +186,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

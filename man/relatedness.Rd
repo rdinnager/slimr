@@ -57,37 +57,35 @@ and so it is not exactly double the kinship coefficient; they actually
 measure different things. More precisely, the relationship between them is
 r = 2φ/sqrt((1+fA)(1+fB)), where r is Wright's coefficient of relatedness,
 φ is the kinship coefficient, and fA and fB are the inbreeding coefficients
-of A and B respectively. events mutationEffect() interaction() mateChoice()
-modifyChild() mutation() recombination() reproduction() survival() 652 Note
-that this relatedness is simply pedigree-based relatedness, and does not
-necessarily correspond to genetic relatedness, because of the effects of factors
-like assortment and recombination. If a metric of actual genetic relatedness
-is desired, tree-sequence recording can be used after simulation is complete,
-to compute the exact genetic relatedness between individuals based upon the
-complete ancestry tree (a topic which is beyond the scope of this manual).
-Actual genetic relatedness cannot presently be calculated during a simulation
-run; the information is implicitly contained in the recorded tree-sequence
-tables, but calculating it is too computationally expensive to be reasonable.
-This method makes a couple of assumptions. One assumption is that the
-grandparents (or the parents, if grandparental information is not available) are
-themselves unrelated and that they are not inbred; this assumption is necessary
-because we have no information about their parentage, since SLiM's pedigree
-tracking information only goes back two generations. Be aware that in a model
-where inbreeding or selfing occurs at all (including "incidental selfing", where
-a hermaphroditic individual happens to choose itself as a mate), some level of
-"background relatedness" will be present and this assumption will be violated.
-In such circumstances, relatedness() will therefore tend to underestimate
-the degree of relatedness between individuals, and the greater the degree of
-inbreeding, the greater the underestimation will be. If inbreeding is allowed in
-a model - and particularly if it is common - the results of relatedness() should
-therefore not be taken as an estimate of absolute relatedness, but can still be
-useful as an estimate of relative relatedness (indicating that, say, A appears
-from the information available to be more closely related to B than it is to
-C). A second assumption is that, in nonWF models, addRecombinant() is not being
-used, since the pedigree relationships involved are then too complex to trace.
-Indeed, addRecombinant() does not record pedigree information at all, for this
-reason, and so the relatedness of individuals produced by addRecombinant() will
-be 0.0.
+of A and B respectively. Note that this relatedness is simply pedigree-based
+relatedness, and does not necessarily correspond to genetic relatedness, because
+of the effects of factors like assortment and recombination. If a metric of
+actual genetic relatedness is desired, tree-sequence recording can be used
+after simulation is complete, to compute the exact genetic relatedness between
+individuals based upon the complete ancestry tree (a topic which is beyond the
+scope of this manual). Actual genetic relatedness cannot presently be calculated
+during a simulation run; the information is implicitly contained in the recorded
+tree-sequence tables, but calculating it is too computationally expensive to be
+reasonable. This method makes a couple of assumptions. One assumption is that
+the grandparents (or the parents, if grandparental information is not available)
+are themselves unrelated and that they are not inbred; this assumption is
+necessary because we have no information about their parentage, since SLiM's
+pedigree tracking information only goes back two generations. Be aware that
+in a model where inbreeding or selfing occurs at all (including "incidental
+selfing", where a hermaphroditic individual happens to choose itself as a mate),
+some level of "background relatedness" will be present and this assumption
+will be violated. In such circumstances, relatedness() will therefore tend to
+underestimate the degree of relatedness between individuals, and the greater
+the degree of inbreeding, the greater the underestimation will be. If inbreeding
+is allowed in a model - and particularly if it is common - the results
+of relatedness() should therefore not be taken as an estimate of absolute
+relatedness, but can still be useful as an estimate of relative relatedness
+(indicating that, say, A appears from the information available to be more
+closely related to B than it is to C). A second assumption is that, in nonWF
+models, addRecombinant() is not being used, since the pedigree relationships
+involved are then too complex to trace. Indeed, addRecombinant() does not
+record pedigree information at all, for this reason, and so the relatedness of
+individuals produced by addRecombinant() will be 0.0.
 }
 \section{Copyright}{
 

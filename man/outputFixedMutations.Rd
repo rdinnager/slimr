@@ -65,21 +65,19 @@ Documentation for this function can be found in the official
 \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=680}{SLiM manual: page
 680}.
 
-Output all fixed mutations - all Substitution objects, in other
-words (see section 1.5.2) - in a SLiM native format (see section 26.1.2
-for output format details). If the optional parameter filePath is NULL (the
-default), output will be sent to Eidos's output stream (see section 4.2.1).
-Otherwise, output will be sent to the filesystem path specified by filePath,
-overwriting that file if append if F, or appending to the end of it if append
-is T. Mutations which have fixed but have not been turned into Substitution
-objects - typically because convertToSubstitution has been set to F for their
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 680 mutation type (see section
-24.11.1) - are not output; they are still considered to be segregating mutations
-by SLiM. In SLiM 3.3 and later, the output format includes the nucleotides
-associated with any nucleotide-based mutations; see section 26.1.2. Output is
-generally done in a late() event, so that the output reflects the state of the
-simulation at the end of a tick.
+Output all fixed mutations - all Substitution objects, in other words
+(see section 1.5.2) - in a SLiM native format (see section 26.1.2 for output
+format details). If the optional parameter filePath is NULL (the default),
+output will be sent to Eidos's output stream (see section 4.2.1). Otherwise,
+output will be sent to the filesystem path specified by filePath, overwriting
+that file if append if F, or appending to the end of it if append is T.
+Mutations which have fixed but have not been turned into Substitution objects
+- typically because convertToSubstitution has been set to F for their mutation
+type (see section 24.11.1) - are not output; they are still considered to be
+segregating mutations by SLiM. In SLiM 3.3 and later, the output format includes
+the nucleotides associated with any nucleotide-based mutations; see section
+26.1.2. Output is generally done in a late() event, so that the output reflects
+the state of the simulation at the end of a tick.
 }
 \section{Copyright}{
 

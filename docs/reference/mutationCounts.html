@@ -6,6 +6,14 @@ up this documentation). It will only do
 anything useful when used inside a slim_block function further
 nested in a slim_script
 function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.
+Documentation for SLiM function mutationCounts, which is a method of the
+SLiM class Species.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a slim_block function further
+nested in a slim_script
+function call, where it will be translated into valid SLiM code as part of a
 full SLiM script."><meta property="og:image" content="https://rdinnager.github.io/slimr/logo.png"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -24,7 +32,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -86,17 +94,27 @@ anything useful when used inside a <code><a href="slim_block.html">slim_block</a
 nested in a <code><a href="slim_script.html">slim_script</a></code>
 function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.</p>
+<p>Documentation for SLiM function <code>mutationCounts</code>, which is a method of the
+SLiM class <code><a href="Species.html">Species</a></code>.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
+nested in a <code><a href="slim_script.html">slim_script</a></code>
+function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mutationCounts</span><span class="op">(</span><span class="va">subpops</span>, <span class="va">mutations</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mutationCounts</span><span class="op">(</span><span class="va">subpops</span>, <span class="va">mutations</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mutationCounts</span><span class="op">(</span><span class="va">subpops</span>, <span class="va">mutations</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>subpops</dt>
-<dd><p>An object of type null or Subpopulation object. See details for
-description.</p></dd>
+<dd><p>An object of type null or integer or Subpopulation object. See
+details for description.</p></dd>
 
 
 <dt>mutations</dt>
@@ -109,10 +127,14 @@ description.</p></dd>
     
 
 <p>An object of type integer.</p>
+
+
+<p>An object of type integer.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Documentation for this function can be found in the official <a href="http://%0Abenhaller.com/slim/SLiM_Manual.pdf#page=567" class="external-link">SLiM manual: page 567</a>.</p>
+    <p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=NA" class="external-link">SLiM manual: page NA</a>.</p>
 <p>Return an integer vector with the frequency counts of all of the
 Mutation objects passed in mutations, within the Subpopulation objects in
 subpops. The subpops argument is required, but you may pass NULL to get
@@ -122,6 +144,20 @@ objects in the simulation - the same Mutation objects, and in the same order,
 as would be returned by the mutations property of sim, in other words. See
 the -mutationFrequencies() method to obtain float frequencies instead of
 integer counts. See also the Genome methods mutationCountsInGenomes() and
+mutationFrequenciesInGenomes().</p>
+<p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=680" class="external-link">SLiM manual: page
+680</a>.</p>
+<p>Return an integer vector with the frequency counts of all of the
+Mutation objects passed in mutations, within the Subpopulation objects in
+subpops. The subpops argument is required, but you may pass NULL to get
+population-wide frequency counts. Subpopulations may be supplied either as
+integer IDs, or as Subpopulation objects. If the optional mutations argument
+is NULL (the default), frequency counts will be returned for all of the active
+Mutation objects in the species - the same Mutation objects, and in the same
+order, as would be returned by the mutations property of sim, in other words.
+See the -mutationFrequencies() method to obtain float frequencies instead
+of integer counts. See also the Genome methods mutationCountsInGenomes() and
 mutationFrequenciesInGenomes().</p>
     </div>
     <div id="copyright">
@@ -135,11 +171,19 @@ documentation is
 Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href="https://messerlab.org/slim/" class="external-link">https://messerlab.org/slim/</a></p>
+
+<p>This is documentation for a function in the SLiM software, and has been
+reproduced from the official manual,
+which can be found here: <a href="http://benhaller.com/slim/SLiM_Manual.pdf" class="external-link">http://benhaller.com/slim/SLiM_Manual.pdf</a>. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: <a href="https://messerlab.org/slim/" class="external-link">https://messerlab.org/slim/</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other SLiMSim: 
-<code><a href="SLiMSim.html">SLiMSim</a></code>,
+<code><a href="SLiMSim.html">SS</a></code>,
 <code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="addSubpop.html">addSubpop</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
@@ -168,7 +212,26 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="treeSeqCoalesced.html">treeSeqCoalesced</a>()</code>,
 <code><a href="treeSeqOutput.html">treeSeqOutput</a>()</code>,
 <code><a href="treeSeqRememberIndividuals.html">treeSeqRememberIndividuals</a>()</code>,
-<code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p></div>
+<code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p>
+<p>Other Species: 
+<code><a href="Species.html">Sp</a></code>,
+<code><a href="addSubpop.html">addSubpop</a>()</code>,
+<code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
+<code><a href="individualsWithPedigreeIDs.html">individualsWithPedigreeIDs</a>()</code>,
+<code><a href="killIndividuals.html">killIndividuals</a>()</code>,
+<code><a href="mutationFrequencies.html">mutationFrequencies</a>()</code>,
+<code><a href="mutationsOfType.html">mutationsOfType</a>()</code>,
+<code><a href="outputFixedMutations.html">outputFixedMutations</a>()</code>,
+<code><a href="outputFull.html">outputFull</a>()</code>,
+<code><a href="outputMutations.html">outputMutations</a>()</code>,
+<code><a href="readFromPopulationFile.html">readFromPopulationFile</a>()</code>,
+<code><a href="recalculateFitness.html">recalculateFitness</a>()</code>,
+<code><a href="registerFitnessEffectCallback.html">registerFitnessEffectCallback</a>()</code>,
+<code><a href="registerMateChoiceCallback.html">registerMateChoiceCallback</a>()</code>,
+<code><a href="registerModifyChildCallback.html">registerModifyChildCallback</a>()</code>,
+<code><a href="registerMutationCallback.html">registerMutationCallback</a>()</code>,
+<code><a href="registerMutationEffectCallback.html">registerMutationEffectCallback</a>()</code>,
+<code><a href="registerRecombinationCallback.html">registerRecombinationCallback</a>()</code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -188,7 +251,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -98,11 +98,12 @@ The GenomicElementType objects being used in the simulation. }
 \item{inSLiMgui}{A property of type logical. It is of length one (a singleton).
 This property is a constant, so it is not modifiable. \strong{Property
 Description:} This property has been deprecated, and may be removed in a future
-release of SLiM. In SLiM 3.2.1 and later, use exists("slimgui") instead. If T,
-the simulation is presently running inside SLiMgui; if F, it is running at the
-command line. In general simulations should not care where they are running,
-but in special circumstances such as opening plot windows it may be necessary to
-know the runtime environment. }
+release of SLiM. In SLiM 3.2.1 and later, use exists("slimgui") instead. Eidos
+events fitness() mateChoice() modifyChild() recombination() interaction()
+reproduction() 564 If T, the simulation is presently running inside SLiMgui;
+if F, it is running at the command line. In general simulations should not
+care where they are running, but in special circumstances such as opening plot
+windows it may be necessary to know the runtime environment. }
 \item{interactionTypes}{A property of type InteractionType object. This property
 is a constant, so it is not modifiable. \strong{Property Description:} The
 InteractionType objects being used in the simulation. }

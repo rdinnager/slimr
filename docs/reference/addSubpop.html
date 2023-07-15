@@ -6,6 +6,14 @@ up this documentation). It will only do
 anything useful when used inside a slim_block function further
 nested in a slim_script
 function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.
+Documentation for SLiM function addSubpop, which is a method of the SLiM
+class Species.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a slim_block function further
+nested in a slim_script
+function call, where it will be translated into valid SLiM code as part of a
 full SLiM script."><meta property="og:image" content="https://rdinnager.github.io/slimr/logo.png"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -24,7 +32,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
       </span>
     </div>
 
@@ -86,10 +94,20 @@ anything useful when used inside a <code><a href="slim_block.html">slim_block</a
 nested in a <code><a href="slim_script.html">slim_script</a></code>
 function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.</p>
+<p>Documentation for SLiM function <code>addSubpop</code>, which is a method of the SLiM
+class <code><a href="Species.html">Species</a></code>.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
+nested in a <code><a href="slim_script.html">slim_script</a></code>
+function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">addSubpop</span><span class="op">(</span><span class="va">subpopID</span>, <span class="va">size</span>, <span class="va">sexRatio</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">addSubpop</span><span class="op">(</span><span class="va">subpopID</span>, <span class="va">size</span>, <span class="va">sexRatio</span>, <span class="va">haploid</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">addSubpop</span><span class="op">(</span><span class="va">subpopID</span>, <span class="va">size</span>, <span class="va">sexRatio</span>, <span class="va">haploid</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -108,6 +126,11 @@ details for description.</p></dd>
 <dd><p>An object of type float. Must be of length 1 (a singleton). The
 default value is <code>0.5</code>. See details for description.</p></dd>
 
+
+<dt>haploid</dt>
+<dd><p>An object of type logical. Must be of length 1 (a singleton). The
+default value is <code>F</code>. See details for description.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -115,10 +138,15 @@ default value is <code>0.5</code>. See details for description.</p></dd>
 
 <p>An object of type Subpopulation object. Return will be of length 1 (a
 singleton)</p>
+
+
+<p>An object of type Subpopulation object. Return will be of length 1 (a
+singleton)</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Documentation for this function can be found in the official <a href="http://%0Abenhaller.com/slim/SLiM_Manual.pdf#page=566" class="external-link">SLiM manual: page 566</a>.</p>
+    <p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=NA" class="external-link">SLiM manual: page NA</a>.</p>
 <p>Add a new subpopulation with id subpopID and size individuals.
 The subpopID parameter may be either an integer giving the ID of the new
 subpopulation, or a string giving the name of the new subpopulation (such as
@@ -130,6 +158,47 @@ will be defined as a global variable immediately by this method (see section
 method will initially consist of individuals with empty genomes. In order to
 model subpopulations that split from an already existing subpopulation, use
 addSubpopSplit().</p>
+<p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=678" class="external-link">SLiM manual: page
+678</a>.</p>
+<p>Add a new subpopulation with id subpopID and size individuals.
+The subpopID parameter may be either an integer giving the ID of the new
+subpopulation, or a string giving the name of the new subpopulation (such
+as "p5" to specify an ID of 5). Only if sex is enabled for the species, the
+initial sex ratio may optionally be specified as sexRatio (as the male fraction,
+M:M+F); if it is not specified, a default of 0.5 is used. The new subpopulation
+will be defined as a global variable immediately by this method (see section
+24.15), and will also be returned by this method. Subpopulations added by this
+method will initially consist of individuals with empty genomes. In order to
+model subpopulations that split from an already existing subpopulation, use
+addSubpopSplit(). Only in nonWF models, the haploid parameter may be T; in
+this case, the second genome of each new individual will be a null genome,
+rather than an empty genome. For even greater control in nonWF models, you can
+call addSubpop() with an initial size of 0 and then stock the population with
+new individuals created however you wish in the next tick's reproduction()
+callback. ject&lt;Subpopulation&gt;$)addSubpopSplit(is$ subpopID, integer$ size,
+io&lt;Subpopulation&gt;$ sourceSubpop, [float$ sexRatio = 0.5]) Split off a new
+subpopulation with id subpopID and size individuals derived from subpopulation
+sourceSubpop. The subpopID parameter may be either an integer giving the ID
+of the new subpopulation, or a string giving the name of the new subpopulation
+(such as "p5" to specify an ID of 5). The sourceSubpop parameter may specify the
+source subpopulation either as a Subpopulation object or by integer identifier.
+Only if sex is enabled for the species, the initial sex ratio may optionally
+be specified as sexRatio (as the male fraction, M:M+F); if it is not specified,
+a default of 0.5 is used. The new subpopulation will be defined as a global
+variable immediately by this method (see section 24.15), and will also be
+returned by this method. Subpopulations added by this method will consist of
+individuals that are clonal copies of individuals from the source subpopulation,
+randomly chosen with probabilities proportional to fitness. The fitness of all
+of these initial individuals is considered to be 1.0, to avoid a doubled round
+of selection in the initial tick, given that fitness values were already used
+to choose the individuals to clone. Once this initial set of individuals has
+mated to produce offspring, the model is effectively of parental individuals in
+the source subpopulation mating randomly according to fitness, as usual in SLiM,
+with juveniles migrating to the newly added subpopulation. Effectively, then,
+then new subpopulation is created empty, and is filled by migrating juveniles
+from the source subpopulation, in accordance with SLiM's usual model of juvenile
+migration.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -142,11 +211,19 @@ documentation is
 Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href="https://messerlab.org/slim/" class="external-link">https://messerlab.org/slim/</a></p>
+
+<p>This is documentation for a function in the SLiM software, and has been
+reproduced from the official manual,
+which can be found here: <a href="http://benhaller.com/slim/SLiM_Manual.pdf" class="external-link">http://benhaller.com/slim/SLiM_Manual.pdf</a>. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: <a href="https://messerlab.org/slim/" class="external-link">https://messerlab.org/slim/</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other SLiMSim: 
-<code><a href="SLiMSim.html">SLiMSim</a></code>,
+<code><a href="SLiMSim.html">SS</a></code>,
 <code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
 <code><a href="createLogFile.html">createLogFile</a>()</code>,
@@ -175,7 +252,26 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="treeSeqCoalesced.html">treeSeqCoalesced</a>()</code>,
 <code><a href="treeSeqOutput.html">treeSeqOutput</a>()</code>,
 <code><a href="treeSeqRememberIndividuals.html">treeSeqRememberIndividuals</a>()</code>,
-<code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p></div>
+<code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p>
+<p>Other Species: 
+<code><a href="Species.html">Sp</a></code>,
+<code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
+<code><a href="individualsWithPedigreeIDs.html">individualsWithPedigreeIDs</a>()</code>,
+<code><a href="killIndividuals.html">killIndividuals</a>()</code>,
+<code><a href="mutationCounts.html">mutationCounts</a>()</code>,
+<code><a href="mutationFrequencies.html">mutationFrequencies</a>()</code>,
+<code><a href="mutationsOfType.html">mutationsOfType</a>()</code>,
+<code><a href="outputFixedMutations.html">outputFixedMutations</a>()</code>,
+<code><a href="outputFull.html">outputFull</a>()</code>,
+<code><a href="outputMutations.html">outputMutations</a>()</code>,
+<code><a href="readFromPopulationFile.html">readFromPopulationFile</a>()</code>,
+<code><a href="recalculateFitness.html">recalculateFitness</a>()</code>,
+<code><a href="registerFitnessEffectCallback.html">registerFitnessEffectCallback</a>()</code>,
+<code><a href="registerMateChoiceCallback.html">registerMateChoiceCallback</a>()</code>,
+<code><a href="registerModifyChildCallback.html">registerModifyChildCallback</a>()</code>,
+<code><a href="registerMutationCallback.html">registerMutationCallback</a>()</code>,
+<code><a href="registerMutationEffectCallback.html">registerMutationEffectCallback</a>()</code>,
+<code><a href="registerRecombinationCallback.html">registerRecombinationCallback</a>()</code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -195,7 +291,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

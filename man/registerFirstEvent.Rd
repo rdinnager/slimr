@@ -53,9 +53,7 @@ later. The registered event is added to the end of the list of registered
 SLiMEidosBlock objects, and is active immediately; it may be eligible to execute
 in the current tick (see section 25.11 for details). The new SLiMEidosBlock will
 be defined as a global variable immediately by this method (see section 24.12),
-and will also be returned by this method. events mutationEffect() interaction()
-mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-637
+and will also be returned by this method.
 }
 \section{Copyright}{
 

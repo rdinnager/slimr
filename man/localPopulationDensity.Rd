@@ -44,23 +44,22 @@ have been previously called for the receiver and exerter subpopulations, and
 positions saved at evaluation time will be used. Population density is estimated
 using interaction strengths, effectively doing a kernel density estimate using
 the interaction function as the kernel. What is returned is computed as the
-total interaction strength present at a given point, divided by the integral of
-the interaction function around that point events mutationEffect() interaction()
-mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-661 after clipping by the spatial bounds of the exerter subpopulation (what
-one might think of as the amount of "interaction field" around the point).
-This provides an estimate of local population density, in units of individuals
-per unit area, as a weighted average over the area covered by the interaction
-function, where the weight of each exerter in the average is the value of the
-interaction function at that exerter's position. This can also be thought of as
-a measure of the amount of interaction happening per unit of interaction field
-in the space surrounding the point. To calculate the clipped integral of the
-interaction function, this method uses the same numerical estimator used by the
-clippedIntegral() method of InteractionType, and all of the caveats described
-for that method apply here also; notably, all individuals must be within spatial
-bounds, the maximum interaction distance must be less than half the spatial
-extent of the subpopulation, and interaction() callbacks are not used (and
-so, for this method, are not allowed to be active). See the documentation for
+total interaction strength present at a given point, divided by the integral
+of the interaction function around that point after clipping by the spatial
+bounds of the exerter subpopulation (what one might think of as the amount
+of "interaction field" around the point). This provides an estimate of local
+population density, in units of individuals per unit area, as a weighted
+average over the area covered by the interaction function, where the weight of
+each exerter in the average is the value of the interaction function at that
+exerter's position. This can also be thought of as a measure of the amount of
+interaction happening per unit of interaction field in the space surrounding
+the point. To calculate the clipped integral of the interaction function,
+this method uses the same numerical estimator used by the clippedIntegral()
+method of InteractionType, and all of the caveats described for that method
+apply here also; notably, all individuals must be within spatial bounds,
+the maximum interaction distance must be less than half the spatial extent
+of the subpopulation, and interaction() callbacks are not used (and so,
+for this method, are not allowed to be active). See the documentation for
 clippedIntegral() for further discussion of the details of these calculations.
 To calculate the total interaction strength around the position of a receiver,
 this method uses the same machinery as the totalOfNeighborStrengths() method

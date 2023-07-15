@@ -86,17 +86,16 @@ initializeAncestralNucleotides <- function(sequence) {
 #'The mean length of gene conversion tracts (whether associated with crossover
 #'or non-crossover events) is given by meanLength; the actual extent of a gene
 #'conversion tract will be the sum of two independent draws from a geometric
-#'distribution with mean meanLength/2. The fraction of gene conversion tracts
-#'that events mutationEffect() interaction() mateChoice() modifyChild()
-#'mutation() recombination() reproduction() survival() 618 are modeled as
-#'"simple" is given by simpleConversionFraction; the remainder will be modeled
-#'as "complex", involving repair of heteroduplex mismatches. Finally, the GC bias
-#'during heteroduplex mismatch repair is given by bias, with the default of 0.0
-#'indicating no bias, 1.0 indicating an absolute preference for G/C mutations
-#'over A/T mutations, and -1.0 indicating an absolute preference for A/T mutations
-#'over G/C mutations. A non-zero bias may only be set in nucleotide-based models
-#'(see section 1.8). This function, and the way that gene conversion is modeled,
-#'fundamentally changed in SLiM 3.3; see section 1.5.6 for discussion.
+#'distribution with mean meanLength/2. The fraction of gene conversion tracts that
+#'are modeled as "simple" is given by simpleConversionFraction; the remainder will
+#'be modeled as "complex", involving repair of heteroduplex mismatches. Finally,
+#'the GC bias during heteroduplex mismatch repair is given by bias, with the
+#'default of 0.0 indicating no bias, 1.0 indicating an absolute preference for
+#'G/C mutations over A/T mutations, and -1.0 indicating an absolute preference
+#'for A/T mutations over G/C mutations. A non-zero bias may only be set in
+#'nucleotide-based models (see section 1.8). This function, and the way that gene
+#'conversion is modeled, fundamentally changed in SLiM 3.3; see section 1.5.6 for
+#'discussion.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -213,29 +212,28 @@ initializeGenomicElement <- function(genomicElementType, start, end) {
 #'in non-nucleotide-based models it must be NULL. In nucleotide-based models, on
 #'the other hand, it must be non-NULL, and therefore must be supplied. In that
 #'case, mutationMatrix should take one of two standard forms. For sequence-based
-#'mutation rates that depend upon only the single nucleotide at a mutation site,
-#'mutationMatrix should be a 4×4 float matrix, specifying mutation rates for an
-#'existing nucleotide state (rows from 0- 3 representing A/C/G/T) to each of the
-#'four possible derived nucleotide states (columns, with the same meaning): The
-#'mutation rates in this matrix are absolute rates, per nucleotide per gamete;
-#'they will be used by SLiM directly unless they are multiplied by a factor from
-#'the hotspot map (see initializeHotspotMap()). Rates in mutationMatrix that
-#'involve the mutation of a nucleotide to * PA→C PA→G PA→T PC→A * PC→G PC→T PG→A
-#'PG→C * PG→T PT→A PT→C PT→G * events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 619 itself
-#'(A to A, C to C, etc.) are not used by SLiM and must be 0.0 by convention
-#'(shown above with asterisks). It is important to note that the order of the
-#'rows and columns used in SLiM, A/C/G/T, is not a universal convention; other
-#'sources will present substitution-rate/transition-rate matrices using different
-#'conventions, and so care must be taken when importing such matrices into SLiM.
-#'For sequence-based mutation rates that depend upon the trinucleotide sequence
-#'centered upon a mutation site (the adjacent bases to the left and right, in
-#'other words, as well as the mutating nucleotide itself), mutationMatrix should
-#'be a 64×4 float matrix, specifying mutation rates for the central nucleotide of
-#'an existing trinucleotide sequence (rows from 0-63, representing trinucleotides
-#'as described in the documentation for the ancestralNucleotides() method of
-#'Chromosome) to each of the four possible derived nucleotide states (columns from
-#'0-3 for A/C/G/T as before): Note that in every case it is the central nucleotide
+#'mutation rates that depend upon only the single nucleotide at a mutation
+#'site, mutationMatrix should be a 4×4 float matrix, specifying mutation rates
+#'for an existing nucleotide state (rows from 0- 3 representing A/C/G/T) to
+#'each of the four possible derived nucleotide states (columns, with the same
+#'meaning): The mutation rates in this matrix are absolute rates, per nucleotide
+#'per gamete; they will be used by SLiM directly unless they are multiplied
+#'by a factor from the hotspot map (see initializeHotspotMap()). Rates in
+#'mutationMatrix that involve the mutation of a nucleotide to * PA→C PA→G PA→T
+#'PC→A * PC→G PC→T PG→A PG→C * PG→T PT→A PT→C PT→G * itself (A to A, C to C,
+#'etc.) are not used by SLiM and must be 0.0 by convention (shown above with
+#'asterisks). It is important to note that the order of the rows and columns used
+#'in SLiM, A/C/G/T, is not a universal convention; other sources will present
+#'substitution-rate/transition-rate matrices using different conventions, and so
+#'care must be taken when importing such matrices into SLiM. For sequence-based
+#'mutation rates that depend upon the trinucleotide sequence centered upon a
+#'mutation site (the adjacent bases to the left and right, in other words, as
+#'well as the mutating nucleotide itself), mutationMatrix should be a 64×4 float
+#'matrix, specifying mutation rates for the central nucleotide of an existing
+#'trinucleotide sequence (rows from 0-63, representing trinucleotides as described
+#'in the documentation for the ancestralNucleotides() method of Chromosome)
+#'to each of the four possible derived nucleotide states (columns from 0-3
+#'for A/C/G/T as before): Note that in every case it is the central nucleotide
 #'of the trinucleotide sequence that is mutating, but rates can be specified
 #'independently based upon the nucleotides in the first and third positions as
 #'well, with this type of mutation matrix. Several helper functions are defined to
@@ -296,25 +294,23 @@ mutationMatrix)
 #'mutational cold spots). There are two ways to call this function. If the
 #'optional ends parameter is NULL (the default), then multipliers must be a
 #'singleton value that specifies a single multiplier to be used along the entire
-#'chromosome (typically 1.0, but not required to be). If, on the other hand,
-#'ends is supplied, then multipliers and ends must be the same length, and the
-#'values in ends must be specified in ascending order. In that case, multipliers
-#'and ends taken together specify the multipliers to be used along successive
-#'contiguous stretches of the chromosome, from beginning to end; the last position
-#'specified in ends should extend to the end of the chromosome (i.e. at least
-#'to the end of the last genomic element, if not further). For example, if the
-#'following call is made: initializeHotspotMap(c(1.0, 1.2), c(5000, 9999)); *
-#'PAAA→ACA PAAA→AGA PAAA→ATA * PAAC→ACC PAAC→AGC PAAC→ATC * PAAG→ACG PAAG→AGG
-#'PAAG→ATG * PAAT→ACT PAAT→AGT PAAT→ATT PACA→AAA * PACA→AGA PACA→ATA PACC→AAC
-#'* PACC→AGC PACC→ATC PACG→AAG * PACG→AGG PACG→ATG . . . . . . . . . . . .
-#'PTTC→TAC PTTC→TCC PTTC→TGC * PTTG→TAG PTTG→TCG PTTG→TGG * PTTT→TAT PTTT→TCT
-#'PTTT→TGT * events mutationEffect() interaction() mateChoice() modifyChild()
-#'mutation() recombination() reproduction() survival() 620 then the result is
-#'that the mutation rate multiplier for bases 0...5000 (inclusive) will be 1.0
-#'(and so the specified sequence-based mutation rates will be used verbatim),
-#'and the multiplier for bases 5001...9999 (inclusive) will be 1.2 (and so the
-#'sequence-based mutation rates will be multiplied by 1.2 within the region).
-#'Note that mutations are generated by SLiM only within genomic elements,
+#'chromosome (typically 1.0, but not required to be). If, on the other hand, ends
+#'is supplied, then multipliers and ends must be the same length, and the values
+#'in ends must be specified in ascending order. In that case, multipliers and ends
+#'taken together specify the multipliers to be used along successive contiguous
+#'stretches of the chromosome, from beginning to end; the last position specified
+#'in ends should extend to the end of the chromosome (i.e. at least to the end
+#'of the last genomic element, if not further). For example, if the following
+#'call is made: initializeHotspotMap(c(1.0, 1.2), c(5000, 9999)); * PAAA→ACA
+#'PAAA→AGA PAAA→ATA * PAAC→ACC PAAC→AGC PAAC→ATC * PAAG→ACG PAAG→AGG PAAG→ATG
+#'* PAAT→ACT PAAT→AGT PAAT→ATT PACA→AAA * PACA→AGA PACA→ATA PACC→AAC * PACC→AGC
+#'PACC→ATC PACG→AAG * PACG→AGG PACG→ATG . . . . . . . . . . . . PTTC→TAC PTTC→TCC
+#'PTTC→TGC * PTTG→TAG PTTG→TCG PTTG→TGG * PTTT→TAT PTTT→TCT PTTT→TGT * then the
+#'result is that the mutation rate multiplier for bases 0...5000 (inclusive)
+#'will be 1.0 (and so the specified sequence-based mutation rates will be used
+#'verbatim), and the multiplier for bases 5001...9999 (inclusive) will be 1.2
+#'(and so the sequence-based mutation rates will be multiplied by 1.2 within the
+#'region). Note that mutations are generated by SLiM only within genomic elements,
 #'regardless of the hotspot map. In effect, the hotspot map given is intersected
 #'with the coverage area of the genomic elements defined; areas outside of any
 #'genomic element are given a multiplier of zero. There is no harm in supplying
@@ -400,28 +396,26 @@ initializeHotspotMap <- function(multipliers, ends, sex) {
 #'below for a note regarding reciprocality in sexual simulations when using the
 #'sexSegregation flag. The maxDistance parameter supplies the maximum distance
 #'over which interactions of this type will be evaluated; at greater distances,
-#'the interaction strength is considered to be zero (for efficiency). The
-#'default value of maxDistance, INF (positive infinity), indicates that there
-#'is no maximum interaction distance; note that this can make some interaction
-#'queries much less efficient, and is therefore not recommended. In SLiM 3.1
-#'and later, a warning will be issued if a spatial interaction type is defined
-#'with no maximum distance to encourage a maximum distance to be defined. The
-#'sexSegregation parameter governs the applicability of the interaction to each
-#'sex, in sexual simulations. It does not affect distance calculations in any
-#'way; it only modifies the way in which interaction strengths are calculated.
-#'The default, "**", implies that the interaction is felt by both sexes (the
-#'first character of the string value) and is exerted by both sexes (the second
-#'character of the string value). Either or both characters may be M or F instead;
-#'for example, "MM" would indicate a male-male interaction, such as male-male
-#'competition, whereas "FM" would indicate an interaction influencing only
-#'female receivers that is influenced only by male exerters, such as male mating
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 621 displays that influence female
-#'attraction. This parameter may be set only to "**" unless sex has been enabled
-#'with initializeSex(). Note that a value of sexSegregation other than "**" may
-#'imply some degree of non-reciprocality, but it is not necessary to specify
-#'reciprocal to be F for this reason; SLiM will take the sex-segregation of
-#'the interaction into account for you. The value of reciprocal may therefore
+#'the interaction strength is considered to be zero (for efficiency). The default
+#'value of maxDistance, INF (positive infinity), indicates that there is no
+#'maximum interaction distance; note that this can make some interaction queries
+#'much less efficient, and is therefore not recommended. In SLiM 3.1 and later, a
+#'warning will be issued if a spatial interaction type is defined with no maximum
+#'distance to encourage a maximum distance to be defined. The sexSegregation
+#'parameter governs the applicability of the interaction to each sex, in sexual
+#'simulations. It does not affect distance calculations in any way; it only
+#'modifies the way in which interaction strengths are calculated. The default,
+#'"**", implies that the interaction is felt by both sexes (the first character
+#'of the string value) and is exerted by both sexes (the second character of the
+#'string value). Either or both characters may be M or F instead; for example,
+#'"MM" would indicate a male-male interaction, such as male-male competition,
+#'whereas "FM" would indicate an interaction influencing only female receivers
+#'that is influenced only by male exerters, such as male mating displays that
+#'influence female attraction. This parameter may be set only to "**" unless sex
+#'has been enabled with initializeSex(). Note that a value of sexSegregation other
+#'than "**" may imply some degree of non-reciprocality, but it is not necessary to
+#'specify reciprocal to be F for this reason; SLiM will take the sex-segregation
+#'of the interaction into account for you. The value of reciprocal may therefore
 #'be interpreted as meaning: in those cases, if any, in which A interacts with
 #'B and B interacts with A, is the interaction strength guaranteed to be the
 #'same in both directions? By default, the interaction strength is 1.0 for all
@@ -516,12 +510,11 @@ sexSegregation)
 #'for that sex (i.e., when generating a gamete from a parent of that sex). In this
 #'case, two calls must be made to initializeMutationRate(), one for each sex, even
 #'if a rate of zero is desired for the other sex; no default mutation rate map
-#'is supplied. events mutationEffect() interaction() mateChoice() modifyChild()
-#'mutation() recombination() reproduction() survival() 622 In nucleotide-based
-#'models, initializeMutationRate() may not be called. Instead, the desired
-#'sequence-based mutation rate(s) should be expressed in the mutationMatrix
-#'parameter to initializeGenomicElementType(). If variation in the mutation rate
-#'along the chromosome is desired, initializeHotspotMap() should be used.
+#'is supplied. In nucleotide-based models, initializeMutationRate() may not be
+#'called. Instead, the desired sequence-based mutation rate(s) should be expressed
+#'in the mutationMatrix parameter to initializeGenomicElementType(). If variation
+#'in the mutation rate along the chromosome is desired, initializeHotspotMap()
+#'should be used.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -689,45 +682,43 @@ distributionType, ...) {
 #'Initialize$initializeRecombinationRate .Init$initializeRecombinationRate
 #'@family Initialize
 #'@return An object of type void.
-#'@details Set the recombination rate per base position per gamete. To be precise,
-#'this recombination rate is the probability that a breakpoint will occur between
-#'one base and the next base; note that this is different from how the mutation
-#'rate is defined (see initializeMutationRate()). All rates must be in the
-#'interval [0.0, 0.5]. A rate of 0.5 implies complete independence between the
-#'adjacent bases, which might be used to implement independent assortment of loci
-#'located on different chromosomes (see events mutationEffect() interaction()
-#'mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-#'623 the example below). Whether a breakpoint occurs between two bases is then,
-#'in effect, determined by a binomial draw with a single trial and the given
-#'rate as probability (but under the hood SLiM uses a mathematically equivalent
-#'but much more efficient strategy). The recombinational process in SLiM will
-#'never generate more then one crossover between one base and the next (in one
-#'generation/ genome), and a supplied rate of 0.5 will therefore result in an
-#'actual probability of 0.5 for a crossover at the relevant position. (Note that
-#'this was not true in SLiM 2.x and earlier, however; their implementation of
-#'recombination resulted in a crossover probability of about 39.3% for a rate
-#'of 0.5, due to the use of an inaccurate approximation method. Recombination
-#'rates lower than about 0.01 would have been essentially exact, since the
-#'approximation error became large only as the rate approached 0.5.) There
-#'are two ways to call this function. If the optional ends parameter is NULL
-#'(the default), then rates must be a singleton value that specifies a single
-#'recombination rate to be used along the entire chromosome. If, on the other
-#'hand, ends is supplied, then rates and ends must be the same length, and
-#'the values in ends must be specified in ascending order. In that case, rates
-#'and ends taken together specify the recombination rates to be used along
-#'successive contiguous stretches of the chromosome, from beginning to end; the
-#'last position specified in ends should extend to the end of the chromosome
-#'(i.e. at least to the end of the last genomic element, if not further). Note
-#'that a recombination rate of 1 centimorgan/Mbp corresponds to a recombination
-#'rate of 1e-8 in the units used by SLiM. For example, if the following call
-#'is made: initializeRecombinationRate(c(0, 0.5, 0), c(5000, 5001, 9999)); then
-#'the result is that the recombination rates between bases 0 / 1, 1 / 2, ...,
-#'4999 / 5000 will be 0, the rate between bases 5000 / 5001 will be 0.5, and
-#'the rate between bases 5001 / 5002 onward (up to 9998 / 9999) will again be
-#'0. Setting the recombination rate between one specific pair of bases to 0.5
-#'forces recombination to occur with a probability of 0.5 between those bases,
-#'which effectively breaks the simulated locus into separate chromosomes at
-#'that point; this example effectively has one simulated chromosome from base
+#'@details Set the recombination rate per base position per gamete. To be
+#'precise, this recombination rate is the probability that a breakpoint will
+#'occur between one base and the next base; note that this is different from how
+#'the mutation rate is defined (see initializeMutationRate()). All rates must
+#'be in the interval [0.0, 0.5]. A rate of 0.5 implies complete independence
+#'between the adjacent bases, which might be used to implement independent
+#'assortment of loci located on different chromosomes (see the example below).
+#'Whether a breakpoint occurs between two bases is then, in effect, determined
+#'by a binomial draw with a single trial and the given rate as probability (but
+#'under the hood SLiM uses a mathematically equivalent but much more efficient
+#'strategy). The recombinational process in SLiM will never generate more then
+#'one crossover between one base and the next (in one generation/ genome), and
+#'a supplied rate of 0.5 will therefore result in an actual probability of 0.5
+#'for a crossover at the relevant position. (Note that this was not true in SLiM
+#'2.x and earlier, however; their implementation of recombination resulted in a
+#'crossover probability of about 39.3% for a rate of 0.5, due to the use of an
+#'inaccurate approximation method. Recombination rates lower than about 0.01 would
+#'have been essentially exact, since the approximation error became large only
+#'as the rate approached 0.5.) There are two ways to call this function. If the
+#'optional ends parameter is NULL (the default), then rates must be a singleton
+#'value that specifies a single recombination rate to be used along the entire
+#'chromosome. If, on the other hand, ends is supplied, then rates and ends must
+#'be the same length, and the values in ends must be specified in ascending
+#'order. In that case, rates and ends taken together specify the recombination
+#'rates to be used along successive contiguous stretches of the chromosome, from
+#'beginning to end; the last position specified in ends should extend to the end
+#'of the chromosome (i.e. at least to the end of the last genomic element, if
+#'not further). Note that a recombination rate of 1 centimorgan/Mbp corresponds
+#'to a recombination rate of 1e-8 in the units used by SLiM. For example, if the
+#'following call is made: initializeRecombinationRate(c(0, 0.5, 0), c(5000, 5001,
+#'9999)); then the result is that the recombination rates between bases 0 / 1,
+#'1 / 2, ..., 4999 / 5000 will be 0, the rate between bases 5000 / 5001 will be
+#'0.5, and the rate between bases 5001 / 5002 onward (up to 9998 / 9999) will
+#'again be 0. Setting the recombination rate between one specific pair of bases
+#'to 0.5 forces recombination to occur with a probability of 0.5 between those
+#'bases, which effectively breaks the simulated locus into separate chromosomes
+#'at that point; this example effectively has one simulated chromosome from base
 #'position 0 to 5000, and another from 5001 to 9999. If the optional sex parameter
 #'is "*" (the default), then the supplied recombination rate map will be used
 #'for both sexes (which is the only option for hermaphroditic simulations). In
@@ -820,16 +811,14 @@ initializeSex <- function(chromosomeType) {
 #'@family Initialize
 #'@return An object of type void.
 #'@details Configure the type of SLiM model used for the simulation. At present,
-#'one of two model types may be selected. If modelType is "WF", SLiM will
-#'use a Wright-Fisher (WF) model; this is the model type that has always been
-#'supported by SLiM, and is the model type used if initializeSLiMModelType()
-#'is not called. If modelType is "nonWF", SLiM will use a non-Wright-Fisher
-#'(nonWF) model instead; this is a new model type supported by SLiM 3.0 and
-#'above (see section 1.6). events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 624 If
-#'initializeSLiMModelType() is called at all then it must be called before any
-#'other initialization function, so that SLiM knows from the outset which features
-#'are enabled and which are not.
+#'one of two model types may be selected. If modelType is "WF", SLiM will use a
+#'Wright-Fisher (WF) model; this is the model type that has always been supported
+#'by SLiM, and is the model type used if initializeSLiMModelType() is not called.
+#'If modelType is "nonWF", SLiM will use a non-Wright-Fisher (nonWF) model
+#'instead; this is a new model type supported by SLiM 3.0 and above (see section
+#'1.6). If initializeSLiMModelType() is called at all then it must be called
+#'before any other initialization function, so that SLiM knows from the outset
+#'which features are enabled and which are not.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -940,84 +929,81 @@ initializeSLiMModelType <- function(modelType) {
 #'as the number of mutation runs inside Genome objects; if it is 0 (the default),
 #'SLiM will calculate a number of mutation runs that it estimates will work
 #'well. Internally, SLiM divides genomes into a sequence of consecutive mutation
-#'runs, allowing more efficient internal computations. The optimal mutation run
-#'length is short enough that each mutation events mutationEffect() interaction()
-#'mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-#'625 run is relatively unlikely to be modified by mutation/recombination events
-#'when inherited, but long enough that each mutation run is likely to contain
-#'a relatively large number of mutations; these priorities are in tension,
-#'so an intermediate balance between them is generally desirable. The optimal
-#'number of mutation runs will depend upon the machine and even the compiler
-#'used to build SLiM, so SLiM's default value may not be optimal; for maximal
-#'performance it can thus be beneficial to experiment with different values and
-#'find the optimal value for the simulation - a process which SLiM can assist
-#'with (see section 21.4). Specifying the number of mutation runs is an advanced
-#'technique, but in certain cases it can improve performance significantly. If
-#'preventIncidentalSelfing is T, incidental selfing in hermaphroditic models
-#'will be prevented by SLiM. By default (i.e., if preventIncidentalSelfing is
-#'F), SLiM chooses the first and second parents in a biparental mating event
-#'independently. It is therefore possible for the same individual to be chosen
-#'as both the first and second parent, resulting in selfing events even when
-#'the selfing rate is zero. In many models this is unimportant, since it happens
-#'fairly infrequently and does not have large consequences. This behavior is
-#'SLiM's default because it is the simplest option, and produces results that
-#'most closely align with simple analytical population genetics models. However,
-#'in some models this selfing can be undesirable and problematic. In particular,
-#'models that involve very high variance in fitness or very small effective
-#'population sizes may see elevated rates of selfing that substantially influence
-#'model results. If preventIncidentalSelfing is set to T, all such incidental
-#'selfing will be prevented (by choosing a new second parent if the first parent
-#'was chosen again). Non-incidental selfing, as requested by the selfing rate,
-#'will still be permitted. Note that if incidental selfing is prevented, SLiM
-#'will hang if it is unable to find a different second parent; there must always
-#'be at least two individuals in the population with non-zero fitness, and
-#'mateChoice() and modifyChild() callbacks must not absolutely prevent those two
-#'individuals from producing viable offspring. Enforcement of the prohibition
-#'on incidental selfing will occur after mateChoice() callbacks have been called
-#'(and thus the default mating weights provided to mateChoice() callbacks will
-#'not exclude the first parent!), but will occur before modifyChild() callbacks
-#'are called (so those callbacks may assume that the first and second parents
-#'are distinct). If nucleotideBased is T, the model will be nucleotide-based.
-#'In this case, auto-generated mutations (i.e., mutation types used by genomic
-#'element types) must be nucleotide-based, and an ancestral nucleotide sequence
-#'must be supplied with initializeAncestralNucleotides(). Nonnucleotide- based
-#'mutations may still be used, but may not be referenced by genomic element types.
-#'A mutation rate (or rate map) may not be supplied with initializeMutationRate();
-#'instead, a hotspot map may (optionally) be supplied with initializeHotspotMap().
-#'This choice has many consequences across SLiM; see section 1.8 for further
-#'discussion. If randomizeCallbacks is T (the default), the order in which
-#'individuals are processed in callbacks will be randomized to make it easier to
-#'avoid order-dependency bugs. This flag exists because the order of individuals
-#'in each subpopulation is non-random; most notably, females always come before
-#'males in the individuals vector, but non-random ordering may also occur with
-#'respect to things like migrant versus non-migrant status, origin by selfing
-#'versus cloning versus biparental mating, and other factors. When this option is
-#'F, individuals in a subpopulation are processed in the order of the individuals
-#'vector in each tick cycle stage, which may lead to order-dependency issues if
-#'there is an enabled callback whose behavior is not fully independent between
-#'calls. Setting this option to T will cause individuals within each subpopulation
-#'to be processed in a randomized order in each tick cycle stage; specifically,
-#'this randomizes the order of calls to mutationEffect() callbacks in both WF
-#'and nonWF models, and calls to reproduction() and survival() callbacks in
-#'nonWF models. Each subpopulation is still processed separately, in sequential
-#'order, so order-dependency issues between subpopulations are still possible if
-#'callbacks have effects that are not fully independent. This feature was added
-#'in SLiM 4, breaking backward compatibility; to recover the behavior of previous
-#'versions of SLiM, pass F for this option (but then be very careful about
-#'order-dependency issues in your script). The default of T is the safe option,
-#'but a small speed penalty is incurred by the randomization of the processing
-#'order - for most models the difference will be less than 1%, but in the worst
-#'case it may approach 10%. Models that do not have any order-dependency issue may
-#'therefore run somewhat faster if this is set to F. Note that anywhere that your
-#'script uses the individuals property of events mutationEffect() interaction()
-#'mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-#'626 Subpopulation, the order of individuals returned will be non-random
-#'(regardless of the setting of this option); you should use sample() to shuffle
-#'the order of the individuals vector if necessary to avoid order-dependency
-#'issues in your script. This function will likely be extended with further
-#'options in the future, added on to the end of the argument list. Using named
-#'arguments with this call is recommended for readability. Note that turning on
-#'optional features may increase the runtime and memory footprint of SLiM.
+#'runs, allowing more efficient internal computations. The optimal mutation
+#'run length is short enough that each mutation run is relatively unlikely to
+#'be modified by mutation/recombination events when inherited, but long enough
+#'that each mutation run is likely to contain a relatively large number of
+#'mutations; these priorities are in tension, so an intermediate balance between
+#'them is generally desirable. The optimal number of mutation runs will depend
+#'upon the machine and even the compiler used to build SLiM, so SLiM's default
+#'value may not be optimal; for maximal performance it can thus be beneficial to
+#'experiment with different values and find the optimal value for the simulation
+#'- a process which SLiM can assist with (see section 21.4). Specifying the
+#'number of mutation runs is an advanced technique, but in certain cases it can
+#'improve performance significantly. If preventIncidentalSelfing is T, incidental
+#'selfing in hermaphroditic models will be prevented by SLiM. By default (i.e.,
+#'if preventIncidentalSelfing is F), SLiM chooses the first and second parents
+#'in a biparental mating event independently. It is therefore possible for the
+#'same individual to be chosen as both the first and second parent, resulting
+#'in selfing events even when the selfing rate is zero. In many models this
+#'is unimportant, since it happens fairly infrequently and does not have large
+#'consequences. This behavior is SLiM's default because it is the simplest option,
+#'and produces results that most closely align with simple analytical population
+#'genetics models. However, in some models this selfing can be undesirable and
+#'problematic. In particular, models that involve very high variance in fitness
+#'or very small effective population sizes may see elevated rates of selfing that
+#'substantially influence model results. If preventIncidentalSelfing is set to T,
+#'all such incidental selfing will be prevented (by choosing a new second parent
+#'if the first parent was chosen again). Non-incidental selfing, as requested by
+#'the selfing rate, will still be permitted. Note that if incidental selfing is
+#'prevented, SLiM will hang if it is unable to find a different second parent;
+#'there must always be at least two individuals in the population with non-zero
+#'fitness, and mateChoice() and modifyChild() callbacks must not absolutely
+#'prevent those two individuals from producing viable offspring. Enforcement
+#'of the prohibition on incidental selfing will occur after mateChoice()
+#'callbacks have been called (and thus the default mating weights provided to
+#'mateChoice() callbacks will not exclude the first parent!), but will occur
+#'before modifyChild() callbacks are called (so those callbacks may assume that
+#'the first and second parents are distinct). If nucleotideBased is T, the model
+#'will be nucleotide-based. In this case, auto-generated mutations (i.e., mutation
+#'types used by genomic element types) must be nucleotide-based, and an ancestral
+#'nucleotide sequence must be supplied with initializeAncestralNucleotides().
+#'Nonnucleotide- based mutations may still be used, but may not be referenced by
+#'genomic element types. A mutation rate (or rate map) may not be supplied with
+#'initializeMutationRate(); instead, a hotspot map may (optionally) be supplied
+#'with initializeHotspotMap(). This choice has many consequences across SLiM; see
+#'section 1.8 for further discussion. If randomizeCallbacks is T (the default),
+#'the order in which individuals are processed in callbacks will be randomized
+#'to make it easier to avoid order-dependency bugs. This flag exists because the
+#'order of individuals in each subpopulation is non-random; most notably, females
+#'always come before males in the individuals vector, but non-random ordering may
+#'also occur with respect to things like migrant versus non-migrant status, origin
+#'by selfing versus cloning versus biparental mating, and other factors. When this
+#'option is F, individuals in a subpopulation are processed in the order of the
+#'individuals vector in each tick cycle stage, which may lead to order-dependency
+#'issues if there is an enabled callback whose behavior is not fully independent
+#'between calls. Setting this option to T will cause individuals within each
+#'subpopulation to be processed in a randomized order in each tick cycle stage;
+#'specifically, this randomizes the order of calls to mutationEffect() callbacks
+#'in both WF and nonWF models, and calls to reproduction() and survival()
+#'callbacks in nonWF models. Each subpopulation is still processed separately,
+#'in sequential order, so order-dependency issues between subpopulations are
+#'still possible if callbacks have effects that are not fully independent. This
+#'feature was added in SLiM 4, breaking backward compatibility; to recover the
+#'behavior of previous versions of SLiM, pass F for this option (but then be very
+#'careful about order-dependency issues in your script). The default of T is the
+#'safe option, but a small speed penalty is incurred by the randomization of the
+#'processing order - for most models the difference will be less than 1%, but in
+#'the worst case it may approach 10%. Models that do not have any order-dependency
+#'issue may therefore run somewhat faster if this is set to F. Note that anywhere
+#'that your script uses the individuals property of Subpopulation, the order
+#'of individuals returned will be non-random (regardless of the setting of this
+#'option); you should use sample() to shuffle the order of the individuals vector
+#'if necessary to avoid order-dependency issues in your script. This function
+#'will likely be extended with further options in the future, added on to the end
+#'of the argument list. Using named arguments with this call is recommended for
+#'readability. Note that turning on optional features may increase the runtime and
+#'memory footprint of SLiM.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -1151,28 +1137,26 @@ initializeSpecies <- function(tickModulo, tickPhase, avatar, color) {
 #'more frequent simplification (lower simplificationRatio or smaller
 #'simplificationInterval) means the stored tree sequences will use less
 #'memory, but at a cost of somewhat longer run times. Conversely, a larger
-#'simplificationRatio or simplificationInterval means that SLiM will wait
-#'longer between simplifications. There are three ways these parameters can
-#'be used. With the first option, with a non- NULL simplificationRatio and
-#'a NULL value for simplificationInterval, SLiM will try to find an optimal
-#'tick interval for simplification such that the ratio of the memory used by
-#'the tree sequence tables, (before:after) simplification, is close to the
-#'requested ratio. The default of 10 (used if both simplificationRatio and
-#'simplificationInterval are NULL) thus requests that SLiM try to find a tick
-#'interval such that the maximum size of the stored tree sequences is ten times
-#'the size after simplification. INF may be supplied to indicate that automatic
-#'simplification should never occur; 0 may be supplied to indicate that automatic
-#'simplification should be performed at the end of every tick. Alternatively -
-#'the second option - simplificationRatio may be NULL and simplificationInterval
-#'may be set to the interval, in ticks, between simplifications. This may
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 627 provide more reliable performance,
-#'but the interval must be chosen carefully to avoid exceeding the available
-#'memory. The simplificationInterval value may be a very large number to
-#'specify that simplification should never occur (not INF, though, since it is
-#'an integer value), or 1 to simplify every tick. Finally - the third option -
-#'both parameters may be non-NULL, in which case simplificationRatio is used as
-#'described above, while simplificationInterval provides the initial interval
+#'simplificationRatio or simplificationInterval means that SLiM will wait longer
+#'between simplifications. There are three ways these parameters can be used.
+#'With the first option, with a non- NULL simplificationRatio and a NULL value
+#'for simplificationInterval, SLiM will try to find an optimal tick interval
+#'for simplification such that the ratio of the memory used by the tree sequence
+#'tables, (before:after) simplification, is close to the requested ratio. The
+#'default of 10 (used if both simplificationRatio and simplificationInterval are
+#'NULL) thus requests that SLiM try to find a tick interval such that the maximum
+#'size of the stored tree sequences is ten times the size after simplification.
+#'INF may be supplied to indicate that automatic simplification should never
+#'occur; 0 may be supplied to indicate that automatic simplification should
+#'be performed at the end of every tick. Alternatively - the second option -
+#'simplificationRatio may be NULL and simplificationInterval may be set to the
+#'interval, in ticks, between simplifications. This may provide more reliable
+#'performance, but the interval must be chosen carefully to avoid exceeding the
+#'available memory. The simplificationInterval value may be a very large number
+#'to specify that simplification should never occur (not INF, though, since it
+#'is an integer value), or 1 to simplify every tick. Finally - the third option
+#'- both parameters may be non-NULL, in which case simplificationRatio is used
+#'as described above, while simplificationInterval provides the initial interval
 #'first used by SLiM (and then subsequently increased or decreased to try to match
 #'the requested simplification ratio). The default initial interval, used when
 #'simplificationInterval is NULL, is usually 20; this is chosen to be relatively
@@ -1335,28 +1319,27 @@ ancestralNucleotides <- function(start, end, format = "string") {
 #'number of breakpoints will be drawn based upon the overall recombination rate
 #'and the chromosome length (following the standard procedure in SLiM). Note that
 #'if the double-stranded breaks model has been chosen, the number of breakpoints
-#'generated will probably not be equal to the number events mutationEffect()
-#'interaction() mateChoice() modifyChild() mutation() recombination()
-#'reproduction() survival() 632 requested, because most breakpoints will entail
-#'gene conversion tracts, which entail additional crossover breakpoints. It is
-#'generally recommended that the parent individual be supplied to this method,
-#'but parent is NULL by default. The individual supplied in parent is used for
-#'two purposes. First, in sexual models that define separate recombination rate
-#'maps for males versus females, the sex of parent will be used to determine
-#'which map is used; in this case, a non-NULL value must be supplied for parent,
-#'since the choice of recombination rate map must be determined. Second, in models
-#'that define recombination() callbacks, parent is used to determine the various
-#'pseudo-parameters that are passed to recombination() callbacks (individual,
-#'genome1, genome2, subpop), and the subpopulation to which parent belongs is used
-#'to select which recombination() callbacks are applicable; given the necessity of
-#'this information, recombination() callbacks will not be called as a side effect
-#'of this method if parent is NULL. Apart from these two uses, parent is not used,
-#'and the caller does not guarantee that the generated breakpoints will actually
-#'be used to recombine the genomes of parent in particular. If a recombination()
-#'callback is called, genome1 for that callback will always be parent.genome1; in
-#'other words, drawBreakpoints() will always treat parent.genome1 as the initial
-#'copy strand. If the caller wishes to randomly choose an initial copy strand
-#'(which is usually desirable), they should do that themselves.
+#'generated will probably not be equal to the number requested, because most
+#'breakpoints will entail gene conversion tracts, which entail additional
+#'crossover breakpoints. It is generally recommended that the parent individual be
+#'supplied to this method, but parent is NULL by default. The individual supplied
+#'in parent is used for two purposes. First, in sexual models that define separate
+#'recombination rate maps for males versus females, the sex of parent will be used
+#'to determine which map is used; in this case, a non-NULL value must be supplied
+#'for parent, since the choice of recombination rate map must be determined.
+#'Second, in models that define recombination() callbacks, parent is used to
+#'determine the various pseudo-parameters that are passed to recombination()
+#'callbacks (individual, genome1, genome2, subpop), and the subpopulation to
+#'which parent belongs is used to select which recombination() callbacks are
+#'applicable; given the necessity of this information, recombination() callbacks
+#'will not be called as a side effect of this method if parent is NULL. Apart
+#'from these two uses, parent is not used, and the caller does not guarantee that
+#'the generated breakpoints will actually be used to recombine the genomes of
+#'parent in particular. If a recombination() callback is called, genome1 for that
+#'callback will always be parent.genome1; in other words, drawBreakpoints() will
+#'always treat parent.genome1 as the initial copy strand. If the caller wishes to
+#'randomly choose an initial copy strand (which is usually desirable), they should
+#'do that themselves.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -1512,13 +1495,12 @@ simpleConversionFraction, bias)
 #'map is used only for that sex. Note that whether sex-specific hotspot maps
 #'will be used is set by the way that the simulation is initially configured
 #'with initializeHotspot(), and cannot be changed with this method; so if the
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 633 simulation was set up to use
-#'sex-specific hotspot maps then sex must be "M" or "F" here, whereas if it was
-#'set up not to, then sex must be "*" or unsupplied here. If a simulation needs
-#'sex-specific hotspot maps only some of the time, the male and female maps can
-#'simply be set to be identical the rest of the time. The hotspot map is normally
-#'constant in simulations, so be sure you know what you are doing.
+#'simulation was set up to use sex-specific hotspot maps then sex must be "M" or
+#'"F" here, whereas if it was set up not to, then sex must be "*" or unsupplied
+#'here. If a simulation needs sex-specific hotspot maps only some of the time, the
+#'male and female maps can simply be set to be identical the rest of the time. The
+#'hotspot map is normally constant in simulations, so be sure you know what you
+#'are doing.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -1733,11 +1715,9 @@ setRecombinationRate <- function(rates, ends, sex) {
 #'be aware that this may use a large amount of memory for large log files). In
 #'any case, the log file will be created immediately, with its requested initial
 #'contents; the initial write is not buffered. When compression is not enabled,
-#'the flushInterval setting is ignored. events mutationEffect() interaction()
-#'mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-#'636 The LogFile documentation discusses how to configure and use LogFile to
-#'write out the data you are interested in from your simulation; see section
-#'24.10.
+#'the flushInterval setting is ignored. The LogFile documentation discusses how to
+#'configure and use LogFile to write out the data you are interested in from your
+#'simulation; see section 24.10.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -2054,9 +2034,7 @@ registerEarlyEvent <- function(id, source, start, end, ticksSpec) {
 #'SLiMEidosBlock objects, and is active immediately; it may be eligible to execute
 #'in the current tick (see section 25.11 for details). The new SLiMEidosBlock will
 #'be defined as a global variable immediately by this method (see section 24.12),
-#'and will also be returned by this method. events mutationEffect() interaction()
-#'mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-#'637
+#'and will also be returned by this method.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -2242,35 +2220,33 @@ registerLateEvent <- function(id, source, start, end, ticksSpec) {
 #'every tenth tick over the whole duration of a long model run, for example, it
 #'would not be advisable to use a call like community.rescheduleScriptBlock(s1,
 #'ticks=seq(10, 100000, 10)) for that purpose, since that would result in
-#'thousands of duplicate script blocks. Instead, it would be preferable to
-#'add a test such as if (community.tick % 10 != 0) return; at the beginning
-#'of the event. It is legal to reschedule a script block while the block is
-#'executing; a call like community.rescheduleScriptBlock(self, community.tick +
-#'10, community.tick + 10); events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 638 made
-#'inside a given block would therefore also cause the block to execute every
-#'tenth tick, although this sort of self-rescheduling code is probably harder to
-#'read, maintain, and debug. Whichever way of specifying the tick set is used,
-#'the discussion in section 25.11 applies: block may continue to be executed
-#'during the current tick cycle stage even after it has been rescheduled, unless
-#'it is made inactive using its active property, and similarly, the block may not
-#'execute during the current tick cycle stage if it was not already scheduled to
-#'do so. Rescheduling script blocks during the tick and tick cycle stage in which
-#'they are executing, or in which they are intended to execute, should be avoided.
-#'Also, as mentioned in section 22.7, script blocks which are open-ended (i.e.,
-#'with no specified end tick), are not used in determining whether the end of the
-#'simulation has been reached (because then the simulation would run forever);
-#'if you reschedule a block to be open-ended, and to start after the end of the
-#'last closed-ended block, the rescheduled block will therefore not run at all
-#'(just as such a block would not run at all in other circumstances, too). Note
-#'that new script blocks can also be created and scheduled using the register...()
-#'methods of Community and Species; by using the same source as a template
-#'script block, the template can be duplicated and scheduled for different
-#'ticks. In fact, rescheduleScriptBlock() does essentially that internally. In
-#'multispecies models, note that all new script blocks created as a side effect of
-#'rescheduleScriptBlock() will have the same species and ticks specifier as block;
-#'use the register...() methods to create a new block with a different species or
-#'ticks specifier.
+#'thousands of duplicate script blocks. Instead, it would be preferable to add
+#'a test such as if (community.tick % 10 != 0) return; at the beginning of the
+#'event. It is legal to reschedule a script block while the block is executing;
+#'a call like community.rescheduleScriptBlock(self, community.tick + 10,
+#'community.tick + 10); made inside a given block would therefore also cause the
+#'block to execute every tenth tick, although this sort of self-rescheduling code
+#'is probably harder to read, maintain, and debug. Whichever way of specifying
+#'the tick set is used, the discussion in section 25.11 applies: block may
+#'continue to be executed during the current tick cycle stage even after it has
+#'been rescheduled, unless it is made inactive using its active property, and
+#'similarly, the block may not execute during the current tick cycle stage if it
+#'was not already scheduled to do so. Rescheduling script blocks during the tick
+#'and tick cycle stage in which they are executing, or in which they are intended
+#'to execute, should be avoided. Also, as mentioned in section 22.7, script
+#'blocks which are open-ended (i.e., with no specified end tick), are not used
+#'in determining whether the end of the simulation has been reached (because then
+#'the simulation would run forever); if you reschedule a block to be open-ended,
+#'and to start after the end of the last closed-ended block, the rescheduled block
+#'will therefore not run at all (just as such a block would not run at all in
+#'other circumstances, too). Note that new script blocks can also be created and
+#'scheduled using the register...() methods of Community and Species; by using
+#'the same source as a template script block, the template can be duplicated and
+#'scheduled for different ticks. In fact, rescheduleScriptBlock() does essentially
+#'that internally. In multispecies models, note that all new script blocks created
+#'as a side effect of rescheduleScriptBlock() will have the same species and ticks
+#'specifier as block; use the register...() methods to create a new block with a
+#'different species or ticks specifier.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -2532,14 +2508,12 @@ addMutations <- function(mutations) {
 #'mutations that you create (see section 24.10.1). The selection coefficients of
 #'the mutations are drawn from their mutation types; addNewMutation() may be used
 #'instead if you wish to specify selection coefficients. In non-nucleotide-based
-#'models, mutationType will always be a non-nucleotide-based mutation type,
-#'and so nucleotide must be NULL (the default). In a nucleotide-based model,
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 640 mutationType might still
-#'be non-nucleotide-based (in which case nucleotide must still be NULL), or
-#'mutationType might be nucleotide-based, in which case a non-NULL value must
-#'be supplied for nucleotide, specifying the nucleotide(s) to be associated with
-#'the new mutation(s). Nucleotides may be specified with string values ("A",
+#'models, mutationType will always be a non-nucleotide-based mutation type, and so
+#'nucleotide must be NULL (the default). In a nucleotide-based model, mutationType
+#'might still be non-nucleotide-based (in which case nucleotide must still be
+#'NULL), or mutationType might be nucleotide-based, in which case a non-NULL value
+#'must be supplied for nucleotide, specifying the nucleotide(s) to be associated
+#'with the new mutation(s). Nucleotides may be specified with string values ("A",
 #'"C", "G", or "T"), or with integer values (A=0, C=1, G=2, T=3). If a nucleotide
 #'mutation already exists at the mutating position, it is replaced automatically
 #'in accordance with the stacking policy for nucleotide- based mutation types. No
@@ -2634,20 +2608,18 @@ nucleotide)
 #'the current tick; otherwise, beginning in SLiM 3.5, it must be equal to the
 #'current tick anyway, as other uses of this property have been deprecated), and
 #'originSubpop (specified by the Subpopulation object or by integer identifier,
-#'or by NULL, the default, to specify the subpopulation to which the first
-#'target genome belongs). If originSubpop is supplied as an integer, it is
-#'intentionally not checked events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 641 for
-#'validity; you may use arbitrary values of originSubpop to "tag" the mutations
-#'that you create (see section 24.10.1). The addNewDrawnMutation() method
-#'may be used instead if you wish selection coefficients to be drawn from the
-#'mutation types of the mutations. In non-nucleotide-based models, mutationType
-#'will always be a non-nucleotide-based mutation type, and so nucleotide must
-#'be NULL (the default). In a nucleotide-based model, mutationType might still
-#'be non-nucleotide-based (in which case nucleotide must still be NULL), or
-#'mutationType might be nucleotide-based, in which case a non-NULL value must
-#'be supplied for nucleotide, specifying the nucleotide(s) to be associated with
-#'the new mutation(s). Nucleotides may be specified with string values ("A",
+#'or by NULL, the default, to specify the subpopulation to which the first target
+#'genome belongs). If originSubpop is supplied as an integer, it is intentionally
+#'not checked for validity; you may use arbitrary values of originSubpop to "tag"
+#'the mutations that you create (see section 24.10.1). The addNewDrawnMutation()
+#'method may be used instead if you wish selection coefficients to be drawn
+#'from the mutation types of the mutations. In non-nucleotide-based models,
+#'mutationType will always be a non-nucleotide-based mutation type, and so
+#'nucleotide must be NULL (the default). In a nucleotide-based model, mutationType
+#'might still be non-nucleotide-based (in which case nucleotide must still be
+#'NULL), or mutationType might be nucleotide-based, in which case a non-NULL value
+#'must be supplied for nucleotide, specifying the nucleotide(s) to be associated
+#'with the new mutation(s). Nucleotides may be specified with string values ("A",
 #'"C", "G", or "T"), or with integer values (A=0, C=1, G=2, T=3). If a nucleotide
 #'mutation already exists at the mutating position, it is replaced automatically
 #'in accordance with the stacking policy for nucleotide- based mutation types. No
@@ -2734,21 +2706,19 @@ originSubpop, nucleotide)
 #'"marker mutations": mutations of a special mutation type that are not literally
 #'mutations in the usual sense, but instead are added in to particular genomes
 #'to mark them as possessing some property. Marker mutations are not typically
-#'added by SLiM's mutation-generating machinery; instead they are added
-#'explicitly with addNewMutation() or addNewDrawnMutation() at a known, constant
-#'position in the genome. This method provides a check for whether a marker
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 642 mutation of a given type exists
-#'in a particular genome; because the position to check is known in advance, that
-#'check can be done much faster than the equivalent check with containsMutations()
-#'or countOfMutationsOfType(), using a binary search of the genome. See section
-#'14.4 for one example of a model that uses marker mutations - in that case, to
-#'mark chromosomes that possess an inversion. If returnMutation is T (an option
-#'added in SLiM 3), this method returns the actual mutation found, rather than
-#'just T or F. More specifically, the first mutation found of mutType at position
-#'will be returned; if more than one such mutation exists in the target genome,
-#'which one is returned is not defined. If returnMutation is T and no mutation of
-#'mutType is found at position, NULL will be returned.
+#'added by SLiM's mutation-generating machinery; instead they are added explicitly
+#'with addNewMutation() or addNewDrawnMutation() at a known, constant position
+#'in the genome. This method provides a check for whether a marker mutation of a
+#'given type exists in a particular genome; because the position to check is known
+#'in advance, that check can be done much faster than the equivalent check with
+#'containsMutations() or countOfMutationsOfType(), using a binary search of the
+#'genome. See section 14.4 for one example of a model that uses marker mutations
+#'- in that case, to mark chromosomes that possess an inversion. If returnMutation
+#'is T (an option added in SLiM 3), this method returns the actual mutation found,
+#'rather than just T or F. More specifically, the first mutation found of mutType
+#'at position will be returned; if more than one such mutation exists in the
+#'target genome, which one is returned is not defined. If returnMutation is T and
+#'no mutation of mutType is found at position, NULL will be returned.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -2962,11 +2932,9 @@ mutationFrequenciesInGenomes <- function(mutations) {
 #'need a count of the matching Mutation objects, rather than a vector of the
 #'matches, use -countOfMutationsOfType(); if you need just the positions of
 #'matching Mutation objects, use -positionsOfMutationsOfType(); and if you are
-#'aiming for a sum of the selection coefficients of matching Mutation objects,
-#'use -sumOfMutationsOfType(). This method is provided for speed; it is much
-#'faster than the corresponding Eidos code. events mutationEffect() interaction()
-#'mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-#'643
+#'aiming for a sum of the selection coefficients of matching Mutation objects, use
+#'-sumOfMutationsOfType(). This method is provided for speed; it is much faster
+#'than the corresponding Eidos code.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -3126,19 +3094,18 @@ output <- function(filePath, append) {
 #'from a single Subpopulation, the outputMSSample() of Subpopulation may be
 #'more straightforward to use. If the optional parameter filePath is NULL (the
 #'default), output is directed to SLiM's standard output. Otherwise, the output
-#'is sent to the file specified by filePath, overwriting that file if append if
-#'F, or appending to the end of it if append is T. Positions in the output will
-#'span the interval [0,1]. If filterMonomorphic is F (the default), all mutations
-#'that are present in the sample will be included in the output. This means that
-#'some mutations may be included that are actually monomorphic within the sample
-#'(i.e., that exist in every sampled genome, and are thus apparently fixed). These
-#'may be filtered out with filterMonomorphic = T if desired; note that this option
-#'means that some mutations that do exist in the sampled genomes might not be
-#'included in the output, simply because they exist in every sampled genome. See
-#'output() and outputVCF() for other output formats. Output is generally done in
-#'a late() event, so that the output reflects the state of the simulation at the
-#'end of a tick. events mutationEffect() interaction() mateChoice() modifyChild()
-#'mutation() recombination() reproduction() survival() 644
+#'is sent to the file specified by filePath, overwriting that file if append if F,
+#'or appending to the end of it if append is T. Positions in the output will span
+#'the interval [0,1]. If filterMonomorphic is F (the default), all mutations that
+#'are present in the sample will be included in the output. This means that some
+#'mutations may be included that are actually monomorphic within the sample (i.e.,
+#'that exist in every sampled genome, and are thus apparently fixed). These may be
+#'filtered out with filterMonomorphic = T if desired; note that this option means
+#'that some mutations that do exist in the sampled genomes might not be included
+#'in the output, simply because they exist in every sampled genome. See output()
+#'and outputVCF() for other output formats. Output is generally done in a late()
+#'event, so that the output reflects the state of the simulation at the end of a
+#'tick.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -3347,55 +3314,54 @@ readFromMS <- function(filePath, mutationType) {
 #'A vector containing all of the mutations created by readFromVCF() is returned.
 #'SLiM's VCF parsing is quite primitive. The header is parsed only inasmuch as
 #'SLiM looks to see whether SLiM-specific VCF fields (see sections 26.2.3 and
-#'26.2.4) are defined or not; the rest of the header information is ignored. Call
-#'lines are assumed to follow the format: #CHROM POS ID REF ALT QUAL FILTER INFO
-#'FORMAT i0...iN events mutationEffect() interaction() mateChoice() modifyChild()
-#'mutation() recombination() reproduction() survival() 645 The CHROM, ID, QUAL,
-#'FILTER, and FORMAT fields are ignored, and information in the genotype fields
-#'beyond the GT genotype subfield are also ignored. SLiM's own VCF annotations
-#'(see section 26.2.3) are honored; in particular, mutations will be created using
-#'the given values of MID, S, PO, TO, and MT if those subfields are present, and
-#'DOM, if it is present, must match the dominance coefficient of the mutation
-#'type. The parameter mutationType (a MutationType object or id) will be used
-#'for any mutations that have no supplied mutation type id in the MT subfield;
-#'if mutationType would be used but is NULL an error will result. Mutation IDs
-#'supplied in MID will be used if no mutation IDs have been used in the simulation
-#'so far; if any have been used, it is difficult for SLiM to guarantee that
-#'there are no conflicts, so a warning will be emitted and the MID values will be
-#'ignored. If selection coefficients are not supplied with the S subfield, they
-#'will be drawn from the mutation type used for the mutation. If a population
-#'of origin is not supplied with the PO subfield, -1 will be used. If a tick of
-#'origin is not supplied with the TO subfield (or a generation of origin GO field,
-#'which was the SLiM convention before SLiM 4), the current tick will be used.
-#'REF and ALT must always be comprised of simple nucleotides (A/C/G/T) rather than
-#'values representing indels or other complex states. Beyond this, the handling of
-#'the REF and ALT fields depends upon several factors. First of all, these fields
-#'are ignored in non-nucleotide-based models, although they are still checked for
-#'conformance. In nucleotide-based models, when a header definition for SLiM's
-#'NONNUC tag is present (as when nucleotide-based output is generated by SLiM):
-#'Second, if a NONNUC field is present in the INFO field the call line is taken
-#'to represent a non-nucleotide-based mutation, and REF and ALT are again ignored.
-#'In this case the mutation type used must be non-nucleotide- based. Third, if
-#'NONNUC is not present the call line is taken to represent a nucleotide-based
-#'mutation. In this case, the mutation type used must be nucleotide-based.
-#'Also, in this case, the specified reference nucleotide must match the existing
-#'ancestral nucleotide at the given position. In nucleotide- based models, when a
-#'header definition for SLiM's NONNUC tag is not present (as when loading a non-
-#'SLiM-generated VCF file): The mutation type will govern the way nucleotides
-#'are handled. If the mutation type used for a mutation is nucleotide-based,
-#'the nucleotide provided in the VCF file for that allele will be used. If the
-#'mutation type is non-nucleotide-based, the nucleotide provided will be ignored.
-#'If multiple alleles using the same nucleotide at the same position are specified
-#'in the VCF file, a separate mutation will be created for each, mirroring SLiM's
-#'behavior with independent mutational lineages when writing VCF (see section
-#'26.2.4). The MULTIALLELIC flag is ignored by readFromVCF(); call lines for
-#'mutations at the same base position in the same genome will result in stacked
-#'mutations whether or not MULTIALLELIC is present. The target genomes correspond,
-#'in order, to the haploid or diploid calls provided for i0…iN (the sample IDs)
-#'in the VCF file. In sex-based models that simulate the X or Y chromosome, null
-#'genomes in the target vector will be skipped, and will not be used to correspond
-#'to any of i0…iN; however, care should be taken in this case that the genomes in
-#'the VCF file correspond to the target genomes in the manner desired.
+#'26.2.4) are defined or not; the rest of the header information is ignored.
+#'Call lines are assumed to follow the format: #CHROM POS ID REF ALT QUAL FILTER
+#'INFO FORMAT i0...iN The CHROM, ID, QUAL, FILTER, and FORMAT fields are ignored,
+#'and information in the genotype fields beyond the GT genotype subfield are
+#'also ignored. SLiM's own VCF annotations (see section 26.2.3) are honored; in
+#'particular, mutations will be created using the given values of MID, S, PO, TO,
+#'and MT if those subfields are present, and DOM, if it is present, must match
+#'the dominance coefficient of the mutation type. The parameter mutationType (a
+#'MutationType object or id) will be used for any mutations that have no supplied
+#'mutation type id in the MT subfield; if mutationType would be used but is NULL
+#'an error will result. Mutation IDs supplied in MID will be used if no mutation
+#'IDs have been used in the simulation so far; if any have been used, it is
+#'difficult for SLiM to guarantee that there are no conflicts, so a warning will
+#'be emitted and the MID values will be ignored. If selection coefficients are
+#'not supplied with the S subfield, they will be drawn from the mutation type
+#'used for the mutation. If a population of origin is not supplied with the PO
+#'subfield, -1 will be used. If a tick of origin is not supplied with the TO
+#'subfield (or a generation of origin GO field, which was the SLiM convention
+#'before SLiM 4), the current tick will be used. REF and ALT must always be
+#'comprised of simple nucleotides (A/C/G/T) rather than values representing
+#'indels or other complex states. Beyond this, the handling of the REF and ALT
+#'fields depends upon several factors. First of all, these fields are ignored in
+#'non-nucleotide-based models, although they are still checked for conformance.
+#'In nucleotide-based models, when a header definition for SLiM's NONNUC tag is
+#'present (as when nucleotide-based output is generated by SLiM): Second, if a
+#'NONNUC field is present in the INFO field the call line is taken to represent
+#'a non-nucleotide-based mutation, and REF and ALT are again ignored. In this
+#'case the mutation type used must be non-nucleotide- based. Third, if NONNUC is
+#'not present the call line is taken to represent a nucleotide-based mutation. In
+#'this case, the mutation type used must be nucleotide-based. Also, in this case,
+#'the specified reference nucleotide must match the existing ancestral nucleotide
+#'at the given position. In nucleotide- based models, when a header definition
+#'for SLiM's NONNUC tag is not present (as when loading a non- SLiM-generated
+#'VCF file): The mutation type will govern the way nucleotides are handled.
+#'If the mutation type used for a mutation is nucleotide-based, the nucleotide
+#'provided in the VCF file for that allele will be used. If the mutation type
+#'is non-nucleotide-based, the nucleotide provided will be ignored. If multiple
+#'alleles using the same nucleotide at the same position are specified in the VCF
+#'file, a separate mutation will be created for each, mirroring SLiM's behavior
+#'with independent mutational lineages when writing VCF (see section 26.2.4). The
+#'MULTIALLELIC flag is ignored by readFromVCF(); call lines for mutations at the
+#'same base position in the same genome will result in stacked mutations whether
+#'or not MULTIALLELIC is present. The target genomes correspond, in order, to the
+#'haploid or diploid calls provided for i0…iN (the sample IDs) in the VCF file. In
+#'sex-based models that simulate the X or Y chromosome, null genomes in the target
+#'vector will be skipped, and will not be used to correspond to any of i0…iN;
+#'however, care should be taken in this case that the genomes in the VCF file
+#'correspond to the target genomes in the manner desired.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -3437,29 +3403,28 @@ readFromVCF <- function(filePath, mutationType) {
 #'@details Remove the mutations in mutations from the target genome(s), if they
 #'are present (if they are not present, they will be ignored). If NULL is passed
 #'for mutations (which is the default), then all mutations will be removed from
-#'the target genomes; in this case, substitute must be F (a specific vector of
-#'mutations to be substituted is required). Note that the Mutation objects removed
-#'remain valid, and will still be in the simulation's mutation registry (i.e.,
-#'will be returned by the Species property mutations), until the next tick.
-#'Removing mutations will normally affect the fitness values calculated at the
-#'end of the current tick; if you want current fitness values to be affected, you
-#'can call the Species method recalculateFitness() - but see the documentation
-#'of that method for caveats. The optional parameter substitute was added in
-#'SLiM 2.2, with a default of F for backward compatibility. If substitute is T,
-#'Substitution objects will be created for all of the removed mutations so that
-#'they are recorded in the simulation as having fixed, just as if they had reached
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 646 fixation and been removed by
-#'SLiM's own internal machinery. This will occur regardless of whether the
-#'mutations have in fact fixed, regardless of the convertToSubstitution property
-#'of the relevant mutation types, and regardless of whether all copies of the
-#'mutations have even been removed from the simulation (making it possible to
-#'create Substitution objects for mutations that are still segregating). It is up
-#'to the caller to perform whatever checks are necessary to preserve the integrity
-#'of the simulation's records. Typically substitute will only be set to T in
-#'the context of calls like sim.subpopulations.genomes.removeMutations(muts, T),
-#'such that the substituted mutations are guaranteed to be entirely removed from
-#'circulation. As mentioned above, substitute may not be T if mutations is NULL.
+#'the target genomes; in this case, substitute must be F (a specific vector
+#'of mutations to be substituted is required). Note that the Mutation objects
+#'removed remain valid, and will still be in the simulation's mutation registry
+#'(i.e., will be returned by the Species property mutations), until the next
+#'tick. Removing mutations will normally affect the fitness values calculated
+#'at the end of the current tick; if you want current fitness values to be
+#'affected, you can call the Species method recalculateFitness() - but see the
+#'documentation of that method for caveats. The optional parameter substitute
+#'was added in SLiM 2.2, with a default of F for backward compatibility. If
+#'substitute is T, Substitution objects will be created for all of the removed
+#'mutations so that they are recorded in the simulation as having fixed, just
+#'as if they had reached fixation and been removed by SLiM's own internal
+#'machinery. This will occur regardless of whether the mutations have in fact
+#'fixed, regardless of the convertToSubstitution property of the relevant mutation
+#'types, and regardless of whether all copies of the mutations have even been
+#'removed from the simulation (making it possible to create Substitution objects
+#'for mutations that are still segregating). It is up to the caller to perform
+#'whatever checks are necessary to preserve the integrity of the simulation's
+#'records. Typically substitute will only be set to T in the context of calls like
+#'sim.subpopulations.genomes.removeMutations(muts, T), such that the substituted
+#'mutations are guaranteed to be entirely removed from circulation. As mentioned
+#'above, substitute may not be T if mutations is NULL.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -3779,37 +3744,35 @@ countOfMutationsOfType <- function(mutType) {
 #'measure different things. More precisely, the relationship between them is
 #'r = 2φ/sqrt((1+fA)(1+fB)), where r is Wright's coefficient of relatedness,
 #'φ is the kinship coefficient, and fA and fB are the inbreeding coefficients
-#'of A and B respectively. events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 652 Note
-#'that this relatedness is simply pedigree-based relatedness, and does not
-#'necessarily correspond to genetic relatedness, because of the effects of factors
-#'like assortment and recombination. If a metric of actual genetic relatedness
-#'is desired, tree-sequence recording can be used after simulation is complete,
-#'to compute the exact genetic relatedness between individuals based upon the
-#'complete ancestry tree (a topic which is beyond the scope of this manual).
-#'Actual genetic relatedness cannot presently be calculated during a simulation
-#'run; the information is implicitly contained in the recorded tree-sequence
-#'tables, but calculating it is too computationally expensive to be reasonable.
-#'This method makes a couple of assumptions. One assumption is that the
-#'grandparents (or the parents, if grandparental information is not available) are
-#'themselves unrelated and that they are not inbred; this assumption is necessary
-#'because we have no information about their parentage, since SLiM's pedigree
-#'tracking information only goes back two generations. Be aware that in a model
-#'where inbreeding or selfing occurs at all (including "incidental selfing", where
-#'a hermaphroditic individual happens to choose itself as a mate), some level of
-#'"background relatedness" will be present and this assumption will be violated.
-#'In such circumstances, relatedness() will therefore tend to underestimate
-#'the degree of relatedness between individuals, and the greater the degree of
-#'inbreeding, the greater the underestimation will be. If inbreeding is allowed in
-#'a model - and particularly if it is common - the results of relatedness() should
-#'therefore not be taken as an estimate of absolute relatedness, but can still be
-#'useful as an estimate of relative relatedness (indicating that, say, A appears
-#'from the information available to be more closely related to B than it is to
-#'C). A second assumption is that, in nonWF models, addRecombinant() is not being
-#'used, since the pedigree relationships involved are then too complex to trace.
-#'Indeed, addRecombinant() does not record pedigree information at all, for this
-#'reason, and so the relatedness of individuals produced by addRecombinant() will
-#'be 0.0.
+#'of A and B respectively. Note that this relatedness is simply pedigree-based
+#'relatedness, and does not necessarily correspond to genetic relatedness, because
+#'of the effects of factors like assortment and recombination. If a metric of
+#'actual genetic relatedness is desired, tree-sequence recording can be used
+#'after simulation is complete, to compute the exact genetic relatedness between
+#'individuals based upon the complete ancestry tree (a topic which is beyond the
+#'scope of this manual). Actual genetic relatedness cannot presently be calculated
+#'during a simulation run; the information is implicitly contained in the recorded
+#'tree-sequence tables, but calculating it is too computationally expensive to be
+#'reasonable. This method makes a couple of assumptions. One assumption is that
+#'the grandparents (or the parents, if grandparental information is not available)
+#'are themselves unrelated and that they are not inbred; this assumption is
+#'necessary because we have no information about their parentage, since SLiM's
+#'pedigree tracking information only goes back two generations. Be aware that
+#'in a model where inbreeding or selfing occurs at all (including "incidental
+#'selfing", where a hermaphroditic individual happens to choose itself as a mate),
+#'some level of "background relatedness" will be present and this assumption
+#'will be violated. In such circumstances, relatedness() will therefore tend to
+#'underestimate the degree of relatedness between individuals, and the greater
+#'the degree of inbreeding, the greater the underestimation will be. If inbreeding
+#'is allowed in a model - and particularly if it is common - the results
+#'of relatedness() should therefore not be taken as an estimate of absolute
+#'relatedness, but can still be useful as an estimate of relative relatedness
+#'(indicating that, say, A appears from the information available to be more
+#'closely related to B than it is to C). A second assumption is that, in nonWF
+#'models, addRecombinant() is not being used, since the pedigree relationships
+#'involved are then too complex to trace. Indeed, addRecombinant() does not
+#'record pedigree information at all, for this reason, and so the relatedness of
+#'individuals produced by addRecombinant() will be 0.0.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -3905,16 +3868,14 @@ setSpatialPosition <- function(position) {
 #'@aliases Individual$sumOfMutationsOfType .I$sumOfMutationsOfType
 #'@family Individual
 #'@return An object of type float. Return will be of length 1 (a singleton)
-#'@details Returns the sum of the selection coefficients of all mutations
-#'that are of the type specified by mutType, out of all of the mutations in
-#'the genomes of the individual. This is often useful in models that use a
-#'particular mutation type to represent QTLs with additive effects; in that
-#'context, sumOfMutationsOfType() will provide the sum of the additive effects
-#'of the QTLs for the given mutation type. This method is provided for speed; it
-#'is much faster than the corresponding Eidos code. Note that this method also
-#'exists on Genome, for cases in which the sum for just one genome is desired.
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 653
+#'@details Returns the sum of the selection coefficients of all mutations that
+#'are of the type specified by mutType, out of all of the mutations in the
+#'genomes of the individual. This is often useful in models that use a particular
+#'mutation type to represent QTLs with additive effects; in that context,
+#'sumOfMutationsOfType() will provide the sum of the additive effects of the
+#'QTLs for the given mutation type. This method is provided for speed; it is much
+#'faster than the corresponding Eidos code. Note that this method also exists on
+#'Genome, for cases in which the sum for just one genome is desired.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -4012,22 +3973,20 @@ uniqueMutationsOfType <- function(mutType) {
 #'the interaction's maximum distance; that distance must be less than half of the
 #'extent of the spatial bounds in each dimension (so that, for a given dimension,
 #'the interaction function is clipped by the spatial bounds on only one side),
-#'otherwise events mutationEffect() interaction() mateChoice() modifyChild()
-#'mutation() recombination() reproduction() survival() 658 an error is raised.
-#'Note that for sex-specific interaction types, the sex of the receiver does
-#'not matter; an individual might not actually receive any interactions because
-#'of its sex, but it is still considered to have the same interaction function
-#'integral. If receivers is NULL, the maximal integral is returned, as would
-#'be experienced by an individual farther than the maximum distance from any
-#'edge. The evaluate() method must have been previously called for the receiver
-#'subpopulation, and positions saved at evaluation time will be used. If the
-#'InteractionType is non-spatial, this method may not be called. The computed
-#'value of the integral is not exact; it is calculated by an approximate numerical
-#'method designed to be fast, but the error should be fairly small (typically
-#'less than 1% from the true value). A large amount of computation will occur the
-#'first time this method is called (perhaps taking more than a second, depending
-#'upon hardware), but subsequent calls should be very fast. This method does
-#'not invoke interaction() callbacks; the calculated integrals are only for
+#'otherwise an error is raised. Note that for sex-specific interaction types, the
+#'sex of the receiver does not matter; an individual might not actually receive
+#'any interactions because of its sex, but it is still considered to have the
+#'same interaction function integral. If receivers is NULL, the maximal integral
+#'is returned, as would be experienced by an individual farther than the maximum
+#'distance from any edge. The evaluate() method must have been previously called
+#'for the receiver subpopulation, and positions saved at evaluation time will be
+#'used. If the InteractionType is non-spatial, this method may not be called. The
+#'computed value of the integral is not exact; it is calculated by an approximate
+#'numerical method designed to be fast, but the error should be fairly small
+#'(typically less than 1% from the true value). A large amount of computation will
+#'occur the first time this method is called (perhaps taking more than a second,
+#'depending upon hardware), but subsequent calls should be very fast. This method
+#'does not invoke interaction() callbacks; the calculated integrals are only for
 #'the interaction function itself, and so will not be accurate if interaction()
 #'callbacks modify the relationship between distance and interaction strength. For
 #'this reason, the overhead of the first call will not reoccur when individuals
@@ -4140,27 +4099,26 @@ distance <- function(receiver, exerters) {
 #'@details Returns a vector containing distances between the point given by
 #'the spatial coordinates in point, which may be thought of as the "receiver",
 #'and individuals in exerters. The point vector is interpreted as providing
-#'coordinates precisely as specified by the spatiality of the interaction type;
-#'if the interaction type's spatiality is "xz", for example, then point[0]
-#'is assumed to be an x value, and point[1] is assumed to be a z value. Be
-#'careful; this means that in general it is not safe to pass an individual's
-#'spatialPosition property for point, for example (although it is safe if the
-#'spatiality of the interaction matches the dimensionality of the simulation). A
-#'coordinate for a periodic spatial dimension must be within the spatial bounds
-#'for that dimension, since coordinates outside of periodic bounds are meaningless
-#'(pointPeriodic() may be used to ensure this); coordinates for non-periodic
-#'spatial dimensions are not restricted. All individuals in exerters must belong
-#'to a single events mutationEffect() interaction() mateChoice() modifyChild()
-#'mutation() recombination() reproduction() survival() 659 subpopulation; the
-#'evaluate() method must have been previously called for that subpopulation,
-#'and positions saved at evaluation time will be used. If the InteractionType is
-#'non-spatial, this method may not be called. The vector point must be exactly
-#'as long as the spatiality of the InteractionType. Importantly, distances are
-#'calculated according to the spatiality of the InteractionType (as declared in
-#'initializeInteractionType()) not the dimensionality of the model as a whole (as
-#'declared in initializeSLiMOptions()). The distances are therefore interaction
-#'distances: the distances that are used to calculate interaction strengths. This
-#'method replaces the distanceToPoint() method that existed prior to SLiM 4.
+#'coordinates precisely as specified by the spatiality of the interaction type; if
+#'the interaction type's spatiality is "xz", for example, then point[0] is assumed
+#'to be an x value, and point[1] is assumed to be a z value. Be careful; this
+#'means that in general it is not safe to pass an individual's spatialPosition
+#'property for point, for example (although it is safe if the spatiality of the
+#'interaction matches the dimensionality of the simulation). A coordinate for a
+#'periodic spatial dimension must be within the spatial bounds for that dimension,
+#'since coordinates outside of periodic bounds are meaningless (pointPeriodic()
+#'may be used to ensure this); coordinates for non-periodic spatial dimensions
+#'are not restricted. All individuals in exerters must belong to a single
+#'subpopulation; the evaluate() method must have been previously called for that
+#'subpopulation, and positions saved at evaluation time will be used. If the
+#'InteractionType is non-spatial, this method may not be called. The vector point
+#'must be exactly as long as the spatiality of the InteractionType. Importantly,
+#'distances are calculated according to the spatiality of the InteractionType (as
+#'declared in initializeInteractionType()) not the dimensionality of the model as
+#'a whole (as declared in initializeSLiMOptions()). The distances are therefore
+#'interaction distances: the distances that are used to calculate interaction
+#'strengths. This method replaces the distanceToPoint() method that existed prior
+#'to SLiM 4.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -4283,11 +4241,9 @@ drawByStrength <- function(receiver, count, exerterSubpop) {
 #'(and an interaction that affects both may need to be evaluated at both times).
 #'If an interaction is never evaluated for a given subpopulation, it is guaranteed
 #'that there will be essentially no memory or computational overhead associated
-#'with the interaction for that events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 660
-#'subpopulation. Furthermore, attempting to query an interaction for a receiver or
-#'exerter in a subpopulation that has not been evaluated is guaranteed to raise an
-#'error.
+#'with the interaction for that subpopulation. Furthermore, attempting to query
+#'an interaction for a receiver or exerter in a subpopulation that has not been
+#'evaluated is guaranteed to raise an error.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -4455,23 +4411,22 @@ interactionDistance <- function(receiver, exerters) {
 #'positions saved at evaluation time will be used. Population density is estimated
 #'using interaction strengths, effectively doing a kernel density estimate using
 #'the interaction function as the kernel. What is returned is computed as the
-#'total interaction strength present at a given point, divided by the integral of
-#'the interaction function around that point events mutationEffect() interaction()
-#'mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-#'661 after clipping by the spatial bounds of the exerter subpopulation (what
-#'one might think of as the amount of "interaction field" around the point).
-#'This provides an estimate of local population density, in units of individuals
-#'per unit area, as a weighted average over the area covered by the interaction
-#'function, where the weight of each exerter in the average is the value of the
-#'interaction function at that exerter's position. This can also be thought of as
-#'a measure of the amount of interaction happening per unit of interaction field
-#'in the space surrounding the point. To calculate the clipped integral of the
-#'interaction function, this method uses the same numerical estimator used by the
-#'clippedIntegral() method of InteractionType, and all of the caveats described
-#'for that method apply here also; notably, all individuals must be within spatial
-#'bounds, the maximum interaction distance must be less than half the spatial
-#'extent of the subpopulation, and interaction() callbacks are not used (and
-#'so, for this method, are not allowed to be active). See the documentation for
+#'total interaction strength present at a given point, divided by the integral
+#'of the interaction function around that point after clipping by the spatial
+#'bounds of the exerter subpopulation (what one might think of as the amount
+#'of "interaction field" around the point). This provides an estimate of local
+#'population density, in units of individuals per unit area, as a weighted
+#'average over the area covered by the interaction function, where the weight of
+#'each exerter in the average is the value of the interaction function at that
+#'exerter's position. This can also be thought of as a measure of the amount of
+#'interaction happening per unit of interaction field in the space surrounding
+#'the point. To calculate the clipped integral of the interaction function,
+#'this method uses the same numerical estimator used by the clippedIntegral()
+#'method of InteractionType, and all of the caveats described for that method
+#'apply here also; notably, all individuals must be within spatial bounds,
+#'the maximum interaction distance must be less than half the spatial extent
+#'of the subpopulation, and interaction() callbacks are not used (and so,
+#'for this method, are not allowed to be active). See the documentation for
 #'clippedIntegral() for further discussion of the details of these calculations.
 #'To calculate the total interaction strength around the position of a receiver,
 #'this method uses the same machinery as the totalOfNeighborStrengths() method
@@ -4558,11 +4513,9 @@ localPopulationDensity <- function(receivers, exerterSubpop) {
 #'used. If the InteractionType is non-spatial, this method may not be called.
 #'Note that this method uses interaction eligibility as a criterion; it will not
 #'return neighbors that cannot exert an interaction upon the receiver (due to
-#'sex-segregation, e.g.). (It will also never return the receiver as a neighbor
-#'of itself.) To find all neighbors of the receiver, whether they can interact
-#'with it or not, use nearestNeighbors(). events mutationEffect() interaction()
-#'mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-#'662
+#'sex-segregation, e.g.). (It will also never return the receiver as a neighbor of
+#'itself.) To find all neighbors of the receiver, whether they can interact with
+#'it or not, use nearestNeighbors().
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -4769,13 +4722,11 @@ neighborCount <- function(receivers, exerterSubpop) {
 #'the maximum interaction distance according to the distance metric of the
 #'InteractionType. The subpopulation may be supplied either as an integer ID,
 #'or as a Subpopulation object. The evaluate() method must have been previously
-#'called for exerterSubpop, and positions saved at evaluation time will be
-#'used. If the InteractionType is non-spatial, this method may not be called.
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 663 This method is similar to
-#'nearestNeighborsOfPoint() (when passed a large count so as to guarantee that
-#'all neighbors are returned), but this method returns only a count of the
-#'individuals, not a vector containing the individuals.
+#'called for exerterSubpop, and positions saved at evaluation time will be used.
+#'If the InteractionType is non-spatial, this method may not be called. This
+#'method is similar to nearestNeighborsOfPoint() (when passed a large count so as
+#'to guarantee that all neighbors are returned), but this method returns only a
+#'count of the individuals, not a vector containing the individuals.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -4934,24 +4885,22 @@ strength <- function(receiver, exerters) {
 #'a single subpopulation, but those two subpopulations do not need to be
 #'the same. The evaluate() method must have been previously called for the
 #'receiver and exerter subpopulations, and positions saved at evaluation
-#'time will be used. If the InteractionType is non- spatial, this method
-#'may not be called. For one individual, this is essentially the same as
-#'calling nearestInteractingNeighbors() with a large count so as to obtain the
-#'complete vector of all interacting neighbors, calling strength() for each
-#'of those interactions to get each interaction strength, and adding those
-#'interaction strengths together with sum(). This method is much faster than
-#'that implementation, however, since all of that work is done as a single
-#'operation. Also, totalOfNeighborStrengths() can total up interactions for
-#'more than one receiver in a single call. events mutationEffect() interaction()
-#'mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-#'664 Similarly, for one individual this is essentially the same as calling
-#'strength() to get the interaction strengths between a receiver and all
-#'individuals in the exerter subpopulation, and then calling sum(). Again, this
-#'method should be much faster, since this algorithm looks only at neighbors,
-#'whereas calling strength() directly assesses interaction strengths with all
-#'other individuals. This will make a particularly large difference when the
-#'subpopulation size is large and the maximum distance of the InteractionType is
-#'small. See localPopulationDensity() for a related method that calculates the
+#'time will be used. If the InteractionType is non- spatial, this method may
+#'not be called. For one individual, this is essentially the same as calling
+#'nearestInteractingNeighbors() with a large count so as to obtain the complete
+#'vector of all interacting neighbors, calling strength() for each of those
+#'interactions to get each interaction strength, and adding those interaction
+#'strengths together with sum(). This method is much faster than that
+#'implementation, however, since all of that work is done as a single operation.
+#'Also, totalOfNeighborStrengths() can total up interactions for more than one
+#'receiver in a single call. Similarly, for one individual this is essentially the
+#'same as calling strength() to get the interaction strengths between a receiver
+#'and all individuals in the exerter subpopulation, and then calling sum().
+#'Again, this method should be much faster, since this algorithm looks only at
+#'neighbors, whereas calling strength() directly assesses interaction strengths
+#'with all other individuals. This will make a particularly large difference when
+#'the subpopulation size is large and the maximum distance of the InteractionType
+#'is small. See localPopulationDensity() for a related method that calculates the
 #'total interaction strength divided by the amount of "interaction field" present
 #'for an individual (i.e., the integral of the interaction function clipped to the
 #'spatial bounds of the subpopulation) to provide an estimate of the "interaction
@@ -5058,11 +5007,9 @@ unevaluate <- function(void) {
 #'be set up as a pseudo-parameter, named context, when source is called, allowing
 #'the same source code to be used to generate values for multiple data columns;
 #'you might, for example, provide the particular Subpopulation object here that
-#'you wish source to use events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 666 for
-#'its calculations. This is optional; if the default value of NULL is used, then
-#'context will be NULL when source is called. See addMeanSDColumns() for a useful
-#'variant.
+#'you wish source to use for its calculations. This is optional; if the default
+#'value of NULL is used, then context will be NULL when source is called. See
+#'addMeanSDColumns() for a useful variant.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -5452,12 +5399,10 @@ addSubpopulationSize <- function(subpop) {
 #'for columnName. That value will be used for the column the next time a row is
 #'generated (whether automatically or by a call to logRow()), and the column's
 #'value will subsequently be undefined again. In other words, for any given logged
-#'row the default of NA may be events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 667 kept, or
-#'a different value may be supplied. This allows the value for the column to be
-#'set at any point during the tick cycle, which can be convenient if the column's
-#'value depends upon transient state that is no longer available at the time the
-#'row is logged.
+#'row the default of NA may be kept, or a different value may be supplied. This
+#'allows the value for the column to be set at any point during the tick cycle,
+#'which can be convenient if the column's value depends upon transient state that
+#'is no longer available at the time the row is logged.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -5810,10 +5755,8 @@ setSuppliedValue <- function(columnName, value) {
 #'@return An object of type void or void or void or void or void or void or void
 #'or void or void or void or void or void or void or void or void or void or void
 #'or void or logical.
-#'@details This Dictionary method has an override in LogFile to make it illegal
-#'to call, since LogFile manages its Dictionary entries. events mutationEffect()
-#'interaction() mateChoice() modifyChild() mutation() recombination()
-#'reproduction() survival() 668
+#'@details This Dictionary method has an override in LogFile to make it illegal to
+#'call, since LogFile manages its Dictionary entries.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -6267,31 +6210,32 @@ countOfMutationsOfType <- function(mutType) {
 #'files will be appended to the filename in filePath if it is not already present.
 #'The sep parameter specifies the separator between data values within a row.
 #'The default of "," will generate a "comma-separated value" (CSV) file, while
-#'passing sep="\\t" will use a tab separator instead to generate a "tab-separated
-#'value" (TSV) file. Other values for sep may also be used, but are less standard.
-#'LogTable supports periodic automatic logging of a new row of data, enabled
-#'by supplying a non-NULL value for logInterval. In this case, a new row will
-#'be logged (as if logRow() were called on the LogFile) at the end of every
-#'logInterval generations (just before the generation counter increments, in both
-#'WF and nonWF models), starting at the end of the generation in which the LogFile
-#'was created. A logInterval of 1 will cause automatic logging at the end of every
-#'generation, whereas a logInterval of NULL disables automatic logging. Automatic
-#'logging can always be disabled or reconfigured later with the LogFile method
-#'setLogInterval(), or logging can be triggered manually by calling logRow().
-#'When compression is enabled, LogFile flushes new data lazily by default, for
-#'performance reasons, buffering data for multiple rows before writing to disk.
-#'Passing a non-NULL value for flushInterval requests a flush every flushInterval
-#'rows (with a value of 1 providing unbuffered operation). Note that flushing
-#'very frequently will likely result in both lower performance and a larger
-#'final file size (in one simple test, 48943 bytes instead of 4280 bytes, or
-#'more than a 10× increase in size). Alternatively, passing a very large value
-#'for flushInterval will effectively disable automatic flushing, except at the
-#'end of the simulation (but be aware that this may use a large amount of memory
-#'for large log files). In any case, the log file will be created immediately,
-#'with its requested initial contents; the initial write is not buffered. When
-#'compression is not enabled, the flushInterval setting is ignored. The LogFile
-#'documentation discusses how to configure and use LogFile to write out the data
-#'you are interested in from your simulation; see section 24.9.
+#'passing sep="\\t" will use a tab separator Eidos events fitness() mateChoice()
+#'modifyChild() recombination() interaction() reproduction() 566 instead to
+#'generate a "tab-separated value" (TSV) file. Other values for sep may also be
+#'used, but are less standard. LogTable supports periodic automatic logging of a
+#'new row of data, enabled by supplying a non-NULL value for logInterval. In this
+#'case, a new row will be logged (as if logRow() were called on the LogFile) at
+#'the end of every logInterval generations (just before the generation counter
+#'increments, in both WF and nonWF models), starting at the end of the generation
+#'in which the LogFile was created. A logInterval of 1 will cause automatic
+#'logging at the end of every generation, whereas a logInterval of NULL disables
+#'automatic logging. Automatic logging can always be disabled or reconfigured
+#'later with the LogFile method setLogInterval(), or logging can be triggered
+#'manually by calling logRow(). When compression is enabled, LogFile flushes new
+#'data lazily by default, for performance reasons, buffering data for multiple
+#'rows before writing to disk. Passing a non-NULL value for flushInterval requests
+#'a flush every flushInterval rows (with a value of 1 providing unbuffered
+#'operation). Note that flushing very frequently will likely result in both
+#'lower performance and a larger final file size (in one simple test, 48943 bytes
+#'instead of 4280 bytes, or more than a 10× increase in size). Alternatively,
+#'passing a very large value for flushInterval will effectively disable automatic
+#'flushing, except at the end of the simulation (but be aware that this may use
+#'a large amount of memory for large log files). In any case, the log file will
+#'be created immediately, with its requested initial contents; the initial write
+#'is not buffered. When compression is not enabled, the flushInterval setting is
+#'ignored. The LogFile documentation discusses how to configure and use LogFile to
+#'write out the data you are interested in from your simulation; see section 24.9.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -6422,16 +6366,17 @@ mutationCounts <- function(subpops, mutations) {
 #'@aliases SLiMSim$mutationFrequencies .SS$mutationFrequencies
 #'@family SLiMSim
 #'@return An object of type float.
-#'@details Return a float vector with the frequencies of all of the Mutation
-#'objects passed in mutations, within the Subpopulation objects in subpops. The
-#'subpops argument is required, but you may pass NULL to get population-wide
-#'frequencies. If the optional mutations argument is NULL (the default),
-#'frequencies will be returned for all of the active Mutation objects in
-#'the simulation - the same Mutation objects, and in the same order, as
-#'would be returned by the mutations property of sim, in other words. See
-#'the -mutationCounts() method to obtain integer counts instead of float
-#'frequencies. See also the Genome methods mutationCountsInGenomes() and
-#'mutationFrequenciesInGenomes().
+#'@details Return a float vector with the frequencies of all of the
+#'Mutation objects passed in mutations, within the Subpopulation objects in
+#'subpops. The subpops argument is required, but you may pass NULL to get
+#'population-wide frequencies. If the optional mutations argument is NULL
+#'(the default), frequencies will be returned for all of the active Mutation
+#'objects in the simulation - the same Mutation objects, and in the same
+#'order, as would be returned by the mutations property of sim, in other
+#'words. See the -mutationCounts() method to obtain integer counts instead
+#'of float frequencies. See also the Genome methods mutationCountsInGenomes()
+#'and mutationFrequenciesInGenomes(). Eidos events fitness() mateChoice()
+#'modifyChild() recombination() interaction() reproduction() 567
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -6595,34 +6540,35 @@ outputFixedMutations <- function(filePath, append) {
 #'available (see section 26.1.1 for format details). If the simulation does not
 #'have continuous space enabled, the spatialPositions parameter will be ignored.
 #'Positional information may be output for all output destinations - the Eidos
-#'output stream, a text file, or a binary file. Beginning with SLiM 3.0, the
-#'ages parameter may be used to control the output of the ages of individuals in
-#'nonWF simulations. If ages is F, the output will not contain ages, preserving
-#'backward compatibility with the output format of SLiM 2.1 and later. If ages
-#'is T, ages will be output for nonWF models (see section 26.1.1 for format
-#'details). In WF simulations, the ages parameter will be ignored. Beginning with
-#'SLiM 3.3, the ancestralNucleotides parameter may be used to control the output
-#'of the ancestral nucleotide sequence in nucleotide-based models (see section
-#'26.1.1 for format details). If ancestralNucleotides is F, the output will not
-#'contain ancestral nucleotide information, and so the ancestral sequence will
-#'not be restored correctly if the saved file is loaded with readPopulationFile().
-#'This option is provided because the ancestral sequence may be quite large,
-#'for models with a long chromosome (e.g., 1 GB if the chromosome is 109 bases
-#'long, when saved in text format, or 0.25 GB when saved in binary format).
-#'If the model is not nucleotide-based (as enabled with the nucleotideBased
-#'parameter to initializeSLiMOptions()), the ancestralNucleotides parameter will
-#'be ignored. Note that in nucleotide-based models the output format will always
-#'include the nucleotides associated with any nucleotide-based mutations; the
-#'ancestralNucleotides flag governs only the ancestral sequence. Beginning with
-#'SLiM 3.5, the pedigreeIDs parameter may be used to request that pedigree IDs
-#'be written out (and read in by readFromPopulationFile(), subsequently). This
-#'option is turned off (F) by default, to preserve backward compatibility; if
-#'it is turned on (T), different file version values will be used, and backward
-#'compatibility with previous versions of SLiM will be lost (see section 26.1.1).
-#'This option may only be used if SLiM's optional pedigree tracking has been
-#'turned on with initializeSLiMOptions(keepPedigrees=T). Output is generally done
-#'in a late() event, so that the output reflects the state of the simulation at
-#'the end of a generation.
+#'output stream, a text file, or a binary file. Beginning with SLiM 3.0, the ages
+#'parameter may be used to control the output of the ages of individuals in nonWF
+#'simulations. If ages is F, the output will not contain ages, preserving backward
+#'compatibility with the output format of SLiM 2.1 and later. If ages is T, ages
+#'will be output for nonWF models (see section 26.1.1 for format details). In
+#'WF simulations, the ages parameter will be ignored. Beginning with SLiM 3.3,
+#'the ancestralNucleotides parameter may be used to control the output of the
+#'ancestral nucleotide sequence in nucleotide-based models (see section 26.1.1
+#'for format details). If ancestralNucleotides is F, the output will not contain
+#'ancestral nucleotide information, and so the ancestral sequence will not be
+#'restored correctly if the saved file is loaded with readPopulationFile(). This
+#'option is provided because the ancestral sequence may be quite large, Eidos
+#'events fitness() mateChoice() modifyChild() recombination() interaction()
+#'reproduction() 568 for models with a long chromosome (e.g., 1 GB if the
+#'chromosome is 109 bases long, when saved in text format, or 0.25 GB when saved
+#'in binary format). If the model is not nucleotide-based (as enabled with the
+#'nucleotideBased parameter to initializeSLiMOptions()), the ancestralNucleotides
+#'parameter will be ignored. Note that in nucleotide-based models the output
+#'format will always include the nucleotides associated with any nucleotide-based
+#'mutations; the ancestralNucleotides flag governs only the ancestral sequence.
+#'Beginning with SLiM 3.5, the pedigreeIDs parameter may be used to request
+#'that pedigree IDs be written out (and read in by readFromPopulationFile(),
+#'subsequently). This option is turned off (F) by default, to preserve backward
+#'compatibility; if it is turned on (T), different file version values will be
+#'used, and backward compatibility with previous versions of SLiM will be lost
+#'(see section 26.1.1). This option may only be used if SLiM's optional pedigree
+#'tracking has been turned on with initializeSLiMOptions(keepPedigrees=T). Output
+#'is generally done in a late() event, so that the output reflects the state of
+#'the simulation at the end of a generation.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -6762,19 +6708,20 @@ outputUsage <- function(void) {
 #'element type Subpopulation, Genome, Mutation, Individual, or Substitution will
 #'be removed as a side effect of this method, since all such variables would
 #'refer to objects that no longer exist in the SLiM simulation; if you want to
-#'preserve any of that state, you should output it or save it to a file prior
-#'to this call. New symbols will be defined to refer to the new Subpopulation
-#'objects loaded from the file. If the file being read was written by a version
-#'of SLiM prior to 2.3, then for backward compatibility fitness values will be
-#'calculated immediately for any new subpopulations created by this call, which
-#'will trigger the calling of any activated and applicable fitness() callbacks.
-#'When reading files written by SLiM 2.3 or later, fitness values are not
-#'calculated as a side effect of this call (because the simulation will often
-#'need to evaluate interactions or modify other state prior to doing so). In SLiM
-#'2.3 and later when using the WF model, calling readFromPopulationFile() from
-#'any context other than a late() event causes a warning; calling from a late()
-#'event is almost always correct in WF models, so that fitness values can be
-#'automatically recalculated by SLiM at the usual time in the generation cycle
+#'preserve any of that state, you should output it or save it to a file prior to
+#'this call. New symbols will be defined to refer to the new Subpopulation objects
+#'loaded from the file. If the file being read was written by a version of SLiM
+#'prior to 2.3, then for backward compatibility fitness values will be calculated
+#'immediately for any new subpopulations created by this call, which will trigger
+#'the calling of any activated and applicable fitness() callbacks. When reading
+#'files written by SLiM 2.3 or later, fitness values are not calculated as a
+#'side effect of this call (because the simulation will often need to evaluate
+#'interactions or modify other state prior to doing so). Eidos events fitness()
+#'mateChoice() modifyChild() recombination() interaction() reproduction() 569 In
+#'SLiM 2.3 and later when using the WF model, calling readFromPopulationFile()
+#'from any context other than a late() event causes a warning; calling from a
+#'late() event is almost always correct in WF models, so that fitness values can
+#'be automatically recalculated by SLiM at the usual time in the generation cycle
 #'without the need to force their recalculation (see chapter 22, and comments on
 #'recalculateFitness() below). In SLiM 3.0 when using the nonWF model, calling
 #'readFromPopulationFile() from any context other than an early() event causes a
@@ -6812,24 +6759,26 @@ outputUsage <- function(void) {
 #'the simulation uses a WF model, an error will result; the WF model does not use
 #'age information. If ages are not present but the simulation uses a nonWF model,
 #'an error will also result; the nonWF model requires age information. As of SLiM
-#'3.3, this method will restore the nucleotides of nucleotide-based mutations, and
-#'will restore the ancestral nucleotide sequence, if that information is present
-#'in the output file. Loading an output file that contains nucleotide information
-#'in a non-nucleotide-based model, and vice versa, will produce an error. As of
-#'SLiM 3.5, this method will read and restore the pedigree IDs of individuals and
-#'genomes if that information is present in the output file (as requested with
-#'outputFull(pedigreeIDs=T)) and if SLiM's optional pedigree tracking has been
-#'turned on with initializeSLiMOptions(keepPedigrees=T). This method can also be
-#'used to read tree-sequence (.trees) files saved by treeSeqOutput() or generated
-#'by the Python pyslim package. When loading a tree sequence, a crosscheck of the
-#'loaded data will be performed to ensure that the tree sequence was well-formed
-#'and was loaded correctly. When running a Release build of SLiM, however,
-#'this crosscheck will only occur the first time that readFromPopulationFile()
-#'is called to load a tree sequence; subsequent calls will not perform this
-#'crosscheck, for greater speed when running models that load saved population
-#'state many times (such as models that are conditional on fixation). If you
-#'suspect that a tree sequence file might be corrupted or read incorrectly,
-#'running a Debug build of SLiM enables crosschecks after every load.
+#'3.3, this method will restore the nucleotides of nucleotide-based mutations,
+#'and will restore the ancestral nucleotide sequence, if that information is
+#'present in the output file. Loading an output file that contains nucleotide
+#'information in a non-nucleotide-based model, and vice versa, will produce
+#'an error. As of SLiM 3.5, this method will read and restore the pedigree IDs
+#'of individuals and genomes if that information is present in the output file
+#'(as requested with outputFull(pedigreeIDs=T)) and if SLiM's optional pedigree
+#'tracking has been turned on with initializeSLiMOptions(keepPedigrees=T).
+#'This method can also be used to read tree-sequence (.trees) files saved by
+#'treeSeqOutput() or generated by the Python pyslim package. When loading a tree
+#'sequence, a crosscheck of the loaded data will be performed to ensure that the
+#'tree sequence was well-formed and was loaded correctly. When running a Release
+#'build of SLiM, however, this crosscheck will only occur the first time that
+#'readFromPopulationFile() is called to load a tree sequence; subsequent calls
+#'will not perform this crosscheck, for greater speed when running models that
+#'load saved population state many times (such as models that are conditional on
+#'fixation). If you suspect that a tree sequence file might be corrupted or read
+#'incorrectly, running a Debug build of SLiM enables crosschecks after every load.
+#'Eidos events fitness() mateChoice() modifyChild() recombination() interaction()
+#'reproduction() 570
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -7006,7 +6955,8 @@ registerEarlyEvent <- function(id, source, start, end) {
 #'SLiMEidosBlock objects, and is active immediately; it may be eligible to execute
 #'in the current generation (see section 25.9 for details). The new SLiMEidosBlock
 #'will be defined as a global variable immediately by this method (see section
-#'24.11), and will also be returned by this method.
+#'24.11), and will also be returned by this method. Eidos events fitness()
+#'mateChoice() modifyChild() recombination() interaction() reproduction() 571
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -7286,17 +7236,18 @@ registerModifyChildCallback <- function(id, source, subpop, start, end) {
 #'@details Register a block of Eidos source code, represented as the string
 #'singleton source, as an Eidos mutation() callback in the current simulation,
 #'with an optional mutation type mutType (which may be an integer mutation type
-#'identifier, or NULL, the default, to indicate all mutation types - see section
-#'25.8), optional subpopulation subpop (which may also be an integer identifier,
-#'or NULL, the default, to indicate all subpopulations), and optional start and
-#'end generations all limiting its applicability. The script block will be given
-#'identifier id (specified as an integer, or as a string symbolic name such as
-#'"s5"); this may be NULL if there is no need to be able to refer to the block
-#'later. The registered callback is added to the end of the list of registered
-#'SLiMEidosBlock objects, and is active immediately; it may be eligible to execute
-#'in the current generation (see section 25.9 for details). The new SLiMEidosBlock
-#'will be defined as a global variable immediately by this method (see section
-#'24.11), and will also be returned by this method.
+#'identifier, or NULL, the default, to indicate all mutation types - see Eidos
+#'events fitness() mateChoice() modifyChild() recombination() interaction()
+#'reproduction() 572 section 25.8), optional subpopulation subpop (which may also
+#'be an integer identifier, or NULL, the default, to indicate all subpopulations),
+#'and optional start and end generations all limiting its applicability. The
+#'script block will be given identifier id (specified as an integer, or as a
+#'string symbolic name such as "s5"); this may be NULL if there is no need to be
+#'able to refer to the block later. The registered callback is added to the end of
+#'the list of registered SLiMEidosBlock objects, and is active immediately; it may
+#'be eligible to execute in the current generation (see section 25.9 for details).
+#'The new SLiMEidosBlock will be defined as a global variable immediately by this
+#'method (see section 24.11), and will also be returned by this method.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -7472,40 +7423,41 @@ registerReproductionCallback <- function(id, source, subpop, sex, start, end)
 #'scheduled by this method, including block, will be returned; this vector is
 #'guaranteed to be sorted by the (ascending) scheduled execution order of the
 #'blocks. Any duplicates of block created will be given values for the active,
-#'source, tag, and type properties equal to the current values for block, but will
-#'be given an id of -1 since script block identifiers must be unique; if it is
-#'necessary to find the duplicated blocks again later, their tag property should
-#'be used. The vector supplied for generations does not need to be in sorted
-#'order, but it must not contain any duplicates. Because this method can create
-#'a large number of duplicate script blocks, it can sometimes be better to handle
-#'script block scheduling in other ways. If an early() event needs to execute
-#'every tenth generation over the whole duration of a long model run, for example,
-#'it would not be advisable to use a call like sim.rescheduleScriptBlock(s1,
-#'generations=seq(10, 100000, 10)) for that purpose, since that would result in
-#'thousands of duplicate script blocks. Instead, it would be preferable to add
-#'a test such as if (sim.generation % 10 != 0) return; at the beginning of the
-#'event. It is legal to reschedule a script block while the block is executing; a
-#'call like sim.rescheduleScriptBlock(self, sim.generation + 10, sim.generation +
-#'10); made inside a given block would therefore also cause the block to execute
-#'every tenth generation, although this sort of self-rescheduling code is probably
-#'harder to read, maintain, and debug. Whichever way of specifying the generation
-#'set is used, the discussion in section 25.9 applies: block may continue to be
-#'executed during the current life cycle stage even after it has been rescheduled,
-#'unless it is made inactive using its active property, and similarly, the block
-#'may not execute during the current life cycle stage if it was not already
-#'scheduled to do so. Rescheduling script blocks during the generation and life
-#'cycle stage in which they are executing, or in which they are intended to
-#'execute, should be avoided. Also, as mentioned in section 22.7, script blocks
-#'which are open-ended (i.e., with no specified end generation), are not used in
-#'determining whether the end of the simulation has been reached (because then
-#'the simulation would run forever); if you reschedule a block to be open-ended,
-#'and to start after the end of the last closed-ended block, the rescheduled block
-#'will therefore not run at all (just as such a block would not run at all in
-#'other circumstances, too). Note that new script blocks can also be created and
-#'scheduled using the register...() methods of SLiMSim; by using the same source
-#'as a template script block, the template can be duplicated and scheduled for
-#'different generations. In fact, rescheduleScriptBlock() does essentially that
-#'internally.
+#'source, tag, and type properties equal to the current values for block, but
+#'will be given an id of -1 since script block identifiers must be unique; if
+#'it is necessary to find the duplicated blocks again later, their tag property
+#'should be used. The vector supplied for generations does not need to be in
+#'sorted order, but it must not contain any duplicates. Eidos events fitness()
+#'mateChoice() modifyChild() recombination() interaction() reproduction() 573
+#'Because this method can create a large number of duplicate script blocks,
+#'it can sometimes be better to handle script block scheduling in other ways.
+#'If an early() event needs to execute every tenth generation over the whole
+#'duration of a long model run, for example, it would not be advisable to use a
+#'call like sim.rescheduleScriptBlock(s1, generations=seq(10, 100000, 10)) for
+#'that purpose, since that would result in thousands of duplicate script blocks.
+#'Instead, it would be preferable to add a test such as if (sim.generation % 10 !=
+#'0) return; at the beginning of the event. It is legal to reschedule a script
+#'block while the block is executing; a call like sim.rescheduleScriptBlock(self,
+#'sim.generation + 10, sim.generation + 10); made inside a given block would
+#'therefore also cause the block to execute every tenth generation, although
+#'this sort of self-rescheduling code is probably harder to read, maintain, and
+#'debug. Whichever way of specifying the generation set is used, the discussion in
+#'section 25.9 applies: block may continue to be executed during the current life
+#'cycle stage even after it has been rescheduled, unless it is made inactive using
+#'its active property, and similarly, the block may not execute during the current
+#'life cycle stage if it was not already scheduled to do so. Rescheduling script
+#'blocks during the generation and life cycle stage in which they are executing,
+#'or in which they are intended to execute, should be avoided. Also, as mentioned
+#'in section 22.7, script blocks which are open-ended (i.e., with no specified end
+#'generation), are not used in determining whether the end of the simulation has
+#'been reached (because then the simulation would run forever); if you reschedule
+#'a block to be open-ended, and to start after the end of the last closed-ended
+#'block, the rescheduled block will therefore not run at all (just as such a block
+#'would not run at all in other circumstances, too). Note that new script blocks
+#'can also be created and scheduled using the register...() methods of SLiMSim; by
+#'using the same source as a template script block, the template can be duplicated
+#'and scheduled for different generations. In fact, rescheduleScriptBlock() does
+#'essentially that internally.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -7609,11 +7561,12 @@ simulationFinished <- function(void) {
 #'or as an integer, 0 / 1 / 2 / 3 respectively). Parameter tag, if non-NULL,
 #'may specify a tag value for the mutations to be returned. Parameter id, if
 #'non-NULL, may specify a required value for the id property of the mutations
-#'to be returned. This method is shorthand for getting the mutations property of
-#'the subpopulation, and then using operator [] to select only mutations with the
-#'desired properties; besides being much simpler than the equivalent Eidos code,
-#'it is also much faster. Note that if you only need to select on mutation type,
-#'the mutationsOfType() method will be even faster.
+#'to be returned. This method is shorthand for getting the mutations property
+#'of the subpopulation, and then using operator [] to select only mutations with
+#'the desired properties; besides being much simpler than the equivalent Eidos
+#'code, it is also much faster. Note that if you only need to select on mutation
+#'type, the mutationsOfType() method will be even faster. Eidos events fitness()
+#'mateChoice() modifyChild() recombination() interaction() reproduction() 574
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -7778,14 +7731,15 @@ treeSeqOutput <- function(path, simplify, includeModel, metadata) {
 #'@aliases SLiMSim$treeSeqRememberIndividuals .SS$treeSeqRememberIndividuals
 #'@family SLiMSim
 #'@return An object of type void.
-#'@details Mark the individuals specified by individuals to be kept across
-#'tree sequence table simplification. This method may only be called if tree
-#'sequence recording has been turned on with initializeTreeSeq(). All currently
-#'living individuals are always kept across simplification; this method does
-#'not need to be called, and indeed should not be called, for that purpose.
-#'Instead, treeSeqRememberIndividuals() allows any individual, including dead
-#'individuals, to be kept in the final tree sequence. Typically this would be
-#'used, for example, to keep particular individuals that you wanted to be able
+#'@details Mark the individuals specified by individuals to be kept across tree
+#'sequence table simplification. This method may only be called if tree sequence
+#'recording has been turned on with initializeTreeSeq(). All currently living
+#'individuals are always kept across simplification; this method does not need
+#'to be called, and indeed should not be called, for that purpose. Instead,
+#'treeSeqRememberIndividuals() allows any individual, including dead individuals,
+#'to be kept in Eidos events fitness() mateChoice() modifyChild() recombination()
+#'interaction() reproduction() 575 the final tree sequence. Typically this would
+#'be used, for example, to keep particular individuals that you wanted to be able
 #'to trace ancestry back to in later analysis. However, this is not the typical
 #'usage pattern for tree sequence recording; most models will not need to call
 #'this method. There are two ways to keep individuals across simplification.
@@ -7929,22 +7883,20 @@ treeSeqSimplify <- function(void) {
 #'@details Add a new subpopulation with id subpopID and size individuals.
 #'The subpopID parameter may be either an integer giving the ID of the new
 #'subpopulation, or a string giving the name of the new subpopulation (such
-#'as "p5" to specify an ID of 5). Only if sex is enabled for the species,
-#'the initial sex ratio may optionally be specified as sexRatio (as the male
-#'fraction, M:M+F); if it is not specified, a default of 0.5 is used. The new
-#'subpopulation will be defined as a global variable immediately by this method
-#'(see section 24.15), and will also be returned by this method. Subpopulations
-#'added by this method will initially consist of individuals with empty
-#'genomes. In order to model subpopulations that split from an already existing
-#'subpopulation, use addSubpopSplit(). Only in nonWF models, the haploid
-#'parameter may be T; in this case, the second genome of each new individual
-#'will be a null genome, rather than an empty genome. For even greater control
-#'in nonWF models, you can call addSubpop() with an initial size of 0 and then
-#'stock the population with new individuals created however you wish in the
-#'next tick's reproduction() callback. events mutationEffect() interaction()
-#'mateChoice() modifyChild() mutation() recombination() reproduction()
-#'survival() 678 ject<Subpopulation>$)addSubpopSplit(is$ subpopID, integer$
-#'size, io<Subpopulation>$ sourceSubpop, [float$ sexRatio = 0.5]) Split off a new
+#'as "p5" to specify an ID of 5). Only if sex is enabled for the species, the
+#'initial sex ratio may optionally be specified as sexRatio (as the male fraction,
+#'M:M+F); if it is not specified, a default of 0.5 is used. The new subpopulation
+#'will be defined as a global variable immediately by this method (see section
+#'24.15), and will also be returned by this method. Subpopulations added by this
+#'method will initially consist of individuals with empty genomes. In order to
+#'model subpopulations that split from an already existing subpopulation, use
+#'addSubpopSplit(). Only in nonWF models, the haploid parameter may be T; in
+#'this case, the second genome of each new individual will be a null genome,
+#'rather than an empty genome. For even greater control in nonWF models, you can
+#'call addSubpop() with an initial size of 0 and then stock the population with
+#'new individuals created however you wish in the next tick's reproduction()
+#'callback. ject<Subpopulation>$)addSubpopSplit(is$ subpopID, integer$ size,
+#'io<Subpopulation>$ sourceSubpop, [float$ sexRatio = 0.5]) Split off a new
 #'subpopulation with id subpopID and size individuals derived from subpopulation
 #'sourceSubpop. The subpopID parameter may be either an integer giving the ID
 #'of the new subpopulation, or a string giving the name of the new subpopulation
@@ -8106,16 +8058,14 @@ individualsWithPedigreeIDs <- function(pedigreeIDs, subpops) {
 #'from their subpopulation and gives them an index value of -1. The Individual
 #'objects are not freed immediately, since references to them could still exist
 #'in local Eidos variables; instead, the individuals are kept in a temporary
-#'"graveyard" until they can be freed safely. It therefore continues to be
-#'safe to use them and their genomes, except that accessing their subpopulation
-#'property will raise an error since they no longer have a subpopulation.
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 679 Note that the indices and
-#'order of individuals and genomes in all source subpopulations will change
-#'unpredictably as a side effect of this method. All evaluated interactions are
-#'invalidated as a side effect of calling this method. Note that this method is
-#'only for use in nonWF models, in which mortality is managed manually by the
-#'model script. In WF models, mortality is managed automatically by the SLiM
+#'"graveyard" until they can be freed safely. It therefore continues to be safe to
+#'use them and their genomes, except that accessing their subpopulation property
+#'will raise an error since they no longer have a subpopulation. Note that the
+#'indices and order of individuals and genomes in all source subpopulations will
+#'change unpredictably as a side effect of this method. All evaluated interactions
+#'are invalidated as a side effect of calling this method. Note that this method
+#'is only for use in nonWF models, in which mortality is managed manually by
+#'the model script. In WF models, mortality is managed automatically by the SLiM
 #'core when the new offspring generation becomes the parental generation and the
 #'previous parental generation dies; mortality does not otherwise occur in WF
 #'models. In nonWF models, mortality normally occurs during the survival stage
@@ -8305,21 +8255,19 @@ mutationsOfType <- function(mutType) {
 #'@aliases Species$outputFixedMutations .Sp$outputFixedMutations
 #'@family Species
 #'@return An object of type void.
-#'@details Output all fixed mutations - all Substitution objects, in other
-#'words (see section 1.5.2) - in a SLiM native format (see section 26.1.2
-#'for output format details). If the optional parameter filePath is NULL (the
-#'default), output will be sent to Eidos's output stream (see section 4.2.1).
-#'Otherwise, output will be sent to the filesystem path specified by filePath,
-#'overwriting that file if append if F, or appending to the end of it if append
-#'is T. Mutations which have fixed but have not been turned into Substitution
-#'objects - typically because convertToSubstitution has been set to F for their
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 680 mutation type (see section
-#'24.11.1) - are not output; they are still considered to be segregating mutations
-#'by SLiM. In SLiM 3.3 and later, the output format includes the nucleotides
-#'associated with any nucleotide-based mutations; see section 26.1.2. Output is
-#'generally done in a late() event, so that the output reflects the state of the
-#'simulation at the end of a tick.
+#'@details Output all fixed mutations - all Substitution objects, in other words
+#'(see section 1.5.2) - in a SLiM native format (see section 26.1.2 for output
+#'format details). If the optional parameter filePath is NULL (the default),
+#'output will be sent to Eidos's output stream (see section 4.2.1). Otherwise,
+#'output will be sent to the filesystem path specified by filePath, overwriting
+#'that file if append if F, or appending to the end of it if append is T.
+#'Mutations which have fixed but have not been turned into Substitution objects
+#'- typically because convertToSubstitution has been set to F for their mutation
+#'type (see section 24.11.1) - are not output; they are still considered to be
+#'segregating mutations by SLiM. In SLiM 3.3 and later, the output format includes
+#'the nucleotides associated with any nucleotide-based mutations; see section
+#'26.1.2. Output is generally done in a late() event, so that the output reflects
+#'the state of the simulation at the end of a tick.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -8392,34 +8340,33 @@ outputFixedMutations <- function(filePath, append) {
 #'the spatialPositions parameter will be ignored. Positional information may
 #'be output for all output destinations - the Eidos output stream, a text file,
 #'or a binary file. Beginning with SLiM 3.0, the ages parameter may be used to
-#'control the output of the ages of individuals in nonWF simulations. If ages
-#'is F, the output will not contain ages, preserving backward compatibility
-#'with the output format of SLiM 2.1 and later. If ages is T, ages will be
-#'output for nonWF models (see section 26.1.1 for format details). In WF
-#'simulations, the ages parameter will be ignored. Beginning with SLiM 3.3,
-#'the ancestralNucleotides parameter may be used to control the output of the
-#'ancestral nucleotide sequence in nucleotide-based models (see section 26.1.1
-#'for format details). If ancestralNucleotides is F, the output will not contain
-#'ancestral nucleotide information, and so the ancestral sequence will not be
-#'restored correctly if the saved file is loaded with readPopulationFile().
-#'This option is provided because the ancestral sequence may be quite large,
-#'for models with a long chromosome (e.g., 1 GB if the chromosome is 109 bases
-#'long, when saved in text format, or 0.25 GB when saved in binary format).
-#'If the model is not nucleotide-based (as enabled with the nucleotideBased
-#'parameter to initializeSLiMOptions()), the ancestralNucleotides parameter will
-#'be ignored. Note that in nucleotide-based models the output format will always
-#'include the nucleotides associated with any nucleotide-based mutations; the
-#'ancestralNucleotides flag governs only the ancestral sequence. Beginning with
-#'SLiM 3.5, the pedigreeIDs parameter may be used to request that pedigree IDs
-#'be written out (and read in by readFromPopulationFile(), subsequently). This
-#'option is turned off (F) by default, to preserve backward compatibility; if
-#'it is turned on (T), different file version values will be used, and backward
-#'compatibility with previous versions of SLiM will be lost (see section 26.1.1).
-#'This option may only be used if SLiM's optional pedigree tracking has been
-#'enabled with initializeSLiMOptions(keepPedigrees=T). Output is generally done in
-#'a late() event, so that the output reflects the state of the simulation at the
-#'end of a tick. events mutationEffect() interaction() mateChoice() modifyChild()
-#'mutation() recombination() reproduction() survival() 681
+#'control the output of the ages of individuals in nonWF simulations. If ages is
+#'F, the output will not contain ages, preserving backward compatibility with the
+#'output format of SLiM 2.1 and later. If ages is T, ages will be output for nonWF
+#'models (see section 26.1.1 for format details). In WF simulations, the ages
+#'parameter will be ignored. Beginning with SLiM 3.3, the ancestralNucleotides
+#'parameter may be used to control the output of the ancestral nucleotide
+#'sequence in nucleotide-based models (see section 26.1.1 for format details).
+#'If ancestralNucleotides is F, the output will not contain ancestral nucleotide
+#'information, and so the ancestral sequence will not be restored correctly if the
+#'saved file is loaded with readPopulationFile(). This option is provided because
+#'the ancestral sequence may be quite large, for models with a long chromosome
+#'(e.g., 1 GB if the chromosome is 109 bases long, when saved in text format, or
+#'0.25 GB when saved in binary format). If the model is not nucleotide-based (as
+#'enabled with the nucleotideBased parameter to initializeSLiMOptions()), the
+#'ancestralNucleotides parameter will be ignored. Note that in nucleotide-based
+#'models the output format will always include the nucleotides associated with
+#'any nucleotide-based mutations; the ancestralNucleotides flag governs only
+#'the ancestral sequence. Beginning with SLiM 3.5, the pedigreeIDs parameter
+#'may be used to request that pedigree IDs be written out (and read in by
+#'readFromPopulationFile(), subsequently). This option is turned off (F)
+#'by default, to preserve backward compatibility; if it is turned on (T),
+#'different file version values will be used, and backward compatibility with
+#'previous versions of SLiM will be lost (see section 26.1.1). This option
+#'may only be used if SLiM's optional pedigree tracking has been enabled with
+#'initializeSLiMOptions(keepPedigrees=T). Output is generally done in a late()
+#'event, so that the output reflects the state of the simulation at the end of a
+#'tick.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -8525,57 +8472,55 @@ outputMutations <- function(mutations, filePath, append) {
 #'be defined to refer to the new Subpopulation objects loaded from the file. If
 #'the file being read was written by a version of SLiM prior to 2.3, then for
 #'backward compatibility fitness values will be calculated immediately for any
-#'new subpopulations created by this call, which will trigger the calling of
-#'any activated and applicable mutationEffect() and fitnessEffect() callbacks.
-#'When reading files written by SLiM 2.3 or later, fitness values are not
-#'calculated as a side effect of this call (because the simulation will often
-#'need to evaluate interactions or modify other state prior to doing so). In
-#'SLiM 2.3 and later when using the WF model, calling readFromPopulationFile()
-#'from any context other than a late() event causes a warning; calling from a
-#'late() event is almost always correct in WF models, so that fitness values
+#'new subpopulations created by this call, which will trigger the calling of any
+#'activated and applicable mutationEffect() and fitnessEffect() callbacks. When
+#'reading files written by SLiM 2.3 or later, fitness values are not calculated as
+#'a side effect of this call (because the simulation will often need to evaluate
+#'interactions or modify other state prior to doing so). In SLiM 2.3 and later
+#'when using the WF model, calling readFromPopulationFile() from any context
+#'other than a late() event causes a warning; calling from a late() event is
+#'almost always correct in WF models, so that fitness values can be automatically
+#'recalculated by SLiM at the usual time in the tick cycle without the need to
+#'force their recalculation (see chapter 22, and comments on recalculateFitness()
+#'below). In SLiM 3.0 when using the nonWF model, calling readFromPopulationFile()
+#'from any context other than an early() event causes a warning; calling from an
+#'early() event is almost always correct in nonWF models, so that fitness values
 #'can be automatically recalculated by SLiM at the usual time in the tick cycle
-#'without the need to force their recalculation (see chapter 22, and comments on
-#'recalculateFitness() below). In SLiM 3.0 when using the nonWF model, calling
-#'readFromPopulationFile() from any context other than an early() event causes
-#'a warning; calling from an early() event is almost always correct in nonWF
-#'models, so that fitness values can be automatically recalculated by SLiM at
-#'the usual time in the tick cycle without the need to force their recalculation
-#'(see chapter 23, and comments on recalculateFitness() below). As of SLiM 2.1,
-#'this method changes the tick and cycle counters to the tick and cycle read
-#'from the file. If you do not want these counters to be changed, you can change
-#'them back after reading, by setting community.tick and sim.cycle to whatever
-#'values you wish. Note that restoring a saved past state and running forward
-#'again will not yield the same simulation results, because the random number
-#'generator's state will not be the same; to ensure reproducibility from a given
-#'time point, setSeed() can be used to establish a new seed value. Any changes
-#'made to structure of the species (mutation types, genomic element types,
-#'etc.) will not be wiped and re-established by readFromPopulationFile(); this
-#'method loads only the population's state, not the species configuration, so
-#'care should be taken to ensure that the species structure meshes coherently
-#'with the loaded data. Indeed, state such as the selfing and cloning rates of
-#'subpopulations, values set into tag properties, and values set onto objects with
-#'setValue() will also be lost, since it is not saved out by outputFull(). Only
-#'information saved by outputFull() will be restored; all other state associated
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 682 with the species - subpopulations,
-#'individuals, genomes, mutations, and substitutions - will be lost, and should be
-#'re-established by the model if it is still needed. As of SLiM 2.3, this method
-#'will read and restore the spatial positions of individuals if that information
-#'is present in the output file and the species has enabled continuous space
-#'(see outputFull() for details). If spatial positions are present in the output
-#'file but the species has not enabled continuous space (or the number of spatial
-#'dimensions does not match), an error will result. If the species has enabled
-#'continuous space but spatial positions are not present in the output file,
-#'the spatial positions of the individuals read will be undefined, but an error
-#'is not raised. As of SLiM 3.0, this method will read and restore the ages of
-#'individuals if that information is present in the output file and the simulation
-#'is based upon the nonWF model. If ages are present but the simulation uses
-#'a WF model, an error will result; the WF model does not use age information.
-#'If ages are not present but the simulation uses a nonWF model, an error will
-#'also result; the nonWF model requires age information. As of SLiM 3.3, this
-#'method will restore the nucleotides of nucleotide-based mutations, and will
-#'restore the ancestral nucleotide sequence, if that information is present in
-#'the output file. Loading an output file that contains nucleotide information
+#'without the need to force their recalculation (see chapter 23, and comments
+#'on recalculateFitness() below). As of SLiM 2.1, this method changes the tick
+#'and cycle counters to the tick and cycle read from the file. If you do not
+#'want these counters to be changed, you can change them back after reading,
+#'by setting community.tick and sim.cycle to whatever values you wish. Note
+#'that restoring a saved past state and running forward again will not yield
+#'the same simulation results, because the random number generator's state will
+#'not be the same; to ensure reproducibility from a given time point, setSeed()
+#'can be used to establish a new seed value. Any changes made to structure of
+#'the species (mutation types, genomic element types, etc.) will not be wiped
+#'and re-established by readFromPopulationFile(); this method loads only the
+#'population's state, not the species configuration, so care should be taken
+#'to ensure that the species structure meshes coherently with the loaded data.
+#'Indeed, state such as the selfing and cloning rates of subpopulations, values
+#'set into tag properties, and values set onto objects with setValue() will also
+#'be lost, since it is not saved out by outputFull(). Only information saved by
+#'outputFull() will be restored; all other state associated with the species -
+#'subpopulations, individuals, genomes, mutations, and substitutions - will be
+#'lost, and should be re-established by the model if it is still needed. As of
+#'SLiM 2.3, this method will read and restore the spatial positions of individuals
+#'if that information is present in the output file and the species has enabled
+#'continuous space (see outputFull() for details). If spatial positions are
+#'present in the output file but the species has not enabled continuous space
+#'(or the number of spatial dimensions does not match), an error will result. If
+#'the species has enabled continuous space but spatial positions are not present
+#'in the output file, the spatial positions of the individuals read will be
+#'undefined, but an error is not raised. As of SLiM 3.0, this method will read
+#'and restore the ages of individuals if that information is present in the output
+#'file and the simulation is based upon the nonWF model. If ages are present but
+#'the simulation uses a WF model, an error will result; the WF model does not use
+#'age information. If ages are not present but the simulation uses a nonWF model,
+#'an error will also result; the nonWF model requires age information. As of SLiM
+#'3.3, this method will restore the nucleotides of nucleotide-based mutations, and
+#'will restore the ancestral nucleotide sequence, if that information is present
+#'in the output file. Loading an output file that contains nucleotide information
 #'in a non-nucleotide-based model, and vice versa, will produce an error. As of
 #'SLiM 3.5, this method will read and restore the pedigree IDs of individuals and
 #'genomes if that information is present in the output file (as requested with
@@ -8610,18 +8555,16 @@ outputMutations <- function(mutations, filePath, append) {
 #'tree-sequence files, at the present time; setting up the correct subpopulation
 #'ids is typically easier when working with those other formats. Note the
 #'tskit command-line interface can be used, like python3 -m tskit populations
-#'file.trees, to find out the number of subpopulations in a tree-sequence file
-#'and their IDs. When loading a tree sequence, a crosscheck of the loaded data
-#'will be performed to ensure that the tree sequence was well-formed and was
-#'loaded correctly. When running a Release build of SLiM, however, this crosscheck
-#'will only occur the first time that readFromPopulationFile() is called to
-#'load a tree sequence; subsequent calls will not perform this crosscheck, for
-#'greater speed when running models that load saved population state many times
-#'(such as models that are conditional on events mutationEffect() interaction()
-#'mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-#'683 fixation). If you suspect that a tree sequence file might be corrupted or
-#'read incorrectly, running a Debug build of SLiM enables crosschecks after every
-#'load.
+#'file.trees, to find out the number of subpopulations in a tree-sequence file and
+#'their IDs. When loading a tree sequence, a crosscheck of the loaded data will
+#'be performed to ensure that the tree sequence was well-formed and was loaded
+#'correctly. When running a Release build of SLiM, however, this crosscheck will
+#'only occur the first time that readFromPopulationFile() is called to load a tree
+#'sequence; subsequent calls will not perform this crosscheck, for greater speed
+#'when running models that load saved population state many times (such as models
+#'that are conditional on fixation). If you suspect that a tree sequence file
+#'might be corrupted or read incorrectly, running a Debug build of SLiM enables
+#'crosschecks after every load.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -8799,13 +8742,11 @@ registerFitnessEffectCallback <- function(id, source, subpop, start, end) {
 #'and optional start and end ticks all limiting its applicability. The script
 #'block will be given identifier id (specified as an integer, or as a string
 #'symbolic name such as "s5"); this may be NULL if there is no need to be able
-#'to refer to the block later. The registered callback is added to the end of
-#'the list of registered SLiMEidosBlock objects, and is active immediately; it
-#'may be eligible to execute in the current tick (see section 25.11 for details).
-#'The new SLiMEidosBlock will be defined as a global variable immediately by
-#'this method (see section 24.12), and will also be returned by this method.
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 684
+#'to refer to the block later. The registered callback is added to the end of the
+#'list of registered SLiMEidosBlock objects, and is active immediately; it may be
+#'eligible to execute in the current tick (see section 25.11 for details). The new
+#'SLiMEidosBlock will be defined as a global variable immediately by this method
+#'(see section 24.12), and will also be returned by this method.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -9143,45 +9084,44 @@ addCloned <- function(parent) {
 #'(a singleton)
 #'@details Generates a new offspring individual from the given parents
 #'by biparental sexual reproduction, queues it for addition to the target
-#'subpopulation, and returns it. The new offspring will not be visible as a member
-#'of the target subpopulation until the end of the offspring generation tick cycle
-#'stage. Attempting to use a newly generated offspring individual as a mate, or to
-#'reference it as a member of events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 691 the
-#'target subpopulation in any other way, will result in an error. In most models
-#'the returned individual is not used, but it is provided for maximal generality
-#'and flexibility. The new offspring individual is generated from parent1 and
-#'parent2 by crossing them. In sexual models parent1 must be female and parent2
-#'must be male; in hermaphroditic models, parent1 and parent2 are unrestricted.
-#'If parent1 and parent2 are the same individual in a hermaphroditic model,
-#'that parent self-fertilizes, or "selfs", to generate the offspring sexually
-#'(note this is not the same as clonal reproduction). Such selfing is considered
-#'"incidental" by addCrossed(), however; if the preventIncidentalSelfing flag
-#'of initializeSLiMOptions() is T, supplying the same individual for parent1
-#'and parent2 is an error (you must check for and prevent incidental selfing
-#'if you set that flag in a nonWF model). If non-incidental selfing is desired,
-#'addSelfed() should be used instead. The sex parameter specifies the sex of the
-#'offspring. A value of NULL means "make the default choice"; in non-sexual models
-#'it is the only legal value for sex, and does nothing, whereas in sexual models
-#'it causes male or female to be chosen with equal probability. A value of "M" or
-#'"F" for sex specifies that the offspring should be male or female, respectively.
-#'Finally, a float value from 0.0 to 1.0 for sex provides the probability that
-#'the offspring will be male; a value of 0.0 will produce a female, a value of
-#'1.0 will produce a male, and for intermediate values SLiM will draw the sex of
-#'the offspring randomly according to the specified probability. Unless you wish
-#'the bias the sex ratio of offspring, the default value of NULL should generally
-#'be used. Note that any defined, active, and applicable recombination(),
-#'mutation(), and modifyChild() callbacks will be called as a side effect of
-#'calling this method, before this method even returns. For recombination() and
-#'mutation() callbacks, the subpopulation of the parent that is generating a
-#'given gamete is used; for modifyChild() callbacks the situation is more complex.
-#'In most biparental mating events, parent1 and parent2 will belong to the same
-#'subpopulation, and modifyChild() callbacks for that subpopulation will be used,
-#'just as in WF models. In certain models (such as models of pollen flow and
-#'broadcast spawning), however, biparental mating may occur between parents that
-#'are not from the same subpopulation; that is legal in nonWF models, and in that
-#'case, modifyChild() callbacks for the subpopulation of parent1 are used (since
-#'that is the maternal parent). If the modifyChild() callback process results in
+#'subpopulation, and returns it. The new offspring will not be visible as a
+#'member of the target subpopulation until the end of the offspring generation
+#'tick cycle stage. Attempting to use a newly generated offspring individual
+#'as a mate, or to reference it as a member of the target subpopulation in any
+#'other way, will result in an error. In most models the returned individual is
+#'not used, but it is provided for maximal generality and flexibility. The new
+#'offspring individual is generated from parent1 and parent2 by crossing them. In
+#'sexual models parent1 must be female and parent2 must be male; in hermaphroditic
+#'models, parent1 and parent2 are unrestricted. If parent1 and parent2 are the
+#'same individual in a hermaphroditic model, that parent self-fertilizes, or
+#'"selfs", to generate the offspring sexually (note this is not the same as
+#'clonal reproduction). Such selfing is considered "incidental" by addCrossed(),
+#'however; if the preventIncidentalSelfing flag of initializeSLiMOptions() is
+#'T, supplying the same individual for parent1 and parent2 is an error (you must
+#'check for and prevent incidental selfing if you set that flag in a nonWF model).
+#'If non-incidental selfing is desired, addSelfed() should be used instead.
+#'The sex parameter specifies the sex of the offspring. A value of NULL means
+#'"make the default choice"; in non-sexual models it is the only legal value
+#'for sex, and does nothing, whereas in sexual models it causes male or female
+#'to be chosen with equal probability. A value of "M" or "F" for sex specifies
+#'that the offspring should be male or female, respectively. Finally, a float
+#'value from 0.0 to 1.0 for sex provides the probability that the offspring will
+#'be male; a value of 0.0 will produce a female, a value of 1.0 will produce
+#'a male, and for intermediate values SLiM will draw the sex of the offspring
+#'randomly according to the specified probability. Unless you wish the bias the
+#'sex ratio of offspring, the default value of NULL should generally be used.
+#'Note that any defined, active, and applicable recombination(), mutation(), and
+#'modifyChild() callbacks will be called as a side effect of calling this method,
+#'before this method even returns. For recombination() and mutation() callbacks,
+#'the subpopulation of the parent that is generating a given gamete is used;
+#'for modifyChild() callbacks the situation is more complex. In most biparental
+#'mating events, parent1 and parent2 will belong to the same subpopulation,
+#'and modifyChild() callbacks for that subpopulation will be used, just as in
+#'WF models. In certain models (such as models of pollen flow and broadcast
+#'spawning), however, biparental mating may occur between parents that are not
+#'from the same subpopulation; that is legal in nonWF models, and in that case,
+#'modifyChild() callbacks for the subpopulation of parent1 are used (since that
+#'is the maternal parent). If the modifyChild() callback process results in
 #'rejection of the proposed child (see section 25.5), a new offspring individual
 #'will not be generated, and this method will return NULL. To force the generation
 #'of an offspring individual from a given pair of parents, you could loop until
@@ -9240,30 +9180,29 @@ addCrossed <- function(parent1, parent2, sex) {
 #'(a singleton)
 #'@details Generates a new offspring individual with empty genomes (i.e.,
 #'containing no mutations), queues it for addition to the target subpopulation,
-#'and returns it. The new offspring will not be visible as a member of the target
-#'subpopulation until the end of the offspring generation tick cycle stage. No
-#'recombination() or mutation() callbacks will be called. The target subpopulation
-#'will be used to locate applicable modifyChild() callbacks governing the
-#'generation of the offspring individual (unlike the other addX() methods, because
-#'there is no parental individual to reference). The offspring is considered to
-#'have no parents for the purposes of pedigree tracking. The sex parameter is
-#'treated as in addCrossed(). events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 692 By
-#'default - when genome1Null and genome2Null are both NULL - null genomes will
-#'be generated instead of empty genomes only in sex-chromosome simulations, where
-#'the sex chromosome that is not being simulated is represented by a null genome;
-#'otherwise, empty genomes rather than null genomes will be created. This default
-#'behavior can be changed by passing T or F for genome1Null or genome2Null, which
-#'will force the corresponding offspring genome to be null (T) or non-null (F).
-#'The behavior in sex-chromosome simulations cannot be changed, since the presence
-#'of null genomes there is dictated by sex, but T or F may be passed as long as
-#'it matches what SLiM would do anyway. In all other simulations there is little
-#'point in passing F (since that would be the default behavior anyway), but
-#'passing T can be used to make one or both genomes be null genomes, which can be
-#'useful for, e.g., modeling haploids (for which, by convention, the second genome
-#'is usually a null genome in SLiM). Note that this method is only for use in
-#'nonWF models. See addCrossed() for further general notes on the addition of new
-#'offspring individuals.
+#'and returns it. The new offspring will not be visible as a member of the
+#'target subpopulation until the end of the offspring generation tick cycle
+#'stage. No recombination() or mutation() callbacks will be called. The target
+#'subpopulation will be used to locate applicable modifyChild() callbacks
+#'governing the generation of the offspring individual (unlike the other addX()
+#'methods, because there is no parental individual to reference). The offspring
+#'is considered to have no parents for the purposes of pedigree tracking. The
+#'sex parameter is treated as in addCrossed(). By default - when genome1Null
+#'and genome2Null are both NULL - null genomes will be generated instead of
+#'empty genomes only in sex-chromosome simulations, where the sex chromosome
+#'that is not being simulated is represented by a null genome; otherwise, empty
+#'genomes rather than null genomes will be created. This default behavior can be
+#'changed by passing T or F for genome1Null or genome2Null, which will force the
+#'corresponding offspring genome to be null (T) or non-null (F). The behavior
+#'in sex-chromosome simulations cannot be changed, since the presence of null
+#'genomes there is dictated by sex, but T or F may be passed as long as it matches
+#'what SLiM would do anyway. In all other simulations there is little point in
+#'passing F (since that would be the default behavior anyway), but passing T can
+#'be used to make one or both genomes be null genomes, which can be useful for,
+#'e.g., modeling haploids (for which, by convention, the second genome is usually
+#'a null genome in SLiM). Note that this method is only for use in nonWF models.
+#'See addCrossed() for further general notes on the addition of new offspring
+#'individuals.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -9350,44 +9289,42 @@ addEmpty <- function(sex, genome1Null, genome2Null) {
 #'when the reproductive mode is essentially clonal from a single parent, since
 #'such inference would be ambiguous in the general case. Similarly, the offspring
 #'is considered to have no parents for the purposes of pedigree tracking, since
-#'there may be more than two "parents" in the general case. When modeling the X
-#'or Y, strand1 and strand2 must be X genomes (or NULL), and strand3 and strand4
-#'must both be X genomes or both be Y genomes (or NULL). events mutationEffect()
-#'interaction() mateChoice() modifyChild() mutation() recombination()
-#'reproduction() survival() 693 These semantics allow several uses for
-#'addRecombinant(). When all strands are non-NULL, it is similar to addCrossed()
-#'except that the recombination breakpoints are speciﬁed explicitly, allowing
-#'very precise offspring generation without having to override SLiM's breakpoint
-#'generation with a recombination() callback. When only strand1 and strand3
-#'are supplied, it is very similar to addCloned(), creating a clonal offspring,
-#'except that the two parental genomes need not belong to the same individual
-#'(whatever that might mean biologically). Supplying only strand1 is useful for
-#'modeling clonally reproducing haploids; the second genome of every offspring
-#'will be kept empty and will not receive new mutations. For a model of clonally
-#'reproducing haploids that undergo horizontal gene transfer (HGT), supplying
-#'only strand1 and strand2 will allow HGT from strand2 to replace segments of
-#'an otherwise clonal copy of strand1, while the second genome of the generated
-#'offspring will again be kept empty; this could be useful for modeling bacterial
-#'conjugation, for example. Other variations are also possible. The value of the
-#'meanParentAge property of the generated offspring is calculated from the mean
-#'parent age of each of its two genomes (whether they turn out to be null genomes
-#'or not); that may be an average of two values (if both offspring genomes have
-#'at least one parent), a single value (if one offspring genome has no parent),
-#'or no values (if both offspring genomes have no parent, in which case 0.0
-#'results). The mean parent age of a given offspring genome is the mean of the
-#'ages of the parents of the two strands used to generate that offspring genome;
-#'if one strand is NULL then the mean parent age for that offspring genome is the
-#'age of the parent of the non-NULL strand, while if both strands are NULL then
-#'that offspring genome is parentless and is not used in the ﬁnal calculation.
-#'In other words, if one offspring genome has two parents with ages A and B, and
-#'the other offspring genome has one parent with age C, the meanParentAge of the
-#'offspring will be (A+B+C+C) / 4, not (A+B+C) / 3. Note that gene conversion
-#'tracts are not explicitly supported by this method; the breaks vectors provide
-#'crossover breakpoints, which may be used to implement crossovers or simple gene
-#'conversion tracts. There is no way to specify complex gene conversion tracts
-#'with heteroduplex mismatch repair. Note that this method is only for use in
-#'nonWF models. See addCrossed() for further general notes on the addition of new
-#'offspring individuals.
+#'there may be more than two "parents" in the general case. When modeling the X or
+#'Y, strand1 and strand2 must be X genomes (or NULL), and strand3 and strand4 must
+#'both be X genomes or both be Y genomes (or NULL). These semantics allow several
+#'uses for addRecombinant(). When all strands are non-NULL, it is similar to
+#'addCrossed() except that the recombination breakpoints are speciﬁed explicitly,
+#'allowing very precise offspring generation without having to override SLiM's
+#'breakpoint generation with a recombination() callback. When only strand1 and
+#'strand3 are supplied, it is very similar to addCloned(), creating a clonal
+#'offspring, except that the two parental genomes need not belong to the same
+#'individual (whatever that might mean biologically). Supplying only strand1 is
+#'useful for modeling clonally reproducing haploids; the second genome of every
+#'offspring will be kept empty and will not receive new mutations. For a model
+#'of clonally reproducing haploids that undergo horizontal gene transfer (HGT),
+#'supplying only strand1 and strand2 will allow HGT from strand2 to replace
+#'segments of an otherwise clonal copy of strand1, while the second genome of the
+#'generated offspring will again be kept empty; this could be useful for modeling
+#'bacterial conjugation, for example. Other variations are also possible. The
+#'value of the meanParentAge property of the generated offspring is calculated
+#'from the mean parent age of each of its two genomes (whether they turn out
+#'to be null genomes or not); that may be an average of two values (if both
+#'offspring genomes have at least one parent), a single value (if one offspring
+#'genome has no parent), or no values (if both offspring genomes have no parent,
+#'in which case 0.0 results). The mean parent age of a given offspring genome
+#'is the mean of the ages of the parents of the two strands used to generate
+#'that offspring genome; if one strand is NULL then the mean parent age for that
+#'offspring genome is the age of the parent of the non-NULL strand, while if both
+#'strands are NULL then that offspring genome is parentless and is not used in
+#'the ﬁnal calculation. In other words, if one offspring genome has two parents
+#'with ages A and B, and the other offspring genome has one parent with age C,
+#'the meanParentAge of the offspring will be (A+B+C+C) / 4, not (A+B+C) / 3. Note
+#'that gene conversion tracts are not explicitly supported by this method; the
+#'breaks vectors provide crossover breakpoints, which may be used to implement
+#'crossovers or simple gene conversion tracts. There is no way to specify complex
+#'gene conversion tracts with heteroduplex mismatch repair. Note that this method
+#'is only for use in nonWF models. See addCrossed() for further general notes on
+#'the addition of new offspring individuals.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -9485,12 +9422,10 @@ addSelfed <- function(parent) {
 #'cachedFitness() from a late() event, because ﬁtness values for the new offspring
 #'generation have not yet been calculated and are undeﬁned. In nonWF models,
 #'the population may be a mixture of new and old individuals, so instead, NAN
-#'will be returned as the ﬁtness of any new individuals whose ﬁtness has not yet
-#'been calculated. When new events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 694
-#'subpopulations are ﬁrst created with addSubpop() or addSubpopSplit(), the ﬁtness
-#'of all of the newly created individuals is considered to be 1.0 until ﬁtness
-#'values are recalculated.
+#'will be returned as the ﬁtness of any new individuals whose ﬁtness has not
+#'yet been calculated. When new subpopulations are ﬁrst created with addSubpop()
+#'or addSubpopSplit(), the ﬁtness of all of the newly created individuals is
+#'considered to be 1.0 until ﬁtness values are recalculated.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -9627,40 +9562,38 @@ configureDisplay <- function(center, scale, color) {
 #'used directly as spatial maps, achieving the expected orientation, with no need
 #'for transposition or ﬂipping. If the spatial map is a three-dimensional array,
 #'it is read as successive z-axis "planes", each of which is a two-dimensional
-#'matrix that is treated as described above. Moving on to the other parameters
-#'of defineSpatialMap(): if interpolate is F, values across the spatial map are
-#'not interpolated; the value at a given point is equal to the nearest value
-#'deﬁned by the grid of values speciﬁed. If interpolate is T, values across the
-#'spatial map will be interpolated (using events mutationEffect() interaction()
-#'mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-#'695 linear, bilinear, or trilinear interpolation as appropriate) to produce
-#'spatially continuous variation in values. In either case, the corners of the
-#'value grid are exactly aligned with the corners of the spatial boundaries of the
-#'subpopulation as speciﬁed by setSpatialBoundary(), and the value grid is then
-#'stretched across the spatial extent of the subpopulation in such a manner as to
-#'produce equal spacing between the values along each dimension. The setting of
-#'interpolation only affects how values between these grid points are calculated:
-#'by nearest-neighbor, or by linear interpolation. Interpolation of spatial maps
-#'with periodic boundaries is not handled specially; to ensure that the edges
-#'of a periodic spatial map join smoothly, simply ensure that the grid values
-#'at the edges of the map are identical, since they will be coincident after
-#'periodic wrapping. The valueRange and colors parameters travel together; either
-#'both are unspeciﬁed, or both are speciﬁed. They control how map values will be
-#'transformed into colors, by SLiMgui and by the spatialMapColor() method. The
-#'valueRange parameter establishes the color-mapped range of spatial map values,
-#'as a vector of length two specifying a minimum and maximum; this does not
-#'need to match the actual range of values in the map. The colors parameter then
-#'establishes the corresponding colors for values within the interval deﬁned by
-#'valueRange: values less than or equal to valueRange[0] will map to colors[0],
-#'values greater than or equal to valueRange[1] will map to the last colors value,
-#'and intermediate values will shade continuously through the speciﬁed vector
-#'of colors, with interpolation between adjacent colors to produce a continuous
-#'spectrum. This is much simpler than it sounds in this description; see the
-#'recipes in chapter 15 for an illustration of its use. Note that at present,
-#'SLiMgui will only display spatial maps of spatiality "x", "y", or "xy"; the
-#'color- mapping parameters will simply be ignored by SLiMgui for other spatiality
-#'values (even if the spatiality is a superset of these values; SLiMgui will
-#'not attempt to display an "xyz" spatial map, for example, since it has no
+#'matrix that is treated as described above. Moving on to the other parameters of
+#'defineSpatialMap(): if interpolate is F, values across the spatial map are not
+#'interpolated; the value at a given point is equal to the nearest value deﬁned
+#'by the grid of values speciﬁed. If interpolate is T, values across the spatial
+#'map will be interpolated (using linear, bilinear, or trilinear interpolation
+#'as appropriate) to produce spatially continuous variation in values. In either
+#'case, the corners of the value grid are exactly aligned with the corners of the
+#'spatial boundaries of the subpopulation as speciﬁed by setSpatialBoundary(), and
+#'the value grid is then stretched across the spatial extent of the subpopulation
+#'in such a manner as to produce equal spacing between the values along each
+#'dimension. The setting of interpolation only affects how values between these
+#'grid points are calculated: by nearest-neighbor, or by linear interpolation.
+#'Interpolation of spatial maps with periodic boundaries is not handled specially;
+#'to ensure that the edges of a periodic spatial map join smoothly, simply ensure
+#'that the grid values at the edges of the map are identical, since they will be
+#'coincident after periodic wrapping. The valueRange and colors parameters travel
+#'together; either both are unspeciﬁed, or both are speciﬁed. They control how map
+#'values will be transformed into colors, by SLiMgui and by the spatialMapColor()
+#'method. The valueRange parameter establishes the color-mapped range of spatial
+#'map values, as a vector of length two specifying a minimum and maximum; this
+#'does not need to match the actual range of values in the map. The colors
+#'parameter then establishes the corresponding colors for values within the
+#'interval deﬁned by valueRange: values less than or equal to valueRange[0] will
+#'map to colors[0], values greater than or equal to valueRange[1] will map to the
+#'last colors value, and intermediate values will shade continuously through the
+#'speciﬁed vector of colors, with interpolation between adjacent colors to produce
+#'a continuous spectrum. This is much simpler than it sounds in this description;
+#'see the recipes in chapter 15 for an illustration of its use. Note that at
+#'present, SLiMgui will only display spatial maps of spatiality "x", "y", or
+#'"xy"; the color- mapping parameters will simply be ignored by SLiMgui for other
+#'spatiality values (even if the spatiality is a superset of these values; SLiMgui
+#'will not attempt to display an "xyz" spatial map, for example, since it has no
 #'way to choose which 2D slice through the xyz space it ought to display). The
 #'spatialMapColor() method will return translated color strings for any spatial
 #'map, however, even if SLiMgui is unable to display the spatial map. If there are
@@ -9736,10 +9669,9 @@ colors)
 #'out with filterMonomorphic = T if desired; note that this option means that
 #'some mutations that do exist in the sampled genomes might not be included in the
 #'output, simply because they exist in every sampled genome. See outputSample()
-#'and outputVCFSample() for other output formats. Output is generally done in
-#'a late() event, so that the output reﬂects the state of the simulation at the
-#'end of a tick. events mutationEffect() interaction() mateChoice() modifyChild()
-#'mutation() recombination() reproduction() survival() 696
+#'and outputVCFSample() for other output formats. Output is generally done in a
+#'late() event, so that the output reﬂects the state of the simulation at the end
+#'of a tick.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -9962,25 +9894,23 @@ pointInBounds <- function(point) {
 #'the periodic spatial boundaries of the subpopulation (as speciﬁed by the
 #'periodicity parameter of initializeSLiMOptions()) by wrapping around periodic
 #'spatial boundaries. In brief, if a coordinate of point lies beyond a periodic
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 697 spatial boundary, that coordinate
-#'is wrapped around the boundary, so that it lies inside the spatial extent by
-#'the same magnitude that it previously lay outside, but on the opposite side
-#'of the space; in effect, the two edges of the periodic spatial boundary are
-#'seamlessly joined. This is done iteratively until all coordinates lie inside the
-#'subpopulation's periodic boundaries. Note that non-periodic spatial boundaries
-#'are not enforced by this method; they should be enforced using pointReflected(),
-#'pointStopped(), or some other means of enforcing boundary constraints (which
-#'can be used after pointPeriodic() to bring the remaining coordinates into
-#'bounds; coordinates already brought into bounds by pointPeriodic() will be
-#'unaffected by those calls). This method is useful for implementing periodic
-#'boundary conditions. This may only be called in simulations for which continuous
-#'space and at least one periodic spatial dimension have been enabled with
-#'initializeSLiMOptions(). The length of point must be an exact multiple of the
-#'dimensionality of the simulation; in other words, point may contain values
-#'comprising more than one point. In this case, each point will be processed as
-#'described above and a new vector containing all of the processed points will be
-#'returned.
+#'spatial boundary, that coordinate is wrapped around the boundary, so that it
+#'lies inside the spatial extent by the same magnitude that it previously lay
+#'outside, but on the opposite side of the space; in effect, the two edges of
+#'the periodic spatial boundary are seamlessly joined. This is done iteratively
+#'until all coordinates lie inside the subpopulation's periodic boundaries. Note
+#'that non-periodic spatial boundaries are not enforced by this method; they
+#'should be enforced using pointReflected(), pointStopped(), or some other means
+#'of enforcing boundary constraints (which can be used after pointPeriodic() to
+#'bring the remaining coordinates into bounds; coordinates already brought into
+#'bounds by pointPeriodic() will be unaffected by those calls). This method is
+#'useful for implementing periodic boundary conditions. This may only be called
+#'in simulations for which continuous space and at least one periodic spatial
+#'dimension have been enabled with initializeSLiMOptions(). The length of point
+#'must be an exact multiple of the dimensionality of the simulation; in other
+#'words, point may contain values comprising more than one point. In this case,
+#'each point will be processed as described above and a new vector containing all
+#'of the processed points will be returned.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -10158,14 +10088,12 @@ pointUniform <- function(n) {
 #'remains unchanged until children are next generated (at which point it is
 #'deallocated), but it is no longer part of the simulation and should not be
 #'used. Note that this method is only for use in nonWF models, in which there
-#'is a distinction between a subpopulation being empty and a subpopulation
-#'being removed from the simulation; an empty subpopulation may be re-colonized
-#'by migrants, whereas as a removed subpopulation no longer exists at all.
-#'WF models do not make this distinction; when a subpopulation is empty it is
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 698 automatically removed. WF
-#'models should therefore call setSubpopulationSize(0) instead of this method;
-#'setSubpopulationSize() is the standard way for WF models to change the
+#'is a distinction between a subpopulation being empty and a subpopulation being
+#'removed from the simulation; an empty subpopulation may be re-colonized by
+#'migrants, whereas as a removed subpopulation no longer exists at all. WF models
+#'do not make this distinction; when a subpopulation is empty it is automatically
+#'removed. WF models should therefore call setSubpopulationSize(0) instead of this
+#'method; setSubpopulationSize() is the standard way for WF models to change the
 #'subpopulation size, including to a size of 0.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
@@ -10369,14 +10297,12 @@ setMigrationRates <- function(sourceSubpops, rates) {
 #'@family Subpopulation
 #'@return An object of type void.
 #'@details Set the selﬁng rate of this subpopulation. The rate is changed to
-#'rate, which should be between 0.0 and 1.0, inclusive. Selﬁng can only be
-#'enabled in non-sexual (i.e. hermaphroditic) simulations. During mating and
-#'offspring generation, the probability that any given offspring individual will
-#'be generated by selﬁng - by self-fertilization via gametes produced by meiosis
-#'by a single parent - will be equal to the selﬁng rate set in the parental (not
-#'the offspring!) subpopulation (see section 22.2.1). events mutationEffect()
-#'interaction() mateChoice() modifyChild() mutation() recombination()
-#'reproduction() survival() 699
+#'rate, which should be between 0.0 and 1.0, inclusive. Selﬁng can only be enabled
+#'in non-sexual (i.e. hermaphroditic) simulations. During mating and offspring
+#'generation, the probability that any given offspring individual will be
+#'generated by selﬁng - by self-fertilization via gametes produced by meiosis by
+#'a single parent - will be equal to the selﬁng rate set in the parental (not the
+#'offspring!) subpopulation (see section 22.2.1).
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -10621,31 +10547,29 @@ spatialMapColor <- function(name, value) {
 #'If centers is F (the default), a width × height grid of lines will be overlaid
 #'on top of the spatial map, and values will be sampled from the spatial map
 #'at the vertices of the grid. If interpolation is not enabled for the spatial
-#'map, these two options will both recover the original matrix of values used to
-#'define the spatial map (assuming, here and below, that events mutationEffect()
-#'interaction() mateChoice() modifyChild() mutation() recombination()
-#'reproduction() survival() 700 width and height are NULL). If interpolation is
-#'enabled for the spatial map, however, centers == F will recover the original
-#'values, but will not capture the "typical" value of each pixel in the image;
-#'centers == T, on the other hand, will not recover the original values, but will
-#'capture the "typical" value of each pixel in the image (i.e., the value at the
-#'center of each pixel, as produced by interpolation). The figures in section
-#'15.11 may be helpful for visualizing the difference between these options; the
-#'overlaid grids span the full extent of the spatial map, just as shown in that
-#'section. If color is T (the default), the valueRange and colors parameters
-#'supplied to defineSpatialMap() will be used to translate map values to RGB color
-#'values as described in the documentation of that method, providing the same
-#'appearance as in SLiMgui; of course those parameters must have been supplied,
-#'otherwise an error will result. If color is F, on the other hand, a grayscale
-#'image will be produced that directly reflects the map values without color
-#'translation. In this case, this method needs to translate map values, which
-#'can have any float value, into grayscale pixel values that are integers in [0,
-#'255]. To do so, the map values are multiplied by 255.0, clamped to [0.0, 255.0],
-#'and then rounded to the nearest integer. This translation scheme essentially
-#'assumes that map values are in [0, 1]; for spatial maps that were defined using
-#'the floatK channel of a grayscale PNG image, this should recover the original
-#'image's pixel values. (If a different translation scheme is desired, color=T
-#'with the desired valueRange and colors should be used.)
+#'map, these two options will both recover the original matrix of values used
+#'to define the spatial map (assuming, here and below, that width and height are
+#'NULL). If interpolation is enabled for the spatial map, however, centers == F
+#'will recover the original values, but will not capture the "typical" value of
+#'each pixel in the image; centers == T, on the other hand, will not recover the
+#'original values, but will capture the "typical" value of each pixel in the image
+#'(i.e., the value at the center of each pixel, as produced by interpolation). The
+#'figures in section 15.11 may be helpful for visualizing the difference between
+#'these options; the overlaid grids span the full extent of the spatial map,
+#'just as shown in that section. If color is T (the default), the valueRange and
+#'colors parameters supplied to defineSpatialMap() will be used to translate map
+#'values to RGB color values as described in the documentation of that method,
+#'providing the same appearance as in SLiMgui; of course those parameters must
+#'have been supplied, otherwise an error will result. If color is F, on the other
+#'hand, a grayscale image will be produced that directly reflects the map values
+#'without color translation. In this case, this method needs to translate map
+#'values, which can have any float value, into grayscale pixel values that are
+#'integers in [0, 255]. To do so, the map values are multiplied by 255.0, clamped
+#'to [0.0, 255.0], and then rounded to the nearest integer. This translation
+#'scheme essentially assumes that map values are in [0, 1]; for spatial maps that
+#'were defined using the floatK channel of a grayscale PNG image, this should
+#'recover the original image's pixel values. (If a different translation scheme is
+#'desired, color=T with the desired valueRange and colors should be used.)
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -10763,8 +10687,6 @@ spatialMapValue <- function(name, point) {
 #'only individuals with the desired properties; besides being much simpler than
 #'the equivalent Eidos code, it is also much faster. See sampleIndividuals() for a
 #'similar method that returns a sample taken from a chosen subset of individuals.
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 701
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -10853,42 +10775,41 @@ takeMigrants <- function(migrants) {
 #'@return An object of type integer or string.
 #'@details Returns the amino acid sequence corresponding to the codon sequence
 #'in codons. Codons should be represented with values in [0, 63] where AAA is 0,
-#'AAC is 1, AAG is 2, and TTT is 63; see ancestralNucleotides() for discussion of
-#'this encoding. If long is F (the default), the standard single-letter codes for
-#'amino acids will be used (where Serine is "S", etc.); if long is T, the standard
-#'three-letter codes will be used instead (where Serine is "Ser", etc.). Beginning
-#'in SLiM 3.5, if long is 0, integer codes will be used as follows (and paste will
-#'be ignored): stop (TAA, TAG, TGA) 0 Alanine 1 Arginine 2 Asparagine 3 Aspartic
-#'acid (Aspartate) 4 Cysteine 5 Glutamine 6 Glutamic acid (Glutamate) 7 Glycine
-#'8 Histidine 9 Isoleucine 10 Leucine 11 Lysine 12 Methionine 13 Phenylalanine 14
-#'Proline 15 Serine 16 Threonine 17 Tryptophan 18 Tyrosine 19 Valine 20 There does
-#'not seem to be a widely used standard for integer coding of amino acids, so SLiM
-#'just numbers them alphabetically, making stop codons 0. If you want a different
-#'coding, you can make your own 64-element vector and use it to convert codons
-#'to whatever integer codes you need. Other events mutationEffect() interaction()
-#'mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-#'703 integer values of long are reserved for future use (to support other
-#'codings), and will currently produce an error. When long is T or F and paste is
-#'T (the default), the amino acid sequence returned will be a singleton string,
-#'such as "LYATI" (when long is F) or "Leu-Tyr-Ala-Thr-Ile" (when long is T).
-#'When long is T or F and paste is F, the amino acid sequence will instead be
-#'returned as a string vector, with one element per amino acid, such as "L"
-#'"Y" "A" "T" "I" (when long is F) or "Leu" "Tyr" "Ala" "Thr" "Ile" (when long
-#'is T). Using the paste=T option is considerably faster than using paste()
-#'in script. This function interprets the supplied codon sequence as the sense
-#'strand (i.e., the strand that is not transcribed, and which mirrors the mRNA's
-#'sequence). This uses the standard DNA codon table directly. For example,
-#'if the nucleotide sequence is CAA TTC, that will correspond to a codon
-#'vector of 16 61, and will result in the amino acid sequence Gln-Phe ("QF").
-#'(is)codonsToNucleotides(integer codons, [string$ format = "string"]) Returns
-#'the nucleotide sequence corresponding to the codon sequence supplied in codons.
-#'Codons should be represented with values in [0, 63] where AAA is 0, AAC is
-#'1, AAG is 2, and TTT is 63; see ancestralNucleotides() for discussion of this
-#'encoding. The format parameter controls the format of the returned sequence. It
-#'may be "string" to obtain the sequence as a singleton string (e.g., "TATACG"),
-#'"char" to obtain it as a string vector of single characters (e.g., "T", "A",
-#'"T", "A", "C", "G"), or "integer" to obtain it as an integer vector (e.g., 3, 0,
-#'3, 0, 1, 2), using SLiM's standard code of A=0, C=1, G=2, T=3.
+#'AAC is 1, AAG is 2, and TTT is 63; see ancestralNucleotides() for discussion
+#'of this encoding. If long is F (the default), the standard single-letter codes
+#'for amino acids will be used (where Serine is "S", etc.); if long is T, the
+#'standard three-letter codes will be used instead (where Serine is "Ser", etc.).
+#'Beginning in SLiM 3.5, if long is 0, integer codes will be used as follows (and
+#'paste will be ignored): stop (TAA, TAG, TGA) 0 Alanine 1 Arginine 2 Asparagine
+#'3 Aspartic acid (Aspartate) 4 Cysteine 5 Glutamine 6 Glutamic acid (Glutamate)
+#'7 Glycine 8 Histidine 9 Isoleucine 10 Leucine 11 Lysine 12 Methionine 13
+#'Phenylalanine 14 Proline 15 Serine 16 Threonine 17 Tryptophan 18 Tyrosine 19
+#'Valine 20 There does not seem to be a widely used standard for integer coding
+#'of amino acids, so SLiM just numbers them alphabetically, making stop codons 0.
+#'If you want a different coding, you can make your own 64-element vector and use
+#'it to convert codons to whatever integer codes you need. Other integer values of
+#'long are reserved for future use (to support other codings), and will currently
+#'produce an error. When long is T or F and paste is T (the default), the amino
+#'acid sequence returned will be a singleton string, such as "LYATI" (when long
+#'is F) or "Leu-Tyr-Ala-Thr-Ile" (when long is T). When long is T or F and paste
+#'is F, the amino acid sequence will instead be returned as a string vector,
+#'with one element per amino acid, such as "L" "Y" "A" "T" "I" (when long is F)
+#'or "Leu" "Tyr" "Ala" "Thr" "Ile" (when long is T). Using the paste=T option
+#'is considerably faster than using paste() in script. This function interprets
+#'the supplied codon sequence as the sense strand (i.e., the strand that is not
+#'transcribed, and which mirrors the mRNA's sequence). This uses the standard
+#'DNA codon table directly. For example, if the nucleotide sequence is CAA TTC,
+#'that will correspond to a codon vector of 16 61, and will result in the amino
+#'acid sequence Gln-Phe ("QF"). (is)codonsToNucleotides(integer codons, [string$
+#'format = "string"]) Returns the nucleotide sequence corresponding to the codon
+#'sequence supplied in codons. Codons should be represented with values in [0, 63]
+#'where AAA is 0, AAC is 1, AAG is 2, and TTT is 63; see ancestralNucleotides()
+#'for discussion of this encoding. The format parameter controls the format of
+#'the returned sequence. It may be "string" to obtain the sequence as a singleton
+#'string (e.g., "TATACG"), "char" to obtain it as a string vector of single
+#'characters (e.g., "T", "A", "T", "A", "C", "G"), or "integer" to obtain it as an
+#'integer vector (e.g., 3, 0, 3, 0, 1, 2), using SLiM's standard code of A=0, C=1,
+#'G=2, T=3.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -11015,9 +10936,8 @@ mmJukesCantor <- function(alpha) {
 #'@details Returns a mutation matrix representing a Kimura (1980) model with
 #'transition rate alpha and transversion rate beta: This 2×2 matrix is suitable
 #'for use with initializeGenomicElementType(). Note that the actual mutation rate
-#'produced by this model is alpha+2*beta. 0 α α α α 0 α α α α 0 α α α α 0 0 β α
-#'β β 0 β α α β 0 β β α β 0 events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 704
+#'produced by this model is alpha+2*beta. 0 α α α α 0 α α α α 0 α α α α 0 0 β α β
+#'β 0 β α α β 0 β β α β 0
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -11257,8 +11177,7 @@ nucleotidesToCodons <- function(sequence) {
 #'infinite-sites interpretation of the segregating mutations. In most biologically
 #'realistic models, such genetic states will be quite rare, and so the impact of
 #'these choices will be negligible; however, in some models these distinctions may
-#'be important. FST = 1 − HS HT events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 706
+#'be important. FST = 1 − HS HT
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -11429,26 +11348,24 @@ calcInbreedingLoad <- function(genomes, mutType) {
 #'individual.genome2), but any two genomes may be supplied. The calculation can
 #'be narrowed to apply to only a window - a subrange of the full chromosome - by
 #'passing the interval bounds [start, end] for the desired window. In this case,
-#'the vector of mutations used for the calculation will be subset to include only
-#'mutations within the specified window. The default behavior, with start and
-#'end of NULL, provides the genome-wide heterozygosity. events mutationEffect()
-#'interaction() mateChoice() modifyChild() mutation() recombination()
-#'reproduction() survival() 707 The implementation calcPairHeterozygosity(),
-#'viewable with functionSource(), treats every mutation as independent in
-#'the heterozygosity calculations by default (i.e., with infiniteSites=T). If
-#'mutations are stacked, the heterozygosity calculated therefore depends upon the
-#'number of unshared mutations, not the number of differing sites. Similarly, if
-#'multiple Mutation objects exist in different genomes at the same site (whether
-#'representing different genetic states, or multiple mutational lineages for the
-#'same genetic state), each Mutation object is treated separately for purposes
-#'of the heterozygosity calculation, just as if they were at different sites.
-#'One could regard these choices as embodying an infinite-sites interpretation of
-#'the segregating mutations. In most biologically realistic models, such genetic
-#'states will be quite rare, and so the impact of this choice will be negligible;
-#'however, in some models this distinction may be important. The behavior of
-#'calcPairHeterozygosity() can be switched to calculate based upon the number
-#'of differing sites, rather than the number of unshared mutations, by passing
-#'infiniteSites=F.
+#'the vector of mutations used for the calculation will be subset to include
+#'only mutations within the specified window. The default behavior, with start
+#'and end of NULL, provides the genome-wide heterozygosity. The implementation
+#'calcPairHeterozygosity(), viewable with functionSource(), treats every mutation
+#'as independent in the heterozygosity calculations by default (i.e., with
+#'infiniteSites=T). If mutations are stacked, the heterozygosity calculated
+#'therefore depends upon the number of unshared mutations, not the number of
+#'differing sites. Similarly, if multiple Mutation objects exist in different
+#'genomes at the same site (whether representing different genetic states, or
+#'multiple mutational lineages for the same genetic state), each Mutation object
+#'is treated separately for purposes of the heterozygosity calculation, just as
+#'if they were at different sites. One could regard these choices as embodying an
+#'infinite-sites interpretation of the segregating mutations. In most biologically
+#'realistic models, such genetic states will be quite rare, and so the impact of
+#'this choice will be negligible; however, in some models this distinction may be
+#'important. The behavior of calcPairHeterozygosity() can be switched to calculate
+#'based upon the number of differing sites, rather than the number of unshared
+#'mutations, by passing infiniteSites=F.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -11612,74 +11529,71 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'individuals are assigned into bins according to their spatial position, and
 #'then a summary value for each bin is calculated based upon the individuals
 #'each bin contains. The individuals might be binned in one dimension (resulting
-#'in a vector of summary events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 708 values),
-#'in two dimensions (resulting in a matrix), or in three dimensions (resulting in
-#'an array). Typically the spatiality of the result (the dimensions into which the
-#'individuals are binned) will match the dimensionality of the model, as indicated
-#'by the default value of NULL for the optional spatiality parameter; for example,
-#'a two-dimensional ("xy") model would by default produce a two-dimensional
-#'matrix as a summary. However, a spatiality that is more restrictive than the
-#'model dimensionality may be passed; for example, in a two-dimensional ("xy")
-#'model a spatiality of "y" could be passed to summarize individuals into a
-#'vector, rather than a matrix, assigning them to bins based only upon their y
-#'position (i.e., the value of their y property). Whatever spatiality is chosen,
-#'the parameter dim provides the dimensions of the desired result, in the same
-#'form that the dim() function does: first the number of rows, then the number
-#'of columns, and then the number of planes, as needed (see the Eidos manual for
-#'discussion of matrices, arrays, and dim()). The length of dims must match the
-#'requested spatiality; for spatiality "xy", for example, dims might be c(50,100)
-#'to request that the returned matrix have 50 rows and 100 columns. The result
-#'vector/matrix/array is in the correct orientation to be directly usable as a
-#'spatial map, by passing it to the defineSpatialMap() method of Subpopulation.
-#'For further discussion of dimensionality and spatiality, see section 24.1
-#'on initializeInteractionType(), and section 24.8 on InteractionType. The
-#'spatialBounds parameter defines the spatial boundaries within which the
-#'individuals are binned. Typically this is the spatial bounds of a particular
-#'subpopulation, within which the individuals reside; for individuals in p1, for
-#'example, you would likely pass p1.spatialBounds for this. However, this is not
-#'required; individuals may come from any or all subpopulations in the model, and
-#'spatialBounds may be any bounds of non-zero area (if an individual falls outside
-#'of the given spatial bounds, it is excluded, as if it were not in individuals
-#'at all). If you have multiple subpopulations that conceptually reside within
-#'the same overall coordinate space, for example, that can be accommodated here.
-#'The bounds are supplied in the dimensionality of the model, in the same form
-#'as for Subpopulation; for an "xy" model, for example, they are supplied as a
-#'four-element vector of the form c(x0, y0, x1, y1) even if the summary is being
-#'produced with spatiality "y". To produce the result, a grid with dimensions
-#'defined by dims is conceptually stretched out across the given spatial bounds,
-#'such that the centers of the edge and corner grid squares are aligned with
-#'the limits of the spatial bounds. This matches the way that defineSpatialMap()
-#'defines its maps; see section 15.11 for illustration. The particular summary
-#'produced depends upon the parameters operation and empty. Consider a single grid
-#'square represented by a single element in the result. That grid square contains
-#'zero or more of the individuals in individuals. If it contains zero individuals
-#'and empty is not NULL, the empty value is used for the result, regardless of
-#'operation, providing specific, separate control over the treatment of empty
-#'grid squares. If empty is NULL, this separate control over the treatment of
-#'empty grid squares is declined; empty grid squares will be handled through
-#'the standard mechanism described next. In all other cases for the given grid
-#'square - when it contains more than zero individuals, or when empty is NULL -
-#'operation is executed as an Eidos lambda, a small snippet of code, supplied as
-#'a singleton string, that is executed in a manner similar to a function call.
-#'Within the execution of the operation lambda, a constant named individuals is
-#'defined to be the focal individuals being evaluated - all of the individuals
-#'within that grid square. This lambda should evaluate to a singleton logical,
-#'integer, or float value, comprising the result value for the grid square; these
-#'types will all be coerced to float (T being 1 and F being 0). Two examples
-#'may illustrate the use of empty and operation. To produce a summary indicating
-#'presence/absence, simply use the default of 0.0 for empty, and "1.0; " (or "1;",
-#'or "T;") for operation. This will produce 0.0 for empty grid squares, and 1.0
-#'for those that contain at least one individual. Note that the use of empty is
-#'essential here, because operation doesn't even check whether individuals are
-#'present or not. To produce a summary with a count of the number of individuals
-#'in each grid square, again use the default of 0.0 for empty, but now use an
-#'operation of "individuals.size();", counting the number of individuals in each
-#'grid square. In this case, empty could be NULL instead and operation would
-#'still produce the correct result; but using empty makes summarizeIndividuals()
-#'more efficient since it allows the execution of operation to be skipped for
-#'those squares. events mutationEffect() interaction() mateChoice() modifyChild()
-#'mutation() recombination() reproduction() survival() 709 Lambdas are not limited
+#'in a vector of summary values), in two dimensions (resulting in a matrix), or
+#'in three dimensions (resulting in an array). Typically the spatiality of the
+#'result (the dimensions into which the individuals are binned) will match the
+#'dimensionality of the model, as indicated by the default value of NULL for the
+#'optional spatiality parameter; for example, a two-dimensional ("xy") model would
+#'by default produce a two-dimensional matrix as a summary. However, a spatiality
+#'that is more restrictive than the model dimensionality may be passed; for
+#'example, in a two-dimensional ("xy") model a spatiality of "y" could be passed
+#'to summarize individuals into a vector, rather than a matrix, assigning them
+#'to bins based only upon their y position (i.e., the value of their y property).
+#'Whatever spatiality is chosen, the parameter dim provides the dimensions of the
+#'desired result, in the same form that the dim() function does: first the number
+#'of rows, then the number of columns, and then the number of planes, as needed
+#'(see the Eidos manual for discussion of matrices, arrays, and dim()). The length
+#'of dims must match the requested spatiality; for spatiality "xy", for example,
+#'dims might be c(50,100) to request that the returned matrix have 50 rows and
+#'100 columns. The result vector/matrix/array is in the correct orientation to
+#'be directly usable as a spatial map, by passing it to the defineSpatialMap()
+#'method of Subpopulation. For further discussion of dimensionality and
+#'spatiality, see section 24.1 on initializeInteractionType(), and section 24.8
+#'on InteractionType. The spatialBounds parameter defines the spatial boundaries
+#'within which the individuals are binned. Typically this is the spatial bounds of
+#'a particular subpopulation, within which the individuals reside; for individuals
+#'in p1, for example, you would likely pass p1.spatialBounds for this. However,
+#'this is not required; individuals may come from any or all subpopulations in the
+#'model, and spatialBounds may be any bounds of non-zero area (if an individual
+#'falls outside of the given spatial bounds, it is excluded, as if it were not
+#'in individuals at all). If you have multiple subpopulations that conceptually
+#'reside within the same overall coordinate space, for example, that can be
+#'accommodated here. The bounds are supplied in the dimensionality of the model,
+#'in the same form as for Subpopulation; for an "xy" model, for example, they
+#'are supplied as a four-element vector of the form c(x0, y0, x1, y1) even if
+#'the summary is being produced with spatiality "y". To produce the result, a
+#'grid with dimensions defined by dims is conceptually stretched out across the
+#'given spatial bounds, such that the centers of the edge and corner grid squares
+#'are aligned with the limits of the spatial bounds. This matches the way that
+#'defineSpatialMap() defines its maps; see section 15.11 for illustration. The
+#'particular summary produced depends upon the parameters operation and empty.
+#'Consider a single grid square represented by a single element in the result.
+#'That grid square contains zero or more of the individuals in individuals. If
+#'it contains zero individuals and empty is not NULL, the empty value is used for
+#'the result, regardless of operation, providing specific, separate control over
+#'the treatment of empty grid squares. If empty is NULL, this separate control
+#'over the treatment of empty grid squares is declined; empty grid squares will
+#'be handled through the standard mechanism described next. In all other cases
+#'for the given grid square - when it contains more than zero individuals, or
+#'when empty is NULL - operation is executed as an Eidos lambda, a small snippet
+#'of code, supplied as a singleton string, that is executed in a manner similar
+#'to a function call. Within the execution of the operation lambda, a constant
+#'named individuals is defined to be the focal individuals being evaluated -
+#'all of the individuals within that grid square. This lambda should evaluate
+#'to a singleton logical, integer, or float value, comprising the result value
+#'for the grid square; these types will all be coerced to float (T being 1 and
+#'F being 0). Two examples may illustrate the use of empty and operation. To
+#'produce a summary indicating presence/absence, simply use the default of 0.0
+#'for empty, and "1.0; " (or "1;", or "T;") for operation. This will produce
+#'0.0 for empty grid squares, and 1.0 for those that contain at least one
+#'individual. Note that the use of empty is essential here, because operation
+#'doesn't even check whether individuals are present or not. To produce a summary
+#'with a count of the number of individuals in each grid square, again use the
+#'default of 0.0 for empty, but now use an operation of "individuals.size();",
+#'counting the number of individuals in each grid square. In this case, empty
+#'could be NULL instead and operation would still produce the correct result;
+#'but using empty makes summarizeIndividuals() more efficient since it allows the
+#'execution of operation to be skipped for those squares. Lambdas are not limited
 #'in their complexity; they can use if, for, etc., and can call methods and
 #'functions. A typical operation to compute the mean phenotype in a quantitative
 #'genetic model that stores phenotype values in tagF, for example, would be
@@ -11846,8 +11760,6 @@ treeSeqMetadata <- function(filePath, userData) {
 #'in multispecies models, the community object and the objects representing
 #'individual species are
 #'not yet defined.)
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 617
 #'The above initialize() callback syntax implicitly declares a single species,
 #'with the default
 #'name of sim, and therefore sets up a single-species model. It is also possible
@@ -11894,6 +11806,8 @@ treeSeqMetadata <- function(filePath, userData) {
 #'specified in the
 #'SLiM input file, the simulation will begin. The tick number at which it starts
 #'is determined by the
+#'Eidos events you have defined (see section 25.1); the first tick in which an
+#'Eidos event is scheduled
 #'to execute is the tick at which the simulation starts. Similarly, the simulation
 #'will terminate after
 #'the last tick for which a script block (either an event or a callback) is
@@ -12003,9 +11917,7 @@ NULL
 #'\item{hotspotEndPositionsF}{A property of type integer. This property is a
 #'constant, so it is not modifiable. \strong{Property Description:} The end
 #'positions for hotspot map regions for females, when using sex-specific hotspot
-#'maps; unavailable otherwise. See hotspotEndPositions for further explanation.
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 629 }
+#'maps; unavailable otherwise. See hotspotEndPositions for further explanation. }
 #'\item{hotspotEndPositionsM}{A property of type integer. This property is a
 #'constant, so it is not modifiable. \strong{Property Description:} The end
 #'positions for hotspot map regions for males, when using sex-specific hotspot
@@ -12065,19 +11977,16 @@ NULL
 #'so it is not modifiable. \strong{Property Description:} The mutation rate for
 #'each of the mutation rate regions specified by mutationEndPositionsM, when
 #'using sex-specific mutation rate maps; unavailable otherwise. This property is
-#'unavailable in nucleotide-based models. events mutationEffect() interaction()
-#'mateChoice() modifyChild() mutation() recombination() reproduction() survival()
-#'630 }
+#'unavailable in nucleotide-based models. }
 #'\item{overallMutationRate}{A property of type float. It is of length
 #'one (a singleton). This property is a constant, so it is not modifiable.
 #'\strong{Property Description:} The overall mutation rate across the whole
-#'chromosome determining the overall number of mutation events that will occur
-#'anywhere in the chromosome, as calculated from the individual mutation ranges
-#'and rates as well as the coverage of the chromosome by genomic elements (since
-#'mutations are only generated within genomic elements, regardless of the mutation
-#'rate map). When using sex- specific mutation rate maps, this property will
-#'unavailable; see overallMutationRateF and overallMutationRateM. This property is
-#'unavailable in nucleotide-based models. }
+#'chromosome determining the overall number of mutation ranges and rates as well
+#'as the coverage of the chromosome by genomic elements (since mutations are only
+#'generated within genomic elements, regardless of the mutation rate map). When
+#'using sex- specific mutation rate maps, this property will unavailable; see
+#'overallMutationRateF and overallMutationRateM. This property is unavailable in
+#'nucleotide-based models. }
 #'\item{overallMutationRateF}{A property of type float. It is of length
 #'one (a singleton). This property is a constant, so it is not modifiable.
 #'\strong{Property Description:} The overall mutation rate for females, when using
@@ -12128,10 +12037,8 @@ NULL
 #'\item{recombinationRates}{A property of type float. This property is a constant,
 #'so it is not modifiable. \strong{Property Description:} The recombination rate
 #'for each of the recombination regions specified by recombinationEndPositions.
-#'When using sex-specific recombination maps, this property will unavailable;
-#'see recombinationRatesF and recombinationRatesM. events mutationEffect()
-#'interaction() mateChoice() modifyChild() mutation() recombination()
-#'reproduction() survival() 631 }
+#'When using sex-specific recombination maps, this property will unavailable; see
+#'recombinationRatesF and recombinationRatesM. }
 #'\item{recombinationRatesF}{A property of type float. This property is
 #'a constant, so it is not modifiable. \strong{Property Description:} The
 #'recombination rate for each of the recombination regions specified by
@@ -12239,11 +12146,9 @@ NULL
 #'This property is a constant, so it is not modifiable. \strong{Property
 #'Description:} The type of model being simulated, as specified in
 #'initializeSLiMModelType(). This will be "WF" for WF models (Wright-Fisher
-#'models, the default), or "nonWF" for nonWF models (non-Wright-Fisher
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 635 models; see section 1.6 for
-#'discussion). This must be the same for all species in the community; it is
-#'therefore a property on Community, not Species. }
+#'models, the default), or "nonWF" for nonWF models (non-Wright-Fisher models;
+#'see section 1.6 for discussion). This must be the same for all species in the
+#'community; it is therefore a property on Community, not Species. }
 #'\item{tag}{A property of type integer. It is of length one (a singleton). This
 #'property is a variable, so it is modifiable. \strong{Property Description:}
 #'A user-defined integer value. The value of tag is initially undefined, and
@@ -12312,11 +12217,10 @@ NULL
 #'non-negative identifier for each genome in a simulation, never re- used
 #'throughout the duration of the simulation run. Furthermore, the genomePedigreeID
 #'of a given genome will be equal to either (2*pedigreeID) or (2*pedigreeID + 1)
-#'of the individual that the events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 639 genome
-#'belongs to (the former for the first genome of the individual, the latter for
-#'the second genome of the individual); this invariant relationship is guaranteed.
-#'If pedigree tracking is not enabled, this property is unavailable. }
+#'of the individual that the genome belongs to (the former for the first genome
+#'of the individual, the latter for the second genome of the individual); this
+#'invariant relationship is guaranteed. If pedigree tracking is not enabled, this
+#'property is unavailable. }
 #'\item{genomeType}{A property of type string. It is of length one (a singleton).
 #'This property is a constant, so it is not modifiable. \strong{Property
 #'Description:} The type of chromosome represented by this genome; one of "A",
@@ -12401,8 +12305,6 @@ NULL
 #'mutation types. The genomic
 #'element types currently defined in the simulation are defined as global
 #'constants with the same
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 647
 #'names used in the SLiM input file - g1, g2, and so forth. Section 1.5.4 presents
 #'an overview of the
 #'conceptual role of this class.
@@ -12463,8 +12365,6 @@ NULL
 #'SLiM are diploid, and thus
 #'contain two Genome objects. Most functionality in SLiM is contained in the
 #'Genome class; the
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 648
 #'Individual class is mostly a convenient way to treat the pairs of genomes
 #'associated with an
 #'individual as a single object, and to associate a tag value with individuals.
@@ -12538,10 +12438,9 @@ NULL
 #'\strong{Property Description:} The average age of the parents of this
 #'individual, measured in cycles. Parentless individuals will have a meanParentAge
 #'of 0.0. The mean parent age is determined when a new offspring is generated,
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 649 from the age property of the
-#'parent or parents involved in generating the offspring. For addRecombinant()
-#'that is somewhat complex; see that method for details. }
+#'from the age property of the parent or parents involved in generating the
+#'offspring. For addRecombinant() that is somewhat complex; see that method for
+#'details. }
 #'\item{migrant}{A property of type logical. It is of length one (a singleton).
 #'This property is a constant, so it is not modifiable. \strong{Property
 #'Description:} Set to T if the individual is a recent migrant, F otherwise. The
@@ -12597,18 +12496,16 @@ NULL
 #'\item{spatialPosition}{A property of type float. This property is a constant,
 #'so it is not modifiable. \strong{Property Description:} The spatial position
 #'of the individual. The length of the spatialPosition property (the number
-#'of coordinates in the spatial position of an individual) depends upon
-#'the spatial dimensionality declared with initializeSLiMOptions(). If the
-#'spatial dimensionality is zero (as it is by default), it is an error to
-#'access this property. The elements of this property are identical to the
-#'values of the x, y, and z properties (if those properties are encompassed
-#'by the spatial dimensionality of the simulation). In other words, if the
-#'declared dimensionality is "xy", the individual.spatialPosition property is
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 650 equivalent to c(individual.x,
-#'individual.y); individual.z is not used since it is not encompassed by
-#'the simulation's dimensionality. This property cannot be set, but the
-#'setSpatialPosition() method may be used to achieve the same thing. }
+#'of coordinates in the spatial position of an individual) depends upon the
+#'spatial dimensionality declared with initializeSLiMOptions(). If the spatial
+#'dimensionality is zero (as it is by default), it is an error to access
+#'this property. The elements of this property are identical to the values
+#'of the x, y, and z properties (if those properties are encompassed by the
+#'spatial dimensionality of the simulation). In other words, if the declared
+#'dimensionality is "xy", the individual.spatialPosition property is equivalent
+#'to c(individual.x, individual.y); individual.z is not used since it is not
+#'encompassed by the simulation's dimensionality. This property cannot be set, but
+#'the setSpatialPosition() method may be used to achieve the same thing. }
 #'\item{subpopulation}{A property of type Subpopulation object. It is of length
 #'one (a singleton). This property is a constant, so it is not modifiable.
 #'\strong{Property Description:} The Subpopulation object to which the individual
@@ -12664,18 +12561,16 @@ NULL
 #'not enabled, you may use x as an additional tag value of type float. }
 #'\item{y}{A property of type float. It is of length one (a singleton). This
 #'property is a variable, so it is modifiable. \strong{Property Description:}
-#'A user-defined float value. The value of y is initially undefined (i.e.,
-#'has an effectively random value that could be different every time you run
-#'your model); if you wish it to have a defined value, you must arrange that
-#'yourself by explicitly setting its value prior to using it elsewhere in your
-#'code, typically in a modifyChild() callback. The value of y is not used by
-#'SLiM unless the optional events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 651
-#'"continuous space" facility is enabled with the dimensionality parameter to
-#'initializeSLiMOptions(), in which case y will be understood to represent the y
-#'coordinate of the individual in space (if the dimensionality is "xy" or "xyz").
-#'If continuous space is not enabled, or the dimensionality is not "xy" or "xyz",
-#'you may use y as an additional tag value of type float. }
+#'A user-defined float value. The value of y is initially undefined (i.e., has
+#'an effectively random value that could be different every time you run your
+#'model); if you wish it to have a defined value, you must arrange that yourself
+#'by explicitly setting its value prior to using it elsewhere in your code,
+#'typically in a modifyChild() callback. The value of y is not used by SLiM unless
+#'the optional "continuous space" facility is enabled with the dimensionality
+#'parameter to initializeSLiMOptions(), in which case y will be understood to
+#'represent the y coordinate of the individual in space (if the dimensionality is
+#'"xy" or "xyz"). If continuous space is not enabled, or the dimensionality is not
+#'"xy" or "xyz", you may use y as an additional tag value of type float. }
 #'\item{z}{A property of type float. It is of length one (a singleton). This
 #'property is a variable, so it is modifiable. \strong{Property Description:}
 #'A user-defined float value. The value of z is initially undefined (i.e., has
@@ -12766,8 +12661,6 @@ NULL
 #'although
 #'InteractionType goes to considerable lengths to minimize the overhead. To reduce
 #'this
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 654
 #'computational burden for your models, it is essential to reduce N, M or both.
 #'Spatial interactions
 #'can have - and almost always should have - a maximum distance, which allows them
@@ -12863,8 +12756,6 @@ NULL
 #'individuals fall
 #'within the maximum interaction radius from a given individual). In SLiM 4, the
 #'full sparse array of
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 655
 #'interactions is no longer calculated (as it was in SLiM 3); instead, single rows
 #'of the sparse array
 #'are calculated on demand, providing most of the benefits of the data structure
@@ -12955,8 +12846,6 @@ NULL
 #'individuals in those
 #'subpopulations; querying with exerters or receivers whose subpopulations have
 #'not been
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 656
 #'evaluated will result in an error. Calling evaluate() causes the positions of
 #'all receivers and
 #'exerters to be cached, thus defining a snapshot in time that the InteractionType
@@ -13006,8 +12895,6 @@ NULL
 #'receiver), for
 #'interacting neighbors (nearby individuals that exert an interaction strength
 #'upon the receiver,
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 657
 #'regardless of what that strength is), or for something about the actual
 #'interaction strengths. In
 #'general, the simpler queries will be faster; finding neighbors is faster than
@@ -13143,8 +13030,6 @@ NULL
 #'add...()
 #'methods to add generators, before the first row of data is written out, to
 #'ensure consistency in the
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 665
 #'file's data. When the first row of data is written (or buffered), the LogFile's
 #'configuration will then
 #'be frozen, and calls to add...() will no longer be allowed. Columns will be
@@ -13303,20 +13188,18 @@ NULL
 #'Description:} The position in the chromosome of this mutation. }
 #'\item{selectionCoeff}{A property of type float. It is of length one
 #'(a singleton). This property is a constant, so it is not modifiable.
-#'\strong{Property Description:} The selection coefficient of the mutation,
-#'drawn from the distribution of fitness effects of its MutationType. If a
-#'mutation has a selectionCoeff of s, the multiplicative fitness effect of the
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 669 mutation in a homozygote is
-#'1+s; in a heterozygote it is 1+hs, where h is the dominance coefficient kept
-#'by the mutation type (see section 24.11.1). Note that this property has a
-#'quirk: it is stored internally in SLiM using a single-precision float, not the
-#'double-precision float type normally used by Eidos. This means that if you set a
-#'mutation mut's selection coefficient to some number x, mut.selectionCoeff==x may
-#'be F due to floating-point rounding error. Comparisons of floating-point numbers
-#'for exact equality is often a bad idea, but this is one case where it may fail
-#'unexpectedly. Instead, it is recommended to use the id or tag properties to
-#'identify particular mutations. }
+#'\strong{Property Description:} The selection coefficient of the mutation, drawn
+#'from the distribution of fitness effects of its MutationType. If a mutation
+#'has a selectionCoeff of s, the multiplicative fitness effect of the mutation
+#'in a homozygote is 1+s; in a heterozygote it is 1+hs, where h is the dominance
+#'coefficient kept by the mutation type (see section 24.11.1). Note that this
+#'property has a quirk: it is stored internally in SLiM using a single-precision
+#'float, not the double-precision float type normally used by Eidos. This means
+#'that if you set a mutation mut's selection coefficient to some number x,
+#'mut.selectionCoeff==x may be F due to floating-point rounding error. Comparisons
+#'of floating-point numbers for exact equality is often a bad idea, but this is
+#'one case where it may fail unexpectedly. Instead, it is recommended to use the
+#'id or tag properties to identify particular mutations. }
 #'\item{subpopID}{A property of type integer. It is of length one (a singleton).
 #'This property is a variable, so it is modifiable. \strong{Property Description:}
 #'The identifier of the subpopulation in which this mutation arose. This property
@@ -13429,9 +13312,8 @@ NULL
 #'SLiMgui, this property still exists, but is not used by SLiM. Colors may be
 #'specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see
 #'the Eidos manual). If color is the empty string, "", SLiMgui's default
-#'(selection-coefficient-based) color scheme is used; this is the default for
-#'new MutationType objects. events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 671 }
+#'(selection-coefficient-based) color scheme is used; this is the default for new
+#'MutationType objects. }
 #'\item{colorSubstitution}{A property of type string. It is of length one (a
 #'singleton). This property is a variable, so it is modifiable. \strong{Property
 #'Description:} The color used to display substitutions of this type in SLiMgui
@@ -13491,17 +13373,16 @@ NULL
 #'documentation of that method for caveats. Note that the dominance coefficient
 #'is not bounded. A dominance coefficient greater than 1.0 may be used to achieve
 #'an overdominance effect. By making the selection coefficient very small and
-#'the events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 672 dominance coefficient very large,
-#'an overdominance scenario in which both homozygotes have the same fitness may
-#'be approximated, to a nearly arbitrary degree of precision. Note that this
-#'property has a quirk: it is stored internally in SLiM using a single-precision
-#'float, not the double-precision float type normally used by Eidos. This means
-#'that if you set a mutation type muttype's dominance coefficient to some number
-#'x, muttype.dominanceCoeff==x may be F due to floating-point rounding error.
-#'Comparisons of floating-point numbers for exact equality is often a bad idea,
-#'but this is one case where it may fail unexpectedly. Instead, it is recommended
-#'to use the id or tag properties to identify particular mutation types. }
+#'the dominance coefficient very large, an overdominance scenario in which both
+#'homozygotes have the same fitness may be approximated, to a nearly arbitrary
+#'degree of precision. Note that this property has a quirk: it is stored
+#'internally in SLiM using a single-precision float, not the double-precision
+#'float type normally used by Eidos. This means that if you set a mutation type
+#'muttype's dominance coefficient to some number x, muttype.dominanceCoeff==x may
+#'be F due to floating-point rounding error. Comparisons of floating-point numbers
+#'for exact equality is often a bad idea, but this is one case where it may fail
+#'unexpectedly. Instead, it is recommended to use the id or tag properties to
+#'identify particular mutation types. }
 #'\item{haploidDominanceCoeff}{A property of type float. It is of length
 #'one (a singleton). This property is a variable, so it is modifiable.
 #'\strong{Property Description:} The dominance coefficient used for mutations
@@ -13538,31 +13419,29 @@ NULL
 #'value, which defines the stacking behavior of all mutations of the mutation
 #'types in the stacking group. In other words, one stacking group might allow
 #'its mutations to stack, while another stacking group might not, but the
-#'policy within each stacking group must be unambiguous. This property is "s"
-#'by default, indicating that mutations in this stacking group should be allowed
-#'to stack without restriction. If the policy is set to "f", the first mutation
-#'of stacking group at a given site is retained; further mutations of this
-#'stacking group at the same site are discarded with no effect. This can be
-#'useful for modeling one-way changes; once a gene is disabled by a premature
-#'stop codon, for example, you might wish to assume, for simplicity, that
-#'further mutations cannot alter that fact. If the policy is set to "l", the last
-#'mutation of this stacking group at a given site is retained; earlier mutation
-#'of this stacking group at the same site are discarded. This can be useful
-#'for modeling an "infinite- alleles" scenario in which every new mutation at
-#'a site generates a completely new allele, rather than retaining the previous
-#'mutations at the site. The mutation stacking policy applies only within the
-#'given mutation type's stacking group; mutations of different stacking groups
-#'are always allowed to stack in SLiM. The policy applies to all mutations added
-#'to the model after the policy is set, whether those mutations are introduced
-#'by calls such as addMutation(), addNewMutation(), or addNewDrawnMutation(),
-#'or are added by SLiM's own mutation-generation machinery. However, no attempt
-#'is made to enforce the policy for mutations already existing at the time the
-#'policy is set; typically, therefore, the policy is set in an initialize()
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 673 callback so that it applies
-#'throughout the simulation. The policy is also not enforced upon the mutations
-#'loaded from a file with readFromPopulationFile(); such mutations were governed
-#'by whatever stacking policy was in effect when the population file was
+#'policy within each stacking group must be unambiguous. This property is "s" by
+#'default, indicating that mutations in this stacking group should be allowed to
+#'stack without restriction. If the policy is set to "f", the first mutation of
+#'stacking group at a given site is retained; further mutations of this stacking
+#'group at the same site are discarded with no effect. This can be useful for
+#'modeling one-way changes; once a gene is disabled by a premature stop codon,
+#'for example, you might wish to assume, for simplicity, that further mutations
+#'cannot alter that fact. If the policy is set to "l", the last mutation of this
+#'stacking group at a given site is retained; earlier mutation of this stacking
+#'group at the same site are discarded. This can be useful for modeling an
+#'"infinite- alleles" scenario in which every new mutation at a site generates
+#'a completely new allele, rather than retaining the previous mutations at the
+#'site. The mutation stacking policy applies only within the given mutation type's
+#'stacking group; mutations of different stacking groups are always allowed to
+#'stack in SLiM. The policy applies to all mutations added to the model after
+#'the policy is set, whether those mutations are introduced by calls such as
+#'addMutation(), addNewMutation(), or addNewDrawnMutation(), or are added by
+#'SLiM's own mutation-generation machinery. However, no attempt is made to
+#'enforce the policy for mutations already existing at the time the policy is
+#'set; typically, therefore, the policy is set in an initialize() callback so that
+#'it applies throughout the simulation. The policy is also not enforced upon the
+#'mutations loaded from a file with readFromPopulationFile(); such mutations were
+#'governed by whatever stacking policy was in effect when the population file was
 #'generated. In nucleotide-based models, the stacking policy for nucleotide-based
 #'mutation types is always "l", and cannot be changed. This ensures that new
 #'nucleotide mutations always replace the previous nucleotide at a site, and that
@@ -13645,8 +13524,6 @@ NULL
 #'registered script
 #'blocks can be deregistered; see the ‑register...() and ‑deregisterScriptBlock()
 #'methods of
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 674
 #'Community and Species in sections 24.3.2 and 24.14.2. The currently executing
 #'script block is
 #'available through the self global; see section 25.11.
@@ -13708,9 +13585,8 @@ NULL
 #'form ticks <species-name>. }
 #'\item{type}{A property of type string. It is of length one (a singleton). This
 #'property is a constant, so it is not modifiable. \strong{Property Description:}
-#'The type of the script block; this will be "first", "early", or "late" for the
-#'three types of Eidos events, or "initialize", "fitnessEffect", "interaction",
-#'"mateChoice", "modifyChild", "mutation", "mutationEffect", "recombination",
+#'The type of the script block; this will be "first", "early", or "late" for
+#'the three types of Eidos "mutation", "mutationEffect", "recombination",
 #'"reproduction", or "survival" for the respective types of Eidos callbacks (see
 #'section 24.1 and chapter 25).}
 #'
@@ -13814,11 +13690,12 @@ NULL
 #'\item{inSLiMgui}{A property of type logical. It is of length one (a singleton).
 #'This property is a constant, so it is not modifiable. \strong{Property
 #'Description:} This property has been deprecated, and may be removed in a future
-#'release of SLiM. In SLiM 3.2.1 and later, use exists("slimgui") instead. If T,
-#'the simulation is presently running inside SLiMgui; if F, it is running at the
-#'command line. In general simulations should not care where they are running,
-#'but in special circumstances such as opening plot windows it may be necessary to
-#'know the runtime environment. }
+#'release of SLiM. In SLiM 3.2.1 and later, use exists("slimgui") instead. Eidos
+#'events fitness() mateChoice() modifyChild() recombination() interaction()
+#'reproduction() 564 If T, the simulation is presently running inside SLiMgui;
+#'if F, it is running at the command line. In general simulations should not
+#'care where they are running, but in special circumstances such as opening plot
+#'windows it may be necessary to know the runtime environment. }
 #'\item{interactionTypes}{A property of type InteractionType object. This property
 #'is a constant, so it is not modifiable. \strong{Property Description:} The
 #'InteractionType objects being used in the simulation. }
@@ -13970,9 +13847,7 @@ NULL
 #'MutationType objects being used in the species. }
 #'\item{mutations}{A property of type Mutation object. This property is a
 #'constant, so it is not modifiable. \strong{Property Description:} The Mutation
-#'objects that are currently active in the species. events mutationEffect()
-#'interaction() mateChoice() modifyChild() mutation() recombination()
-#'reproduction() survival() 677 }
+#'objects that are currently active in the species. }
 #'\item{name}{A property of type string. It is of length one (a singleton). This
 #'property is a constant, so it is not modifiable. \strong{Property Description:}
 #'A human-readable string name for the subpopulation. This is always the declared
@@ -14111,9 +13986,8 @@ NULL
 #'To scale the fitness of individuals by different (individual-specific) factors,
 #'see the fitnessScaling property of Individual. The value of fitnessScaling is
 #'reset to 1.0 every tick, so that any scaling factor set lasts for only a single
-#'tick. This reset occurs immediately after fitness values are calculated, in
-#'both WF and nonWF models. events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 689 }
+#'tick. This reset occurs immediately after fitness values are calculated, in both
+#'WF and nonWF models. }
 #'\item{genomes}{A property of type Genome object. This property is a constant,
 #'so it is not modifiable. \strong{Property Description:} All of the genomes
 #'contained by the subpopulation; there are two genomes per diploid individual. }
@@ -14175,16 +14049,15 @@ NULL
 #'subpopulation's symbol as a string; for subpopulation p3, for example, name
 #'defaults to "p3". However, it may be set to whatever you wish except that
 #'subpopulation names must be unique across time (two different subpopulations
-#'may not both have the name "foo", even if they never exist at the same time).
-#'A subpopulation's name may appear as a label in SLiMgui, and it can be useful
-#'in generating output, events mutationEffect() interaction() mateChoice()
-#'modifyChild() mutation() recombination() reproduction() survival() 690
-#'debugging, and other purposes. When tree-sequence recording is enabled, name
-#'is persisted in the subpopulation's metadata in tree-sequence output, and
-#'can then be used in Python to identify the subpopulation; if you plan to take
-#'advantage of that feature, name should follow the syntax of Python identifiers:
-#'starting with a letter or underscore [a-zA-Z_], followed by letters, digits, or
-#'underscores [a-zA-Z0-9_], without spaces, hyphens, or other characters. }
+#'may not both have the name "foo", even if they never exist at the same time). A
+#'subpopulation's name may appear as a label in SLiMgui, and it can be useful in
+#'generating output, debugging, and other purposes. When tree-sequence recording
+#'is enabled, name is persisted in the subpopulation's metadata in tree-sequence
+#'output, and can then be used in Python to identify the subpopulation; if
+#'you plan to take advantage of that feature, name should follow the syntax of
+#'Python identifiers: starting with a letter or underscore [a-zA-Z_], followed by
+#'letters, digits, or underscores [a-zA-Z0-9_], without spaces, hyphens, or other
+#'characters. }
 #'\item{selfingRate}{A property of type float. It is of length one (a singleton).
 #'This property is a constant, so it is not modifiable. \strong{Property
 #'Description:} The expected value of the fraction of children in the next
@@ -14285,10 +14158,8 @@ NULL
 #'Description:} The position in the chromosome of this mutation. }
 #'\item{selectionCoeff}{A property of type float. It is of length one
 #'(a singleton). This property is a constant, so it is not modifiable.
-#'\strong{Property Description:} The selection coefficient of the mutation,
-#'drawn from the distribution of fitness effects of its MutationType. events
-#'mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 702 }
+#'\strong{Property Description:} The selection coefficient of the mutation, drawn
+#'from the distribution of fitness effects of its MutationType. }
 #'\item{subpopID}{A property of type integer. It is of length one (a singleton).
 #'This property is a variable, so it is modifiable. \strong{Property Description:}
 #'The identifier of the subpopulation in which this mutation arose. This value

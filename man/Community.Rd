@@ -84,11 +84,9 @@ being used in the simulation. }
 This property is a constant, so it is not modifiable. \strong{Property
 Description:} The type of model being simulated, as specified in
 initializeSLiMModelType(). This will be "WF" for WF models (Wright-Fisher
-models, the default), or "nonWF" for nonWF models (non-Wright-Fisher
-events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-recombination() reproduction() survival() 635 models; see section 1.6 for
-discussion). This must be the same for all species in the community; it is
-therefore a property on Community, not Species. }
+models, the default), or "nonWF" for nonWF models (non-Wright-Fisher models;
+see section 1.6 for discussion). This must be the same for all species in the
+community; it is therefore a property on Community, not Species. }
 \item{tag}{A property of type integer. It is of length one (a singleton). This
 property is a variable, so it is modifiable. \strong{Property Description:}
 A user-defined integer value. The value of tag is initially undefined, and

@@ -31,16 +31,14 @@ Documentation for this function can be found in the official
 624}.
 
 Configure the type of SLiM model used for the simulation. At present,
-one of two model types may be selected. If modelType is "WF", SLiM will
-use a Wright-Fisher (WF) model; this is the model type that has always been
-supported by SLiM, and is the model type used if initializeSLiMModelType()
-is not called. If modelType is "nonWF", SLiM will use a non-Wright-Fisher
-(nonWF) model instead; this is a new model type supported by SLiM 3.0 and
-above (see section 1.6). events mutationEffect() interaction() mateChoice()
-modifyChild() mutation() recombination() reproduction() survival() 624 If
-initializeSLiMModelType() is called at all then it must be called before any
-other initialization function, so that SLiM knows from the outset which features
-are enabled and which are not.
+one of two model types may be selected. If modelType is "WF", SLiM will use a
+Wright-Fisher (WF) model; this is the model type that has always been supported
+by SLiM, and is the model type used if initializeSLiMModelType() is not called.
+If modelType is "nonWF", SLiM will use a non-Wright-Fisher (nonWF) model
+instead; this is a new model type supported by SLiM 3.0 and above (see section
+1.6). If initializeSLiMModelType() is called at all then it must be called
+before any other initialization function, so that SLiM knows from the outset
+which features are enabled and which are not.
 }
 \section{Copyright}{
 

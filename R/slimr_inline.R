@@ -5,7 +5,7 @@
 #' \code{\link{slim_block}} call
 #'
 #' @param object R object to inline into the SLiM script.
-#' @param delay By default \code{slimr_inline} will insert the
+#' @param delay By default \code{r_inline} will insert the
 #' value of \code{object} into the script when the script is
 #' created (e.g. when \code{\link{slim_script}} is called).
 #' However, setting \code{delay = TRUE} will delay the evaluation
@@ -21,11 +21,11 @@
 #' @details Currently supported R objects include all atomic vectors, matrices and arrays and \code{RasterLayer} objects.
 #' Non-atomic vectors like factors are currently not supported and neither are any other special object types, though we
 #' plan to support some in the future.
-slimr_inline <- function(object, delay = FALSE) {
+r_inline <- function(object, delay = FALSE) {
 
   if(delay) {
     object <- rlang::enexpr(object)
-    return(rlang::expr(slimr_inline(!!object)))
+    return(rlang::expr(r_inline(!!object)))
   }
 
   if(inherits(object, "RasterLayer")) {
@@ -74,12 +74,18 @@ slimr_inline <- function(object, delay = FALSE) {
 
 }
 
+#' @rdname r_inline
+#' @export
+slimr_inline <- r_inline
+
 sinln <- function(object) {
   slimr_inline(object)
 }
 
 inline_replace <- function(code) {
   code <- stringr::str_replace_all(code, "slimr_inline", "!!slimr_inline")
+  code <- stringr::str_replace_all(code, "([^m])r_inline", "\\1!!r_inline") ## probably a better solution..
+  code <- stringr::str_replace_all(code, "^r_inline", "!!r_inline") ## deals with special case
   code <- stringr::str_replace_all(code, "sinln", "!!sinln")
   code_expr <- rlang::parse_exprs(paste(code, collapse = "\n"))
   code <- purrr::map(code_expr, ~rlang::expr_interp(.x)) %>%
@@ -137,7 +143,7 @@ process_inline <- function(code, block_names, slimr_inline_attr) {
                      ~purrr::map(.,
                                  ~ purrr::`%||%`(.x, NA))) %>%
     dplyr::mutate_at(c("code_for_slim", "code_for_display"),
-                     ~vec_unchop(.))
+                     ~list_unchop(.))
 
   new_code <- purrr::map(inline_processed$new_code,
                          ~unlist(.x))

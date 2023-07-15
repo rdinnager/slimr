@@ -28,8 +28,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=552}{SLiM manual: page 552}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=664}{SLiM manual: page
+664}.
 
 Set the function used to translate spatial distances into interaction
 strengths for an interaction type. The functionType may be "f", in which case
@@ -41,11 +42,12 @@ function; "n", in which case the ellipsis should supply a numeric$ maximum
 strength and a numeric$ sigma (standard deviation) parameter for a Gaussian
 function; or "c", in which case the ellipsis should supply a numeric$ maximum
 strength and a numeric$ scale parameter for a Cauchy distribution function. See
-section 24.7 above for discussions of these interaction functions. Non-spatial
+section 24.8 above for discussions of these interaction functions. Non-spatial
 interactions must use function type "f", since no distance values are available
 in that case. The interaction function for an interaction type is normally a
 constant in simulations; in any case, it cannot be changed when an interaction
-has already been evaluated for a given generation of individuals.
+has already been evaluated, so either it should be set prior to evaluation, or
+unevaluate() should be called first.
 }
 \section{Copyright}{
 
@@ -61,15 +63,19 @@ on the official website: \url{https://messerlab.org/slim/}
 \seealso{
 Other InteractionType: 
 \code{\link{InteractionType}},
-\code{\link{distanceToPoint}()},
+\code{\link{clippedIntegral}()},
+\code{\link{distanceFromPoint}()},
 \code{\link{distance}()},
 \code{\link{drawByStrength}()},
 \code{\link{evaluate}()},
 \code{\link{interactingNeighborCount}()},
 \code{\link{interactionDistance}()},
+\code{\link{localPopulationDensity}()},
 \code{\link{nearestInteractingNeighbors}()},
 \code{\link{nearestNeighborsOfPoint}()},
 \code{\link{nearestNeighbors}()},
+\code{\link{neighborCountOfPoint}()},
+\code{\link{neighborCount}()},
 \code{\link{strength}()},
 \code{\link{totalOfNeighborStrengths}()},
 \code{\link{unevaluate}()}

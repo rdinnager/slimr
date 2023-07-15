@@ -6,10 +6,14 @@
 \alias{.IT$interactingNeighborCount}
 \title{SLiM method interactingNeighborCount}
 \usage{
-interactingNeighborCount(individuals)
+interactingNeighborCount(receivers, exerterSubpop)
 }
 \arguments{
-\item{individuals}{An object of type Individual object. See details for
+\item{receivers}{An object of type Individual object. See details for
+description.}
+
+\item{exerterSubpop}{An object of type null or Subpopulation object. Must be
+of length 1 (a singleton). The default value is \code{NULL}. See details for
 description.}
 }
 \value{
@@ -26,23 +30,30 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=551}{SLiM manual: page 551}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=661}{SLiM manual: page
+661}.
 
-Returns the number of interacting individuals for each individual
-in individuals, within the maximum interaction distance according to the
-distance metric of the InteractionType. More specifically, this method counts
-the number of individuals which can exert an interaction upon each focal
-individual; it does not count individuals which only feel an interaction from
-a focal individual. This method is similar to nearestInteractingNeighbors()
-(when passed a large count so as to guarantee that all interacting individuals
-are returned), but this method returns only a count of the interacting
-individuals, not a vector containing the individuals. This method may also be
-called in a vectorized fashion, with a non-singleton vector of individuals,
-unlike nearestInteractingNeighbors(). Note that this method uses interaction
-eligibility as a criterion; it will not count neighbors that cannot exert an
-interaction upon a focal individual (due to sex-segregation, e.g.). (It also
-does not count a focal individual as a neighbor of itself.)
+Returns the number of interacting individuals for each individual in
+receivers, within the maximum interaction distance according to the distance
+metric of the InteractionType, from among the exerters in exerterSubpop (or, if
+that is NULL, then from among all individuals in the receiver's subpopulation).
+More specifically, this method counts the number of individuals which can exert
+an interaction upon each receiver. All of the receivers must belong to a single
+subpopulation, and all of the exerters must belong to a single subpopulation,
+but those two subpopulations do not need to be the same. The evaluate() method
+must have been previously called for the receiver and exerter subpopulations,
+and positions saved at evaluation time will be used. This method is similar to
+nearestInteractingNeighbors() (when passed a large count so as to guarantee that
+all interacting individuals are returned), but this method returns only a count
+of the interacting individuals, not a vector containing the individuals. This
+method may also be called in a vectorized fashion, with a non-singleton vector
+of individuals, unlike nearestInteractingNeighbors(). Note that this method uses
+interaction eligibility as a criterion; it will not count neighbors that cannot
+exert an interaction upon a receiver (due to sex-segregation, e.g.). (It also
+does not count a receiver as a neighbor of itself.) If a count of all neighbors
+is desired, rather than just interacting neighbors, use neighborCount(). If the
+InteractionType is non-spatial, this method may not be called.
 }
 \section{Copyright}{
 
@@ -58,14 +69,18 @@ on the official website: \url{https://messerlab.org/slim/}
 \seealso{
 Other InteractionType: 
 \code{\link{InteractionType}},
-\code{\link{distanceToPoint}()},
+\code{\link{clippedIntegral}()},
+\code{\link{distanceFromPoint}()},
 \code{\link{distance}()},
 \code{\link{drawByStrength}()},
 \code{\link{evaluate}()},
 \code{\link{interactionDistance}()},
+\code{\link{localPopulationDensity}()},
 \code{\link{nearestInteractingNeighbors}()},
 \code{\link{nearestNeighborsOfPoint}()},
 \code{\link{nearestNeighbors}()},
+\code{\link{neighborCountOfPoint}()},
+\code{\link{neighborCount}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
 \code{\link{totalOfNeighborStrengths}()},

@@ -31,23 +31,22 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=522}{SLiM manual: page 522}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=623}{SLiM manual: page
+623}.
 
-Set the recombination rate per base position per generation along the
-chromosome. To be precise, this recombination rate is the probability that a
-breakpoint will occur between one base and the next base; note that this is
-different from how the mutation rate is defined (see initializeMutationRate()).
-All rates must be in the interval [0.0, 0.5]. A rate of 0.5 implies complete
-independence between the adjacent bases, which might be used to implement
-independent assortment of loci located on different chromosomes (see the
-example below). Whether a breakpoint occurs between two bases is then, in
-effect, determined by a binomial draw with a single trial and the given rate
-as probability (but under the hood SLiM uses a mathematically equivalent but
-much more efficient strategy). Unlike the mutational process in SLiM, then,
-which can generate more than one mutation at a given site (in one generation/
-genome), the recombinational process in SLiM will never generate more then
-one crossover between one base and the next (in one generation/genome), and
+Set the recombination rate per base position per gamete. To be
+precise, this recombination rate is the probability that a breakpoint will
+occur between one base and the next base; note that this is different from how
+the mutation rate is defined (see initializeMutationRate()). All rates must
+be in the interval [0.0, 0.5]. A rate of 0.5 implies complete independence
+between the adjacent bases, which might be used to implement independent
+assortment of loci located on different chromosomes (see the example below).
+Whether a breakpoint occurs between two bases is then, in effect, determined
+by a binomial draw with a single trial and the given rate as probability (but
+under the hood SLiM uses a mathematically equivalent but much more efficient
+strategy). The recombinational process in SLiM will never generate more then
+one crossover between one base and the next (in one generation/ genome), and
 a supplied rate of 0.5 will therefore result in an actual probability of 0.5
 for a crossover at the relevant position. (Note that this was not true in SLiM
 2.x and earlier, however; their implementation of recombination resulted in a
@@ -94,7 +93,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Initialize: 
-\code{\link{Initialize}},
+\code{\link{Init}},
 \code{\link{initializeAncestralNucleotides}()},
 \code{\link{initializeGeneConversion}()},
 \code{\link{initializeGenomicElementType}()},
@@ -107,6 +106,7 @@ Other Initialize:
 \code{\link{initializeSLiMModelType}()},
 \code{\link{initializeSLiMOptions}()},
 \code{\link{initializeSex}()},
+\code{\link{initializeSpecies}()},
 \code{\link{initializeTreeSeq}()}
 }
 \author{

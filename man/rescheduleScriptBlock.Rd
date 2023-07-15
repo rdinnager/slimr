@@ -2,10 +2,14 @@
 % Please edit documentation in R/slim_lang.R
 \name{rescheduleScriptBlock}
 \alias{rescheduleScriptBlock}
+\alias{Community$rescheduleScriptBlock}
+\alias{.Co$rescheduleScriptBlock}
 \alias{SLiMSim$rescheduleScriptBlock}
 \alias{.SS$rescheduleScriptBlock}
 \title{SLiM method rescheduleScriptBlock}
 \usage{
+rescheduleScriptBlock(block, start, end, generations)
+
 rescheduleScriptBlock(block, start, end, generations)
 }
 \arguments{
@@ -20,11 +24,25 @@ The default value is \code{NULL}. See details for description.}
 
 \item{generations}{An object of type null or integer. The default value is
 \code{NULL}. See details for description.}
+
+\item{ticks}{An object of type null or integer. The default value is
+\code{NULL}. See details for description.}
 }
 \value{
 An object of type SLiMEidosBlock object.
+
+An object of type SLiMEidosBlock object.
 }
 \description{
+Documentation for SLiM function \code{rescheduleScriptBlock}, which is a method
+of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further
+nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.
+
 Documentation for SLiM function \code{rescheduleScriptBlock}, which is a method
 of the SLiM class \code{\link{SLiMSim}}.
 Note that the R function is a stub, it does not do anything in R (except bring
@@ -35,8 +53,65 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=573}{SLiM manual: page 573}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=638}{SLiM manual: page
+638}.
+
+Reschedule the target script block given by block to execute in
+a specified set of ticks. The block parameter may be either an integer
+representing the ID of the desired script block, or a SLiMScriptBlock specified
+directly. The first way to specify the tick set is with start and end parameter
+values; block will then execute from start to end, inclusive. In this case,
+block is returned. The second way to specify the tick set is using the ticks
+parameter; this is more flexible but more complicated. Since script blocks
+execute across a contiguous span of ticks defined by their start and end
+properties, this may result in the duplication of block; one script block will
+be used for each contiguous span of ticks in ticks. The block object itself will
+be rescheduled to cover the first such span, whereas duplicates of block will
+be created to cover subsequent contiguous spans. A vector containing all of the
+script blocks scheduled by this method, including block, will be returned; this
+vector is guaranteed to be sorted by the (ascending) scheduled execution order
+of the blocks. Any duplicates of block created will be given values for the
+active, source, tag, and type properties equal to the current values for block,
+but will be given an id of -1 since script block identifiers must be unique; if
+it is necessary to find the duplicated blocks again later, their tag property
+should be used. The vector supplied for ticks does not need to be in sorted
+order, but it must not contain any duplicates. Because this method can create
+a large number of duplicate script blocks, it can sometimes be better to handle
+script block scheduling in other ways. If an early() event needs to execute
+every tenth tick over the whole duration of a long model run, for example, it
+would not be advisable to use a call like community.rescheduleScriptBlock(s1,
+ticks=seq(10, 100000, 10)) for that purpose, since that would result in
+thousands of duplicate script blocks. Instead, it would be preferable to add
+a test such as if (community.tick % 10 != 0) return; at the beginning of the
+event. It is legal to reschedule a script block while the block is executing;
+a call like community.rescheduleScriptBlock(self, community.tick + 10,
+community.tick + 10); made inside a given block would therefore also cause the
+block to execute every tenth tick, although this sort of self-rescheduling code
+is probably harder to read, maintain, and debug. Whichever way of specifying
+the tick set is used, the discussion in section 25.11 applies: block may
+continue to be executed during the current tick cycle stage even after it has
+been rescheduled, unless it is made inactive using its active property, and
+similarly, the block may not execute during the current tick cycle stage if it
+was not already scheduled to do so. Rescheduling script blocks during the tick
+and tick cycle stage in which they are executing, or in which they are intended
+to execute, should be avoided. Also, as mentioned in section 22.7, script
+blocks which are open-ended (i.e., with no specified end tick), are not used
+in determining whether the end of the simulation has been reached (because then
+the simulation would run forever); if you reschedule a block to be open-ended,
+and to start after the end of the last closed-ended block, the rescheduled block
+will therefore not run at all (just as such a block would not run at all in
+other circumstances, too). Note that new script blocks can also be created and
+scheduled using the register...() methods of Community and Species; by using
+the same source as a template script block, the template can be duplicated and
+scheduled for different ticks. In fact, rescheduleScriptBlock() does essentially
+that internally. In multispecies models, note that all new script blocks created
+as a side effect of rescheduleScriptBlock() will have the same species and ticks
+specifier as block; use the register...() methods to create a new block with a
+different species or ticks specifier.
+
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
 
 Reschedule the target script block given by block to execute in a
 specified set of generations. The first way to specify the generation set is
@@ -52,42 +127,52 @@ cover subsequent contiguous spans. A vector containing all of the script blocks
 scheduled by this method, including block, will be returned; this vector is
 guaranteed to be sorted by the (ascending) scheduled execution order of the
 blocks. Any duplicates of block created will be given values for the active,
-source, tag, and type properties equal to the current values for block, but will
-be given an id of -1 since script block identifiers must be unique; if it is
-necessary to find the duplicated blocks again later, their tag property should
-be used. The vector supplied for generations does not need to be in sorted
-order, but it must not contain any duplicates. Because this method can create
-a large number of duplicate script blocks, it can sometimes be better to handle
-script block scheduling in other ways. If an early() event needs to execute
-every tenth generation over the whole duration of a long model run, for example,
-it would not be advisable to use a call like sim.rescheduleScriptBlock(s1,
-generations=seq(10, 100000, 10)) for that purpose, since that would result in
-thousands of duplicate script blocks. Instead, it would be preferable to add
-a test such as if (sim.generation % 10 != 0) return; at the beginning of the
-event. It is legal to reschedule a script block while the block is executing; a
-call like sim.rescheduleScriptBlock(self, sim.generation + 10, sim.generation +
-10); made inside a given block would therefore also cause the block to execute
-every tenth generation, although this sort of self-rescheduling code is probably
-harder to read, maintain, and debug. Whichever way of specifying the generation
-set is used, the discussion in section 25.9 applies: block may continue to be
-executed during the current life cycle stage even after it has been rescheduled,
-unless it is made inactive using its active property, and similarly, the block
-may not execute during the current life cycle stage if it was not already
-scheduled to do so. Rescheduling script blocks during the generation and life
-cycle stage in which they are executing, or in which they are intended to
-execute, should be avoided. Also, as mentioned in section 22.7, script blocks
-which are open-ended (i.e., with no specified end generation), are not used in
-determining whether the end of the simulation has been reached (because then
-the simulation would run forever); if you reschedule a block to be open-ended,
-and to start after the end of the last closed-ended block, the rescheduled block
-will therefore not run at all (just as such a block would not run at all in
-other circumstances, too). Note that new script blocks can also be created and
-scheduled using the register...() methods of SLiMSim; by using the same source
-as a template script block, the template can be duplicated and scheduled for
-different generations. In fact, rescheduleScriptBlock() does essentially that
-internally.
+source, tag, and type properties equal to the current values for block, but
+will be given an id of -1 since script block identifiers must be unique; if
+it is necessary to find the duplicated blocks again later, their tag property
+should be used. The vector supplied for generations does not need to be in
+sorted order, but it must not contain any duplicates. Eidos events fitness()
+mateChoice() modifyChild() recombination() interaction() reproduction() 573
+Because this method can create a large number of duplicate script blocks,
+it can sometimes be better to handle script block scheduling in other ways.
+If an early() event needs to execute every tenth generation over the whole
+duration of a long model run, for example, it would not be advisable to use a
+call like sim.rescheduleScriptBlock(s1, generations=seq(10, 100000, 10)) for
+that purpose, since that would result in thousands of duplicate script blocks.
+Instead, it would be preferable to add a test such as if (sim.generation % 10 !=
+0) return; at the beginning of the event. It is legal to reschedule a script
+block while the block is executing; a call like sim.rescheduleScriptBlock(self,
+sim.generation + 10, sim.generation + 10); made inside a given block would
+therefore also cause the block to execute every tenth generation, although
+this sort of self-rescheduling code is probably harder to read, maintain, and
+debug. Whichever way of specifying the generation set is used, the discussion in
+section 25.9 applies: block may continue to be executed during the current life
+cycle stage even after it has been rescheduled, unless it is made inactive using
+its active property, and similarly, the block may not execute during the current
+life cycle stage if it was not already scheduled to do so. Rescheduling script
+blocks during the generation and life cycle stage in which they are executing,
+or in which they are intended to execute, should be avoided. Also, as mentioned
+in section 22.7, script blocks which are open-ended (i.e., with no specified end
+generation), are not used in determining whether the end of the simulation has
+been reached (because then the simulation would run forever); if you reschedule
+a block to be open-ended, and to start after the end of the last closed-ended
+block, the rescheduled block will therefore not run at all (just as such a block
+would not run at all in other circumstances, too). Note that new script blocks
+can also be created and scheduled using the register...() methods of SLiMSim; by
+using the same source as a template script block, the template can be duplicated
+and scheduled for different generations. In fact, rescheduleScriptBlock() does
+essentially that internally.
 }
 \section{Copyright}{
+
+This is documentation for a function in the SLiM software, and has been
+reproduced from the official manual,
+which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+
 
 This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
@@ -99,8 +184,25 @@ on the official website: \url{https://messerlab.org/slim/}
 }
 
 \seealso{
+Other Community: 
+\code{\link{Co}},
+\code{\link{createLogFile}()},
+\code{\link{deregisterScriptBlock}()},
+\code{\link{genomicElementTypesWithIDs}()},
+\code{\link{interactionTypesWithIDs}()},
+\code{\link{mutationTypesWithIDs}()},
+\code{\link{outputUsage}()},
+\code{\link{registerEarlyEvent}()},
+\code{\link{registerFirstEvent}()},
+\code{\link{registerInteractionCallback}()},
+\code{\link{registerLateEvent}()},
+\code{\link{scriptBlocksWithIDs}()},
+\code{\link{simulationFinished}()},
+\code{\link{speciesWithIDs}()},
+\code{\link{subpopulationsWithIDs}()}
+
 Other SLiMSim: 
-\code{\link{SLiMSim}},
+\code{\link{SS}},
 \code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},
@@ -135,4 +237,5 @@ Other SLiMSim:
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Community}
 \concept{SLiMSim}

@@ -12,7 +12,8 @@ initializeTreeSeq(
   simplificationInterval,
   checkCoalescence,
   runCrosschecks,
-  retainCoalescentOnly
+  retainCoalescentOnly,
+  timeUnit
 )
 }
 \arguments{
@@ -35,6 +36,9 @@ singleton). The default value is \code{F}. See details for description.}
 
 \item{retainCoalescentOnly}{An object of type logical. Must be of length 1 (a
 singleton). The default value is \code{T}. See details for description.}
+
+\item{timeUnit}{An object of type null or string. Must be of length 1 (a
+singleton). The default value is \code{NULL}. See details for description.}
 }
 \value{
 An object of type void.
@@ -50,75 +54,91 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=525}{SLiM manual: page 525}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=627}{SLiM manual: page
+627}.
 
 Configure options for tree sequence recording. Calling this
 function turns on tree sequence recording, as a side effect, for later
 reconstruction of the simulation's evolutionary dynamics; if you do not
-want tree sequence recording to be enabled, do not call this function.
-The recordMutations flag controls whether information about individual
-mutations is recorded or not. Such recording takes time and memory, and
-so can be turned off if only the tree sequence itself is needed, but it
-is turned on by default since mutation recording is generally useful. The
-simplificationRatio and simplificationInterval parameters control how often
-automatic simplification of the recorded tree sequence occurs. This is a speed-
-memory tradeoff: more frequent simplification (lower simplificationRatio
-or smaller simplificationInterval) means the stored tree sequences will use
-less memory, but at a cost of somewhat longer run times. Conversely, a larger
+want tree sequence recording to be enabled, do not call this function. Note
+that tree-sequence recording internally uses SLiM's "pedigree tracking"
+feature to uniquely identify individuals and genomes; however, if you
+want to use pedigree tracking in your script you must still enable it
+yourself with initializeSLiMOptions(keepPedigrees=T). The recordMutations
+flag controls whether information about individual mutations is recorded
+or not. Such recording takes time and memory, and so can be turned off if
+only the tree sequence itself is needed, but it is turned on by default
+since mutation recording is generally useful. The simplificationRatio and
+simplificationInterval parameters control how often automatic simplification
+of the recorded tree sequence occurs. This is a speed-memory tradeoff:
+more frequent simplification (lower simplificationRatio or smaller
+simplificationInterval) means the stored tree sequences will use less
+memory, but at a cost of somewhat longer run times. Conversely, a larger
 simplificationRatio or simplificationInterval means that SLiM will wait longer
 between simplifications. There are three ways these parameters can be used.
 With the first option, with a non- NULL simplificationRatio and a NULL value
-for simplificationInterval, SLiM will try to find an optimal generation interval
+for simplificationInterval, SLiM will try to find an optimal tick interval
 for simplification such that the ratio of the memory used by the tree sequence
 tables, (before:after) simplification, is close to the requested ratio. The
-default of 10 (used if both simplificationRatio and simplificationInterval
-are NULL) thus requests that SLiM try to find a generation interval such that
-the maximum size of the stored tree sequences is ten times the size after
-simplification. INF may be supplied to indicate that automatic simplification
-should never occur; 0 may be supplied to indicate that automatic simplification
-should be performed at the end of every generation. Alternatively - the second
-option - simplificationRatio may be NULL and simplificationInterval may be
-set to the interval, in generations, between simplifications. This may provide
-more reliable performance, but the interval must be chosen carefully to avoid
-exceeding the available memory. The simplificationInterval value may be a
-very large number to specify that simplification should never occur (not INF,
-though, since it is an integer value), or 1 to simplify every generation.
-Finally - the third option - both parameters may be non-NULL, in which case
-simplificationRatio is used as described above, while simplificationInterval
-provides the initial interval first used by SLiM (and then subsequently
-increased or decreased to try to match the requested simplification ratio). The
-default initial interval, used when simplificationInterval is NULL, is usually
-20; this is chosen to be relatively frequent, and thus unlikely to lead to a
-memory overflow, but it can result in rather slow spool-up for models where
-the equilibrium simplification interval, as determined by the simplification
-ratio, is much longer. It can therefore be helpful to set a larger initial
-interval so that the early part of the model run is not excessively bogged
-down in simplification. The checkCoalescence parameter controls whether a
-check for full coalescence is conducted after each simplification. If a model
-will call treeSeqCoalesced() to check for coalescence during its execution,
-checkCoalescence should be set to T. Since the coalescence checks entail
-a performance penalty, the default of F is preferable otherwise. See the
-documentation for treeSeqCoalesced() for further discussion. The runCrosschecks
-parameter controls whether cross-checks between SLiM's internal data structures
-and the tree-sequence recording data structures will be conducted. These two
-sets of data structures record much the same thing (mutations in genomes), but
-using completely different representations, so such cross-checks can be useful
-to confirm that the two data structures do indeed represent the same conceptual
-state. This slows down the model considerably, however, and would normally
-be turned on only for debugging purposes, so it is turned off by default.
-The retainCoalescentOnly parameter controls how, exactly, simplification of
-the tree-sequence data is performed in SLiM (both for auto-simplification
-and for calls to treeSeqSimplify()). More specifically, this parameter
-controls the behavior of simplification for individuals and genomes that have
-been "retained" by calling treeSeqRememberIndividuals() with the parameter
-permanent=F. The default of retainCoalescentOnly=T helps to keep the number
-of retained individuals relatively small, which is helpful if your simulation
-regularly flags many individuals for retaining. In this case, changing
-retainCoalescentOnly to F may dramatically increase memory usage and runtime,
-in a similar way to permanently remembering all the individuals. See the
-documentation of treeSeqRememberIndividuals() for further discussion (section
-24.13.2).
+default of 10 (used if both simplificationRatio and simplificationInterval are
+NULL) thus requests that SLiM try to find a tick interval such that the maximum
+size of the stored tree sequences is ten times the size after simplification.
+INF may be supplied to indicate that automatic simplification should never
+occur; 0 may be supplied to indicate that automatic simplification should
+be performed at the end of every tick. Alternatively - the second option -
+simplificationRatio may be NULL and simplificationInterval may be set to the
+interval, in ticks, between simplifications. This may provide more reliable
+performance, but the interval must be chosen carefully to avoid exceeding the
+available memory. The simplificationInterval value may be a very large number
+to specify that simplification should never occur (not INF, though, since it
+is an integer value), or 1 to simplify every tick. Finally - the third option
+- both parameters may be non-NULL, in which case simplificationRatio is used
+as described above, while simplificationInterval provides the initial interval
+first used by SLiM (and then subsequently increased or decreased to try to match
+the requested simplification ratio). The default initial interval, used when
+simplificationInterval is NULL, is usually 20; this is chosen to be relatively
+frequent, and thus unlikely to lead to a memory overflow, but it can result in
+rather slow spool-up for models where the equilibrium simplification interval,
+as determined by the simplification ratio, is much longer. It can therefore be
+helpful to set a larger initial interval so that the early part of the model
+run is not excessively bogged down in simplification. The checkCoalescence
+parameter controls whether a check for full coalescence is conducted after
+each simplification. If a model will call treeSeqCoalesced() to check for
+coalescence during its execution, checkCoalescence should be set to T. Since
+the coalescence checks entail a performance penalty, the default of F is
+preferable otherwise. See the documentation for treeSeqCoalesced() for further
+discussion. The runCrosschecks parameter controls whether cross-checks between
+SLiM's internal data structures and the tree-sequence recording data structures
+will be conducted. These two sets of data structures record much the same thing
+(mutations in genomes), but using completely different representations, so such
+cross-checks can be useful to confirm that the two data structures do indeed
+represent the same conceptual state. This slows down the model considerably,
+however, and would normally be turned on only for debugging purposes, so it
+is turned off by default. The retainCoalescentOnly parameter controls how,
+exactly, simplification of the tree-sequence data is performed in SLiM (both
+for auto-simplification and for calls to treeSeqSimplify()). More specifically,
+this parameter controls the behavior of simplification for individuals and
+genomes that have been "retained" by calling treeSeqRememberIndividuals()
+with the parameter permanent=F. The default of retainCoalescentOnly=T helps
+to keep the number of retained individuals relatively small, which is helpful
+if your simulation regularly flags many individuals for retaining. In this
+case, changing retainCoalescentOnly to F may dramatically increase memory usage
+and runtime, in a similar way to permanently remembering all the individuals.
+See the documentation of treeSeqRememberIndividuals() for further discussion
+(section 24.14.2). The timeUnit parameter controls the time unit stated in the
+tree sequence when it is saved (which can be accessed through tskit APIs); it
+has no effect on the running simulation whatsoever. The default value, NULL,
+means that a time unit of "ticks" will be used for all model types. (In SLiM
+3.7 / 3.7.1, NULL implied a time unit of "generations" for WF models, but
+"ticks" for nonWF models; given the new multispecies timescale parameters in
+SLiM 4, a default of "ticks" makes sense in all cases since now even in WF
+models one tick might not equal one biological generation.) It may be helpful
+to set timeUnit to "generations" explicitly when modeling non-overlapping
+generations in which one tick equals one generation, to tell tskit that the time
+unit does in fact represent biological generations; doing so may avoid warnings
+from tskit or msprime regarding the time unit, in cases such as recapitation
+where the simulation timescale is important.
 }
 \section{Copyright}{
 
@@ -133,7 +153,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Initialize: 
-\code{\link{Initialize}},
+\code{\link{Init}},
 \code{\link{initializeAncestralNucleotides}()},
 \code{\link{initializeGeneConversion}()},
 \code{\link{initializeGenomicElementType}()},
@@ -146,7 +166,8 @@ Other Initialize:
 \code{\link{initializeRecombinationRate}()},
 \code{\link{initializeSLiMModelType}()},
 \code{\link{initializeSLiMOptions}()},
-\code{\link{initializeSex}()}
+\code{\link{initializeSex}()},
+\code{\link{initializeSpecies}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

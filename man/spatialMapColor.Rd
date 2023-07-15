@@ -28,12 +28,13 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=587}{SLiM manual: page 587}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=700}{SLiM manual: page
+700}.
 
-Looks up the spatial map indicated by name, and uses its color-
-translation machinery (as defined by the valueRange and colors parameters to
-defineSpatialMap()) to translate each element of value into a corresponding
+Looks up the spatial map indicated by name, and uses its
+color-translation machinery (as defined by the valueRange and colors parameters
+to defineSpatialMap()) to translate each element of value into a corresponding
 color string. If the spatial map does not have color-translation capabilities,
 an error will result. See the documentation for defineSpatialMap() for
 information regarding the details of color translation. See the Eidos manual for
@@ -52,7 +53,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
@@ -77,6 +78,7 @@ Other Subpopulation:
 \code{\link{setSexRatio}()},
 \code{\link{setSpatialBounds}()},
 \code{\link{setSubpopulationSize}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{subsetIndividuals}()},
 \code{\link{takeMigrants}()}

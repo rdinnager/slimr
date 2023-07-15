@@ -1,0 +1,52 @@
+allGenomicElementTypes => (object<GenomicElementType>)
+All of the GenomicElementType objects defined in the simulation.
+allInteractionTypes => (object<InteractionType>)
+All of the InteractionType objects defined in the simulation.
+allMutationTypes => (object<MutationType>)
+All of the MutationType objects defined in the simulation.
+allScriptBlocks => (object<SLiMEidosBlock>)
+All registered SLiMEidosBlock objects in the simulation.
+allSpecies => (object<Species>)
+All of the Species objects defined in the simulation (in species declaration order).
+allSubpopulations => (object<Subpopulation>)
+All of the Subpopulation objects defined in the simulation.
+cycleStage => (string$)
+The current cycle stage, as a string. The values of this property essentially mirror the cycle stages of
+WF and nonWF models (see chapters 22 and 23). Common values include "first" (during
+execution of first() events), "early" (during execution of early() events),
+"reproduction" (during offspring generation), "fitness" (during fitness evaluation),
+"survival" (while applying selection and mortality in nonWF models), and "late" (during
+execution of late() events).
+Other possible values include "begin" (during internal setup before each cycle), "tally" (while
+tallying mutation reference counts and removing fixed mutations), "swap" (while swapping the
+offspring generation into the parental generation in WF models), "end" (during internal bookkeeping
+after each cycle), and "console" (during the in-between-ticks state in which commands in SLiMgui’s
+Eidos console are executed). It would probably be a good idea not to use this latter set of values; they
+are probably not user-visible during ordinary model execution anyway.
+During execution of initialize() callbacks, no Community object yet exists and so this property
+cannot be accessed. To detect this state, use exists("community"); if that is F, community does not
+exist, and therefore your code is executing during initialize() callbacks (or outside of SLiM
+entirely, in some other Eidos-based context).
+logFiles => (object<LogFile>)
+The LogFile objects being used in the simulation.
+modelType => (string$)
+The type of model being simulated, as specified in initializeSLiMModelType(). This will be "WF"
+for WF models (Wright–Fisher models, the default), or "nonWF" for nonWF models (non-Wright–Fisher
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 635
+models; see section 1.6 for discussion). This must be the same for all species in the community; it is
+therefore a property on Community, not Species.
+tag <–> (integer$)
+A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read
+it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value
+prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.
+See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos
+manual), for another way of attaching state to the simulation.
+tick <–> (integer$)
+The current tick number.
+verbosity <–> (integer$)
+The verbosity level, for SLiM’s logging of information about the simulation. This is 1 by default, but
+can be changed at the command line with the -l[ong] option. It is provided here so that scripts can
+consult it to govern the level of verbosity of their own output, or set the verbosity level for particular
+sections of their code. A verbosity level of 0 suppresses most of SLiM’s optional output; 2 adds some
+extra output beyond SLiM’s standard output. See sections 20.3 and 21.4 for more information.

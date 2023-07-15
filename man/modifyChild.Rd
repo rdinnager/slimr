@@ -72,6 +72,7 @@ Other callbacks:
 \code{\link{interaction}()},
 \code{\link{late}()},
 \code{\link{mateChoice}()},
+\code{\link{mutation}()},
 \code{\link{recombination}()},
 \code{\link{reproduction}()},
 \code{\link{slim_callbacks}()}

@@ -4,8 +4,12 @@
 \alias{outputFixedMutations}
 \alias{SLiMSim$outputFixedMutations}
 \alias{.SS$outputFixedMutations}
+\alias{Species$outputFixedMutations}
+\alias{.Sp$outputFixedMutations}
 \title{SLiM method outputFixedMutations}
 \usage{
+outputFixedMutations(filePath, append)
+
 outputFixedMutations(filePath, append)
 }
 \arguments{
@@ -17,6 +21,8 @@ default value is \code{F}. See details for description.}
 }
 \value{
 An object of type void.
+
+An object of type void.
 }
 \description{
 Documentation for SLiM function \code{outputFixedMutations}, which is a method
@@ -27,10 +33,19 @@ anything useful when used inside a \code{\link{slim_block}} function further
 nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
+
+Documentation for SLiM function \code{outputFixedMutations}, which is a method
+of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further
+nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=568}{SLiM manual: page 568}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
 
 Output all fixed mutations - all Substitution objects, in other words
 (see section 1.5.2) - in a SLiM native format (see section 26.1.2 for output
@@ -45,8 +60,35 @@ segregating mutations by SLiM. In SLiM 3.3 and later, the output format includes
 the nucleotides associated with any nucleotide-based mutations; see section
 26.1.2. Output is generally done in a late() event, so that the output reflects
 the state of the simulation at the end of a generation.
+
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=680}{SLiM manual: page
+680}.
+
+Output all fixed mutations - all Substitution objects, in other words
+(see section 1.5.2) - in a SLiM native format (see section 26.1.2 for output
+format details). If the optional parameter filePath is NULL (the default),
+output will be sent to Eidos's output stream (see section 4.2.1). Otherwise,
+output will be sent to the filesystem path specified by filePath, overwriting
+that file if append if F, or appending to the end of it if append is T.
+Mutations which have fixed but have not been turned into Substitution objects
+- typically because convertToSubstitution has been set to F for their mutation
+type (see section 24.11.1) - are not output; they are still considered to be
+segregating mutations by SLiM. In SLiM 3.3 and later, the output format includes
+the nucleotides associated with any nucleotide-based mutations; see section
+26.1.2. Output is generally done in a late() event, so that the output reflects
+the state of the simulation at the end of a tick.
 }
 \section{Copyright}{
+
+This is documentation for a function in the SLiM software, and has been
+reproduced from the official manual,
+which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+
 
 This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
@@ -59,7 +101,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other SLiMSim: 
-\code{\link{SLiMSim}},
+\code{\link{SS}},
 \code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},
@@ -89,9 +131,30 @@ Other SLiMSim:
 \code{\link{treeSeqOutput}()},
 \code{\link{treeSeqRememberIndividuals}()},
 \code{\link{treeSeqSimplify}()}
+
+Other Species: 
+\code{\link{Sp}},
+\code{\link{addSubpop}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{individualsWithPedigreeIDs}()},
+\code{\link{killIndividuals}()},
+\code{\link{mutationCounts}()},
+\code{\link{mutationFrequencies}()},
+\code{\link{mutationsOfType}()},
+\code{\link{outputFull}()},
+\code{\link{outputMutations}()},
+\code{\link{readFromPopulationFile}()},
+\code{\link{recalculateFitness}()},
+\code{\link{registerFitnessEffectCallback}()},
+\code{\link{registerMateChoiceCallback}()},
+\code{\link{registerModifyChildCallback}()},
+\code{\link{registerMutationCallback}()},
+\code{\link{registerMutationEffectCallback}()},
+\code{\link{registerRecombinationCallback}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
 \concept{SLiMSim}
+\concept{Species}

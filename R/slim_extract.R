@@ -78,7 +78,8 @@ slim_extract_to_data <- function(dat, type) {
       stringr::str_split(" ") %>%
       .[[1]]
 
-    output_type <- first_line[3]
+    output_type <- first_line[c(3, 4)]
+    output_type <- output_type[which(stringr::str_detect(output_type, "[:upper:]"))]
 
     res <- switch(output_type,
                   A = purrr::map(purrr::transpose(dat),

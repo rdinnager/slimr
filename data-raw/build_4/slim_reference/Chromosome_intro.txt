@@ -1,0 +1,3 @@
+This class represents the layout and properties of the chromosome being simulated. The
+chromosome currently being simulated is available through the sim.chromosome global. Section
+1.5.4 presents an overview of the conceptual role of this class.

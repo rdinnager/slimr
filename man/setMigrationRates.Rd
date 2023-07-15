@@ -28,18 +28,19 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=586}{SLiM manual: page 586}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=699}{SLiM manual: page
+699}.
 
 Set the migration rates to this subpopulation from the subpopulations
-in sourceSubpops to the corresponding rates specified in rates; in other words,
+in sourceSubpops to the corresponding rates speciﬁed in rates; in other words,
 rates gives the expected fractions of the children in this subpopulation that
 will subsequently be generated from parents in the subpopulations sourceSubpops
 (see section 22.2.1). This method will only set the migration fractions from
 the subpopulations given; migration rates from other subpopulations will be
 left unchanged (explicitly set a zero rate to turn off migration from a given
 subpopulation). The type of sourceSubpops may be either integer, specifying
-subpopulations by identifier, or object, specifying subpopulations directly.
+subpopulations by identiﬁer, or object, specifying subpopulations directly.
 }
 \section{Copyright}{
 
@@ -54,7 +55,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
@@ -79,6 +80,7 @@ Other Subpopulation:
 \code{\link{setSpatialBounds}()},
 \code{\link{setSubpopulationSize}()},
 \code{\link{spatialMapColor}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{subsetIndividuals}()},
 \code{\link{takeMigrants}()}

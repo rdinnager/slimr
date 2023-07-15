@@ -20,6 +20,7 @@ toc <- pdf_toc("slim_man/SLiM_Manual.pdf")
 toc_txt <- unlist(toc)
 
 classes <- c("Chromosome",
+             "Community",
              "Genome",
              "GenomicElement",
              "GenomicElementType",
@@ -29,7 +30,8 @@ classes <- c("Chromosome",
              "Mutation",
              "MutationType",
              "SLiMEidosBlock",
-             "SLiMSim",
+             #"SLiMSim",
+             "Species",
              "Subpopulation",
              "Substitution")
 
@@ -59,7 +61,7 @@ init_mention <- str_which(toc_txt, "initialize")
 toc_txt[init_mention]
 
 
-slim_lang_txtfiles <- list.files("data-raw/build/slim_reference", full.names = TRUE)
+slim_lang_txtfiles <- list.files("data-raw/build_4/slim_reference", full.names = TRUE)
 
 initialize_methods_index <- grep("Initialize", slim_lang_txtfiles, fixed = TRUE)
 initialize_methods_txtfile <- grep("_methods", slim_lang_txtfiles[initialize_methods_index],
@@ -91,20 +93,20 @@ slim_lang_intro_txtfiles <- grep("Builtin", slim_lang_intro_txtfiles, value = TR
 initialize_intro <- readr::read_lines(initialize_intro_txtfile) %>%
   paste(collapse = "\n") %>%
   setNames(stringr::str_remove_all(initialize_intro_txtfile,
-                                   "data-raw/build/slim_reference/") %>%
+                                   "data-raw/build_4/slim_reference/") %>%
              stringr::str_remove_all("_intro.txt"))
 
 builtin_intro <- readr::read_lines(builtin_intro_txtfile) %>%
   paste(collapse = "\n") %>%
   setNames(stringr::str_remove_all(builtin_intro_txtfile,
-                                   "data-raw/build/slim_reference/") %>%
+                                   "data-raw/build_4/slim_reference/") %>%
              stringr::str_remove_all("_intro.txt"))
 
 slim_lang_intros <- purrr::map_chr(slim_lang_intro_txtfiles,
                                ~readr::read_lines(.x) %>%
                                  paste(collapse = "\n")) %>%
   setNames(stringr::str_remove_all(slim_lang_intro_txtfiles,
-                                   "data-raw/build/slim_reference/") %>%
+                                   "data-raw/build_4/slim_reference/") %>%
              stringr::str_remove_all("_intro.txt"))
 
 slim_lang_intros <- c(initialize_intro, builtin_intro,
@@ -113,7 +115,7 @@ slim_lang_intros <- c(initialize_intro, builtin_intro,
 nms <- names(slim_lang_intros)
 
 slim_lang_intros <- stringr::str_replace_all(slim_lang_intros, "\nTOC.*?\n", "\n")
-slim_lang_intros <- stringr::str_replace_all(slim_lang_intros, "\nEidos events.*?\n", "\n")
+slim_lang_intros <- stringr::str_replace_all(slim_lang_intros, "\nevents.*?\n", "\n")
 
 names(slim_lang_intros) <- nms
 
@@ -160,7 +162,7 @@ find_man_page <- function(func_name, man_txt, pages = NULL) {
                                               as.character(),
                                             dotall = TRUE))
 
-  page <- page[page >= 516 & page <= 594]
+  page <- page[page >= 617 & page <= 710]
 
   if(!is.null(pages)) {
     page <- page[page >= pages[1] & page <= pages[2]]
@@ -184,10 +186,10 @@ find_man_page <- function(func_name, man_txt, pages = NULL) {
 
 #txt <- initialize_txt
 #txt <- slim_lang_methods_txt[1]
-extract_methods <- function(txt, init = FALSE, pages = NULL) {
+extract_methods <- function(txt, init = FALSE, pages = NULL, SLiMSim = FALSE) {
 
   txt <- stringr::str_replace_all(txt, "\nTOC.*?\n", "\n")
-  txt <- stringr::str_replace_all(txt, "\nEidos events.*?\n", "\n")
+  txt <- stringr::str_replace_all(txt, "\nevents.*?\n", "\n")
   if(init) {
     txt <- stringr::str_replace_all(txt, "\n((?!\\((void|object|integer|float|logical|string|numeric|\\*|\\+)))", " \\1")
   } else {
@@ -245,10 +247,14 @@ extract_methods <- function(txt, init = FALSE, pages = NULL) {
     dplyr::mutate(return_singleton = ifelse(stringr::str_detect(return_type, "\\$"),
                                          TRUE,
                                          FALSE))
-
-  func_data <- func_data %>%
-    mutate(man_page = map_int(function_name,
-                              ~find_man_page(.x, man_txt, pages)))
+  if(!SLiMSim) {
+    func_data <- func_data %>%
+      mutate(man_page = map_int(function_name,
+                                ~find_man_page(.x, man_txt, pages)))
+  } else {
+    func_data <- func_data %>%
+      mutate(man_page = NA_integer_)
+  }
 
   func_data
 }
@@ -265,7 +271,9 @@ slim_lang_methods_txt <- slim_lang_methods_txt[-which(names(slim_lang_methods_tx
 
 names(slim_lang_methods_txt) <- stringr::str_remove(names(slim_lang_methods_txt), "_methods.txt")
 all_methods_data <- purrr::imap(slim_lang_methods_txt,
-                               ~extract_methods(.x, init = FALSE, methods[[.y]]))
+                               ~extract_methods(.x, init = FALSE, methods[[.y]],
+                                                SLiMSim = .y == "SLiMSim"),
+                               .progress = TRUE)
 #names(all_methods_data) <- stringr::str_remove(names(all_methods_data), "_methods.txt")
 
 # all_methods_data2 <- purrr::map(methods,
@@ -364,22 +372,24 @@ make_slim_function(func_table, class_name, class_abbr, template = func_template)
 make_slim_function(func_table, class_name, class_abbr, template = method_code) %>%
   cat()
 
-class_abbrs <- tibble::tribble(~class_name, ~class_abbr,
-                               "Initialize", ".Init",
-                               "Chromosome", ".c",
-                               "Genome", ".G",
-                               "GenomicElement", ".GE",
-                               "GenomicElementType", ".GET",
-                               "Individual", ".I",
-                               "InteractionType", ".IT",
-                               "LogFile", ".LF",
-                               "Mutation", ".M",
-                               "MutationType", ".MT",
-                               "SLiMBuiltin", ".SB",
-                               "SLiMEidosBlock", ".SEB",
-                               "SLiMSim", ".SS",
-                               "Subpopulation", ".P",
-                               "Substitution", ".S")
+class_abbrs <- tibble::tribble(~class_name, ~class_abbr, ~class_internal,
+                               "Initialize", "Init", ".Init",
+                               "Chromosome", "Ch", ".Ch",
+                               "Community", "Co", ".Co",
+                               "Genome", "G", ".G",
+                               "GenomicElement", "GE", ".GE",
+                               "GenomicElementType", "GET", ".GET",
+                               "Individual", "In", ".I",
+                               "InteractionType", "IT", ".IT",
+                               "LogFile", "LF", ".LF",
+                               "Mutation", "M", ".M",
+                               "MutationType", "MT", ".MT",
+                               "SLiMBuiltin", "SB", ".SB",
+                               "SLiMEidosBlock", "SEB", ".SEB",
+                               "SLiMSim", "SS", ".SS",
+                               "Species", "Sp", ".Sp",
+                               "Subpopulation", "P", ".P",
+                               "Substitution", "S", ".S")
 
 method_make_df <- dplyr::tibble(class_name = names(all_methods_data)) %>%
   dplyr::left_join(class_abbrs)
@@ -399,14 +409,14 @@ make_class_funcs <- function(method_table, class_name, class_abbr, template) {
 
 all_methods_txt <- purrr::pmap_chr(list(all_methods_data,
                                    method_make_df$class_name,
-                                   method_make_df$class_abbr),
+                                   method_make_df$class_internal),
                                    ~make_class_funcs(..1, ..2, ..3,
                                                      func_template)) %>%
   paste(collapse = "\n\n\n\n")
 
 all_methods_code <- purrr::pmap_chr(list(all_methods_data,
                                          method_make_df$class_name,
-                                         method_make_df$class_abbr),
+                                         method_make_df$class_internal),
                                     ~make_class_funcs(..1, ..2, ..3,
                                                       method_code)) %>%
   paste(collapse = "\n\n\n\n")
@@ -430,7 +440,7 @@ slim_lang_properties_txt <- purrr::map(slim_lang_properties_txtfiles,
 # txt <- slim_lang_properties_txt[[1]]
 extract_properties <- function(txt) {
   txt <- stringr::str_replace_all(txt, "\nTOC.*?\n", "\n")
-  txt <- stringr::str_replace_all(txt, "\nEidos events.*?\n", "\n")
+  txt <- stringr::str_replace_all(txt, "\nevents.*?\n", "\n")
   txt <- stringr::str_split(txt, "\n")[[1]]
   props <- stringr::str_which(txt,
                       "(.*?) (\\<\\–\\>|\\=\\>) \\((.*?)\\)",
@@ -476,7 +486,7 @@ create_properties <- function(property_table, class_name, class_abbr) {
 
 property_txt <- purrr::pmap_chr(list(all_properties_data,
                                 property_make_df$class_name,
-                                property_make_df$class_abbr),
+                                property_make_df$class_internal),
                                 ~create_properties(..1, ..2, ..3)) %>%
   paste(collapse = "\n")
 
@@ -521,6 +531,8 @@ class_roxy <- "
 
 Documentation for <<class_name>> class from SLiM
 
+@name <<class_name>>
+@export
 @aliases <<class_abbr>>
 @family <<class_name>>
 @details <<intro_text>>
@@ -532,7 +544,7 @@ This class has the following properties:
 \\describe{
 <<property_list>>
 }
-#..'<<class_name>>'"
+#..NULL"
 
 class_table <- purrr::map(seq_len(nrow(all_class_data)),
                           ~all_class_data[.x, ])[[1]]
@@ -569,7 +581,7 @@ class_roxies <- purrr::map(seq_len(nrow(all_class_data)),
 
 ########## lastly, make the class object code ###########
 
-class_create <- "{class_name} <- {class_abbr} <- list()"
+class_create <- "{class_name} <- {class_abbr} <- {class_internal} <- list()"
 class_make_code <- purrr::transpose(class_abbrs) %>%
   purrr::map_chr(~glue::glue_data(.x, class_create)) %>%
   paste(collapse = "\n")
@@ -630,7 +642,8 @@ readr::write_lines(r_script, "R/slim_lang.R")
 slim_classes <- class_abbrs
 
 usethis::use_data(.Init,
-                  .c,
+                  .Ch,
+                  .Co,
                   .G,
                   .GE,
                   .GET,
@@ -642,6 +655,7 @@ usethis::use_data(.Init,
                   .SB,
                   .SEB,
                   .SS,
+                  .Sp,
                   .P,
                   .S,
                   internal = TRUE,

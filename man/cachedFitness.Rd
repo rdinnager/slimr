@@ -25,22 +25,24 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=581}{SLiM manual: page 581}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=694}{SLiM manual: page
+694}.
 
-The fitness values calculated for the individuals at the indices
-given are returned. If NULL is passed, fitness values for all individuals in
-the subpopulation are returned. The fitness values returned are cached values;
-fitness() callbacks are therefore not called as a side effect of this method.
-It is always an error to call cachedFitness() from inside a fitness() callback,
-since fitness values are in the middle of being set up. In WF models, it is also
-an error to call cachedFitness() from a late() event, because fitness values
-for the new offspring generation have not yet been calculated and are undefined.
-In nonWF models, the population may be a mixture of new and old individuals,
-so instead, NAN will be returned as the fitness of any new individuals whose
-fitness has not yet been calculated. When new subpopulations are first created
-with addSubpop() or addSubpopSplit(), the fitness of all of the newly created
-individuals is considered to be 1.0 until fitness values are recalculated.
+The ﬁtness values calculated for the individuals at the indices
+given are returned. If NULL is passed, ﬁtness values for all individuals in
+the subpopulation are returned. The ﬁtness values returned are cached values;
+mutationEffect() and fitnessEffect() callbacks are therefore not called as a
+side effect of this method. It is always an error to call cachedFitness() from
+inside a mutationEffect() or fitnessEffect() callback, since ﬁtness values
+are in the middle of being set up. In WF models, it is also an error to call
+cachedFitness() from a late() event, because ﬁtness values for the new offspring
+generation have not yet been calculated and are undeﬁned. In nonWF models,
+the population may be a mixture of new and old individuals, so instead, NAN
+will be returned as the ﬁtness of any new individuals whose ﬁtness has not
+yet been calculated. When new subpopulations are ﬁrst created with addSubpop()
+or addSubpopSplit(), the ﬁtness of all of the newly created individuals is
+considered to be 1.0 until ﬁtness values are recalculated.
 }
 \section{Copyright}{
 
@@ -55,7 +57,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
@@ -80,6 +82,7 @@ Other Subpopulation:
 \code{\link{setSpatialBounds}()},
 \code{\link{setSubpopulationSize}()},
 \code{\link{spatialMapColor}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{subsetIndividuals}()},
 \code{\link{takeMigrants}()}

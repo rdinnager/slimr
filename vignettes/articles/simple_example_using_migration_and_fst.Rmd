@@ -173,13 +173,14 @@ Looks like it worked. We can get the resulting genomic data from the returned ob
 library(dartR)
 
 inds <- slim_extract_genlight(results, "final_output")
+ploidy(inds) <- 2
 plot(inds)
 
 ```
 Note that the SNPs are ordered by their mutation id, which should roughly correspond to their order of origination, so the leftmost mutations are the oldest, the rightmost the youngest. Using a genlight object we can calculate a lot of population genetics metrics easily using the package `dartR`. Let's calculate Fst for example.
 
 ```{r pop_gen}
-p_fst <- dartR::gl.fst.pop(inds, nboots = 1)
+p_fst <- dartR::gl.fst.pop(inds, nboots = 1, verbose = 0)
 p_fst
 ```
 So generally those Fst values are low, which we would expect since our populations are not experiencing differential selection and the effects of drift are counteracted by migration between the populations. Nevertheless the pairwise Fst's measured here are inversely proportional to the overall strength of migration between the population in our simulation. We can see this like this:
@@ -306,7 +307,10 @@ if(length(errored) > 0) {
 }
 
 all_fsts <- furrr::future_map_dbl(all_gl,
-                                  ~dartR::gl.fst.pop(.x, nboots = 1)[2, 1],
+                                  ~ {
+                                    ploidy(.x) <- 2
+                                    dartR::gl.fst.pop(.x, nboots = 1, verbose = 0)[2, 1]
+                                  },
                                   .progress = TRUE)
 
 end_time <- Sys.time()

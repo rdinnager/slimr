@@ -160,10 +160,10 @@ a character vector, or a text file.
 }
 \section{Methods (by class)}{
 \itemize{
-\item \code{character}: Run a SLiM script from character vector
+\item \code{slim_run(character)}: Run a SLiM script from character vector
 
-\item \code{slimr_script}: Run a SLiM script from slimr_script object
+\item \code{slim_run(slimr_script)}: Run a SLiM script from slimr_script object
 
-\item \code{slimr_script_coll}: Run a SLiM script from slimr_script object
+\item \code{slim_run(slimr_script_coll)}: Run a SLiM script from slimr_script object
+
 }}
-

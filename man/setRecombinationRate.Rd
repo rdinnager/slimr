@@ -3,7 +3,7 @@
 \name{setRecombinationRate}
 \alias{setRecombinationRate}
 \alias{Chromosome$setRecombinationRate}
-\alias{.c$setRecombinationRate}
+\alias{.Ch$setRecombinationRate}
 \title{SLiM method setRecombinationRate}
 \usage{
 setRecombinationRate(rates, ends, sex)
@@ -31,31 +31,32 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=532}{SLiM manual: page 532}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=634}{SLiM manual: page
+634}.
 
-Set the recombination rate per base position per generation along the
-chromosome. All rates must be in the interval [0.0, 0.5]. There are two ways
-to call this method. If the optional ends parameter is NULL (the default), then
-rates must be a singleton value that specifies a single recombination rate to
-be used along the entire chromosome. If, on the other hand, ends is supplied,
-then rates and ends must be the same length, and the values in ends must be
-specified in ascending order. In that case, rates and ends taken together
-specify the recombination rates to be used along successive contiguous stretches
-of the chromosome, from beginning to end; the last position specified in ends
-should extend to the end of the chromosome (as previously determined, during
-simulation initialization). See the initializeRecombinationRate() function for
-further discussion of precisely how these rates and positions are interpreted.
-If the optional sex parameter is "*" (the default), then the supplied
-recombination rate map will be used for both sexes (which is the only option
-for hermaphroditic simulations). In sexual simulations sex may be "M" or "F"
-instead, in which case the supplied recombination map is used only for that sex.
-Note that whether sex-specific recombination maps will be used is set by the way
-that the simulation is initially configured with initializeRecombinationRate(),
-and cannot be changed with this method; so if the simulation was set up to use
-sex-specific recombination maps then sex must be "M" or "F" here, whereas if
-it was set up not to, then sex must be "*" or unsupplied here. If a simulation
-needs sex-specific recombination maps only some of the time, the male and female
+Set the recombination rate per base position per gamete. All rates must
+be in the interval [0.0, 0.5]. There are two ways to call this method. If the
+optional ends parameter is NULL (the default), then rates must be a singleton
+value that specifies a single recombination rate to be used along the entire
+chromosome. If, on the other hand, ends is supplied, then rates and ends must
+be the same length, and the values in ends must be specified in ascending order.
+In that case, rates and ends taken together specify the recombination rates to
+be used along successive contiguous stretches of the chromosome, from beginning
+to end; the last position specified in ends should extend to the end of the
+chromosome (as previously determined, during simulation initialization). See
+the initializeRecombinationRate() function for further discussion of precisely
+how these rates and positions are interpreted. If the optional sex parameter
+is "*" (the default), then the supplied recombination rate map will be used
+for both sexes (which is the only option for hermaphroditic simulations). In
+sexual simulations sex may be "M" or "F" instead, in which case the supplied
+recombination map is used only for that sex. Note that whether sex-specific
+recombination maps will be used is set by the way that the simulation is
+initially configured with initializeRecombinationRate(), and cannot be
+changed with this method; so if the simulation was set up to use sex-specific
+recombination maps then sex must be "M" or "F" here, whereas if it was set
+up not to, then sex must be "*" or unsupplied here. If a simulation needs
+sex-specific recombination maps only some of the time, the male and female
 maps can simply be set to be identical the rest of the time. The recombination
 intervals are normally a constant in simulations, so be sure you know what you
 are doing.
@@ -73,7 +74,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Chromosome: 
-\code{\link{Chromosome}},
+\code{\link{Ch}},
 \code{\link{ancestralNucleotides}()},
 \code{\link{drawBreakpoints}()},
 \code{\link{setAncestralNucleotides}()},

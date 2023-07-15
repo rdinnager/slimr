@@ -1,0 +1,10 @@
+This class represents a block of Eidos code registered in a SLiM simulation. All Eidos events and
+Eidos callbacks defined in the SLiM input file of the current simulation are instantiated as
+SLiMEidosBlock objects and are available through the allScriptBlocks property of Community and
+the scriptBlocks property of Species; see sections 24.3.1 and 24.14.1. In addition, new script
+blocks can be created programmatically and registered with the simulation, and registered script
+blocks can be deregistered; see the ‑register...() and ‑deregisterScriptBlock() methods of
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 674
+Community and Species in sections 24.3.2 and 24.14.2. The currently executing script block is
+available through the self global; see section 25.11.

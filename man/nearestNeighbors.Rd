@@ -6,14 +6,18 @@
 \alias{.IT$nearestNeighbors}
 \title{SLiM method nearestNeighbors}
 \usage{
-nearestNeighbors(individual, count)
+nearestNeighbors(receiver, count, exerterSubpop)
 }
 \arguments{
-\item{individual}{An object of type Individual object. Must be of length 1 (a
+\item{receiver}{An object of type Individual object. Must be of length 1 (a
 singleton). See details for description.}
 
 \item{count}{An object of type integer. Must be of length 1 (a singleton). The
 default value is \code{1}. See details for description.}
+
+\item{exerterSubpop}{An object of type null or Subpopulation object. Must be
+of length 1 (a singleton). The default value is \code{NULL}. See details for
+description.}
 }
 \value{
 An object of type Individual object.
@@ -29,22 +33,27 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=552}{SLiM manual: page 552}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=663}{SLiM manual: page
+663}.
 
 Returns up to count individuals that are spatially closest to
-individual, according to the distance metric of the InteractionType. To obtain
-all of the individuals within the maximum interaction distance of individual,
-simply pass a value for count that is greater than or equal to the size of
-individual's subpopulation. Note that if fewer than count individuals are within
-the maximum interaction distance, the vector returned may be shorter than count,
-or even zero-length; it is important to check for this possibility even when
-requesting a single neighbor. Note that this method does not use interaction
-eligibility as a criterion; it will return neighbors that could not interact
-with the focal individual due to sex-segregation. (It will never return the
-focal individual as a neighbor of itself, however.) To find only neighbors
-that are eligible to exert an interaction upon the focal individual, use
-nearestInteractingNeighbors().
+individual, according to the distance metric of the InteractionType, from
+among the exerters in exerterSubpop (or, if that is NULL, then from among all
+individuals in the receiver's subpopulation). To obtain all of the individuals
+within the maximum interaction distance of individual, simply pass a value for
+count that is greater than or equal to the size of individual's subpopulation.
+Note that if fewer than count individuals are within the maximum interaction
+distance, the vector returned may be shorter than count, or even zero- length;
+it is important to check for this possibility even when requesting a single
+neighbor. The evaluate() method must have been previously called for the
+receiver and exerter subpopulations, and positions saved at evaluation time will
+be used. If the InteractionType is non-spatial, this method may not be called.
+Note that this method does not use interaction eligibility as a criterion;
+it will return neighbors that could not interact with the receiver due to
+sex-segregation. (It will never return the receiver as a neighbor of itself,
+however.) To find only neighbors that are eligible to exert an interaction upon
+the receiver, use nearestInteractingNeighbors().
 }
 \section{Copyright}{
 
@@ -60,14 +69,18 @@ on the official website: \url{https://messerlab.org/slim/}
 \seealso{
 Other InteractionType: 
 \code{\link{InteractionType}},
-\code{\link{distanceToPoint}()},
+\code{\link{clippedIntegral}()},
+\code{\link{distanceFromPoint}()},
 \code{\link{distance}()},
 \code{\link{drawByStrength}()},
 \code{\link{evaluate}()},
 \code{\link{interactingNeighborCount}()},
 \code{\link{interactionDistance}()},
+\code{\link{localPopulationDensity}()},
 \code{\link{nearestInteractingNeighbors}()},
 \code{\link{nearestNeighborsOfPoint}()},
+\code{\link{neighborCountOfPoint}()},
+\code{\link{neighborCount}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
 \code{\link{totalOfNeighborStrengths}()},

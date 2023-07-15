@@ -35,8 +35,8 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=575}{SLiM manual: page 575}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
 
 Outputs the current tree sequence recording tables to the path
 specified by path. This method may only be called if tree sequence recording
@@ -76,7 +76,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other SLiMSim: 
-\code{\link{SLiMSim}},
+\code{\link{SS}},
 \code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},

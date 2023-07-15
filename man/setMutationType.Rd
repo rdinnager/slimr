@@ -26,8 +26,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=558}{SLiM manual: page 558}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=670}{SLiM manual: page
+670}.
 
 Set the mutation type of the mutation to mutType (which may be
 specified as either an integer identifier or a MutationType object). This
@@ -38,12 +39,12 @@ changed, since it is a property of the mutation object itself; it can be changed
 explicitly using the setSelectionCoeff() method if so desired. The mutation
 type of a mutation is normally a constant in simulations, so be sure you know
 what you are doing. Changing this will normally affect the fitness values
-calculated at the end of the current generation; if you want current fitness
-values to be affected, you can call SLiMSim's method recalculateFitness() - but
-see the documentation of that method for caveats. In nucleotide-based models,
-a restriction applies: nucleotide-based mutations may not be changed to a non-
-nucleotide-based mutation type, and non-nucleotide-based mutations may not be
-changed to a nucleotide-based mutation type.
+calculated toward the end of the current tick; if you want current fitness
+values to be affected, you can call the Species method recalculateFitness()
+- but see the documentation of that method for caveats. In nucleotide-based
+models, a restriction applies: nucleotide-based mutations may not be changed to
+a non-nucleotide-based mutation type, and non-nucleotide-based mutations may not
+be changed to a nucleotide-based mutation type.
 }
 \section{Copyright}{
 
@@ -58,7 +59,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Mutation: 
-\code{\link{Mutation}},
+\code{\link{M}},
 \code{\link{setSelectionCoeff}()}
 }
 \author{

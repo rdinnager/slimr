@@ -60,6 +60,7 @@ Other callbacks:
 \code{\link{late}()},
 \code{\link{mateChoice}()},
 \code{\link{modifyChild}()},
+\code{\link{mutation}()},
 \code{\link{recombination}()},
 \code{\link{slim_callbacks}()}
 }

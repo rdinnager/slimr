@@ -3,7 +3,7 @@
 \name{setHotspotMap}
 \alias{setHotspotMap}
 \alias{Chromosome$setHotspotMap}
-\alias{.c$setHotspotMap}
+\alias{.Ch$setHotspotMap}
 \title{SLiM method setHotspotMap}
 \usage{
 setHotspotMap(multipliers, ends, sex)
@@ -31,8 +31,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=531}{SLiM manual: page 531}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=633}{SLiM manual: page
+633}.
 
 In nucleotide-based models, set the mutation rate multiplier along
 the chromosome. There are two ways to call this method. If the optional ends
@@ -72,7 +73,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Chromosome: 
-\code{\link{Chromosome}},
+\code{\link{Ch}},
 \code{\link{ancestralNucleotides}()},
 \code{\link{drawBreakpoints}()},
 \code{\link{setAncestralNucleotides}()},

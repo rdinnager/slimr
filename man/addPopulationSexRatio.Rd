@@ -6,14 +6,16 @@
 \alias{.LF$addPopulationSexRatio}
 \title{SLiM method addPopulationSexRatio}
 \usage{
-addPopulationSexRatio(void)
+addPopulationSexRatio(species)
 }
 \arguments{
-\item{void}{An object of type . See details for description.}
+\item{species}{An object of type null or Species object. Must be of length 1 (a
+singleton). The default value is \code{NULL}. See details for description.}
 }
 \value{
 An object of type void or void or void or void or void or void or void
-or void or void or void or void or void or void or void or void.
+or void or void or void or void or void or void or void or void or void or void
+or void or logical.
 }
 \description{
 Documentation for SLiM function \code{addPopulationSexRatio}, which is a method
@@ -26,11 +28,15 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=555}{SLiM manual: page 555}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
+667}.
 
-Adds a new data column that provides the population sex ratio M:(M+F),
-named sex_ratio. If the model is hermaphroditic, NA will be written.
+Adds a new data column that provides the population sex ratio M:(M+F)
+for species. In single- species models, species may be NULL to indicate that
+single species. The column will simply be named sex_ratio in single-species
+models; an underscore and the name of the species will be appended in
+multispecies models. If the species is hermaphroditic, NA will be written.
 }
 \section{Copyright}{
 
@@ -45,21 +51,25 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other LogFile: 
-\code{\link{LogFile}},
+\code{\link{LF}},
 \code{\link{addCustomColumn}()},
-\code{\link{addGenerationStage}()},
-\code{\link{addGeneration}()},
+\code{\link{addCycleStage}()},
+\code{\link{addCycle}()},
 \code{\link{addKeysAndValuesFrom}()},
 \code{\link{addMeanSDColumns}()},
 \code{\link{addPopulationSize}()},
 \code{\link{addSubpopulationSexRatio}()},
 \code{\link{addSubpopulationSize}()},
+\code{\link{addSuppliedColumn}()},
+\code{\link{addTick}()},
 \code{\link{clearKeysAndValues}()},
 \code{\link{flush}()},
 \code{\link{logRow}()},
 \code{\link{setFilePath}()},
 \code{\link{setLogInterval}()},
-\code{\link{setValue}()}
+\code{\link{setSuppliedValue}()},
+\code{\link{setValue}()},
+\code{\link{willAutolog}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

@@ -35,8 +35,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=517}{SLiM manual: page 517}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=619}{SLiM manual: page
+619}.
 
 Add a genomic element type at initialization time. The id must
 not already be used for any genomic element type in the simulation. The
@@ -54,39 +55,35 @@ provides the new object. The mutationMatrix parameter is NULL by default, and
 in non-nucleotide-based models it must be NULL. In nucleotide-based models, on
 the other hand, it must be non-NULL, and therefore must be supplied. In that
 case, mutationMatrix should take one of two standard forms. For sequence-based
-mutation rates that depend upon only the single nucleotide at a mutation site,
-mutationMatrix should be a 4×4 float matrix, specifying mutation rates for an
-existing nucleotide state (rows from 0- 3 representing A/C/G/T) to each of the
-four possible derived nucleotide states (columns, with the same meaning): The
-mutation rates in this matrix are absolute rates, per nucleotide per generation;
-they will be used by SLiM directly unless they are multiplied by a factor from
-the hotspot map (see initializeHotspotMap()). Rates in mutationMatrix that
-involve the mutation of a nucleotide to itself (A to A, C to C, etc.) are not
-used by SLiM and must be 0.0 by convention (shown above with asterisks). It
-is important to note that the order of the rows and columns used in SLiM, A/
-C/G/T, is not a universal convention; other sources will present substitution-
-rate/transition-rate matrices using different conventions, and so care must be
-taken when importing such matrices into SLiM. For sequence-based mutation rates
-that depend upon the trinucleotide sequence centered upon a mutation site (the
-adjacent bases to the left and right, in other words, as well as the mutating
-nucleotide itself), mutationMatrix should be a 64×4 float matrix, specifying
-mutation rates for the central nucleotide of an existing trinucleotide sequence
-(rows from 0-63, representing trinucleotides as described in the documentation
-for the ancestralNucleotides() method of Chromosome) to each of the four
-possible derived nucleotide states (columns from 0-3 for A/C/G/T as before):
-Note that in every case it is the central nucleotide of the trinucleotide
-sequence that is mutating, but rates can be specified independently based
-upon the nucleotides in the first and third positions as well, with this type
-of mutation matrix. Several helper functions are defined to construct common
-types of mutation matrices, such as mmJukesCantor() to create a mutation matrix
-for a Jukes-Cantor model; see section 24.16.1. See chapter 18 for practical
-examples of mutation matrices, and section 22.2.3 for further discussion of the
-mutational paradigm in nucleotide-based models. * PA→C PA→G PA→T PC→A * PC→G
-PC→T PG→A PG→C * PG→T PT→A PT→C PT→G * * PAAA→ACA PAAA→AGA PAAA→ATA * PAAC→ACC
-PAAC→AGC PAAC→ATC * PAAG→ACG PAAG→AGG PAAG→ATG * PAAT→ACT PAAT→AGT PAAT→ATT
-PACA→AAA * PACA→AGA PACA→ATA PACC→AAC * PACC→AGC PACC→ATC PACG→AAG * PACG→AGG
-PACG→ATG . . . . . . . . . . . . PTTC→TAC PTTC→TCC PTTC→TGC * PTTG→TAG PTTG→TCG
-PTTG→TGG * PTTT→TAT PTTT→TCT PTTT→TGT *
+mutation rates that depend upon only the single nucleotide at a mutation
+site, mutationMatrix should be a 4×4 float matrix, specifying mutation rates
+for an existing nucleotide state (rows from 0- 3 representing A/C/G/T) to
+each of the four possible derived nucleotide states (columns, with the same
+meaning): The mutation rates in this matrix are absolute rates, per nucleotide
+per gamete; they will be used by SLiM directly unless they are multiplied
+by a factor from the hotspot map (see initializeHotspotMap()). Rates in
+mutationMatrix that involve the mutation of a nucleotide to * PA→C PA→G PA→T
+PC→A * PC→G PC→T PG→A PG→C * PG→T PT→A PT→C PT→G * itself (A to A, C to C,
+etc.) are not used by SLiM and must be 0.0 by convention (shown above with
+asterisks). It is important to note that the order of the rows and columns used
+in SLiM, A/C/G/T, is not a universal convention; other sources will present
+substitution-rate/transition-rate matrices using different conventions, and so
+care must be taken when importing such matrices into SLiM. For sequence-based
+mutation rates that depend upon the trinucleotide sequence centered upon a
+mutation site (the adjacent bases to the left and right, in other words, as
+well as the mutating nucleotide itself), mutationMatrix should be a 64×4 float
+matrix, specifying mutation rates for the central nucleotide of an existing
+trinucleotide sequence (rows from 0-63, representing trinucleotides as described
+in the documentation for the ancestralNucleotides() method of Chromosome)
+to each of the four possible derived nucleotide states (columns from 0-3
+for A/C/G/T as before): Note that in every case it is the central nucleotide
+of the trinucleotide sequence that is mutating, but rates can be specified
+independently based upon the nucleotides in the first and third positions as
+well, with this type of mutation matrix. Several helper functions are defined to
+construct common types of mutation matrices, such as mmJukesCantor() to create
+a mutation matrix for a Jukes-Cantor model; see section 24.17.1. See chapter
+18 for practical examples of mutation matrices, and section 22.2.3 for further
+discussion of the mutational paradigm in nucleotide-based models.
 }
 \section{Copyright}{
 
@@ -101,7 +98,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Initialize: 
-\code{\link{Initialize}},
+\code{\link{Init}},
 \code{\link{initializeAncestralNucleotides}()},
 \code{\link{initializeGeneConversion}()},
 \code{\link{initializeGenomicElement}()},
@@ -114,6 +111,7 @@ Other Initialize:
 \code{\link{initializeSLiMModelType}()},
 \code{\link{initializeSLiMOptions}()},
 \code{\link{initializeSex}()},
+\code{\link{initializeSpecies}()},
 \code{\link{initializeTreeSeq}()}
 }
 \author{

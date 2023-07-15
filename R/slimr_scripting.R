@@ -75,7 +75,7 @@ slim_script <- function(...) {
                               ~glue::glue(.x, .na = NULL) %>%
                                 as.character())
 
-  code <- vctrs::vec_unchop(script$code)
+  code <- vctrs::list_unchop(script$code)
 
   ## process inlining
   c(code, slimr_inline_attr) %<-% process_inline(code, block_names,
@@ -104,6 +104,16 @@ slim_script <- function(...) {
   code <- new_slimr_code(code)
 
 
+  species <- purrr::map(script_list, ~attr(.x, "species"))
+  spec_null <- purrr::map_lgl(species, is.null)
+  if(all(spec_null)) {
+    species <- NULL
+  } else {
+    species <- purrr::map_if(species,
+                             is.null,
+                             ~ NA_character_,
+                             .else = ~ .x)
+  }
 
   script <- new_slimr_script(block_name = block_names,
                              block_id = script$block_id,
@@ -111,6 +121,7 @@ slim_script <- function(...) {
                              end_gen = script$end_gen,
                              callback = script$callback,
                              code = code,
+                             species = species,
                              slimr_inline = slimr_inline_attr,
                              slimr_output = slimr_output_attr,
                              slimr_template = slimr_template_attr,
@@ -183,6 +194,13 @@ slim_block <- function(...) {
 
   if(!is.call(args[[n_args]])) {
     rlang::abort("The last argument of slim_block should be a valid slimr_code block expression.")
+  }
+
+  spec <- names(args)[names(args) != ""]
+  if(length(spec) > 1) {
+    rlang::abort("If any arguments are named it should be exactly one argument (and the name should be the name of a species in the SLiM model)")
+  } else {
+    spec <- NULL
   }
 
   #code <- deparse(args[[n_args]], width.cutoff = 500, control = NULL)
@@ -346,6 +364,8 @@ slim_block <- function(...) {
     block_row$start_gen <- NA_character_
     block_row$end_gen <- NA_character_
   }
+
+  attr(block_row, "species") <- spec
 
   class(block_row) <- "slimr_block"
 
@@ -549,7 +569,6 @@ slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE
                                                      slimr_template_attr = slimr_template_attr,
                                                      replace_NAs = replace_NAs),
                                 .options = furrr::furrr_options(globals = FALSE,
-                                                                lazy = TRUE,
                                                                 seed = TRUE))
     } else {
       new_scripts <- purrr::map(template,
@@ -571,7 +590,6 @@ slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE
       new_scripts <- furrr::future_map(new_scripts,
                                        ~reprocess_script(.x),
                                        .options = furrr::furrr_options(globals = FALSE,
-                                                                       lazy = TRUE,
                                                                        seed = TRUE))
     } else {
       new_scripts <- purrr::map(new_scripts,
@@ -598,7 +616,7 @@ slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE
         new_slimr_script_coll()
     } else {
       new_scripts <- replicate(reps, new_scripts, simplify = FALSE) %>%
-        vctrs::vec_unchop()
+        vctrs::list_unchop()
     }
   }
 

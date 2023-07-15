@@ -45,78 +45,72 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=519}{SLiM manual: page 519}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=621}{SLiM manual: page
+621}.
 
 Add an interaction type at initialization time. The id must not
 already be used for any interaction type in the simulation. The id parameter
-may be either an integer giving the ID of the new interaction type, or a string
-giving the name of the new interaction type (such as "i5" to specify an ID of
-5). The spatiality may be "", for non-spatial interactions (i.e., interactions
-that do not depend upon the distance between individuals); "x", "y", or "z"
-for one-dimensional interactions; "xy", "xz", or "yz" for two-dimensional
-interactions; or "xyz" for three-dimensional interactions. The dimensions
-referenced by spatiality must have been previously defined as spatial dimensions
+may be either an integer giving the ID of the new interaction type, or a
+string giving the name of the new interaction type (such as "i5" to specify
+an ID of 5). The spatiality may be "", for non-spatial interactions (i.e.,
+interactions that do not depend upon the distance between individuals);
+"x", "y", or "z" for one-dimensional interactions; "xy", "xz", or "yz" for
+two-dimensional interactions; or "xyz" for three-dimensional interactions.
+The dimensions referenced by spatiality must be defined as spatial dimensions
 with initializeSLiMOptions(); if the simulation has dimensionality "xy", for
 example, then interactions in the simulation may have spatiality "", "x",
 "y", or "xy", but may not reference spatial dimension z and thus may not have
 spatiality "xz", "yz", or "xyz". If no spatial dimensions have been configured,
 only non-spatial interactions may be defined. The reciprocal flag may be T, in
 which case the interaction is guaranteed by the user to be reciprocal: whatever
-the interaction strength is for individual B upon individual A, it will be
-equal (in magnitude and sign) for A upon B. This allows the InteractionType
-to reduce the amount of computation necessary by up to a factor of two. If
-reciprocal is F, the interaction is not guaranteed to be reciprocal and each
-interaction will be computed independently. The built-in interaction formulas
-are all reciprocal, but if you implement an interaction() callback (see section
-25.6), you must consider whether the callback you have implemented preserves
-reciprocality or not. For this reason, the default is reciprocal=F, so that
-bugs are not inadvertently introduced by an invalid assumption of reciprocality.
-See below for a note regarding reciprocality in sexual simulations when using
-the sexSegregation flag. Note that even if an interaction is reciprocal,
-it may occasionally be slightly faster for reciprocal to be set to F. This
-is most likely when the amount of computation per interaction is very small
-(particularly if no interaction() callbacks are involved), and when it is
-unlikely that the reciprocal of a queried interaction will also be queried.
-Even in such cases, however, the slowdown for reciprocal=T should be fairly
-small. In most usage cases, setting reciprocal to T (when the interaction is
-in fact reciprocal) will result in at least equal performance, if not better;
-with a very slow interaction() callback, the performance can be as much as
-double, making it generally worthwhile to use reciprocal=T when possible.
-However, for maximal performance one might wish to time and compare runs with
-reciprocality enabled and disabled (using the same random number seed). The
-maxDistance parameter supplies the maximum distance over which interactions of
-this type will be evaluated; at greater distances, the interaction strength is
-considered to be zero (for efficiency). The default value of maxDistance, INF
-(positive infinity), indicates that there is no maximum interaction distance;
-note that this can make some interaction queries much less efficient, and is
-therefore not recommended. In SLiM 3.1 and later, a warning will be issued if
-a spatial interaction type is defined with no maximum distance to encourage
-a maximum distance to be defined. The sexSegregation parameter governs the
-applicability of the interaction to each sex, in sexual simulations. It does
-not affect distance calculations in any way; it only modifies the way in which
-interaction strengths are calculated. The default, "**", implies that the
-interaction is felt by both sexes (the first character of the string value) and
-is exerted by both sexes (the second character of the string value). Either or
-both characters may be M or F instead; for example, "MM" would indicate a male-
-male interaction, such as male-male competition, whereas "FM" would indicate an
-interaction influencing only females that is influenced only by males, such as
-male mating displays that influence female attraction. This parameter may be set
-only to "**" unless sex has been enabled with initializeSex(). Note that a value
-of sexSegregation other than "**" may imply some degree of non-reciprocality,
-but it is not necessary to specify reciprocal to be F for this reason; SLiM will
-take the sex-segregation of the interaction into account for you. The value of
-reciprocal may therefore be interpreted as meaning: in those cases, if any, in
-which A interacts with B and B interacts with A, is the interaction strength
-guaranteed to be the same in both directions? By default, the interaction
-strength is 1.0 for all interactions within maxDistance. Often it is desirable
-to change the interaction function using setInteractionFunction(); modifying
-interaction strengths can also be achieved with interaction() callbacks if
-necessary (see section 25.6). In any case, interactions beyond maxDistance
-always have a strength of 0.0, and the interaction strength of an individual
-with itself is always 0.0, regardless of the interaction function or callbacks.
-The global symbol for the new interaction type is immediately available; the
-return value also provides the new object.
+the interaction strength is for exerter B upon receiver A, it will be equal (in
+magnitude and sign) for exerter A upon receiver B. In principle, this allows
+the InteractionType to reduce the amount of computation necessary by up to a
+factor of two (although it may or may not be used). If reciprocal is F, the
+interaction is not guaranteed to be reciprocal and each interaction will be
+computed independently. The built-in interaction formulas are all reciprocal,
+but if you implement an interaction() callback (see section 25.7), you must
+consider whether the callback you have implemented preserves reciprocality
+or not. For this reason, the default is reciprocal=F, so that bugs are not
+inadvertently introduced by an invalid assumption of reciprocality. See
+below for a note regarding reciprocality in sexual simulations when using the
+sexSegregation flag. The maxDistance parameter supplies the maximum distance
+over which interactions of this type will be evaluated; at greater distances,
+the interaction strength is considered to be zero (for efficiency). The default
+value of maxDistance, INF (positive infinity), indicates that there is no
+maximum interaction distance; note that this can make some interaction queries
+much less efficient, and is therefore not recommended. In SLiM 3.1 and later, a
+warning will be issued if a spatial interaction type is defined with no maximum
+distance to encourage a maximum distance to be defined. The sexSegregation
+parameter governs the applicability of the interaction to each sex, in sexual
+simulations. It does not affect distance calculations in any way; it only
+modifies the way in which interaction strengths are calculated. The default,
+"**", implies that the interaction is felt by both sexes (the first character
+of the string value) and is exerted by both sexes (the second character of the
+string value). Either or both characters may be M or F instead; for example,
+"MM" would indicate a male-male interaction, such as male-male competition,
+whereas "FM" would indicate an interaction influencing only female receivers
+that is influenced only by male exerters, such as male mating displays that
+influence female attraction. This parameter may be set only to "**" unless sex
+has been enabled with initializeSex(). Note that a value of sexSegregation other
+than "**" may imply some degree of non-reciprocality, but it is not necessary to
+specify reciprocal to be F for this reason; SLiM will take the sex-segregation
+of the interaction into account for you. The value of reciprocal may therefore
+be interpreted as meaning: in those cases, if any, in which A interacts with
+B and B interacts with A, is the interaction strength guaranteed to be the
+same in both directions? By default, the interaction strength is 1.0 for all
+interactions within maxDistance. Often it is desirable to change the interaction
+function using setInteractionFunction(); modifying interaction strengths
+can also be achieved with interaction() callbacks if necessary (see section
+25.7). In any case, interactions beyond maxDistance always have a strength of
+0.0, and the interaction strength of an individual with itself is always 0.0,
+regardless of the interaction function or callbacks. The global symbol for the
+new interaction type is immediately available; the return value also provides
+the new object. Note that in multispecies models, initializeInteractionType()
+must be called from a non-species-specific interaction() callback (declared
+as species all initialize()), since interactions are managed at the community
+level.
 }
 \section{Copyright}{
 
@@ -131,7 +125,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Initialize: 
-\code{\link{Initialize}},
+\code{\link{Init}},
 \code{\link{initializeAncestralNucleotides}()},
 \code{\link{initializeGeneConversion}()},
 \code{\link{initializeGenomicElementType}()},
@@ -144,6 +138,7 @@ Other Initialize:
 \code{\link{initializeSLiMModelType}()},
 \code{\link{initializeSLiMOptions}()},
 \code{\link{initializeSex}()},
+\code{\link{initializeSpecies}()},
 \code{\link{initializeTreeSeq}()}
 }
 \author{

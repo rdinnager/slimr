@@ -3,7 +3,7 @@
 \name{setGeneConversion}
 \alias{setGeneConversion}
 \alias{Chromosome$setGeneConversion}
-\alias{.c$setGeneConversion}
+\alias{.Ch$setGeneConversion}
 \title{SLiM method setGeneConversion}
 \usage{
 setGeneConversion(
@@ -41,8 +41,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=531}{SLiM manual: page 531}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=633}{SLiM manual: page
+633}.
 
 This method switches the recombination model to the "double-stranded
 break (DSB)" model (if it is not already set to that), and configures the
@@ -64,7 +65,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Chromosome: 
-\code{\link{Chromosome}},
+\code{\link{Ch}},
 \code{\link{ancestralNucleotides}()},
 \code{\link{drawBreakpoints}()},
 \code{\link{setAncestralNucleotides}()},

@@ -1,0 +1,7 @@
+This class represents a single simulated individual. Individuals in SLiM are diploid, and thus
+contain two Genome objects. Most functionality in SLiM is contained in the Genome class; the
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 648
+Individual class is mostly a convenient way to treat the pairs of genomes associated with an
+individual as a single object, and to associate a tag value with individuals. Section 1.5.1 presents
+an overview of the conceptual role of this class.

@@ -2,10 +2,14 @@
 % Please edit documentation in R/slim_lang.R
 \name{outputUsage}
 \alias{outputUsage}
+\alias{Community$outputUsage}
+\alias{.Co$outputUsage}
 \alias{SLiMSim$outputUsage}
 \alias{.SS$outputUsage}
 \title{SLiM method outputUsage}
 \usage{
+outputUsage(void)
+
 outputUsage(void)
 }
 \arguments{
@@ -13,8 +17,19 @@ outputUsage(void)
 }
 \value{
 An object of type void.
+
+An object of type void.
 }
 \description{
+Documentation for SLiM function \code{outputUsage}, which is a method of the
+SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further
+nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.
+
 Documentation for SLiM function \code{outputUsage}, which is a method of the
 SLiM class \code{\link{SLiMSim}}.
 Note that the R function is a stub, it does not do anything in R (except bring
@@ -25,8 +40,22 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=569}{SLiM manual: page 569}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=637}{SLiM manual: page
+637}.
+
+Output the current memory usage of the simulation to Eidos's output
+stream. The specifics of what is printed, and in what format, should not be
+relied upon as they may change from version to version of SLiM. This method
+is primarily useful for understanding where the memory usage of a simulation
+predominantly resides, for debugging or optimization. Note that it does not
+capture all memory usage by the process; rather, it summarizes the memory usage
+by SLiM and Eidos in directly allocated objects and buffers. To get the total
+memory usage of the running process (either current or peak), use the Eidos
+function usage().
+
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
 
 Output the current memory usage of the simulation to Eidos's output
 stream. The specifics of what is printed, and in what format, should not be
@@ -47,11 +76,37 @@ documentation is
 Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
+
+
+This is documentation for a function in the SLiM software, and has been
+reproduced from the official manual,
+which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
 }
 
 \seealso{
+Other Community: 
+\code{\link{Co}},
+\code{\link{createLogFile}()},
+\code{\link{deregisterScriptBlock}()},
+\code{\link{genomicElementTypesWithIDs}()},
+\code{\link{interactionTypesWithIDs}()},
+\code{\link{mutationTypesWithIDs}()},
+\code{\link{registerEarlyEvent}()},
+\code{\link{registerFirstEvent}()},
+\code{\link{registerInteractionCallback}()},
+\code{\link{registerLateEvent}()},
+\code{\link{rescheduleScriptBlock}()},
+\code{\link{scriptBlocksWithIDs}()},
+\code{\link{simulationFinished}()},
+\code{\link{speciesWithIDs}()},
+\code{\link{subpopulationsWithIDs}()}
+
 Other SLiMSim: 
-\code{\link{SLiMSim}},
+\code{\link{SS}},
 \code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},
@@ -86,4 +141,5 @@ Other SLiMSim:
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Community}
 \concept{SLiMSim}

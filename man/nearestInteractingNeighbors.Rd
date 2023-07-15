@@ -6,14 +6,18 @@
 \alias{.IT$nearestInteractingNeighbors}
 \title{SLiM method nearestInteractingNeighbors}
 \usage{
-nearestInteractingNeighbors(individual, count)
+nearestInteractingNeighbors(receiver, count, exerterSubpop)
 }
 \arguments{
-\item{individual}{An object of type Individual object. Must be of length 1 (a
+\item{receiver}{An object of type Individual object. Must be of length 1 (a
 singleton). See details for description.}
 
 \item{count}{An object of type integer. Must be of length 1 (a singleton). The
 default value is \code{1}. See details for description.}
+
+\item{exerterSubpop}{An object of type null or Subpopulation object. Must be
+of length 1 (a singleton). The default value is \code{NULL}. See details for
+description.}
 }
 \value{
 An object of type Individual object.
@@ -29,26 +33,30 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=551}{SLiM manual: page 551}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=662}{SLiM manual: page
+662}.
 
-Returns up to count interacting individuals that are spatially
-closest to individual, according to the distance metric of the InteractionType.
-More specifically, this method returns only individuals which can exert an
-interaction upon the focal individual; it does not include individuals that only
-feel an interaction from the focal individual. To obtain all of the interacting
-individuals within the maximum interaction distance of individual, simply pass
-a value for count that is greater than or equal to the size of individual's
-subpopulation. Note that if fewer than count interacting individuals are within
-the maximum interaction distance, the vector returned may be shorter than count,
-or even zero-length; it is important to check for this possibility even when
-requesting a single neighbor. If only the number of interacting individuals
-is needed, use interactingNeighborCount() instead. Note that this method uses
-interaction eligibility as a criterion; it will not return neighbors that cannot
-exert an interaction upon the focal individual (due to sex-segregation, e.g.).
-(It will also never return the focal individual as a neighbor of itself.) To
-find all neighbors of the focal individual, whether they can interact with it or
-not, use nearestNeighbors().
+Returns up to count interacting individuals that are spatially closest
+to receiver, according to the distance metric of the InteractionType, from
+among the exerters in exerterSubpop (or, if that is NULL, then from among all
+individuals in the receiver's subpopulation). More specifically, this method
+returns only individuals which can exert an interaction upon the receiver.
+To obtain all of the interacting individuals within the maximum interaction
+distance of individual, simply pass a value for count that is greater than or
+equal to the size of the exerter subpopulation. Note that if fewer than count
+interacting individuals are within the maximum interaction distance, the vector
+returned may be shorter than count, or even zero-length; it is important to
+check for this possibility even when requesting a single neighbor. If only the
+number of interacting individuals is needed, use interactingNeighborCount()
+instead. The evaluate() method must have been previously called for the receiver
+and exerter subpopulations, and positions saved at evaluation time will be
+used. If the InteractionType is non-spatial, this method may not be called.
+Note that this method uses interaction eligibility as a criterion; it will not
+return neighbors that cannot exert an interaction upon the receiver (due to
+sex-segregation, e.g.). (It will also never return the receiver as a neighbor of
+itself.) To find all neighbors of the receiver, whether they can interact with
+it or not, use nearestNeighbors().
 }
 \section{Copyright}{
 
@@ -64,14 +72,18 @@ on the official website: \url{https://messerlab.org/slim/}
 \seealso{
 Other InteractionType: 
 \code{\link{InteractionType}},
-\code{\link{distanceToPoint}()},
+\code{\link{clippedIntegral}()},
+\code{\link{distanceFromPoint}()},
 \code{\link{distance}()},
 \code{\link{drawByStrength}()},
 \code{\link{evaluate}()},
 \code{\link{interactingNeighborCount}()},
 \code{\link{interactionDistance}()},
+\code{\link{localPopulationDensity}()},
 \code{\link{nearestNeighborsOfPoint}()},
 \code{\link{nearestNeighbors}()},
+\code{\link{neighborCountOfPoint}()},
+\code{\link{neighborCount}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
 \code{\link{totalOfNeighborStrengths}()},

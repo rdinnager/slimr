@@ -126,27 +126,27 @@ sim%.%SLiMSim$simulationFinished();
 
 ```
 
-Simply replace the `.` with `%.%`, then specify the class of object, in this case `SLiMSim`, followed by the `$` operator for R. The `SLiMSim` object contains all the available methods and properties for its class. There is a similar object for all SLiM classes. Note also that all SLiM class objects in `slimr` have an abbreviated alias to save typing. For `SLiMSim` this is `.SS`, so you could type instead `sim%.%.SS$simulationFinished();` for example. Using this way of coding let's you use autocomplete. Try typing just `sim%.%.SS` for example and (if using RStudio) you should see this:
+Simply replace the `.` with `%.%`, then specify the class of object, in this case `SLiMSim`, followed by the `$` operator for R. The `SLiMSim` object contains all the available methods and properties for its class. There is a similar object for all SLiM classes. Note also that all SLiM class objects in `slimr` have an abbreviated alias to save typing. For `SLiMSim` this is `SS`, so you could type instead `sim%.%SS$simulationFinished();` for example. Using this way of coding let's you use autocomplete. Try typing just `sim%.%SS` for example and (if using RStudio) you should see this:
 
-![Autocomplete for .SS class object](figures/autocomplete_SS_1.png)
+![Autocomplete for SS class object](figures/autocomplete_SS_1.png)
 
 The popup gives you a list of all methods (and properties further down) of the class. If you begin typing this list will be narrowed down further. Once you've chosen a method to use, you can press the `tab` key to bring up the arguments that the method accepts, like this:
 
 ![Autocomplete for .SS class object arguments](figures/autocomplete_SS_2.png)
 
-To get help on this method, including full descriptions of the arguments, in RStudio, place you cursor over the function text and press the `F1` key. You can also simply run the function with no arguments or type `?.SS$addSubpop` or `help(".SS$addSubPop")`, all of which will bring up the documentation for this SLiM function.
+To get help on this method, including full descriptions of the arguments, in RStudio, place you cursor over the function text and press the `F1` key. You can also simply run the function with no arguments or type `?SS$addSubpop` or `help("SS$addSubPop")`, all of which will bring up the documentation for this SLiM function.
 
 ```{r printr, echo=FALSE, results='hide', warning=FALSE, message=FALSE}
 require(printr, quietly = TRUE)
 ```
 
 ```{r get_help, message=FALSE, warning=FALSE}
-help(".SS$addSubpop")
+help("SS$addSubpop")
 ```
 
 
 
-There is also two special classes which are not actually classes in SLiM itself, but they are used in `slimr` to keep particular types of SLiM function together. These are `Initialize` (or `.Init`) and `SLiMBuiltin` (or `.SB`). The `Initialize` object contains SLiM functions that can only be used in the `initialize()` block of SLiM code (more on this later). `SLiMBuiltin` contains miscellaneous functions built in to SLiM which are not part of any SLiM class. 
+There is also two special classes which are not actually classes in SLiM itself, but they are used in `slimr` to keep particular types of SLiM function together. These are `Initialize` (or `Init`) and `SLiMBuiltin` (or `SB`). The `Initialize` object contains SLiM functions that can only be used in the `initialize()` block of SLiM code (more on this later). `SLiMBuiltin` contains miscellaneous functions built in to SLiM which are not part of any SLiM class. 
 
 Admittedly, using these extra R objects in the code does make it look somewhat less elegant, and also makes it no longer directly valid SLiM code. But don't worry, `slimr` knows how to transform this syntax back into proper SLiM code, which you can see by printing out the resulting `slim_script` object.
 
@@ -155,23 +155,23 @@ slim_script(
   slim_block(initialize(),
              {
                ## set the overall mutation rate
-               .Init$initializeMutationRate(1e-7); 
+               Init$initializeMutationRate(1e-7); 
                ## m1 mutation type: neutral
-               .Init$initializeMutationType("m1", 0.5, "f", 0.0);
+               Init$initializeMutationType("m1", 0.5, "f", 0.0);
                ## g1 genomic element type: uses m1 for all mutations
-               .Init$initializeGenomicElementType("g1", m1, 1.0);
+               Init$initializeGenomicElementType("g1", m1, 1.0);
                ## uniform chromosome of length 100 kb
-               .Init$initializeGenomicElement(g1, 0, 99999);
+               Init$initializeGenomicElement(g1, 0, 99999);
                ## uniform recombination along the chromosome
-               .Init$initializeRecombinationRate(1e-8);
+               Init$initializeRecombinationRate(1e-8);
              }),
   slim_block(1,
              {
-               sim%.%.SS$addSubpop("p1", 500);
+               sim%.%SS$addSubpop("p1", 500);
              }),
   slim_block(10000,
              {
-               sim%.%.SS$simulationFinished();
+               sim%.%SS$simulationFinished();
              })
 ) -> script_2
 

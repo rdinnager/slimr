@@ -6,9 +6,6 @@
 \usage{
 slim_unload_globals()
 }
-\value{
-
-}
 \description{
 This will remove any objects added to the global environment by
 \code{\link{slim_load_globals}}

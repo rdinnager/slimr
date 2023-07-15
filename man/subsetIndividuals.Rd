@@ -41,8 +41,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=588}{SLiM manual: page 588}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=701}{SLiM manual: page
+701}.
 
 Returns a vector of individuals subset from the individuals in the
 target subpopulation. The parameters specify constraints upon the subset
@@ -51,15 +52,15 @@ specify a specific individual that should not be included (typically the focal
 individual in some operation). Parameter sex, if non-NULL, may specify a sex
 ("M" or "F") for the individuals to be returned, in sexual models. Parameter
 tag, if non-NULL, may specify a tag value for the individuals to be returned.
-Parameters minAge and maxAge, if non-NULL, may specify a minimum or maximum age
-for the individuals to be returned, in nonWF models. Parameter migrant, if non-
-NULL, may specify a required value for the migrant property of the individuals
-to be returned (so T will require that individuals be migrants, F will require
-that they not be). This method is shorthand for getting the individuals property
-of the subpopulation, and then using operator [] to select only individuals with
-the desired properties; besides being much simpler than the equivalent Eidos
-code, it is also much faster. See sampleIndividuals() for a similar method that
-returns a sample taken from a chosen subset of individuals.
+Parameters minAge and maxAge, if non-NULL, may specify a minimum or maximum
+age for the individuals to be returned, in nonWF models. Parameter migrant,
+if non-NULL, may specify a required value for the migrant property of the
+individuals to be returned (so T will require that individuals be migrants,
+F will require that they not be). This method is shorthand for getting the
+individuals property of the subpopulation, and then using operator [] to select
+only individuals with the desired properties; besides being much simpler than
+the equivalent Eidos code, it is also much faster. See sampleIndividuals() for a
+similar method that returns a sample taken from a chosen subset of individuals.
 }
 \section{Copyright}{
 
@@ -74,7 +75,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
@@ -100,6 +101,7 @@ Other Subpopulation:
 \code{\link{setSpatialBounds}()},
 \code{\link{setSubpopulationSize}()},
 \code{\link{spatialMapColor}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{takeMigrants}()}
 }

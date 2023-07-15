@@ -13,7 +13,8 @@ flush(void)
 }
 \value{
 An object of type void or void or void or void or void or void or void
-or void or void or void or void or void or void or void or void.
+or void or void or void or void or void or void or void or void or void or void
+or void or logical.
 }
 \description{
 Documentation for SLiM function \code{flush}, which is a method of the SLiM
@@ -26,8 +27,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=556}{SLiM manual: page 556}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
+668}.
 
 Flushes all buffered data to the output file, synchronously. This will
 make the contents of the file on disk be up-to-date with the running simulation.
@@ -50,21 +52,25 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other LogFile: 
-\code{\link{LogFile}},
+\code{\link{LF}},
 \code{\link{addCustomColumn}()},
-\code{\link{addGenerationStage}()},
-\code{\link{addGeneration}()},
+\code{\link{addCycleStage}()},
+\code{\link{addCycle}()},
 \code{\link{addKeysAndValuesFrom}()},
 \code{\link{addMeanSDColumns}()},
 \code{\link{addPopulationSexRatio}()},
 \code{\link{addPopulationSize}()},
 \code{\link{addSubpopulationSexRatio}()},
 \code{\link{addSubpopulationSize}()},
+\code{\link{addSuppliedColumn}()},
+\code{\link{addTick}()},
 \code{\link{clearKeysAndValues}()},
 \code{\link{logRow}()},
 \code{\link{setFilePath}()},
 \code{\link{setLogInterval}()},
-\code{\link{setValue}()}
+\code{\link{setSuppliedValue}()},
+\code{\link{setValue}()},
+\code{\link{willAutolog}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

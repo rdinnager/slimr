@@ -25,19 +25,20 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=585}{SLiM manual: page 585}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=698}{SLiM manual: page
+698}.
 
-Returns a revised version of point that has been brought inside
-the spatial boundaries of the subpopulation by reflection. In brief, if
-a coordinate of point lies beyond a spatial boundary, that coordinate is
-reflected across the boundary, so that it lies inside the boundary by the
-same magnitude that it previously lay outside the boundary. This is done
-iteratively until all coordinates lie inside the subpopulation's boundaries.
-This method is useful for implementing reflecting boundary conditions. This
-may only be called in simulations for which continuous space has been enabled
-with initializeSLiMOptions(). The length of point must be an exact multiple of
-the dimensionality of the simulation; in other words, point may contain values
+Returns a revised version of point that has been brought inside the
+spatial boundaries of the subpopulation by reﬂection. In brief, if a coordinate
+of point lies beyond a spatial boundary, that coordinate is reﬂected across
+the boundary, so that it lies inside the boundary by the same magnitude
+that it previously lay outside the boundary. This is done iteratively until
+all coordinates lie inside the subpopulation's boundaries. This method
+is useful for implementing reﬂecting boundary conditions. This may only
+be called in simulations for which continuous space has been enabled with
+initializeSLiMOptions(). The length of point must be an exact multiple of the
+dimensionality of the simulation; in other words, point may contain values
 comprising more than one point. In this case, each point will be processed as
 described above and a new vector containing all of the processed points will be
 returned.
@@ -55,7 +56,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
@@ -80,6 +81,7 @@ Other Subpopulation:
 \code{\link{setSpatialBounds}()},
 \code{\link{setSubpopulationSize}()},
 \code{\link{spatialMapColor}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{subsetIndividuals}()},
 \code{\link{takeMigrants}()}

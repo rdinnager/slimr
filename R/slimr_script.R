@@ -69,6 +69,7 @@ new_slimr_script <- function(block_name = character(),
                              end_gen = character(),
                              callback = character(),
                              code = new_slimr_code(),
+                             species = NULL,
                              slimr_output = NULL,
                              slimr_inline = NULL,
                              slimr_template = NULL,
@@ -88,6 +89,7 @@ new_slimr_script <- function(block_name = character(),
                 end_gen = end_gen,
                 callback = callback,
                 code = code),
+           species = species,
            slimr_output = slimr_output,
            slimr_inline = slimr_inline,
            slimr_template = slimr_template,
@@ -111,6 +113,9 @@ vec_ptype2.slimr_script.slimr_script <- function(x, y, ...) {
   slimr_template <- dplyr::bind_rows(attr(x, "slimr_template"),
                                      attr(y, "slimr_template"))
 
+  species <- c(attr(x, "species"),
+               attr(y, "species"))
+
   slimrlang_orig <- NULL
 
   script_info <- list()
@@ -127,6 +132,7 @@ vec_ptype2.slimr_script.slimr_script <- function(x, y, ...) {
                    end_gen = field(x, "end_gen"),
                    callback = field(x, "callback"),
                    code = field(x, "code"),
+                   species = species,
                    slimr_output = slimr_output,
                    slimr_inline = slimr_inline,
                    slimr_template = slimr_template,
@@ -147,6 +153,9 @@ vec_cast.slimr_script.slimr_script <- function(x, to, ...) {
 
   slimrlang_orig <- NULL
 
+  species <- c(attr(x, "species"),
+               attr(to, "species"))
+
   script_info <- list()
   script_info$end_gen <- max(as.numeric(attr(x, "script_info")$end_gen),
                              as.numeric(attr(to, "script_info")$end_gen))
@@ -157,6 +166,7 @@ vec_cast.slimr_script.slimr_script <- function(x, to, ...) {
                    end_gen = field(x, "end_gen"),
                    callback = field(x, "callback"),
                    code = field(x, "code"),
+                   species = species,
                    slimr_output = slimr_output,
                    slimr_inline = slimr_inline,
                    slimr_template = slimr_template,
@@ -246,16 +256,35 @@ as.character.slimr_script <- function(x, for_script = FALSE, ...) {
 
   code <- fix_integers(code)
 
-  string <- paste0(ifelse(is.na(field(x, "block_id")), "", paste0(field(x, "block_id"), " ")),
-                   ifelse(is.na(field(x, "start_gen")), "", field(x, "start_gen")),
-                   ifelse(is.na(field(x, "end_gen")), "", paste0(":", field(x, "end_gen"))),
-                   " ",
-                   field(x, "callback"),
-                   " {\n    ",
-                   purrr::map_chr(code, ~paste(.x, collapse = "\n    ")),
-                   "\n}\n") %>%
-    stringr::str_trim("left")
+  if(is.null(atts$species)) {
 
+    string <- paste0(ifelse(is.na(field(x, "block_id")), "", paste0(field(x, "block_id"), " ")),
+                     ifelse(is.na(field(x, "start_gen")), "", field(x, "start_gen")),
+                     ifelse(is.na(field(x, "end_gen")), "", paste0(":", field(x, "end_gen"))),
+                     " ",
+                     field(x, "callback"),
+                     " {\n    ",
+                     purrr::map_chr(code, ~paste(.x, collapse = "\n    ")),
+                     "\n}\n") %>%
+      stringr::str_trim("left")
+
+  } else {
+    token <- ifelse(field(x, "callback") %in% c("first()", "early()", "late()"),
+                    "ticks",
+                    "species")
+    string <- paste0(ifelse(is.na(field(x, "block_id")), "", paste0(field(x, "block_id"), " ")),
+                     ifelse(is.na(atts$species), "", paste0(token, " ")),
+                     ifelse(is.na(atts$species), "", paste0(atts$species, " ")),
+                     ifelse(is.na(field(x, "start_gen")), "", field(x, "start_gen")),
+                     ifelse(is.na(field(x, "end_gen")), "", paste0(":", field(x, "end_gen"))),
+                     " ",
+                     field(x, "callback"),
+                     " {\n    ",
+                     purrr::map_chr(code, ~paste(.x, collapse = "\n    ")),
+                     "\n}\n") %>%
+      stringr::str_trim("left")
+
+  }
 
   string
 }

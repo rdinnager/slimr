@@ -40,16 +40,17 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=582}{SLiM manual: page 582}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=695}{SLiM manual: page
+695}.
 
-Defines a spatial map for the subpopulation. The map will henceforth
-be identified by name. The map uses the spatial dimensions referenced by
-spatiality, which must be a subset of the dimensions defined for the simulation
+Deﬁnes a spatial map for the subpopulation. The map will henceforth
+be identiﬁed by name. The map uses the spatial dimensions referenced by
+spatiality, which must be a subset of the dimensions deﬁned for the simulation
 in initializeSLiMOptions(). Spatiality "x" is permitted for dimensionality
 "x"; spatiality "x", "y", or "xy" for dimensionality "xy"; and spatiality "x",
 "y", "z", "xy", "yz", "xz", or "xyz" for dimensionality "xyz". The spatial
-map is defined by a grid of values supplied in parameter values. The remaining
+map is deﬁned by a grid of values supplied in parameter values. The remaining
 optional parameters are described below. Note that the semantics of this method
 changed in SLiM 3.5; in particular, the gridSize parameter was removed, and
 the interpretation of the values parameter changed as described below. Existing
@@ -63,47 +64,46 @@ require a (two-dimensional) matrix, and a map with spatiality of "xyz" would
 require a three-dimensional array. (See the Eidos manual for discussion of
 vectors, matrices, and arrays.) The data in values is interpreted in such a way
 that a two-dimensional matrix of values, with (0, 0) at upper left and values
-by column, is transformed into the format expected by SLiM, with (0, 0) at
-lower left and values by row; in other words, the twodimensional matrix as it
-prints in the Eidos console will match the appearance of the two-dimensional
-spatial map as seen in SLiMgui. This is a change in behavior from versions
-prior to SLiM 3.5; it ensures that images loaded from disk with the Eidos class
-Image can be used directly as spatial maps, achieving the expected orientation,
-with no need for transposition or flipping. If the spatial map is a three-
-dimensional array, it is read as successive z-axis "planes", each of which is
-a two-dimensional matrix that is treated as described above. Moving on to the
-other parameters of defineSpatialMap(): if interpolate is F, values across the
-spatial map are not interpolated; the value at a given point is equal to the
-nearest value defined by the grid of values specified. If interpolate is T,
-values across the spatial map will be interpolated (using linear, bilinear,
-or trilinear interpolation as appropriate) to produce spatially continuous
-variation in values. In either case, the corners of the value grid are exactly
-aligned with the corners of the spatial boundaries of the subpopulation as
-specified by setSpatialBoundary(), and the value grid is then stretched across
-the spatial extent of the subpopulation in such a manner as to produce equal
-spacing between the values along each dimension. The setting of interpolation
-only affects how values between these grid points are calculated: by nearest-
-neighbor, or by linear interpolation. Interpolation of spatial maps with
-periodic boundaries is not handled specially; to ensure that the edges of a
-periodic spatial map join smoothly, simply ensure that the grid values at the
-edges of the map are identical, since they will be coincident after periodic
-wrapping. The valueRange and colors parameters travel together; either both
-are unspecified, or both are specified. They control how map values will be
-transformed into colors, by SLiMgui and by the spatialMapColor() method. The
-valueRange parameter establishes the color-mapped range of spatial map values,
-as a vector of length two specifying a minimum and maximum; this does not
-need to match the actual range of values in the map. The colors parameter then
-establishes the corresponding colors for values within the interval defined by
-valueRange: values less than or equal to valueRange[0] will map to colors[0],
-values greater than or equal to valueRange[1] will map to the last colors value,
-and intermediate values will shade continuously through the specified vector
-of colors, with interpolation between adjacent colors to produce a continuous
-spectrum. This is much simpler than it sounds in this description; see the
-recipes in chapter 15 for an illustration of its use. Note that at present,
-SLiMgui will only display spatial maps of spatiality "x", "y", or "xy"; the
-colormapping parameters will simply be ignored by SLiMgui for other spatiality
-values (even if the spatiality is a superset of these values; SLiMgui will
-not attempt to display an "xyz" spatial map, for example, since it has no
+by column, is transformed into the format expected by SLiM, with (0, 0) at lower
+left and values by row; in other words, the two- dimensional matrix as it prints
+in the Eidos console will match the appearance of the two-dimensional spatial
+map as seen in SLiMgui. This is a change in behavior from versions prior to SLiM
+3.5; it ensures that images loaded from disk with the Eidos class Image can be
+used directly as spatial maps, achieving the expected orientation, with no need
+for transposition or ﬂipping. If the spatial map is a three-dimensional array,
+it is read as successive z-axis "planes", each of which is a two-dimensional
+matrix that is treated as described above. Moving on to the other parameters of
+defineSpatialMap(): if interpolate is F, values across the spatial map are not
+interpolated; the value at a given point is equal to the nearest value deﬁned
+by the grid of values speciﬁed. If interpolate is T, values across the spatial
+map will be interpolated (using linear, bilinear, or trilinear interpolation
+as appropriate) to produce spatially continuous variation in values. In either
+case, the corners of the value grid are exactly aligned with the corners of the
+spatial boundaries of the subpopulation as speciﬁed by setSpatialBoundary(), and
+the value grid is then stretched across the spatial extent of the subpopulation
+in such a manner as to produce equal spacing between the values along each
+dimension. The setting of interpolation only affects how values between these
+grid points are calculated: by nearest-neighbor, or by linear interpolation.
+Interpolation of spatial maps with periodic boundaries is not handled specially;
+to ensure that the edges of a periodic spatial map join smoothly, simply ensure
+that the grid values at the edges of the map are identical, since they will be
+coincident after periodic wrapping. The valueRange and colors parameters travel
+together; either both are unspeciﬁed, or both are speciﬁed. They control how map
+values will be transformed into colors, by SLiMgui and by the spatialMapColor()
+method. The valueRange parameter establishes the color-mapped range of spatial
+map values, as a vector of length two specifying a minimum and maximum; this
+does not need to match the actual range of values in the map. The colors
+parameter then establishes the corresponding colors for values within the
+interval deﬁned by valueRange: values less than or equal to valueRange[0] will
+map to colors[0], values greater than or equal to valueRange[1] will map to the
+last colors value, and intermediate values will shade continuously through the
+speciﬁed vector of colors, with interpolation between adjacent colors to produce
+a continuous spectrum. This is much simpler than it sounds in this description;
+see the recipes in chapter 15 for an illustration of its use. Note that at
+present, SLiMgui will only display spatial maps of spatiality "x", "y", or
+"xy"; the color- mapping parameters will simply be ignored by SLiMgui for other
+spatiality values (even if the spatiality is a superset of these values; SLiMgui
+will not attempt to display an "xyz" spatial map, for example, since it has no
 way to choose which 2D slice through the xyz space it ought to display). The
 spatialMapColor() method will return translated color strings for any spatial
 map, however, even if SLiMgui is unable to display the spatial map. If there are
@@ -124,7 +124,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
@@ -149,6 +149,7 @@ Other Subpopulation:
 \code{\link{setSpatialBounds}()},
 \code{\link{setSubpopulationSize}()},
 \code{\link{spatialMapColor}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{subsetIndividuals}()},
 \code{\link{takeMigrants}()}

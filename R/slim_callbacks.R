@@ -336,6 +336,80 @@ callbacks$modifyChild <- function(subpop_id) {
 
 }
 
+#' SLiM mutation() callback
+#'
+#' This callback specifies that a code block is providing logic to modify mutations. It is called
+#' once for each new auto-generated mutation during the tick(s) in which the callback is active.
+#' The \code{mutation()} callback has three possible returns: \code{T}, \code{F}, or (beginning in
+#' SLiM 3.5) a singleton object of type \code{Mutation}.
+#' see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=725}{SLiM Manual: page 725}
+#'
+#' @details
+#' Global variables available in reproduction callbacks:
+#' \describe{
+#'   \item{mut}{The focal mutation that is being modified or reviewed}
+#'   \item{genome}{The parental genome that is being copied}
+#'   \item{element}{The genomic element that controls the mutation site}
+#'   \item{originalNuc}{The nucleotide (0/1/2/3 for A/C/G/T) originally at the mutating position}
+#'   \item{parent}{The parent which is generating the offspring genome}
+#'   \item{subpop}{The subpopulation in which that individual lives}
+#' }
+#'
+#' @param mut_type_id The id of the mutationType to which this callback should apply. Can be an
+#' integer 1, 2, etc., or character "m1", "m2", etc.
+#' @param subpop_id The id(s) of the subpopulation(s) to which this callback should apply. Can
+#' be an integer 1, 2, etc., or character "p1", "p2", etc.
+#' @family callbacks
+#' @return None
+#' @export
+#' @section Copyright:
+#' This is documentation for a function in the SLiM software, and has been
+#' modified from the official manual,
+#' which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#' documentation is
+#' Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#' about SLiM can be found
+#' on the official website: \url{https://messerlab.org/slim/}
+#' @author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#' (\email{messer@cornell.edu})
+#' @examples
+#' # From page 261 of the SLiM Manual
+#' slim_block(recombination(), {
+#'   if (genome1.containsMarkerMutation(m2, 25000) ==
+#'       genome2.containsMarkerMutation(m2, 25000)) {
+#'
+#'     return(F)
+#'
+#'   }
+#'
+#'   inInv = (breakpoints > 25000) & (breakpoints < 75000)
+#'   if (!any(inInv)) {
+#'     return(F)
+#'   }
+#'
+#'   breakpoints = breakpoints[!inInv]
+#'   return(T)
+#'
+#' })
+mutation <- function(mut_type_id, subpop_id) {
+  callbacks$mutation(mut_type_id, subpop_id)
+}
+
+callbacks$mutation <- function(mut_type_id, subpop_id) {
+
+  argus <- rlang::enexprs(mut_type_id, subpop_id)
+
+  argus <- argus[!purrr::map_lgl(argus, rlang::is_missing)]
+
+  cb <- rlang::expr(fitness(!!!rlang::maybe_missing(argus)))
+
+  cb <- rlang::expr_text(cb)
+
+  class(cb) <- "callback"
+  cb
+
+}
+
 #' SLiM recombination() callback
 #'
 #' This callback specifies that a code block is providing logic to determine the breakpoints
@@ -546,6 +620,7 @@ callbacks <- list2env(callbacks)
 #' \item{\code{\link{fitness}}}
 #' \item{\code{\link{mateChoice}}}
 #' \item{\code{\link{modifyChild}}}
+#' \item{\code{\link{mutation}}}
 #' \item{\code{\link{recombination}}}
 #' \item{\code{\link{interaction}}}
 #' \item{\code{\link{reproduction}}}

@@ -42,8 +42,8 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=574}{SLiM manual: page 574}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
 
 Returns a vector of mutations subset from the list of all active
 mutations in the simulation (as would be provided by the mutations property).
@@ -55,14 +55,15 @@ to be returned (as either a MutationType object or an integer identifier).
 Parameter position, if non-NULL, may specify a base position for the mutations
 to be returned. Parameter nucleotide, if non-NULL, may specify a nucleotide
 for the mutations to be returned (either as a string, "A" / "C" / "G" / "T",
-or as an integer, 0 / 1 / 2 / 3 respectively). Parameter tag, if non-NULL, may
-specify a tag value for the mutations to be returned. Parameter id, if non-
-NULL, may specify a required value for the id property of the mutations to be
-returned. This method is shorthand for getting the mutations property of the
-subpopulation, and then using operator [] to select only mutations with the
-desired properties; besides being much simpler than the equivalent Eidos code,
-it is also much faster. Note that if you only need to select on mutation type,
-the mutationsOfType() method will be even faster.
+or as an integer, 0 / 1 / 2 / 3 respectively). Parameter tag, if non-NULL,
+may specify a tag value for the mutations to be returned. Parameter id, if
+non-NULL, may specify a required value for the id property of the mutations
+to be returned. This method is shorthand for getting the mutations property
+of the subpopulation, and then using operator [] to select only mutations with
+the desired properties; besides being much simpler than the equivalent Eidos
+code, it is also much faster. Note that if you only need to select on mutation
+type, the mutationsOfType() method will be even faster. Eidos events fitness()
+mateChoice() modifyChild() recombination() interaction() reproduction() 574
 }
 \section{Copyright}{
 
@@ -77,7 +78,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other SLiMSim: 
-\code{\link{SLiMSim}},
+\code{\link{SS}},
 \code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},

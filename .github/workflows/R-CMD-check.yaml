@@ -3,6 +3,7 @@ on:
     branches:
       - master
       - develop
+      - slim_4
   pull_request:
     branches:
       - master
@@ -60,7 +61,16 @@ jobs:
           cd ${{ github.workspace }}
           wget http://benhaller.com/slim/SLiM.zip
 
-      - name: Cache SLiM
+      - name: Cache SLiM on Windows
+        id: cache-slim-win
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ github.workspace }}/SLiM_build
+            ${{ github.workspace }}/SLiM
+          key: ${{ runner.os }}-build_SLiM-${{ hashFiles('/d/a/SLiM.zip') }}
+
+      - name: Cache SLiM on non-Windows
         id: cache-slim
         uses: actions/cache@v2
         with:
@@ -71,12 +81,11 @@ jobs:
 
       - name: Setup cmake on non-Windows
         if: runner.os != 'Windows'
-        uses: jwlawson/actions-setup-cmake@v1.9
-        with:
-          github-api-token: ${{ secrets.INSTALL_GITHUB_PAT }}
+        uses: jwlawson/actions-setup-cmake@v1.14
 
       - name: Install SLiM on Windows Part 1
-        if: runner.os == 'Windows' && steps.cache-slim.outputs.cache-hit != 'true'
+        if: runner.os == 'Windows' && steps.cache-slim-win.outputs.cache-hit != 'true'
+        continue-on-error: true
         shell: msys2 {0}
         run: |
           cd /d/a
@@ -101,6 +110,7 @@ jobs:
 
       - name: Install SLiM on non-Windows Part 1
         if: runner.os != 'Windows' && steps.cache-slim.outputs.cache-hit != 'true'
+        continue-on-error: true
         run: |
           cd ${{ github.workspace }}
           unzip -o SLiM.zip
@@ -161,95 +171,3 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
-
-  test-coverage:
-    runs-on: macOS-latest
-    needs: R-CMD-check
-    env:
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      _R_CHECK_FORCE_SUGGESTS_: false
-      GITHUB_PAT: ${{ secrets.INSTALL_GITHUB_PAT }}
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: r-lib/actions/setup-r@master
-
-      - uses: r-lib/actions/setup-pandoc@master
-
-      - name: Query dependencies
-        run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-        shell: Rscript {0}
-
-      - name: Cache R packages
-        uses: actions/cache@v1
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: macOS-r-4.0-1-v1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: macOS-r-4.0-1-v1-
-
-      - name: Install dependencies
-        run: |
-          install.packages(c("remotes"))
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_bioc("Biostrings")
-          remotes::install_cran("covr")
-        shell: Rscript {0}
-
-      - name: Download SLiM
-        run: |
-          cd ${{ github.workspace }}
-          wget http://benhaller.com/slim/SLiM.zip
-
-      - name: Cache SLiM
-        id: cache-slim
-        uses: actions/cache@v2
-        with:
-          path: |
-            ${{ github.workspace }}/SLiM_build
-            ${{ github.workspace }}/SLiM
-          key: ${{ runner.os }}test-coverage-build_SLiM-${{ hashFiles('SLiM.zip') }}
-
-      - name: Install SLiM Part 1
-        if: steps.cache-slim.outputs.cache-hit != 'true'
-        run: |
-          cd ${{ github.workspace }}
-          unzip -o SLiM.zip
-          mkdir SLiM_build
-          cd SLiM_build
-          cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
-          make
-
-      - name: Install SLiM Part 2
-        run: |
-          cd ${{ github.workspace }}/SLiM_build
-          sudo make install
-          cd ..
-          rm SLiM.zip
-
-      - name: Download test objects for covr
-        uses: actions/download-artifact@master
-        with:
-          name: covr-test-objects
-          path: ~/covr_test_objects
-
-      - name: Test coverage
-        run: |
-          codecovr_try <- try(covr::codecov(quiet = FALSE, clean = FALSE,
-          line_exclusions = "R/slim_lang.R"))
-          if(inherits(codecovr_try, "try-error"))
-          {
-          dir.create("coverage_results")
-          file.copy(list.files(tempdir(), full.names = TRUE), "coverage_results", recursive = TRUE)
-          print(codecovr_try)
-          quit(status = 1L)
-          }
-        shell: Rscript {0}
-
-      - name: Upload coverage results
-        if: failure()
-        uses: actions/upload-artifact@master
-        with:
-          name: coverage-results
-          path: coverage_results

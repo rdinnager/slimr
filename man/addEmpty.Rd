@@ -6,10 +6,16 @@
 \alias{.P$addEmpty}
 \title{SLiM method addEmpty}
 \usage{
-addEmpty(sex)
+addEmpty(sex, genome1Null, genome2Null)
 }
 \arguments{
 \item{sex}{An object of type null or float or string. Must be of length 1 (a
+singleton). The default value is \code{NULL}. See details for description.}
+
+\item{genome1Null}{An object of type null or logical. Must be of length 1 (a
+singleton). The default value is \code{NULL}. See details for description.}
+
+\item{genome2Null}{An object of type null or logical. Must be of length 1 (a
 singleton). The default value is \code{NULL}. See details for description.}
 }
 \value{
@@ -27,21 +33,35 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=580}{SLiM manual: page 580}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=692}{SLiM manual: page
+692}.
 
 Generates a new offspring individual with empty genomes (i.e.,
 containing no mutations), queues it for addition to the target subpopulation,
-and returns it. The new offspring will not be visible as a member of the target
-subpopulation until the end of the offspring generation life cycle stage. No
-recombination() or mutation() callbacks will be called. The target subpopulation
-will be used to locate applicable modifyChild() callbacks governing the
-generation of the offspring individual (unlike the other addX() methods, because
-there is no parental individual to reference). The offspring is considered
-to have no parents for the purposes of pedigree tracking. The sex parameter
-is treated as in addCrossed(). Note that this method is only for use in nonWF
-models. See addCrossed() for further general notes on the addition of new
-offspring individuals.
+and returns it. The new offspring will not be visible as a member of the
+target subpopulation until the end of the offspring generation tick cycle
+stage. No recombination() or mutation() callbacks will be called. The target
+subpopulation will be used to locate applicable modifyChild() callbacks
+governing the generation of the offspring individual (unlike the other addX()
+methods, because there is no parental individual to reference). The offspring
+is considered to have no parents for the purposes of pedigree tracking. The
+sex parameter is treated as in addCrossed(). By default - when genome1Null
+and genome2Null are both NULL - null genomes will be generated instead of
+empty genomes only in sex-chromosome simulations, where the sex chromosome
+that is not being simulated is represented by a null genome; otherwise, empty
+genomes rather than null genomes will be created. This default behavior can be
+changed by passing T or F for genome1Null or genome2Null, which will force the
+corresponding offspring genome to be null (T) or non-null (F). The behavior
+in sex-chromosome simulations cannot be changed, since the presence of null
+genomes there is dictated by sex, but T or F may be passed as long as it matches
+what SLiM would do anyway. In all other simulations there is little point in
+passing F (since that would be the default behavior anyway), but passing T can
+be used to make one or both genomes be null genomes, which can be useful for,
+e.g., modeling haploids (for which, by convention, the second genome is usually
+a null genome in SLiM). Note that this method is only for use in nonWF models.
+See addCrossed() for further general notes on the addition of new offspring
+individuals.
 }
 \section{Copyright}{
 
@@ -56,7 +76,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addRecombinant}()},
@@ -81,6 +101,7 @@ Other Subpopulation:
 \code{\link{setSpatialBounds}()},
 \code{\link{setSubpopulationSize}()},
 \code{\link{spatialMapColor}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{subsetIndividuals}()},
 \code{\link{takeMigrants}()}

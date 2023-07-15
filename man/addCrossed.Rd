@@ -33,14 +33,15 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=579}{SLiM manual: page 579}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=691}{SLiM manual: page
+691}.
 
 Generates a new offspring individual from the given parents
 by biparental sexual reproduction, queues it for addition to the target
 subpopulation, and returns it. The new offspring will not be visible as a
 member of the target subpopulation until the end of the offspring generation
-life cycle stage. Attempting to use a newly generated offspring individual
+tick cycle stage. Attempting to use a newly generated offspring individual
 as a mate, or to reference it as a member of the target subpopulation in any
 other way, will result in an error. In most models the returned individual is
 not used, but it is provided for maximal generality and flexibility. The new
@@ -76,7 +77,7 @@ spawning), however, biparental mating may occur between parents that are not
 from the same subpopulation; that is legal in nonWF models, and in that case,
 modifyChild() callbacks for the subpopulation of parent1 are used (since that
 is the maternal parent). If the modifyChild() callback process results in
-rejection of the proposed child (see section 25.4), a new offspring individual
+rejection of the proposed child (see section 25.5), a new offspring individual
 will not be generated, and this method will return NULL. To force the generation
 of an offspring individual from a given pair of parents, you could loop until
 addCrossed() succeeds, but note that if your modifyChild() callback rejects
@@ -105,7 +106,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addEmpty}()},
 \code{\link{addRecombinant}()},
@@ -130,6 +131,7 @@ Other Subpopulation:
 \code{\link{setSpatialBounds}()},
 \code{\link{setSubpopulationSize}()},
 \code{\link{spatialMapColor}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{subsetIndividuals}()},
 \code{\link{takeMigrants}()}

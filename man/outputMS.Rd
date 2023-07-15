@@ -32,8 +32,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=537}{SLiM manual: page 537}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=644}{SLiM manual: page
+644}.
 
 Output the target genomes in MS format (see section 26.3.2 for output
 format details). This low-level output method may be used to output any sample
@@ -53,7 +54,7 @@ that some mutations that do exist in the sampled genomes might not be included
 in the output, simply because they exist in every sampled genome. See output()
 and outputVCF() for other output formats. Output is generally done in a late()
 event, so that the output reflects the state of the simulation at the end of a
-generation.
+tick.
 }
 \section{Copyright}{
 
@@ -68,7 +69,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Genome: 
-\code{\link{Genome}},
+\code{\link{G}},
 \code{\link{addMutations}()},
 \code{\link{addNewDrawnMutation}()},
 \code{\link{addNewMutation}()},

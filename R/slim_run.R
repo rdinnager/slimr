@@ -239,7 +239,6 @@ slim_run.slimr_script_coll <- function(x, slim_path = NULL,
                                                ...)),
                                      .progress = progress,
                                      .options = furrr::furrr_options(globals = FALSE,
-                                                                     lazy = TRUE,
                                                                      seed = TRUE))
   } else {
     all_results <- purrr::map(x,

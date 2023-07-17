@@ -101,7 +101,6 @@
                         <h4 data-toc-skip class="author">Russell
 Dinnage</h4>
             
-            <h4 data-toc-skip class="date">22/06/2020</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rdinnager/slimr/blob/HEAD/vignettes/articles/Custom_vis.Rmd" class="external-link"><code>vignettes/articles/Custom_vis.Rmd</code></a></small>
       <div class="hidden name"><code>Custom_vis.Rmd</code></div>
@@ -249,7 +248,7 @@ accumulate a few mutations to test the visualization).</p>
 <span><span class="co">##  8         40 fix_mut sim.outputFull() slim_output "#OUT: 40 40 A\nVersion: 3\n…</span></span>
 <span><span class="co">##  9         45 fix_mut sim.outputFull() slim_output "#OUT: 45 45 A\nVersion: 3\n…</span></span>
 <span><span class="co">## 10         50 fix_mut sim.outputFull() slim_output "#OUT: 50 50 A\nVersion: 3\n…</span></span>
-<span><span class="co">## # … with 190 more rows</span></span></code></pre>
+<span><span class="co">## # ℹ 190 more rows</span></span></code></pre>
 <p>So now we can write a function that takes the outputted
 <code>tibble</code> and make the desired plot. The first thing we need
 to do is extract the relevant information from the full output. In this
@@ -265,22 +264,22 @@ generation. Let’s test it:</p>
 <code class="sourceCode R"><span><span class="va">mut_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_extract_full.html">slim_extract_full</a></span><span class="op">(</span><span class="va">output_test</span><span class="op">$</span><span class="va">output_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">output_test</span><span class="op">$</span><span class="va">output_data</span><span class="op">)</span>, <span class="op">]</span>,</span>
 <span>                                   <span class="st">"mutations"</span><span class="op">)</span></span>
 <span><span class="va">mut_dat</span></span></code></pre></div>
-<pre class="fansi fansi-output"><code><span><span class="co">## # A tibble: 82 × 11</span></span>
-<span><span class="co">##    gener…¹ mut_id uniqu…² mut_t…³ chrom…⁴ selec…⁵ domin…⁶ subpop first…⁷ preva…⁸</span></span>
-<span><span class="co">##      &lt;int&gt;  &lt;int&gt;   &lt;int&gt; &lt;chr&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;int&gt;   &lt;int&gt;</span></span>
-<span><span class="co">##  1    1000      6     908 m1       206180       0     0.5 p1         172      53</span></span>
-<span><span class="co">##  2    1000     52    1523 m1       170069       0     0.5 p1         284      37</span></span>
-<span><span class="co">##  3    1000     24    1545 m1       189875       0     0.5 p1         288     147</span></span>
-<span><span class="co">##  4    1000      8    1617 m1       231226       0     0.5 p1         299      53</span></span>
-<span><span class="co">##  5    1000     30    1868 m1       242581       0     0.5 p1         351     147</span></span>
-<span><span class="co">##  6    1000     29    2441 m1       236017       0     0.5 p1         458     147</span></span>
-<span><span class="co">##  7    1000      7    2722 m1       224925       0     0.5 p1         512      53</span></span>
-<span><span class="co">##  8    1000     49    2874 m1       112238       0     0.5 p1         542      37</span></span>
-<span><span class="co">##  9    1000      5    2887 m1       157237       0     0.5 p1         544     163</span></span>
-<span><span class="co">## 10    1000     14    2975 m1        48861       0     0.5 p1         561     124</span></span>
-<span><span class="co">## # … with 72 more rows, 1 more variable: nucleotide &lt;chr&gt;, and abbreviated</span></span>
-<span><span class="co">## #   variable names ¹​generation, ²​unique_mut_id, ³​mut_type, ⁴​chrome_pos,</span></span>
-<span><span class="co">## #   ⁵​selection, ⁶​dominance, ⁷​first_gen, ⁸​prevalence</span></span></code></pre>
+<pre class="fansi fansi-output"><code><span><span class="co">## # A tibble: 77 × 11</span></span>
+<span><span class="co">##    generation mut_id unique_mut_id mut_type chrome_pos selection dominance</span></span>
+<span><span class="co">##         &lt;int&gt;  &lt;int&gt;         &lt;int&gt; &lt;chr&gt;         &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">##  1       1000     11          1186 m1            76997         0       0.5</span></span>
+<span><span class="co">##  2       1000      6          1295 m1            34633         0       0.5</span></span>
+<span><span class="co">##  3       1000     21          1679 m1            73846         0       0.5</span></span>
+<span><span class="co">##  4       1000      1          2134 m1            10195         0       0.5</span></span>
+<span><span class="co">##  5       1000      7          2222 m1            54574         0       0.5</span></span>
+<span><span class="co">##  6       1000     10          2319 m1            75262         0       0.5</span></span>
+<span><span class="co">##  7       1000      4          2323 m1            25228         0       0.5</span></span>
+<span><span class="co">##  8       1000      0          2914 m1             3692         0       0.5</span></span>
+<span><span class="co">##  9       1000      8          3095 m1            58158         0       0.5</span></span>
+<span><span class="co">## 10       1000     22          3255 m1            79389         0       0.5</span></span>
+<span><span class="co">## # ℹ 67 more rows</span></span>
+<span><span class="co">## # ℹ 4 more variables: subpop &lt;chr&gt;, first_gen &lt;int&gt;, prevalence &lt;int&gt;,</span></span>
+<span><span class="co">## #   nucleotide &lt;chr&gt;</span></span></code></pre>
 <p>Okay, so now we are ready to make our callback function. First we
 will create a little function to plot the Hilbert Curve. This uses a
 trick from the <code>grDevices</code> package to hold the display until
@@ -351,7 +350,7 @@ necessary.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

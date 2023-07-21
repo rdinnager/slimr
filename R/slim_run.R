@@ -287,7 +287,7 @@ slim_run_script <- function(script_txt,
 
   platform <- get_os()
 
-  process_during <- progress || !is.null(callbacks) || !is.null(save_to_file)
+  process_during <- progress || !is.null(callbacks) || !is.null(save_to_file) || simple_run
 
   if(new_grdev) {
     assert_package("grDevices")

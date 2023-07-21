@@ -486,7 +486,7 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #'  Copyright © 2016–2020 Philipp Messer. All rights reserved. More information about SLiM can be found
 #'  on the official website: \\url{https://messerlab.org/slim/}
 #' @author Benjamin C Haller (\\email{bhaller@benhaller.com}) and Philipp W Messer (\\email{messer@cornell.edu})
-`%?%` <- function(lhs, rhs) {
+`%else%` <- function(lhs, rhs) {
   print(paste0(lhs, " ? ", rhs))
   ?`%?%`
 }

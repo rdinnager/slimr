@@ -922,11 +922,12 @@ slim_extract_genlight_tibble_GS <- function(output_GS) {
   mut_dat <- mut_dat %>%
     dplyr::filter(!is.na(unique_mut_id))
   alleles <- alleles %>%
-    dplyr::filter(!is.na(unique_mut_id)) %>%
+    #dplyr::filter(!is.na(unique_mut_id)) %>%
     tidyr::pivot_wider(id_cols = c("ind_id"),
                        names_from = "unique_mut_id",
                        values_from = "count",
-                       values_fill = 0)
+                       values_fill = 0) %>%
+    dplyr::select(-`NA`)
 
   list(alleles = alleles, mut_dat = mut_dat)
 

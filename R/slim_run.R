@@ -72,7 +72,7 @@ slim_run <- function(x, slim_path = NULL,
                      record_graphics = "",
                      rec_args = NULL,
                      parallel = FALSE,
-                     progress = TRUE,
+                     progress = FALSE,
                      throw_error = FALSE,
                      ...) {
   UseMethod("slim_run", x)
@@ -92,7 +92,7 @@ slim_run.character <- function(x, slim_path = NULL,
                                record_graphics = "",
                                rec_args = NULL,
                                parallel = FALSE,
-                               progress = TRUE,
+                               progress = FALSE,
                                throw_error = FALSE,
                                ...) {
 
@@ -135,7 +135,7 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
                                   record_graphics = "",
                                   rec_args = NULL,
                                   parallel = FALSE,
-                                  progress = TRUE,
+                                  progress = FALSE,
                                   throw_error = FALSE,
                                   ...) {
 
@@ -192,7 +192,7 @@ slim_run.slimr_script_coll <- function(x, slim_path = NULL,
                                        record_graphics = "",
                                        rec_args = NULL,
                                        parallel = FALSE,
-                                       progress = TRUE,
+                                       progress = FALSE,
                                        throw_error = FALSE,
                                        ...) {
 
@@ -287,6 +287,8 @@ slim_run_script <- function(script_txt,
 
   platform <- get_os()
 
+  process_during <- progress || !is.null(callbacks) || !is.null(save_to_file)
+
   if(new_grdev) {
     assert_package("grDevices")
     grDevices::dev.new(noRStudioGD = TRUE)
@@ -353,13 +355,14 @@ slim_run_script <- function(script_txt,
 
     if(slim_p$is_alive()) {
 
-      slim_p$poll_io(10000)
-
       if(file_out) {
         # out_lines <- readr::read_lines(conn, skip = curr_line, lazy = FALSE,
         #                                progress = FALSE)
-        out_lines <- read_out_lines(conn, skip = curr_line)
+        if(process_during) {
+          out_lines <- read_out_lines(conn, skip = curr_line)
+        }
       } else {
+        slim_p$poll_io(10000)
         out_lines <- c(leftovers, slim_p$read_output_lines())
       }
 
@@ -369,7 +372,9 @@ slim_run_script <- function(script_txt,
       if(file_out) {
         # out_lines <- readr::read_lines(conn, skip = curr_line, lazy = FALSE,
         #                                progress = FALSE)
-        out_lines <- read_out_lines(conn, skip = curr_line)
+        if(process_during) {
+          out_lines <- read_out_lines(conn, skip = curr_line)
+        }
       } else {
         out_lines <- c(leftovers, slim_p$read_all_output_lines())
       }
@@ -403,78 +408,95 @@ slim_run_script <- function(script_txt,
       }
     } else {
 
+      if(process_during) {
+        if(length(out_lines) > 0) {
 
-      if(length(out_lines) > 0) {
+          output_list <- slim_process_output(out_lines)
 
-        output_list <- slim_process_output(out_lines)
-
-        if(!is.null(output_list$last_line)) {
-          curr_line <- curr_line + output_list$last_line
-        }
-
-        ## save results so far to file
-        if(nrow(output_list$data) > 0 & !is.null(save_to_file)) {
-          dat_to_save <- output_list$data %>%
-            dplyr::filter(.data$name %in% save_to_file$output_name)
-          output_list$data <- output_list$data %>%
-            dplyr::filter(!.data$name %in% save_to_file$output_name)
-          slim_save_data(dat_to_save, save_to_file)
-          if(nrow(output_list$data) == 0) {
-            output_list$data <- NULL
+          if(!is.null(output_list$last_line)) {
+            curr_line <- curr_line + output_list$last_line
           }
-        }
 
-        if(nrow(output_list$data) > 0) {
-          data_i <- data_i + 1L
-
-          output_data[[data_i]] <- output_list$data
-
-          gen_curr <- max(output_data[[data_i]]$generation)
-          gens_past <- gen_curr - gens_past
-          if(!is.null(callbacks) && !is.na(gens_past) && !is.null(gens_past) && gens_past > cb_every) {
-            data_bound <- dplyr::bind_rows(output_data[(last_bound + 1L):data_i])
-            last_bound <- data_i
-            gen_past <- gen_curr
-            if(!is.null(callbacks)) {
-              purrr::walk(callbacks,
-                          ~do.call(.x, c(list(data = data_bound),
-                                         cb_args)))
+          ## save results so far to file
+          if(nrow(output_list$data) > 0 & !is.null(save_to_file)) {
+            dat_to_save <- output_list$data %>%
+              dplyr::filter(.data$name %in% save_to_file$output_name)
+            output_list$data <- output_list$data %>%
+              dplyr::filter(!.data$name %in% save_to_file$output_name)
+            slim_save_data(dat_to_save, save_to_file)
+            if(nrow(output_list$data) == 0) {
+              output_list$data <- NULL
             }
           }
 
-          if(progress) {
-            pb <- slim_update_progress(output_list, pb, show_output, simple_pb, end_gen)
-          }
-          if(simple_pb) {
-            simple_pb <- FALSE
-          }
-        }
+          if(nrow(output_list$data) > 0) {
+            data_i <- data_i + 1L
 
-        if(capture_output) {
+            output_data[[data_i]] <- output_list$data
 
-          if(keep_all_output) {
-            out_i <- out_i + 1L
-            all_output[[out_i]] <- out_lines
-          } else {
-            if(length(output_list$extra_out) > 0) {
+            gen_curr <- max(output_data[[data_i]]$generation)
+            gens_past <- gen_curr - gens_past
+            if(!is.null(callbacks) && !is.na(gens_past) && !is.null(gens_past) && gens_past > cb_every) {
+              data_bound <- dplyr::bind_rows(output_data[(last_bound + 1L):data_i])
+              last_bound <- data_i
+              gen_past <- gen_curr
+              if(!is.null(callbacks)) {
+                purrr::walk(callbacks,
+                            ~do.call(.x, c(list(data = data_bound),
+                                           cb_args)))
+              }
+            }
+
+            if(progress) {
+              pb <- slim_update_progress(output_list, pb, show_output, simple_pb, end_gen)
+            }
+            if(simple_pb) {
+              simple_pb <- FALSE
+            }
+          }
+
+          if(capture_output) {
+
+            if(keep_all_output) {
               out_i <- out_i + 1L
-              all_output[[out_i]] <- output_list$extra_out
+              all_output[[out_i]] <- out_lines
+            } else {
+              if(length(output_list$extra_out) > 0) {
+                out_i <- out_i + 1L
+                all_output[[out_i]] <- output_list$extra_out
+              }
             }
           }
+
+          leftovers <- output_list$leftovers
+          out_lines <- NULL
+
         }
-
-        leftovers <- output_list$leftovers
-        out_lines <- NULL
-
       }
     }
   }
 
   if(!simple_run) {
-    final_output <- slim_process_output(leftovers)
-    output_data[[data_i + 1L]] <- final_output$data
-    if(capture_output) {
-      all_output[[out_i + 1L]] <- final_output$extra_out
+    if(process_during) {
+      final_output <- slim_process_output(leftovers)
+      output_data[[data_i + 1L]] <- final_output$data
+      if(capture_output) {
+        all_output[[out_i + 1L]] <- final_output$extra_out
+      }
+    } else {
+      out <- read_out_lines(conn, skip = 0)
+      final_output <- slim_process_output(out)
+      output_data[[1]] <- final_output$data
+      if(capture_output) {
+        if(keep_all_output) {
+          all_output[[1]] <- out
+        } else {
+          all_output[[1]] <- final_output$extra_out
+          if(!is.null(final_output$leftovers)) {
+            all_output[[2]] <- final_output$leftovers
+          }
+        }
+      }
     }
   }
 

@@ -34,16 +34,19 @@ slim_block(1, early(), {
 \seealso{
 Other callbacks: 
 \code{\link{first}()},
+\code{\link{fitnessEffect}()},
 \code{\link{fitness}()},
 \code{\link{initialize}()},
 \code{\link{interaction}()},
 \code{\link{late}()},
 \code{\link{mateChoice}()},
 \code{\link{modifyChild}()},
+\code{\link{mutationEffect}()},
 \code{\link{mutation}()},
 \code{\link{recombination}()},
 \code{\link{reproduction}()},
-\code{\link{slim_callbacks}()}
+\code{\link{slim_callbacks}()},
+\code{\link{survival}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

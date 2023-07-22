@@ -21,7 +21,7 @@ slim_run(
   record_graphics = "",
   rec_args = NULL,
   parallel = FALSE,
-  progress = TRUE,
+  progress = FALSE,
   throw_error = FALSE,
   ...
 )
@@ -40,7 +40,7 @@ slim_run(
   record_graphics = "",
   rec_args = NULL,
   parallel = FALSE,
-  progress = TRUE,
+  progress = FALSE,
   throw_error = FALSE,
   ...
 )
@@ -59,7 +59,7 @@ slim_run(
   record_graphics = "",
   rec_args = NULL,
   parallel = FALSE,
-  progress = TRUE,
+  progress = FALSE,
   throw_error = FALSE,
   ...
 )
@@ -78,7 +78,7 @@ slim_run(
   record_graphics = "",
   rec_args = NULL,
   parallel = FALSE,
-  progress = TRUE,
+  progress = FALSE,
   throw_error = FALSE,
   ...
 )

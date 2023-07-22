@@ -7,6 +7,9 @@
     <loc>https://rdinnager.github.io/slimr/articles/articles/Custom_vis.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/articles/articles/Main_manuscript_example_v2.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/articles/articles/simple_example_using_migration_and_fst.html</loc>
   </url>
   <url>
@@ -29,6 +32,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/articles/slimrlang_intro.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/articles/useful_tables.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/authors.html</loc>
@@ -217,6 +223,9 @@
     <loc>https://rdinnager.github.io/slimr/reference/fitness.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/fitnessEffect.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/flush.html</loc>
   </url>
   <url>
@@ -239,6 +248,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/grapes-.-grapes.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/grapes-else-grapes.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/grapes-help-grapes.html</loc>
@@ -353,6 +365,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/mutationCountsInGenomes.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/mutationEffect.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/mutationFrequencies.html</loc>
@@ -782,6 +797,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/sumOfMutationsOfType.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/survival.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/takeMigrants.html</loc>

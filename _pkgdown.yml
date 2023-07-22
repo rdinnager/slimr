@@ -43,6 +43,7 @@ reference:
   - contents:
     - "`%.%`"
     - "`%?%`"
+    - "`%else%`"
   - title: SLiM Callbacks
     desc: Function stubs for SLiM callback Functions
   - contents:
@@ -51,11 +52,14 @@ reference:
       - late
       - early
       - fitness
+      - fitnessEffect
       - mateChoice
       - modifyChild
+      - mutationEffect
       - recombination
       - interaction
       - reproduction
+      - survival
   - title: SLiM Class Objects
     desc: >
       Objects representing the different classes used in SLiM. These can be used to look up and

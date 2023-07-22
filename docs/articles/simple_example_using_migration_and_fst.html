@@ -60,6 +60,9 @@
       <a href="../articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
+      <a href="../articles/Main_manuscript_example_v2.html">Using slimr to investigate the population genetics of the Sandy Inland Mouse in the periodic rainfall environment of the Simpson Desert</a>
+    </li>
+    <li>
       <a href="../articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
@@ -70,6 +73,9 @@
     </li>
     <li>
       <a href="../articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+    </li>
+    <li>
+      <a href="../articles/useful_tables.html">Useful slimr Tables</a>
     </li>
   </ul>
 </li>
@@ -999,10 +1005,10 @@ continue with our analysis by calculating Fst.</p>
 <span><span class="va">end_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">end_time</span> <span class="op">-</span> <span class="va">start_time</span></span>
-<span><span class="co">#&gt; Time difference of 2.586049 mins</span></span>
+<span><span class="co">#&gt; Time difference of 3.050072 mins</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Total Duration:"</span>, <span class="va">end_time</span> <span class="op">-</span> <span class="va">start_time</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Total Duration: 2.586049</span></span></code></pre></div>
+<span><span class="co">#&gt; Total Duration: 3.050072</span></span></code></pre></div>
 <p>Firstly, negative values of Fst are incorrect, and usually reflect
 numerical inaccuracy around zero, so we will set negative Fst values to
 zero. Then let’s look at the distribution.</p>
@@ -1031,20 +1037,20 @@ an idea by running a simple linear model. Then we will do plots.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
-<span><span class="co">#&gt; -0.08706 -0.02651 -0.00610  0.01303  0.58905 </span></span>
+<span><span class="co">#&gt; -0.09117 -0.03810 -0.00932  0.01505  0.70214 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;                   Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)       0.026550   0.003834   6.926 2.71e-11 ***</span></span>
-<span><span class="co">#&gt; pop_size_st      -0.012313   0.003859  -3.191  0.00157 ** </span></span>
-<span><span class="co">#&gt; m_st             -0.031899   0.003860  -8.264 4.78e-15 ***</span></span>
-<span><span class="co">#&gt; pop_size_st:m_st  0.012210   0.003788   3.224  0.00141 ** </span></span>
+<span><span class="co">#&gt; (Intercept)       0.029191   0.004567   6.391 6.38e-10 ***</span></span>
+<span><span class="co">#&gt; pop_size_st      -0.005577   0.004597  -1.213    0.226    </span></span>
+<span><span class="co">#&gt; m_st             -0.036193   0.004599  -7.870 6.72e-14 ***</span></span>
+<span><span class="co">#&gt; pop_size_st:m_st  0.005673   0.004513   1.257    0.210    </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 0.0664 on 296 degrees of freedom</span></span>
-<span><span class="co">#&gt; Multiple R-squared:  0.2257, Adjusted R-squared:  0.2179 </span></span>
-<span><span class="co">#&gt; F-statistic: 28.76 on 3 and 296 DF,  p-value: 2.389e-16</span></span></code></pre></div>
+<span><span class="co">#&gt; Residual standard error: 0.07911 on 296 degrees of freedom</span></span>
+<span><span class="co">#&gt; Multiple R-squared:  0.1775, Adjusted R-squared:  0.1692 </span></span>
+<span><span class="co">#&gt; F-statistic:  21.3 on 3 and 296 DF,  p-value: 1.616e-12</span></span></code></pre></div>
 <p>So both migration rate</p>
 <p>We can demonstrate the interaction by splitting our data into
 population size bins and plotting the migration rate relationship as

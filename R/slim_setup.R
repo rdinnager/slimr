@@ -206,11 +206,15 @@ get_slim_call <- function() {
 
 get_slim_dir <- function() {
 
-  if(!is.null(.slim_settings$install_dir)) {
+  if(!is.null(.slim_settings$slim_dir)) {
     return(.slim_settings$slim_dir)
   } else {
 
-    return(install_path())
+    if(Sys.getenv("SLIM_HOME") != "") {
+      return(Sys.getenv("SLIM_HOME"))
+    } else {
+      return(install_path())
+    }
 
   }
 }

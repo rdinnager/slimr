@@ -1,7 +1,12 @@
+# slimr 0.2.1
+
+* allow user to manually set SLiM executable directory with `SLIM_HOME` environmental variable
+
 # slimr 0.2.0
 
+* all SLiM callbacks now supported
 * slimr now fully supports SLiM versions 4.0 and greater, including support for 
-multispecies models (though these have been extensively tested yet)
+multispecies models (though these have been extensively tested yet) and are currently undocumented
 * slimr verbs are now prefixed with `r_` (e.g. `r_output`, `r_inline`, `r_template`). 
 The old version `slimr_` prefixed version are still available for backwards 
 compatibility, but should be considered soft-deprecated

@@ -156,20 +156,23 @@ slim_setup <- function(verbose = TRUE,
 
     Sys.setenv(SLIM_HOME = install_dir)
 
-    if(install_dir != "~/slim") {
-      message("\n")
-      if (requireNamespace("crayon", quietly = TRUE)) {
-        message(stringr::str_wrap(glue::glue("It looks like you didn't use the default installation directory for SLiM. If you want slimr to find your SLiM installation in subsequent R sessions, please either make sure the slim executable is on the path, or set the SLIM_HOME evironmental variable to '{install_dir}'. We recommend adding this to your .RProfile file. This is most easily done by using {crayon::green('usethis::edit_r_environ()')}, and copying in the following line:\n{crayon::blue('SLIM_HOME=')}'{crayon::green(install_dir)}'\n"),
-                                  exdent = 2))
-      } else {
-        message(stringr::str_wrap(glue::glue("It looks like you didn't use the default installation directory for SLiM. If you want slimr to find your SLiM installation in subsequent R sessions, please either make sure the slim executable is on the path, or set the SLIM_HOME evironmental variable to '{install_dir}'. We recommend adding this to your .RProfile file. This is most easily done by using {crayon::green('usethis::edit_r_environ()')}, and copying in the following line:\nSLIM_HOME=install_dir\n"),
-                                  exdent = 2))
-      }
-      message("\n")
-      if (requireNamespace("clipr", quietly = TRUE)) {
-        clipr::write_clip(glue::glue("SLIM_HOME='{install_dir}'"))
-        message("This snippet has been copied to the clipboard.")
-      }
+    # if(install_dir != "~/slim") {
+    #   message("\n")
+    #   if (requireNamespace("crayon", quietly = TRUE)) {
+    #     message(stringr::str_wrap(glue::glue("It looks like you didn't use the default installation directory for SLiM. If you want slimr to find your SLiM installation in subsequent R sessions, please either make sure the slim executable is on the path, or set the SLIM_HOME evironmental variable to '{install_dir}'. We recommend adding this to your .RProfile file. This is most easily done by using {crayon::green('usethis::edit_r_environ()')}, and copying in the following line:\n{crayon::blue('SLIM_HOME=')}'{crayon::green(install_dir)}'\n"),
+    #                               exdent = 2))
+    #   } else {
+    #     message(stringr::str_wrap(glue::glue("It looks like you didn't use the default installation directory for SLiM. If you want slimr to find your SLiM installation in subsequent R sessions, please either make sure the slim executable is on the path, or set the SLIM_HOME evironmental variable to '{install_dir}'. We recommend adding this to your .RProfile file. This is most easily done by using {crayon::green('usethis::edit_r_environ()')}, and copying in the following line:\nSLIM_HOME=install_dir\n"),
+    #                               exdent = 2))
+    #   }
+    #   message("\n")
+    #   if (requireNamespace("clipr", quietly = TRUE)) {
+    #     clipr::write_clip(glue::glue("SLIM_HOME='{install_dir}'"))
+    #     message("This snippet has been copied to the clipboard.")
+    #   }
+    # }
+    if(!slim_is_avail()) {
+      message("We are sorry, but it appears the installation failed. Please visit https://rdinnager.github.io/slimr/ and follow the manual installation instructions instead.")
     }
 
     return(invisible(NULL))

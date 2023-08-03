@@ -14,7 +14,6 @@
 #' }
 #' @export
 #'
-#' @examples
 slim_extract_output_data <- function(output) {
 
   slim_process_output(output, data_only = TRUE)
@@ -228,7 +227,6 @@ slim_make_snp_matrix <- function(dat) {
 #' @return A tibble
 #' @export
 #'
-#' @examples
 slim_extract_full <- function(output_full, type = c("mutations", "individuals",
                                                           "genomes", "coordinates",
                                                           "sexes", "ages", "full_individual"), join = TRUE,
@@ -419,7 +417,6 @@ slim_extract_full_one <- function(string, type, expand_mutations, generation) {
 #' @return A tibble
 #' @export
 #'
-#' @examples
 slim_extract_genome <- function(output, type = c("mutations",
                                                    "genomes",
                                                    "full"),

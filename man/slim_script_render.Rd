@@ -32,6 +32,9 @@ rendered, in which case it will just repeat the rendered script in the result.}
 \item{parallel}{Should the rendering be done in parallel when rendering multiple scripts? Requires
 the \code{furrr} package and will use the plan set by \code{future::\link[future]{plan}}}
 }
+\value{
+returns a rendered slim script
+}
 \description{
 If your \code{slimr_script} object has made use of special \code{slimrlang}
 syntax \code{\link{slimr_template}}, this function will 'render' the \code{slimr_script}

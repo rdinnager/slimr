@@ -59,7 +59,6 @@
 #' }
 #' @export
 #'
-#' @examples
 slim_run <- function(x, slim_path = NULL,
                      script_file = NULL,
                      simple_run = FALSE,

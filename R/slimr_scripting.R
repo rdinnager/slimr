@@ -512,10 +512,9 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #' @param parallel Should the rendering be done in parallel when rendering multiple scripts? Requires
 #' the \code{furrr} package and will use the plan set by \code{future::\link[future]{plan}}
 #'
-#' @return
+#' @return returns a rendered slim script
 #' @export
 #'
-#' @examples
 slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE,
                                 reps = 1, parallel = FALSE) {
 

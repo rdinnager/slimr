@@ -467,7 +467,6 @@ process_code_blocks <- function(slim_script_text) {
 #' @return A \code{slimr_script} object
 #' @export
 #'
-#' @examples
 as_slimr_script <- function(slim_script_text) {
 
   block_names <- block_ids <- start_nums <- end_nums <- callbacks <- blocks <- max_num <- NULL
@@ -615,7 +614,6 @@ end_gen <- function(x) {
 #' @return A \code{slimr_script} object with new duration
 #' @export
 #'
-#' @examples
 slim_script_duration <- function(x, duration) {
   start_gens <- as.numeric(vctrs::field(x, "start_gen"))
   end_gens <- as.numeric(end_gen(x))
@@ -748,10 +746,10 @@ slimr_write.character <- function(x, file, ...) {
 
 #' Reconstruct slimrlang code to make this slimr_script
 #'
-#' This reconstructs a \code{slimrlang} input sequence to regenerate the given \script(slimr_script)
+#' This reconstructs a \code{slimrlang} input sequence to regenerate the given \script{slimr_script}
 #' object. This is useful if you want to edit the SLiM script to add additional functionality,
 #' for example, where you want to incorporate the results of \code{slimrlang}'s internal edits, e.g.
-#' such as removing \code{\link{%.%}} special operators, etc. It is also useful when the
+#' such as removing \code{\link{\%.\%}} special operators, etc. It is also useful when the
 #' \code{slimr_script} object has been created from converting a text-based SLiM script, such as when
 #' using \code{\link[slimr]{as.slimr_script}} from the \code{slimr} package on a character variable.
 #'
@@ -787,10 +785,10 @@ reconstruct <- function(x, ...) {
 
 #' Reconstruct slimrlang code to make this slimr_script
 #'
-#' This reconstructs a \code{slimrlang} input sequence to regenerate the given \script(slimr_script)
+#' This reconstructs a \code{slimrlang} input sequence to regenerate the given \script{slimr_script}
 #' object. This is useful if you want to edit the SLiM script to add additional functionality,
 #' for example, where you want to incorporate the results of \code{slimrlang}'s internal edits, e.g.
-#' such as removing \code{\link{%.%}} special operators, etc. It is also useful when the
+#' such as removing \code{\link{\%.\%}} special operators, etc. It is also useful when the
 #' \code{slimr_script} object has been created from converting a text-based SLiM script, such as when
 #' using \code{\link[slimr]{as.slimr_script}} from the \code{slimr} package on a character variable.
 #'

@@ -46,7 +46,6 @@ minimal_slim_sim <- function(command) {
 #' @return The code as a string (invisibly)
 #' @export
 #'
-#' @examples
 slimr_clip_original <- function(slimr_script_name = NULL) {
   assert_package("clipr")
 
@@ -73,7 +72,6 @@ slimr_clip_original <- function(slimr_script_name = NULL) {
 #' @return The code as a string (invisibly)
 #' @export
 #'
-#' @examples
 slimr_open_original <- function(slimr_script_name = NULL) {
   assert_package("rstudioapi")
 

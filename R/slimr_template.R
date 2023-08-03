@@ -189,7 +189,6 @@ replace_double_dots <- function(slimr_script, envir = parent.frame(), slimr_temp
 #' in that block, and its values are equal to the default values for those variables.
 #' @export
 #'
-#' @examples
 slimr_template_info <- function(script_temp) {
   slimr_template_attr <- attr(script_temp, "slimr_template")
   if(any(!is.na(slimr_template_attr$var_names))) {

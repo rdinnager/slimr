@@ -227,6 +227,7 @@ process_output <- function(code, block_names) {
 
 #' Utility function to tell SLiM to output its outputFull() output
 #'
+#' utiltiy function
 #' @param name Name of output to use to label it in \code{slimr_results object}. Default is \code{"full_output"}
 #' @param ... Other arguments to be passed to \code{\link{r_output}}
 #' @export
@@ -365,8 +366,6 @@ slimr_output_sex <- r_output_sex
 #'
 #' @return None
 #' @export
-#'
-#' @examples
 r_output_snp <- function(name = "snp", subpops = FALSE, ...) {
   if(subpops) {
     snp_out <- slimr_output(paste(size(sim.subpopulations.individuals),

@@ -12,5 +12,5 @@ r_output_full(name = "full_output", ...)
 \item{...}{Other arguments to be passed to \code{\link{r_output}}}
 }
 \description{
-Utility function to tell SLiM to output its outputFull() output
+utiltiy function
 }

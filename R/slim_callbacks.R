@@ -249,7 +249,7 @@ callbacks$fitnessEffect <- function(subpop_id) {
 
   argus <- argus[!purrr::map_lgl(argus, rlang::is_missing)]
 
-  cb <- rlang::expr(fitness(!!!rlang::maybe_missing(argus)))
+  cb <- rlang::expr(fitnessEffect(!!!rlang::maybe_missing(argus)))
 
   cb <- rlang::expr_text(cb)
 
@@ -459,7 +459,7 @@ callbacks$mutation <- function(mut_type_id, subpop_id) {
 
   argus <- argus[!purrr::map_lgl(argus, rlang::is_missing)]
 
-  cb <- rlang::expr(fitness(!!!rlang::maybe_missing(argus)))
+  cb <- rlang::expr(mutation(!!!rlang::maybe_missing(argus)))
 
   cb <- rlang::expr_text(cb)
 
@@ -522,7 +522,7 @@ callbacks$mutationEffect <- function(mut_type_id, subpop_id) {
 
   argus <- argus[!purrr::map_lgl(argus, rlang::is_missing)]
 
-  cb <- rlang::expr(fitness(!!!rlang::maybe_missing(argus)))
+  cb <- rlang::expr(mutationEffect(!!!rlang::maybe_missing(argus)))
 
   cb <- rlang::expr_text(cb)
 
@@ -789,7 +789,7 @@ callbacks$survival <- function(subpop_id) {
 
   argus <- argus[!purrr::map_lgl(argus, rlang::is_missing)]
 
-  cb <- rlang::expr(recombination(!!!rlang::maybe_missing(argus)))
+  cb <- rlang::expr(survival(!!!rlang::maybe_missing(argus)))
 
   cb <- rlang::expr_text(cb)
 

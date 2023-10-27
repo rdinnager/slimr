@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![R build status](https://github.com/rdinnager/slimr/workflows/R-CMD-check/badge.svg)](https://github.com/rdinnager/slimr/actions)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![slimr status badge](https://rdinnager.r-universe.dev/badges/slimr)](https://rdinnager.r-universe.dev/slimr)
 <!-- badges: end -->
 
 
@@ -43,6 +44,11 @@ devtools::install_github("rdinnager/slimr", re = "v0.2.1")  #version accompanied
 
 ```
 
+`slimr` is also on R-Universe, and can be installed alternatively using the following code:
+
+```{r eval=FALSE}
+install.packages('slimr', repos = c('https://rdinnager.r-universe.dev', 'https://cloud.r-project.org'))
+```
 
 To facilitate the installation of slim We provide provide a function  ```slim_setup()```. This functions aims to download a precompiled binary of SLiM and automatically links slimr to SLiM. Unfortunately due to the variety of systems and installs this might not work. If that is is the case please follow the excellent documentation how to install SLiM on their websites.
 
@@ -63,7 +69,7 @@ And if true is returned you are ready to go and run the test example below. In t
 
 For example if slim R is installed at `C:/Program Files/R/R-4.3.1/library/slimr` then you need to specify this via:
 
-```{r}
+```{r, eval=FALSE}
 Sys.setenv(SLIM_HOME='C:/Program Files/R/R-4.3.1/library/slimr')
 ```
 

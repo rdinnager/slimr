@@ -423,6 +423,10 @@ process_code_blocks <- function(slim_script_text) {
 
   block_ids <- stringr::str_extract(heads, "^s(\\d+)")
   heads <- stringr::str_remove_all(heads, "^s(\\d+) ")
+  nams <- stringr::str_match(heads, "^[species|ticks]+[:space:]+(.*?)[:space:]+")[ , 2]
+  nams <- stringr::str_trim(nams)
+  heads <- stringr::str_remove_all(heads, "^[species|ticks]+[:space:]+(.*?)[:space:]+")
+  heads <- stringr::str_trim(heads)
   start_nums <- stringr::str_match(heads, "^([:digit:]*e?(?!a)[:digit:]*)[[:space:]:]?")[ , 2]
   start_nums <- stringr::str_trim(start_nums)
   end_nums <- stringr::str_match(heads, ":(\\d+)")[ , 2]
@@ -437,7 +441,9 @@ process_code_blocks <- function(slim_script_text) {
                                                    nchar(trunc(n_blocks)),
                                                    pad = "0"))
 
-  block_names[heads == "initialize()"] <- "block_init"
+  block_names[heads == "initialize()"] <- paste0("block_init_", stringr::str_pad(seq_along(block_names[heads == "initialize()"]),
+                                                   nchar(trunc(n_blocks)),
+                                                   pad = "0"))
 
   blocks <- stringr::str_trim(blocks)
 
@@ -455,7 +461,8 @@ process_code_blocks <- function(slim_script_text) {
        end_nums = end_nums,
        callbacks = callbacks,
        blocks = blocks,
-       max_num = max_num)
+       max_num = max_num,
+       species = nams)
 }
 
 #' Convert a character vector into a slim_script object
@@ -476,8 +483,11 @@ as_slimr_script <- function(slim_script_text) {
     rlang::abort("as_slimr_script only accepts character arguments")
   }
 
-  c(block_names, block_ids, start_nums, end_nums, callbacks, blocks, max_num) %<-%
+  c(block_names, block_ids, start_nums, end_nums, callbacks, blocks, max_num, species) %<-%
     process_code_blocks(slim_script_text)
+
+  ## resolve fundamental type default incompatability between R and SLiM
+  blocks <- slim_resolve_floats(blocks)
 
   ## make code parseable
 
@@ -494,12 +504,17 @@ as_slimr_script <- function(slim_script_text) {
 
   code <- new_slimr_code(code)
 
+  if(all(is.na(species))) {
+    species <- NULL
+  }
+
   script <- new_slimr_script(block_name = block_names,
                              block_id = block_ids,
                              start_gen = start_nums,
                              end_gen = end_nums,
                              callback = callbacks,
                              code = code,
+                             species = species,
                              script_info = list(end_gen = max_num,
                                                 rendered = TRUE))
 

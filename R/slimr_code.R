@@ -1,6 +1,6 @@
 
 SLiMify <- function(code, for_script = FALSE) {
-  code <- slimr_code_add_semicolons(code) %>%
+  code <- slimr_code_add_semicolons(code, for_script = for_script) %>%
     slimr_code_replace_arrows() %>%
     slimr_code_remove_special_classes() %>%
     slimr_code_replace_dollars() %>%
@@ -25,7 +25,7 @@ SLiMify_all <- function(code, for_script = FALSE) {
   code
 }
 
-slimr_code_add_semicolons <- function(code_one) {
+slimr_code_add_semicolons <- function(code_one, for_script = FALSE) {
   brace_lines <- stringr::str_detect(code_one,
                                      "(\\{|\\}|\\+|\\,|\\-|\\*|\\/)[:blank:]*$")
   do_lines <- stringr::str_detect(code_one,
@@ -36,6 +36,25 @@ slimr_code_add_semicolons <- function(code_one) {
   # get_semi <- which(!brace_lines & !if_lines)
   get_semi <- which(!brace_lines & !do_lines)
   code_one[get_semi] <- paste0(code_one[get_semi], ";")
+  if(for_script) {
+    #code_one <- stringr::str_replace_all(code_one, "^(.*?[^\\}])[:space:]+\\Qelse\\E(.*?)", "\\1; else\\2")
+    code_one <- purrr::map(code_one,
+                           function(code1) {
+                             else_split <- stringr::str_split_1(code1, "[:blank:]+else")
+                             brace_lines <- stringr::str_detect(else_split,
+                                                                "(\\{|\\}|\\+|\\,|\\-|\\*|\\/)[:blank:]*$")
+                             do_lines <- stringr::str_detect(else_split,
+                                                             "do$")
+                             get_semi <- !brace_lines & !do_lines
+                             get_semi[length(get_semi)] <- FALSE
+                             if(any(get_semi)) {
+                               else_split[get_semi] <- paste0(else_split[get_semi], "; ")
+                               code1 <- paste(else_split, collapse = " else")
+                             }
+                             code1
+                           })
+
+  }
   code_one
 }
 
@@ -84,8 +103,8 @@ slimr_code_remove_slimr_special <- function(code_one) {
 }
 
 slimr_code_replace_ternary <- function(code_one) {
-  code <- stringr::str_replace_all(code_one,
-                                   "\\%?\\%",
+  code_one <- stringr::str_replace_all(code_one,
+                                   "\\%\\?\\%",
                                    "?")
   stringr::str_replace_all(code_one,
                            "\\%else\\%",
@@ -102,8 +121,8 @@ slimr_code_replace_modulus <- function(code_one) {
 slimr_code_replace_returns <- function(code_one) {
   ## turn R's return(...) syntax back into SLiM's return ...; syntax.
   stringr::str_replace_all(code_one,
-                           "return\\((.*)\\)[:blank:]*(;| else)",
-                           "return \\1\\2")
+                           "return\\(([^;]+)\\)",
+                           "return \\1")
 }
 
 
@@ -175,6 +194,13 @@ slimr_code_from_text_whiles <- function(code) {
                            "\\1slimr_special__")
 }
 
+slimr_code_from_text_primes <- function(code) {
+  ## add slimr_special__ keyword to while statements to make R parse it OK.
+  stringr::str_replace_all(code,
+                           "′",
+                           "_prime")
+}
+
 slimr_code_from_text_style <- function(code) {
   rlang::parse_exprs(code) %>%
     purrr::map_chr(~expr_deparse_fast(.x) %>%
@@ -207,7 +233,8 @@ slimr_code_Rify <- function(code) {
     slimr_code_from_text_dos() %>%
     slimr_code_from_text_returns() %>%
     slimr_code_from_text_dots() %>%
-    slimr_code_from_text_whiles()
+    slimr_code_from_text_whiles() %>%
+    slimr_code_from_text_primes()
 
   code
 

@@ -311,3 +311,9 @@ slim_unload_globals <- function() {
   rm(list = .resources$loaded_globals, pos = rlang::global_env())
   .resources$loaded_globals <- NULL
 }
+
+slim_resolve_floats <- function(code_blocks) {
+  stringr::str_replace_all(code_blocks,
+                           "([:digit:]+\\.0+(?![:digit:]))",
+                           "asFloat(\\1)")
+}

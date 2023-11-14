@@ -1,0 +1,204 @@
+---
+title: "Advanced Example: Multispecies Spatial Model with SLiMGUI Integration Demonstration"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r color, echo = FALSE, results='asis'}
+# crayon needs to be explicitly activated in Rmd
+options(crayon.enabled = TRUE)
+# Hooks needs to be set to deal with outputs
+# thanks to fansi logic
+if(requireNamespace("fansi", quietly = TRUE)) {
+  old_hooks <- fansi::set_knit_hooks(knitr::knit_hooks, 
+                                     which = c("output", "message", "error"))
+}
+```
+
+```{r setup}
+library(slimr)
+```
+
+This example is based on recipe 19.5 (spatial host-parasite model) and 19.6 (evolutionary trait-matching host-parasite mode) from the SLiM Manual, a spatial trait-matching host parasite model. We will use all of the main `slimr` verbs in this model. We will then show how `slimr` can be used in conjunction with SLiMGUI to aid in model development.
+
+For the purposes of modifying existing SLiM models in `slimr`, we can use some neat `slimr` functionality. `slimr` includes all of the recipes for SLiM scripts found in the SLiM Manual. to look at one of the recipes you can simply access the `slim_recipes`. Here we simply print out the recipe from section 5.3.4 of the SLiM Manual:
+
+```{r cat_recipe}
+cat(slim_recipes$`5.3.4`)
+```
+
+SLiM recipes can be converted into `slimr_script` object using the function `as_slimr_script()`.
+
+```{r convert_it}
+test_script <- as_slimr_script(slim_recipes$`5.3.4`)
+test_script
+```
+
+However, we cannot edit or modify a `slimr_script` once it has been created. To edit and mix and match between different `slimr_script` objects we need to be able to reconstruct the `slimr_script()` call that could recreate the above. `slimr` provides the `reconstruct` function for this purpose:
+
+```{r reconstruct}
+cat(reconstruct(test_script))
+```
+
+Now we can simply copy and paste that output into an R script, which we can edit as we like. We can do the two steps above in a single step using `as_slimr_code()`, which takes a SLiM script as a character vector and returns the `slimr` code equivalent, and printing it to the console.
+
+```{r as_slimr_code}
+as_slimr_code(slim_recipes$`5.3.4`)
+```
+
+Here is the `slimr` code to create recipes 19.5 and 19.6
+
+```{r print_recipes}
+as_slimr_code(slim_recipes$`19.5`)
+as_slimr_code(slim_recipes$`19.6`)
+```
+
+Combining aspects of the above two `slimr` scripts, and adding `slimr` verb functionality gives a final full model:
+
+```{r host_para_model}
+
+n_gen <- 1000
+
+slim_script(
+
+    slim_block(all = initialize(),  {
+        r_template_constant("K", 100)
+        r_template_constant("R", log(20))
+        r_template_constant("A", 0.015)
+        r_template_constant("SIDE", 10)
+        defineConstant("S", SIDE * SIDE)
+        defineConstant("N0_host", asInteger((135.6217 + 0.01) * S))
+        defineConstant("N0_parasitoid", asInteger((109.301 + 0.01) * S))
+        r_template_constant("S_P", 0.5)
+        r_template_constant("S_H", 0.2)
+        r_template_constant("D_H", 0.2)
+        defineConstant("CROSS_SCRIPT", "subpop.addCrossed(individual, mate);")
+        initializeSLiMModelType("nonWF")
+        initializeInteractionType(1, "xy", maxDistance = S_P)
+        i1.setInteractionFunction("l", asFloat(1))
+        initializeInteractionType(2, "xy", maxDistance = S_H)
+        i2.setInteractionFunction("l", asFloat(1))
+    }),
+
+    slim_block(host = initialize(),  {
+        initializeSpecies(avatar = "🐛", color = "cornflowerblue")
+        initializeSLiMOptions(dimensionality = "xy")
+        # initializeMutationType("m1", 0.5, "n", asFloat(0), 0.1)
+        # initializeGenomicElementType("g1", m1, asFloat(1))
+        # initializeGenomicElement(g1, 0, 9999)
+        # initializeMutationRate(1e-07)
+        # initializeRecombinationRate(1e-08)
+    }),
+
+    slim_block(parasitoid = initialize(),  {
+        initializeSpecies(avatar = "🦟", color = "red")
+        initializeSLiMOptions(dimensionality = "xy")
+        # initializeMutationType("m2", 0.5, "n", asFloat(0), 0.1)
+        # initializeGenomicElementType("g2", m2, asFloat(1))
+        # initializeGenomicElement(g2, 0, 9999)
+        # initializeMutationRate(1e-07)
+        # initializeRecombinationRate(1e-08)
+    }),
+    
+    # slim_block(host = mutationEffect(m1),  {
+    #     return(asFloat(1))
+    # }),
+    # 
+    # slim_block(parasitoid = mutationEffect(m2),  {
+    #     return(asFloat(1))
+    # }),
+
+    slim_block(all = 2, !!n_gen, first(),  {
+        host_pop = host.subpopulations
+        hosts = host_pop.individuals
+        parasitoid_pop = parasitoid.subpopulations
+        parasitoids = parasitoid_pop.individuals
+        i1.evaluate(c(host_pop, parasitoid_pop))
+        i2.evaluate(host_pop)
+        parasitoid_density_byhost = i1.localPopulationDensity(hosts, parasitoid_pop)
+        parasitoids.tag = 0
+        parasitoids.setValue("PREY_POS", NULL)
+        P_parasitized_byhost = 1 - exp(-A * parasitoid_density_byhost)
+        killed = (runif(hosts.size()) < P_parasitized_byhost)
+        hosts.tag = asInteger(killed)
+        preys = hosts[killed]
+        for (prey in preys) {
+            hunter = i1.drawByStrength(prey, 1, parasitoid_pop)
+            preyPos = prey.spatialPosition
+            preyPos = c(hunter.getValue("PREY_POS"), preyPos)
+            hunter.tag = hunter.tag + 1
+            hunter.setValue("PREY_POS", preyPos)
+        }
+        unhunted = hosts[!killed]
+        host_density_by_unhunted = i2.localPopulationDensity(unhunted, host_pop)
+        P_survives_by_unhunted = exp(-host_density_by_unhunted/K)
+        survived = (runif(unhunted.size()) < P_survives_by_unhunted)
+        dead = unhunted[!survived]
+        dead.tag = 1
+        r_output(hosts.size(), "host_pop_size")
+        r_output(parasitoids.size(), "parasitoid_pop_size")
+    }),
+
+    slim_block(host = reproduction(),  {
+        if (individual.tag != 0) return
+        mate = i2.drawByStrength(individual)
+        if (mate.size()) {
+            litterSize = rpois(1, exp(R))
+            if (litterSize > 0) {
+                offspring = sapply(seqLen(litterSize), CROSS_SCRIPT)
+                positions = rep(individual.spatialPosition, litterSize)
+                positions = positions + rnorm(litterSize * 2, 0, D_H)
+                positions = p1.pointReflected(positions)
+                offspring.setSpatialPosition(positions)
+            }
+        }
+    }),
+
+    slim_block(parasitoid = reproduction(),  {
+        litterSize = individual.tag
+        if (litterSize > 0) {
+            mate = i1.drawByStrength(individual)
+            if (mate.size()) {
+                offspring = sapply(seqLen(litterSize), CROSS_SCRIPT)
+                offspring.setSpatialPosition(individual.getValue("PREY_POS"))
+            }
+        }
+    }),
+
+    slim_block(all = 1, early(),  {
+        host.addSubpop("p1", N0_host)
+        p1.setSpatialBounds(c(0, 0, SIDE, SIDE))
+        p1.individuals.setSpatialPosition(p1.pointUniform(N0_host))
+        parasitoid.addSubpop("p2", N0_parasitoid)
+        p2.setSpatialBounds(c(0, 0, SIDE, SIDE))
+        p2.individuals.setSpatialPosition(p2.pointUniform(N0_parasitoid))
+    }),
+
+    slim_block(host = survival(),  {
+        return((individual.age == 0))
+    }),
+
+    slim_block(parasitoid = survival(),  {
+        return((individual.age == 0))
+    }),
+
+    slim_block(all = !!n_gen, late(),  {
+        community.simulationFinished()
+    })
+) -> hp_script
+
+hp_script
+```
+
+Writing a multispecies model in `slimr` is simple. You only have to use a single named argument in each `slim_block()` call to specify the species to which the block applies. You use `all` to specify that the block applies to all species.
+Note in particular the use of `r_template_constant()`, a variation of `r_template()` that inserts the templated variable into a `defineConstant()` statement. `defineConstant()` assigns the variable into a constant in the SLiM initialization block so that it can be uses throughout any block of code in the simulation. It also makes it easier to adjust parameter values manually within SLiMGUI if we choose to test the model in SLiMGUI with its interactive features.
+
+```{r test_it}
+test <- slim_run(hp_script, progress = TRUE)
+
+```

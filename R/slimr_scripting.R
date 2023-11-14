@@ -199,8 +199,6 @@ slim_block <- function(...) {
   spec <- names(args)[names(args) != ""]
   if(length(spec) > 1) {
     rlang::abort("If any arguments are named it should be exactly one argument (and the name should be the name of a species in the SLiM model)")
-  } else {
-    spec <- NULL
   }
 
   #code <- deparse(args[[n_args]], width.cutoff = 500, control = NULL)
@@ -511,13 +509,16 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #' rendered, in which case it will just repeat the rendered script in the result.
 #' @param parallel Should the rendering be done in parallel when rendering multiple scripts? Requires
 #' the \code{furrr} package and will use the plan set by \code{future::\link[future]{plan}}
+#' @param portable If `TRUE`, the the script will be rendered in a 'portable' format, which allows
+#' the script to be modified in another program such as SLiMGUI, and then reimported into R, while maintaining
+#' `slimr` features. See details for more information on how this works.
 #'
 #' @return
 #' @export
 #'
 #' @examples
 slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE,
-                                reps = 1, parallel = FALSE) {
+                                reps = 1, parallel = FALSE, portable = FALSE) {
 
   if(parallel) {
     assert_package("furrr")
@@ -668,6 +669,7 @@ reprocess_script <- function(script) {
   start_gen <- vctrs::field(script, "start_gen")
   end_gen <- vctrs::field(script, "end_gen")
   callback <- vctrs::field(script, "callback")
+  species <- attr(script, "species")
   slimr_output_attr <- attr(script, "slimr_output")
   slimr_template_attr <- attr(script, "slimr_template")
   slimr_lang_orig <- attr(script, "slimr_lang_orig")
@@ -679,6 +681,7 @@ reprocess_script <- function(script) {
                              end_gen = end_gen,
                              callback = callback,
                              code = code,
+                             species = species,
                              slimr_inline = slimr_inline_attr,
                              slimr_output = slimr_output_attr,
                              slimr_template = slimr_template_attr,

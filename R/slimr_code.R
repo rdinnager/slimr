@@ -264,3 +264,22 @@ slimr_code_detect_nucleotides <- function(code) {
   any(stringr::str_detect(code,
                           "nucleotide"))
 }
+
+
+#' Convert SLiM code text into equivalent `slimr` code to produce the same model
+#'
+#' This function print the equivalent `slimr` code to the console where it can easily
+#' be copied and pasted into an R script.
+#'
+#' @param code_txt
+#'
+#' @return `slimr` code as a character vector, invisibly
+#' @export
+#'
+#' @examples
+#' as_slimr_code(slim_recipes$`5.3.4`)
+as_slimr_code <- function(code_txt) {
+  new_code <- reconstruct(as_slimr_script(code_txt))
+  cat(new_code)
+  invisible(new_code)
+}

@@ -436,6 +436,7 @@ process_code_blocks <- function(slim_script_text) {
     max_num <- ""
   }
   end_nums <- ifelse(has_colon & is.na(end_nums), as.character(max_num), end_nums)
+  start_nums[start_nums == ""] <- NA
 
   block_names <- paste0("block_", stringr::str_pad(seq_along(blocks),
                                                    nchar(trunc(n_blocks)),
@@ -836,19 +837,40 @@ reconstruct <- function(x, ...) {
 #') -> script
 #'reconstruct(script)
 reconstruct.slimr_script <- function(x, ...) {
-  code <- paste0("    slim_block(",
-                 ifelse(is.na(field(x, "block_id")), "", paste0(field(x, "block_id"), ", ")),
-                 ifelse(is.na(field(x, "start_gen")), "", paste0(field(x, "start_gen"), ", ")),
-                 ifelse(is.na(field(x, "end_gen")), "", ifelse(field(x, "end_gen") == "", ".., ",
-                                                               paste0(field(x, "end_gen"), ", "))),
-                 field(x, "callback"), ", ",
-                 " {\n    ",
-                 purrr::map_chr(field(x, "code"), ~paste(paste0("    ", .x),
-                                                         collapse = "\n    ")),
-                 "\n    })")
-  code <- paste0("slim_script(\n\n",
-                 paste(code, collapse = ",\n\n"),
-                 "\n)")
+
+  atts <- attributes(x)
+
+  if(is.null(atts$species)) {
+    code <- paste0("    slim_block(",
+                   ifelse(is.na(field(x, "block_id")), "", paste0(field(x, "block_id"), ", ")),
+                   ifelse(is.na(field(x, "start_gen")), "", paste0(field(x, "start_gen"), ", ")),
+                   ifelse(is.na(field(x, "end_gen")), "", ifelse(field(x, "end_gen") == "", ".., ",
+                                                                 paste0(field(x, "end_gen"), ", "))),
+                   field(x, "callback"), ", ",
+                   " {\n    ",
+                   purrr::map_chr(field(x, "code"), ~paste(paste0("    ", .x),
+                                                           collapse = "\n    ")),
+                   "\n    })")
+    code <- paste0("slim_script(\n\n",
+                   paste(code, collapse = ",\n\n"),
+                   "\n)")
+  } else {
+
+    code <- paste0("    slim_block(", atts$species, " = ",
+                   ifelse(is.na(field(x, "block_id")), "", paste0(field(x, "block_id"), ", ")),
+                   ifelse(is.na(field(x, "start_gen")), "", paste0(field(x, "start_gen"), ", ")),
+                   ifelse(is.na(field(x, "end_gen")), "", ifelse(field(x, "end_gen") == "", ".., ",
+                                                                 paste0(field(x, "end_gen"), ", "))),
+                   field(x, "callback"), ", ",
+                   " {\n    ",
+                   purrr::map_chr(field(x, "code"), ~paste(paste0("    ", .x),
+                                                           collapse = "\n    ")),
+                   "\n    })")
+    code <- paste0("slim_script(\n\n",
+                   paste(code, collapse = ",\n\n"),
+                   "\n)")
+
+  }
 
   code
 }

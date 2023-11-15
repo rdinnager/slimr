@@ -51,7 +51,8 @@ Imports:
     tidyr,
     zeallot,
     utils,
-    stats
+    stats,
+    codetools
 Suggests: 
     covr,
     testthat (>= 2.1.0),

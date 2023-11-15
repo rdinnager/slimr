@@ -2,7 +2,7 @@ test_that("Retrieving SLiM recipes works", {
 
   recipe_2 <- slim_get_recipe(2)
   expect_type(recipe_2, "character")
-  expect_snapshot_output(cat(recipe_2))
+  expect_snapshot(cat(recipe_2))
 
   all_recipes <- slim_get_recipes()
   expect_length(all_recipes, 185L)
@@ -30,7 +30,7 @@ test_that("All SLiM recipes can be converted to slimr_script objects properly", 
     slim_scripts[[i]] <-  as_slimr_script(slim_recipes[[i]])
     expect_s3_class(slim_scripts[[!!i]], "slimr_script")
     if(!i %in% recipes_using_files) {
-      expect_snapshot_output(print(slim_scripts[[i]]))
+      expect_snapshot(print(slim_scripts[[i]]))
     }
   }
   # slim_scripts <- purrr::map(slim_scripts,

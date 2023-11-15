@@ -197,6 +197,9 @@ slim_block <- function(...) {
   }
 
   spec <- names(args)[names(args) != ""]
+  if(length(spec) == 0) {
+    spec <- NULL
+  }
   if(length(spec) > 1) {
     rlang::abort("If any arguments are named it should be exactly one argument (and the name should be the name of a species in the SLiM model)")
   }

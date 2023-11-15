@@ -25,6 +25,8 @@ test_that("All SLiM recipes can be converted to slimr_script objects properly", 
   #skip_on_cran()
   #skip_on_covr()
 
+  local_reproducible_output(unicode = FALSE)
+
   for(i in seq_along(slim_recipes)) {
     #print(i)
     slim_scripts[[i]] <-  as_slimr_script(slim_recipes[[i]])

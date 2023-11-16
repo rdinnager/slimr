@@ -552,14 +552,16 @@ setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(
   } else {
     if(platform == "windows") {
       #slim_call <- list(call = "wsl", args = c(slim_path, "{script_file}"))
-      slim_call <- list(call = slim_path, args = c("{script_file}", "-s", seed))
+      slim_call <- list(call = slim_path, args = "{script_file}")
     } else {
-      slim_call <- list(call = slim_path, args = c("{script_file}", "-s", seed))
+      slim_call <- list(call = slim_path, args = "{script_file}")
     }
   }
 
   slim_call$args <- purrr::map_chr(slim_call$args,
                                    ~glue::glue(.x, .envir = list(script_file = script_file)))
+
+  slim_call$args <- c("-s", seed, slim_call$args)
 
   if(simple_run) {
 

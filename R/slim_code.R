@@ -127,17 +127,23 @@ slim_code_SLiMify <- function(code_snippet) {
 #' refer to different Global types (see details for more information), and the value
 #' refers to how many of that Global type to load.
 #' @param sim Should the \code{sim} global be loaded?
+#' @param community Should the \code{community} global be loaded?
 #' @param self Should the \code{self} global be loaded?
 #' @param pseudo Should 'pseudo-variables' be loaded? These are similar to SLiM
 #' globals but are only available inside certain callbacks.
 #' @return None
 #' @export
 #' @examples slim_load_globals(c(p = 4, g = 2))
-slim_load_globals <- function(max = 10, sim = TRUE, self = TRUE, pseudo = TRUE) {
+slim_load_globals <- function(max = 10, sim = TRUE, community = TRUE, self = TRUE, pseudo = TRUE) {
 
   if(sim) {
     rlang::env_bind_lazy(rlang::global_env(),
                          sim = SLiMSim)
+  }
+
+  if(community) {
+    rlang::env_bind_lazy(rlang::global_env(),
+                         community = Community)
   }
 
   if(self) {
@@ -236,6 +242,11 @@ slim_load_globals <- function(max = 10, sim = TRUE, self = TRUE, pseudo = TRUE) 
   if(sim) {
     ob_names <- c(ob_names, "sim")
     ob_names_all <- c(ob_names_all, "sim")
+  }
+
+  if(community) {
+    ob_names <- c(ob_names, "community")
+    ob_names_all <- c(ob_names_all, "community")
   }
 
   if(self) {

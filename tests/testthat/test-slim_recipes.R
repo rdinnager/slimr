@@ -18,8 +18,6 @@ test_that("Retrieving SLiM recipes works", {
 
 test_that("All SLiM recipes can be converted to slimr_script objects properly", {
 
-  skip_if_not(l10n_info()$`UTF-8`)
-
   slim_scripts <- list()
   slim_recipes <- slim_get_recipes()
 
@@ -32,11 +30,17 @@ test_that("All SLiM recipes can be converted to slimr_script objects properly", 
     #print(i)
     slim_scripts[[i]] <-  as_slimr_script(slim_recipes[[i]])
     expect_s3_class(slim_scripts[[!!i]], "slimr_script")
+
+  }
+  # slim_scripts <- purrr::map(slim_scripts,
+  #                            ~slim_script_remove_output(.x))
+
+  skip_on_ci()
+
+  for(i in seq_along(slim_recipes)) {
     if(!i %in% recipes_using_files) {
       expect_snapshot(print(slim_scripts[[i]]))
     }
   }
-  # slim_scripts <- purrr::map(slim_scripts,
-  #                            ~slim_script_remove_output(.x))
 
 })

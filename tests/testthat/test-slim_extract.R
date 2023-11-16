@@ -12,6 +12,8 @@ test_that("slim_extract_output_data works", {
 
   if(!on_covr()) {
 
+    set.seed(39299)
+
     test_sim <- slim_script(
       slim_block_init_minimal(),
       slim_block_add_subpops(1, 100),

@@ -18,7 +18,7 @@ test_that("Retrieving SLiM recipes works", {
 
 test_that("All SLiM recipes can be converted to slimr_script objects properly", {
 
-  local_reproducible_output(unicode = FALSE)
+  skip_if_not(l10n_info()$`UTF-8`)
 
   slim_scripts <- list()
   slim_recipes <- slim_get_recipes()

@@ -15,19 +15,19 @@ experimental](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https:/
 badge](https://rdinnager.r-universe.dev/badges/slimr)](https://rdinnager.r-universe.dev/slimr)
 <!-- badges: end -->
 
-The goal of slimr is to run SLiM population genetics forward simulations
-from R. It also has utilities for monitoring the simulations, and
-bringing the resulting data into R for post-processing and
-visualization.
+The goal of `slimr` is to run SLiM population genetics forward
+simulations from R. It also has utilities for monitoring the
+simulations, and bringing the resulting data into R for post-processing
+and visualization.
 
 ## Setup
 
-To be able to use slimr productively it is important to have a working
-version of [SLiM](https://messerlab.org/slim/) and slimr.
+To be able to use `slimr` productively it is important to have a working
+version of [SLiM](https://messerlab.org/slim/) and `slimr`.
 
 ### Installing slimr and SLiM
 
-As a first step you need to install the package slimr from github.
+As a first step you need to install the package `slimr` from github.
 
 ``` r
 
@@ -58,9 +58,9 @@ their websites.
 
 ## A first test run
 
-The next step is to make sure slimr is “linked” to slim (by knowing the
-location of the folder where the slim program is installed.). To check
-you can try:
+The next step is to make sure `slimr` is “linked” to slim (by knowing
+the location of the folder where the slim program is installed.). To
+check you can try:
 
 ``` r
 slimr::slim_is_avail()
@@ -72,7 +72,7 @@ below. In the case the test was not successful we need to find the
 folder where the slim executable has been installed and set this path in
 the R environment accordingly.
 
-For example if slim R is installed at
+For example if SLiM is installed at
 `C:/Program Files/R/R-4.3.1/library/slimr` then you need to specify this
 via:
 
@@ -81,20 +81,21 @@ Sys.setenv(SLIM_HOME='C:/Program Files/R/R-4.3.1/library/slimr')
 ```
 
 If you want to add this path permanently to your Rstudio installation
-(so no need to run Sys.setenv every time) you can use the command
+(so no need to run `Sys.setenv()` every time) you can use the command
 `usethis::edit_r_environ()` and add a line like
 `SLIMR_HOME='C:/Program Files/R/R-4.3.1/library/slimr'` to this file.
 
 ## Run a first simple test
 
 To be able to run SLiM within slimr we need to create a simple slim
-script. Below is the slimr version of the first slim script as presented
-in the excellent [SLiM](https://messerlab.org/slim/) manual, called
-receipes. There are hundreds of more advanced script and we provide also
-several worked out examples in the manuscript (Russell et al. submitted,
+script. Below is the `slimr` version of the first slim script as
+presented in the excellent [SLiM](https://messerlab.org/slim/) manual,
+called receipes. There are hundreds of more advanced script and we
+provide also several worked out examples in the manuscript (Russell et
+al. submitted,
 [bioRxiv](https://www.biorxiv.org/content/10.1101/2021.08.05.455258v2)
 ). The example below is simply to test if slim is installed correctly
-and works together with slimr.
+and works together with `slimr`.
 
 Running this code should give you the output as below (a return value of
 zero means success).
@@ -162,22 +163,23 @@ slim_run(script_1)
 #> Success!
 ```
 
-slimr shines because it can create so called templates to run scripts
+`slimr` shines because it can create so called templates to run scripts
 with different parameter settings. It also allows to “collect” the
 output from SLiM and load it back into R, so you can run a full
 simulation with lots of parameters settings using parallel cores if
-available and analyse the output directly in R. See the vignettes for
-details of these features and how to use them.
+available and analyse the output directly in R.
+
+See the vignettes for details of these features and how to use them.
 
 ## A complete workflow
 
-Below is a simle “complete” workflow. \* Creating a script in R \* Run
+Below is a simple “complete” workflow. \* Creating a script in R \* Run
 SLiM \* Load the results into R \* Analyse and visualise the results.
 
 As an example we simply will run a single population of 33 individuals
 for 100 generations, with a single chromosome of (length=100000 bases),
 and high mutation rate (1e-5) \[to shorten run-time\]. Every 10
-generation we will save the genetic status of each inidiviual for 100
+generation we will save the genetic status of each individual for 100
 generations. Once completed we read back in the genotypes (as a genlight
 object) and count the number of loci every of the 10 generations (the
 number of loci increases due to the mutations, that occurs during the
@@ -270,14 +272,14 @@ is a tibble that holds all the information that was used during runs.
 ``` r
 str(sr)
 #> List of 6
-#>  $ output     : chr [1:42] "// Initial random seed:" "128557412" "" "// RunInitializeCallbacks():" ...
+#>  $ output     : chr [1:42] "// Initial random seed:" "524845972" "" "// RunInitializeCallbacks():" ...
 #>  $ exit_status: int 0
 #>  $ output_data: slmr_tp_ [10 × 5] (S3: slimr_output_data/spec_tbl_df/tbl_df/tbl/data.frame)
 #>   ..$ generation: int [1:10] 10 20 30 40 50 60 70 80 90 100
 #>   ..$ name      : chr [1:10] "p1" "p1" "p1" "p1" ...
 #>   ..$ expression: chr [1:10] "p1.genomes.output()" "p1.genomes.output()" "p1.genomes.output()" "p1.genomes.output()" ...
 #>   ..$ type      : chr [1:10] "slim_output" "slim_output" "slim_output" "slim_output" ...
-#>   ..$ data      : chr [1:10] "#OUT: 10 GS 66\nMutations:\n258 0 m1 66430 0 0.5 p1 1 1\n260 1 m1 86971 0 0.5 p1 1 1\n186 10 m1 4409 0 0.5 p1 1"| __truncated__ "#OUT: 20 GS 66\nMutations:\n135 20 m1 76803 0 0.5 p1 1 5\n136 21 m1 83069 0 0.5 p1 1 5\n58 26 m1 28368 0 0.5 p1"| __truncated__ "#OUT: 30 GS 66\nMutations:\n233 20 m1 76803 0 0.5 p1 1 18\n235 21 m1 83069 0 0.5 p1 1 18\n103 26 m1 28368 0 0.5"| __truncated__ "#OUT: 40 GS 66\nMutations:\n29 20 m1 76803 0 0.5 p1 1 28\n32 21 m1 83069 0 0.5 p1 1 28\n229 26 m1 28368 0 0.5 p"| __truncated__ ...
+#>   ..$ data      : chr [1:10] "#OUT: 10 GS 66\nMutations:\n60 3 m1 91517 0 0.5 p1 1 3\n156 8 m1 42112 0 0.5 p1 1 6\n140 18 m1 58247 0 0.5 p1 1"| __truncated__ "#OUT: 20 GS 66\nMutations:\n43 8 m1 42112 0 0.5 p1 1 12\n219 18 m1 58247 0 0.5 p1 1 2\n13 32 m1 49150 0 0.5 p1 "| __truncated__ "#OUT: 30 GS 66\nMutations:\n171 8 m1 42112 0 0.5 p1 1 8\n19 32 m1 49150 0 0.5 p1 1 18\n21 33 m1 60590 0 0.5 p1 "| __truncated__ "#OUT: 40 GS 66\nMutations:\n171 8 m1 42112 0 0.5 p1 1 12\n60 32 m1 49150 0 0.5 p1 1 12\n63 33 m1 60590 0 0.5 p1"| __truncated__ ...
 #>   ..- attr(*, "spec")=
 #>   .. .. cols(
 #>   .. ..   generation = col_integer(),
@@ -290,7 +292,7 @@ str(sr)
 #>  $ process    :Classes 'process', 'R6' PROCESS 'slim.exe', finished.
 #>  
 #>  $ error      : chr(0) 
-#>  $ output_file: chr "F:\\Rtemp\\Rtmpec8h8r\\file6a583f1e66f2.txt"
+#>  $ output_file: chr "F:\\Rtemp\\RtmpgbqoPJ\\file5fc41a19ddf.txt"
 #>  - attr(*, "class")= chr "slimr_results"
 
 sr$output_data
@@ -321,23 +323,23 @@ gls
 #> # A tibble: 10 × 2
 #>    generation genlight        
 #>         <int> <list>          
-#>  1         10 <genlight[,270]>
-#>  2         20 <genlight[,347]>
-#>  3         30 <genlight[,459]>
-#>  4         40 <genlight[,503]>
-#>  5         50 <genlight[,573]>
-#>  6         60 <genlight[,614]>
-#>  7         70 <genlight[,617]>
-#>  8         80 <genlight[,641]>
-#>  9         90 <genlight[,523]>
-#> 10        100 <genlight[,430]>
+#>  1         10 <genlight[,265]>
+#>  2         20 <genlight[,305]>
+#>  3         30 <genlight[,399]>
+#>  4         40 <genlight[,437]>
+#>  5         50 <genlight[,450]>
+#>  6         60 <genlight[,565]>
+#>  7         70 <genlight[,577]>
+#>  8         80 <genlight[,531]>
+#>  9         90 <genlight[,603]>
+#> 10        100 <genlight[,553]>
 
 
 #the genlight object for generation 10
 gls$genlight[[1]]
 #>  /// GENLIGHT OBJECT /////////
 #> 
-#>  // 33 genotypes,  270 binary SNPs, size: 73.8 Kb
+#>  // 33 genotypes,  265 binary SNPs, size: 73.3 Kb
 #>  0 (0 %) missing data
 #> 
 #>  // Basic content
@@ -345,13 +347,13 @@ gls$genlight[[1]]
 #> 
 #>  // Optional content
 #>    @ind.names:  33 individual labels
-#>    @loc.names:  270 locus labels
+#>    @loc.names:  265 locus labels
 #>    @position: integer storing positions of the SNPs
 #>    @other: a list containing: mut_type  prevalence
 
 #number of loci at generation 10
 nLoc(gls$genlight[[1]])
-#> [1] 270
+#> [1] 265
 ```
 
 And finally we can use a simply `lapply` to find the number of loci in
@@ -385,14 +387,16 @@ We believe that a simplified workflow will allow researchers to explore
 their parameter space in more detail and therefore, ultimately, will
 lead to a better understanding of the system under study.
 
-Have fun using slimr!!!
+Have fun using `slimr`!!!
 
 Russell et al.
 
+(Thanks to Bernd Gruber for making the above example script!)
+
 ## Code of Conduct
 
-Please note that the slimr project is released with a [Contributor Code
-of
+Please note that the `slimr` project is released with a [Contributor
+Code of
 Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
@@ -404,10 +408,10 @@ normally limited to the suggestions of the names of existing functions
 and arguments. This creates a complication for functions that are
 methods within SLiM classes (the majority of functions since SLiM is an
 object-oriented language). This is because the operator to access
-elements inside an object in SLiM is ‘.’ (similar to Python), but in R
-‘.’ is not an operator, R assumes the ‘.’ is part of the name of an
-object. This means if you type ‘sim.addSubpop\`, R will not recognize
-’addSubpop’ as a function to look up for autocompletion.
+elements inside an object in SLiM is `.` (similar to Python), but in R
+`.` is not an operator, R assumes the `.` is part of the name of an
+object. This means if you type `sim.addSubpop`, R will not recognize
+`addSubpop` as a function to look up for autocompletion.
 
 In `slimr`, there are two ways you can get around this limitation for
 accessing autocomplete for methods from within R. The simplest way that

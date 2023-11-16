@@ -17,6 +17,9 @@ test_that("Retrieving SLiM recipes works", {
 })
 
 test_that("All SLiM recipes can be converted to slimr_script objects properly", {
+
+  local_reproducible_output(unicode = FALSE)
+
   slim_scripts <- list()
   slim_recipes <- slim_get_recipes()
 
@@ -24,8 +27,6 @@ test_that("All SLiM recipes can be converted to slimr_script objects properly", 
   #skip_on_ci()
   #skip_on_cran()
   #skip_on_covr()
-
-  local_reproducible_output(unicode = FALSE)
 
   for(i in seq_along(slim_recipes)) {
     #print(i)

@@ -2,10 +2,13 @@
 % Please edit documentation in R/slimr_template.R
 \name{r_template_constant}
 \alias{r_template_constant}
+\alias{slimr_template_constant}
 \title{Like slimr_template but automatically inserts code to setup variable as
 a defineConstant() call in the SLiM initialization block.}
 \usage{
 r_template_constant(var_name, default = NULL, unquote_strings = FALSE)
+
+slimr_template_constant(var_name, default = NULL, unquote_strings = FALSE)
 }
 \arguments{
 \item{var_name}{Name to use as a placemarker for the variable. This name will be used for replacing values later.}

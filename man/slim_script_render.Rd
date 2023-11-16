@@ -9,7 +9,8 @@ slim_script_render(
   template = NULL,
   replace_NAs = TRUE,
   reps = 1,
-  parallel = FALSE
+  parallel = FALSE,
+  portable = FALSE
 )
 }
 \arguments{
@@ -31,6 +32,10 @@ rendered, in which case it will just repeat the rendered script in the result.}
 
 \item{parallel}{Should the rendering be done in parallel when rendering multiple scripts? Requires
 the \code{furrr} package and will use the plan set by \code{future::\link[future]{plan}}}
+
+\item{portable}{If `TRUE`, the the script will be rendered in a 'portable' format, which allows
+the script to be modified in another program such as SLiMGUI, and then reimported into R, while maintaining
+`slimr` features. See details for more information on how this works.}
 }
 \description{
 If your \code{slimr_script} object has made use of special \code{slimrlang}

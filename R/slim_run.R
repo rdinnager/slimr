@@ -545,14 +545,16 @@ slim_run_script <- function(script_txt,
 
 setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(), simple_run = FALSE, conn = "|") {
 
+  seed <- as.character(sample.int(.Machine$integer.max, 1))
+
   if(is.null(slim_path)) {
     slim_call <- get_slim_call()
   } else {
     if(platform == "windows") {
       #slim_call <- list(call = "wsl", args = c(slim_path, "{script_file}"))
-      slim_call <- list(call = slim_path, args = "{script_file}")
+      slim_call <- list(call = slim_path, args = c("{script_file}", "-s", seed))
     } else {
-      slim_call <- list(call = slim_path, args = "{script_file}")
+      slim_call <- list(call = slim_path, args = c("{script_file}", "-s", seed))
     }
   }
 

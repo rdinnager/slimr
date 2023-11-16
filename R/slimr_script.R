@@ -964,6 +964,28 @@ vec_ptype_full.slimr_script_coll <- function(x, ...) "slimr_script_coll"
 #' @export
 vec_ptype_abbr.slimr_script_coll <- function(x, ...) "s-s-col"
 
+slimr_script_find_setup_block <- function(slimr_script) {
+
+  callback <- vctrs::field(slimr_script, "callback")
+  start_gen <- vctrs::field(slimr_script, "start_gen")
+  end_gen <- vctrs::field(slimr_script, "end_gen")
+  spec <- attr(slimr_script, "species")
+
+  if(is.null(spec)) {
+    setup_block <- callback == "early()" & start_gen == 1 & is.na(end_gen)
+  } else {
+    setup_block <- callback == "early()" & start_gen == 1 & is.na(end_gen) & unlist(spec) == "all"
+  }
+
+
+  if(any(setup_block)) {
+    return(which(setup_block))
+  } else {
+    return(NULL)
+  }
+
+}
+
 slim_detect_inline <- function(code) {
 
 }

@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
       </span>
     </div>
 
@@ -118,6 +118,9 @@ Dinnage</h4>
 
     
     
+<style type="text/css" scoped>
+PRE.fansi SPAN {padding-top: .25em; padding-bottom: .25em};
+</style>
 <div class="section level3">
 <h3 id="custom-live-plots">Custom Live Plots<a class="anchor" aria-label="anchor" href="#custom-live-plots"></a>
 </h3>
@@ -167,7 +170,7 @@ initialize() {
 </code></pre>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rdinnager.github.io/slimr">slimr</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">HilbertCurve</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jokergoo/HilbertCurve" class="external-link">HilbertCurve</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chromosome_sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_script.html">slim_script</a></span><span class="op">(</span></span>
 <span>  </span>
@@ -193,6 +196,27 @@ initialize() {
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">chromosome_sim</span></span></code></pre></div>
+<pre class="fansi fansi-output"><code><span><span class="co">## &lt;slimr_script[3]&gt;</span></span>
+<span><span class="co">## block_init:initialize() {</span></span>
+<span><span class="co">##     initializeMutationRate(..mut_rate..);</span></span>
+<span><span class="co">##     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">##     initializeMutationType("m2", 0.5, "f", 0.1);</span></span>
+<span><span class="co">##     initializeGenomicElementType("g1", c(m1, m2), c(10000, 1));</span></span>
+<span><span class="co">##     initializeGenomicElement(g1, 0, 262142);</span></span>
+<span><span class="co">##     rates = c(1e-09, 0.5, 1e-09, 0.5, 1e-09);</span></span>
+<span><span class="co">##     ends = c(87381, 87382, 174762, 174763, 262143);</span></span>
+<span><span class="co">##     initializeRecombinationRate(rates, ends);</span></span>
+<span><span class="co">## }</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## block_2:1 early() {</span></span>
+<span><span class="co">##     sim.addSubpop("p1", ..N..);</span></span>
+<span><span class="co">## }</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## block_3:1:1000 late() {</span></span>
+<span><span class="co">##     {sim.outputFull() -&gt; fix_mut}</span></span>
+<span><span class="co">## }</span></span>
+<span><span class="co">## This slimr_script has templating in block(s) block_init and</span></span>
+<span><span class="co">## block_2 for variables mut_rate and N.</span></span></code></pre>
 <p>I’ve added a few <code><a href="../reference/r_template.html">slimr_template()</a></code> calls to make it
 easier to quickly change parameters in the script for exploration.</p>
 <p>In order to make a custom visualization for this script we can
@@ -209,9 +233,31 @@ generations and on a small number of individuals (just enough to
 accumulate a few mutations to test the visualization).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chromosome_sim_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">chromosome_sim</span>,</span>
-<span>                                           template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">output_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_run.html">slim_run</a></span><span class="op">(</span><span class="va">chromosome_sim_test</span><span class="op">)</span></span>
-<span><span class="va">output_test</span><span class="op">$</span><span class="va">output_data</span></span></code></pre></div>
+<span>                                           template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning: Warning: A templated variable was not specified in the template and has been replaced by its default value.</span></span></code></pre>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">output_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_run.html">slim_run</a></span><span class="op">(</span><span class="va">chromosome_sim_test</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Simulation finished with exit status: 0</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Success!</span></span></code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">output_test</span><span class="op">$</span><span class="va">output_data</span></span></code></pre></div>
+<pre class="fansi fansi-output"><code><span><span class="co">## # A tibble: 200 × 5</span></span>
+<span><span class="co">##    generation name    expression       type        data                         </span></span>
+<span><span class="co">##         &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;       &lt;chr&gt;                        </span></span>
+<span><span class="co">##  1          5 fix_mut sim.outputFull() slim_output "#OUT: 5 5 A\nVersion: 3\nPo…</span></span>
+<span><span class="co">##  2         10 fix_mut sim.outputFull() slim_output "#OUT: 10 10 A\nVersion: 3\n…</span></span>
+<span><span class="co">##  3         15 fix_mut sim.outputFull() slim_output "#OUT: 15 15 A\nVersion: 3\n…</span></span>
+<span><span class="co">##  4         20 fix_mut sim.outputFull() slim_output "#OUT: 20 20 A\nVersion: 3\n…</span></span>
+<span><span class="co">##  5         25 fix_mut sim.outputFull() slim_output "#OUT: 25 25 A\nVersion: 3\n…</span></span>
+<span><span class="co">##  6         30 fix_mut sim.outputFull() slim_output "#OUT: 30 30 A\nVersion: 3\n…</span></span>
+<span><span class="co">##  7         35 fix_mut sim.outputFull() slim_output "#OUT: 35 35 A\nVersion: 3\n…</span></span>
+<span><span class="co">##  8         40 fix_mut sim.outputFull() slim_output "#OUT: 40 40 A\nVersion: 3\n…</span></span>
+<span><span class="co">##  9         45 fix_mut sim.outputFull() slim_output "#OUT: 45 45 A\nVersion: 3\n…</span></span>
+<span><span class="co">## 10         50 fix_mut sim.outputFull() slim_output "#OUT: 50 50 A\nVersion: 3\n…</span></span>
+<span><span class="co">## # ℹ 190 more rows</span></span></code></pre>
 <p>So now we can write a function that takes the outputted
 <code>tibble</code> and make the desired plot. The first thing we need
 to do is extract the relevant information from the full output. In this
@@ -223,17 +269,33 @@ function extracts various pieces of the SLiM <code><a href="../reference/outputF
 function, which contains all information about a population in a SLiM
 simulation. In this case, we only need the information for the latest
 generation. Let’s test it:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mut_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_extract_full.html">slim_extract_full</a></span><span class="op">(</span><span class="va">output_test</span><span class="op">$</span><span class="va">output_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">output_test</span><span class="op">$</span><span class="va">output_data</span><span class="op">)</span>, <span class="op">]</span>,</span>
 <span>                                   <span class="st">"mutations"</span><span class="op">)</span></span>
 <span><span class="va">mut_dat</span></span></code></pre></div>
+<pre class="fansi fansi-output"><code><span><span class="co">## # A tibble: 72 × 11</span></span>
+<span><span class="co">##    generation mut_id unique_mut_id mut_type chrome_pos selection dominance</span></span>
+<span><span class="co">##         &lt;int&gt;  &lt;int&gt;         &lt;int&gt; &lt;chr&gt;         &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span><span class="co">##  1       1000     32          1059 m1            51819         0       0.5</span></span>
+<span><span class="co">##  2       1000      2          1625 m1            38952         0       0.5</span></span>
+<span><span class="co">##  3       1000      7          1785 m1            70816         0       0.5</span></span>
+<span><span class="co">##  4       1000     34          1792 m1            65569         0       0.5</span></span>
+<span><span class="co">##  5       1000     33          1974 m1            55913         0       0.5</span></span>
+<span><span class="co">##  6       1000      1          1994 m1            38596         0       0.5</span></span>
+<span><span class="co">##  7       1000     27          2163 m1            11533         0       0.5</span></span>
+<span><span class="co">##  8       1000      3          2301 m1            58311         0       0.5</span></span>
+<span><span class="co">##  9       1000     35          2947 m1            71275         0       0.5</span></span>
+<span><span class="co">## 10       1000     31          2990 m1            46828         0       0.5</span></span>
+<span><span class="co">## # ℹ 62 more rows</span></span>
+<span><span class="co">## # ℹ 4 more variables: subpop &lt;chr&gt;, first_gen &lt;int&gt;, prevalence &lt;int&gt;,</span></span>
+<span><span class="co">## #   nucleotide &lt;chr&gt;</span></span></code></pre>
 <p>Okay, so now we are ready to make our callback function. First we
 will create a little function to plot the Hilbert Curve. This uses a
 trick from the <code>grDevices</code> package to hold the display until
 each plot is finished drawing. This gives the animation produced while
 running the simulation a smoother appearance, but is not strictly
 necessary.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## specify chromosome ranges for plotting</span></span>
 <span><span class="va">chrs</span> <span class="op">&lt;-</span> <span class="fu">IRanges</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/IRanges-constructor.html" class="external-link">IRanges</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">87382</span>, <span class="fl">174763</span><span class="op">)</span>,</span>
 <span>                         end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">87382</span>, <span class="fl">174763</span>, <span class="fl">262143</span><span class="op">)</span><span class="op">)</span></span>
@@ -244,24 +306,25 @@ necessary.</p>
 <span>  <span class="va">prevalence</span> <span class="op">&lt;-</span> <span class="va">prevalence</span> <span class="op">/</span> <span class="va">max_prev</span></span>
 <span>  <span class="va">cols</span> <span class="op">&lt;-</span> <span class="fu">colourvalues</span><span class="fu">::</span><span class="fu"><a href="https://symbolixau.github.io/colourvalues/reference/colour_values.html" class="external-link">color_values</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">prevalence</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">prevalence</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span>
 <span>  <span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.flush.html" class="external-link">dev.hold</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="va">hc</span> <span class="op">=</span> <span class="fu">HilbertCurve</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">262143</span>, level <span class="op">=</span> <span class="fl">4</span>, reference <span class="op">=</span> <span class="cn">TRUE</span>, arrow <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span>  <span class="fu">hc_polygon</span><span class="op">(</span><span class="va">hc</span>, <span class="va">chrs</span><span class="op">)</span></span>
-<span>  <span class="fu">hc_points</span><span class="op">(</span><span class="va">hc</span>, <span class="va">bg</span>, np <span class="op">=</span> <span class="fl">4</span>, gp <span class="op">=</span> <span class="fu">gpar</span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">colourvalues</span><span class="fu">::</span><span class="fu"><a href="https://symbolixau.github.io/colourvalues/reference/colour_values.html" class="external-link">color_values</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu">hc_points</span><span class="op">(</span><span class="va">hc</span>, x1 <span class="op">=</span> <span class="va">positions</span>, gp <span class="op">=</span> <span class="fu">gpar</span><span class="op">(</span>fill <span class="op">=</span> <span class="va">cols</span><span class="op">)</span>, np <span class="op">=</span> <span class="fl">4</span>, mean_mode <span class="op">=</span> <span class="st">"weighted"</span><span class="op">)</span></span>
+<span>  <span class="va">hc</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/HilbertCurve/man/HilbertCurve.html" class="external-link">HilbertCurve</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">262143</span>, level <span class="op">=</span> <span class="fl">4</span>, reference <span class="op">=</span> <span class="cn">TRUE</span>, arrow <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/HilbertCurve/man/hc_polygon-dispatch.html" class="external-link">hc_polygon</a></span><span class="op">(</span><span class="va">hc</span>, <span class="va">chrs</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/HilbertCurve/man/hc_points-dispatch.html" class="external-link">hc_points</a></span><span class="op">(</span><span class="va">hc</span>, <span class="va">bg</span>, np <span class="op">=</span> <span class="fl">4</span>, gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="fu">colourvalues</span><span class="fu">::</span><span class="fu"><a href="https://symbolixau.github.io/colourvalues/reference/colour_values.html" class="external-link">color_values</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/HilbertCurve/man/hc_points-dispatch.html" class="external-link">hc_points</a></span><span class="op">(</span><span class="va">hc</span>, x1 <span class="op">=</span> <span class="va">positions</span>, gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html" class="external-link">gpar</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">cols</span><span class="op">)</span>, np <span class="op">=</span> <span class="fl">4</span>, mean_mode <span class="op">=</span> <span class="st">"weighted"</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu">grDevices</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.flush.html" class="external-link">dev.flush</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="co">#grDevices::dev.new(noRStudioGD = TRUE)</span></span>
 <span><span class="fu">plot_HC</span><span class="op">(</span><span class="va">mut_dat</span><span class="op">$</span><span class="va">chrome_pos</span>, <span class="va">mut_dat</span><span class="op">$</span><span class="va">prevalence</span>, <span class="va">chrs</span>, <span class="va">bg</span>, max_prev <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Custom_vis_files/figure-html/make_callback-1.png" width="700"></p>
 <p>Now the final callback function:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">make_hilbert</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">max_prev</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">mutation_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_extract_full.html">slim_extract_full</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>, <span class="op">]</span>, <span class="st">"mutations"</span><span class="op">)</span></span>
 <span>  <span class="fu">plot_HC</span><span class="op">(</span><span class="va">mutation_data</span><span class="op">$</span><span class="va">chrome_pos</span>, <span class="va">mutation_data</span><span class="op">$</span><span class="va">prevalence</span>, <span class="va">chrs</span>, <span class="va">bg</span>, <span class="va">max_prev</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Let’s try it out!</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## change mutation rate and increase pop size</span></span>
 <span><span class="va">chromosome_sim_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_script_render.html">slim_script_render</a></span><span class="op">(</span><span class="va">chromosome_sim</span>,</span>
 <span>                                           template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>N <span class="op">=</span> <span class="fl">500</span>,</span>

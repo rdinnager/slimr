@@ -19,7 +19,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
       </span>
     </div>
 
@@ -88,7 +88,13 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">slim_load_globals</span><span class="op">(</span>max <span class="op">=</span> <span class="fl">10</span>, sim <span class="op">=</span> <span class="cn">TRUE</span>, self <span class="op">=</span> <span class="cn">TRUE</span>, pseudo <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">slim_load_globals</span><span class="op">(</span></span>
+<span>  max <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  sim <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  community <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  self <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  pseudo <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -102,6 +108,10 @@ refers to how many of that Global type to load.</p></dd>
 
 <dt>sim</dt>
 <dd><p>Should the <code>sim</code> global be loaded?</p></dd>
+
+
+<dt>community</dt>
+<dd><p>Should the <code>community</code> global be loaded?</p></dd>
 
 
 <dt>self</dt>

@@ -149,7 +149,7 @@ slim_script <- function(...) {
 #' is executed every generation, within a generation range, to perform a desired task. The syntax of an
 #' Eidos event declaration in \code{slimr} mimics that of the Eidos (e.g. SLiM) language itself (see SLiM manual).
 #' It looks like this:
-#'   \code{slim_block([id,] [start_gen, [end_gen,]], [slim_callback,] \{ ... \})}
+#'   \code{slim_block([species_id = ][id,] [start_gen, [end_gen,]], [slim_callback,] \{ ... \})}
 #'   where [ ] specifies that the code is optional.
 #' The minimum required is a single argument containing Eidos code. This will be run in every generation
 #' with slim_callback \code{early()}, the default for Eidos events. You can also optionally specify an id
@@ -171,6 +171,13 @@ slim_script <- function(...) {
 #' \item{\code{interaction(int_type_id, subpop_id)}}
 #' \item{\code{reproduction(subpop_id, sex)}}
 #' }
+#'
+#' Multispecies models are supported (if using SLiM >= 4.0), by using a single named argument where the argument name is
+#' a species id (e.g. \code{slim_block(species_id = early())} would create a block that would run early in every generation and
+#' apply only to species \code{species_id}). Note that any of the arguments can be named, but only one. It is usually easiest to
+#' name the first argument specified in \code{slim_block()}. This may seem a somewhat unusual way to specify a species id but it
+#' was the simplest way to support multispecies models without changing the syntax of \code{slim_block()} much and maintaining
+#' the conciseness of block declarations which is a hallmark of SLiM and \code{slimr}.
 #'
 #' @return A slimr_block object. This is of little use outside a \code{\link{slim_script}}
 #' function call.

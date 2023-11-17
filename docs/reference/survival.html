@@ -35,7 +35,7 @@ see SLiM Manual: page 727"><meta property="og:image" content="https://rdinnager.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
       </span>
     </div>
 
@@ -54,6 +54,9 @@ see SLiM Manual: page 727"><meta property="og:image" content="https://rdinnager.
     </li>
     <li>
       <a href="../articles/Main_manuscript_example_v2.html">Using slimr to investigate the population genetics of the Sandy Inland Mouse in the periodic rainfall environment of the Simpson Desert</a>
+    </li>
+    <li>
+      <a href="../articles/multispecies.html">Advanced Example: Multispecies Model</a>
     </li>
     <li>
       <a href="../articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
@@ -202,7 +205,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> A slimr_block:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;slimr_script[1]&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="background-color: #00BBBB; font-weight: bold;">block_1:</span>1:1 recombination(p1) <span style="color: #BBBB00;">{</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="background-color: #00BBBB; font-weight: bold;">block_1:</span>1:1 survival(p1) <span style="color: #BBBB00;">{</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     <span style="color: #BB0000;">if</span> <span style="color: #0000BB;">(</span><span style="color: #00BB00;">!</span>surviving<span style="color: #0000BB;">)</span> <span style="color: #0000BB;">{</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #BB0000;">if</span> <span style="color: #00BBBB;">(</span>individual.sex <span style="color: #00BB00;">==</span> <span style="color: #BBBB00;">"M"</span><span style="color: #00BBBB;">)</span> <span style="color: #00BBBB;">{</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             <span style="color: #00BBBB;">return</span><span style="color: #BBBB00;">(</span>p1000<span style="color: #BBBB00;">)</span>;</span>

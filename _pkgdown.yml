@@ -16,6 +16,9 @@ reference:
   - subtitle: r_output_ special variants
   - contents:
     - starts_with("r_output_")
+  - subtitle: r_template_ special variants
+  - contents:
+    - starts_with("r_template_")
   - subtitle: slimr_block_ verbs
     desc: These function generate full code blocks and can be used inside `slim_script` calls.
   - contents:
@@ -160,6 +163,7 @@ reference:
   - title: Uncategorized
   - contents:
     - as_slimr_script
+    - as_slimr_code
     - as_slim_text
     - as_slim_text.slimr_script
     - code

@@ -1,5 +1,5 @@
 ---
-title: "Advanced Example: Multispecies Spatial Model with SLiMGUI Integration Demonstration"
+title: "Advanced Example: Multispecies Model"
 ---
 
 ```{r, include = FALSE}
@@ -88,31 +88,13 @@ slim_script(
     slim_block(host = initialize(),  {
         initializeSpecies(avatar = "🐛", color = "cornflowerblue")
         initializeSLiMOptions(dimensionality = "xy")
-        # initializeMutationType("m1", 0.5, "n", asFloat(0), 0.1)
-        # initializeGenomicElementType("g1", m1, asFloat(1))
-        # initializeGenomicElement(g1, 0, 9999)
-        # initializeMutationRate(1e-07)
-        # initializeRecombinationRate(1e-08)
     }),
 
     slim_block(parasitoid = initialize(),  {
         initializeSpecies(avatar = "🦟", color = "red")
         initializeSLiMOptions(dimensionality = "xy")
-        # initializeMutationType("m2", 0.5, "n", asFloat(0), 0.1)
-        # initializeGenomicElementType("g2", m2, asFloat(1))
-        # initializeGenomicElement(g2, 0, 9999)
-        # initializeMutationRate(1e-07)
-        # initializeRecombinationRate(1e-08)
     }),
     
-    # slim_block(host = mutationEffect(m1),  {
-    #     return(asFloat(1))
-    # }),
-    # 
-    # slim_block(parasitoid = mutationEffect(m2),  {
-    #     return(asFloat(1))
-    # }),
-
     slim_block(all = 2, !!n_gen, first(),  {
         host_pop = host.subpopulations
         hosts = host_pop.individuals
@@ -140,8 +122,8 @@ slim_script(
         survived = (runif(unhunted.size()) < P_survives_by_unhunted)
         dead = unhunted[!survived]
         dead.tag = 1
-        r_output(hosts.size(), "host_pop_size")
-        r_output(parasitoids.size(), "parasitoid_pop_size")
+        cat("Host Population Size: ", hosts.size())
+        cat("Parasitoid Population Size: ", parasitoids.size())
     }),
 
     slim_block(host = reproduction(),  {
@@ -198,7 +180,7 @@ hp_script
 Writing a multispecies model in `slimr` is simple. You only have to use a single named argument in each `slim_block()` call to specify the species to which the block applies. You use `all` to specify that the block applies to all species.
 Note in particular the use of `r_template_constant()`, a variation of `r_template()` that inserts the templated variable into a `defineConstant()` statement. `defineConstant()` assigns the variable into a constant in the SLiM initialization block so that it can be uses throughout any block of code in the simulation. It also makes it easier to adjust parameter values manually within SLiMGUI if we choose to test the model in SLiMGUI with its interactive features.
 
-```{r test_it}
+```{r test_it, eval=FALSE}
 test <- slim_run(hp_script, progress = TRUE)
 
 ```

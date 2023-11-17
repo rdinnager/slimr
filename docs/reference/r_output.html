@@ -22,7 +22,7 @@ used within a slim_block call"><meta property="og:image" content="https://rdinna
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
       </span>
     </div>
 
@@ -41,6 +41,9 @@ used within a slim_block call"><meta property="og:image" content="https://rdinna
     </li>
     <li>
       <a href="../articles/Main_manuscript_example_v2.html">Using slimr to investigate the population genetics of the Sandy Inland Mouse in the periodic rainfall environment of the Simpson Desert</a>
+    </li>
+    <li>
+      <a href="../articles/multispecies.html">Advanced Example: Multispecies Model</a>
     </li>
     <li>
       <a href="../articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
@@ -205,7 +208,7 @@ use `sim.generation` instead (this parameter is for backwards compatability with
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">run_w_out</span><span class="op">$</span><span class="va">output_data</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #OUT: 100 100 SV p1 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ##fileformat=VCFv4.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ##fileDate=20230721</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ##fileDate=20231117</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ##source=SLiM</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ##INFO=&lt;ID=MID,Number=.,Type=Integer,Description="Mutation ID in SLiM"&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ##INFO=&lt;ID=S,Number=.,Type=Float,Description="Selection Coefficient"&gt;</span>
@@ -218,12 +221,10 @@ use `sim.generation` instead (this parameter is for backwards compatability with
 <span class="r-out co"><span class="r-pr">#&gt;</span> ##INFO=&lt;ID=MULTIALLELIC,Number=0,Type=Flag,Description="Multiallelic"&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ##FORMAT=&lt;ID=GT,Number=1,Type=String,Description="Genotype"&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	i0	i1	i2	i3	i4	i5	i6	i7	i8	i9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	10703	.	A	T	1000	PASS	MID=137;S=0;DOM=0.5;PO=1;TO=68;MT=1;AC=3;DP=1000	GT	0|0	0|1	1|0	0|1	0|0	0|0	0|0	0|0	0|0	0|0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	63449	.	A	T	1000	PASS	MID=169;S=0;DOM=0.5;PO=1;TO=81;MT=1;AC=2;DP=1000	GT	0|0	0|0	0|0	0|0	0|0	0|0	1|0	0|0	0|0	0|1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	65287	.	A	T	1000	PASS	MID=101;S=0;DOM=0.5;PO=1;TO=52;MT=1;AC=2;DP=1000	GT	0|0	0|0	0|0	0|0	1|0	0|0	0|0	0|0	0|1	0|0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	71628	.	A	T	1000	PASS	MID=189;S=0;DOM=0.5;PO=1;TO=93;MT=1;AC=2;DP=1000	GT	0|0	0|0	0|0	0|0	0|0	0|0	1|0	0|0	0|0	0|1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	82766	.	A	T	1000	PASS	MID=195;S=0;DOM=0.5;PO=1;TO=97;MT=1;AC=1;DP=1000	GT	0|1	0|0	0|0	0|0	0|0	0|0	0|0	0|0	0|0	0|0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	97216	.	A	T	1000	PASS	MID=186;S=0;DOM=0.5;PO=1;TO=90;MT=1;AC=1;DP=1000	GT	0|0	0|0	0|0	0|0	0|0	0|0	0|0	0|0	1|0	0|0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1	24292	.	A	T	1000	PASS	MID=11;S=0;DOM=0.5;PO=1;TO=6;MT=1;AC=4;DP=1000	GT	1|0	0|0	0|1	0|0	0|0	0|0	0|0	0|1	0|0	0|1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1	27497	.	A	T	1000	PASS	MID=104;S=0;DOM=0.5;PO=1;TO=53;MT=1;AC=4;DP=1000	GT	1|0	0|0	0|1	0|0	0|0	0|0	0|0	0|1	0|0	0|1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1	83632	.	A	T	1000	PASS	MID=86;S=0;DOM=0.5;PO=1;TO=42;MT=1;AC=2;DP=1000	GT	0|0	1|0	0|0	0|0	0|0	0|0	0|0	1|0	0|0	0|0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1	97040	.	A	T	1000	PASS	MID=75;S=0;DOM=0.5;PO=1;TO=37;MT=1;AC=4;DP=1000	GT	1|0	0|0	0|1	0|0	0|0	0|0	0|0	0|1	0|0	0|1</span>
 </code></pre></div>
     </div>
   </div>

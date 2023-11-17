@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
       </span>
     </div>
 
@@ -36,6 +36,9 @@
     </li>
     <li>
       <a href="../articles/Main_manuscript_example_v2.html">Using slimr to investigate the population genetics of the Sandy Inland Mouse in the periodic rainfall environment of the Simpson Desert</a>
+    </li>
+    <li>
+      <a href="../articles/multispecies.html">Advanced Example: Multispecies Model</a>
     </li>
     <li>
       <a href="../articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
@@ -126,6 +129,15 @@
           <p><code><a href="r_output_snp.html">r_output_snp()</a></code> <code><a href="r_output_snp.html">slimr_output_snp()</a></code> </p>
         </td>
         <td><p>Utility function to tell SLiM to output SNP format data</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h3 id="r-template-special-variants">r_template_ special variants <a href="#r-template-special-variants" class="anchor" aria-hidden="true"></a></h3>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="r_template_constant.html">r_template_constant()</a></code> <code><a href="r_template_constant.html">slimr_template_constant()</a></code> </p>
+        </td>
+        <td><p>Like slimr_template but automatically inserts code to setup variable as
+a defineConstant() call in the SLiM initialization block.</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h3 id="slimr-block-verbs">slimr_block_ verbs <a href="#slimr-block-verbs" class="anchor" aria-hidden="true"></a></h3>
           <p class="section-desc"></p><p>These function generate full code blocks and can be used inside <code>slim_script</code> calls.</p>
@@ -1298,6 +1310,10 @@
           <p><code><a href="as_slimr_script.html">as_slimr_script()</a></code> </p>
         </td>
         <td><p>Convert a character vector into a slim_script object</p></td>
+      </tr><tr><td>
+          <p><code><a href="as_slimr_code.html">as_slimr_code()</a></code> </p>
+        </td>
+        <td><p>Convert SLiM code text into equivalent `slimr` code to produce the same model</p></td>
       </tr><tr><td>
           <p><code><a href="as_slim_text.html">as_slim_text()</a></code> </p>
         </td>

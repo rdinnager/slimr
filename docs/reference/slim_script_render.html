@@ -19,7 +19,7 @@ into valid SLiM syntax, ready to be run with SLiM or slim_run"><meta property="o
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
       </span>
     </div>
 
@@ -38,6 +38,9 @@ into valid SLiM syntax, ready to be run with SLiM or slim_run"><meta property="o
     </li>
     <li>
       <a href="../articles/Main_manuscript_example_v2.html">Using slimr to investigate the population genetics of the Sandy Inland Mouse in the periodic rainfall environment of the Simpson Desert</a>
+    </li>
+    <li>
+      <a href="../articles/multispecies.html">Advanced Example: Multispecies Model</a>
     </li>
     <li>
       <a href="../articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
@@ -90,7 +93,8 @@ into valid SLiM syntax, ready to be run with SLiM or <code><a href="slim_run.htm
 <span>  template <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  replace_NAs <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  reps <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  parallel <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  parallel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  portable <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -123,6 +127,12 @@ rendered, in which case it will just repeat the rendered script in the result.</
 <dt>parallel</dt>
 <dd><p>Should the rendering be done in parallel when rendering multiple scripts? Requires
 the <code>furrr</code> package and will use the plan set by <code>future::<a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></code></p></dd>
+
+
+<dt>portable</dt>
+<dd><p>If `TRUE`, the the script will be rendered in a 'portable' format, which allows
+the script to be modified in another program such as SLiMGUI, and then reimported into R, while maintaining
+`slimr` features. See details for more information on how this works.</p></dd>
 
 </dl></div>
 

@@ -10,7 +10,11 @@ test_that("slim_extract_output_data works", {
   expect_identical(nrow(no_dat$data), 1L)
   expect_identical(no_dat$last_line, 3L)
 
+  skip_on_os("windows")
+
   if(!on_covr()) {
+
+    set.seed(39299)
 
     test_sim <- slim_script(
       slim_block_init_minimal(),

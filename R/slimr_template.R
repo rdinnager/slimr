@@ -164,12 +164,15 @@ replace_double_dots <- function(slimr_script, envir = parent.frame(), slimr_temp
   script_info <- attr(slimr_script, "script_info")
   script_info$rendered <- TRUE
 
+  species <- attr(slimr_script, "species")
+
   slimr_script <- new_slimr_script(block_name = block_names,
                                    block_id = field(slimr_script, "block_id"),
                                    start_gen = field(slimr_script, "start_gen"),
                                    end_gen = field(slimr_script, "end_gen"),
                                    callback = field(slimr_script, "callback"),
                                    code = new_code,
+                                   species = species,
                                    slimr_template = slimr_template_attr,
                                    slimr_output = attr(slimr_script, "slimr_output"),
                                    slimr_inline = attr(slimr_script, "slimr_inline"),
@@ -218,3 +221,22 @@ slimr_template_info <- function(script_temp) {
     NULL
   }
 }
+
+#' Like slimr_template but automatically inserts code to setup variable as
+#' a defineConstant() call in the SLiM initialization block.
+#'
+#' @inheritParams slimr_template
+#'
+#' @return placemarker if used outside `slim_block`
+#' @export
+#'
+#' @details Note that this function is only designed to be used inside a \code{\link{slim_block}} function call. If run in any other
+#' situation, it won't really do anything, just returning a reference to the placemarker that would have been inserted if run in
+#' its correct context.
+r_template_constant <- function(var_name, default = NULL, unquote_strings = FALSE) {
+  rlang::expr(defineConstant(!!var_name, !!r_template(var_name, default = default, unquote_strings = unquote_strings)))
+}
+
+#' @rdname r_template_constant
+#' @export
+slimr_template_constant <- r_template_constant

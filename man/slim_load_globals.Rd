@@ -4,7 +4,13 @@
 \alias{slim_load_globals}
 \title{Load SLiM Globals into R Global environment}
 \usage{
-slim_load_globals(max = 10, sim = TRUE, self = TRUE, pseudo = TRUE)
+slim_load_globals(
+  max = 10,
+  sim = TRUE,
+  community = TRUE,
+  self = TRUE,
+  pseudo = TRUE
+)
 }
 \arguments{
 \item{max}{A single integer values indicating how many of
@@ -13,6 +19,8 @@ refer to different Global types (see details for more information), and the valu
 refers to how many of that Global type to load.}
 
 \item{sim}{Should the \code{sim} global be loaded?}
+
+\item{community}{Should the \code{community} global be loaded?}
 
 \item{self}{Should the \code{self} global be loaded?}
 

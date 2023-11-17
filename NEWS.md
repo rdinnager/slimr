@@ -1,3 +1,9 @@
+# slimr 0.3.0
+
+* Added `slim_auto()` function to automatically insert `r_template()` and `r_inline()` statement in useful places in a `slimr_script`, based on computational graph analysis
+* Added `as_slimr_code()` function, which is similar to `as_slimr_script()`, which converts SLiM code as a character vector into a `slimr_script` object, but `as_slimr_code()` returns the code necessary to create the `slimr_script` instead. this allows copy and pasting the text into the R console or IDE so that it can be subsequently edited and modified.
+* Added vignette showing how to create a multispecies model in `slimr`, and documented the multispecies feature in the documentation for `slim_block()`
+
 # slimr 0.2.1
 
 * allow user to manually set SLiM executable directory with `SLIM_HOME` environmental variable

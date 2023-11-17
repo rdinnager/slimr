@@ -545,6 +545,8 @@ slim_run_script <- function(script_txt,
 
 setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(), simple_run = FALSE, conn = "|") {
 
+  seed <- as.character(sample.int(.Machine$integer.max, 1))
+
   if(is.null(slim_path)) {
     slim_call <- get_slim_call()
   } else {
@@ -558,6 +560,8 @@ setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(
 
   slim_call$args <- purrr::map_chr(slim_call$args,
                                    ~glue::glue(.x, .envir = list(script_file = script_file)))
+
+  slim_call$args <- c("-s", seed, slim_call$args)
 
   if(simple_run) {
 

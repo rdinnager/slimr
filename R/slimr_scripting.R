@@ -149,7 +149,7 @@ slim_script <- function(...) {
 #' is executed every generation, within a generation range, to perform a desired task. The syntax of an
 #' Eidos event declaration in \code{slimr} mimics that of the Eidos (e.g. SLiM) language itself (see SLiM manual).
 #' It looks like this:
-#'   \code{slim_block([id,] [start_gen, [end_gen,]], [slim_callback,] \{ ... \})}
+#'   \code{slim_block([species_id = ][id,] [start_gen, [end_gen,]], [slim_callback,] \{ ... \})}
 #'   where [ ] specifies that the code is optional.
 #' The minimum required is a single argument containing Eidos code. This will be run in every generation
 #' with slim_callback \code{early()}, the default for Eidos events. You can also optionally specify an id
@@ -171,6 +171,13 @@ slim_script <- function(...) {
 #' \item{\code{interaction(int_type_id, subpop_id)}}
 #' \item{\code{reproduction(subpop_id, sex)}}
 #' }
+#'
+#' Multispecies models are supported (if using SLiM >= 4.0), by using a single named argument where the argument name is
+#' a species id (e.g. \code{slim_block(species_id = early())} would create a block that would run early in every generation and
+#' apply only to species \code{species_id}). Note that any of the arguments can be named, but only one. It is usually easiest to
+#' name the first argument specified in \code{slim_block()}. This may seem a somewhat unusual way to specify a species id but it
+#' was the simplest way to support multispecies models without changing the syntax of \code{slim_block()} much and maintaining
+#' the conciseness of block declarations which is a hallmark of SLiM and \code{slimr}.
 #'
 #' @return A slimr_block object. This is of little use outside a \code{\link{slim_script}}
 #' function call.
@@ -197,10 +204,11 @@ slim_block <- function(...) {
   }
 
   spec <- names(args)[names(args) != ""]
+  if(length(spec) == 0) {
+    spec <- NULL
+  }
   if(length(spec) > 1) {
     rlang::abort("If any arguments are named it should be exactly one argument (and the name should be the name of a species in the SLiM model)")
-  } else {
-    spec <- NULL
   }
 
   #code <- deparse(args[[n_args]], width.cutoff = 500, control = NULL)
@@ -511,13 +519,16 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #' rendered, in which case it will just repeat the rendered script in the result.
 #' @param parallel Should the rendering be done in parallel when rendering multiple scripts? Requires
 #' the \code{furrr} package and will use the plan set by \code{future::\link[future]{plan}}
+#' @param portable If `TRUE`, the the script will be rendered in a 'portable' format, which allows
+#' the script to be modified in another program such as SLiMGUI, and then reimported into R, while maintaining
+#' `slimr` features. See details for more information on how this works.
 #'
 #' @return
 #' @export
 #'
 #' @examples
 slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE,
-                                reps = 1, parallel = FALSE) {
+                                reps = 1, parallel = FALSE, portable = FALSE) {
 
   if(parallel) {
     assert_package("furrr")
@@ -668,6 +679,7 @@ reprocess_script <- function(script) {
   start_gen <- vctrs::field(script, "start_gen")
   end_gen <- vctrs::field(script, "end_gen")
   callback <- vctrs::field(script, "callback")
+  species <- attr(script, "species")
   slimr_output_attr <- attr(script, "slimr_output")
   slimr_template_attr <- attr(script, "slimr_template")
   slimr_lang_orig <- attr(script, "slimr_lang_orig")
@@ -679,6 +691,7 @@ reprocess_script <- function(script) {
                              end_gen = end_gen,
                              callback = callback,
                              code = code,
+                             species = species,
                              slimr_inline = slimr_inline_attr,
                              slimr_output = slimr_output_attr,
                              slimr_template = slimr_template_attr,

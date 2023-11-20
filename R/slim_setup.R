@@ -186,7 +186,7 @@ slim_setup <- function(verbose = TRUE,
 #'
 #' Function to test if SLiM is available on user's system.
 #'
-#' @return
+#' @return returns NULL
 get_slim_call <- function() {
 
   if(!is.null(.slim_settings$slim_call)) {

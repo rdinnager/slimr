@@ -217,7 +217,7 @@ slimr_code_from_text_style_all <- function(code) {
 #'
 #' Utility code to convert SLiM code into a form that can be parsed by R
 #' (e.g. in \code{styler} or \code{prettycode}). Don't forget to re-SLiMify
-#' afterwards (via \code{\link(slim_code_SLiMify))!
+#' afterwards (via \code{\link{slim_code_SLiMify}}!
 #'
 #' @param code_snippet SLiM code to Rify as a character vector
 #'

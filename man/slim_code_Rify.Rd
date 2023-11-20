@@ -13,5 +13,7 @@ slim_code_Rify(code_snippet)
 Rified code snippet
 }
 \description{
-
+Utility code to convert SLiM code into a form that can be parsed by R
+(e.g. in \code{styler} or \code{prettycode}). Don't forget to re-SLiMify
+afterwards (via \code{\link{slim_code_SLiMify}} )!
 }

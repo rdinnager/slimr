@@ -37,6 +37,9 @@ the \code{furrr} package and will use the plan set by \code{future::\link[future
 the script to be modified in another program such as SLiMGUI, and then reimported into R, while maintaining
 `slimr` features. See details for more information on how this works.}
 }
+\value{
+returns a rendered slim script
+}
 \description{
 If your \code{slimr_script} object has made use of special \code{slimrlang}
 syntax \code{\link{slimr_template}}, this function will 'render' the \code{slimr_script}

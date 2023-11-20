@@ -392,6 +392,7 @@ slim_block <- function(...) {
 #'
 #' @return A \code{slimr_block} object (only useful with the context of a \code{\link{slim_script}}) call.
 #' @export
+#' @examples
 slim_function <- function(..., name, return_type = "f$", body) {
   args <- list(...)
 
@@ -523,9 +524,8 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #' the script to be modified in another program such as SLiMGUI, and then reimported into R, while maintaining
 #' `slimr` features. See details for more information on how this works.
 #'
-#' @return
+#' @return returns a rendered slim script
 #' @export
-#'
 #' @examples
 slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE,
                                 reps = 1, parallel = FALSE, portable = FALSE) {

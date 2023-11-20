@@ -6,6 +6,9 @@
 \usage{
 get_slim_call()
 }
+\value{
+returns NULL
+}
 \description{
 Function to test if SLiM is available on user's system.
 }

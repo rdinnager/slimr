@@ -11,6 +11,7 @@ test_that("slim_extract_output_data works", {
   expect_identical(no_dat$last_line, 3L)
 
   skip_on_os("windows")
+  skip_if_slim_not_installed()
 
   if(!on_covr()) {
 
@@ -42,6 +43,8 @@ test_that("slim_extract_output_data works", {
 })
 
 test_that("slim_results_to_data works as expected", {
+
+  skip_if_slim_not_installed()
 
   if(!on_covr()) {
 
@@ -109,6 +112,8 @@ test_that("slim_results_to_data works as expected", {
 
 test_that("slim_extract_genome works as expected", {
 
+  skip_if_slim_not_installed()
+
   if(!on_covr()) {
 
     test_sim <- slim_script(
@@ -154,6 +159,8 @@ test_that("slim_extract_genome works as expected", {
 })
 
 test_that("slim_extract_genlight works as expected", {
+
+  skip_if_slim_not_installed()
 
   if(!on_covr()) {
 

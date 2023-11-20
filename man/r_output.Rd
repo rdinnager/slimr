@@ -73,6 +73,7 @@ during simulation runs with \code{\link[slimr]{slim_run}} from the
 used within a \code{\link{slim_block}} call
 }
 \examples{
+if(slim_is_avail()) {
 slim_script(
   slim_block(initialize(),
              {
@@ -95,4 +96,5 @@ slim_script(
 slim_run() -> run_w_out
 
 cat(run_w_out$output_data$data[[1]])
+}
 }

@@ -35,6 +35,7 @@
 #' @export
 #'
 #' @examples
+#' if(slim_is_avail()) {
 #' slim_script(
 #'   slim_block(initialize(),
 #'              {
@@ -57,6 +58,7 @@
 #' slim_run() -> run_w_out
 #'
 #' cat(run_w_out$output_data$data[[1]])
+#' }
 r_output <- function(slimr_expr, name, do_every = 1,
                          send_to = c("data", "file"),
                          file_name = tempfile(fileext = ".txt"),

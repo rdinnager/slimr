@@ -36,6 +36,7 @@ test_that("All SLiM recipes can be converted to slimr_script objects properly", 
   #                            ~slim_script_remove_output(.x))
 
   skip_on_ci()
+  skip_if_slim_not_installed()
 
   for(i in seq_along(slim_recipes)) {
     if(!i %in% recipes_using_files) {

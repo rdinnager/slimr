@@ -19,3 +19,11 @@ if(on_ci()) {
   }
 
 }
+
+skip_if_slim_not_installed <- function() {
+  if (!slim_is_avail()) {
+    skip("SLiM is not installed.")
+  } else {
+    invisible()
+  }
+}

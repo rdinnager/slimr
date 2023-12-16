@@ -1,0 +1,29 @@
+---
+title: "Useful slimr Tables"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Useful slimr Tables}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Major Syntax Differences
+
+
+| SLiM Code                                                         | `slimr` Equivalent                                                                                                                | Notes                                                                                                                                                                                                                                                                                                                          |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `something = "hello world";`<br>`print(something);`                   | `something <- "hello world"`<br>`print(something)`<br>    --OR--<br>`something = "hello world";`<br>`print(something);`                  | In SLiM, semicolons at the end of lines are mandatory, and assignment is always with `=`. In slimr, R-style assignment operator `<-` is allowed and semicolons are optional. Code will be appropriately converted to work in SLiM.                                                                                         |
+| `return T;`                                                         | `return(T);`                                                                                                                      | In SLiM, `return` is a keyword, but in R, `return` is a function. Use `return()` in `slimr`, which will be automatically converted for SLiM. Note also that for `TRUE` and `FALSE`, SLiM uses `T` and `F`, so use `T` and `F` in slimr as well.                                                                                                    |
+| `cat(fixed ? “FIXED\\n" else "LOST\\n");`                           | `cat(fixed %?% “FIXED\\n" %else% "LOST\\n");`                                                                                     | SLiM can make use of Eidos trinary operator `?`, which is a compact form of an if else statement, or a non-vectorized form of `ifelse()`. `slimr` supports this by using the operators `%?%` and `%else%`.                                                                                                                               |
+| `if (fixed)`<br>&emsp;`cat("FIXED\\n");`<br>`else`<br>&emsp;`cat("LOST\\n");` | `if (fixed)`<br>&emsp;`cat("FIXED\\n"); else`<br>&emsp; &emsp;`cat("LOST\\n");`                                                              | If Else statement are formatted slightly differently between SLiM and R. In SLiM, the `else` statement must follow a newline after the final line of the `if` statement. In R, the `else` statement must be on the same line as the final line of the `if` statement. In `slimr` use the R form, it will be converted to work with SLiM. |
+| `sim.addSubpop("p1", 500);`                                         | `sim.addSubpop("p1", 500);`<br> &emsp; &emsp; --OR--<br>`sim$addSubpop("p1", 500);`<br> &emsp; &emsp; --OR-- <br> `sim%.%Species$addSubpop("p1", 500);` | The other varieties may look a little weird but they allow autocomplete to work in R. If you don't need autocomplete it works best to just write as you would in SLiM.                                                                                                                                                         |
+| `[id] [t1 [: t2]] first() { ... }`                                  | `slim_block([id,] [t1, [t2,]] first(), { ... })`                                                                                  | This is how an Eidos block is specified in SLiM and slimr. Things inside square brackets are optional. Instead of `first()`, any event or callback function can be used. `id` is a name for the code block, `t1` is the first time to run the block, `t2` is the last time. `...` is arbitrary Eidos or `slimr` code.                      |
+| `1: late() { ... }`                                                 | `slim_block(1, .., late(), { ... })`                                                                                              | In SLiM, using `t: `, means to run the code from time `t` until the end of the simulation. In `slimr`, this can be accomplished by using `..` for the end time.                                           |
+| `do`<br>`{...}`<br>`while (runif(1) < 0.8);`                            | `proceed <- 0;`<br>`while(proceed < 0.8) {`<br> &emsp; `...`<br> &emsp; `proceed <- runif(1);`<br>`}`<br>                                         | R does not have a `do ... while` loop construction, it only has `while` loops. The main difference is that `do ... while` tests the condition at the end of the `{...}` code, whereas `while()` tests the condition before the `{...}` code. Similar functionality can be achieved with a slightly more verbose `while` loop in R, which will also work in SLiM. |

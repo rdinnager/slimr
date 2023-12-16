@@ -4,15 +4,24 @@
 \alias{recalculateFitness}
 \alias{SLiMSim$recalculateFitness}
 \alias{.SS$recalculateFitness}
+\alias{Species$recalculateFitness}
+\alias{.Sp$recalculateFitness}
 \title{SLiM method recalculateFitness}
 \usage{
-recalculateFitness(generation)
+recalculateFitness(tick)
+
+recalculateFitness(tick)
 }
 \arguments{
+\item{tick}{An object of type null or integer. Must be of length 1 (a
+singleton). The default value is \code{NULL}. See details for description.}
+
 \item{generation}{An object of type null or integer. Must be of length 1 (a
 singleton). The default value is \code{NULL}. See details for description.}
 }
 \value{
+An object of type void.
+
 An object of type void.
 }
 \description{
@@ -24,10 +33,19 @@ anything useful when used inside a \code{\link{slim_block}} function further
 nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
+
+Documentation for SLiM function \code{recalculateFitness}, which is a method of
+the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further
+nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=571}{SLiM manual: page 571}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
 
 Force an immediate recalculation of fitness values for all individuals
 in all subpopulations. Normally fitness values are calculated at a fixed
@@ -58,8 +76,51 @@ any enabled and applicable fitness() callbacks, so this is quite a heavyweight
 operation; you should think carefully about what side effects might result
 (which is why fitness recalculation does not just occur automatically after
 changes that might affect fitness values).
+
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=725}{SLiM manual: page
+725}.
+
+Force an immediate recalculation of fitness values for all individuals
+in all subpopulations. Normally fitness values are calculated at a fixed
+point in each tick, and those values are cached and used until the next
+recalculation. If simulation parameters are changed in script in a way that
+affects fitness calculations, and if you wish those changes to take effect
+immediately rather than taking effect at the next automatic recalculation, you
+may call recalculateFitness() to force an immediate recalculation and recache.
+The optional parameter tick provides the tick for which mutationEffect() and
+fitnessEffect() callbacks should be selected; if it is NULL (the default), the
+current tick value for the simulation, community.tick, is used. If you call
+recalculateFitness() in an early() event in a WF model, you may wish this to be
+community.tick - 1 in order to utilize the mutationEffect() and fitnessEffect()
+callbacks for the previous tick, as if the changes that you have made to
+fitnessinfluencing parameters were already in effect at the end of the previous
+tick when the new generation was first created and evaluated (usually it is
+simpler to just make such changes in a late() event instead, however, in which
+case calling recalculateFitness() is probably not necessary at all since fitness
+values will be recalculated immediately afterwards). Regardless of the value
+supplied for tick here, community.tick inside callbacks will report the true
+tick number, so if your callbacks consult that parameter in order to create
+tick-specific fitness effects you will need to handle the discrepancy somehow.
+(Similar considerations apply for nonWF models that call recalculateFitness()
+in a late() event, which is also not advisable in general.) After this call,
+the fitness values used for all purposes in SLiM will be the newly calculated
+values. Calling this method will trigger the calling of any enabled and
+applicable mutationEffect() and fitnessEffect() callbacks, so this is quite a
+heavyweight operation; you should think carefully about what side effects might
+result (which is why fitness recalculation does not just occur automatically
+after changes that might affect fitness values).
 }
 \section{Copyright}{
+
+This is documentation for a function in the SLiM software, and has been
+reproduced from the official manual,
+which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+
 
 This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
@@ -72,7 +133,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other SLiMSim: 
-\code{\link{SLiMSim}},
+\code{\link{SS}},
 \code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},
@@ -102,9 +163,40 @@ Other SLiMSim:
 \code{\link{treeSeqOutput}()},
 \code{\link{treeSeqRememberIndividuals}()},
 \code{\link{treeSeqSimplify}()}
+
+Other Species: 
+\code{\link{Sp}},
+\code{\link{addSubpopSplit}()},
+\code{\link{addSubpop}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{individualsWithPedigreeIDs}()},
+\code{\link{killIndividuals}()},
+\code{\link{mutationCounts}()},
+\code{\link{mutationFrequencies}()},
+\code{\link{mutationsOfType}()},
+\code{\link{outputFixedMutations}()},
+\code{\link{outputFull}()},
+\code{\link{outputMutations}()},
+\code{\link{readFromPopulationFile}()},
+\code{\link{registerFitnessEffectCallback}()},
+\code{\link{registerMateChoiceCallback}()},
+\code{\link{registerModifyChildCallback}()},
+\code{\link{registerMutationCallback}()},
+\code{\link{registerMutationEffectCallback}()},
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{registerSurvivalCallback}()},
+\code{\link{simulationFinished}()},
+\code{\link{skipTick}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqOutput}()},
+\code{\link{treeSeqRememberIndividuals}()},
+\code{\link{treeSeqSimplify}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
 \concept{SLiMSim}
+\concept{Species}

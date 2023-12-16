@@ -1,7 +1,24 @@
+install_path <- function() {
+  path <- Sys.getenv("SLIM_HOME")
+  if (nzchar(path)) {
+    path <- normalizePath(path, mustWork = FALSE)
+  } else {
+    path <- normalizePath(file.path(system.file("", package = "slimr")), mustWork = FALSE)
+  }
+  path
+}
+
+#' A simple exported version of install_path
+#' Returns the SLiM installation path.
+#' @export
+slim_install_path <- function() {
+  install_path()
+}
+
 #' Attempt to install and / or setup SLiM for use with slimr
 #'
 #' `slim_setup()` will attempt to determine the user's OS and install SLiM automatically.
-#' Note that on Windows, you must have Windows subsystem for linux installed, which requires at least Windows 10.
+#' Note that on Windows, this will attempt to download a precompiled executable.
 #'
 #' @param install_dir Directory to install SLiM to. If "default" `slim_setup()` will install in the default
 #' directory. Be careful to make sure you have write and execution permissions for the installation folder
@@ -9,7 +26,6 @@
 #' environmental variable to tell slimr where to find your slim installation. Note that for Windows, this
 #' refers to a linux path from the perspective of your Windows Subsystem for Linux (WSL) distribution, not a
 #' Windows path.
-#' @param test_slim Should SLiM be tested once installation is complete?
 #' @param verbose Whether to print out progress of the installation.
 #' @param force If \code{FALSE} (the default) \code{slim_setup} will not install SLiM if it is already
 #' installed and can be found. If you want to force an installation, even if SLiM is already installed
@@ -21,21 +37,10 @@
 #' \dontrun{
 #' slim_setup()
 #' }
-slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE,
+slim_setup <- function(verbose = TRUE,
                        force = FALSE) {
 
-  on.exit({
-    system("wsl rm -f SLiM.zip",
-           ignore.stdout = suppress_out,
-           ignore.stderr = suppress_out)
-    system("wsl rm -f -r SLiM",
-           ignore.stdout = suppress_out,
-           ignore.stderr = suppress_out)
-    system("wsl rm -f -r SLiM_build",
-           ignore.stdout = suppress_out,
-           ignore.stderr = suppress_out)
-  },
-  add = TRUE)
+  install_dir <- install_path()
 
   suppress_out <- !verbose
 
@@ -46,95 +51,15 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE,
     }
 
     if(platform == "windows") {
-      if(Sys.which("wsl.exe") == "") {
-        stop("It appears your Windows system does not have a working Windows subsystem for linux (WSL). Please make
-             sure you setup and install WSL before proceeding. Note WSL is only available for Windows 10 and above.
-             See https://docs.microsoft.com/en-us/windows/wsl/install-win10 for installation instructions")
-      }
 
       ## check if slim is already installed
 
-      if(!.slim_settings$slim_avail) {
 
-        message("Attempting to install slim using Window subsystem for linux (WSL)")
+      message("Attempting to download SLiM")
+      download.file("https://github.com/rdinnager/slimr/releases/download/slim-windows-executable/slim.exe",
+                    file.path(install_path(), "slim.exe"),
+                    mode = "wb")
 
-        system('bash -c "wget http://benhaller.com/slim/SLiM.zip"',
-               ignore.stdout = suppress_out,
-               ignore.stderr = suppress_out)
-
-        unzip <- system('bash -c "unzip -o SLiM.zip"',
-                        ignore.stdout = suppress_out,
-                        ignore.stderr = suppress_out)
-        if(unzip != 0) {
-          stop("Unzipping of SLiM archive failed. Make sure you have unzip installed on your WSL distro. e.g.
-               for Ubuntu run `sudo apt-get install unzip`.")
-        }
-
-        system('bash -c "mkdir SLiM_build"',
-               ignore.stdout = suppress_out,
-               ignore.stderr = suppress_out)
-
-        if(install_dir == "default") {
-          compile <- system('bash -c "cd SLiM_build \
-                            cmake -DCMAKE_BUILD_TYPE=Release ../SLiM \
-                            make \
-                            make install"',
-                            ignore.stdout = suppress_out,
-                            ignore.stderr = suppress_out)
-        } else {
-
-          system(paste0('bash -c "mkdir -p ', install_dir, '"'),
-                 ignore.stdout = suppress_out,
-                 ignore.stderr = suppress_out)
-
-          compile <- system(stringr::str_replace('bash -c "cd SLiM_build \
-  cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/path/to/install ../SLiM \
-  make \
-                            make install"',
-                                                 "/path/to/install",
-                                                 install_dir),
-                            ignore.stdout = suppress_out,
-                            ignore.stderr = suppress_out)
-        }
-
-        if(compile != 0) {
-
-          system('bash -c "rm -f SLiM.zip"',
-                 ignore.stdout = suppress_out,
-                 ignore.stderr = suppress_out)
-          system('bash -c "rm -f -r SLiM"',
-                 ignore.stdout = suppress_out,
-                 ignore.stderr = suppress_out)
-          system('bash -c "rm -f -r SLiM_build"',
-                 ignore.stdout = suppress_out,
-                 ignore.stderr = suppress_out)
-
-          stop("It looks like installation failed at compiling time. Make sure you have cmake and gcc (or build-essential)
-               installed in your WSL distro and that they are accessible (e.g. in the PATH)")
-        }
-
-        system('bash -c "rm -f SLiM.zip"',
-               ignore.stdout = suppress_out,
-               ignore.stderr = suppress_out)
-        system('bash -c "rm -f -r SLiM"',
-               ignore.stdout = suppress_out,
-               ignore.stderr = suppress_out)
-        system('bash -c "rm -f -r SLiM_build"',
-               ignore.stdout = suppress_out,
-               ignore.stderr = suppress_out)
-
-        message("SLiM installed! Running a test now...")
-
-        # test <- system('bash -c "slim -testSLiM"', intern = TRUE)
-        #
-        # if(any(grepl("SUCCESS", test))) {
-        #   message("SLiM test successful. You should now be able to use `slimr`")
-        # }
-
-      } else {
-        message("Looks like SLiM is already installed. If you want to reinstall use force=TRUE")
-
-      }
 
       #slim_settings$slim_call <- 'bash -c "slim {slim_options}"'
 
@@ -156,7 +81,7 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE,
                         ignore.stdout = suppress_out,
                         ignore.stderr = suppress_out)
         if(unzip != 0) {
-          stop("Unzipping of SLiM archive failed. Make sure you have unzip installed on your WSL distro. e.g.
+          stop("Unzipping of SLiM archive failed. Make sure you have unzip installed on your linux distro. e.g.
                for Ubuntu run `sudo apt-get install unzip`.")
         }
 
@@ -212,9 +137,9 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE,
                ignore.stdout = suppress_out,
                ignore.stderr = suppress_out)
 
-        message("\n")
-        message("SLiM installed! Running a test now...")
-        message("\n")
+        # message("\n")
+        # message("SLiM installed! Running a test now...")
+        # message("\n")
 
       } else {
         message("Looks like SLiM is already installed. If you want to reinstall use force=TRUE")
@@ -229,25 +154,30 @@ slim_setup <- function(install_dir = "~/slim", test_slim = TRUE, verbose = TRUE,
     .slim_settings$slim_call <- get_slim_call()
     .slim_settings$slim_avail <- TRUE
 
-    Sys.setenv(SLIMR_SLIM_DIR = install_dir)
+    Sys.setenv(SLIM_HOME = install_dir)
 
-    if(install_dir != "~/slim") {
-      message("\n")
-      if (requireNamespace("crayon", quietly = TRUE)) {
-        message(stringr::str_wrap(glue::glue("It looks like you didn't use the default installation directory for SLiM. If you want slimr to find your SLiM installation in subsequent R sessions, please either make sure the slim executable is on the path, or set the SLIMR_SLIM_DIR evironmental variable to '{install_dir}'. We recommend adding this to your .RProfile file. This is most easily done by using {crayon::green('usethis::edit_r_environ()')}, and copying in the following line:\n{crayon::blue('SLIMR_SLIM_DIR=')}'{crayon::green(install_dir)}'\n"),
-                                  exdent = 2))
-      } else {
-        message(stringr::str_wrap(glue::glue("It looks like you didn't use the default installation directory for SLiM. If you want slimr to find your SLiM installation in subsequent R sessions, please either make sure the slim executable is on the path, or set the SLIMR_SLIM_DIR evironmental variable to '{install_dir}'. We recommend adding this to your .RProfile file. This is most easily done by using {crayon::green('usethis::edit_r_environ()')}, and copying in the following line:\nSLIMR_SLIM_DIR=install_dir\n"),
-                                  exdent = 2))
-      }
-      message("\n")
-      if (requireNamespace("clipr", quietly = TRUE)) {
-        clipr::write_clip(glue::glue("SLIMR_SLIM_DIR='{install_dir}'"))
-        message("This snippet has been copied to the clipboard.")
-      }
+    # if(install_dir != "~/slim") {
+    #   message("\n")
+    #   if (requireNamespace("crayon", quietly = TRUE)) {
+    #     message(stringr::str_wrap(glue::glue("It looks like you didn't use the default installation directory for SLiM. If you want slimr to find your SLiM installation in subsequent R sessions, please either make sure the slim executable is on the path, or set the SLIM_HOME evironmental variable to '{install_dir}'. We recommend adding this to your .RProfile file. This is most easily done by using {crayon::green('usethis::edit_r_environ()')}, and copying in the following line:\n{crayon::blue('SLIM_HOME=')}'{crayon::green(install_dir)}'\n"),
+    #                               exdent = 2))
+    #   } else {
+    #     message(stringr::str_wrap(glue::glue("It looks like you didn't use the default installation directory for SLiM. If you want slimr to find your SLiM installation in subsequent R sessions, please either make sure the slim executable is on the path, or set the SLIM_HOME evironmental variable to '{install_dir}'. We recommend adding this to your .RProfile file. This is most easily done by using {crayon::green('usethis::edit_r_environ()')}, and copying in the following line:\nSLIM_HOME=install_dir\n"),
+    #                               exdent = 2))
+    #   }
+    #   message("\n")
+    #   if (requireNamespace("clipr", quietly = TRUE)) {
+    #     clipr::write_clip(glue::glue("SLIM_HOME='{install_dir}'"))
+    #     message("This snippet has been copied to the clipboard.")
+    #   }
+    # }
+    if(!slim_is_avail()) {
+      message("We are sorry, but it appears the installation failed. Please visit https://rdinnager.github.io/slimr/ and follow the manual installation instructions instead.")
     }
 
     return(invisible(NULL))
+  } else {
+    message("Looks like SLiM is already installed. If you want to reinstall use force=TRUE")
   }
 }
 
@@ -265,27 +195,13 @@ get_slim_call <- function() {
 
   } else {
 
-    platform <- get_os()
-
-    test <- slimr_which("slim", platform)
-
-    if(test != "") {
-      slim_path <- test
-    } else {
-      slim_dir <- get_slim_dir()
-      slim_path <- slimr_which(file.path(slim_dir, "slim"), platform)
-    }
+    slim_path <- slim_get_executable()
 
     if(slim_path == "") {
       slim_call <- NULL
     } else {
-      if(platform == "windows") {
-        slim_call <- list(call = "wsl",
-                          args = c(slim_path, "{script_file}"))
-      } else {
-        slim_call <- list(call = slim_path,
-                          args = "{script_file}")
-      }
+      slim_call <- list(call = slim_path,
+                        args = "{script_file}")
     }
 
     return(slim_call)
@@ -294,33 +210,43 @@ get_slim_call <- function() {
 
 get_slim_dir <- function() {
 
-  if(!is.null(.slim_settings$install_dir)) {
+  if(!is.null(.slim_settings$slim_dir)) {
     return(.slim_settings$slim_dir)
   } else {
-    if(Sys.getenv("SLIMR_SLIM_DIR") != "") {
-      return(Sys.getenv("SLIMR_SLIM_DIR"))
+
+    if(Sys.getenv("SLIM_HOME") != "") {
+      return(Sys.getenv("SLIM_HOME"))
     } else {
-      return("~/slim/bin")
+      return(install_path())
     }
+
   }
 }
 
-slim_is_avail <- function() {
-  os <- get_os()
-  test <- slimr_which("slim", os)
-  if(test == "") {
-    slim_dir <- get_slim_dir()
-    test <- slimr_which(file.path(slim_dir, "slim"), os)
-    if(test != "") {
-      avail <- TRUE
-    } else {
-      avail <- FALSE
-    }
-  } else {
-    avail <- TRUE
+slim_get_executable <- function() {
+  slim_dir <- get_slim_dir()
+  slim_path <- slimr_which(file.path(slim_dir, "slim"))
+  if(slim_path == "" | !file.exists(slim_path)) {
+    slim_path <- slimr_which("slim")
   }
+  slim_path
+}
 
-  avail
+#' Check if SLiM is installed and \code{slimr} can find it
+#'
+#' @return \code{TRUE} if SLiM is found and \code{FALSE} otherwise
+#' @export
+#'
+#' @examples
+#' slim_is_avail()
+slim_is_avail <- function() {
+
+  slim_path <- slim_get_executable()
+  if(slim_path != "" & file.exists(slim_path)) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
 
 }
 
@@ -328,4 +254,10 @@ slim_test <- function() {
 
   test <- slim_run_script(script_file = "--test")
 
+}
+
+assert_slim_installed <- function() {
+  if(!slim_is_avail()) {
+    rlang::abort("SLiM is not installed or can't be found. Please install using slim_setup() or manually by following the instruction at https://messerlab.org/slim/ . If you are sure SLiM is already installed, you can let slimr know where it is by setting the environmental variable SLIM_HOME, e.g. Sys.setenv(SLIM_HOME = 'install_dir'), where install_dir is the directory that contains your SLiM executable (usually slim or slim.exe)")
+  }
 }

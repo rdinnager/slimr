@@ -12,33 +12,38 @@ initializeSLiMOptions(
   periodicity,
   mutationRuns,
   preventIncidentalSelfing,
-  nucleotideBased
+  nucleotideBased,
+  randomizeCallbacks
 )
 }
 \arguments{
 \item{keepPedigrees}{An object of type logical or string or string or integer
-or logical or logical. Must be of length 1 (a singleton). The default value is
-\code{F}. See details for description.}
-
-\item{dimensionality}{An object of type logical or string or string or integer
-or logical or logical. Must be of length 1 (a singleton). The default value is
-\code{""}. See details for description.}
-
-\item{periodicity}{An object of type logical or string or string or integer
-or logical or logical. Must be of length 1 (a singleton). The default value is
-\code{""}. See details for description.}
-
-\item{mutationRuns}{An object of type logical or string or string or integer
-or logical or logical. Must be of length 1 (a singleton). The default value is
-\code{0}. See details for description.}
-
-\item{preventIncidentalSelfing}{An object of type logical or string or string
-or integer or logical or logical. Must be of length 1 (a singleton). The default
+or logical or logical or logical. Must be of length 1 (a singleton). The default
 value is \code{F}. See details for description.}
 
+\item{dimensionality}{An object of type logical or string or string or integer
+or logical or logical or logical. Must be of length 1 (a singleton). The default
+value is \code{""}. See details for description.}
+
+\item{periodicity}{An object of type logical or string or string or integer or
+logical or logical or logical. Must be of length 1 (a singleton). The default
+value is \code{""}. See details for description.}
+
+\item{mutationRuns}{An object of type logical or string or string or integer or
+logical or logical or logical. Must be of length 1 (a singleton). The default
+value is \code{0}. See details for description.}
+
+\item{preventIncidentalSelfing}{An object of type logical or string or string or
+integer or logical or logical or logical. Must be of length 1 (a singleton). The
+default value is \code{F}. See details for description.}
+
 \item{nucleotideBased}{An object of type logical or string or string or integer
-or logical or logical. Must be of length 1 (a singleton). The default value is
-\code{F}. See details for description.}
+or logical or logical or logical. Must be of length 1 (a singleton). The default
+value is \code{F}. See details for description.}
+
+\item{randomizeCallbacks}{An object of type logical or string or string or
+integer or logical or logical or logical. Must be of length 1 (a singleton). The
+default value is \code{F}. See details for description.}
 }
 \value{
 An object of type void.
@@ -54,30 +59,31 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=523}{SLiM manual: page 523}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=654}{SLiM manual: page
+654}.
 
-Configure options for the simulation. If initializeSLiMOptions()
-is called at all then it must be called before any other initialization
-function (except initializeSLiMModelType()), so that SLiM knows from the
-outset which optional features are enabled and which are not. If keepPedigrees
-is T, SLiM will keep pedigree information for every individual in the
-simulation, tracking the identity of its parents and grandparents. This
-allows individuals to assess their degree of pedigree-based relatedness to
-other individuals (see Individual's relatedness() method, section 24.6.2), as
-well as allowing a model to find "trios" (two parents and an offspring they
-generated) using the pedigree properties of Individual (section 24.6.1). As a
+Configure options for the simulation. If initializeSLiMOptions() is
+called at all then it must be called before any other initialization function
+(except initializeSLiMModelType()), so that SLiM knows from the outset which
+optional features are enabled and which are not. If keepPedigrees is T, SLiM
+will keep pedigree information for every individual in the simulation, tracking
+the identity of its parents and grandparents. This allows individuals to
+assess their degree of pedigree-based relatedness to other individuals (see
+Individual's relatedness() and sharedParentCount() methods, section 25.7.2),
+as well as allowing a model to find "trios" (two parents and an offspring they
+generated) using the pedigree properties of Individual (section 25.7.1). As a
 side effect of keepPedigrees being T, the pedigreeID, pedigreeParentIDs, and
 pedigreeGrandparentIDs properties of Individual will have defined values (see
-section 24.6.1), as will the genomePedigreeID property of Genome (see section
-24.3.1). Note that pedigree-based relatedness doesn't necessarily correspond
+section 25.7.1), as will the genomePedigreeID property of Genome (see section
+25.4.1). Note that pedigree-based relatedness doesn't necessarily correspond
 to genetic relatedness, due to effects such as assortment and recombination.
 For an overview of other ways of tracking genetic ancestry, including true
 local ancestry at each position on the chromosome, see sections 1.7 and 14.7.
 Beginning in SLiM 3.5, keepPedigrees=T also enables tracking of individual
 reproductive output, available through the reproductiveOutput property of
-Individual (see section 24.6.1) and the lifetimeReproductiveOutput property
-of Subpopulation (see section 24.14.1). If dimensionality is not "", SLiM will
+Individual (see section 25.7.1) and the lifetimeReproductiveOutput property
+of Subpopulation (see section 25.16.1). If dimensionality is not "", SLiM will
 enable its optional "continuous space" facility. Three values for dimensionality
 are presently supported: "x", "xy", and "xyz", specifying that continuous
 space should be enabled for one, two, or three dimensions, respectively, using
@@ -121,7 +127,7 @@ them is generally desirable. The optimal number of mutation runs will depend
 upon the machine and even the compiler used to build SLiM, so SLiM's default
 value may not be optimal; for maximal performance it can thus be beneficial to
 experiment with different values and find the optimal value for the simulation
-- a process which SLiM can assist with (see section 20.4). Specifying the
+- a process which SLiM can assist with (see section 21.4). Specifying the
 number of mutation runs is an advanced technique, but in certain cases it can
 improve performance significantly. If preventIncidentalSelfing is T, incidental
 selfing in hermaphroditic models will be prevented by SLiM. By default (i.e.,
@@ -140,8 +146,8 @@ all such incidental selfing will be prevented (by choosing a new second parent
 if the first parent was chosen again). Non-incidental selfing, as requested by
 the selfing rate, will still be permitted. Note that if incidental selfing is
 prevented, SLiM will hang if it is unable to find a different second parent;
-there must always be at least two individuals in the population with non-
-zero fitness, and mateChoice() and modifyChild() callbacks must not absolutely
+there must always be at least two individuals in the population with non-zero
+fitness, and mateChoice() and modifyChild() callbacks must not absolutely
 prevent those two individuals from producing viable offspring. Enforcement
 of the prohibition on incidental selfing will occur after mateChoice()
 callbacks have been called (and thus the default mating weights provided to
@@ -155,10 +161,38 @@ Nonnucleotide- based mutations may still be used, but may not be referenced by
 genomic element types. A mutation rate (or rate map) may not be supplied with
 initializeMutationRate(); instead, a hotspot map may (optionally) be supplied
 with initializeHotspotMap(). This choice has many consequences across SLiM; see
-section 1.8 for further discussion. This function will likely be extended with
-further options in the future, added on to the end of the argument list. Using
-named arguments with this call is recommended for readability. Note that turning
-on optional features may increase the runtime and memory footprint of SLiM.
+section 1.8 for further discussion. If randomizeCallbacks is T (the default),
+the order in which individuals are processed in callbacks will be randomized
+to make it easier to avoid order-dependency bugs. This flag exists because the
+order of individuals in each subpopulation is non-random; most notably, females
+always come before males in the individuals vector, but non-random ordering may
+also occur with respect to things like migrant versus non-migrant status, origin
+by selfing versus cloning versus biparental mating, and other factors. When this
+option is F, individuals in a subpopulation are processed in the order of the
+individuals vector in each tick cycle stage, which may lead to order-dependency
+issues if there is an enabled callback whose behavior is not fully independent
+between calls. Setting this option to T will cause individuals within each
+subpopulation to be processed in a randomized order in each tick cycle stage;
+specifically, this randomizes the order of calls to mutationEffect() callbacks
+in both WF and nonWF models, and calls to reproduction() and survival()
+callbacks in nonWF models. Each subpopulation is still processed separately,
+in sequential order, so order-dependency issues between subpopulations are
+still possible if callbacks have effects that are not fully independent. This
+feature was added in SLiM 4, breaking backward compatibility; to recover the
+behavior of previous versions of SLiM, pass F for this option (but then be very
+careful about order-dependency issues in your script). The default of T is the
+safe option, but a small speed penalty is incurred by the randomization of the
+processing order - for most models the difference will be less than 1%, but in
+the worst case it may approach 10%. Models that do not have any order-dependency
+issue may therefore run somewhat faster if this is set to F. Note that anywhere
+that your script uses the individuals property of Subpopulation, the order
+of individuals returned will be non-random (regardless of the setting of this
+option); you should use sample() to shuffle the order of the individuals vector
+if necessary to avoid order-dependency issues in your script. This function
+will likely be extended with further options in the future, added on to the end
+of the argument list. Using named arguments with this call is recommended for
+readability. Note that turning on optional features may increase the runtime and
+memory footprint of SLiM.
 }
 \section{Copyright}{
 
@@ -173,7 +207,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Initialize: 
-\code{\link{Initialize}},
+\code{\link{Init}},
 \code{\link{initializeAncestralNucleotides}()},
 \code{\link{initializeGeneConversion}()},
 \code{\link{initializeGenomicElementType}()},
@@ -186,6 +220,7 @@ Other Initialize:
 \code{\link{initializeRecombinationRate}()},
 \code{\link{initializeSLiMModelType}()},
 \code{\link{initializeSex}()},
+\code{\link{initializeSpecies}()},
 \code{\link{initializeTreeSeq}()}
 }
 \author{

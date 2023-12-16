@@ -69,6 +69,7 @@ new_slimr_script <- function(block_name = character(),
                              end_gen = character(),
                              callback = character(),
                              code = new_slimr_code(),
+                             species = NULL,
                              slimr_output = NULL,
                              slimr_inline = NULL,
                              slimr_template = NULL,
@@ -88,6 +89,7 @@ new_slimr_script <- function(block_name = character(),
                 end_gen = end_gen,
                 callback = callback,
                 code = code),
+           species = species,
            slimr_output = slimr_output,
            slimr_inline = slimr_inline,
            slimr_template = slimr_template,
@@ -111,6 +113,9 @@ vec_ptype2.slimr_script.slimr_script <- function(x, y, ...) {
   slimr_template <- dplyr::bind_rows(attr(x, "slimr_template"),
                                      attr(y, "slimr_template"))
 
+  species <- c(attr(x, "species"),
+               attr(y, "species"))
+
   slimrlang_orig <- NULL
 
   script_info <- list()
@@ -127,6 +132,7 @@ vec_ptype2.slimr_script.slimr_script <- function(x, y, ...) {
                    end_gen = field(x, "end_gen"),
                    callback = field(x, "callback"),
                    code = field(x, "code"),
+                   species = species,
                    slimr_output = slimr_output,
                    slimr_inline = slimr_inline,
                    slimr_template = slimr_template,
@@ -147,6 +153,9 @@ vec_cast.slimr_script.slimr_script <- function(x, to, ...) {
 
   slimrlang_orig <- NULL
 
+  species <- c(attr(x, "species"),
+               attr(to, "species"))
+
   script_info <- list()
   script_info$end_gen <- max(as.numeric(attr(x, "script_info")$end_gen),
                              as.numeric(attr(to, "script_info")$end_gen))
@@ -157,6 +166,7 @@ vec_cast.slimr_script.slimr_script <- function(x, to, ...) {
                    end_gen = field(x, "end_gen"),
                    callback = field(x, "callback"),
                    code = field(x, "code"),
+                   species = species,
                    slimr_output = slimr_output,
                    slimr_inline = slimr_inline,
                    slimr_template = slimr_template,
@@ -246,16 +256,35 @@ as.character.slimr_script <- function(x, for_script = FALSE, ...) {
 
   code <- fix_integers(code)
 
-  string <- paste0(ifelse(is.na(field(x, "block_id")), "", paste0(field(x, "block_id"), " ")),
-                   ifelse(is.na(field(x, "start_gen")), "", field(x, "start_gen")),
-                   ifelse(is.na(field(x, "end_gen")), "", paste0(":", field(x, "end_gen"))),
-                   " ",
-                   field(x, "callback"),
-                   " {\n    ",
-                   purrr::map_chr(code, ~paste(.x, collapse = "\n    ")),
-                   "\n}\n") %>%
-    stringr::str_trim("left")
+  if(is.null(atts$species)) {
 
+    string <- paste0(ifelse(is.na(field(x, "block_id")), "", paste0(field(x, "block_id"), " ")),
+                     ifelse(is.na(field(x, "start_gen")), "", field(x, "start_gen")),
+                     ifelse(is.na(field(x, "end_gen")), "", paste0(":", field(x, "end_gen"))),
+                     " ",
+                     field(x, "callback"),
+                     " {\n    ",
+                     purrr::map_chr(code, ~paste(.x, collapse = "\n    ")),
+                     "\n}\n") %>%
+      stringr::str_trim("left")
+
+  } else {
+    token <- ifelse(field(x, "callback") %in% c("first()", "early()", "late()"),
+                    "ticks",
+                    "species")
+    string <- paste0(ifelse(is.na(field(x, "block_id")), "", paste0(field(x, "block_id"), " ")),
+                     ifelse(is.na(atts$species), "", paste0(token, " ")),
+                     ifelse(is.na(atts$species), "", paste0(atts$species, " ")),
+                     ifelse(is.na(field(x, "start_gen")), "", field(x, "start_gen")),
+                     ifelse(is.na(field(x, "end_gen")), "", paste0(":", field(x, "end_gen"))),
+                     " ",
+                     field(x, "callback"),
+                     " {\n    ",
+                     purrr::map_chr(code, ~paste(.x, collapse = "\n    ")),
+                     "\n}\n") %>%
+      stringr::str_trim("left")
+
+  }
 
   string
 }
@@ -394,6 +423,10 @@ process_code_blocks <- function(slim_script_text) {
 
   block_ids <- stringr::str_extract(heads, "^s(\\d+)")
   heads <- stringr::str_remove_all(heads, "^s(\\d+) ")
+  nams <- stringr::str_match(heads, "^[species|ticks]+[:space:]+(.*?)[:space:]+")[ , 2]
+  nams <- stringr::str_trim(nams)
+  heads <- stringr::str_remove_all(heads, "^[species|ticks]+[:space:]+(.*?)[:space:]+")
+  heads <- stringr::str_trim(heads)
   start_nums <- stringr::str_match(heads, "^([:digit:]*e?(?!a)[:digit:]*)[[:space:]:]?")[ , 2]
   start_nums <- stringr::str_trim(start_nums)
   end_nums <- stringr::str_match(heads, ":(\\d+)")[ , 2]
@@ -403,12 +436,15 @@ process_code_blocks <- function(slim_script_text) {
     max_num <- ""
   }
   end_nums <- ifelse(has_colon & is.na(end_nums), as.character(max_num), end_nums)
+  start_nums[start_nums == ""] <- NA
 
   block_names <- paste0("block_", stringr::str_pad(seq_along(blocks),
                                                    nchar(trunc(n_blocks)),
                                                    pad = "0"))
 
-  block_names[heads == "initialize()"] <- "block_init"
+  block_names[heads == "initialize()"] <- paste0("block_init_", stringr::str_pad(seq_along(block_names[heads == "initialize()"]),
+                                                   nchar(trunc(n_blocks)),
+                                                   pad = "0"))
 
   blocks <- stringr::str_trim(blocks)
 
@@ -426,7 +462,8 @@ process_code_blocks <- function(slim_script_text) {
        end_nums = end_nums,
        callbacks = callbacks,
        blocks = blocks,
-       max_num = max_num)
+       max_num = max_num,
+       species = nams)
 }
 
 #' Convert a character vector into a slim_script object
@@ -447,8 +484,11 @@ as_slimr_script <- function(slim_script_text) {
     rlang::abort("as_slimr_script only accepts character arguments")
   }
 
-  c(block_names, block_ids, start_nums, end_nums, callbacks, blocks, max_num) %<-%
+  c(block_names, block_ids, start_nums, end_nums, callbacks, blocks, max_num, species) %<-%
     process_code_blocks(slim_script_text)
+
+  ## resolve fundamental type default incompatability between R and SLiM
+  blocks <- slim_resolve_floats(blocks)
 
   ## make code parseable
 
@@ -465,12 +505,17 @@ as_slimr_script <- function(slim_script_text) {
 
   code <- new_slimr_code(code)
 
+  if(all(is.na(species))) {
+    species <- NULL
+  }
+
   script <- new_slimr_script(block_name = block_names,
                              block_id = block_ids,
                              start_gen = start_nums,
                              end_gen = end_nums,
                              callback = callbacks,
                              code = code,
+                             species = species,
                              script_info = list(end_gen = max_num,
                                                 rendered = TRUE))
 
@@ -792,19 +837,40 @@ reconstruct <- function(x, ...) {
 #') -> script
 #'reconstruct(script)
 reconstruct.slimr_script <- function(x, ...) {
-  code <- paste0("    slim_block(",
-                 ifelse(is.na(field(x, "block_id")), "", paste0(field(x, "block_id"), ", ")),
-                 ifelse(is.na(field(x, "start_gen")), "", paste0(field(x, "start_gen"), ", ")),
-                 ifelse(is.na(field(x, "end_gen")), "", ifelse(field(x, "end_gen") == "", ".., ",
-                                                               paste0(field(x, "end_gen"), ", "))),
-                 field(x, "callback"), ", ",
-                 " {\n    ",
-                 purrr::map_chr(field(x, "code"), ~paste(paste0("    ", .x),
-                                                         collapse = "\n    ")),
-                 "\n    })")
-  code <- paste0("slim_script(\n\n",
-                 paste(code, collapse = ",\n\n"),
-                 "\n)")
+
+  atts <- attributes(x)
+
+  if(is.null(atts$species)) {
+    code <- paste0("    slim_block(",
+                   ifelse(is.na(field(x, "block_id")), "", paste0(field(x, "block_id"), ", ")),
+                   ifelse(is.na(field(x, "start_gen")), "", paste0(field(x, "start_gen"), ", ")),
+                   ifelse(is.na(field(x, "end_gen")), "", ifelse(field(x, "end_gen") == "", ".., ",
+                                                                 paste0(field(x, "end_gen"), ", "))),
+                   field(x, "callback"), ", ",
+                   " {\n    ",
+                   purrr::map_chr(field(x, "code"), ~paste(paste0("    ", .x),
+                                                           collapse = "\n    ")),
+                   "\n    })")
+    code <- paste0("slim_script(\n\n",
+                   paste(code, collapse = ",\n\n"),
+                   "\n)")
+  } else {
+
+    code <- paste0("    slim_block(", atts$species, " = ",
+                   ifelse(is.na(field(x, "block_id")), "", paste0(field(x, "block_id"), ", ")),
+                   ifelse(is.na(field(x, "start_gen")), "", paste0(field(x, "start_gen"), ", ")),
+                   ifelse(is.na(field(x, "end_gen")), "", ifelse(field(x, "end_gen") == "", ".., ",
+                                                                 paste0(field(x, "end_gen"), ", "))),
+                   field(x, "callback"), ", ",
+                   " {\n    ",
+                   purrr::map_chr(field(x, "code"), ~paste(paste0("    ", .x),
+                                                           collapse = "\n    ")),
+                   "\n    })")
+    code <- paste0("slim_script(\n\n",
+                   paste(code, collapse = ",\n\n"),
+                   "\n)")
+
+  }
 
   code
 }
@@ -897,6 +963,28 @@ obj_print_data.slimr_script_coll <- function(x, add_block_names = TRUE, max_show
 vec_ptype_full.slimr_script_coll <- function(x, ...) "slimr_script_coll"
 #' @export
 vec_ptype_abbr.slimr_script_coll <- function(x, ...) "s-s-col"
+
+slimr_script_find_setup_block <- function(slimr_script) {
+
+  callback <- vctrs::field(slimr_script, "callback")
+  start_gen <- vctrs::field(slimr_script, "start_gen")
+  end_gen <- vctrs::field(slimr_script, "end_gen")
+  spec <- attr(slimr_script, "species")
+
+  if(is.null(spec)) {
+    setup_block <- callback == "early()" & start_gen == 1 & is.na(end_gen)
+  } else {
+    setup_block <- callback == "early()" & start_gen == 1 & is.na(end_gen) & unlist(spec) == "all"
+  }
+
+
+  if(any(setup_block)) {
+    return(which(setup_block))
+  } else {
+    return(NULL)
+  }
+
+}
 
 slim_detect_inline <- function(code) {
 

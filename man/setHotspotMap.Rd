@@ -3,7 +3,7 @@
 \name{setHotspotMap}
 \alias{setHotspotMap}
 \alias{Chromosome$setHotspotMap}
-\alias{.c$setHotspotMap}
+\alias{.Ch$setHotspotMap}
 \title{SLiM method setHotspotMap}
 \usage{
 setHotspotMap(multipliers, ends, sex)
@@ -31,8 +31,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=531}{SLiM manual: page 531}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=662}{SLiM manual: page
+662}.
 
 In nucleotide-based models, set the mutation rate multiplier along
 the chromosome. There are two ways to call this method. If the optional ends
@@ -43,21 +44,20 @@ same length, and the values in ends must be specified in ascending order. In
 that case, multipliers and ends taken together specify the multipliers to be
 used along successive contiguous stretches of the chromosome, from beginning
 to end; the last position specified in ends should extend to the end of the
-chromosome (as previously determined, during simulation initialization). See
-the initializeHotspotMap() function for further discussion of precisely how
-these multipliers and positions are interpreted. If the optional sex parameter
-is "*" (the default), then the supplied hotspot map will be used for both
-sexes (which is the only option for hermaphroditic simulations). In sexual
-simulations sex may be "M" or "F" instead, in which case the supplied hotspot
-map is used only for that sex. Note that whether sex-specific hotspot maps
-will be used is set by the way that the simulation is initially configured
-with initializeHotspot(), and cannot be changed with this method; so if the
-simulation was set up to use sex-specific hotspot maps then sex must be "M" or
-"F" here, whereas if it was set up not to, then sex must be "*" or unsupplied
-here. If a simulation needs sex-specific hotspot maps only some of the time, the
-male and female maps can simply be set to be identical the rest of the time. The
-hotspot map is normally constant in simulations, so be sure you know what you
-are doing.
+chromosome (as previously determined, during simulation initialization). See the
+initializeHotspotMap() function for further discussion of precisely how these
+multipliers and positions are interpreted. If the optional sex parameter is "*"
+(the default), then the supplied hotspot map will be used for both sexes (which
+is the only option for hermaphroditic simulations). In sexual simulations sex
+may be "M" or "F" instead, in which case the supplied hotspot map is used only
+for that sex. Note that whether sex-specific hotspot maps will be used is set
+by the way that the simulation is initially configured with initializeHotspot(),
+and cannot be changed with this method; so if the simulation was set up to use
+sex-specific hotspot maps then sex must be "M" or "F" here, whereas if it was
+set up not to, then sex must be "*" or unsupplied here. If a simulation needs
+sex-specific hotspot maps only some of the time, the male and female maps can
+simply be set to be identical the rest of the time. The hotspot map is normally
+constant in simulations, so be sure you know what you are doing.
 }
 \section{Copyright}{
 
@@ -72,7 +72,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Chromosome: 
-\code{\link{Chromosome}},
+\code{\link{Ch}},
 \code{\link{ancestralNucleotides}()},
 \code{\link{drawBreakpoints}()},
 \code{\link{setAncestralNucleotides}()},

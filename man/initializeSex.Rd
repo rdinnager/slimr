@@ -6,14 +6,11 @@
 \alias{.Init$initializeSex}
 \title{SLiM method initializeSex}
 \usage{
-initializeSex(chromosomeType, xDominanceCoeff)
+initializeSex(chromosomeType)
 }
 \arguments{
-\item{chromosomeType}{An object of type string or numeric. Must be of length 1
-(a singleton). See details for description.}
-
-\item{xDominanceCoeff}{An object of type string or numeric. Must be of length 1
-(a singleton). The default value is \code{1}. See details for description.}
+\item{chromosomeType}{An object of type string. Must be of length 1 (a
+singleton). See details for description.}
 }
 \value{
 An object of type void.
@@ -29,19 +26,22 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=523}{SLiM manual: page 523}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=654}{SLiM manual: page
+654}.
 
 Enable and configure sex in the simulation. The argument chromosomeType
 gives the type of chromosome to be simulated; this should be "A", "X", or "Y".
-If the chromosomeType is "X", the optional xDominanceCoeff parameter can supply
-the dominance coefficient used when a mutation is present in an XY male, and is
-thus "heterozygous" (but in a different sense than the heterozygosity of an XX
-female with one copy of the mutation). Calling this function has the side effect
-of enabling sex in the simulation; individuals will be male and female (rather
-than hermaphroditic) regardless of the chromosomeType chosen for simulation.
-There is no way to disable sex once it has been enabled; if you don't want to
-have sex, don't call this function.
+Calling this function has the side effect of enabling sex in the simulation;
+individuals will be male and female (rather than hermaphroditic) regardless of
+the chromosomeType chosen for simulation. There is no way to disable sex once
+it has been enabled; if you don't want to have sex, don't call this function.
+The xDominanceCoeff parameter has been deprecated and removed. In SLiM 3.7 and
+later, use the haploidDominanceCoeff property of MutationType instead. If the
+chromosomeType is "X", the optional xDominanceCoeff parameter can supply the
+dominance coefficient used when a mutation is present in an XY male, and is thus
+"heterozygous" (but in a different sense than the heterozygosity of an XX female
+with one copy of the mutation).
 }
 \section{Copyright}{
 
@@ -56,7 +56,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Initialize: 
-\code{\link{Initialize}},
+\code{\link{Init}},
 \code{\link{initializeAncestralNucleotides}()},
 \code{\link{initializeGeneConversion}()},
 \code{\link{initializeGenomicElementType}()},
@@ -69,6 +69,7 @@ Other Initialize:
 \code{\link{initializeRecombinationRate}()},
 \code{\link{initializeSLiMModelType}()},
 \code{\link{initializeSLiMOptions}()},
+\code{\link{initializeSpecies}()},
 \code{\link{initializeTreeSeq}()}
 }
 \author{

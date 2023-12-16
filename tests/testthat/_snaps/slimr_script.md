@@ -26,10 +26,10 @@
       print(to_script)
     Output
       <slimr_script[3]>
-      block_1:initialize() {
+      block_init_1:initialize() {
           initializeMutationRate(1e-07);
-          initializeMutationType("m1", 0.5, "f", 0);
-          initializeGenomicElementType("g1", m1, 1);
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          initializeGenomicElementType("g1", m1, asFloat(1));
           initializeGenomicElement(g1, 0, 99999);
           initializeRecombinationRate(1e-08);
       }

@@ -40,8 +40,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=536}{SLiM manual: page 536}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=672}{SLiM manual: page
+672}.
 
 Returns a logical vector indicating whether each of the mutations
 in mutations is present in the genome; each element in the returned vector
@@ -49,8 +50,9 @@ indicates whether the corresponding mutation is present (T) or absent (F). This
 method is provided for speed; it is much faster than the corresponding Eidos
 code.
 
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=545}{SLiM manual: page 545}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=682}{SLiM manual: page
+682}.
 
 Returns a logical vector indicating whether each of the mutations in
 mutations is present in the individual (in either of its genomes); each element
@@ -80,7 +82,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Genome: 
-\code{\link{Genome}},
+\code{\link{G}},
 \code{\link{addMutations}()},
 \code{\link{addNewDrawnMutation}()},
 \code{\link{addNewMutation}()},
@@ -100,17 +102,15 @@ Other Genome:
 \code{\link{sumOfMutationsOfType}()}
 
 Other Individual: 
-\code{\link{Individual}},
+\code{\link{In}},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{relatedness}()},
 \code{\link{setSpatialPosition}()},
+\code{\link{sharedParentCount}()},
 \code{\link{sumOfMutationsOfType}()},
 \code{\link{uniqueMutationsOfType}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
-
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }

@@ -1,0 +1,45 @@
+This class represents a type of mutation with a particular distribution of fitness effects, such as
+neutral mutations or weakly beneficial mutations. Sections 1.5.3 and 1.5.4 present an overview of
+the conceptual role of this class. The mutation types currently defined in the simulation are
+defined as global constants with the same names used in the SLiM input file – m1, m2, and so forth.
+There are currently six options for the distribution of fitness effects in SLiM, represented by
+single-character codes:
+"f" – A fixed fitness effect. This DFE type has a single parameter, the selection coefficient s to
+be used by all mutations of the mutation type.
+"g" – A gamma-distributed fitness effect. This DFE type is specified by two parameters, a mean
+value and a shape parameter. The gamma distribution from which mutations are drawn is given by
+the probability density function P(s | α,β) = [Γ(α)βα]−1sα−1exp(−s/β), where α is the shape parameter,
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 705
+and the specified mean for the distribution is equal to αβ. Note that this parameterization is the
+same as for the Eidos function rgamma(). A gamma distribution is often used to model deleterious
+mutations at functional sites.
+"e" – An exponentially-distributed fitness effect. This DFE type is specified by a single
+parameter, the mean of the distribution. The exponential distribution from which mutations are
+drawn is given by the probability density function P(s | β) = β−1exp(−s/β), where β is the specified
+mean for the distribution. This parameterization is the same as for the Eidos function rexp(). An
+exponential distribution is often used to model beneficial mutations.
+"n" – A normally-distributed fitness effect. This DFE type is specified by two parameters, a
+mean and a standard deviation. The normal distribution from which mutations are drawn is given
+by the probability density function P(s | μ,σ) = (2πσ2)−1/2exp(−(s−μ)2/2σ2), where μ is the mean and σ
+is the standard deviation. This parameterization is the same as for the Eidos function rnorm(). A
+normal distribution is often used to model mutations that can be either beneficial or deleterious,
+since both tails of the distribution are unbounded.
+"p" – A Laplace-distributed fitness effect. This DFE type is specified by two parameters, a mean
+and a scale. The Laplace distribution from which mutations are drawn is given by the probability
+density function P(s | μ,b) = exp(−|s−μ|/b)/2b, where μ is the mean and b is the scale parameter. A
+Laplace distribution is sometimes used to model a mix of both deleterious and beneficial
+mutations.
+"w" – A Weibull-distributed fitness effect. This DFE type is specified by a scale parameter and a
+shape parameter. The Weibull distribution from which mutations are drawn is given by the
+probability density function P(s | λ,k) = (k/λk)sk−1exp(−(s/λ)k), where λ is the scale parameter and k is
+the shape parameter. This parameterization is the same as for the Eidos function rweibull(). A
+Weibull distribution is often used to model mutations following extreme-value theory.
+"s" – A script-based fitness effect. This DFE type is specified by a script parameter of type
+string, specifying an Eidos script to be executed to produce each new selection coefficient. For
+example, the script "return rbinom(1);" could be used to generate selection coefficients drawn
+from a binomial distribution, using the Eidos function rbinom(), even though that mutational
+distribution is not supported by SLiM directly. The script must return a singleton float or integer.
+Note that these distributions can in principle produce selection coefficients smaller than -1.0.
+In that case, the mutations will be evaluated as “lethal” by SLiM, and the relative fitness of the
+individual will be set to 0.0.

@@ -6,7 +6,20 @@
 \alias{.P$sampleIndividuals}
 \title{SLiM method sampleIndividuals}
 \usage{
-sampleIndividuals(size, replace, exclude, sex, minAge, maxAge, migrant)
+sampleIndividuals(
+  size,
+  replace,
+  exclude,
+  sex,
+  minAge,
+  maxAge,
+  migrant,
+  tagL0,
+  tagL1,
+  tagL2,
+  tagL3,
+  tagL4
+)
 }
 \arguments{
 \item{size}{An object of type integer. Must be of length 1 (a singleton). See
@@ -29,6 +42,21 @@ singleton). The default value is \code{NULL}. See details for description.}
 
 \item{migrant}{An object of type null or logical. Must be of length 1 (a
 singleton). The default value is \code{NULL}. See details for description.}
+
+\item{tagL0}{An object of type null or logical. Must be of length 1 (a
+singleton). The default value is \code{NULL}. See details for description.}
+
+\item{tagL1}{An object of type null or logical. Must be of length 1 (a
+singleton). The default value is \code{NULL}. See details for description.}
+
+\item{tagL2}{An object of type null or logical. Must be of length 1 (a
+singleton). The default value is \code{NULL}. See details for description.}
+
+\item{tagL3}{An object of type null or logical. Must be of length 1 (a
+singleton). The default value is \code{NULL}. See details for description.}
+
+\item{tagL4}{An object of type null or logical. Must be of length 1 (a
+singleton). The default value is \code{NULL}. See details for description.}
 }
 \value{
 An object of type Individual object.
@@ -44,8 +72,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=586}{SLiM manual: page 586}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=743}{SLiM manual: page
+743}.
 
 Returns a vector of individuals, of size less than or equal to
 parameter size, sampled from the individuals in the target subpopulation.
@@ -56,20 +85,27 @@ Parameter exclude, if non- NULL, may specify a specific individual that
 should not be considered a candidate (typically the focal individual in some
 operation). Parameter sex, if non-NULL, may specify a sex ("M" or "F") for
 the individuals to be drawn, in sexual models. Parameter tag, if non-NULL,
-may specify a tag value for the individuals to be drawn. Parameters minAge and
-maxAge, if non-NULL, may specify a minimum or maximum age for the individuals
-to be drawn, in nonWF models. Parameter migrant, if non-NULL, may specify a
-required value for the migrant property of the individuals to be drawn (so T
-will require that individuals be migrants, F will require that they not be).
-If the candidate pool is smaller than the requested sample size, all eligible
-candidates will be returned (in randomized order); the result will be a zero-
-length vector if no eligible candidates exist (unlike sample()). This method
-is similar to getting the individuals property of the subpopulation, using
-operator [] to select only individuals with the desired properties, and then
-using sample() to sample from that candidate pool. However, besides being much
-simpler than the equivalent Eidos code, it is also much faster, and it does not
-fail if less than the full sample size is available. See subsetIndividuals() for
-a similar method that returns a full subset, rather than a sample.
+may specify a tag property value for the individuals to be drawn. Parameters
+minAge and maxAge, if non-NULL, may specify a minimum or maximum age for the
+individuals to be drawn, in nonWF models. Parameter migrant, if non-NULL, may
+specify a required value for the migrant property of the individuals to be drawn
+(so T will require that individuals be migrants, F will require that they not
+be). Finally, parameters tagL0, tagL1, tagL2, tagL3, and tagL4, if non-NULL,
+may specify a required value (T or F) for the corresponding properties (tagL0,
+tagL1, tagL2, tagL3, and tagL4) of the individuals to be drawn. Note that if
+any tag/tagL parameter is specified as non-NULL, that tag/tagL property must
+have a defined value for every individual in the subpopulation, otherwise an
+error may result (although this requirement will not necessarily be checked
+comprehensively by this method in every invocation). If the candidate pool
+is smaller than the requested sample size, all eligible candidates will be
+returned (in randomized order); the result will be a zero-length vector if no
+eligible candidates exist (unlike sample()). This method is similar to getting
+the individuals property of the subpopulation, using operator [] to select only
+individuals with the desired properties, and then using sample() to sample from
+that candidate pool. However, besides being much simpler than the equivalent
+Eidos code, it is also much faster, and it does not fail if less than the full
+sample size is available. See subsetIndividuals() for a similar method that
+returns a full subset, rather than a sample.
 }
 \section{Copyright}{
 
@@ -84,23 +120,26 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
+\code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
+\code{\link{pointDeviated}()},
 \code{\link{pointInBounds}()},
 \code{\link{pointPeriodic}()},
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{setCloningRate}()},
 \code{\link{setMigrationRates}()},
@@ -109,6 +148,7 @@ Other Subpopulation:
 \code{\link{setSpatialBounds}()},
 \code{\link{setSubpopulationSize}()},
 \code{\link{spatialMapColor}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{subsetIndividuals}()},
 \code{\link{takeMigrants}()}

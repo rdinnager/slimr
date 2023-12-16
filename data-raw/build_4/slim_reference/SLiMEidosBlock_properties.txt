@@ -1,0 +1,41 @@
+active <–> (integer$)
+If this evaluates to logical F (i.e., is equal to 0), the script block is inactive and will not be called.
+The value of active for all registered script blocks is reset to -1 at the beginning of each tick, prior to
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 709
+script events being called, thus activating all blocks (except callbacks associated with a species that is
+not active in that tick, which are deactivated as part of the deactivation of the species). Any integer
+value other than -1 may be used instead of -1 to represent that a block is active; for example, active
+may be used as a counter to make a block execute a fixed number of times in each tick. This value is
+not cached by SLiM; if it is changed, the new value takes effect immediately. For example, a callback
+might be activated and inactivated repeatedly during a single tick.
+end => (integer$)
+The last tick in which the script block is active.
+id => (integer$)
+The identifier for this script block; for script s3, for example, this is 3. A script block for which no id
+was given will have an id of -1.
+source => (string$)
+The source code string of the script block.
+speciesSpec => (object<Species>)
+The species specifier for the script block. The species specifier for a callback block indicates
+the callback’s associated species; the callback is called to modify the default behavior for that
+species. If the script block has no species specifier, this property’s value is a zero-length
+object vector of class Species. This property is read-only; normally it is set by preceding
+the definition of a callback with a species specifier, of the form species <species-name>.
+start => (integer$)
+The first tick in which the script block is active.
+tag <–> (integer$)
+A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read
+it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value
+prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.
+ticksSpec => (object<Species>)
+The ticks specifier for the script block. The ticks specifier for an event block indicates the
+event’s associated species; the event executes only in ticks when that species is active. If the
+script block has no ticks specifier, this property’s value is a zero-length object vector of
+class Species. This property is read-only; normally it is set by preceding the definition of an
+event with a ticks specifier, of the form ticks <species-name>.
+type => (string$)
+The type of the script block; this will be "first", "early", or "late" for the three types of Eidos
+events, or "initialize", "fitnessEffect", "interaction", "mateChoice", "modifyChild",
+"mutation", "mutationEffect", "recombination", "reproduction", or "survival" for the
+respective types of Eidos callbacks (see section 25.1 and chapter 26).

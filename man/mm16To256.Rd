@@ -25,8 +25,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=590}{SLiM manual: page 590}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=749}{SLiM manual: page
+749}.
 
 Returns a 64×4 mutation matrix that is functionally identical to
 the supplied 4×4 mutation matrix in mutationMatrix16. The mutation rate for
@@ -36,7 +37,7 @@ the same nucleotide in mutationMatrix16. This function can be used to easily
 construct a simple trinucleotide-based mutation matrix which can then be
 modified so that specific trinucleotides sustain a mutation rate that does
 not depend only upon their central nucleotide. See the documentation for
-initializeGenomicElementType() in section 24.1 for further discussion of how
+initializeGenomicElementType() in section 25.1 for further discussion of how
 these 64×4 mutation matrices are interpreted and used.
 }
 \section{Copyright}{
@@ -52,9 +53,10 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other SLiMBuiltin: 
-\code{\link{SLiMBuiltin}},
+\code{\link{SB}},
 \code{\link{calcFST}()},
 \code{\link{calcHeterozygosity}()},
+\code{\link{calcInbreedingLoad}()},
 \code{\link{calcPairHeterozygosity}()},
 \code{\link{calcVA}()},
 \code{\link{calcWattersonsTheta}()},
@@ -63,7 +65,9 @@ Other SLiMBuiltin:
 \code{\link{mmKimura}()},
 \code{\link{nucleotideCounts}()},
 \code{\link{nucleotideFrequencies}()},
-\code{\link{nucleotidesToCodons}()}
+\code{\link{nucleotidesToCodons}()},
+\code{\link{summarizeIndividuals}()},
+\code{\link{treeSeqMetadata}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

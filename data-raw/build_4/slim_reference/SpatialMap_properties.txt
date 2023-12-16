@@ -1,0 +1,33 @@
+gridDimensions => (integer)
+The dimensions of the spatial map’s grid of values, in the order of the components of the map’s
+spatiality. For example, a map with spatiality "xz" and a grid of values that is 500 in the "x"
+dimension by 300 in the "z" dimension would return c(500, 300) for this property.
+interpolate <–> (logical$)
+Whether interpolation between grid values is enabled (T) or disabled (F). The initial value of this
+property is set by defineSpatialMap(), but it can be changed. The interpolation performed is linear;
+for cubic interpolation, use the interpolate() method.
+name => (string$)
+The name of the spatial map, usually as provided to defineSpatialMap(). The names of spatial
+maps must be unique within any given subpopulation, but the same name may be reused for different
+spatial maps in different subpopulations. The name is used to identify a map for methods such as
+spatialMapValue(), and is also used for display in SLiMgui.
+spatialBounds => (float)
+The spatial bounds to which the spatial map is aligned. These bounds come from the subpopulation
+that originally created the map, with the defineSpatialMap() method, and cannot be subsequently
+changed. All subpopulations that use a given spatial map must match that map’s spatial bounds, so
+that the map does not stretch or shrink relative to its initial configuration. The components of the
+spatial bounds of a map correspond to the components of the map’s spatiality; for example, a map
+with spatiality "xz" will have bounds (x0, z0, x1, z1); bounds for "y" are not included, since that
+dimension is not used by the spatial map.
+spatiality => (string$)
+The spatiality of the map: the subset of the model’s dimensions that are used by the spatial map. The
+spatiality of a map is configured by defineSpatialMap() and cannot subsequently be changed. For
+example, a 3D model (with dimensionality "xyz") might define a 2D spatial map with spatiality "xz",
+providing spatial values that do not depend upon the "y" dimension. Often, however, the spatiality of
+a map will match the dimensionality of the model.
+tag <–> (integer$)
+A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read
+it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value
+prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.
+See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos
+manual), for another way of attaching state to spatial maps.

@@ -6,15 +6,20 @@
 \alias{.P$addSelfed}
 \title{SLiM method addSelfed}
 \usage{
-addSelfed(parent)
+addSelfed(parent, count, defer)
 }
 \arguments{
 \item{parent}{An object of type Individual object. Must be of length 1 (a
 singleton). See details for description.}
+
+\item{count}{An object of type integer. Must be of length 1 (a singleton). The
+default value is \code{1}. See details for description.}
+
+\item{defer}{An object of type logical. Must be of length 1 (a singleton). The
+default value is \code{F}. See details for description.}
 }
 \value{
-An object of type null or Individual object. Return will be of length 1
-(a singleton)
+An object of type Individual object.
 }
 \description{
 Documentation for SLiM function \code{addSelfed}, which is a method of the SLiM
@@ -27,23 +32,47 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=581}{SLiM manual: page 581}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=737}{SLiM manual: page
+737}.
 
 Generates a new offspring individual from the given parent by selfing,
 queues it for addition to the target subpopulation, and returns it. The new
 offspring will not be visible as a member of the target subpopulation until
-the end of the offspring generation life cycle stage. The subpopulation of
+the end of the offspring generation tick cycle stage. The subpopulation of
 parent will be used to locate applicable mutation(), recombination(), and
 modifyChild() callbacks governing the generation of the offspring individual.
 Since selfing requires that parent act as a source of both a male and a female
 gamete, this method may be called only in hermaphroditic models; calling it in
 sexual models will result in an error. This method represents a non-incidental
 selfing event, so the preventIncidentalSelfing flag of initializeSLiMOptions()
-has no effect on this method (in contrast to the behavior of addCrossed(), where
-selfing is assumed to be incidental). Note that this method is only for use in
-nonWF models. See addCrossed() for further general notes on the addition of new
-offspring individuals.
+has no effect on this method (in contrast to the behavior of addCrossed(),
+where selfing is assumed to be incidental). Beginning in SLiM 4.1, the count
+parameter dictates how many offspring will be generated (previously, exactly
+one offspring was generated). Each offspring is generated independently, based
+upon the given parameters. The returned vector contains all generated offspring,
+except those that were rejected by a modifyChild() callback. If all offspring
+are rejected, object<Individual>(0) is returned, which is a zero-length object
+vector of class Individual; note that this is a change in behavior from earlier
+versions, which would return NULL. Beginning in SLiM 4.1, passing T for defer
+will defer the generation of the genomes of the produced offspring until the
+end of the reproduction phase. Genome generation can only be deferred if there
+are no active mutation() or recombination() callbacks; otherwise, an error will
+result. Furthermore, when genome generation is deferred the mutations of the
+genomes of the generated offspring may not be accessed until reproduction is
+complete (whether from a modifyChild() callback or otherwise). There is little
+or no advantage to deferring genome generation at this time (it is in place
+for future expansion); the default of F for defer is generally preferable since
+it has fewer restrictions. Also beginning in SLiM 4.1, in spatial models the
+spatial position of the offspring will be inherited (i.e., copied) from parent;
+more specifically, the x property will be inherited in all spatial models
+(1D/ 2D/3D), the y property in 2D/3D models, and the z property in 3D models.
+Properties not inherited will be left uninitialized, as they were prior to SLiM
+4.1. The parent's spatial position is probably not desirable in itself; the
+intention here is to make it easy to model the natal dispersal of all the new
+offspring for a given tick with a single vectorized call to pointDeviated().
+Note that this method is only for use in nonWF models. See addCrossed() for
+further general notes on the addition of new offspring individuals.
 }
 \section{Copyright}{
 
@@ -58,22 +87,25 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
 \code{\link{addRecombinant}()},
+\code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
+\code{\link{pointDeviated}()},
 \code{\link{pointInBounds}()},
 \code{\link{pointPeriodic}()},
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
 \code{\link{setCloningRate}()},
@@ -83,6 +115,7 @@ Other Subpopulation:
 \code{\link{setSpatialBounds}()},
 \code{\link{setSubpopulationSize}()},
 \code{\link{spatialMapColor}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{subsetIndividuals}()},
 \code{\link{takeMigrants}()}

@@ -29,27 +29,30 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=552}{SLiM manual: page 552}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=698}{SLiM manual: page
+698}.
 
 Returns a vector containing the interaction strengths exerted upon
 receiver by the individuals in exerters. If exerters is NULL (the default),
 then a vector of the interaction strengths exerted by all individuals in the
-subpopulation of receiver (including receiver itself) is returned; this case
-may be handled much more efficiently than if a vector of all individuals in
-the subpopulation is explicitly provided. If the strengths of interactions
-exerted by a single individual upon multiple individuals is needed instead
-(the inverse of what this method provides), multiple calls to this method will
-be necessary, one per pairwise interaction queried; the interaction engine
-is not optimized for the inverse case, and so it will likely be quite slow
-to compute. If the interaction is reciprocal and sex-symmetric, the opposite
-query should provide identical results in a single efficient call (because then
-the interactions exerted are equal to the interactions received); otherwise,
-the best approach might be to define a second interaction type representing
-the inverse interaction that you wish to be able to query efficiently. If the
-needed interaction strengths have already been calculated, those cached values
-are simply returned. Otherwise, calling this method triggers evaluation of the
-needed interactions, including calls to any applicable interaction() callbacks.
+subpopulation of receiver (including receiver itself, with a strength of 0.0)
+is returned; this case may be handled much more efficiently than if a vector
+of all individuals in the subpopulation is explicitly provided. Otherwise,
+all individuals in exerters must belong to a single subpopulation (but not
+necessarily the same subpopulation as receiver). The evaluate() method must
+have been previously called for the receiver and exerter subpopulations,
+and positions saved at evaluation time will be used. If the strengths of
+interactions exerted by a single individual upon multiple individuals are needed
+instead (the inverse of what this method provides), multiple calls to this
+method will be necessary, one per pairwise interaction queried; the interaction
+engine is not optimized for the inverse case, and so it will likely be quite
+slow to compute. If the interaction is reciprocal and has the same receiver and
+exerter constraints, the opposite query should provide identical results in a
+single efficient call (because then the interactions exerted are equal to the
+interactions received); otherwise, the best approach might be to define a second
+interaction type representing the inverse interaction that you wish to be able
+to query efficiently.
 }
 \section{Copyright}{
 
@@ -65,16 +68,22 @@ on the official website: \url{https://messerlab.org/slim/}
 \seealso{
 Other InteractionType: 
 \code{\link{InteractionType}},
-\code{\link{distanceToPoint}()},
+\code{\link{clippedIntegral}()},
+\code{\link{distanceFromPoint}()},
 \code{\link{distance}()},
 \code{\link{drawByStrength}()},
 \code{\link{evaluate}()},
 \code{\link{interactingNeighborCount}()},
 \code{\link{interactionDistance}()},
+\code{\link{localPopulationDensity}()},
 \code{\link{nearestInteractingNeighbors}()},
 \code{\link{nearestNeighborsOfPoint}()},
 \code{\link{nearestNeighbors}()},
+\code{\link{neighborCountOfPoint}()},
+\code{\link{neighborCount}()},
+\code{\link{setConstraints}()},
 \code{\link{setInteractionFunction}()},
+\code{\link{testConstraints}()},
 \code{\link{totalOfNeighborStrengths}()},
 \code{\link{unevaluate}()}
 }

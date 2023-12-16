@@ -75,7 +75,7 @@ slim_script <- function(...) {
                               ~glue::glue(.x, .na = NULL) %>%
                                 as.character())
 
-  code <- vctrs::vec_unchop(script$code)
+  code <- vctrs::list_unchop(script$code)
 
   ## process inlining
   c(code, slimr_inline_attr) %<-% process_inline(code, block_names,
@@ -104,6 +104,16 @@ slim_script <- function(...) {
   code <- new_slimr_code(code)
 
 
+  species <- purrr::map(script_list, ~attr(.x, "species"))
+  spec_null <- purrr::map_lgl(species, is.null)
+  if(all(spec_null)) {
+    species <- NULL
+  } else {
+    species <- purrr::map_if(species,
+                             is.null,
+                             ~ NA_character_,
+                             .else = ~ .x)
+  }
 
   script <- new_slimr_script(block_name = block_names,
                              block_id = script$block_id,
@@ -111,6 +121,7 @@ slim_script <- function(...) {
                              end_gen = script$end_gen,
                              callback = script$callback,
                              code = code,
+                             species = species,
                              slimr_inline = slimr_inline_attr,
                              slimr_output = slimr_output_attr,
                              slimr_template = slimr_template_attr,
@@ -138,7 +149,7 @@ slim_script <- function(...) {
 #' is executed every generation, within a generation range, to perform a desired task. The syntax of an
 #' Eidos event declaration in \code{slimr} mimics that of the Eidos (e.g. SLiM) language itself (see SLiM manual).
 #' It looks like this:
-#'   \code{slim_block([id,] [start_gen, [end_gen,]], [slim_callback,] \{ ... \})}
+#'   \code{slim_block([species_id = ][id,] [start_gen, [end_gen,]], [slim_callback,] \{ ... \})}
 #'   where [ ] specifies that the code is optional.
 #' The minimum required is a single argument containing Eidos code. This will be run in every generation
 #' with slim_callback \code{early()}, the default for Eidos events. You can also optionally specify an id
@@ -160,6 +171,13 @@ slim_script <- function(...) {
 #' \item{\code{interaction(int_type_id, subpop_id)}}
 #' \item{\code{reproduction(subpop_id, sex)}}
 #' }
+#'
+#' Multispecies models are supported (if using SLiM >= 4.0), by using a single named argument where the argument name is
+#' a species id (e.g. \code{slim_block(species_id = early())} would create a block that would run early in every generation and
+#' apply only to species \code{species_id}). Note that any of the arguments can be named, but only one. It is usually easiest to
+#' name the first argument specified in \code{slim_block()}. This may seem a somewhat unusual way to specify a species id but it
+#' was the simplest way to support multispecies models without changing the syntax of \code{slim_block()} much and maintaining
+#' the conciseness of block declarations which is a hallmark of SLiM and \code{slimr}.
 #'
 #' @return A slimr_block object. This is of little use outside a \code{\link{slim_script}}
 #' function call.
@@ -183,6 +201,14 @@ slim_block <- function(...) {
 
   if(!is.call(args[[n_args]])) {
     rlang::abort("The last argument of slim_block should be a valid slimr_code block expression.")
+  }
+
+  spec <- names(args)[names(args) != ""]
+  if(length(spec) == 0) {
+    spec <- NULL
+  }
+  if(length(spec) > 1) {
+    rlang::abort("If any arguments are named it should be exactly one argument (and the name should be the name of a species in the SLiM model)")
   }
 
   #code <- deparse(args[[n_args]], width.cutoff = 500, control = NULL)
@@ -347,6 +373,8 @@ slim_block <- function(...) {
     block_row$end_gen <- NA_character_
   }
 
+  attr(block_row, "species") <- spec
+
   class(block_row) <- "slimr_block"
 
   block_row
@@ -466,7 +494,7 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #'  Copyright © 2016–2020 Philipp Messer. All rights reserved. More information about SLiM can be found
 #'  on the official website: \\url{https://messerlab.org/slim/}
 #' @author Benjamin C Haller (\\email{bhaller@benhaller.com}) and Philipp W Messer (\\email{messer@cornell.edu})
-`%?%` <- function(lhs, rhs) {
+`%else%` <- function(lhs, rhs) {
   print(paste0(lhs, " ? ", rhs))
   ?`%?%`
 }
@@ -491,13 +519,16 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #' rendered, in which case it will just repeat the rendered script in the result.
 #' @param parallel Should the rendering be done in parallel when rendering multiple scripts? Requires
 #' the \code{furrr} package and will use the plan set by \code{future::\link[future]{plan}}
+#' @param portable If `TRUE`, the the script will be rendered in a 'portable' format, which allows
+#' the script to be modified in another program such as SLiMGUI, and then reimported into R, while maintaining
+#' `slimr` features. See details for more information on how this works.
 #'
 #' @return
 #' @export
 #'
 #' @examples
 slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE,
-                                reps = 1, parallel = FALSE) {
+                                reps = 1, parallel = FALSE, portable = FALSE) {
 
   if(parallel) {
     assert_package("furrr")
@@ -549,7 +580,6 @@ slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE
                                                      slimr_template_attr = slimr_template_attr,
                                                      replace_NAs = replace_NAs),
                                 .options = furrr::furrr_options(globals = FALSE,
-                                                                lazy = TRUE,
                                                                 seed = TRUE))
     } else {
       new_scripts <- purrr::map(template,
@@ -571,7 +601,6 @@ slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE
       new_scripts <- furrr::future_map(new_scripts,
                                        ~reprocess_script(.x),
                                        .options = furrr::furrr_options(globals = FALSE,
-                                                                       lazy = TRUE,
                                                                        seed = TRUE))
     } else {
       new_scripts <- purrr::map(new_scripts,
@@ -598,7 +627,7 @@ slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE
         new_slimr_script_coll()
     } else {
       new_scripts <- replicate(reps, new_scripts, simplify = FALSE) %>%
-        vctrs::vec_unchop()
+        vctrs::list_unchop()
     }
   }
 
@@ -650,6 +679,7 @@ reprocess_script <- function(script) {
   start_gen <- vctrs::field(script, "start_gen")
   end_gen <- vctrs::field(script, "end_gen")
   callback <- vctrs::field(script, "callback")
+  species <- attr(script, "species")
   slimr_output_attr <- attr(script, "slimr_output")
   slimr_template_attr <- attr(script, "slimr_template")
   slimr_lang_orig <- attr(script, "slimr_lang_orig")
@@ -661,6 +691,7 @@ reprocess_script <- function(script) {
                              end_gen = end_gen,
                              callback = callback,
                              code = code,
+                             species = species,
                              slimr_inline = slimr_inline_attr,
                              slimr_output = slimr_output_attr,
                              slimr_template = slimr_template_attr,

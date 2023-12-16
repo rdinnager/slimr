@@ -2,6 +2,8 @@
 .slim_assets <- new.env()
 .resources <- new.env()
 if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
+                                                        "Eidos",
+                                                        ".E",
                                                         ".G",
                                                         "Genome",
                                                         ".GE",
@@ -26,6 +28,12 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
                                                         "SLiMBuiltin",
                                                         ".SS",
                                                         "SLiMSim",
+                                                        ".Sp",
+                                                        "Species",
+                                                        ".SG",
+                                                        "SLiMgui",
+                                                        ".SM",
+                                                        "SpatialMap",
                                                         ".c",
                                                         "Chromosome",
                                                         ".Init",
@@ -34,6 +42,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
                                                         "SLiMEidosBlock",
                                                         ".x",
                                                         "sim.generation",
+                                                        "community.tick",
                                                         "catn",
                                                         "initialize",
                                                         "m1",
@@ -90,9 +99,9 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
   resources <- list.files(system.file("extdata", "recipe_resources", package = "slimr"), full.names = TRUE)
   #resources <- resources[!stringr::str_detect(resources, stringr::fixed("FIN_samples.txt"))]
 
-  if(get_os() == "windows") {
-    resources <- convert_to_wsl_path(resources)
-  }
+  # if(get_os() == "windows") {
+  #   resources <- convert_to_wsl_path(resources)
+  # }
 
   slim_recipes <- slimr::slim_recipes
 
@@ -103,7 +112,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
                                                                 stringr::coll(basename(.x))))
 
   resources_used <- purrr::map_lgl(recipes_using_resources,
-                               ~length(.x) > 0)
+                               ~!purrr::is_empty(.x) > 0)
   recipes_using_resources <- recipes_using_resources %>%
     purrr::simplify()
 
@@ -141,21 +150,26 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
 
 
   ## setup slim class environments
-  .Init <- list2env(.Init, Initialize)
-  .c <- list2env(.c, Chromosome)
-  .G <- list2env(.G, Genome)
-  .GE <- list2env(.GE, GenomicElement)
-  .GET <- list2env(.GET, GenomicElementType)
-  .I <- list2env(.I, Individual)
-  .IT <- list2env(.IT, InteractionType)
-  .LF <- list2env(.LF, LogFile)
-  .M <- list2env(.M, Mutation)
-  .MT <- list2env(.MT, MutationType)
-  .SB <- list2env(.SB, SLiMBuiltin)
-  .SEB <- list2env(.SEB, SLiMEidosBlock)
-  .SS <- list2env(.SS, SLiMSim)
-  .P <- list2env(.P, Subpopulation)
-  .S <- list2env(.S, Substitution)
+  Init <- list2env(.Init, Initialize)
+  Ch <- list2env(.Ch, Chromosome)
+  Co <- list2env(.Co, Community)
+  E <- list2env(.E, Eidos)
+  G <- list2env(.G, Genome)
+  GE <- list2env(.GE, GenomicElement)
+  GET <- list2env(.GET, GenomicElementType)
+  In <- list2env(.I, Individual)
+  IT <- list2env(.IT, InteractionType)
+  LF <- list2env(.LF, LogFile)
+  M <- list2env(.M, Mutation)
+  MT <- list2env(.MT, MutationType)
+  SB <- list2env(.SB, SLiMBuiltin)
+  SEB <- list2env(.SEB, SLiMEidosBlock)
+  SG <- list2env(.SG, SLiMgui)
+  SM <- list2env(.SM, SpatialMap)
+  SS <- list2env(.SS, SLiMSim)
+  Sp <- list2env(.Sp, Species)
+  P <- list2env(.P, Subpopulation)
+  S <- list2env(.S, Substitution)
 
   ##### make class nesting ############
   SLiMSim$chromosome <- Chromosome
@@ -167,6 +181,22 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
   SLiMSim$scriptBlocks <- SLiMEidosBlock
   SLiMSim$subpopulations <- Subpopulation
   SLiMSim$substitutions <- Substitution
+
+  Species$chromosome <- Chromosome
+  Species$genomicElementTypes <- GenomicElementType
+  Species$mutationTypes <- MutationType
+  Species$mutations <- Mutation
+  Species$scriptBlocks <- SLiMEidosBlock
+  Species$subpopulations <- Subpopulation
+  Species$substitutions <- Substitution
+
+  Community$logFiles <- LogFile
+  Community$allGenomicElementTypes <- GenomicElementType
+  Community$allInteractionTypes <- InteractionType
+  Community$allMutationTypes <- MutationType
+  Community$allScriptBlocks <-  SLiMEidosBlock
+  Community$allSpecies <- Species
+  Community$allSubpopulations <- Subpopulation
 
   Chromosome$genomicElements <- GenomicElement
 

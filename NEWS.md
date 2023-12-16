@@ -1,3 +1,22 @@
+# slimr 0.3.0
+
+* Added `slim_auto()` function to automatically insert `r_template()` and `r_inline()` statement in useful places in a `slimr_script`, based on computational graph analysis
+* Added `as_slimr_code()` function, which is similar to `as_slimr_script()`, which converts SLiM code as a character vector into a `slimr_script` object, but `as_slimr_code()` returns the code necessary to create the `slimr_script` instead. this allows copy and pasting the text into the R console or IDE so that it can be subsequently edited and modified.
+* Added vignette showing how to create a multispecies model in `slimr`, and documented the multispecies feature in the documentation for `slim_block()`
+
+# slimr 0.2.1
+
+* allow user to manually set SLiM executable directory with `SLIM_HOME` environmental variable
+
+# slimr 0.2.0
+
+* all SLiM callbacks now supported
+* slimr now fully supports SLiM versions 4.0 and greater, including support for 
+multispecies models (though these have been extensively tested yet) and are currently undocumented
+* slimr verbs are now prefixed with `r_` (e.g. `r_output`, `r_inline`, `r_template`). 
+The old version `slimr_` prefixed version are still available for backwards 
+compatibility, but should be considered soft-deprecated
+
 # slimr 0.1.0
 
 * SLiM Classes available for help with autocomplete now have nested class objects 

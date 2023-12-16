@@ -78,7 +78,8 @@ slim_extract_to_data <- function(dat, type) {
       stringr::str_split(" ") %>%
       .[[1]]
 
-    output_type <- first_line[3]
+    output_type <- first_line[c(3, 4)]
+    output_type <- output_type[which(stringr::str_detect(output_type, "[:upper:]"))]
 
     res <- switch(output_type,
                   A = purrr::map(purrr::transpose(dat),
@@ -439,6 +440,10 @@ slim_extract_genome <- function(output, type = c("mutations",
     type <- type[type != "full"]
   }
 
+  if("genomes" %in% type) {
+    type <- c("metadat", type)
+  }
+
   get_one <- function(type, data, generation) {
     purrr::map2_dfr(data, generation,
                     ~slim_extract_genome_one(.x, type, expand_mutations, generation = .y)) %>%
@@ -447,6 +452,14 @@ slim_extract_genome <- function(output, type = c("mutations",
 
   dat <- purrr::map(type,
                     ~get_one(.x, output$data, output$generation))
+
+  if("metadat" %in% type) {
+    GS <- as.integer(stringr::str_match(dat[[1]]$metadata[1],
+                             stringr::regex("GS ([:digit:]+)"))[ , 2])
+    genomes <- dplyr::tibble(gen_id = paste0("p*:", rep(1:GS)))
+    dat <- dat[-1]
+    dat[[1]] <- dplyr::left_join(genomes, dat[[1]], by = "gen_id")
+  }
 
   if(join) {
     suppressMessages(
@@ -906,11 +919,15 @@ slim_extract_genlight_tibble_GS <- function(output_GS) {
                                        .data$mut_type,
                                        .data$prevalence))
   )
+  mut_dat <- mut_dat %>%
+    dplyr::filter(!is.na(unique_mut_id))
   alleles <- alleles %>%
+    #dplyr::filter(!is.na(unique_mut_id)) %>%
     tidyr::pivot_wider(id_cols = c("ind_id"),
                        names_from = "unique_mut_id",
                        values_from = "count",
-                       values_fill = 0)
+                       values_fill = 0) %>%
+    dplyr::select(-`NA`)
 
   list(alleles = alleles, mut_dat = mut_dat)
 

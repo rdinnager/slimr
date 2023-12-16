@@ -28,8 +28,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=562}{SLiM manual: page 562}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=709}{SLiM manual: page
+709}.
 
 Set the distribution of fitness effects for a mutation type. The
 distributionType may be "f", in which case the ellipsis ... should supply a
@@ -39,9 +40,11 @@ supply a numeric$ mean selection coefficient for the exponential distribution;
 coefficient and a numeric$ alpha shape parameter for a gamma distribution; "n",
 in which case the ellipsis should supply a numeric$ mean selection coefficient
 and a numeric$ sigma (standard deviation) parameter for a normal distribution;
-"w", in which case the ellipsis should supply a numeric$ λ scale parameter and a
+"p", in which case the ellipsis should supply a numeric$ mean selection
+coefficient and a numeric$ scale parameter for a Laplace distribution; "w",
+in which case the ellipsis should supply a numeric$ λ scale parameter and a
 numeric$ k shape parameter for a Weibull distribution; or "s", in which case the
-ellipsis should supply a string$ Eidos script parameter. See section 24.10 above
+ellipsis should supply a string$ Eidos script parameter. See section 25.11 above
 for discussions of these distributions and their uses. The DFE for a mutation
 type is normally a constant in simulations, so be sure you know what you are
 doing.
@@ -59,7 +62,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other MutationType: 
-\code{\link{MutationType}},
+\code{\link{MT}},
 \code{\link{drawSelectionCoefficient}()}
 }
 \author{

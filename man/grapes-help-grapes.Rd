@@ -5,24 +5,14 @@
 \title{slimrlang stub for the first part of the SLiM ternary operator (\code{condition ? yes else no}).}
 \usage{
 lhs \%?\% rhs
-
-lhs \%?\% rhs
 }
 \arguments{
-\item{lhs}{A SLiM expression to be executed if the condition (before the companion %?%)
-is \code{TRUE}}
+\item{lhs}{A condition}
 
-\item{rhs}{A SLiM expression to be executed if the condition (before the companion %?%)
-is \code{FALSE}}
+\item{rhs}{A SLiM expression to be executed if the condition is \code{TRUE}}
 }
 \description{
 This is used in conjunction with %else% to use the SLiM ternary operator in \code{slimrlang}
-which will make the code valid in R. Note that the R function is a stub, it does not do anything in R
-(except bring up this documentation). It will only do anything useful when used inside
-a \\code{\\link{slim_block}} function further nested in a \\code{\\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a full SLiM script.
-
-This is used in conjunction with %?% to use the SLiM ternary operator in \code{slimrlang}
 which will make the code valid in R. Note that the R function is a stub, it does not do anything in R
 (except bring up this documentation). It will only do anything useful when used inside
 a \\code{\\link{slim_block}} function further nested in a \\code{\\link{slim_script}}
@@ -34,16 +24,8 @@ function call, where it will be translated into valid SLiM code as part of a ful
  which can be found here: \\url{http://benhaller.com/slim/SLiM_Manual.pdf}. This documentation is
  Copyright © 2016–2020 Philipp Messer. All rights reserved. More information about SLiM can be found
  on the official website: \\url{https://messerlab.org/slim/}
-
-
- This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
- which can be found here: \\url{http://benhaller.com/slim/SLiM_Manual.pdf}. This documentation is
- Copyright © 2016–2020 Philipp Messer. All rights reserved. More information about SLiM can be found
- on the official website: \\url{https://messerlab.org/slim/}
 }
 
 \author{
-Benjamin C Haller (\\email{bhaller@benhaller.com}) and Philipp W Messer (\\email{messer@cornell.edu})
-
 Benjamin C Haller (\\email{bhaller@benhaller.com}) and Philipp W Messer (\\email{messer@cornell.edu})
 }

@@ -48,11 +48,12 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=583}{SLiM manual: page 583}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=740}{SLiM manual: page
+740}.
 
 Output a random sample from the subpopulation in MS format (see
-section 26.2.2 for output format details). Positions in the output will span
+section 27.2.2 for output format details). Positions in the output will span
 the interval [0,1]. A sample of genomes (not entire individuals, note) of
 size sampleSize from the subpopulation will be output. The sample may be done
 either with or without replacement, as specified by replace; the default is to
@@ -74,7 +75,7 @@ some mutations that do exist in the sampled genomes might not be included in the
 output, simply because they exist in every sampled genome. See outputSample()
 and outputVCFSample() for other output formats. Output is generally done in a
 late() event, so that the output reflects the state of the simulation at the end
-of a generation.
+of a tick.
 }
 \section{Copyright}{
 
@@ -89,22 +90,25 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
+\code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
+\code{\link{pointDeviated}()},
 \code{\link{pointInBounds}()},
 \code{\link{pointPeriodic}()},
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
 \code{\link{setCloningRate}()},
@@ -114,6 +118,7 @@ Other Subpopulation:
 \code{\link{setSpatialBounds}()},
 \code{\link{setSubpopulationSize}()},
 \code{\link{spatialMapColor}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{subsetIndividuals}()},
 \code{\link{takeMigrants}()}

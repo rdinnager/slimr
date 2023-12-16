@@ -3,7 +3,7 @@
 \name{drawBreakpoints}
 \alias{drawBreakpoints}
 \alias{Chromosome$drawBreakpoints}
-\alias{.c$drawBreakpoints}
+\alias{.Ch$drawBreakpoints}
 \title{SLiM method drawBreakpoints}
 \usage{
 drawBreakpoints(parent, n)
@@ -29,8 +29,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=530}{SLiM manual: page 530}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=662}{SLiM manual: page
+662}.
 
 Draw recombination breakpoints, using the chromosome's recombination
 rate map, the current gene conversion parameters, and (in some cases - see
@@ -52,10 +53,14 @@ determine the various pseudo-parameters that are passed to recombination()
 callbacks (individual, genome1, genome2, subpop), and the subpopulation to
 which parent belongs is used to select which recombination() callbacks are
 applicable; given the necessity of this information, recombination() callbacks
-will not be called as a side effect of this method if parent is NULL. Apart from
-these two uses, parent is not used, and the caller does not guarantee that the
-generated breakpoints will actually be used to recombine the genomes of parent
-in particular.
+will not be called as a side effect of this method if parent is NULL. Apart
+from these two uses, parent is not used, and the caller does not guarantee that
+the generated breakpoints will actually be used to recombine the genomes of
+parent in particular. If a recombination() callback is called, genome1 for that
+callback will always be parent.genome1; in other words, drawBreakpoints() will
+always treat parent.genome1 as the initial copy strand. If the caller wishes to
+randomly choose an initial copy strand (which is usually desirable), they should
+do that themselves.
 }
 \section{Copyright}{
 
@@ -70,7 +75,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Chromosome: 
-\code{\link{Chromosome}},
+\code{\link{Ch}},
 \code{\link{ancestralNucleotides}()},
 \code{\link{setAncestralNucleotides}()},
 \code{\link{setGeneConversion}()},

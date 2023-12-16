@@ -10,22 +10,29 @@ initializeGeneConversion(
   nonCrossoverFraction,
   meanLength,
   simpleConversionFraction,
-  bias
+  bias,
+  redrawLengthsOnFailure
 )
 }
 \arguments{
-\item{nonCrossoverFraction}{An object of type numeric or numeric or numeric or
-numeric. Must be of length 1 (a singleton). See details for description.}
+\item{nonCrossoverFraction}{An object of type numeric or numeric or numeric
+or numeric or logical. Must be of length 1 (a singleton). See details for
+description.}
 
-\item{meanLength}{An object of type numeric or numeric or numeric or numeric.
-Must be of length 1 (a singleton). See details for description.}
+\item{meanLength}{An object of type numeric or numeric or numeric or numeric or
+logical. Must be of length 1 (a singleton). See details for description.}
 
 \item{simpleConversionFraction}{An object of type numeric or numeric or numeric
-or numeric. Must be of length 1 (a singleton). See details for description.}
-
-\item{bias}{An object of type numeric or numeric or numeric or numeric. Must
-be of length 1 (a singleton). The default value is \code{0}. See details for
+or numeric or logical. Must be of length 1 (a singleton). See details for
 description.}
+
+\item{bias}{An object of type numeric or numeric or numeric or numeric or
+logical. Must be of length 1 (a singleton). The default value is \code{0}. See
+details for description.}
+
+\item{redrawLengthsOnFailure}{An object of type numeric or numeric or numeric
+or numeric or logical. Must be of length 1 (a singleton). The default value is
+\code{F}. See details for description.}
 }
 \value{
 An object of type void.
@@ -41,26 +48,45 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=517}{SLiM manual: page 517}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=647}{SLiM manual: page
+647}.
 
 Calling this function switches the recombination model from a "simple
 crossover" model to a "double-stranded break (DSB)" model, and configures
-the details of the gene conversion tracts that will therefore be modeled (see
-section 1.5.6 for discussion of these models). The fraction of DSBs that will
-be modeled as non-crossover events is given by nonCrossoverFraction. The mean
-length of gene conversion tracts (whether associated with crossover or non-
-crossover events) is given by meanLength; the actual extent of a gene conversion
-tract will be the sum of two independent draws from a geometric distribution
-with mean meanLength/2. The fraction of gene conversion tracts that are modeled
-as "simple" is given by simpleConversionFraction; the remainder will be modeled
-as "complex", involving repair of heteroduplex mismatches. Finally, the GC bias
-during heteroduplex mismatch repair is given by bias, with the default of 0.0
-indicating no bias, 1.0 indicating an absolute preference for G/C mutations
-over A/T mutations, and -1.0 indicating an absolute preference for A/T mutations
-over G/C mutations. A non-zero bias may only be set in nucleotide-based models
-(see section 1.8). This function, and the way that gene conversion is modeled,
-fundamentally changed in SLiM 3.3; see section 1.5.6 for discussion.
+the details of the gene conversion tracts that will therefore be modeled
+(see section 1.5.6 for discussion of these models). The fraction of DSBs that
+will be modeled as non-crossover events is given by nonCrossoverFraction.
+The mean length of gene conversion tracts (whether associated with crossover
+or non-crossover events) is given by meanLength; the actual extent of a gene
+conversion tract will be the sum of two independent draws from a geometric
+distribution with mean meanLength/2. The fraction of gene conversion tracts that
+are modeled as "simple" is given by simpleConversionFraction; the remainder will
+be modeled as "complex", involving repair of heteroduplex mismatches. Finally,
+the GC bias during heteroduplex mismatch repair is given by bias, with the
+default of 0.0 indicating no bias, 1.0 indicating an absolute preference for
+G/C mutations over A/T mutations, and -1.0 indicating an absolute preference
+for A/T mutations over G/C mutations. A non-zero bias may only be set in
+nucleotide-based models (see section 1.8). This function, and the way that gene
+conversion is modeled, fundamentally changed in SLiM 3.3; see section 1.5.6 for
+discussion. Beginning in SLiM 4.1, the redrawLengthsOnFailure parameter can be
+used to modify the internal mechanics of layout of gene conversion tracts. If it
+is F (the default, and the only behavior supported before SLiM 4.1), then if an
+attempt to lay out gene conversion tracts fails (because the tracts overlap each
+other, or overlap the start or end of the chromosome), SLiM will try again by
+drawing new positions for the tracts - essentially shuffling the tracts around
+to try to find positions for them that don't overlap. If redrawLengthsOnFailure
+is T, then if an attempt to lay out gene conversion tracts fails, SLiM will
+try again by drawing new lengths for the tracts, as well as new positions. This
+makes it more likely that layout will succeed, but risks biasing the realized
+mean tract length downward from the requested mean length (since layout of long
+tracts is more likely fail due to overlap). In either case, if SLiM attempts to
+lay out gene conversion tracts 100 times without success, an error will result.
+That error indicates that the specified constraints for gene conversion are
+difficult to satisfy - tracts may commonly be so long that it is difficult or
+impossible to find an acceptable layout for them within the specified chromosome
+length. Setting redrawLengthsOnFailure to T may mitigate this problem, at the
+price of biasing the mean tract length downward as discussed.
 }
 \section{Copyright}{
 
@@ -75,7 +101,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Initialize: 
-\code{\link{Initialize}},
+\code{\link{Init}},
 \code{\link{initializeAncestralNucleotides}()},
 \code{\link{initializeGenomicElementType}()},
 \code{\link{initializeGenomicElement}()},
@@ -88,6 +114,7 @@ Other Initialize:
 \code{\link{initializeSLiMModelType}()},
 \code{\link{initializeSLiMOptions}()},
 \code{\link{initializeSex}()},
+\code{\link{initializeSpecies}()},
 \code{\link{initializeTreeSeq}()}
 }
 \author{

@@ -1,0 +1,3 @@
+pid => (integer$)
+The Un*x process identifier (commonly called the “pid”) of the running SLiMgui application. This can
+be useful for scripts that wish to use system calls to influence the SLiMgui application.

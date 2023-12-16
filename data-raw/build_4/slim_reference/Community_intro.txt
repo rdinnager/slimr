@@ -1,0 +1,6 @@
+This class represents the top level of a SLiM simulation: a community containing one or more
+species (represented by class Species). The community, represented by a global Community object
+with the variable name community, is responsible for execution of the tick cycle for active species
+in each tick, management of the script blocks associated with a simulation, and creation of log
+files (by creating and owning instances of the LogFile class). The community exists even in singlespecies
+models.

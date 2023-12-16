@@ -1,6 +1,6 @@
 Package: slimr
 Title: Create, Run and Post-Process SLiM Population Genetics Forward Simulations
-Version: 0.1.0
+Version: 0.3.0
 Authors@R: 
     c(person(given = "Russell",
              family = "Dinnage",
@@ -32,7 +32,7 @@ Encoding: UTF-8
 LazyData: true
 URL: https://rdinnager.github.io/slimr, https://rdinnager.github.io/slimr/index.html
 BugReports: https://github.com/rdinnager/slimr/issues
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3
 Language: en-GB
 Depends: 
     R (>= 2.10)
@@ -51,7 +51,8 @@ Imports:
     tidyr,
     zeallot,
     utils,
-    stats
+    stats,
+    codetools
 Suggests: 
     covr,
     testthat (>= 2.1.0),
@@ -63,7 +64,6 @@ Suggests:
     ggplot2,
     gganimate,
     grDevices,
-    av,
     fansi,
     printr,
     rstudioapi,
@@ -74,6 +74,7 @@ Suggests:
     future,
     Biostrings,
     raster,
-    withr
+    withr,
+    paletteer
 VignetteBuilder: knitr
 Config/testthat/edition: 3

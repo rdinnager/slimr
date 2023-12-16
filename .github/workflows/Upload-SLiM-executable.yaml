@@ -1,0 +1,31 @@
+on:
+  workflow_dispatch
+
+name: Upload-SLiM-executable
+
+jobs:
+  upload-exec:
+    name: upload-exec
+    runs-on: windows-2019
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup MSYS2 mingw64
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          location: C:\msys642
+          install: >-
+            mingw-w64-x86_64-slim-simulator
+      - name: debugging
+        run: |
+          cygpath -m /mingw64/bin/slim.exe
+      - uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: C:/msys642/msys64/mingw64/bin/slim.exe
+          overwrite: true
+          file_glob: false
+          tag: slim-windows-executable

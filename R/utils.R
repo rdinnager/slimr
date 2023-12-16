@@ -55,24 +55,8 @@ get_os <- function(){
 #' @param os What operating system are we working in? Must be "windows", "osx", or "linux#', if left blank slimr will try and detrmine it automatically
 #' @return The full path to the executable as a character, or "" if not found.
 #' @noRd
-slimr_which <- function(slim_path, os = c("linux", "osx", "windows")) {
-
-  if(missing(os)) {
-    os <- get_os()
-  }
-  if(os == "windows") {
-
-    suppressWarnings(exe <- system(glue::glue('bash -c "which -a {slim_path}"'),
-                                   intern = TRUE,
-                                   show.output.on.console = FALSE))
-    if(is.null(attr(exe, "status"))) {
-      here_it_is <- stringr::str_remove_all(exe, "\n")
-    } else {
-      here_it_is <- ""
-    }
-  } else {
-    here_it_is <- Sys.which(path.expand(slim_path))
-  }
+slimr_which <- function(slim_path) {
+  here_it_is <- Sys.which(path.expand(slim_path))
   here_it_is
 }
 
@@ -119,7 +103,8 @@ convert_to_wsl_path <- function(windows_path) {
 slim_file <- function(file_name) {
   os <- get_os()
   if(os == "windows") {
-    return(convert_to_wsl_path(file_name))
+    #return(convert_to_wsl_path(file_name))
+    return(file_name)
   } else {
     return(file_name)
   }
@@ -160,6 +145,8 @@ fix_integers <- function(code) {
 expr_deparse_fast <- function(expr) {
   ini <- rlang::expr_text(expr, width = 500L) %>%
     stringr::str_replace_all("[^[:alnum:]](if[:blank:]*\\((.*?)\\)[:blank:]*)\n[:blank:]*",
+                             " \\1") %>%
+    stringr::str_replace_all("\n[:blank:]*(else[:blank:]*(.*?)\n[:blank:]*)",
                              " \\1")
   stringr::str_split(ini, "\n")[[1]]
 }

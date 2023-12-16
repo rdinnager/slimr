@@ -37,12 +37,45 @@ callbacks$initialize <- function() {
   cb
 }
 
+#' SLiM first() callback
+#'
+#' This callback specifies the code should be called first (before anything else) in the simulation cycle.
+#' For details on exactly when \code{\link{first}()}, \code{\link{early}()} and \code{early()} callbacks are
+#' run during a simulation see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=541}{SLiM Manual: page 541}
+#' for "WF" models, or \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=549}{SLiM Manual: page 549} for "nonWF" models.
+#' @family callbacks
+#' @return None
+#' @export
+#' @section Copyright:
+#' This is documentation for a function in the SLiM software, and has been
+#' modified from the official manual,
+#' which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#' documentation is
+#' Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#' about SLiM can be found
+#' on the official website: \url{https://messerlab.org/slim/}
+#' @author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#' (\email{messer@cornell.edu})
+#' @examples
+#' slim_block(1, early(), {
+#'   sim.addSubpop("p1", 100)
+#' })
+first <- function() {
+  callbacks$first()
+}
+
+callbacks$first <- function() {
+  cb <- "first()"
+  class(cb) <- "callback"
+  cb
+}
+
 #' SLiM early() callback
 #'
 #' This callback specifies the code should be called early in the simulation cycle.
-#' For details on exactly when \code{\link{late}()} and \code{early()} callbacks are
-#' run during a simulation see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=503}{SLiM Manual: page 503}
-#' for "WF" models, or \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=511}{SLiM Manual: page 511} for "nonWF" models.
+#' For details on exactly when \code{\link{first}()}, \code{\link{late}()} and \code{early()} callbacks are
+#' run during a simulation see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=541}{SLiM Manual: page 541}
+#' for "WF" models, or \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=549}{SLiM Manual: page 549} for "nonWF" models.
 #' @family callbacks
 #' @return None
 #' @export
@@ -73,9 +106,9 @@ callbacks$early <- function() {
 #' SLiM late() callback
 #'
 #' This callback specifies the code should be called late in the simulation cycle.
-#' For details on exactly when \code{late()} and \code{\link{early}()} callbacks are
-#' run during a simulation see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=503}{SLiM Manual: page 503}
-#' for "WF" models, or \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=511}{SLiM Manual: page 511} for "nonWF" models.
+#' For details on exactly when \code{\link{first}()}, \code{late()} and \code{\link{early}()} callbacks are
+#' run during a simulation see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=541}{SLiM Manual: page 541}
+#' for "WF" models, or \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=549}{SLiM Manual: page 549} for "nonWF" models.
 #' @family callbacks
 #' @return None
 #' @export
@@ -159,6 +192,64 @@ callbacks$fitness <- function(mut_type_id, subpop_id) {
   argus <- argus[!purrr::map_lgl(argus, rlang::is_missing)]
 
   cb <- rlang::expr(fitness(!!!rlang::maybe_missing(argus)))
+
+  cb <- rlang::expr_text(cb)
+
+  class(cb) <- "callback"
+  cb
+
+}
+
+#' SLiM fitnessEffect() callback
+#'
+#' A fitnessEffect() callback is called by SLiM when it is determining the fitness of an individual
+#' – typically, but not always, once per tick during the fitness calculation tick cycle stage. Normally,
+#' the fitness of a given individual is determined by multiplying together the fitness effects of all
+#' mutations possessed by that individual (see section 25.2 for further discussion). Supplying a
+#' fitnessEffect() callback allows you to add another multiplicative fitness effect into that
+#' calculation. As with mutationEffect() callbacks, the value returned by fitnessEffect()
+#' callbacks is a fitness effect, so 1.0 is neutral. For details
+#' see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=715}{SLiM Manual: page 715}
+#'
+#' @details
+#' Global variables available in reproduction callbacks:
+#' \describe{
+#'   \item{individual}{The individual carrying this mutation (an object of class Individual)}
+#'   \item{subpop}{The subpopulation in which that individual lives}
+#' }
+#'
+#' @param subpop_id The id(s) of the subpopulation(s) to which this callback should apply. Can
+#' be an integer 1, 2, etc., or character "p1", "p2", etc.
+#' @family callbacks
+#' @return None
+#' @export
+#' @section Copyright:
+#' This is documentation for a function in the SLiM software, and has been
+#' modified from the official manual,
+#' which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#' documentation is
+#' Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#' about SLiM can be found
+#' on the official website: \url{https://messerlab.org/slim/}
+#' @author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#' (\email{messer@cornell.edu})
+#' @examples
+#' # From page 715 of the SLiM Manual
+#' slim_block(fitnessEffect(p3), {
+#'   # multiplies all individual's fitness by 0.75
+#'   return(0.75)
+#' })
+fitnessEffect <- function(subpop_id) {
+  callbacks$fitnessEffect(subpop_id)
+}
+
+callbacks$fitnessEffect <- function(subpop_id) {
+
+  argus <- rlang::enexprs(subpop_id)
+
+  argus <- argus[!purrr::map_lgl(argus, rlang::is_missing)]
+
+  cb <- rlang::expr(fitnessEffect(!!!rlang::maybe_missing(argus)))
 
   cb <- rlang::expr_text(cb)
 
@@ -295,6 +386,143 @@ callbacks$modifyChild <- function(subpop_id) {
   argus <- argus[!purrr::map_lgl(argus, rlang::is_missing)]
 
   cb <- rlang::expr(modifyChild(!!!rlang::maybe_missing(argus)))
+
+  cb <- rlang::expr_text(cb)
+
+  class(cb) <- "callback"
+  cb
+
+}
+
+#' SLiM mutation() callback
+#'
+#' This callback specifies that a code block is providing logic to modify mutations. It is called
+#' once for each new auto-generated mutation during the tick(s) in which the callback is active.
+#' The \code{mutation()} callback has three possible returns: \code{T}, \code{F}, or (beginning in
+#' SLiM 3.5) a singleton object of type \code{Mutation}.
+#' see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=725}{SLiM Manual: page 725}
+#'
+#' @details
+#' Global variables available in reproduction callbacks:
+#' \describe{
+#'   \item{mut}{The focal mutation that is being modified or reviewed}
+#'   \item{genome}{The parental genome that is being copied}
+#'   \item{element}{The genomic element that controls the mutation site}
+#'   \item{originalNuc}{The nucleotide (0/1/2/3 for A/C/G/T) originally at the mutating position}
+#'   \item{parent}{The parent which is generating the offspring genome}
+#'   \item{subpop}{The subpopulation in which that individual lives}
+#' }
+#'
+#' @param mut_type_id The id of the mutationType to which this callback should apply. Can be an
+#' integer 1, 2, etc., or character "m1", "m2", etc.
+#' @param subpop_id The id(s) of the subpopulation(s) to which this callback should apply. Can
+#' be an integer 1, 2, etc., or character "p1", "p2", etc.
+#' @family callbacks
+#' @return None
+#' @export
+#' @section Copyright:
+#' This is documentation for a function in the SLiM software, and has been
+#' modified from the official manual,
+#' which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#' documentation is
+#' Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#' about SLiM can be found
+#' on the official website: \url{https://messerlab.org/slim/}
+#' @author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#' (\email{messer@cornell.edu})
+#' @examples
+#' # From page 261 of the SLiM Manual
+#' slim_block(recombination(), {
+#'   if (genome1.containsMarkerMutation(m2, 25000) ==
+#'       genome2.containsMarkerMutation(m2, 25000)) {
+#'
+#'     return(F)
+#'
+#'   }
+#'
+#'   inInv = (breakpoints > 25000) & (breakpoints < 75000)
+#'   if (!any(inInv)) {
+#'     return(F)
+#'   }
+#'
+#'   breakpoints = breakpoints[!inInv]
+#'   return(T)
+#'
+#' })
+mutation <- function(mut_type_id, subpop_id) {
+  callbacks$mutation(mut_type_id, subpop_id)
+}
+
+callbacks$mutation <- function(mut_type_id, subpop_id) {
+
+  argus <- rlang::enexprs(mut_type_id, subpop_id)
+
+  argus <- argus[!purrr::map_lgl(argus, rlang::is_missing)]
+
+  cb <- rlang::expr(mutation(!!!rlang::maybe_missing(argus)))
+
+  cb <- rlang::expr_text(cb)
+
+  class(cb) <- "callback"
+  cb
+
+}
+
+#' SLiM mutationEffect() callback
+#'
+#'A mutationEffect() callback is called by SLiM when it is determining the fitness effect of a
+#'mutation carried by an individual. Normally, the fitness effect of a mutation is determined by the
+#'selection coefficient s of the mutation and the dominance coefficient h of the mutation (the latter
+#'used only if the individual is heterozygous for the mutation). For details on this callback
+#'see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=712}{SLiM Manual: page 712}
+#'
+#' @details
+#' Global variables available in mutationEffect callbacks:
+#' \describe{
+#'   \item{mut}{A Mutation object, the mutation whose relative fitness is being evaluated}
+#'   \item{homozygous}{A value of T (the mutation is homozygous), F (heterozygous), or NULL (it is paired with a null chromosome, and is thus hemizygous or haploid)}
+#'   \item{effect}{The default relative fitness value calculated by SLiM}
+#'   \item{individual}{The individual carrying this mutation (an object of class Individual)}
+#'   \item{subpop}{The subpopulation in which that individual lives}
+#' }
+#'
+#' @param mut_type_id The id of the mutationType to which this callback should apply. Can be an
+#' integer 1, 2, etc., or character "m1", "m2", etc.
+#' @param subpop_id The id(s) of the subpopulation(s) to which this callback should apply. Can
+#' be an integer 1, 2, etc., or character "p1", "p2", etc.
+#' @family callbacks
+#' @return None
+#' @export
+#' @section Copyright:
+#' This is documentation for a function in the SLiM software, and has been
+#' modified from the official manual,
+#' which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#' documentation is
+#' Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#' about SLiM can be found
+#' on the official website: \url{https://messerlab.org/slim/}
+#' @author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#' (\email{messer@cornell.edu})
+#' @examples
+#' # From page 714 of the SLiM Manual
+#' slim_block(mutationEffect(), {
+#'   if (homozygous) {
+#'     return(1.0 + mut.selectionCoeff);
+#'   } else {
+#'     return(1.0 + mut.mutationType.dominanceCoeff * mut.selectionCoeff);
+#'   }
+#' })
+mutationEffect <- function(mut_type_id, subpop_id) {
+  callbacks$mutationEffect(mut_type_id, subpop_id)
+}
+
+callbacks$mutationEffect <- function(mut_type_id, subpop_id) {
+
+  argus <- rlang::enexprs(mut_type_id, subpop_id)
+
+  argus <- argus[!purrr::map_lgl(argus, rlang::is_missing)]
+
+  cb <- rlang::expr(mutationEffect(!!!rlang::maybe_missing(argus)))
 
   cb <- rlang::expr_text(cb)
 
@@ -493,6 +721,83 @@ callbacks$reproduction <- function(subpop_id, sex) {
 
 }
 
+#' SLiM survival() callback
+#'
+#' The survival() callback will be called during the selection phase of the tick cycle of nonWF
+#' models, during the tick(s) in which it is active. By default it will be called once per individual in
+#' the entire population (whether slated for survival or not); it may optionally be restricted to apply
+#' only to individuals in a specified subpopulation, using the <subpop-id> specifier. (In multispecies
+#' models, the definition must be preceded by a species specification as usual.)
+#' When a survival() callback is called, a focal individual has already been evaluated by SLiM
+#' regarding its survival; a final fitness value for the individual has been calculated, and a random
+#' uniform draw in [0,1] has been generated that determines whether the individual is to survive (a
+#' draw less than the individual’s fitness) or die (a draw greater than or equal to the individual’s
+#' fitness). The focal individual is provided to the callback, as is the subpopulation in which it
+#' resides. Furthermore, the preliminary decision (whether the focal individual will survive or not),
+#' the focal individual’s fitness, and the random draw made by SLiM to determine survival are also
+#' provided to the callback. The callback may return NULL to accept SLiM’s decision, or may return T
+#' to indicate that the individual should survive, or F to indicate that it should die, regardless of its
+#' fitness and the random deviate drawn. The callback may also return a singleton Subpopulation
+#' object to indicate the individual should remain alive but should be moved to that subpopulation
+#' (note that calling takeMigrants() during the survival phase is illegal, because SLiM is busy
+#' modifying the population’s internal state). For more details
+#' see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=727}{SLiM Manual: page 727}
+#'
+#' @details
+#' Global variables available in reproduction callbacks:
+#' \describe{
+#'   \item{individual}{The focal parent that is generating a gamete}
+#'   \item{subpop}{The subpopulation to which the focal parent belongs}
+#'   \item{surviving}{A logical value indicating SLiM’s preliminary decision (T == survival)}
+#'   \item{fitness}{The focal individual’s fitness}
+#'   \item{draw}{SLiM’s random uniform deviate, which determined the preliminary decision}
+#' }
+#'
+#' @param subpop_id The id(s) of the subpopulation(s) to which this callback should apply. Can
+#' be an integer 1, 2, etc., or character "p1", "p2", etc.
+#' @family callbacks
+#' @return None
+#' @export
+#' @section Copyright:
+#' This is documentation for a function in the SLiM software, and has been
+#' modified from the official manual,
+#' which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#' documentation is
+#' Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#' about SLiM can be found
+#' on the official website: \url{https://messerlab.org/slim/}
+#' @author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#' (\email{messer@cornell.edu})
+#' @examples
+#' # From page 461 of the SLiM Manual
+#' slim_block(survival(p1), {
+#'   # move dying males into cold storage in case they have mated
+#'   if (!surviving) {
+#'     if (individual.sex == "M") {
+#'       return(p1000);
+#'     }
+#'     return(NULL);
+#'   }
+#' })
+survival <- function(subpop_id) {
+  callbacks$survival(subpop_id)
+}
+
+callbacks$survival <- function(subpop_id) {
+
+  argus <- rlang::enexprs(subpop_id)
+
+  argus <- argus[!purrr::map_lgl(argus, rlang::is_missing)]
+
+  cb <- rlang::expr(survival(!!!rlang::maybe_missing(argus)))
+
+  cb <- rlang::expr_text(cb)
+
+  class(cb) <- "callback"
+  cb
+
+}
+
 callbacks <- list2env(callbacks)
 
 #' SLiM Callbacks
@@ -511,13 +816,18 @@ callbacks <- list2env(callbacks)
 #' \item{\code{\link{early}}}
 #' \item{\code{\link{late}}}
 #' \item{\code{\link{fitness}}}
+#' \item{\code{\link{fitnessEffect}}}
 #' \item{\code{\link{mateChoice}}}
 #' \item{\code{\link{modifyChild}}}
+#' \item{\code{\link{mutation}}}
+#' \item{\code{\link{mutationEffect}}}
 #' \item{\code{\link{recombination}}}
 #' \item{\code{\link{interaction}}}
 #' \item{\code{\link{reproduction}}}
+#' \item{\code{\link{survival}}}
 #' }
 #' @family callbacks
 slim_callbacks <- function() {
   callbacks
 }
+

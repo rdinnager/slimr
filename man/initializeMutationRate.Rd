@@ -31,29 +31,29 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=520}{SLiM manual: page 520}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=651}{SLiM manual: page
+651}.
 
-Set the mutation rate per base position per generation along the
-chromosome. To be precise, this mutation rate is the expected mean number of
-mutations that will occur per base position per generation (per new offspring
-genome being generated); note that this is different from how the recombination
-rate is defined (see initializeRecombinationRate()). The number of mutations
-that actually occurs at a given base position when generating an offspring
-genome is, in effect, drawn from a Poisson distribution with that expected
-mean (but under the hood SLiM uses a mathematically equivalent but much more
-efficient strategy). It is possible for this Poisson draw to indicate that two
-or more new mutations have arisen at the same base position, particularly when
-the mutation rate is very high; in this case, the new mutations will be added to
-the site one at a time, and as always the mutation stacking policy (see section
-1.5.3) will be followed. There are two ways to call this function. If the
-optional ends parameter is NULL (the default), then rates must be a singleton
-value that specifies a single mutation rate to be used along the entire
-chromosome. If, on the other hand, ends is supplied, then rates and ends must be
-the same length, and the values in ends must be specified in ascending order. In
-that case, rates and ends taken together specify the mutation rates to be used
-along successive contiguous stretches of the chromosome, from beginning to end;
-the last position specified in ends should extend to the end of the chromosome
+Set the mutation rate per base position per gamete. To be precise, this
+mutation rate is the expected mean number of mutations that will occur per base
+position per gamete; note that this is different from how the recombination rate
+is defined (see initializeRecombinationRate()). The number of mutations that
+actually occurs at a given base position when generating an offspring genome
+is, in effect, drawn from a Poisson distribution with that expected mean (but
+under the hood SLiM uses a mathematically equivalent but much more efficient
+strategy). It is possible for this Poisson draw to indicate that two or more new
+mutations have arisen at the same base position, particularly when the mutation
+rate is very high; in this case, the new mutations will be added to the site
+one at a time, and as always the mutation stacking policy (see section 1.5.3)
+will be followed. There are two ways to call this function. If the optional
+ends parameter is NULL (the default), then rates must be a singleton value
+that specifies a single mutation rate to be used along the entire chromosome.
+If, on the other hand, ends is supplied, then rates and ends must be the same
+length, and the values in ends must be specified in ascending order. In that
+case, rates and ends taken together specify the mutation rates to be used along
+successive contiguous stretches of the chromosome, from beginning to end; the
+last position specified in ends should extend to the end of the chromosome
 (i.e. at least to the end of the last genomic element, if not further). For
 example, if the following call is made: initializeMutationRate(c(1e-7, 2.5e-8),
 c(5000, 9999)); then the result is that the mutation rate for bases 0...5000
@@ -93,7 +93,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Initialize: 
-\code{\link{Initialize}},
+\code{\link{Init}},
 \code{\link{initializeAncestralNucleotides}()},
 \code{\link{initializeGeneConversion}()},
 \code{\link{initializeGenomicElementType}()},
@@ -106,6 +106,7 @@ Other Initialize:
 \code{\link{initializeSLiMModelType}()},
 \code{\link{initializeSLiMOptions}()},
 \code{\link{initializeSex}()},
+\code{\link{initializeSpecies}()},
 \code{\link{initializeTreeSeq}()}
 }
 \author{

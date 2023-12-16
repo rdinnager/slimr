@@ -1,0 +1,181 @@
+– (object<LogFile>$)createLogFile(string$ filePath, [Ns initialContents = NULL],
+[logical$ append = F], [logical$ compress = F], [string$ sep = ","],
+[Ni$ logInterval = NULL], [Ni$ flushInterval = NULL])
+Creates and returns a new LogFile object that logs data from the simulation (see the documentation
+for the LogFile class for details). Logged data will be written to the file at filePath, overwriting any
+existing file at that path by default, or appending to it instead if append is T (successive rows of the log
+table will always be appended to the previously written content, of course). Before the header line for
+the log is written out, any string elements in initialContents will be written first, separated by
+newlines, allowing for a user-defined file header. If compress is T, the contents will be compressed
+with zlib as they are written, and the standard .gz extension for gzip-compressed files will be
+appended to the filename in filePath if it is not already present.
+The sep parameter specifies the separator between data values within a row. The default of "," will
+generate a “comma-separated value” (CSV) file, while passing sep="\t" will use a tab separator
+instead to generate a “tab-separated value” (TSV) file. Other values for sep may also be used, but are
+less standard.
+LogFile supports periodic automatic logging of a new row of data, enabled by supplying a non-NULL
+value for logInterval. In this case, a new row will be logged (as if logRow() were called on the
+LogFile) at the end of every logInterval ticks (just before the tick counter increments, in both WF
+and nonWF models), starting at the end of the tick in which the LogFile was created. A
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 665
+logInterval of 1 will cause automatic logging at the end of every tick, whereas a logInterval of
+NULL disables automatic logging. Automatic logging can always be disabled or reconfigured later with
+the LogFile method setLogInterval(), or logging can be triggered manually by calling logRow().
+When compression is enabled, LogFile flushes new data lazily by default, for performance reasons,
+buffering data for multiple rows before writing to disk. Passing a non-NULL value for flushInterval
+requests a flush every flushInterval rows (with a value of 1 providing unbuffered operation). Note
+that flushing very frequently will likely result in both lower performance and a larger final file size (in
+one simple test, 48943 bytes instead of 4280 bytes, or more than a 10× increase in size). Alternatively,
+passing a very large value for flushInterval will effectively disable automatic flushing, except at the
+end of the simulation (but be aware that this may use a large amount of memory for large log files). In
+any case, the log file will be created immediately, with its requested initial contents; the initial write is
+not buffered. When compression is not enabled, the flushInterval setting is ignored.
+The LogFile documentation discusses how to configure and use LogFile to write out the data you
+are interested in from your simulation; see section 25.10.
+– (void)deregisterScriptBlock(io<SLiMEidosBlock> scriptBlocks)
+All SLiMEidosBlock objects specified by scriptBlocks (either with SLiMEidosBlock objects or
+with integer identifiers) will be scheduled for deregistration. The deregistered blocks remain valid,
+and may even still be executed in the current stage of the current tick (see section 26.11); the blocks
+are not actually deregistered and deallocated until sometime after the currently executing script block
+has completed. To immediately prevent a script block from executing, even when it is scheduled to
+execute in the current stage of the current tick, use the active property of the script block (see
+sections 25.12.1 and 26.11).
+– (object<GenomicElementType>)genomicElementTypesWithIDs(integer ids)
+Find and return the GenomicElementType objects with id values matching the values in ids. If no
+matching GenomicElementType object can be found with a given id, an error results.
+– (object<InteractionType>)interactionTypesWithIDs(integer ids)
+Find and return the InteractionType objects with id values matching the values in ids. If no
+matching InteractionType object can be found with a given id, an error results.
+– (object<MutationType>)mutationTypesWithIDs(integer ids)
+Find and return the MutationType objects with id values matching the values in ids. If no matching
+MutationType object can be found with a given id, an error results.
+– (void)outputUsage(void)
+Output the current memory usage of the simulation to Eidos’s output stream. The specifics of what is
+printed, and in what format, should not be relied upon as they may change from version to version of
+SLiM. This method is primarily useful for understanding where the memory usage of a simulation
+predominantly resides, for debugging or optimization. Note that it does not capture all memory usage
+by the process; rather, it summarizes the memory usage by SLiM and Eidos in directly allocated
+objects and buffers. To get the same memory usage reported by outputUsage(), but as a float$
+value, use the Community method usage(). To get the total memory usage of the running process
+(either current or peak), use the Eidos function usage().
+– (object<SLiMEidosBlock>$)registerEarlyEvent(Nis$ id, string$ source,
+[Ni$ start = NULL], [Ni$ end = NULL], [No<Species>$ ticksSpec = NULL])
+Register a block of Eidos source code, represented as the string singleton source, as an Eidos
+early() event in the current simulation, with optional start and end ticks (and, for multispecies
+models, optional ticks specifier ticksSpec) limiting its applicability. The script block will be given
+identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL
+if there is no need to be able to refer to the block later. The registered event is added to the end of the
+list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 666
+the current tick (see section 26.11 for details). The new SLiMEidosBlock will be defined as a global
+variable immediately by this method (see section 25.12), and will also be returned by this method.
+– (object<SLiMEidosBlock>$)registerFirstEvent(Nis$ id, string$ source,
+[Ni$ start = NULL], [Ni$ end = NULL], [No<Species>$ ticksSpec = NULL])
+Register a block of Eidos source code, represented as the string singleton source, as an Eidos
+first() event in the current simulation, with optional start and end ticks (and, for multispecies
+models, optional ticks specifier ticksSpec) limiting its applicability. The script block will be given
+identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL
+if there is no need to be able to refer to the block later. The registered event is added to the end of the
+list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in
+the current tick (see section 26.11 for details). The new SLiMEidosBlock will be defined as a global
+variable immediately by this method (see section 25.12), and will also be returned by this method.
+– (object<SLiMEidosBlock>$)registerInteractionCallback(Nis$ id, string$ source,
+io<InteractionType>$ intType, [Nio<Subpopulation>$ subpop = NULL],
+[Ni$ start = NULL], [Ni$ end = NULL])
+Register a block of Eidos source code, represented as the string singleton source, as an Eidos
+interaction() callback in the current simulation (global to the community), with a required
+interaction type intType (which may be an integer identifier), optional exerter subpopulation
+subpop (which may also be an integer identifier, or NULL, the default, to indicate all
+subpopulations), and optional start and end ticks all limiting its applicability. The script block will
+be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this
+may be NULL if there is no need to be able to refer to the block later. The registered callback is added
+to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it will be
+eligible to execute the next time an InteractionType is evaluated. The new SLiMEidosBlock will
+be defined as a global variable immediately by this method (see section 25.12), and will also be
+returned by this method.
+– (object<SLiMEidosBlock>$)registerLateEvent(Nis$ id, string$ source,
+[Ni$ start = NULL], [Ni$ end = NULL], [No<Species>$ ticksSpec = NULL])
+Register a block of Eidos source code, represented as the string singleton source, as an Eidos
+late() event in the current simulation, with optional start and end ticks (and, for multispecies
+models, optional ticks specifier ticksSpec) limiting its applicability. The script block will be given
+identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL
+if there is no need to be able to refer to the block later. The registered event is added to the end of the
+list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in
+the current tick (see section 26.11 for details). The new SLiMEidosBlock will be defined as a global
+variable immediately by this method (see section 25.12), and will also be returned by this method.
+– (object<SLiMEidosBlock>)rescheduleScriptBlock(io<SLiMEidosBlock>$ block,
+[Ni$ start = NULL], [Ni$ end = NULL], [Ni ticks = NULL])
+Reschedule the target script block given by block to execute in a specified set of ticks. The block
+parameter may be either an integer representing the ID of the desired script block, or a
+SLiMScriptBlock specified directly.
+The first way to specify the tick set is with start and end parameter values; block will then execute
+from start to end, inclusive. In this case, block is returned.
+The second way to specify the tick set is using the ticks parameter; this is more flexible but more
+complicated. Since script blocks execute across a contiguous span of ticks defined by their start and
+end properties, this may result in the duplication of block; one script block will be used for each
+contiguous span of ticks in ticks. The block object itself will be rescheduled to cover the first such
+span, whereas duplicates of block will be created to cover subsequent contiguous spans. A vector
+containing all of the script blocks scheduled by this method, including block, will be returned; this
+vector is guaranteed to be sorted by the (ascending) scheduled execution order of the blocks. Any
+duplicates of block created will be given values for the active, source, tag, and type properties
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 667
+equal to the current values for block, but will be given an id of -1 since script block identifiers must
+be unique; if it is necessary to find the duplicated blocks again later, their tag property should be
+used. The vector supplied for ticks does not need to be in sorted order, but it must not contain any
+duplicates.
+Because this method can create a large number of duplicate script blocks, it can sometimes be better
+to handle script block scheduling in other ways. If an early() event needs to execute every tenth tick
+over the whole duration of a long model run, for example, it would not be advisable to use a call like
+community.rescheduleScriptBlock(s1, ticks=seq(10, 100000, 10)) for that purpose, since
+that would result in thousands of duplicate script blocks. Instead, it would be preferable to add a test
+such as if (community.tick % 10 != 0) return; at the beginning of the event. It is legal to
+reschedule a script block while the block is executing; a call like
+community.rescheduleScriptBlock(self, community.tick + 10, community.tick + 10);
+made inside a given block would therefore also cause the block to execute every tenth tick, although
+this sort of self-rescheduling code is probably harder to read, maintain, and debug.
+Whichever way of specifying the tick set is used, the discussion in section 26.11 applies: block may
+continue to be executed during the current tick cycle stage even after it has been rescheduled, unless
+it is made inactive using its active property, and similarly, the block may not execute during the
+current tick cycle stage if it was not already scheduled to do so. Rescheduling script blocks during the
+tick and tick cycle stage in which they are executing, or in which they are intended to execute, should
+be avoided. Also, as mentioned in section 23.7, script blocks which are open-ended (i.e., with no
+specified end tick), are not used in determining whether the end of the simulation has been reached
+(because then the simulation would run forever); if you reschedule a block to be open-ended, and to
+start after the end of the last closed-ended block, the rescheduled block will therefore not run at all
+(just as such a block would not run at all in other circumstances, too).
+Note that new script blocks can also be created and scheduled using the register...() methods of
+Community and Species; by using the same source as a template script block, the template can be
+duplicated and scheduled for different ticks. In fact, rescheduleScriptBlock() does essentially that
+internally. In multispecies models, note that all new script blocks created as a side effect of
+rescheduleScriptBlock() will have the same species and ticks specifier as block; use the
+register...() methods to create a new block with a different species or ticks specifier.
+– (object<SLiMEidosBlock>)scriptBlocksWithIDs(integer ids)
+Find and return the SLiMEidosBlock objects with id values matching the values in ids. If no
+matching SLiMEidosBlock object can be found with a given id, an error results.
+– (void)simulationFinished(void)
+Declare the current simulation finished. Normally SLiM ends a simulation when, at the end of a tick,
+there are no script events or callbacks registered for any future tick (excluding scripts with no declared
+end tick). If you wish to end a simulation before this condition is met, a call to
+simulationFinished() will cause the current simulation to end at the end of the current tick. For
+example, a simulation might self-terminate if a test for a dynamic equilibrium condition is satisfied.
+Note that the current tick will finish executing; if you want the simulation to stop immediately, you
+can use the Eidos method stop(), which raises an error condition.
+– (object<Species>)speciesWithIDs(integer ids)
+Find and return the Species objects with id values matching the values in ids. If no matching
+Species object can be found with a given id, an error results.
+– (object<Subpopulation>)subpopulationsWithIDs(integer ids)
+Find and return the Subpopulation objects with id values matching the values in ids. If no
+matching Subpopulation object can be found with a given id, an error results.
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 668
+– (float$)usage(void)
+Return the current memory usage of the simulation. The specifics of what is totalled up should not be
+relied upon as it may change from version to version of SLiM. This method is primarily useful for
+understanding where the memory usage of a simulation predominantly resides, for debugging or
+optimization. Note that it does not capture all memory usage by the process; rather, it summarizes the
+memory usage by SLiM and Eidos in directly allocated objects and buffers. To see details of this
+internal memory usage, use the Community method outputUsage(). To get the total memory usage
+of the running process (either current or peak), use the Eidos function usage().

@@ -11,9 +11,9 @@ None
 }
 \description{
 This callback specifies the code should be called late in the simulation cycle.
-For details on exactly when \code{late()} and \code{\link{early}()} callbacks are
-run during a simulation see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=503}{SLiM Manual: page 503}
-for "WF" models, or \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=511}{SLiM Manual: page 511} for "nonWF" models.
+For details on exactly when \code{\link{first}()}, \code{late()} and \code{\link{early}()} callbacks are
+run during a simulation see \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=541}{SLiM Manual: page 541}
+for "WF" models, or \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=549}{SLiM Manual: page 549} for "nonWF" models.
 }
 \section{Copyright}{
 
@@ -34,14 +34,19 @@ slim_block(100, late(), {
 \seealso{
 Other callbacks: 
 \code{\link{early}()},
+\code{\link{first}()},
+\code{\link{fitnessEffect}()},
 \code{\link{fitness}()},
 \code{\link{initialize}()},
 \code{\link{interaction}()},
 \code{\link{mateChoice}()},
 \code{\link{modifyChild}()},
+\code{\link{mutationEffect}()},
+\code{\link{mutation}()},
 \code{\link{recombination}()},
 \code{\link{reproduction}()},
-\code{\link{slim_callbacks}()}
+\code{\link{slim_callbacks}()},
+\code{\link{survival}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

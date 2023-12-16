@@ -32,18 +32,19 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=581}{SLiM manual: page 581}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=738}{SLiM manual: page
+738}.
 
 This method customizes the display of the subpopulation in SLiMgui's
 Population Visualization graph. When this method is called by a model running
-outside SLiMgui, it will do nothing except type- checking and bounds-checking
+outside SLiMgui, it will do nothing except typechecking and bounds-checking
 its arguments. When called by a model running in SLiMgui, the position,
-size, and color of the subpopulation's displayed circle can be controlled as
-specified below. The center parameter sets the coordinates of the center of
-the subpopulation's displayed circle; it must be a float vector of length two,
-such that center[0] provides the x-coordinate and center[1] provides the y-
-coordinate. The square central area of the Population Visualization occupies
+size, and color of the subpopulation's displayed circle can be controlled
+as specified below. The center parameter sets the coordinates of the center
+of the subpopulation's displayed circle; it must be a float vector of length
+two, such that center[0] provides the x-coordinate and center[1] provides the
+y-coordinate. The square central area of the Population Visualization occupies
 scaled coordinates in [0,1] for both x and y, so the values in center must
 be within those bounds. If a value of NULL is provided, SLiMgui's default
 center will be used (which currently arranges subpopulations in a circle).
@@ -72,22 +73,25 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
+\code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{defineSpatialMap}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
+\code{\link{pointDeviated}()},
 \code{\link{pointInBounds}()},
 \code{\link{pointPeriodic}()},
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
 \code{\link{setCloningRate}()},
@@ -97,6 +101,7 @@ Other Subpopulation:
 \code{\link{setSpatialBounds}()},
 \code{\link{setSubpopulationSize}()},
 \code{\link{spatialMapColor}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{subsetIndividuals}()},
 \code{\link{takeMigrants}()}

@@ -6,14 +6,14 @@
 \alias{.IT$distance}
 \title{SLiM method distance}
 \usage{
-distance(individuals1, individuals2)
+distance(receiver, exerters)
 }
 \arguments{
-\item{individuals1}{An object of type Individual object. See details for
-description.}
+\item{receiver}{An object of type Individual object. Must be of length 1 (a
+singleton). See details for description.}
 
-\item{individuals2}{An object of type null or Individual object. The default
-value is \code{NULL}. See details for description.}
+\item{exerters}{An object of type null or Individual object. The default value
+is \code{NULL}. See details for description.}
 }
 \value{
 An object of type float.
@@ -29,29 +29,28 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=549}{SLiM manual: page 549}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=692}{SLiM manual: page
+692}.
 
-Returns a vector containing distances between individuals in
-individuals1 and individuals2. At least one of individuals1 or individuals2
-must be singleton, so that the distances evaluated are either from one
-individual to many, or from many to one (which are equivalent, in fact);
-evaluating distances for many to many individuals cannot be done in a single
-call. (There is one exception: if both individuals1 and individuals2 are zero-
-length or NULL, a zero-length float vector will be returned.) If individuals2
-is NULL (the default), then individuals1 must be singleton, and a vector of
-the distances from that individual to all individuals in its subpopulation
-(including itself) is returned; this case may be handled differently internally,
-for greater speed, so supplying NULL is preferable to supplying the vector of
-all individuals in the subpopulation explicitly even though that should produce
-identical results. If the InteractionType is non-spatial, this method may not
-be called. Importantly, distances are calculated according to the spatiality
-of the InteractionType (as declared in initializeInteractionType()), not the
-dimensionality of the model as a whole (as declared in initializeSLiMOptions()).
-The distances returned are therefore the distances that would be used to
-calculate interaction strengths. However, distance() will return finite
-distances for all pairs of individuals, even if the individuals are non-
-interacting; the distance() between an individual and itself will thus be 0. See
+Returns a vector containing distances between receiver and the
+individuals in exerters. If exerters is NULL (the default), then a vector of
+the distances from receiver to all individuals in its subpopulation (including
+itself) is returned; this case may be handled differently internally, for
+greater speed, so supplying NULL is preferable to supplying the vector of all
+individuals in the subpopulation explicitly. Otherwise, all individuals in
+exerters must belong to a single subpopulation (but not necessarily the same
+subpopulation as receiver). The evaluate() method must have been previously
+called for the receiver and exerter subpopulations, and positions saved at
+evaluation time will be used. If the InteractionType is non-spatial, this
+method may not be called. Importantly, distances are calculated according to the
+spatiality of the InteractionType (as declared in initializeInteractionType()),
+not the dimensionality of the model as a whole (as declared in
+initializeSLiMOptions()). The distances returned are therefore the distances
+that would be used to calculate interaction strengths. However, distance() will
+return finite distances for all pairs of individuals, even if the individuals
+are non-interacting due to the maximum interaction distance or the interaction
+constraints; the distance() between an individual and itself will thus be 0. See
 interactionDistance() for an alternative distance definition.
 }
 \section{Copyright}{
@@ -68,16 +67,22 @@ on the official website: \url{https://messerlab.org/slim/}
 \seealso{
 Other InteractionType: 
 \code{\link{InteractionType}},
-\code{\link{distanceToPoint}()},
+\code{\link{clippedIntegral}()},
+\code{\link{distanceFromPoint}()},
 \code{\link{drawByStrength}()},
 \code{\link{evaluate}()},
 \code{\link{interactingNeighborCount}()},
 \code{\link{interactionDistance}()},
+\code{\link{localPopulationDensity}()},
 \code{\link{nearestInteractingNeighbors}()},
 \code{\link{nearestNeighborsOfPoint}()},
 \code{\link{nearestNeighbors}()},
+\code{\link{neighborCountOfPoint}()},
+\code{\link{neighborCount}()},
+\code{\link{setConstraints}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
+\code{\link{testConstraints}()},
 \code{\link{totalOfNeighborStrengths}()},
 \code{\link{unevaluate}()}
 }

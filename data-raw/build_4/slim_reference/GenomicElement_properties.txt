@@ -1,0 +1,10 @@
+endPosition => (integer$)
+The last position in the chromosome contained by this genomic element.
+genomicElementType => (object<GenomicElementType>$)
+The GenomicElementType object that defines the behavior of this genomic element.
+startPosition => (integer$)
+The first position in the chromosome contained by this genomic element.
+tag <–> (integer$)
+A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read
+it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value
+prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.

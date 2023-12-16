@@ -72,7 +72,7 @@ slim_run <- function(x, slim_path = NULL,
                      record_graphics = "",
                      rec_args = NULL,
                      parallel = FALSE,
-                     progress = TRUE,
+                     progress = FALSE,
                      throw_error = FALSE,
                      ...) {
   UseMethod("slim_run", x)
@@ -92,9 +92,11 @@ slim_run.character <- function(x, slim_path = NULL,
                                record_graphics = "",
                                rec_args = NULL,
                                parallel = FALSE,
-                               progress = TRUE,
+                               progress = FALSE,
                                throw_error = FALSE,
                                ...) {
+
+  assert_slim_installed()
 
   if(length(x) > 1) {
     rlang::warn("Input has more than one element. Concatenating them with newline separators...")
@@ -133,44 +135,46 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
                                   record_graphics = "",
                                   rec_args = NULL,
                                   parallel = FALSE,
-                                  progress = TRUE,
+                                  progress = FALSE,
                                   throw_error = FALSE,
                                   ...) {
 
-  if(!attr(x, "script_info")$rendered) {
-    rlang::inform("slimr_script is unrendered. Trying to render now...")
-    x <- slim_script_render(x)
-  }
+    assert_slim_installed()
 
-  script <- as_slim_text(x)
-  end_gen <- attr(x, "script_info")$end_gen
-  output_info <- attr(x, "slimr_output")
+    if(!attr(x, "script_info")$rendered) {
+      rlang::inform("slimr_script is unrendered. Trying to render now...")
+      x <- slim_script_render(x)
+    }
 
-  if(any(!is.na(output_info$file_name))) {
-    save_to_file <- output_info %>%
-      dplyr::select(.data$output_name, .data$file_name, .data$format) %>%
-      tidyr::drop_na(.data$file_name)
-  } else {
-    save_to_file <- NULL
-  }
+    script <- as_slim_text(x)
+    end_gen <- attr(x, "script_info")$end_gen
+    output_info <- attr(x, "slimr_output")
 
-  slim_run_script(script, end_gen = end_gen,
-                  slim_path = slim_path,
-                  script_file = script_file,
-                  simple_run = simple_run,
-                  capture_output = capture_output,
-                  keep_all_output = keep_all_output,
-                  show_output = show_output,
-                  callbacks = callbacks,
-                  cb_args = cb_args,
-                  new_grdev = new_grdev,
-                  record_graphics = record_graphics,
-                  rec_args = rec_args,
-                  parallel = parallel,
-                  progress = progress,
-                  save_to_file = save_to_file,
-                  throw_error = throw_error,
-                  ...)
+    if(any(!is.na(output_info$file_name))) {
+      save_to_file <- output_info %>%
+        dplyr::select(.data$output_name, .data$file_name, .data$format) %>%
+        tidyr::drop_na(.data$file_name)
+    } else {
+      save_to_file <- NULL
+    }
+
+    slim_run_script(script, end_gen = end_gen,
+                    slim_path = slim_path,
+                    script_file = script_file,
+                    simple_run = simple_run,
+                    capture_output = capture_output,
+                    keep_all_output = keep_all_output,
+                    show_output = show_output,
+                    callbacks = callbacks,
+                    cb_args = cb_args,
+                    new_grdev = new_grdev,
+                    record_graphics = record_graphics,
+                    rec_args = rec_args,
+                    parallel = parallel,
+                    progress = progress,
+                    save_to_file = save_to_file,
+                    throw_error = throw_error,
+                    ...)
 
 }
 
@@ -188,10 +192,11 @@ slim_run.slimr_script_coll <- function(x, slim_path = NULL,
                                        record_graphics = "",
                                        rec_args = NULL,
                                        parallel = FALSE,
-                                       progress = TRUE,
+                                       progress = FALSE,
                                        throw_error = FALSE,
                                        ...) {
 
+  assert_slim_installed()
   assert_package("future")
   assert_package("furrr")
 
@@ -234,7 +239,6 @@ slim_run.slimr_script_coll <- function(x, slim_path = NULL,
                                                ...)),
                                      .progress = progress,
                                      .options = furrr::furrr_options(globals = FALSE,
-                                                                     lazy = TRUE,
                                                                      seed = TRUE))
   } else {
     all_results <- purrr::map(x,
@@ -280,7 +284,10 @@ slim_run_script <- function(script_txt,
                             throw_error = FALSE,
                             ...) {
 
+
   platform <- get_os()
+
+  process_during <- progress || !is.null(callbacks) || !is.null(save_to_file) || simple_run
 
   if(new_grdev) {
     assert_package("grDevices")
@@ -309,9 +316,9 @@ slim_run_script <- function(script_txt,
 
   slimr_write(script_txt, script_file)
 
-  if(platform == "windows") {
-    script_file <- convert_to_wsl_path(script_file)
-  }
+  # if(platform == "windows") {
+  #   script_file <- convert_to_wsl_path(script_file)
+  # }
 
   slim_p <- setup_slim_process(script_file, slim_path, platform, simple_run, conn = conn)
 
@@ -338,7 +345,7 @@ slim_run_script <- function(script_txt,
   data_bound <- dplyr::tibble(NULL)
   cb_every <- 1L
   last_bound <- 0L
-  gen_past <- 0
+  gens_past <- 0
 
   if(file_out) {
     curr_line <- 0L
@@ -348,11 +355,14 @@ slim_run_script <- function(script_txt,
 
     if(slim_p$is_alive()) {
 
-      slim_p$poll_io(10000)
-
       if(file_out) {
-        out_lines <- readr::read_lines(conn, skip = curr_line)
+        # out_lines <- readr::read_lines(conn, skip = curr_line, lazy = FALSE,
+        #                                progress = FALSE)
+        if(process_during) {
+          out_lines <- read_out_lines(conn, skip = curr_line)
+        }
       } else {
+        slim_p$poll_io(10000)
         out_lines <- c(leftovers, slim_p$read_output_lines())
       }
 
@@ -360,7 +370,11 @@ slim_run_script <- function(script_txt,
 
       not_finished <- FALSE
       if(file_out) {
-        out_lines <- readr::read_lines(conn, skip = curr_line)
+        # out_lines <- readr::read_lines(conn, skip = curr_line, lazy = FALSE,
+        #                                progress = FALSE)
+        if(process_during) {
+          out_lines <- read_out_lines(conn, skip = curr_line)
+        }
       } else {
         out_lines <- c(leftovers, slim_p$read_all_output_lines())
       }
@@ -394,78 +408,95 @@ slim_run_script <- function(script_txt,
       }
     } else {
 
+      if(process_during) {
+        if(length(out_lines) > 0) {
 
-      if(length(out_lines) > 0) {
+          output_list <- slim_process_output(out_lines)
 
-        output_list <- slim_process_output(out_lines)
-
-        if(!is.null(output_list$last_line)) {
-          curr_line <- curr_line + output_list$last_line
-        }
-
-        ## save results so far to file
-        if(nrow(output_list$data) > 0 & !is.null(save_to_file)) {
-          dat_to_save <- output_list$data %>%
-            dplyr::filter(.data$name %in% save_to_file$output_name)
-          output_list$data <- output_list$data %>%
-            dplyr::filter(!.data$name %in% save_to_file$output_name)
-          slim_save_data(dat_to_save, save_to_file)
-          if(nrow(output_list$data) == 0) {
-            output_list$data <- NULL
+          if(!is.null(output_list$last_line)) {
+            curr_line <- curr_line + output_list$last_line
           }
-        }
 
-        if(nrow(output_list$data) > 0) {
-          data_i <- data_i + 1L
-
-          output_data[[data_i]] <- output_list$data
-
-          gen_curr <- max(output_data[[data_i]]$generation)
-          gens_past <- gen_curr - gen_past
-          if(gens_past > cb_every) {
-            data_bound <- dplyr::bind_rows(output_data[(last_bound + 1L):data_i])
-            last_bound <- data_i
-            gen_past <- gen_curr
-            if(!is.null(callbacks)) {
-              purrr::walk(callbacks,
-                          ~do.call(.x, c(list(data = data_bound),
-                                         cb_args)))
+          ## save results so far to file
+          if(nrow(output_list$data) > 0 & !is.null(save_to_file)) {
+            dat_to_save <- output_list$data %>%
+              dplyr::filter(.data$name %in% save_to_file$output_name)
+            output_list$data <- output_list$data %>%
+              dplyr::filter(!.data$name %in% save_to_file$output_name)
+            slim_save_data(dat_to_save, save_to_file)
+            if(nrow(output_list$data) == 0) {
+              output_list$data <- NULL
             }
           }
 
-          if(progress) {
-            pb <- slim_update_progress(output_list, pb, show_output, simple_pb, end_gen)
-          }
-          if(simple_pb) {
-            simple_pb <- FALSE
-          }
-        }
+          if(nrow(output_list$data) > 0) {
+            data_i <- data_i + 1L
 
-        if(capture_output) {
+            output_data[[data_i]] <- output_list$data
 
-          if(keep_all_output) {
-            out_i <- out_i + 1L
-            all_output[[out_i]] <- out_lines
-          } else {
-            if(length(output_list$extra_out) > 0) {
+            gen_curr <- max(output_data[[data_i]]$generation)
+            gens_past <- gen_curr - gens_past
+            if(!is.null(callbacks) && !is.na(gens_past) && !is.null(gens_past) && gens_past > cb_every) {
+              data_bound <- dplyr::bind_rows(output_data[(last_bound + 1L):data_i])
+              last_bound <- data_i
+              gen_past <- gen_curr
+              if(!is.null(callbacks)) {
+                purrr::walk(callbacks,
+                            ~do.call(.x, c(list(data = data_bound),
+                                           cb_args)))
+              }
+            }
+
+            if(progress) {
+              pb <- slim_update_progress(output_list, pb, show_output, simple_pb, end_gen)
+            }
+            if(simple_pb) {
+              simple_pb <- FALSE
+            }
+          }
+
+          if(capture_output) {
+
+            if(keep_all_output) {
               out_i <- out_i + 1L
-              all_output[[out_i]] <- output_list$extra_out
+              all_output[[out_i]] <- out_lines
+            } else {
+              if(length(output_list$extra_out) > 0) {
+                out_i <- out_i + 1L
+                all_output[[out_i]] <- output_list$extra_out
+              }
             }
           }
+
+          leftovers <- output_list$leftovers
+          out_lines <- NULL
+
         }
-
-        leftovers <- output_list$leftovers
-        out_lines <- NULL
-
       }
     }
   }
 
   if(!simple_run) {
-    final_output <- slim_process_output(leftovers)
-    output_data[[data_i + 1L]] <- final_output$data
-    if(capture_output) {
-      all_output[[out_i + 1L]] <- final_output$extra_out
+    if(process_during) {
+      final_output <- slim_process_output(leftovers)
+      output_data[[data_i + 1L]] <- final_output$data
+      if(capture_output) {
+        all_output[[out_i + 1L]] <- final_output$extra_out
+      }
+    } else {
+      out <- read_out_lines(conn, skip = 0)
+      final_output <- slim_process_output(out)
+      output_data[[1]] <- final_output$data
+      if(capture_output) {
+        if(keep_all_output) {
+          all_output[[1]] <- out
+        } else {
+          all_output[[1]] <- final_output$extra_out
+          if(!is.null(final_output$leftovers)) {
+            all_output[[2]] <- final_output$leftovers
+          }
+        }
+      }
     }
   }
 
@@ -514,11 +545,14 @@ slim_run_script <- function(script_txt,
 
 setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(), simple_run = FALSE, conn = "|") {
 
+  seed <- as.character(sample.int(.Machine$integer.max, 1))
+
   if(is.null(slim_path)) {
     slim_call <- get_slim_call()
   } else {
     if(platform == "windows") {
-      slim_call <- list(call = "wsl", args = c(slim_path, "{script_file}"))
+      #slim_call <- list(call = "wsl", args = c(slim_path, "{script_file}"))
+      slim_call <- list(call = slim_path, args = "{script_file}")
     } else {
       slim_call <- list(call = slim_path, args = "{script_file}")
     }
@@ -526,6 +560,8 @@ setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(
 
   slim_call$args <- purrr::map_chr(slim_call$args,
                                    ~glue::glue(.x, .envir = list(script_file = script_file)))
+
+  slim_call$args <- c("-s", seed, slim_call$args)
 
   if(simple_run) {
 
@@ -637,12 +673,14 @@ slim_process_output <- function(out, data_only = FALSE) {
         dat <- paste0(dat, "\n")
       }
 
-      df <- readr::read_csv(I(paste0(stringr::str_replace_all(dat, "\'", "\""),
+      df <- readr::read_csv(I(paste0(dat,
                                    "\n", collapse = "")),
                             col_names = c("generation", "name", "expression", "type", "data"),
-                            #quote = "\'",
+                            quote = "\'",
                             col_types = "icccc",
-                            num_threads = 1)
+                            num_threads = 1,
+                            lazy = FALSE,
+                            progress = FALSE)
 
       end_data <- max(data_lines)
       last_line <- end_data + 1L
@@ -764,9 +802,9 @@ slim_open <- function(slimr_script,
   suppressWarnings(script_file <- tempfile(fileext = ".txt"))
   slimr_write(script_text, script_file)
 
-  if(platform == "windows") {
-    script_file <- convert_to_wsl_path(script_file)
-  }
+  # if(platform == "windows") {
+  #   script_file <- convert_to_wsl_path(script_file)
+  # }
 
   proc <- processx::run(slim_gui_path, script_file,
                         windows_verbatim_args = TRUE)
@@ -774,4 +812,15 @@ slim_open <- function(slimr_script,
 
 }
 
+read_out_lines <- function(conn, skip = curr_line) {
+  out_lines <- try(readr::read_lines(conn, skip = skip, lazy = FALSE,
+                                 progress = FALSE),
+                   silent = TRUE)
+  while(inherits(out_lines, "try-error")) {
+    out_lines <- try(readr::read_lines(conn, skip = skip, lazy = FALSE,
+                                 progress = FALSE),
+                     silent = TRUE)
+  }
+  out_lines
 
+}

@@ -28,8 +28,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=541}{SLiM manual: page 541}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=678}{SLiM manual: page
+678}.
 
 Set the mutation type fractions contributing to a genomic element type.
 The mutationTypes vector should supply the mutation types used by the genomic
@@ -52,7 +53,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other GenomicElementType: 
-\code{\link{GenomicElementType}},
+\code{\link{GET}},
 \code{\link{setMutationMatrix}()}
 }
 \author{

@@ -43,8 +43,8 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=571}{SLiM manual: page 571}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
 
 Register a block of Eidos source code, represented as the string
 singleton source, as an Eidos fitness() callback in the current simulation,
@@ -59,7 +59,8 @@ later. The registered callback is added to the end of the list of registered
 SLiMEidosBlock objects, and is active immediately; it may be eligible to execute
 in the current generation (see section 25.9 for details). The new SLiMEidosBlock
 will be defined as a global variable immediately by this method (see section
-24.11), and will also be returned by this method.
+24.11), and will also be returned by this method. Eidos events fitness()
+mateChoice() modifyChild() recombination() interaction() reproduction() 571
 }
 \section{Copyright}{
 
@@ -74,7 +75,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other SLiMSim: 
-\code{\link{SLiMSim}},
+\code{\link{SS}},
 \code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},

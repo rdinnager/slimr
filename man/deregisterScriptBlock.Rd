@@ -2,10 +2,14 @@
 % Please edit documentation in R/slim_lang.R
 \name{deregisterScriptBlock}
 \alias{deregisterScriptBlock}
+\alias{Community$deregisterScriptBlock}
+\alias{.Co$deregisterScriptBlock}
 \alias{SLiMSim$deregisterScriptBlock}
 \alias{.SS$deregisterScriptBlock}
 \title{SLiM method deregisterScriptBlock}
 \usage{
+deregisterScriptBlock(scriptBlocks)
+
 deregisterScriptBlock(scriptBlocks)
 }
 \arguments{
@@ -14,8 +18,19 @@ details for description.}
 }
 \value{
 An object of type void.
+
+An object of type void.
 }
 \description{
+Documentation for SLiM function \code{deregisterScriptBlock}, which is a method
+of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further
+nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.
+
 Documentation for SLiM function \code{deregisterScriptBlock}, which is a method
 of the SLiM class \code{\link{SLiMSim}}.
 Note that the R function is a stub, it does not do anything in R (except bring
@@ -26,8 +41,22 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=567}{SLiM manual: page 567}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=666}{SLiM manual: page
+666}.
+
+All SLiMEidosBlock objects specified by scriptBlocks (either with
+SLiMEidosBlock objects or with integer identifiers) will be scheduled for
+deregistration. The deregistered blocks remain valid, and may even still be
+executed in the current stage of the current tick (see section 26.11); the
+blocks are not actually deregistered and deallocated until sometime after the
+currently executing script block has completed. To immediately prevent a script
+block from executing, even when it is scheduled to execute in the current stage
+of the current tick, use the active property of the script block (see sections
+25.12.1 and 26.11).
+
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
 
 All SLiMEidosBlock objects specified by scriptBlocks (either with
 SLiMEidosBlock objects or with integer identifiers) will be scheduled for
@@ -48,11 +77,38 @@ documentation is
 Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
+
+
+This is documentation for a function in the SLiM software, and has been
+reproduced from the official manual,
+which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
 }
 
 \seealso{
+Other Community: 
+\code{\link{Co}},
+\code{\link{createLogFile}()},
+\code{\link{genomicElementTypesWithIDs}()},
+\code{\link{interactionTypesWithIDs}()},
+\code{\link{mutationTypesWithIDs}()},
+\code{\link{outputUsage}()},
+\code{\link{registerEarlyEvent}()},
+\code{\link{registerFirstEvent}()},
+\code{\link{registerInteractionCallback}()},
+\code{\link{registerLateEvent}()},
+\code{\link{rescheduleScriptBlock}()},
+\code{\link{scriptBlocksWithIDs}()},
+\code{\link{simulationFinished}()},
+\code{\link{speciesWithIDs}()},
+\code{\link{subpopulationsWithIDs}()},
+\code{\link{usage}()}
+
 Other SLiMSim: 
-\code{\link{SLiMSim}},
+\code{\link{SS}},
 \code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},
@@ -87,4 +143,5 @@ Other SLiMSim:
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
+\concept{Community}
 \concept{SLiMSim}

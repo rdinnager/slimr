@@ -25,8 +25,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=587}{SLiM manual: page 587}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=745}{SLiM manual: page
+745}.
 
 Set the spatial boundaries of the subpopulation to bounds. This
 method may be called only for simulations in which continuous space has been
@@ -42,8 +43,16 @@ default spatial boundaries for all subpopulations span the interval [0,1] in
 each dimension. Spatial dimensions that are periodic (as established with the
 periodicity parameter to initializeSLiMOptions()) must have a minimum coordinate
 value of 0.0 (a restriction that allows the handling of periodicity to be
-somewhat more efficient). The current spatial bounds for the subpopulation may
-be obtained through the spatialBounds property.
+somewhat more efficient). The current spatial bounds for the subpopulation
+may be obtained through the spatialBounds property. The spatial bounds of a
+subpopulation are shared with any SpatialMap objects added to the subpopulation.
+For this reason, once a spatial map has been added to a subpopulation, the
+spatial bounds of the subpopulation can no longer be changed (because it
+would stretch or shrink the associated spatial map, which does not seem to
+make physical sense). The bounds for a subpopulation should therefore be
+configured before any spatial maps are added to it. If those bounds do need
+to change subsequently, any associated spatial maps must first be removed with
+removeSpatialMap(), to ensure model consistency.
 }
 \section{Copyright}{
 
@@ -58,23 +67,26 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Subpopulation: 
-\code{\link{Subpopulation}},
+\code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
+\code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
+\code{\link{pointDeviated}()},
 \code{\link{pointInBounds}()},
 \code{\link{pointPeriodic}()},
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
 \code{\link{setCloningRate}()},
@@ -83,6 +95,7 @@ Other Subpopulation:
 \code{\link{setSexRatio}()},
 \code{\link{setSubpopulationSize}()},
 \code{\link{spatialMapColor}()},
+\code{\link{spatialMapImage}()},
 \code{\link{spatialMapValue}()},
 \code{\link{subsetIndividuals}()},
 \code{\link{takeMigrants}()}

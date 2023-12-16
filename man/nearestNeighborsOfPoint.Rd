@@ -6,13 +6,13 @@
 \alias{.IT$nearestNeighborsOfPoint}
 \title{SLiM method nearestNeighborsOfPoint}
 \usage{
-nearestNeighborsOfPoint(subpop, point, count)
+nearestNeighborsOfPoint(point, exerterSubpop, count)
 }
 \arguments{
-\item{subpop}{An object of type Subpopulation object. Must be of length 1 (a
-singleton). See details for description.}
-
 \item{point}{An object of type float. See details for description.}
+
+\item{exerterSubpop}{An object of type integer or Subpopulation object. Must be
+of length 1 (a singleton). See details for description.}
 
 \item{count}{An object of type integer. Must be of length 1 (a singleton). The
 default value is \code{1}. See details for description.}
@@ -31,16 +31,21 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=552}{SLiM manual: page 552}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=696}{SLiM manual: page
+696}.
 
-Returns up to count individuals in subpop that are spatially closest to
-point, according to the distance metric of the InteractionType. To obtain all of
-the individuals within the maximum interaction distance of point, simply pass a
-value for count that is greater than or equal to the size of subpop. Note that
-if fewer than count individuals are within the maximum interaction distance, the
-vector returned may be shorter than count, or even zero-length; it is important
-to check for this possibility even when requesting a single neighbor.
+Returns up to count individuals in exerterSubpop that are spatially
+closest to point, according to the distance metric of the InteractionType. The
+subpopulation may be supplied either as an integer ID, or as a Subpopulation
+object. To obtain all of the individuals within the maximum interaction distance
+of point, simply pass a value for count that is greater than or equal to the
+size of exerterSubpop. Note that if fewer than count individuals are within the
+maximum interaction distance, the vector returned may be shorter than count,
+or even zero-length; it is important to check for this possibility even when
+requesting a single neighbor. The evaluate() method must have been previously
+called for exerterSubpop, and positions saved at evaluation time will be used.
+If the InteractionType is non-spatial, this method may not be called.
 }
 \section{Copyright}{
 
@@ -56,16 +61,22 @@ on the official website: \url{https://messerlab.org/slim/}
 \seealso{
 Other InteractionType: 
 \code{\link{InteractionType}},
-\code{\link{distanceToPoint}()},
+\code{\link{clippedIntegral}()},
+\code{\link{distanceFromPoint}()},
 \code{\link{distance}()},
 \code{\link{drawByStrength}()},
 \code{\link{evaluate}()},
 \code{\link{interactingNeighborCount}()},
 \code{\link{interactionDistance}()},
+\code{\link{localPopulationDensity}()},
 \code{\link{nearestInteractingNeighbors}()},
 \code{\link{nearestNeighbors}()},
+\code{\link{neighborCountOfPoint}()},
+\code{\link{neighborCount}()},
+\code{\link{setConstraints}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
+\code{\link{testConstraints}()},
 \code{\link{totalOfNeighborStrengths}()},
 \code{\link{unevaluate}()}
 }

@@ -16,7 +16,7 @@
 #' @details Note that this function is only designed to be used inside a \code{\link{slim_block}} function call. If run in any other
 #' situation, it won't really do anything, just returning a reference to the placemarker that would have been inserted if run in
 #' its correct context.
-slimr_template <- function(var_name, default = NULL, unquote_strings = FALSE) {
+r_template <- function(var_name, default = NULL, unquote_strings = FALSE) {
   .resources$temp_slimr_template$var_name <- c(.resources$temp_slimr_template$var_name,
                                                var_name)
   .resources$temp_slimr_template$default <- c(.resources$temp_slimr_template$default,
@@ -27,12 +27,18 @@ slimr_template <- function(var_name, default = NULL, unquote_strings = FALSE) {
   rlang::sym(paste0("..", var_name, ".."))
 }
 
+#' @rdname r_template
+#' @export
+slimr_template <- r_template
+
 stmplt <- function(var_name, default = NULL, unquote_strings = FALSE) {
   slimr_template(var_name, default, unquote_strings)
 }
 
 tmplt_replace <- function(code) {
   code <- stringr::str_replace_all(code, "slimr_template", "!!slimr_template")
+  code <- stringr::str_replace_all(code, "([^m])r_template", "\\1!!r_template")
+  code <- stringr::str_replace_all(code, "^r_template", "!!r_template")
   code <- stringr::str_replace_all(code, "stmplt", "!!stmplt")
   code_expr <- rlang::parse_exprs(paste(code, collapse = ""))
 
@@ -79,7 +85,7 @@ process_template <- function(code, block_names) {
                      ~purrr::map(.,
                                  ~ purrr::`%||%`(.x, NA))) %>%
     dplyr::mutate_at(c("var_names", "unquote"),
-                     ~vec_unchop(.))
+                     ~list_unchop(.))
 
   #new_code <- SLiMify_all(template_processed$new_code)
   new_code <- purrr::map(template_processed$new_code,
@@ -158,12 +164,15 @@ replace_double_dots <- function(slimr_script, envir = parent.frame(), slimr_temp
   script_info <- attr(slimr_script, "script_info")
   script_info$rendered <- TRUE
 
+  species <- attr(slimr_script, "species")
+
   slimr_script <- new_slimr_script(block_name = block_names,
                                    block_id = field(slimr_script, "block_id"),
                                    start_gen = field(slimr_script, "start_gen"),
                                    end_gen = field(slimr_script, "end_gen"),
                                    callback = field(slimr_script, "callback"),
                                    code = new_code,
+                                   species = species,
                                    slimr_template = slimr_template_attr,
                                    slimr_output = attr(slimr_script, "slimr_output"),
                                    slimr_inline = attr(slimr_script, "slimr_inline"),
@@ -212,3 +221,22 @@ slimr_template_info <- function(script_temp) {
     NULL
   }
 }
+
+#' Like slimr_template but automatically inserts code to setup variable as
+#' a defineConstant() call in the SLiM initialization block.
+#'
+#' @inheritParams slimr_template
+#'
+#' @return placemarker if used outside `slim_block`
+#' @export
+#'
+#' @details Note that this function is only designed to be used inside a \code{\link{slim_block}} function call. If run in any other
+#' situation, it won't really do anything, just returning a reference to the placemarker that would have been inserted if run in
+#' its correct context.
+r_template_constant <- function(var_name, default = NULL, unquote_strings = FALSE) {
+  rlang::expr(defineConstant(!!var_name, !!r_template(var_name, default = default, unquote_strings = unquote_strings)))
+}
+
+#' @rdname r_template_constant
+#' @export
+slimr_template_constant <- r_template_constant

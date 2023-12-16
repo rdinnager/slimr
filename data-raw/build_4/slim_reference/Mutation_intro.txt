@@ -1,0 +1,5 @@
+This class represents a single point mutation. Mutations can be shared by the genomes of many
+individuals; if they reach fixation, they are converted to Substitution objects.
+Although Mutation has a tag property, like most SLiM classes, the subpopID can also store
+custom values if you don’t need to track the origin subpopulation of mutations (see below).
+Section 1.5.2 presents an overview of the conceptual role of this class.

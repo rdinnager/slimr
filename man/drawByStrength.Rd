@@ -6,17 +6,24 @@
 \alias{.IT$drawByStrength}
 \title{SLiM method drawByStrength}
 \usage{
-drawByStrength(individual, count)
+drawByStrength(receiver, count, exerterSubpop, returnDict)
 }
 \arguments{
-\item{individual}{An object of type Individual object. Must be of length 1 (a
-singleton). See details for description.}
+\item{receiver}{An object of type Individual object. See details for
+description.}
 
 \item{count}{An object of type integer. Must be of length 1 (a singleton). The
 default value is \code{1}. See details for description.}
+
+\item{exerterSubpop}{An object of type null or Subpopulation object. Must be
+of length 1 (a singleton). The default value is \code{NULL}. See details for
+description.}
+
+\item{returnDict}{An object of type logical. Must be of length 1 (a singleton).
+The default value is \code{F}. See details for description.}
 }
 \value{
-An object of type Individual object.
+An object of type .
 }
 \description{
 Documentation for SLiM function \code{drawByStrength}, which is a method of the
@@ -29,24 +36,43 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=550}{SLiM manual: page 550}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=692}{SLiM manual: page
+692}.
 
-Returns up to count individuals drawn from the subpopulation of
-individual. The probability of drawing particular individuals is proportional
-to the strength of interaction they exert upon individual. This method may be
-used with either spatial or non-spatial interactions, but will be more efficient
-with spatial interactions that set a short maximum interaction distance. Draws
-are done with replacement, so the same individual may be drawn more than once;
-sometimes using unique() on the result of this call is therefore desirable. If
-more than one draw will be needed, it is much more efficient to use a single
-call to drawByStrength(), rather than drawing individuals one at a time. Note
-that if no individuals exert a non-zero interaction upon individual, the vector
-returned will be zero-length; it is important to consider this possibility.
-If the needed interaction strengths have already been calculated, those cached
-values are simply used. Otherwise, calling this method triggers evaluation
-of the needed interactions, including calls to any applicable interaction()
-callbacks.
+Returns an object<Individual> vector containing up to count individuals
+drawn from exerterSubpop, or if that is NULL (the default), then from the
+subpopulation of receiver, which must be singleton in the default mode of
+operation (but see below). The probability of drawing particular individuals is
+proportional to the strength of interaction they exert upon receiver (which is
+zero for receiver itself). All exerters must belong to a single subpopulation
+(but not necessarily the same subpopulation as receiver). The evaluate() method
+must have been previously called for the receiver and exerter subpopulations,
+and positions saved at evaluation time will be used. This method may be used
+with either spatial or non-spatial interactions, but will be more efficient
+with spatial interactions that set a short maximum interaction distance.
+Draws are done with replacement, so the same individual may be drawn more
+than once; sometimes using unique() on the result of this call is therefore
+desirable. If more than one draw will be needed, it is much more efficient
+to use a single call to drawByStrength(), rather than drawing individuals one
+at a time. Note that if no individuals exert a non-zero interaction strength
+upon receiver, the vector returned will be zerolength; it is important to
+consider this possibility. Beginning in SLiM 4.1, this method has a vectorized
+mode of operation in which the receiver parameter may be non-singleton. To
+switch the method to this mode, pass T for returnDict, rather than the default
+of F (the operation of which is described above). In this mode, the return
+value is a Dictionary object instead of a vector of Individual objects. This
+dictionary uses integer keys that range from 0 to N-1, where N is the number
+of individuals passed in receiver; these keys thus correspond directly to the
+indices of the individuals in receiver, and there is one entry in the dictionary
+for each receiver. The value in the dictionary, for a given integer key, is
+an object<Individual> vector with the individuals drawn for the corresponding
+receiver, exactly as described above for the non-vectorized case. The results
+for each receiver can therefore be obtained from the returned dictionary
+with getValue(), passing the index of the receiver. The speed of this mode
+of operation will probably be similar to the speed of making N separate
+non-vectorized calls to drawByStrength(), but may have other advantages. In this
+mode of operation, all receivers must belong to the same subpopulation.
 }
 \section{Copyright}{
 
@@ -62,16 +88,22 @@ on the official website: \url{https://messerlab.org/slim/}
 \seealso{
 Other InteractionType: 
 \code{\link{InteractionType}},
-\code{\link{distanceToPoint}()},
+\code{\link{clippedIntegral}()},
+\code{\link{distanceFromPoint}()},
 \code{\link{distance}()},
 \code{\link{evaluate}()},
 \code{\link{interactingNeighborCount}()},
 \code{\link{interactionDistance}()},
+\code{\link{localPopulationDensity}()},
 \code{\link{nearestInteractingNeighbors}()},
 \code{\link{nearestNeighborsOfPoint}()},
 \code{\link{nearestNeighbors}()},
+\code{\link{neighborCountOfPoint}()},
+\code{\link{neighborCount}()},
+\code{\link{setConstraints}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
+\code{\link{testConstraints}()},
 \code{\link{totalOfNeighborStrengths}()},
 \code{\link{unevaluate}()}
 }

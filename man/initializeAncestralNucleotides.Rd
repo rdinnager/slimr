@@ -26,8 +26,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=516}{SLiM manual: page 516}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=647}{SLiM manual: page
+647}.
 
 This function, which may be called only in nucleotide-based models
 (see section 1.8), supplies an ancestral nucleotide sequence for the model.
@@ -43,7 +44,7 @@ sequence that involve a singleton string value are distinguished heuristically;
 a singleton string that contains only the letters ACGT will be assumed to be a
 nucleotide sequence rather than a filename. The length of the ancestral sequence
 is returned. A utility function, randomNucleotides(), is provided by SLiM to
-assist in generating simple random nucleotide sequences; see section 24.16.1.
+assist in generating simple random nucleotide sequences; see section 25.18.1.
 }
 \section{Copyright}{
 
@@ -58,7 +59,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Initialize: 
-\code{\link{Initialize}},
+\code{\link{Init}},
 \code{\link{initializeGeneConversion}()},
 \code{\link{initializeGenomicElementType}()},
 \code{\link{initializeGenomicElement}()},
@@ -71,6 +72,7 @@ Other Initialize:
 \code{\link{initializeSLiMModelType}()},
 \code{\link{initializeSLiMOptions}()},
 \code{\link{initializeSex}()},
+\code{\link{initializeSpecies}()},
 \code{\link{initializeTreeSeq}()}
 }
 \author{

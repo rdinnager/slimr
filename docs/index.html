@@ -30,6 +30,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -42,39 +44,45 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
+      <a href="articles/Custom_vis.html">Custom Live Plotting for SLiM</a>
     </li>
     <li>
-      <a href="articles/articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
+      <a href="articles/Main_manuscript_example_v2.html">Using slimr to investigate the population genetics of the Sandy Inland Mouse in the periodic rainfall environment of the Simpson Desert</a>
+    </li>
+    <li>
+      <a href="articles/multispecies.html">Advanced Example: Multispecies Model</a>
+    </li>
+    <li>
+      <a href="articles/simple_example_using_migration_and_fst.html">simple_example_using_migration_and_fst</a>
     </li>
     <li>
       <a href="articles/installing_SLiM_for_slimr.html">How to Install SLiM for Use with slimr</a>
     </li>
     <li>
+      <a href="articles/simple_nucleotide_example.html">Simple Example of a Simulation using Nucleotides</a>
+    </li>
+    <li>
       <a href="articles/slimrlang_intro.html">Introduction to slimr: Writing SLiM scripts from R</a>
+    </li>
+    <li>
+      <a href="articles/useful_tables.html">Useful slimr Tables</a>
     </li>
   </ul>
 </li>
@@ -84,7 +92,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/rdinnager/slimr/">
+  <a href="https://github.com/rdinnager/slimr/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -101,113 +109,352 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="slimr-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#slimr-" class="anchor"></a>slimr <img src="reference/figures/logo.png" align="right" height="278">
+<div class="section level1">
+<div class="page-header"><h1 id="slimr-">slimr <img src="reference/figures/logo.png" style="float:right; height:278px;"><a class="anchor" aria-label="anchor" href="#slimr-"></a>
 </h1></div>
 <p><a href="https://rdinnager.github.io/slimr/" class="uri">https://rdinnager.github.io/slimr/</a></p>
 <!-- badges: start -->
-<p><a href="https://github.com/rdinnager/slimr/actions"><img src="https://github.com/rdinnager/slimr/workflows/R-CMD-check/badge.svg" alt="R build status"></a> <a href="https://codecov.io/gh/rdinnager/slimr?branch=master"><img src="https://codecov.io/gh/rdinnager/slimr/branch/master/graph/badge.svg" alt="Codecov test coverage"></a> <a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a> <!-- badges: end --></p>
-<p>The goal of slimr is to run SLiM population genetics forward simulations from R. It also has utilities for monitoring the simulations, and bringing the resulting data into R for post-processing and visualization.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the development version from <a href="https://github.com/">GitHub</a> with:</p>
+
+<p>The goal of <code>slimr</code> is to run SLiM population genetics forward simulations from R. It also has utilities for monitoring the simulations, and bringing the resulting data into R for post-processing and visualization.</p>
+<div class="section level2">
+<h2 id="setup">Setup<a class="anchor" aria-label="anchor" href="#setup"></a>
+</h2>
+<p>To be able to use <code>slimr</code> productively it is important to have a working version of <a href="https://messerlab.org/slim/" class="external-link">SLiM</a> and <code>slimr</code>.</p>
+<div class="section level3">
+<h3 id="installing-slimr-and-slim">Installing slimr and SLiM<a class="anchor" aria-label="anchor" href="#installing-slimr-and-slim"></a>
+</h3>
+<p>As a first step you need to install the package <code>slimr</code> from github.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"rdinnager/slimr"</span><span class="op">)</span></code></pre></div>
-</div>
-<div id="writing-slim-scripts-in-r" class="section level2">
-<h2 class="hasAnchor">
-<a href="#writing-slim-scripts-in-r" class="anchor"></a>Writing SLiM Scripts in R</h2>
-<p>Using <code>slimr</code>, this is how you write the first example script (or recipe) from the (excellent) <a href="https://messerlab.org/slim/">SLiM</a> manual:</p>
+<code class="sourceCode R"><span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://devtools.r-lib.org/" class="external-link">"devtools"</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="va">devtools</span><span class="op">)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"rdinnager/slimr"</span><span class="op">)</span>  <span class="co">#downloads the latest version</span></span>
+<span></span>
+<span><span class="co">#for other branches you may want to try</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"rdinnager/slimr"</span>, re <span class="op">=</span> <span class="st">"v0.2.1"</span><span class="op">)</span>  <span class="co">#version accompanied with the manuscript</span></span></code></pre></div>
+<p><code>slimr</code> is also on R-Universe, and can be installed alternatively using the following code:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rdinnager.github.io/slimr">slimr</a></span><span class="op">)</span>
-<span class="co">#&gt; Welcome to the slimr package for forward population genetics simulation in SLiM. For more information on SLiM please visit https://messerlab.org/slim/ .</span>
-
-<span class="fu"><a href="reference/slim_script.html">slim_script</a></span><span class="op">(</span>
-  <span class="fu"><a href="reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="reference/initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,
-             <span class="op">{</span>
-               <span class="co">## set the overall mutation rate</span>
-               <span class="fu"><a href="reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">1e-7</span><span class="op">)</span>; 
-               <span class="co">## m1 mutation type: neutral</span>
-               <span class="fu"><a href="reference/initializeMutationType.html">initializeMutationType</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;
-               <span class="co">## g1 genomic element type: uses m1 for all mutations</span>
-               <span class="fu"><a href="reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fl">1.0</span><span class="op">)</span>;
-               <span class="co">## uniform chromosome of length 100 kb</span>
-               <span class="fu"><a href="reference/initializeGenomicElement.html">initializeGenomicElement</a></span><span class="op">(</span><span class="va">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span><span class="op">)</span>;
-               <span class="co">## uniform recombination along the chromosome</span>
-               <span class="fu"><a href="reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span><span class="op">(</span><span class="fl">1e-8</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>,
-             <span class="op">{</span>
-               <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">500</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>,
-  <span class="fu"><a href="reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">10000</span>,
-             <span class="op">{</span>
-               <span class="fu">sim.simulationFinished</span><span class="op">(</span><span class="op">)</span>;
-             <span class="op">}</span><span class="op">)</span>
-<span class="op">)</span> <span class="op">-&gt;</span> <span class="va">script_1</span>
-
-<span class="va">script_1</span>
-<span class="co">#&gt; &lt;slimr_script[3]&gt;</span>
-<span class="co">#&gt; block_init:initialize() {</span>
-<span class="co">#&gt;     initializeMutationRate(1e-07);</span>
-<span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span>
-<span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span>
-<span class="co">#&gt;     initializeGenomicElement(g1, 0, 99999);</span>
-<span class="co">#&gt;     initializeRecombinationRate(1e-08);</span>
-<span class="co">#&gt; }</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; block_2:1 early() {</span>
-<span class="co">#&gt;     sim.addSubpop("p1", 500);</span>
-<span class="co">#&gt; }</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; block_3:10000 early() {</span>
-<span class="co">#&gt;     sim.simulationFinished();</span>
-<span class="co">#&gt; }</span></code></pre></div>
-<p>You can output this script to text to run in a standalone SLiM installation, or you can run it in SLiM directly from R, and many other things. Please see the package website for lots of examples (link in top right corner of github repo).</p>
-<p>You can also do fancy stuff like make the above script or another script into a template that you can dynamically fill-in with parameters generated in R. You can also make SLiM generate R-friendly input. See the vignettes for details of these features and how to use them.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'slimr'</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'https://rdinnager.r-universe.dev'</span>, <span class="st">'https://cloud.r-project.org'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>To facilitate the installation of slim We provide provide a function <code><a href="reference/slim_setup.html">slim_setup()</a></code>. This functions aims to download a precompiled binary of SLiM and automatically links slimr to SLiM. Unfortunately due to the variety of systems and installs this might not work. If that is is the case please follow the excellent documentation how to install SLiM on their websites.</p>
+<ul>
+<li><a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=64" class="external-link">Windows</a></li>
+<li><a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=59" class="external-link">Linux</a></li>
+<li><a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=54" class="external-link">MacOS</a></li>
+</ul>
 </div>
-<div id="code-of-conduct" class="section level2">
-<h2 class="hasAnchor">
-<a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h2>
-<p>Please note that the slimr project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+</div>
+<div class="section level2">
+<h2 id="a-first-test-run">A first test run<a class="anchor" aria-label="anchor" href="#a-first-test-run"></a>
+</h2>
+<p>The next step is to make sure <code>slimr</code> is “linked” to slim (by knowing the location of the folder where the slim program is installed.). To check you can try:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">slimr</span><span class="fu">::</span><span class="fu"><a href="reference/slim_is_avail.html">slim_is_avail</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
+<p>And if true is returned you are ready to go and run the test example below. In the case the test was not successful we need to find the folder where the slim executable has been installed and set this path in the R environment accordingly.</p>
+<p>For example if SLiM is installed at <code>C:/Program Files/R/R-4.3.1/library/slimr</code> then you need to specify this via:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>SLIM_HOME<span class="op">=</span><span class="st">'C:/Program Files/R/R-4.3.1/library/slimr'</span><span class="op">)</span></span></code></pre></div>
+<p>If you want to add this path permanently to your Rstudio installation (so no need to run <code><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv()</a></code> every time) you can use the command <code><a href="https://usethis.r-lib.org/reference/edit.html" class="external-link">usethis::edit_r_environ()</a></code> and add a line like <code>SLIMR_HOME='C:/Program Files/R/R-4.3.1/library/slimr'</code> to this file.</p>
+</div>
+<div class="section level2">
+<h2 id="run-a-first-simple-test">Run a first simple test<a class="anchor" aria-label="anchor" href="#run-a-first-simple-test"></a>
+</h2>
+<p>To be able to run SLiM within slimr we need to create a simple slim script. Below is the <code>slimr</code> version of the first slim script as presented in the excellent <a href="https://messerlab.org/slim/" class="external-link">SLiM</a> manual, called receipes. There are hundreds of more advanced script and we provide also several worked out examples in the manuscript (Russell et al. submitted, <a href="https://www.biorxiv.org/content/10.1101/2021.08.05.455258v2" class="external-link">bioRxiv</a> ). The example below is simply to test if slim is installed correctly and works together with <code>slimr</code>.</p>
+<p>Running this code should give you the output as below (a return value of zero means success).</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rdinnager.github.io/slimr">slimr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; Welcome to the slimr package for forward population genetics simulation in SLiM. For more information on SLiM please visit https://messerlab.org/slim/ .</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'slimr'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:methods':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     initialize</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     interaction</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/slim_script.html">slim_script</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="reference/callback_initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="co">## set the overall mutation rate</span></span>
+<span>               <span class="fu"><a href="reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">1e-7</span><span class="op">)</span>; </span>
+<span>               <span class="co">## m1 mutation type: neutral</span></span>
+<span>               <span class="fu"><a href="reference/initializeMutationType.html">initializeMutationType</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;</span>
+<span>               <span class="co">## g1 genomic element type: uses m1 for all mutations</span></span>
+<span>               <span class="fu"><a href="reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fl">1.0</span><span class="op">)</span>;</span>
+<span>               <span class="co">## uniform chromosome of length 100 kb</span></span>
+<span>               <span class="fu"><a href="reference/initializeGenomicElement.html">initializeGenomicElement</a></span><span class="op">(</span><span class="va">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span><span class="op">)</span>;</span>
+<span>               <span class="co">## uniform recombination along the chromosome</span></span>
+<span>               <span class="fu"><a href="reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span><span class="op">(</span><span class="fl">1e-8</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">500</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">10000</span>,</span>
+<span>             <span class="op">{</span></span>
+<span>               <span class="fu">sim.simulationFinished</span><span class="op">(</span><span class="op">)</span>;</span>
+<span>             <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">script_1</span></span>
+<span></span>
+<span><span class="va">script_1</span></span>
+<span><span class="co">#&gt; &lt;slimr_script[3]&gt;</span></span>
+<span><span class="co">#&gt; block_init:initialize() {</span></span>
+<span><span class="co">#&gt;     initializeMutationRate(1e-07);</span></span>
+<span><span class="co">#&gt;     initializeMutationType("m1", 0.5, "f", 0);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElementType("g1", m1, 1);</span></span>
+<span><span class="co">#&gt;     initializeGenomicElement(g1, 0, 99999);</span></span>
+<span><span class="co">#&gt;     initializeRecombinationRate(1e-08);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_2:1 early() {</span></span>
+<span><span class="co">#&gt;     sim.addSubpop("p1", 500);</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; block_3:10000 early() {</span></span>
+<span><span class="co">#&gt;     sim.simulationFinished();</span></span>
+<span><span class="co">#&gt; }</span></span>
+<span></span>
+<span><span class="co">#run slim from within slimr</span></span>
+<span><span class="fu"><a href="reference/slim_run.html">slim_run</a></span><span class="op">(</span><span class="va">script_1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Simulation finished with exit status: 0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Success!</span></span></code></pre></div>
+<p><code>slimr</code> shines because it can create so called templates to run scripts with different parameter settings. It also allows to “collect” the output from SLiM and load it back into R, so you can run a full simulation with lots of parameters settings using parallel cores if available and analyse the output directly in R.</p>
+<p>See the vignettes for details of these features and how to use them.</p>
+</div>
+<div class="section level2">
+<h2 id="a-complete-workflow">A complete workflow<a class="anchor" aria-label="anchor" href="#a-complete-workflow"></a>
+</h2>
+<p>Below is a simple “complete” workflow. * Creating a script in R * Run SLiM * Load the results into R * Analyse and visualise the results.</p>
+<p>As an example we simply will run a single population of 33 individuals for 100 generations, with a single chromosome of (length=100000 bases), and high mutation rate (1e-5) [to shorten run-time]. Every 10 generation we will save the genetic status of each individual for 100 generations. Once completed we read back in the genotypes (as a genlight object) and count the number of loci every of the 10 generations (the number of loci increases due to the mutations, that occurs during the simulation.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rdinnager.github.io/slimr">slimr</a></span><span class="op">)</span></span>
+<span><span class="co"># package adegenet as we are using genlight objects</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/thibautjombart/adegenet" class="external-link">adegenet</a></span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"adegenet"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading required package: adegenet</span></span>
+<span><span class="co">#&gt; Loading required package: ade4</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;    /// adegenet 2.1.10 is loaded ////////////</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;    &gt; overview: '?adegenet'</span></span>
+<span><span class="co">#&gt;    &gt; tutorials/doc/questions: 'adegenetWeb()' </span></span>
+<span><span class="co">#&gt;    &gt; bug reports/feature requests: adegenetIssues()</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/thibautjombart/adegenet" class="external-link">adegenet</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/slim_script.html">slim_script</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="reference/slim_block.html">slim_block</a></span> <span class="op">(</span><span class="fu"><a href="reference/callback_initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="op">{</span></span>
+<span>    <span class="fu"><a href="reference/initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">1e-5</span><span class="op">)</span>;</span>
+<span>    <span class="co">## m1 mutation type: neutral</span></span>
+<span>    <span class="fu"><a href="reference/initializeMutationType.html">initializeMutationType</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;</span>
+<span>    <span class="co">## g1 genomic element type: uses m1 for all mutations</span></span>
+<span>    </span>
+<span>    <span class="fu"><a href="reference/initializeGenomicElementType.html">initializeGenomicElementType</a></span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fl">1.0</span><span class="op">)</span>;</span>
+<span>    <span class="co">## uniform chromosome of length 100 kb</span></span>
+<span>    <span class="fu"><a href="reference/initializeGenomicElement.html">initializeGenomicElement</a></span><span class="op">(</span><span class="va">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span> <span class="op">)</span>;</span>
+<span>    <span class="co">## uniform recombination along the chromosome</span></span>
+<span>    <span class="fu"><a href="reference/initializeRecombinationRate.html">initializeRecombinationRate</a></span><span class="op">(</span><span class="fl">1e-8</span><span class="op">)</span>;</span>
+<span>  <span class="op">}</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="reference/early.html">early</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    <span class="op">{</span></span>
+<span>    <span class="co">## create a population of 33 individuals</span></span>
+<span>    <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">33</span><span class="op">)</span>;</span>
+<span>    <span class="op">}</span><span class="op">)</span>,</span>
+<span>  </span>
+<span>  <span class="fu"><a href="reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span>, <span class="fu"><a href="reference/late.html">late</a></span><span class="op">(</span><span class="op">)</span>, </span>
+<span>    <span class="op">{</span></span>
+<span>      <span class="co">#create an output </span></span>
+<span>      <span class="fu"><a href="reference/r_output.html">slimr_output</a></span><span class="op">(</span><span class="fu">p1.genomes.output</span><span class="op">(</span><span class="op">)</span>, <span class="st">"p1"</span>, do_every<span class="op">=</span><span class="fl">10</span><span class="op">)</span>;</span>
+<span>    <span class="op">}</span><span class="op">)</span>,</span>
+<span>  </span>
+<span>    </span>
+<span>  <span class="fu"><a href="reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">100</span>,<span class="fu"><a href="reference/late.html">late</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span></span>
+<span>    <span class="op">{</span></span>
+<span>    <span class="fu">sim.simulationFinished</span><span class="op">(</span><span class="op">)</span>;</span>
+<span>    <span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="op">)</span><span class="op">-&gt;</span><span class="va">script_2</span></span></code></pre></div>
+<p>As before we setup a script, but this time we would like to run SLiM in parallel (does not make much sense as it is a single run only, but this is for demonstration purposes)</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.futureverse.org" class="external-link">future</a></span><span class="op">)</span></span>
+<span><span class="co"># we want to run SLiM using 5 local cores</span></span>
+<span><span class="co"># please note on Linux and Windows you would like to use multicore as this is faster as it is a 'real' fork, </span></span>
+<span><span class="co"># but multisession works on all systems</span></span>
+<span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span>, workers <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/slim_run.html">slim_run</a></span><span class="op">(</span><span class="va">script_2</span> , parallel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Simulation finished with exit status: 0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Success!</span></span></code></pre></div>
+<p>And finally we want to get the results back into R. The <code>sr</code> object has information on all the runs and output files and data and can be used to get the results directly back into R. Please note that SLiM will still produce all the output files it as if it would have been run from the command line, hence the user can also explore those files.</p>
+<p>In a typical slimr workflow though the user wants to have the data loaded back into R and depending on the output (in this case we used the function <code>genomes.output()</code> to save) we can easily create <code>genlight</code> objects that hold the genomics data in a very memory efficient way. To do so we use the <code>slim_extract_genlight</code> function.</p>
+<p>Before we use this function we may want to explore the <code>sr</code> object which is a tibble that holds all the information that was used during runs.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">sr</span><span class="op">)</span></span>
+<span><span class="co">#&gt; List of 6</span></span>
+<span><span class="co">#&gt;  $ output     : chr [1:42] "// Initial random seed:" "524845972" "" "// RunInitializeCallbacks():" ...</span></span>
+<span><span class="co">#&gt;  $ exit_status: int 0</span></span>
+<span><span class="co">#&gt;  $ output_data: slmr_tp_ [10 × 5] (S3: slimr_output_data/spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
+<span><span class="co">#&gt;   ..$ generation: int [1:10] 10 20 30 40 50 60 70 80 90 100</span></span>
+<span><span class="co">#&gt;   ..$ name      : chr [1:10] "p1" "p1" "p1" "p1" ...</span></span>
+<span><span class="co">#&gt;   ..$ expression: chr [1:10] "p1.genomes.output()" "p1.genomes.output()" "p1.genomes.output()" "p1.genomes.output()" ...</span></span>
+<span><span class="co">#&gt;   ..$ type      : chr [1:10] "slim_output" "slim_output" "slim_output" "slim_output" ...</span></span>
+<span><span class="co">#&gt;   ..$ data      : chr [1:10] "#OUT: 10 GS 66\nMutations:\n60 3 m1 91517 0 0.5 p1 1 3\n156 8 m1 42112 0 0.5 p1 1 6\n140 18 m1 58247 0 0.5 p1 1"| __truncated__ "#OUT: 20 GS 66\nMutations:\n43 8 m1 42112 0 0.5 p1 1 12\n219 18 m1 58247 0 0.5 p1 1 2\n13 32 m1 49150 0 0.5 p1 "| __truncated__ "#OUT: 30 GS 66\nMutations:\n171 8 m1 42112 0 0.5 p1 1 8\n19 32 m1 49150 0 0.5 p1 1 18\n21 33 m1 60590 0 0.5 p1 "| __truncated__ "#OUT: 40 GS 66\nMutations:\n171 8 m1 42112 0 0.5 p1 1 12\n60 32 m1 49150 0 0.5 p1 1 12\n63 33 m1 60590 0 0.5 p1"| __truncated__ ...</span></span>
+<span><span class="co">#&gt;   ..- attr(*, "spec")=</span></span>
+<span><span class="co">#&gt;   .. .. cols(</span></span>
+<span><span class="co">#&gt;   .. ..   generation = col_integer(),</span></span>
+<span><span class="co">#&gt;   .. ..   name = col_character(),</span></span>
+<span><span class="co">#&gt;   .. ..   expression = col_character(),</span></span>
+<span><span class="co">#&gt;   .. ..   type = col_character(),</span></span>
+<span><span class="co">#&gt;   .. ..   data = col_character()</span></span>
+<span><span class="co">#&gt;   .. .. )</span></span>
+<span><span class="co">#&gt;   ..- attr(*, "problems")=&lt;externalptr&gt; </span></span>
+<span><span class="co">#&gt;  $ process    :Classes 'process', 'R6' PROCESS 'slim.exe', finished.</span></span>
+<span><span class="co">#&gt;  </span></span>
+<span><span class="co">#&gt;  $ error      : chr(0) </span></span>
+<span><span class="co">#&gt;  $ output_file: chr "F:\\Rtemp\\RtmpgbqoPJ\\file5fc41a19ddf.txt"</span></span>
+<span><span class="co">#&gt;  - attr(*, "class")= chr "slimr_results"</span></span>
+<span></span>
+<span><span class="va">sr</span><span class="op">$</span><span class="va">output_data</span></span>
+<span><span class="co">#&gt; # A tibble: 10 × 5</span></span>
+<span><span class="co">#&gt;    generation name  expression          type        data                        </span></span>
+<span><span class="co">#&gt;         &lt;int&gt; &lt;chr&gt; &lt;chr&gt;               &lt;chr&gt;       &lt;chr&gt;                       </span></span>
+<span><span class="co">#&gt;  1         10 p1    p1.genomes.output() slim_output "#OUT: 10 GS 66\nMutations:…</span></span>
+<span><span class="co">#&gt;  2         20 p1    p1.genomes.output() slim_output "#OUT: 20 GS 66\nMutations:…</span></span>
+<span><span class="co">#&gt;  3         30 p1    p1.genomes.output() slim_output "#OUT: 30 GS 66\nMutations:…</span></span>
+<span><span class="co">#&gt;  4         40 p1    p1.genomes.output() slim_output "#OUT: 40 GS 66\nMutations:…</span></span>
+<span><span class="co">#&gt;  5         50 p1    p1.genomes.output() slim_output "#OUT: 50 GS 66\nMutations:…</span></span>
+<span><span class="co">#&gt;  6         60 p1    p1.genomes.output() slim_output "#OUT: 60 GS 66\nMutations:…</span></span>
+<span><span class="co">#&gt;  7         70 p1    p1.genomes.output() slim_output "#OUT: 70 GS 66\nMutations:…</span></span>
+<span><span class="co">#&gt;  8         80 p1    p1.genomes.output() slim_output "#OUT: 80 GS 66\nMutations:…</span></span>
+<span><span class="co">#&gt;  9         90 p1    p1.genomes.output() slim_output "#OUT: 90 GS 66\nMutations:…</span></span>
+<span><span class="co">#&gt; 10        100 p1    p1.genomes.output() slim_output "#OUT: 100 GS 66\nMutations…</span></span></code></pre></div>
+<p>Now we can use the <code>slim_extract_genlight</code> function to convert the SLiM output files back into R, which creates a list of 10 genlight objects, one for each generation.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span></span>
+<span><span class="va">gls</span><span class="op">&lt;-</span> <span class="fu"><a href="reference/slim_extract_genlight.html">slim_extract_genlight</a></span><span class="op">(</span><span class="va">sr</span>, by<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"generation"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">gls</span></span>
+<span><span class="co">#&gt; # A tibble: 10 × 2</span></span>
+<span><span class="co">#&gt;    generation genlight        </span></span>
+<span><span class="co">#&gt;         &lt;int&gt; &lt;list&gt;          </span></span>
+<span><span class="co">#&gt;  1         10 &lt;genlight[,265]&gt;</span></span>
+<span><span class="co">#&gt;  2         20 &lt;genlight[,305]&gt;</span></span>
+<span><span class="co">#&gt;  3         30 &lt;genlight[,399]&gt;</span></span>
+<span><span class="co">#&gt;  4         40 &lt;genlight[,437]&gt;</span></span>
+<span><span class="co">#&gt;  5         50 &lt;genlight[,450]&gt;</span></span>
+<span><span class="co">#&gt;  6         60 &lt;genlight[,565]&gt;</span></span>
+<span><span class="co">#&gt;  7         70 &lt;genlight[,577]&gt;</span></span>
+<span><span class="co">#&gt;  8         80 &lt;genlight[,531]&gt;</span></span>
+<span><span class="co">#&gt;  9         90 &lt;genlight[,603]&gt;</span></span>
+<span><span class="co">#&gt; 10        100 &lt;genlight[,553]&gt;</span></span>
+<span></span>
+<span></span>
+<span><span class="co">#the genlight object for generation 10</span></span>
+<span><span class="va">gls</span><span class="op">$</span><span class="va">genlight</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt;  /// GENLIGHT OBJECT /////////</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  // 33 genotypes,  265 binary SNPs, size: 73.3 Kb</span></span>
+<span><span class="co">#&gt;  0 (0 %) missing data</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  // Basic content</span></span>
+<span><span class="co">#&gt;    @gen: list of 33 SNPbin</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  // Optional content</span></span>
+<span><span class="co">#&gt;    @ind.names:  33 individual labels</span></span>
+<span><span class="co">#&gt;    @loc.names:  265 locus labels</span></span>
+<span><span class="co">#&gt;    @position: integer storing positions of the SNPs</span></span>
+<span><span class="co">#&gt;    @other: a list containing: mut_type  prevalence</span></span>
+<span></span>
+<span><span class="co">#number of loci at generation 10</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/adegenet/man/accessors.html" class="external-link">nLoc</a></span><span class="op">(</span><span class="va">gls</span><span class="op">$</span><span class="va">genlight</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 265</span></span></code></pre></div>
+<p>And finally we can use a simply <code>lapply</code> to find the number of loci in the genlight for each generation (e.g. the number of loci that are polymorphic).</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span></span>
+<span><span class="va">nloci</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">gls</span><span class="op">$</span><span class="va">genlight</span>, <span class="va">nLoc</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html" class="external-link">barplot</a></span><span class="op">(</span><span class="va">nloci</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">rainbow</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">gls</span><span class="op">$</span><span class="va">genlight</span><span class="op">)</span><span class="op">)</span>, names.arg <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, xlab<span class="op">=</span><span class="st">"generation"</span>,</span>
+<span>        ylab<span class="op">=</span><span class="st">"# loci"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-10-1.png" width="100%"></p>
+<p>As we expect, this value gradually increases over time.</p>
+<p>Within a simulation, it is also possible to output any file format or intermediate result in a variety of common and self-defined formats, (e.g VCF files, Fst values or a pedigree trees) and then extract the information using the workflow outlined above.</p>
+<p>A very important feature, not shown here, is that you can create so called template scripts that have placeholders for parameters, that can be filled via a R data structure and all run all simuations via a single call to SLiM using <code><a href="reference/slim_run.html">slim_run()</a></code>. Please see the vignettes for such an example.</p>
+<p>We believe that a simplified workflow will allow researchers to explore their parameter space in more detail and therefore, ultimately, will lead to a better understanding of the system under study.</p>
+<p>Have fun using <code>slimr</code>!!!</p>
+<p>Russell et al.</p>
+<p>(Thanks to Bernd Gruber for making the above example script!)</p>
+</div>
+<div class="section level2">
+<h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
+</h2>
+<p>Please note that the <code>slimr</code> project is released with a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+</div>
+<div class="section level2">
+<h2 id="a-note-on-autocomplete">A Note on Autocomplete<a class="anchor" aria-label="anchor" href="#a-note-on-autocomplete"></a>
+</h2>
+<p>Autocomplete is supported for SLiM code used within <code>slimr</code>, though with some unavoidable limitations. More specifically, autocomplete is normally limited to the suggestions of the names of existing functions and arguments. This creates a complication for functions that are methods within SLiM classes (the majority of functions since SLiM is an object-oriented language). This is because the operator to access elements inside an object in SLiM is <code>.</code> (similar to Python), but in R <code>.</code> is not an operator, R assumes the <code>.</code> is part of the name of an object. This means if you type <code>sim.addSubpop</code>, R will not recognize <code>addSubpop</code> as a function to look up for autocompletion.</p>
+<p>In <code>slimr</code>, there are two ways you can get around this limitation for accessing autocomplete for methods from within R. The simplest way that results in the most readable code is to use the <code><a href="reference/slim_load_globals.html">slim_load_globals()</a></code> function. When run this function will load object stubs for commonly used SLiM class instances into the R global environment. This includes the <code>sim</code> object, which is the main SLiMSim class instance used to track the simulation from within SLiM (or an instance of class Species in SLiM 4.0 or greater, where it represents the main species simulation in a single species simulation). It can also load as many numbered global variables used in SLiM as desired, named as in SLiM like <code>p1</code>, <code>p2</code>, <code>…</code>, <code>pn</code> for the first n Subpopulations, <code>g1</code>, <code>g2</code>, <code>…</code>, <code>gn</code> for GenomicElementTypes, etc (see documentation of <code><a href="reference/slim_load_globals.html">slim_load_globals()</a></code> for details). Functions (or properties) can then be accessed within these instances using the standard R <code>$</code> operator for accessing elements of a list. For convenience, slimr converts any <code>$</code> in SLiM code into <code>.</code>, allowing you to leave the code as is after autocompletion has been used.</p>
+<p>The second method is less readable but avoids having to load otherwise unnecessary objects into your global environment. To use it, you type the object name followed by the R operator %.%, which is included in slimr, they then type the class name of the object (such as Genome, or SLiMSiM) and then using the <code>$</code> operator, methods and properties of that class can be accessed and autocompleted. An example would be <code>sim%.%Species$addSubpop()</code>. This is a little verbose so <code>slimr</code> also includes abbreviated versions of all SLiM classes. For Species the abbreviation is <code>Sp</code>, so you could type <code>sim%.%Sp$addSubpop()</code>. Just as for the other solution, <code>slimr</code> knows how to properly replace the above code with the correct SLiM code, which would be <code>sim.addSubpop()</code>. See the below figure for a screenshot of both the methods in action in the RStudio IDE.</p>
+<p><img src="reference/figures/README-Figure_2.png" width="400"></p>
+<p><em>Caption: Screenshots of working with slimr autocomplete in RStudio, which requires some special consideration due to the object oriented programming style of SLiM. a) An example of autocomplete for SLiM code using the <code><a href="reference/slim_load_globals.html">slim_load_globals()</a></code> function which loads a set of objects that store what SLiM classes contain, in this case the sim object, which is a SLiM 4.0 Species class. This lets the user press tab to bring up the arguments of <code><a href="reference/addSubpop.html">addSubpop()</a></code> function, which is a method of Species. The lower panel shows that <code>slimr</code> automatically replaces the expression with the correct SLiM code. b) An example of using the alternative method for autocomplete by typing the name of an object (<code>sim</code>), followed by <code>%.%</code> and then the class name or an abbreviation of the class name (<code>Sp</code>), and then using <code>$</code> to access methods or properties of the class. Again, the lower panel shows how <code>slimr</code> correctly replaces the construction with valid SLiM code. By prefixing any of the methods or properties inside the <code>slimr</code> class objects with <code>?</code>, you can also bring up the full documentation of the method or property from the SLiM manual.</em></p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/rdinnager/slimr/">https://​github.com/​rdinnager/​slimr/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/rdinnager/slimr/issues">https://​github.com/​rdinnager/​slimr/​issues</a>
-</li>
+<li><a href="https://github.com/rdinnager/slimr/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/rdinnager/slimr/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>Russell Dinnage <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0003-0846-2819" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html#citation">Citing slimr</a></li>
+</ul>
+</div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Russell Dinnage <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0003-0846-2819" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Stephen Sarre <br><small class="roles"> Author </small>  </li>
 <li>Bernd Gruber <br><small class="roles"> Author </small>  </li>
 <li>Richard Duncan <br><small class="roles"> Author </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html">More about authors...</a></li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/rdinnager/slimr/actions" class="external-link"><img src="https://github.com/rdinnager/slimr/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#maturing" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://rdinnager.r-universe.dev/slimr" class="external-link"><img src="https://rdinnager.r-universe.dev/badges/slimr" alt="slimr status badge"></a></li>
 </ul>
 </div>
 
@@ -216,11 +463,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Russell Dinnage, Stephen Sarre, Bernd Gruber, Richard Duncan.</p>
+  <p></p>
+<p>Developed by Russell Dinnage, Stephen Sarre, Bernd Gruber, Richard Duncan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -228,6 +477,8 @@
 
   
 
+
+  
 
   </body>
 </html>

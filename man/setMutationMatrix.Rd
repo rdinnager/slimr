@@ -25,13 +25,14 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=541}{SLiM manual: page 541}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=678}{SLiM manual: page
+678}.
 
 Sets a new nucleotide mutation matrix for the genomic
 element type. This replaces the mutation matrix originally set by
-initializeGenomicElementType(). This method may only be called in nucleotide-
-based models.
+initializeGenomicElementType(). This method may only be called in
+nucleotide-based models.
 }
 \section{Copyright}{
 
@@ -46,7 +47,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other GenomicElementType: 
-\code{\link{GenomicElementType}},
+\code{\link{GET}},
 \code{\link{setMutationFractions}()}
 }
 \author{

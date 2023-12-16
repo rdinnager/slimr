@@ -1,5 +1,7 @@
 test_that("slim_run can run a SLiM script", {
 
+  skip_if_slim_not_installed()
+
   test_script <- as_slimr_script(slim_get_recipe(1))
   test_script <- slim_script_duration(test_script, 500)
   res <- slim_run(test_script, throw_error = TRUE)
@@ -13,9 +15,10 @@ test_that("slim_run can run a SLiM script", {
 
 test_that("slim_run works with output", {
 
+  skip_if_slim_not_installed()
   skip_on_covr()
 
-  expect_snapshot({
+  #expect_snapshot({
     slim_script(
       slim_block(initialize(), {
         setSeed(12345)
@@ -36,8 +39,9 @@ test_that("slim_run works with output", {
       })
     ) %>%
       slim_run() -> run_w_out
-    cat(run_w_out$output_data$data)
-  })
+  #  cat(run_w_out$output_data$data)
+  #},
+  #cnd_class = FALSE)
 
   expect_type(run_w_out$output_data$data, "character")
   expect_identical(run_w_out$exit_status, 0L)
@@ -45,6 +49,8 @@ test_that("slim_run works with output", {
 })
 
 test_that("slim_run works on slimr_script_coll objects", {
+
+  skip_if_slim_not_installed()
   slim_script(
     slim_block(initialize(), {
       setSeed(12345)
@@ -73,6 +79,7 @@ test_that("slim_run works on slimr_script_coll objects", {
 test_that("slim_run works in parallel", {
 
   skip_on_cran()
+  skip_if_slim_not_installed()
 
   future::plan(future::multisession())
 

@@ -3,6 +3,7 @@ on:
     branches:
       - master
       - develop
+      - revisions2
   pull_request:
     branches:
       - master
@@ -13,16 +14,17 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }}-${{ matrix.config.r }}-slim-${{ matrix.config.slim }}
 
     strategy:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest, r: 'release'}
-          - {os: macOS-latest, r: 'release'}
-          - {os: macOS-latest, r: 'devel'}
-          - {os: ubuntu-16.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/xenial/latest"}
+          - {os: windows-latest, r: 'release', slim: 'yes'}
+          - {os: windows-latest, r: 'release', slim: 'no'}
+          - {os: macOS-latest, r: 'release', slim: 'yes'}
+          - {os: macOS-latest, r: 'devel', slim: 'yes'}
+          - {os: ubuntu-20.04, r: 'release', slim: 'yes', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -33,107 +35,83 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install WSL
-        if: runner.os == 'Windows'
-        uses: Vampire/setup-wsl@v1
+      - name: Setup MSYS2 on Windows
+        if: runner.os == 'Windows' && matrix.config.slim == 'yes' && steps.cache-slim.outputs.cache-hit != 'true'
+        uses: msys2/setup-msys2@v2
         with:
-          distribution: Ubuntu-18.04
-
-      - uses: r-lib/actions/setup-r@master
-        with:
-          r-version: ${{ matrix.config.r }}
-
-      - uses: r-lib/actions/setup-pandoc@master
-
-      - name: Query dependencies
-        run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
-        shell: Rscript {0}
-
-      - name: Cache R packages
-        if: runner.os != 'Windows'
-        uses: actions/cache@v1
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-v1-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-v1-${{ hashFiles('.github/R-version') }}-1-
-
-      - name: Install system dependencies
-        if: runner.os == 'Linux'
-        env:
-          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
-        run: |
-          Rscript -e "remotes::install_github('r-hub/sysreqs')"
-          sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
-          sudo -s eval "$sysreqs"
-
-      - name: Install dependencies
-        run: |
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_cran("rcmdcheck")
-          remotes::install_bioc("Biostrings")
-        shell: Rscript {0}
+          msystem: mingw64
+          update: true
+          install: >-
+           git
+           unzip
+           base-devel
+           msys2-devel
+           mingw-w64-x86_64-toolchain
+           mingw-w64-x86_64-cmake
 
       - name: Download SLiM on Windows
-        if: runner.os == 'Windows'
-        shell: wsl-bash {0}
+        if: runner.os == 'Windows' && matrix.config.slim == 'yes'
+        shell: msys2 {0}
         run: |
-          cd `wslpath -a '${{ github.workspace }}'`
+          cd /d/a
           wget http://benhaller.com/slim/SLiM.zip
 
       - name: Download SLiM on non-Windows
-        if: runner.os != 'Windows'
+        if: runner.os != 'Windows' && matrix.config.slim == 'yes'
         run: |
           cd ${{ github.workspace }}
           wget http://benhaller.com/slim/SLiM.zip
 
-      - name: Cache SLiM
-        id: cache-slim
-        uses: actions/cache@v2
-        with:
-          path: |
-            ${{ github.workspace }}/SLiM_build
-            ${{ github.workspace }}/SLiM
-          key: ${{ runner.os }}-build_SLiM-${{ hashFiles('SLiM.zip') }}
+      # - name: Cache SLiM on Windows
+      #   id: cache-slim-win
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       ${{ github.workspace }}/SLiM_build
+      #       ${{ github.workspace }}/SLiM
+      #     key: ${{ runner.os }}-build_SLiM-${{ hashFiles('/d/a/SLiM.zip') }}
+      #
+      # - name: Cache SLiM on non-Windows
+      #   id: cache-slim
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       ${{ github.workspace }}/SLiM_build
+      #       ${{ github.workspace }}/SLiM
+      #     key: ${{ runner.os }}-build_SLiM-${{ hashFiles('SLiM.zip') }}
 
       - name: Setup cmake on non-Windows
-        if: runner.os != 'Windows'
-        uses: jwlawson/actions-setup-cmake@v1.9
-        with:
-          github-api-token: ${{ secrets.INSTALL_GITHUB_PAT }}
+        if: runner.os != 'Windows' && matrix.config.slim == 'yes'
+        uses: jwlawson/actions-setup-cmake@v1.14
 
       - name: Install SLiM on Windows Part 1
-        if: runner.os == 'Windows' && steps.cache-slim.outputs.cache-hit != 'true'
-        shell: wsl-bash {0}
+        if: runner.os == 'Windows' && matrix.config.slim == 'yes' #&& steps.cache-slim-win.outputs.cache-hit != 'true'
+        continue-on-error: true
+        shell: msys2 {0}
         run: |
-          sudo apt update
-          sudo apt-get -y install unzip
-          sudo apt-get -y install build-essential
-          sudo apt-get -y install cmake
-          cd `wslpath -a '${{ github.workspace }}'`
+          cd /d/a
           unzip -o SLiM.zip
+          cd SLiM/windows_compat/gnulib
+          touch --date="`date`" aclocal.m4 Makefile.am configure configure.ac config.h.in Makefile.in
+          cd ../../..
           mkdir SLiM_build
           cd SLiM_build
-          cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
-          make
+          cmake -G"MSYS Makefiles" -DCMAKE_BUILD_TYPE=Release ../SLiM
+          make -j 2
 
       - name: Install SLiM on Windows Part 2
-        if: runner.os == 'Windows'
-        shell: wsl-bash {0}
+        if: runner.os == 'Windows' && matrix.config.slim == 'yes'
+        shell: msys2 {0}
         run: |
-          sudo apt update
-          sudo apt-get -y install build-essential
-          sudo apt-get -y install cmake
-          cd `wslpath -a '${{ github.workspace }}'`
+          cd /d/a
           cd SLiM_build
-          sudo make install
+          make install
           cd ..
           rm SLiM.zip
 
       - name: Install SLiM on non-Windows Part 1
-        if: runner.os != 'Windows' && steps.cache-slim.outputs.cache-hit != 'true'
+        if: runner.os != 'Windows' && matrix.config.slim == 'yes' #&& steps.cache-slim.outputs.cache-hit != 'true'
+        continue-on-error: true
         run: |
           cd ${{ github.workspace }}
           unzip -o SLiM.zip
@@ -143,18 +121,42 @@ jobs:
           make
 
       - name: Install SLiM on non-Windows Part 2
-        if: runner.os != 'Windows'
+        if: runner.os != 'Windows' && matrix.config.slim == 'yes'
         run: |
           cd ${{ github.workspace }}/SLiM_build
           sudo make install
           cd ..
           rm SLiM.zip
 
-      - name: Check
+      - name: Install macOS system dependencies
+        if: runner.os == 'macOS'
+        run: |
+          brew install gdal
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
+
+      - uses: r-lib/actions/check-r-package@v2
+        if: runner.os == 'Windows'
         env:
-          _R_CHECK_CRAN_INCOMING_REMOTE_: false
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "error", check_dir = "check")
-        shell: Rscript {0}
+          SLIM_HOME: 'C:/Program Files (x86)/SLiM/bin'
+        with:
+          args: 'c("--no-manual", "--as-cran")'
+          error-on: '"error"'
+
+      - uses: r-lib/actions/check-r-package@v2
+        if: runner.os != 'Windows'
+        with:
+          args: 'c("--no-manual", "--as-cran")'
+          error-on: '"error"'
 
       - name: Upload test objects for covr
         if: runner.os == 'Linux'
@@ -170,95 +172,3 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
-
-  test-coverage:
-    runs-on: macOS-latest
-    needs: R-CMD-check
-    env:
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      _R_CHECK_FORCE_SUGGESTS_: false
-      GITHUB_PAT: ${{ secrets.INSTALL_GITHUB_PAT }}
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: r-lib/actions/setup-r@master
-
-      - uses: r-lib/actions/setup-pandoc@master
-
-      - name: Query dependencies
-        run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-        shell: Rscript {0}
-
-      - name: Cache R packages
-        uses: actions/cache@v1
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: macOS-r-4.0-1-v1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: macOS-r-4.0-1-v1-
-
-      - name: Install dependencies
-        run: |
-          install.packages(c("remotes"))
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_bioc("Biostrings")
-          remotes::install_cran("covr")
-        shell: Rscript {0}
-
-      - name: Download SLiM
-        run: |
-          cd ${{ github.workspace }}
-          wget http://benhaller.com/slim/SLiM.zip
-
-      - name: Cache SLiM
-        id: cache-slim
-        uses: actions/cache@v2
-        with:
-          path: |
-            ${{ github.workspace }}/SLiM_build
-            ${{ github.workspace }}/SLiM
-          key: ${{ runner.os }}test-coverage-build_SLiM-${{ hashFiles('SLiM.zip') }}
-
-      - name: Install SLiM Part 1
-        if: steps.cache-slim.outputs.cache-hit != 'true'
-        run: |
-          cd ${{ github.workspace }}
-          unzip -o SLiM.zip
-          mkdir SLiM_build
-          cd SLiM_build
-          cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
-          make
-
-      - name: Install SLiM Part 2
-        run: |
-          cd ${{ github.workspace }}/SLiM_build
-          sudo make install
-          cd ..
-          rm SLiM.zip
-
-      - name: Download test objects for covr
-        uses: actions/download-artifact@master
-        with:
-          name: covr-test-objects
-          path: ~/covr_test_objects
-
-      - name: Test coverage
-        run: |
-          codecovr_try <- try(covr::codecov(quiet = FALSE, clean = FALSE,
-          line_exclusions = "R/slim_lang.R"))
-          if(inherits(codecovr_try, "try-error"))
-          {
-          dir.create("coverage_results")
-          file.copy(list.files(tempdir(), full.names = TRUE), "coverage_results", recursive = TRUE)
-          print(codecovr_try)
-          quit(status = 1L)
-          }
-        shell: Rscript {0}
-
-      - name: Upload coverage results
-        if: failure()
-        uses: actions/upload-artifact@master
-        with:
-          name: coverage-results
-          path: coverage_results

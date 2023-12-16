@@ -1,0 +1,17 @@
+allKeys => (string)
+This Dictionary property has an override in LogFile to return, in order, the names of the log file
+columns, which are the keys for LogFile’s dictionary.
+filePath => (string$)
+The path of the log file being written to. This may be changed with setFilePath().
+logInterval => (integer$)
+The interval for automatic logging; a new row of data will be logged every logInterval ticks. This
+may be changed with setLogInterval(). If automatic logging has been disabled, this property will
+be 0.
+precision <–> (integer$)
+The precision of float output. To be exact, precision specifies the preferred number of significant
+digits that will be output for float values. The default is 6; values in [1,22] are legal, but 17 is
+probably the largest value that makes sense given the limits of double-precision floating point.
+tag <–> (integer$)
+A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read
+it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value
+prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.

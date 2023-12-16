@@ -29,8 +29,9 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official \href{http://
-benhaller.com/slim/SLiM_Manual.pdf#page=538}{SLiM manual: page 538}.
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=674}{SLiM manual: page
+674}.
 
 Read new mutations from the MS format file at filePath and add them
 to the target genomes. The number of target genomes must match the number
@@ -42,15 +43,15 @@ position specified in the file, using the mutation type given by mutationType.
 Positions are expected to be in [0,1], and are scaled to the length of the
 chromosome by multiplying by the last valid base position of the chromosome
 (i.e., one less than the chromosome length). Selection coefficients are drawn
-from the mutation type. The population of origin for each mutation is set
-to -1, and the generation of origin is set to the current generation. In a
-nucleotidebased model, if mutationType is nucleotide-based, a random nucleotide
-different from the ancestral nucleotide at the position will be chosen with
-equal probability. The target genomes correspond, in order, to the call lines
-in the MS file. In sex-based models that simulate the X or Y chromosome, null
-genomes in the target vector will be skipped, and will not be used to correspond
-to any call line; however, care should be taken in this case that the lines in
-the MS file correspond to the target genomes in the manner desired.
+from the mutation type. The population of origin for each mutation is set to
+-1, and the tick of origin is set to the current tick. In a nucleotide-based
+model, if mutationType is nucleotide-based, a random nucleotide different from
+the ancestral nucleotide at the position will be chosen with equal probability.
+The target genomes correspond, in order, to the call lines in the MS file.
+In sex-based models that simulate the X or Y chromosome, null genomes in the
+target vector will be skipped, and will not be used to correspond to any call
+line; however, care should be taken in this case that the lines in the MS file
+correspond to the target genomes in the manner desired.
 }
 \section{Copyright}{
 
@@ -65,7 +66,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other Genome: 
-\code{\link{Genome}},
+\code{\link{G}},
 \code{\link{addMutations}()},
 \code{\link{addNewDrawnMutation}()},
 \code{\link{addNewMutation}()},

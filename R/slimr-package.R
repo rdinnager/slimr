@@ -153,6 +153,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
   Init <- list2env(.Init, Initialize)
   Ch <- list2env(.Ch, Chromosome)
   Co <- list2env(.Co, Community)
+  E <- list2env(.E, Eidos)
   G <- list2env(.G, Genome)
   GE <- list2env(.GE, GenomicElement)
   GET <- list2env(.GET, GenomicElementType)
@@ -163,6 +164,8 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
   MT <- list2env(.MT, MutationType)
   SB <- list2env(.SB, SLiMBuiltin)
   SEB <- list2env(.SEB, SLiMEidosBlock)
+  SG <- list2env(.SG, SLiMgui)
+  SM <- list2env(.SM, SpatialMap)
   SS <- list2env(.SS, SLiMSim)
   Sp <- list2env(.Sp, Species)
   P <- list2env(.P, Subpopulation)
@@ -178,6 +181,22 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
   SLiMSim$scriptBlocks <- SLiMEidosBlock
   SLiMSim$subpopulations <- Subpopulation
   SLiMSim$substitutions <- Substitution
+
+  Species$chromosome <- Chromosome
+  Species$genomicElementTypes <- GenomicElementType
+  Species$mutationTypes <- MutationType
+  Species$mutations <- Mutation
+  Species$scriptBlocks <- SLiMEidosBlock
+  Species$subpopulations <- Subpopulation
+  Species$substitutions <- Substitution
+
+  Community$logFiles <- LogFile
+  Community$allGenomicElementTypes <- GenomicElementType
+  Community$allInteractionTypes <- InteractionType
+  Community$allMutationTypes <- MutationType
+  Community$allScriptBlocks <-  SLiMEidosBlock
+  Community$allSpecies <- Species
+  Community$allSubpopulations <- Subpopulation
 
   Chromosome$genomicElements <- GenomicElement
 

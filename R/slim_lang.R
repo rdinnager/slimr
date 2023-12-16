@@ -4662,7 +4662,7 @@ eidos_any <- function(x, ...) {
 #'@details Concatenates output to Eidos's output stream, joined together by sep.
 #'The value x that is output may be of any type. A newline is not appended to the
 #'output, unlike the behavior of print(); if a trailing newline is desired, you
-#'can use "\n" (or use the catn() function). Also unlike print(), cat() tends to
+#'can use "\\n" (or use the catn() function). Also unlike print(), cat() tends to
 #'emit very literal output; print(logical(0)) will emit "logical(0)", for example
 #'- showing a semantic interpretation of the value - whereas cat(logical(0))
 #'will emit nothing at all, since there are no elements in the value (it is
@@ -6053,7 +6053,7 @@ eidos_isString <- function(x) {
 #'The "awk" grammar is based upon the "extended" grammar, with more escapes for
 #'non-printing characters. The "grep" and "egrep" grammars are based upon the
 #'"basic" and "extended" grammars, respectively, but also allow newline characters
-#'("\n") to separate alternations. If you are not sure which grammar you want
+#'("\\n") to separate alternations. If you are not sure which grammar you want
 #'to use, "ECMAScript" is recommended. All of these grammars are implemented
 #'internally in Eidos using the C++ <regex> library, so if you need clarification
 #'on the details of a grammar, you can search for related C++ materials online.
@@ -7473,7 +7473,7 @@ comment) {
 #'@family Eidos
 #'@return An object of type string.
 #'@details Reads in the contents of a file specified by filePath and returns a
-#'string vector containing the lines (separated by \n and \r characters) of the
+#'string vector containing the lines (separated by \\n and \\r characters) of the
 #'file. Reading files other than text files is not presently supported. If an
 #'error occurs during the read, NULL will be returned.
 #'@section Copyright:

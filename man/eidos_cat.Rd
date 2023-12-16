@@ -38,7 +38,7 @@ Documentation for this function can be found in the official
 Concatenates output to Eidos's output stream, joined together by sep.
 The value x that is output may be of any type. A newline is not appended to the
 output, unlike the behavior of print(); if a trailing newline is desired, you
-can use "\n" (or use the catn() function). Also unlike print(), cat() tends to
+can use "\\n" (or use the catn() function). Also unlike print(), cat() tends to
 emit very literal output; print(logical(0)) will emit "logical(0)", for example
 - showing a semantic interpretation of the value - whereas cat(logical(0))
 will emit nothing at all, since there are no elements in the value (it is

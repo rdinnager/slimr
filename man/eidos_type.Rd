@@ -54,7 +54,7 @@ https://en.wikibooks.org/wiki/Regular_Expressions/POSIX-Extended_Regular_Express
 The "awk" grammar is based upon the "extended" grammar, with more escapes for
 non-printing characters. The "grep" and "egrep" grammars are based upon the
 "basic" and "extended" grammars, respectively, but also allow newline characters
-("\n") to separate alternations. If you are not sure which grammar you want
+("\\n") to separate alternations. If you are not sure which grammar you want
 to use, "ECMAScript" is recommended. All of these grammars are implemented
 internally in Eidos using the C++ <regex> library, so if you need clarification
 on the details of a grammar, you can search for related C++ materials online.

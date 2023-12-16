@@ -700,6 +700,14 @@ r_script <- stringr::str_replace_all(r_script,
                                     stringr::fixed("\\t"),
                                     stringr::fixed("\\\\t"))
 
+r_script <- stringr::str_replace_all(r_script,
+                                    stringr::fixed("\\n"),
+                                    stringr::fixed("\\\\n"))
+
+r_script <- stringr::str_replace_all(r_script,
+                                    stringr::fixed("\\r"),
+                                    stringr::fixed("\\\\r"))
+
 r_script <- r_script %>%
   stringr::str_replace_all("genomicElem entType",
                            "genomicElementType")

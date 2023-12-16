@@ -30,7 +30,7 @@ Documentation for this function can be found in the official
 \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
 
 Reads in the contents of a file specified by filePath and returns a
-string vector containing the lines (separated by \n and \r characters) of the
+string vector containing the lines (separated by \\n and \\r characters) of the
 file. Reading files other than text files is not presently supported. If an
 error occurs during the read, NULL will be returned.
 }

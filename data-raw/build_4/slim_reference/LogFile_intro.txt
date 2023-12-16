@@ -6,7 +6,7 @@ separator string between data values. The file can be plain text or can be compr
 format (decompressible at the command line with the gunzip utility, among other tools). When
 compression is enabled, writes out to disk are buffered in memory for better performance and
 smaller file size. A new LogFile object attached to the simulation can be created with the
-Community method createLogFile(), discussed in section 24.3.2. Any number of LogFile objects
+Community method createLogFile(), discussed in section 25.3.2. Any number of LogFile objects
 can be active simultaneously, writing to different files.
 Logging can be done automatically, at the end of ticks at a given periodic interval (e.g., every
 10th tick). This automatic logging is optional, and a log row can always be generated explicitly by
@@ -19,8 +19,6 @@ generator with custom Eidos code can be added with addCustomColumn(), and a gene
 expects to be supplied with the value to write, rather than generating the value itself, can be added
 with addSuppliedColumn(). LogFile expects to be fully configured, with calls to add...()
 methods to add generators, before the first row of data is written out, to ensure consistency in the
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 665
 file’s data. When the first row of data is written (or buffered), the LogFile’s configuration will then
 be frozen, and calls to add...() will no longer be allowed. Columns will be written, in each row,
 in the order in which add...() calls are made on the LogFile, and they will be named in the file’s
@@ -37,6 +35,8 @@ just be aware that getValue() on a LogFile might return NULL for a key, represen
 the result of serialize() might contain NA values.
 Finally: as a general rule, if a Subpopulation is referenced by one of the add...X() methods
 below it may be supplied as an object if it already exists (p1), or by id (1) even if it does not yet
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 700
 exist. The resulting column will generally have a name of the form pX_colname, where X is the id
 of the specified subpopulation. If a subpopulation-specific data logger refers to a Subpopulation
 that does not exist at the time a given row is logged, NA will be written.

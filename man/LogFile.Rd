@@ -24,7 +24,7 @@ compression is enabled, writes out to disk are buffered in memory for better
 performance and
 smaller file size. A new LogFile object attached to the simulation can be
 created with the
-Community method createLogFile(), discussed in section 24.3.2. Any number of
+Community method createLogFile(), discussed in section 25.3.2. Any number of
 LogFile objects
 can be active simultaneously, writing to different files.
 Logging can be done automatically, at the end of ticks at a given periodic

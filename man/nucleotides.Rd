@@ -33,8 +33,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=644}{SLiM manual: page
-644}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=673}{SLiM manual: page
+673}.
 
 Returns the nucleotide sequence for the genome. This is the
 current ancestral sequence, as would be returned by the Chromosome method
@@ -58,7 +58,7 @@ working with sequences, such as nucleotideCounts() to get the counts of A/C/G/T
 nucleotides in a sequence, nucleotideFrequencies() to get the same information
 as frequencies, and codonsToAminoAcids() to convert a codon sequence (such as
 provided by the codon format described above) to an amino acid sequence; see
-section 24.17.1.
+section 25.18.1.
 }
 \section{Copyright}{
 

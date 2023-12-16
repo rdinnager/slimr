@@ -17,6 +17,8 @@ LogFile supports periodic automatic logging of a new row of data, enabled by sup
 value for logInterval. In this case, a new row will be logged (as if logRow() were called on the
 LogFile) at the end of every logInterval ticks (just before the tick counter increments, in both WF
 and nonWF models), starting at the end of the tick in which the LogFile was created. A
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 665
 logInterval of 1 will cause automatic logging at the end of every tick, whereas a logInterval of
 NULL disables automatic logging. Automatic logging can always be disabled or reconfigured later with
 the LogFile method setLogInterval(), or logging can be triggered manually by calling logRow().
@@ -29,18 +31,16 @@ passing a very large value for flushInterval will effectively disable automatic 
 end of the simulation (but be aware that this may use a large amount of memory for large log files). In
 any case, the log file will be created immediately, with its requested initial contents; the initial write is
 not buffered. When compression is not enabled, the flushInterval setting is ignored.
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 636
 The LogFile documentation discusses how to configure and use LogFile to write out the data you
-are interested in from your simulation; see section 24.10.
+are interested in from your simulation; see section 25.10.
 – (void)deregisterScriptBlock(io<SLiMEidosBlock> scriptBlocks)
 All SLiMEidosBlock objects specified by scriptBlocks (either with SLiMEidosBlock objects or
 with integer identifiers) will be scheduled for deregistration. The deregistered blocks remain valid,
-and may even still be executed in the current stage of the current tick (see section 25.11); the blocks
+and may even still be executed in the current stage of the current tick (see section 26.11); the blocks
 are not actually deregistered and deallocated until sometime after the currently executing script block
 has completed. To immediately prevent a script block from executing, even when it is scheduled to
 execute in the current stage of the current tick, use the active property of the script block (see
-sections 24.12.1 and 25.11).
+sections 25.12.1 and 26.11).
 – (object<GenomicElementType>)genomicElementTypesWithIDs(integer ids)
 Find and return the GenomicElementType objects with id values matching the values in ids. If no
 matching GenomicElementType object can be found with a given id, an error results.
@@ -56,8 +56,9 @@ printed, and in what format, should not be relied upon as they may change from v
 SLiM. This method is primarily useful for understanding where the memory usage of a simulation
 predominantly resides, for debugging or optimization. Note that it does not capture all memory usage
 by the process; rather, it summarizes the memory usage by SLiM and Eidos in directly allocated
-objects and buffers. To get the total memory usage of the running process (either current or peak), use
-the Eidos function usage().
+objects and buffers. To get the same memory usage reported by outputUsage(), but as a float$
+value, use the Community method usage(). To get the total memory usage of the running process
+(either current or peak), use the Eidos function usage().
 – (object<SLiMEidosBlock>$)registerEarlyEvent(Nis$ id, string$ source,
 [Ni$ start = NULL], [Ni$ end = NULL], [No<Species>$ ticksSpec = NULL])
 Register a block of Eidos source code, represented as the string singleton source, as an Eidos
@@ -66,8 +67,10 @@ models, optional ticks specifier ticksSpec) limiting its applicability. The scri
 identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL
 if there is no need to be able to refer to the block later. The registered event is added to the end of the
 list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in
-the current tick (see section 25.11 for details). The new SLiMEidosBlock will be defined as a global
-variable immediately by this method (see section 24.12), and will also be returned by this method.
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 666
+the current tick (see section 26.11 for details). The new SLiMEidosBlock will be defined as a global
+variable immediately by this method (see section 25.12), and will also be returned by this method.
 – (object<SLiMEidosBlock>$)registerFirstEvent(Nis$ id, string$ source,
 [Ni$ start = NULL], [Ni$ end = NULL], [No<Species>$ ticksSpec = NULL])
 Register a block of Eidos source code, represented as the string singleton source, as an Eidos
@@ -76,10 +79,8 @@ models, optional ticks specifier ticksSpec) limiting its applicability. The scri
 identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL
 if there is no need to be able to refer to the block later. The registered event is added to the end of the
 list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in
-the current tick (see section 25.11 for details). The new SLiMEidosBlock will be defined as a global
-variable immediately by this method (see section 24.12), and will also be returned by this method.
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 637
+the current tick (see section 26.11 for details). The new SLiMEidosBlock will be defined as a global
+variable immediately by this method (see section 25.12), and will also be returned by this method.
 – (object<SLiMEidosBlock>$)registerInteractionCallback(Nis$ id, string$ source,
 io<InteractionType>$ intType, [Nio<Subpopulation>$ subpop = NULL],
 [Ni$ start = NULL], [Ni$ end = NULL])
@@ -92,7 +93,7 @@ be given identifier id (specified as an integer, or as a string symbolic name su
 may be NULL if there is no need to be able to refer to the block later. The registered callback is added
 to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it will be
 eligible to execute the next time an InteractionType is evaluated. The new SLiMEidosBlock will
-be defined as a global variable immediately by this method (see section 24.12), and will also be
+be defined as a global variable immediately by this method (see section 25.12), and will also be
 returned by this method.
 – (object<SLiMEidosBlock>$)registerLateEvent(Nis$ id, string$ source,
 [Ni$ start = NULL], [Ni$ end = NULL], [No<Species>$ ticksSpec = NULL])
@@ -102,8 +103,8 @@ models, optional ticks specifier ticksSpec) limiting its applicability. The scri
 identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL
 if there is no need to be able to refer to the block later. The registered event is added to the end of the
 list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in
-the current tick (see section 25.11 for details). The new SLiMEidosBlock will be defined as a global
-variable immediately by this method (see section 24.12), and will also be returned by this method.
+the current tick (see section 26.11 for details). The new SLiMEidosBlock will be defined as a global
+variable immediately by this method (see section 25.12), and will also be returned by this method.
 – (object<SLiMEidosBlock>)rescheduleScriptBlock(io<SLiMEidosBlock>$ block,
 [Ni$ start = NULL], [Ni$ end = NULL], [Ni ticks = NULL])
 Reschedule the target script block given by block to execute in a specified set of ticks. The block
@@ -119,6 +120,8 @@ span, whereas duplicates of block will be created to cover subsequent contiguous
 containing all of the script blocks scheduled by this method, including block, will be returned; this
 vector is guaranteed to be sorted by the (ascending) scheduled execution order of the blocks. Any
 duplicates of block created will be given values for the active, source, tag, and type properties
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 667
 equal to the current values for block, but will be given an id of -1 since script block identifiers must
 be unique; if it is necessary to find the duplicated blocks again later, their tag property should be
 used. The vector supplied for ticks does not need to be in sorted order, but it must not contain any
@@ -131,16 +134,14 @@ that would result in thousands of duplicate script blocks. Instead, it would be 
 such as if (community.tick % 10 != 0) return; at the beginning of the event. It is legal to
 reschedule a script block while the block is executing; a call like
 community.rescheduleScriptBlock(self, community.tick + 10, community.tick + 10);
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 638
 made inside a given block would therefore also cause the block to execute every tenth tick, although
 this sort of self-rescheduling code is probably harder to read, maintain, and debug.
-Whichever way of specifying the tick set is used, the discussion in section 25.11 applies: block may
+Whichever way of specifying the tick set is used, the discussion in section 26.11 applies: block may
 continue to be executed during the current tick cycle stage even after it has been rescheduled, unless
 it is made inactive using its active property, and similarly, the block may not execute during the
 current tick cycle stage if it was not already scheduled to do so. Rescheduling script blocks during the
 tick and tick cycle stage in which they are executing, or in which they are intended to execute, should
-be avoided. Also, as mentioned in section 22.7, script blocks which are open-ended (i.e., with no
+be avoided. Also, as mentioned in section 23.7, script blocks which are open-ended (i.e., with no
 specified end tick), are not used in determining whether the end of the simulation has been reached
 (because then the simulation would run forever); if you reschedule a block to be open-ended, and to
 start after the end of the last closed-ended block, the rescheduled block will therefore not run at all
@@ -168,3 +169,13 @@ Species object can be found with a given id, an error results.
 – (object<Subpopulation>)subpopulationsWithIDs(integer ids)
 Find and return the Subpopulation objects with id values matching the values in ids. If no
 matching Subpopulation object can be found with a given id, an error results.
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 668
+– (float$)usage(void)
+Return the current memory usage of the simulation. The specifics of what is totalled up should not be
+relied upon as it may change from version to version of SLiM. This method is primarily useful for
+understanding where the memory usage of a simulation predominantly resides, for debugging or
+optimization. Note that it does not capture all memory usage by the process; rather, it summarizes the
+memory usage by SLiM and Eidos in directly allocated objects and buffers. To see details of this
+internal memory usage, use the Community method outputUsage(). To get the total memory usage
+of the running process (either current or peak), use the Eidos function usage().

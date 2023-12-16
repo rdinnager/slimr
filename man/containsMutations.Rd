@@ -41,8 +41,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=643}{SLiM manual: page
-643}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=672}{SLiM manual: page
+672}.
 
 Returns a logical vector indicating whether each of the mutations
 in mutations is present in the genome; each element in the returned vector
@@ -51,8 +51,8 @@ method is provided for speed; it is much faster than the corresponding Eidos
 code.
 
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=652}{SLiM manual: page
-652}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=682}{SLiM manual: page
+682}.
 
 Returns a logical vector indicating whether each of the mutations in
 mutations is present in the individual (in either of its genomes); each element
@@ -106,6 +106,7 @@ Other Individual:
 \code{\link{countOfMutationsOfType}()},
 \code{\link{relatedness}()},
 \code{\link{setSpatialPosition}()},
+\code{\link{sharedParentCount}()},
 \code{\link{sumOfMutationsOfType}()},
 \code{\link{uniqueMutationsOfType}()}
 }

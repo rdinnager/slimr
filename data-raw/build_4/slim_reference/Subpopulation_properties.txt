@@ -29,7 +29,7 @@ The value of fitnessScaling is reset to 1.0 every tick, so that any scaling fact
 single tick. This reset occurs immediately after fitness values are calculated, in both WF and nonWF
 models.
 TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 689
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 730
 genomes => (object<Genome>)
 All of the genomes contained by the subpopulation; there are two genomes per diploid individual.
 genomesNonNull => (object<Genome>)
@@ -76,7 +76,7 @@ whatever you wish except that subpopulation names must be unique across time (tw
 subpopulations may not both have the name "foo", even if they never exist at the same time). A
 subpopulation’s name may appear as a label in SLiMgui, and it can be useful in generating output,
 TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 690
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 731
 debugging, and other purposes. When tree-sequence recording is enabled, name is persisted in the
 subpopulation’s metadata in tree-sequence output, and can then be used in Python to identify the
 subpopulation; if you plan to take advantage of that feature, name should follow the syntax of Python
@@ -100,6 +100,8 @@ the spatialBounds property will contain values (x0, y0, x1, y1); bounds for the 
 will not be included in that case, since that coordinate is not used in the simulation’s dimensionality.
 This property cannot be set, but the setSpatialBounds() method may be used to achieve the same
 thing.
+spatialMaps => (object<SpatialMap>)
+The spatial maps that are currently added to the subpopulation.
 species => (object<Species>$)
 The species to which the target object belongs.
 tag <–> (integer$)

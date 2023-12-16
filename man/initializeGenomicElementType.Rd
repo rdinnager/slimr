@@ -36,8 +36,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=619}{SLiM manual: page
-619}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=648}{SLiM manual: page
+648}.
 
 Add a genomic element type at initialization time. The id must
 not already be used for any genomic element type in the simulation. The
@@ -55,18 +55,17 @@ provides the new object. The mutationMatrix parameter is NULL by default, and
 in non-nucleotide-based models it must be NULL. In nucleotide-based models, on
 the other hand, it must be non-NULL, and therefore must be supplied. In that
 case, mutationMatrix should take one of two standard forms. For sequence-based
-mutation rates that depend upon only the single nucleotide at a mutation
-site, mutationMatrix should be a 4×4 float matrix, specifying mutation rates
-for an existing nucleotide state (rows from 0- 3 representing A/C/G/T) to
-each of the four possible derived nucleotide states (columns, with the same
-meaning): The mutation rates in this matrix are absolute rates, per nucleotide
-per gamete; they will be used by SLiM directly unless they are multiplied
-by a factor from the hotspot map (see initializeHotspotMap()). Rates in
-mutationMatrix that involve the mutation of a nucleotide to * PA→C PA→G PA→T
-PC→A * PC→G PC→T PG→A PG→C * PG→T PT→A PT→C PT→G * itself (A to A, C to C,
-etc.) are not used by SLiM and must be 0.0 by convention (shown above with
-asterisks). It is important to note that the order of the rows and columns used
-in SLiM, A/C/G/T, is not a universal convention; other sources will present
+mutation rates that depend upon only the single nucleotide at a mutation site,
+mutationMatrix should be a 4×4 float matrix, specifying mutation rates for an
+existing nucleotide state (rows from 0- 3 representing A/C/G/T) to each of the
+four possible derived nucleotide states (columns, with the same meaning): The
+mutation rates in this matrix are absolute rates, per nucleotide per gamete;
+they will be used by SLiM directly unless they are multiplied by a factor
+from the hotspot map (see initializeHotspotMap()). Rates in mutationMatrix
+that involve the mutation of a nucleotide to itself (A to A, C to C, etc.) are
+not used by SLiM and must be 0.0 by convention (shown above with asterisks).
+It is important to note that the order of the rows and columns used in
+SLiM, A/C/G/T, is not a universal convention; other sources will present
 substitution-rate/transition-rate matrices using different conventions, and so
 care must be taken when importing such matrices into SLiM. For sequence-based
 mutation rates that depend upon the trinucleotide sequence centered upon a
@@ -81,8 +80,8 @@ of the trinucleotide sequence that is mutating, but rates can be specified
 independently based upon the nucleotides in the first and third positions as
 well, with this type of mutation matrix. Several helper functions are defined to
 construct common types of mutation matrices, such as mmJukesCantor() to create
-a mutation matrix for a Jukes-Cantor model; see section 24.17.1. See chapter
-18 for practical examples of mutation matrices, and section 22.2.3 for further
+a mutation matrix for a Jukes-Cantor model; see section 25.18.1. See chapter
+18 for practical examples of mutation matrices, and section 23.2.3 for further
 discussion of the mutational paradigm in nucleotide-based models.
 }
 \section{Copyright}{

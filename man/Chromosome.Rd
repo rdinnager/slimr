@@ -144,9 +144,9 @@ unavailable in nucleotide-based models. }
 one (a singleton). This property is a constant, so it is not modifiable.
 \strong{Property Description:} The overall mutation rate across the whole
 chromosome determining the overall number of mutation ranges and rates as well
-as the coverage of the chromosome by genomic elements (since mutations are only
-generated within genomic elements, regardless of the mutation rate map). When
-using sex- specific mutation rate maps, this property will unavailable; see
+as the coverage of the chromosome by genomic elements (since mutations are
+only generated within genomic elements, regardless of the mutation rate map).
+When using sexspecific mutation rate maps, this property will unavailable; see
 overallMutationRateF and overallMutationRateM. This property is unavailable in
 nucleotide-based models. }
 \item{overallMutationRateF}{A property of type float. It is of length

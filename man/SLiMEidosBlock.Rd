@@ -14,15 +14,15 @@ Eidos callbacks defined in the SLiM input file of the current simulation are
 instantiated as
 SLiMEidosBlock objects and are available through the allScriptBlocks property of
 Community and
-the scriptBlocks property of Species; see sections 24.3.1 and 24.14.1. In
+the scriptBlocks property of Species; see sections 25.3.1 and 25.15.1. In
 addition, new script
 blocks can be created programmatically and registered with the simulation, and
 registered script
 blocks can be deregistered; see the ‑register...() and ‑deregisterScriptBlock()
 methods of
-Community and Species in sections 24.3.2 and 24.14.2. The currently executing
+Community and Species in sections 25.3.2 and 25.15.2. The currently executing
 script block is
-available through the self global; see section 25.11.
+available through the self global; see section 26.11.
 This class has the following methods (functions):
 \itemize{
 \item{None. This class has no methods.}
@@ -84,7 +84,7 @@ property is a constant, so it is not modifiable. \strong{Property Description:}
 The type of the script block; this will be "first", "early", or "late" for
 the three types of Eidos "mutation", "mutationEffect", "recombination",
 "reproduction", or "survival" for the respective types of Eidos callbacks (see
-section 24.1 and chapter 25).}
+section 25.1 and chapter 26).}
 
 }
 }

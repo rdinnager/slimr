@@ -12,7 +12,7 @@ allSubpopulations => (object<Subpopulation>)
 All of the Subpopulation objects defined in the simulation.
 cycleStage => (string$)
 The current cycle stage, as a string. The values of this property essentially mirror the cycle stages of
-WF and nonWF models (see chapters 22 and 23). Common values include "first" (during
+WF and nonWF models (see chapters 23 and 24). Common values include "first" (during
 execution of first() events), "early" (during execution of early() events),
 "reproduction" (during offspring generation), "fitness" (during fitness evaluation),
 "survival" (while applying selection and mortality in nonWF models), and "late" (during
@@ -20,6 +20,8 @@ execution of late() events).
 Other possible values include "begin" (during internal setup before each cycle), "tally" (while
 tallying mutation reference counts and removing fixed mutations), "swap" (while swapping the
 offspring generation into the parental generation in WF models), "end" (during internal bookkeeping
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 664
 after each cycle), and "console" (during the in-between-ticks state in which commands in SLiMgui’s
 Eidos console are executed). It would probably be a good idea not to use this latter set of values; they
 are probably not user-visible during ordinary model execution anyway.
@@ -32,8 +34,6 @@ The LogFile objects being used in the simulation.
 modelType => (string$)
 The type of model being simulated, as specified in initializeSLiMModelType(). This will be "WF"
 for WF models (Wright–Fisher models, the default), or "nonWF" for nonWF models (non-Wright–Fisher
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 635
 models; see section 1.6 for discussion). This must be the same for all species in the community; it is
 therefore a property on Community, not Species.
 tag <–> (integer$)

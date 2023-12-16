@@ -53,6 +53,15 @@ function rnorm(). A
 normal distribution is often used to model mutations that can be either
 beneficial or deleterious,
 since both tails of the distribution are unbounded.
+"p" - A Laplace-distributed fitness effect. This DFE type is specified by two
+parameters, a mean
+and a scale. The Laplace distribution from which mutations are drawn is given by
+the probability
+density function P(s | μ,b) = exp(−|s−μ|/b)/2b, where μ is the mean and b is the
+scale parameter. A
+Laplace distribution is sometimes used to model a mix of both deleterious and
+beneficial
+mutations.
 "w" - A Weibull-distributed fitness effect. This DFE type is specified by a
 scale parameter and a
 shape parameter. The Weibull distribution from which mutations are drawn is
@@ -88,9 +97,9 @@ This class has the following properties:
 \item{color}{A property of type string. It is of length one (a singleton). This
 property is a variable, so it is modifiable. \strong{Property Description:}
 The color used to display mutations of this type in SLiMgui. Outside of
-SLiMgui, this property still exists, but is not used by SLiM. Colors may be
-specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see
-the Eidos manual). If color is the empty string, "", SLiMgui's default
+SLiMgui, this property still exists, but is not used by SLiM. Colors may
+be specified by name, or with hexadecimal RGB values of the form "#RRGGBB"
+(see the Eidos manual). If color is the empty string, "", SLiMgui's default
 (selection-coefficient-based) color scheme is used; this is the default for new
 MutationType objects. }
 \item{colorSubstitution}{A property of type string. It is of length one (a
@@ -115,11 +124,11 @@ mutations through a mutationEffect() callback would need to continue having that
 influence even after reaching fixation, but if the simulation were to replace
 the fixed mutation with a Substitution object the mutation would no longer be
 considered in fitness calculations (unless the callback explicitly consulted
-the list of Substitution objects kept by the simulation). Other script- defined
+the list of Substitution objects kept by the simulation). Other scriptdefined
 behaviors in mutationEffect(), interaction(), mateChoice(), modifyChild(), and
 recombination() callbacks might also necessitate the disabling of substitution
 for a given mutation type; this is an important consideration to keep in mind.
-See section 22.3 for further discussion of convertToSubstitution in WF models.
+See section 23.3 for further discussion of convertToSubstitution in WF models.
 In contrast, for nonWF models this property is F by default, because even
 mutations with no epistatis or other indirect fitness effects will continue
 to influence the survival probabilities of individuals. For nonWF models, only
@@ -128,7 +137,7 @@ converted to substitutions upon fixation. When such a pure-neutral mutation
 type is defined in a nonWF model, this property should be set to T to tell
 SLiM that substitution is allowed; this may have very large positive effects
 on performance, so it is important to remember when modeling background neutral
-mutations. See section 23.5 for further discussion of convertToSubstitution
+mutations. See section 24.5 for further discussion of convertToSubstitution
 in nonWF models. SLiM consults this flag at the end of each tick when deciding
 whether to substitute each fixed mutation. If this flag is T, all eligible
 fixed mutations will be converted at the end of the current tick, even if they
@@ -142,7 +151,7 @@ string for DFE type "s", and type float for all other DFE types. }
 \item{distributionType}{A property of type string. It is of length one
 (a singleton). This property is a constant, so it is not modifiable.
 \strong{Property Description:} The type of distribution of fitness effects; one
-of "f", "g", "e", "n", "w", or "s" (see section 24.11, above). }
+of "f", "g", "e", "n", "p", "w", or "s" (see section 25.11, above). }
 \item{dominanceCoeff}{A property of type float. It is of length one (a
 singleton). This property is a variable, so it is modifiable. \strong{Property
 Description:} The dominance coefficient used for mutations of this type when
@@ -205,10 +214,10 @@ stacking group at a given site is retained; further mutations of this stacking
 group at the same site are discarded with no effect. This can be useful for
 modeling one-way changes; once a gene is disabled by a premature stop codon,
 for example, you might wish to assume, for simplicity, that further mutations
-cannot alter that fact. If the policy is set to "l", the last mutation of this
-stacking group at a given site is retained; earlier mutation of this stacking
-group at the same site are discarded. This can be useful for modeling an
-"infinite- alleles" scenario in which every new mutation at a site generates
+cannot alter that fact. If the policy is set to "l", the last mutation of
+this stacking group at a given site is retained; earlier mutation of this
+stacking group at the same site are discarded. This can be useful for modeling
+an "infinitealleles" scenario in which every new mutation at a site generates
 a completely new allele, rather than retaining the previous mutations at the
 site. The mutation stacking policy applies only within the given mutation type's
 stacking group; mutations of different stacking groups are always allowed to

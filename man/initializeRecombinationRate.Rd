@@ -32,8 +32,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=623}{SLiM manual: page
-623}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=653}{SLiM manual: page
+653}.
 
 Set the recombination rate per base position per gamete. To be
 precise, this recombination rate is the probability that a breakpoint will

@@ -27,8 +27,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=705}{SLiM manual: page
-705}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=749}{SLiM manual: page
+749}.
 
 A convenience function that returns an integer vector of length four,
 providing the number of occurrences of A / C / G / T nucleotides, respectively,

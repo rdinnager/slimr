@@ -41,8 +41,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=684}{SLiM manual: page
-684}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=725}{SLiM manual: page
+725}.
 
 Register a block of Eidos source code, represented as the string
 singleton source, as an Eidos fitnessEffect() callback in the current
@@ -54,8 +54,8 @@ integer, or as a string symbolic name such as "s5"); this may be NULL if there
 is no need to be able to refer to the block later. The registered callback is
 added to the end of the list of registered SLiMEidosBlock objects, and is active
 immediately; it may be eligible to execute in the current tick (see section
-25.11 for details). The new SLiMEidosBlock will be defined as a global variable
-immediately by this method (see section 24.12), and will also be returned by
+26.11 for details). The new SLiMEidosBlock will be defined as a global variable
+immediately by this method (see section 25.12), and will also be returned by
 this method.
 }
 \section{Copyright}{
@@ -72,6 +72,7 @@ on the official website: \url{https://messerlab.org/slim/}
 \seealso{
 Other Species: 
 \code{\link{Sp}},
+\code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{individualsWithPedigreeIDs}()},
@@ -88,7 +89,16 @@ Other Species:
 \code{\link{registerModifyChildCallback}()},
 \code{\link{registerMutationCallback}()},
 \code{\link{registerMutationEffectCallback}()},
-\code{\link{registerRecombinationCallback}()}
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{registerSurvivalCallback}()},
+\code{\link{simulationFinished}()},
+\code{\link{skipTick}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqOutput}()},
+\code{\link{treeSeqRememberIndividuals}()},
+\code{\link{treeSeqSimplify}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

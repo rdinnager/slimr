@@ -4,8 +4,12 @@
 \alias{treeSeqOutput}
 \alias{SLiMSim$treeSeqOutput}
 \alias{.SS$treeSeqOutput}
+\alias{Species$treeSeqOutput}
+\alias{.Sp$treeSeqOutput}
 \title{SLiM method treeSeqOutput}
 \usage{
+treeSeqOutput(path, simplify, includeModel, metadata)
+
 treeSeqOutput(path, simplify, includeModel, metadata)
 }
 \arguments{
@@ -23,10 +27,21 @@ default value is \code{NULL}. See details for description.}
 }
 \value{
 An object of type void.
+
+An object of type void.
 }
 \description{
 Documentation for SLiM function \code{treeSeqOutput}, which is a method of the
 SLiM class \code{\link{SLiMSim}}.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further
+nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.
+
+Documentation for SLiM function \code{treeSeqOutput}, which is a method of the
+SLiM class \code{\link{Species}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -62,8 +77,47 @@ subclass of Dictionary, such as the SLiMSim simulation object sim, or a LogFile
 instance. However, only the keys and values contained by the object's Dictionary
 superclass state will be serialized into the metadata; properties of the
 subclass will be ignored.
+
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=728}{SLiM manual: page
+728}.
+
+Outputs the current tree sequence recording tables to the path
+specified by path. This method may only be called if tree sequence recording
+has been turned on with initializeTreeSeq(). If simplify is T (the default),
+simplification will be done immediately prior to output; this is almost always
+desirable, unless a model wishes to avoid simplification entirely. (Note that if
+simplification is not done, then all genomes since the last simplification will
+be marked as samples in the resulting tree sequence.) A binary tree sequence
+file will be written to the specified path; a filename extension of .trees
+is suggested for this type of file. Normally, the full SLiM script used to
+generate the tree sequence is written out to the provenance entry of the tree
+sequence file, to the model subkey of the parameters top-level key. Supplying
+F for includeModel suppresses output of the full script; see section 27.4.6
+for further discussion. A Dictionary object containing user-generated metadata
+may be supplied with the metadata parameter. If present, this dictionary will
+be serialized as JSON and attached to the saved tree sequence under a key
+named user_metadata, within the SLiM key (see section 27.4.5). If tskit is
+used to read the tree sequence in Python, this metadata will automatically be
+deserialized and made available at ts.metadata["SLiM"]["user_metadata"]. This
+metadata dictionary is not used by SLiM, or by pyslim, tskit, or msprime; you
+may use it for any purpose you wish. Note that metadata may actually be any
+subclass of Dictionary, such as a DataFrame. It can even be a Species object
+such as sim, or a LogFile instance; however, only the keys and values contained
+by the object's Dictionary superclass state will be serialized into the metadata
+(properties of the subclass will be ignored). This metadata dictionary can be
+recovered from the saved file using the treeSeqMetadata() function.
 }
 \section{Copyright}{
+
+This is documentation for a function in the SLiM software, and has been
+reproduced from the official manual,
+which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+
 
 This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
@@ -106,9 +160,40 @@ Other SLiMSim:
 \code{\link{treeSeqCoalesced}()},
 \code{\link{treeSeqRememberIndividuals}()},
 \code{\link{treeSeqSimplify}()}
+
+Other Species: 
+\code{\link{Sp}},
+\code{\link{addSubpopSplit}()},
+\code{\link{addSubpop}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{individualsWithPedigreeIDs}()},
+\code{\link{killIndividuals}()},
+\code{\link{mutationCounts}()},
+\code{\link{mutationFrequencies}()},
+\code{\link{mutationsOfType}()},
+\code{\link{outputFixedMutations}()},
+\code{\link{outputFull}()},
+\code{\link{outputMutations}()},
+\code{\link{readFromPopulationFile}()},
+\code{\link{recalculateFitness}()},
+\code{\link{registerFitnessEffectCallback}()},
+\code{\link{registerMateChoiceCallback}()},
+\code{\link{registerModifyChildCallback}()},
+\code{\link{registerMutationCallback}()},
+\code{\link{registerMutationEffectCallback}()},
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{registerSurvivalCallback}()},
+\code{\link{simulationFinished}()},
+\code{\link{skipTick}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqRememberIndividuals}()},
+\code{\link{treeSeqSimplify}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
 \concept{SLiMSim}
+\concept{Species}

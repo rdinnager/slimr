@@ -27,15 +27,16 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=705}{SLiM manual: page
-705}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=749}{SLiM manual: page
+749}.
 
 A convenience function that returns a float vector of length four,
 providing the frequencies of occurrences of A / C / G / T nucleotides,
-respectively, in the supplied nucleotide sequence. The parameter sequence may be
-a singleton string (e.g., "TATA"), a string vector of single characters (e.g.,
-"T", "A", "T", "A"), or an integer vector (e.g., 3, 0, 3, 0), using SLiM's
-standard code of A=0, C=1, G=2, T=3.
+respectively, in the supplied nucleotide sequence. The parameter sequence may
+be a singleton string (e.g., "TATA"), a string vector of single characters 0 α α
+α α 0 α α α α 0 α α α α 0 0 β α β β 0 β α α β 0 β β α β 0 (e.g., "T", "A", "T",
+"A"), or an integer vector (e.g., 3, 0, 3, 0), using SLiM's standard code of
+A=0, C=1, G=2, T=3.
 }
 \section{Copyright}{
 

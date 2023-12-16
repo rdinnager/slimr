@@ -27,8 +27,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=624}{SLiM manual: page
-624}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=654}{SLiM manual: page
+654}.
 
 Enable and configure sex in the simulation. The argument chromosomeType
 gives the type of chromosome to be simulated; this should be "A", "X", or "Y".

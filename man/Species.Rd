@@ -16,6 +16,7 @@ instance is defined as a global constant with the same name as the species.
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{addSubpop}}}
+\item{\code{\link{addSubpopSplit}}}
 \item{\code{\link{countOfMutationsOfType}}}
 \item{\code{\link{individualsWithPedigreeIDs}}}
 \item{\code{\link{killIndividuals}}}
@@ -33,6 +34,15 @@ This class has the following methods (functions):
 \item{\code{\link{registerMutationCallback}}}
 \item{\code{\link{registerMutationEffectCallback}}}
 \item{\code{\link{registerRecombinationCallback}}}
+\item{\code{\link{registerReproductionCallback}}}
+\item{\code{\link{registerSurvivalCallback}}}
+\item{\code{\link{simulationFinished}}}
+\item{\code{\link{skipTick}}}
+\item{\code{\link{subsetMutations}}}
+\item{\code{\link{treeSeqCoalesced}}}
+\item{\code{\link{treeSeqOutput}}}
+\item{\code{\link{treeSeqRememberIndividuals}}}
+\item{\code{\link{treeSeqSimplify}}}
 }
 This class has the following properties:
 \describe{
@@ -139,6 +149,7 @@ the simulation.}
 }
 \seealso{
 Other Species: 
+\code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{individualsWithPedigreeIDs}()},
@@ -156,6 +167,15 @@ Other Species:
 \code{\link{registerModifyChildCallback}()},
 \code{\link{registerMutationCallback}()},
 \code{\link{registerMutationEffectCallback}()},
-\code{\link{registerRecombinationCallback}()}
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{registerSurvivalCallback}()},
+\code{\link{simulationFinished}()},
+\code{\link{skipTick}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqOutput}()},
+\code{\link{treeSeqRememberIndividuals}()},
+\code{\link{treeSeqSimplify}()}
 }
 \concept{Species}

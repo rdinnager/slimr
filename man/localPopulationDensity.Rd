@@ -31,8 +31,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=661}{SLiM manual: page
-661}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=694}{SLiM manual: page
+694}.
 
 Returns a vector of the local population density present at the
 location of each individual in receivers, which does not need to be a singleton;
@@ -114,8 +114,10 @@ Other InteractionType:
 \code{\link{nearestNeighbors}()},
 \code{\link{neighborCountOfPoint}()},
 \code{\link{neighborCount}()},
+\code{\link{setConstraints}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
+\code{\link{testConstraints}()},
 \code{\link{totalOfNeighborStrengths}()},
 \code{\link{unevaluate}()}
 }

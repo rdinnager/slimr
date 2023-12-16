@@ -29,8 +29,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=648}{SLiM manual: page
-648}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=678}{SLiM manual: page
+678}.
 
 Set the mutation type fractions contributing to a genomic element type.
 The mutationTypes vector should supply the mutation types used by the genomic

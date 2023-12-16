@@ -6,15 +6,12 @@ must be within bounds or an error is raised. A periodic boundary will, correctly
 interaction function. The interaction function is also clipped to the interaction’s maximum distance;
 that distance must be less than half of the extent of the spatial bounds in each dimension (so that, for a
 given dimension, the interaction function is clipped by the spatial bounds on only one side), otherwise
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 658
-an error is raised. Note that for sex-specific interaction types, the sex of the receiver does not matter;
-an individual might not actually receive any interactions because of its sex, but it is still considered to
-have the same interaction function integral. If receivers is NULL, the maximal integral is returned, as
-would be experienced by an individual farther than the maximum distance from any edge. The
-evaluate() method must have been previously called for the receiver subpopulation, and positions
-saved at evaluation time will be used. If the InteractionType is non-spatial, this method may not be
-called.
+an error is raised. Note that receiver constraints are not applied; an individual might not actually
+receive any interactions because of those constraints, but it is still considered to have the same
+interaction function integral. If receivers is NULL, the maximal integral is returned, as would be
+experienced by an individual farther than the maximum distance from any edge. The evaluate()
+method must have been previously called for the receiver subpopulation, and positions saved at
+evaluation time will be used. If the InteractionType is non-spatial, this method may not be called.
 The computed value of the integral is not exact; it is calculated by an approximate numerical method
 designed to be fast, but the error should be fairly small (typically less than 1% from the true value). A
 large amount of computation will occur the first time this method is called (perhaps taking more than
@@ -33,6 +30,8 @@ method automatically incorporates the mechanics of clippedIntegral() into the ca
 performs; see that method’s documentation for further discussion of this concept. This approach can
 also be useful with the interactingNeighborCount() method, provided that the interaction
 function is of type "f" (since the neighbor count does not depend upon interaction strength).
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 691
 – (float)distance(object<Individual>$ receiver, [No<Individual> exerters = NULL])
 Returns a vector containing distances between receiver and the individuals in exerters. If
 exerters is NULL (the default), then a vector of the distances from receiver to all individuals in its
@@ -46,8 +45,9 @@ Importantly, distances are calculated according to the spatiality of the Interac
 in initializeInteractionType()), not the dimensionality of the model as a whole (as declared in
 initializeSLiMOptions()). The distances returned are therefore the distances that would be used
 to calculate interaction strengths. However, distance() will return finite distances for all pairs of
-individuals, even if the individuals are non-interacting; the distance() between an individual and
-itself will thus be 0. See interactionDistance() for an alternative distance definition.
+individuals, even if the individuals are non-interacting due to the maximum interaction distance or the
+interaction constraints; the distance() between an individual and itself will thus be 0. See
+interactionDistance() for an alternative distance definition.
 – (float)distanceFromPoint(float point, object<Individual> exerters)
 Returns a vector containing distances between the point given by the spatial coordinates in point,
 which may be thought of as the “receiver”, and individuals in exerters. The point vector is
@@ -59,8 +59,6 @@ the interaction matches the dimensionality of the simulation). A coordinate for 
 dimension must be within the spatial bounds for that dimension, since coordinates outside of periodic
 bounds are meaningless (pointPeriodic() may be used to ensure this); coordinates for non-periodic
 spatial dimensions are not restricted. All individuals in exerters must belong to a single
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 659
 subpopulation; the evaluate() method must have been previously called for that subpopulation, and
 positions saved at evaluation time will be used. If the InteractionType is non-spatial, this method
 may not be called. The vector point must be exactly as long as the spatiality of the
@@ -68,51 +66,68 @@ InteractionType.
 Importantly, distances are calculated according to the spatiality of the InteractionType (as declared
 in initializeInteractionType()) not the dimensionality of the model as a whole (as declared in
 initializeSLiMOptions()). The distances are therefore interaction distances: the distances that are
-used to calculate interaction strengths.
+used to calculate interaction strengths. However, the maximum interaction distance and interaction
+constraints are not used.
 This method replaces the distanceToPoint() method that existed prior to SLiM 4.
-– (object<Individual>)drawByStrength(object<Individual>$ receiver,
-[integer$ count = 1], [No<Subpopulation>$ exerterSubpop = NULL])
-Returns up to count individuals drawn from exerterSubpop, or if that is NULL (the default), then from
-the subpopulation of receiver. The probability of drawing particular individuals is proportional to
-the strength of interaction they exert upon receiver. All exerters must belong to a single
-subpopulation (but not necessarily the same subpopulation as receiver). The evaluate() method
-must have been previously called for the receiver and exerter subpopulations, and positions saved at
-evaluation time will be used.
+– (object)drawByStrength(object<Individual> receiver, [integer$ count = 1],
+[No<Subpopulation>$ exerterSubpop = NULL], [logical$ returnDict = F])
+Returns an object<Individual> vector containing up to count individuals drawn from
+exerterSubpop, or if that is NULL (the default), then from the subpopulation of receiver, which must
+be singleton in the default mode of operation (but see below). The probability of drawing particular
+individuals is proportional to the strength of interaction they exert upon receiver (which is zero for
+receiver itself). All exerters must belong to a single subpopulation (but not necessarily the same
+subpopulation as receiver). The evaluate() method must have been previously called for the
+receiver and exerter subpopulations, and positions saved at evaluation time will be used.
 This method may be used with either spatial or non-spatial interactions, but will be more efficient with
 spatial interactions that set a short maximum interaction distance. Draws are done with replacement,
 so the same individual may be drawn more than once; sometimes using unique() on the result of this
 call is therefore desirable. If more than one draw will be needed, it is much more efficient to use a
 single call to drawByStrength(), rather than drawing individuals one at a time. Note that if no
-individuals exert a non-zero interaction strength upon receiver, the vector returned will be zero-
-length; it is important to consider this possibility.
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 692
+individuals exert a non-zero interaction strength upon receiver, the vector returned will be zerolength;
+it is important to consider this possibility.
+Beginning in SLiM 4.1, this method has a vectorized mode of operation in which the receiver
+parameter may be non-singleton. To switch the method to this mode, pass T for returnDict, rather
+than the default of F (the operation of which is described above). In this mode, the return value is a
+Dictionary object instead of a vector of Individual objects. This dictionary uses integer keys that
+range from 0 to N-1, where N is the number of individuals passed in receiver; these keys thus
+correspond directly to the indices of the individuals in receiver, and there is one entry in the
+dictionary for each receiver. The value in the dictionary, for a given integer key, is an
+object<Individual> vector with the individuals drawn for the corresponding receiver, exactly as
+described above for the non-vectorized case. The results for each receiver can therefore be obtained
+from the returned dictionary with getValue(), passing the index of the receiver. The speed of this
+mode of operation will probably be similar to the speed of making N separate non-vectorized calls to
+drawByStrength(), but may have other advantages. In this mode of operation, all receivers must
+belong to the same subpopulation.
 – (void)evaluate(io<Subpopulation> subpops)
 Snapshots model state in preparation for the use of the interaction, for the receiver and exerter
 subpopulations specified by subpops. The subpopulations may be supplied either as integer IDs, or
 as Subpopulation objects. This method will discard all previously cached data for the
 subpopulation(s), and will cache the current spatial positions of all individuals they contain (so that
 the spatial positions of those individuals may then change without disturbing the state of the
-interaction at the moment of evaluation). Particular interaction distances and strengths are not
-computed by evaluate(), and interaction() callbacks will not be called in response to this
-method; that work is deferred until required to satisfy a query (at which point the tick and cycle
-counters may have advanced, so be careful with the tick ranges used in defining interaction()
-callbacks).
+interaction at the moment of evaluation). It will also cache which individuals in the subpopulation are
+eligible to act as exerters, according to the configured exerter constraints, but it will not cache such
+eligibility information for receiver constraints (which are applied at the time a spatial query is made).
+Particular interaction distances and strengths are not computed by evaluate(), and interaction()
+callbacks will not be called in response to this method; that work is deferred until required to satisfy a
+query (at which point the tick and cycle counters may have advanced, so be careful with the tick
+ranges used in defining interaction() callbacks).
 You must explicitly call evaluate() at an appropriate time in the tick cycle before the interaction is
 used, but after any relevant changes have been made to the population. SLiM will invalidate any
 existing interactions after any portion of the tick cycle in which new individuals have been born or
 existing individuals have died. In a WF model, this occurs just before late() events execute (see the
-WF tick cycle diagram in chapter 22), so late() events are often the appropriate place to put
+WF tick cycle diagram in chapter 23), so late() events are often the appropriate place to put
 evaluate() calls, but first() or early() events can work too if the interaction is not needed until
 that point in the tick cycle anyway. In nonWF models, on the other hand, new offspring are produced
 just before early() events and then individuals die just before late() events (see the nonWF tick
-cycle diagram in chapter 23), so interactions will be invalidated twice during each tick cycle. This
+cycle diagram in chapter 24), so interactions will be invalidated twice during each tick cycle. This
 means that in a nonWF model, an interaction that influences reproduction should usually be
 evaluated in a first() event, while an interaction that influences fitness or mortality should usually
 be evaluated in an early() event (and an interaction that affects both may need to be evaluated at
 both times).
 If an interaction is never evaluated for a given subpopulation, it is guaranteed that there will be
 essentially no memory or computational overhead associated with the interaction for that
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 660
 subpopulation. Furthermore, attempting to query an interaction for a receiver or exerter in a
 subpopulation that has not been evaluated is guaranteed to raise an error.
 – (integer)interactingNeighborCount(object<Individual> receivers,
@@ -121,38 +136,39 @@ Returns the number of interacting individuals for each individual in receivers, 
 interaction distance according to the distance metric of the InteractionType, from among the
 exerters in exerterSubpop (or, if that is NULL, then from among all individuals in the receiver’s
 subpopulation). More specifically, this method counts the number of individuals which can exert an
-interaction upon each receiver. All of the receivers must belong to a single subpopulation, and all of
-the exerters must belong to a single subpopulation, but those two subpopulations do not need to be
-the same. The evaluate() method must have been previously called for the receiver and exerter
-subpopulations, and positions saved at evaluation time will be used.
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 693
+interaction upon each receiver (which does not include the receiver itself). All of the receivers must
+belong to a single subpopulation, and all of the exerters must belong to a single subpopulation, but
+those two subpopulations do not need to be the same. The evaluate() method must have been
+previously called for the receiver and exerter subpopulations, and positions saved at evaluation time
+will be used.
 This method is similar to nearestInteractingNeighbors() (when passed a large count so as to
 guarantee that all interacting individuals are returned), but this method returns only a count of the
-interacting individuals, not a vector containing the individuals. This method may also be called in a
-vectorized fashion, with a non-singleton vector of individuals, unlike
-nearestInteractingNeighbors().
-Note that this method uses interaction eligibility as a criterion; it will not count neighbors that cannot
-exert an interaction upon a receiver (due to sex-segregation, e.g.). (It also does not count a receiver as
-a neighbor of itself.) If a count of all neighbors is desired, rather than just interacting neighbors, use
-neighborCount(). If the InteractionType is non-spatial, this method may not be called.
+interacting individuals, not a vector containing the individuals.
+Note that this method uses interaction eligibility as a criterion; it will not count neighbors that do not
+exert an interaction upon a given receiver (due to the configured receiver or exerter constraints). (It
+also does not count a receiver as a neighbor of itself.) If a count of all neighbors is desired, rather than
+just interacting neighbors, use neighborCount(). If the InteractionType is non-spatial, this
+method may not be called.
 – (float)interactionDistance(object<Individual>$ receiver,
 [No<Individual> exerters = NULL])
 Returns a vector containing interaction-dependent distances between receiver and individuals in
-exerters that exert an interaction strength upon receiver. If exerters is NULL (the default), then a
-vector of the interaction-dependent distances from receiver to all individuals in its subpopulation
-(including receiver itself) is returned; this case may be handled much more efficiently than if a
-vector of all individuals in the subpopulation is explicitly provided. Otherwise, all individuals in
-exerters must belong to a single subpopulation (but not necessarily the same subpopulation as
-receiver). The evaluate() method must have been previously called for the receiver and exerter
-subpopulations, and positions saved at evaluation time will be used. If the InteractionType is non-
-spatial, this method may not be called.
+exerters. If exerters is NULL (the default), then a vector of the interaction-dependent distances
+from receiver to all individuals in its subpopulation (including receiver itself) is returned; this case
+may be handled much more efficiently than if a vector of all individuals in the subpopulation is
+explicitly provided. Otherwise, all individuals in exerters must belong to a single subpopulation
+(but not necessarily the same subpopulation as receiver). The evaluate() method must have been
+previously called for the receiver and exerter subpopulations, and positions saved at evaluation time
+will be used. If the InteractionType is non-spatial, this method may not be called.
 Importantly, distances are calculated according to the spatiality of the InteractionType (as declared
 in initializeInteractionType()), not the dimensionality of the model as a whole (as declared in
 initializeSLiMOptions()). The distances returned are therefore the distances that would be used
 to calculate interaction strengths. In addition, interactionDistance() will return INF as the
 distance between receiver and any individual which does not exert an interaction upon receiver;
 the interactionDistance() between an individual and itself will thus be INF, and likewise for pairs
-excluded from interacting by the sex segregation or max distance of the interaction type. See
-distance() for an alternative distance definition.
+excluded from interacting by receiver constraints, exerter constraints, or the maximum interaction
+distance of the interaction type. See distance() for an alternative distance definition.
 – (float)localPopulationDensity(object<Individual> receivers,
 [No<Subpopulation>$ exerterSubpop = NULL])
 Returns a vector of the local population density present at the location of each individual in
@@ -164,8 +180,6 @@ receiver and exerter subpopulations, and positions saved at evaluation time will
 Population density is estimated using interaction strengths, effectively doing a kernel density estimate
 using the interaction function as the kernel. What is returned is computed as the total interaction
 strength present at a given point, divided by the integral of the interaction function around that point
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 661
 after clipping by the spatial bounds of the exerter subpopulation (what one might think of as the
 amount of “interaction field” around the point). This provides an estimate of local population density,
 in units of individuals per unit area, as a weighted average over the area covered by the interaction
@@ -175,6 +189,8 @@ per unit of interaction field in the space surrounding the point.
 To calculate the clipped integral of the interaction function, this method uses the same numerical
 estimator used by the clippedIntegral() method of InteractionType, and all of the caveats
 described for that method apply here also; notably, all individuals must be within spatial bounds, the
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 694
 maximum interaction distance must be less than half the spatial extent of the subpopulation, and
 interaction() callbacks are not used (and so, for this method, are not allowed to be active). See the
 documentation for clippedIntegral() for further discussion of the details of these calculations.
@@ -198,42 +214,71 @@ strength passed to setInteractionFunction() no longer matters; it cancels out wh
 interaction strength is divided by the receiver’s clipped integral. However, the shape of the interaction
 function does still matter; it determines the relative weights used for exerters at different distances from
 the position of the receiver.
-– (object<Individual>)nearestInteractingNeighbors(object<Individual>$ receiver,
-[integer$ count = 1], [No<Subpopulation>$ exerterSubpop = NULL])
-Returns up to count interacting individuals that are spatially closest to receiver, according to the
-distance metric of the InteractionType, from among the exerters in exerterSubpop (or, if that is
-NULL, then from among all individuals in the receiver’s subpopulation). More specifically, this method
-returns only individuals which can exert an interaction upon the receiver. To obtain all of the
-interacting individuals within the maximum interaction distance of individual, simply pass a value
-for count that is greater than or equal to the size of the exerter subpopulation. Note that if fewer than
-count interacting individuals are within the maximum interaction distance, the vector returned may
-be shorter than count, or even zero-length; it is important to check for this possibility even when
-requesting a single neighbor. If only the number of interacting individuals is needed, use
+– (object)nearestInteractingNeighbors(object<Individual> receiver,
+[integer$ count = 1], [No<Subpopulation>$ exerterSubpop = NULL],
+[logical$ returnDict = F])
+Returns an object<Individual> vector containing up to count interacting individuals that are
+spatially closest to receiver, according to the distance metric of the InteractionType, from among
+the exerters in exerterSubpop (or, if that is NULL, then from among all individuals in the receiver’s
+subpopulation). More specifically, this method returns only individuals which can exert an interaction
+upon receiver, which must be singleton in the default mode of operation (but see below). To obtain
+all of the interacting individuals within the maximum interaction distance of receiver, simply pass a
+value for count that is greater than or equal to the size of the exerter subpopulation. Note that if
+fewer than count interacting individuals are within the maximum interaction distance, the vector
+returned may be shorter than count, or even zero-length; it is important to check for this possibility
+even when requesting a single neighbor. If only the number of interacting individuals is needed, use
 interactingNeighborCount() instead. The evaluate() method must have been previously called
 for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. If the
 InteractionType is non-spatial, this method may not be called.
 Note that this method uses interaction eligibility as a criterion; it will not return neighbors that cannot
-exert an interaction upon the receiver (due to sex-segregation, e.g.). (It will also never return the
-receiver as a neighbor of itself.) To find all neighbors of the receiver, whether they can interact with it
-or not, use nearestNeighbors().
+exert an interaction upon the receiver (due to the configured receiver or exerter constraints). (It will
+also never return the receiver as a neighbor of itself.) To find all neighbors of a receiver, whether they
+can interact with it or not, use nearestNeighbors().
+Beginning in SLiM 4.1, this method has a vectorized mode of operation in which the receiver
+parameter may be non-singleton. To switch the method to this mode, pass T for returnDict, rather
+than the default of F (the operation of which is described above). In this mode, the return value is a
+Dictionary object instead of a vector of Individual objects. This dictionary uses integer keys that
+range from 0 to N-1, where N is the number of individuals passed in receiver; these keys thus
+correspond directly to the indices of the individuals in receiver, and there is one entry in the
+dictionary for each receiver. The value in the dictionary, for a given integer key, is an
+object<Individual> vector with the interacting neighbors found for the corresponding receiver,
+exactly as described above for the non-vectorized case. The results for each receiver can therefore be
 TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 662
-– (object<Individual>)nearestNeighbors(object<Individual>$ receiver,
-[integer$ count = 1], [No<Subpopulation>$ exerterSubpop = NULL])
-Returns up to count individuals that are spatially closest to individual, according to the distance
-metric of the InteractionType, from among the exerters in exerterSubpop (or, if that is NULL, then
-from among all individuals in the receiver’s subpopulation). To obtain all of the individuals within the
-maximum interaction distance of individual, simply pass a value for count that is greater than or
-equal to the size of individual’s subpopulation. Note that if fewer than count individuals are within
-the maximum interaction distance, the vector returned may be shorter than count, or even zero-
-length; it is important to check for this possibility even when requesting a single neighbor. The
-evaluate() method must have been previously called for the receiver and exerter subpopulations,
-and positions saved at evaluation time will be used. If the InteractionType is non-spatial, this
-method may not be called.
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 695
+obtained from the returned dictionary with getValue(), passing the index of the receiver. The speed
+of this mode of operation will probably be similar to the speed of making N separate non-vectorized
+calls to nearestInteractingNeighbors(), but may have other advantages. In this mode of
+operation, all receivers must belong to the same subpopulation.
+– (object)nearestNeighbors(object<Individual> receiver, [integer$ count = 1],
+[No<Subpopulation>$ exerterSubpop = NULL], [logical$ returnDict = F])
+Returns an object<Individual> vector containing up to count individuals that are spatially closest
+to receiver, according to the distance metric of the InteractionType, from among the exerters in
+exerterSubpop (or, if that is NULL, then from among all individuals in the receiver’s subpopulation).
+In the default mode of operation, receiver must be singleton (but see below). To obtain all of the
+individuals within the maximum interaction distance of receiver, simply pass a value for count that
+is greater than or equal to the size of individual’s subpopulation. Note that if fewer than count
+individuals are within the maximum interaction distance, the vector returned may be shorter than
+count, or even zero-length; it is important to check for this possibility even when requesting a single
+neighbor. The evaluate() method must have been previously called for the receiver and exerter
+subpopulations, and positions saved at evaluation time will be used. If the InteractionType is nonspatial,
+this method may not be called.
 Note that this method does not use interaction eligibility as a criterion; it will return neighbors that
-could not interact with the receiver due to sex-segregation. (It will never return the receiver as a
-neighbor of itself, however.) To find only neighbors that are eligible to exert an interaction upon the
-receiver, use nearestInteractingNeighbors().
+could not interact with the receiver due to the configured receiver or exerter constraints. (It will never
+return the receiver as a neighbor of itself, however.) To find only neighbors that are eligible to exert an
+interaction upon the receiver, use nearestInteractingNeighbors().
+Beginning in SLiM 4.1, this method has a vectorized mode of operation in which the receiver
+parameter may be non-singleton. To switch the method to this mode, pass T for returnDict, rather
+than the default of F (the operation of which is described above). In this mode, the return value is a
+Dictionary object instead of a vector of Individual objects. This dictionary uses integer keys that
+range from 0 to N-1, where N is the number of individuals passed in receiver; these keys thus
+correspond directly to the indices of the individuals in receiver, and there is one entry in the
+dictionary for each receiver. The value in the dictionary, for a given integer key, is an
+object<Individual> vector with the neighbors found for the corresponding receiver, exactly as
+described above for the non-vectorized case. The results for each receiver can therefore be obtained
+from the returned dictionary with getValue(), passing the index of the receiver. The speed of this
+mode of operation will probably be similar to the speed of making N separate non-vectorized calls to
+nearestNeighbors(), but may have other advantages. In this mode of operation, all receivers must
+belong to the same subpopulation.
 – (object<Individual>)nearestNeighborsOfPoint(float point,
 io<Subpopulation>$ exerterSubpop, [integer$ count = 1])
 Returns up to count individuals in exerterSubpop that are spatially closest to point, according to
@@ -251,59 +296,128 @@ Returns the number of neighbors for each individual in receivers, within the max
 distance according to the distance metric of the InteractionType, from among the individuals in
 exerterSubpop (or, if that is NULL, then from among all individuals in the receiver’s subpopulation).
 All of the receivers must belong to a single subpopulation, and all of the exerters must belong to a
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 696
 single subpopulation, but those two subpopulations do not need to be the same. The evaluate()
 method must have been previously called for the receiver and exerter subpopulations, and positions
 saved at evaluation time will be used.
 This method is similar to nearestNeighbors() (when passed a large count so as to guarantee that all
 neighbors are returned), but this method returns only a count of the individuals, not a vector
-containing the individuals. This method may also be called in a vectorized fashion, with a non-
-singleton vector of individuals, unlike nearestNeighbors().
+containing the individuals.
 Note that this method does not use interaction eligibility as a criterion; it will count neighbors that
-cannot exert an interaction upon a receiver (due to sex-segregation, e.g.). (It still does not count a
-receiver as a neighbor of itself, however.) If a count of only interacting neighbors is desired, use
-interactingNeighborCount(). If the InteractionType is non-spatial, this method may not be
-called.
+cannot exert an interaction upon a receiver (due to the configured receiver or exerter constraints). (It
+still does not count a receiver as a neighbor of itself, however.) If a count of only interacting neighbors
+is desired, use interactingNeighborCount(). If the InteractionType is non-spatial, this method
+may not be called.
 – (integer$)neighborCountOfPoint(float point, io<Subpopulation>$ exerterSubpop)
 Returns the number of individuals in exerterSubpop that are within the maximum interaction
 distance according to the distance metric of the InteractionType. The subpopulation may be
 supplied either as an integer ID, or as a Subpopulation object. The evaluate() method must
 have been previously called for exerterSubpop, and positions saved at evaluation time will be used.
 If the InteractionType is non-spatial, this method may not be called.
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 663
 This method is similar to nearestNeighborsOfPoint() (when passed a large count so as to
 guarantee that all neighbors are returned), but this method returns only a count of the individuals, not
 a vector containing the individuals.
+– (void)setConstraints(string$ who, [Ns$ sex = NULL], [Ni$ tag = NULL],
+[Ni$ minAge = NULL], [Ni$ maxAge = NULL], [Nl$ migrant = NULL],
+[Nl$ tagL0 = NULL], [Nl$ tagL1 = NULL], [Nl$ tagL2 = NULL], [Nl$ tagL3 = NULL],
+[Nl$ tagL4 = NULL])
+Sets constraints upon which individuals can be receivers and/or exerters, making the target
+InteractionType measure interactions between only subsets of the population. The parameter who
+specifies upon whom the specified constraints apply; it may be "exerters" to set constraints upon
+exerters, "receivers" to set constraints upon receivers, or "both" to set constraints upon both. If
+"both" is used, the same constraints are set for both exerters and receivers; different constraints can
+be set for exerters versus receivers by making a separate call to setConstraints() for each.
+Constraints only affect queries that involve the concept of interaction; for example, they will affect the
+result of nearestInteractingNeighbors(), but not the result of nearestNeighbors(). The
+constraints specified by a given call to setConstraints() override all previously set constraints for
+the category specified (receivers, exerter, or both).
+There is a general policy for the remaining arguments: they are NULL by default, and if NULL is used, it
+specifies “no constraint” for that property (removing any currently existing constraint for that property).
+The sex parameter constrains the sex of individuals; it may be "M" or “F" (or "*" as another way of
+specifying no constraint, for historical reasons). If sex is "M" or "F", the individuals to which the
+constraint is applied (potential receivers/exerters) must belong to a sexual species. The tag parameter
+constrains the tag property of individuals; if this set, the individuals to which the constraint is applied
+must have defined tag values. The minAge and maxAge properties constrain the age property of
+individuals to the given minimum and/or maximum values; these constraints can only be used in
+nonWF models. The migrant property constraints the migrant property of individuals (T constrains
+to only migrants, F to only non-migrants). Finally, the tagL0, tagL1, tagL2, tagL3, and tagL4
+properties constrain the corresponding logical properties of individuals, requiring them to be either
+T or F as specified; the individuals to which these constraints are applied must have defined values for
+the constrained property or properties. Again, NULL should be supplied (as it is by default) for any
+property which you do not wish to constrain.
+These constraints may be used in any combination, as desired. For example, calling
+setConstraints("receivers", sex="M", minAge=5, tagL0=T) constrains the interaction type’s
+operation so that receivers must be males, with an age of at least 5, with a tagL0 property value of T.
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 697
+For that configuration the potential receivers used with the interaction type must be sexual (since sex
+is specified), must be in a nonWF model (since minAge is specified), and must have a defined value
+for their tagL0 property (since that property is constrained). Note that the sexSegregation
+parameter to initializeInteractionType() is a shortcut which does the same thing as the
+corresponding calls to setConstraints().
+Exerter constraints are applied at evaluate() time, whereas receiver constraints are applied at query
+time; see the InteractionType class documentation (section 25.8) for further discussion. The
+interaction constraints for an interaction type are normally a constant in simulations; in any case, they
+cannot be changed when an interaction has already been evaluated, so either they should be set prior
+to evaluation, or unevaluate() should be called first.
 – (void)setInteractionFunction(string$ functionType, ...)
 Set the function used to translate spatial distances into interaction strengths for an interaction type.
 The functionType may be "f", in which case the ellipsis ... should supply a numeric$ fixed
 interaction strength; "l", in which case the ellipsis should supply a numeric$ maximum strength for a
 linear function; "e", in which case the ellipsis should supply a numeric$ maximum strength and a
-numeric$ lambda (shape) parameter for a negative exponential function; "n", in which case the
-ellipsis should supply a numeric$ maximum strength and a numeric$ sigma (standard deviation)
-parameter for a Gaussian function; or "c", in which case the ellipsis should supply a numeric$
-maximum strength and a numeric$ scale parameter for a Cauchy distribution function. See section
-24.8 above for discussions of these interaction functions. Non-spatial interactions must use function
-type "f", since no distance values are available in that case.
+numeric$ lambda (rate) parameter for a negative exponential function; "n", in which case the ellipsis
+should supply a numeric$ maximum strength and a numeric$ sigma (standard deviation) parameter
+for a Gaussian function; "c", in which case the ellipsis should supply a numeric$ maximum strength
+and a numeric$ scale parameter for a Cauchy distribution function; or "t", in which case the ellipsis
+should supply a numeric$ maximum strength, a numeric$ degrees of freedom, and a numeric$ scale
+parameter for a t-distribution function. See section 25.8 above for discussions of these interaction
+functions. Non-spatial interactions must use function type "f", since no distance values are available
+in that case.
 The interaction function for an interaction type is normally a constant in simulations; in any case, it
 cannot be changed when an interaction has already been evaluated, so either it should be set prior to
 evaluation, or unevaluate() should be called first.
 – (float)strength(object<Individual>$ receiver, [No<Individual> exerters = NULL])
 Returns a vector containing the interaction strengths exerted upon receiver by the individuals in
 exerters. If exerters is NULL (the default), then a vector of the interaction strengths exerted by all
-individuals in the subpopulation of receiver (including receiver itself) is returned; this case may be
-handled much more efficiently than if a vector of all individuals in the subpopulation is explicitly
-provided. Otherwise, all individuals in exerters must belong to a single subpopulation (but not
-necessarily the same subpopulation as receiver). The evaluate() method must have been
-previously called for the receiver and exerter subpopulations, and positions saved at evaluation time
-will be used.
+individuals in the subpopulation of receiver (including receiver itself, with a strength of 0.0) is
+returned; this case may be handled much more efficiently than if a vector of all individuals in the
+subpopulation is explicitly provided. Otherwise, all individuals in exerters must belong to a single
+subpopulation (but not necessarily the same subpopulation as receiver). The evaluate() method
+must have been previously called for the receiver and exerter subpopulations, and positions saved at
+evaluation time will be used.
 If the strengths of interactions exerted by a single individual upon multiple individuals are needed
 instead (the inverse of what this method provides), multiple calls to this method will be necessary, one
 per pairwise interaction queried; the interaction engine is not optimized for the inverse case, and so it
-will likely be quite slow to compute. If the interaction is reciprocal and sex-symmetric, the opposite
-query should provide identical results in a single efficient call (because then the interactions exerted
-are equal to the interactions received); otherwise, the best approach might be to define a second
-interaction type representing the inverse interaction that you wish to be able to query efficiently.
+will likely be quite slow to compute. If the interaction is reciprocal and has the same receiver and
+exerter constraints, the opposite query should provide identical results in a single efficient call
+(because then the interactions exerted are equal to the interactions received); otherwise, the best
+approach might be to define a second interaction type representing the inverse interaction that you
+wish to be able to query efficiently.
+– (lo<Individual>)testConstraints(object<Individual> individuals,
+string$ constraints, [logical$ returnIndividuals = F])
+Tests the individuals in the parameter individuals against the interaction constraints specified by
+constraints. The value of constraints may be "receiver" to use the receiver constraints, or
+"exerter" to use the exerter constraints. If returnIndividuals is F (the default), a logical vector
+will be returned, with T values indicating that the corresponding individual satisfied the constraints, F
+values indicating that it did not. If returnIndividuals is T, an object vector of class Individual
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 698
+will be returned containing only those elements of individuals that satisfied the constraints (in the
+same order as individuals). Note that unlike most queries, the InteractionType does not need to
+have been evaluated before calling this method, and the individuals passed in need not belong to a
+single population or even a single species.
+This method can be useful for narrowing a vector of individuals down to just those that satisfy
+constraints. Outside the context of InteractionType, similar functionality is provided by the
+Subpopulation method subsetIndividuals(). Note that the use of testConstraints() is
+somewhat rare; usually, queries are evaluated across a vector of individuals, each of which might or
+might not satisfy the defined constraints. Individuals that do not satisfy constraints do not participate
+in interactions, so their interaction strength with other individuals will simply be zero.
+See the setConstraints() method to set up constraints, as well as the sexSegregation parameter
+to initializeInteractionType(). Note that if the constraints tested involve tag values (including
+tagL0 / tagL1 / tagL2 / tagL3 / tagL4), the corresponding property or properties of the tested
+individuals must be defined (i.e., must have been set to a value), or an error will result because the
+constraints cannot be applied.
 – (float)totalOfNeighborStrengths(object<Individual> receivers,
 [No<Subpopulation>$ exerterSubpop = NULL])
 Returns a vector of the total interaction strength felt by each individual in receivers by the exerters
@@ -312,16 +426,14 @@ receivers parameter does not need to be a singleton; indeed, it can be a vector 
 individuals in a given subpopulation. All of the receivers must belong to a single subpopulation, and
 all of the exerters must belong to a single subpopulation, but those two subpopulations do not need to
 be the same. The evaluate() method must have been previously called for the receiver and exerter
-subpopulations, and positions saved at evaluation time will be used. If the InteractionType is non-
-spatial, this method may not be called.
+subpopulations, and positions saved at evaluation time will be used. If the InteractionType is nonspatial,
+this method may not be called.
 For one individual, this is essentially the same as calling nearestInteractingNeighbors() with a
 large count so as to obtain the complete vector of all interacting neighbors, calling strength() for
 each of those interactions to get each interaction strength, and adding those interaction strengths
 together with sum(). This method is much faster than that implementation, however, since all of that
 work is done as a single operation. Also, totalOfNeighborStrengths() can total up interactions
-for more than one receiver in a single call.
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 664
+for more than one receiver in a single vectorized call.
 Similarly, for one individual this is essentially the same as calling strength() to get the interaction
 strengths between a receiver and all individuals in the exerter subpopulation, and then calling sum().
 Again, this method should be much faster, since this algorithm looks only at neighbors, whereas
@@ -335,15 +447,18 @@ interaction function clipped to the spatial bounds of the subpopulation) to prov
 – (void)unevaluate(void)
 Discards all evaluation of this interaction, for all subpopulations. The state of the InteractionType
 is reset to a state prior to evaluation. This can be useful if the model state has changed in such a way
-that the evaluation already conducted is no longer valid. For example, if the maximum distance or the
-interaction function of the InteractionType need to be changed with immediate effect, or if the data
-used by an interaction() callback has changed in such a way that previously calculated interaction
-strengths are no longer correct, unevaluate() allows the interaction to begin again from scratch.
+that the evaluation already conducted is no longer valid. For example, if the maximum distance, the
+interaction function, or the receiver or exerter constraints of the InteractionType need to be
+changed with immediate effect, or if the data used by an interaction() callback has changed in
+such a way that previously calculated interaction strengths are no longer correct, unevaluate()
+allows the interaction to begin again from scratch.
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 699
 In WF models, all interactions are automatically reset to an unevaluated state at the moment when the
 new offspring generation becomes the parental generation (at step 4 in the tick cycle; see section
-22.4).
+23.4).
 In nonWF models, all interactions are automatically reset to an unevaluated state twice per tick:
 immediately after reproduction() callbacks have completed (after step 1 in the tick cycle; see
-section 23.1), and immediately before viability/survival selection (before step 4 in the tick cycle; see
-section 23.4).
+section 24.1), and immediately before viability/survival selection (before step 4 in the tick cycle; see
+section 24.4).
 Given this automatic invalidation, most simulations have no reason to call unevaluate().

@@ -1,7 +1,7 @@
 ## code to prepare `DATASET` dataset goes here
 library(dplyr)
 
-download.file("https://github.com/MesserLab/SLiM/releases/download/v4.0.1/SLiM_Recipes.zip", "data-raw/recipes.zip")
+download.file("https://github.com/MesserLab/SLiM/releases/download/v4.1/SLiM_Recipes.zip", "data-raw/recipes.zip")
 zip::unzip("data-raw/recipes.zip", exdir = "data-raw") ## doesn't work, had to do it manually with winzip because of double quotes in filenames
 
 files <- list.files("data-raw/SLiM_Recipes/", full.names = TRUE)

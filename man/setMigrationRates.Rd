@@ -29,18 +29,18 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=699}{SLiM manual: page
-699}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=744}{SLiM manual: page
+744}.
 
 Set the migration rates to this subpopulation from the subpopulations
-in sourceSubpops to the corresponding rates speciﬁed in rates; in other words,
+in sourceSubpops to the corresponding rates specified in rates; in other words,
 rates gives the expected fractions of the children in this subpopulation that
 will subsequently be generated from parents in the subpopulations sourceSubpops
-(see section 22.2.1). This method will only set the migration fractions from
+(see section 23.2.1). This method will only set the migration fractions from
 the subpopulations given; migration rates from other subpopulations will be
 left unchanged (explicitly set a zero rate to turn off migration from a given
 subpopulation). The type of sourceSubpops may be either integer, specifying
-subpopulations by identiﬁer, or object, specifying subpopulations directly.
+subpopulations by identifier, or object, specifying subpopulations directly.
 }
 \section{Copyright}{
 
@@ -61,17 +61,20 @@ Other Subpopulation:
 \code{\link{addEmpty}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
+\code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
+\code{\link{pointDeviated}()},
 \code{\link{pointInBounds}()},
 \code{\link{pointPeriodic}()},
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
 \code{\link{setCloningRate}()},

@@ -29,8 +29,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=659}{SLiM manual: page
-659}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=692}{SLiM manual: page
+692}.
 
 Returns a vector containing distances between the point given by
 the spatial coordinates in point, which may be thought of as the "receiver",
@@ -53,8 +53,9 @@ distances are calculated according to the spatiality of the InteractionType (as
 declared in initializeInteractionType()) not the dimensionality of the model as
 a whole (as declared in initializeSLiMOptions()). The distances are therefore
 interaction distances: the distances that are used to calculate interaction
-strengths. This method replaces the distanceToPoint() method that existed prior
-to SLiM 4.
+strengths. However, the maximum interaction distance and interaction constraints
+are not used. This method replaces the distanceToPoint() method that existed
+prior to SLiM 4.
 }
 \section{Copyright}{
 
@@ -82,8 +83,10 @@ Other InteractionType:
 \code{\link{nearestNeighbors}()},
 \code{\link{neighborCountOfPoint}()},
 \code{\link{neighborCount}()},
+\code{\link{setConstraints}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
+\code{\link{testConstraints}()},
 \code{\link{totalOfNeighborStrengths}()},
 \code{\link{unevaluate}()}
 }

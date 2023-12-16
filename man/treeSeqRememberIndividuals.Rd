@@ -4,8 +4,12 @@
 \alias{treeSeqRememberIndividuals}
 \alias{SLiMSim$treeSeqRememberIndividuals}
 \alias{.SS$treeSeqRememberIndividuals}
+\alias{Species$treeSeqRememberIndividuals}
+\alias{.Sp$treeSeqRememberIndividuals}
 \title{SLiM method treeSeqRememberIndividuals}
 \usage{
+treeSeqRememberIndividuals(individuals, permanent)
+
 treeSeqRememberIndividuals(individuals, permanent)
 }
 \arguments{
@@ -17,10 +21,21 @@ The default value is \code{T}. See details for description.}
 }
 \value{
 An object of type void.
+
+An object of type void.
 }
 \description{
 Documentation for SLiM function \code{treeSeqRememberIndividuals}, which is a
 method of the SLiM class \code{\link{SLiMSim}}.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further
+nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.
+
+Documentation for SLiM function \code{treeSeqRememberIndividuals}, which is a
+method of the SLiM class \code{\link{Species}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -93,8 +108,83 @@ addSubpop() that are inherited by extant individuals, for easy recapitation and
 other analysis (see sections 17.2 and 17.10). However, the individuals of the
 first generation are not remembered automatically, only their needed genomic
 information.
+
+Documentation for this function can be found in the official
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=729}{SLiM manual: page
+729}.
+
+Mark the individuals specified by individuals to be kept across
+tree sequence table simplification. This method may only be called if tree
+sequence recording has been turned on with initializeTreeSeq(). All currently
+living individuals are always kept across simplification; this method does
+not need to be called, and indeed should not be called, for that purpose.
+Instead, treeSeqRememberIndividuals() allows any individual, including dead
+individuals, to be kept in the final tree sequence. Typically this would be
+used, for example, to keep particular individuals that you wanted to be able
+to trace ancestry back to in later analysis. However, this is not the typical
+usage pattern for tree sequence recording; most models will not need to call
+this method. There are two ways to keep individuals across simplification.
+If permanent is T (the default), then the specified individuals will be
+permanently remembered: their genomes will be added to the current sample,
+and they will always be present in the tree sequence. Permanently remembering
+a large number of individuals will, of course, markedly increase memory usage
+and runtime. Supplying F for permanent will instead mark the individuals only
+for (temporary) retention: their genomes will not be added to the sample, and
+they will appear in the final tree sequence only if one of their genomes is
+retained across simplification. In other words, the rule of thumb for retained
+individuals is simple: if a genome is kept by simplification, the genome's
+corresponding individual is kept also, if it is retained. Note that permanent
+remembering takes priority; calling this function with permanent=F on an
+individual that has previously been permanently remembered will not remove
+it from the sample. The behavior of simplification for individuals retained
+with permanent=F depends upon the value of the retainCoalescentOnly flag
+passed to initializeTreeSeq(); here we will discuss the behavior of that flag
+in detail. First of all, genomes are always removed by simplification unless
+they are (a) part of the final generation (i.e., in a living individual when
+simplification occurs), (b) ancestral to the final generation, (c) a genome
+of a permanently remembered individual, or (d) ancestral to a permanently
+remembered individual. If retainCoalescentOnly is T (the default), they are
+also always removed if they are not a branch point (i.e., a coalescent node
+or most recent common ancestor) in the tree sequence. In some cases it may
+be useful to retain a genome and its associated individual when it is simply
+an intermediate node in the ancestry (i.e., in the middle of a branch).
+This can be enabled by setting retainCoalescentOnly to F in your call to
+initializeTreeSeq(). In this case, ancestral genomes that are intermediate
+("unary nodes", in tskit parlance) and are within an individual that has been
+retained using the permanent=F flag here are kept, along with the retained
+individual itself. Since setting retainCoalescentOnly to F will prevent the
+unary nodes for retained individuals from being pruned, simplification may
+often be unable to prune very much at all from the tree sequence, and memory
+usage and runtime may increase rapidly. If you are retaining many individuals,
+this setting should therefore be used only with caution; it is not necessary if
+you are purely interested in the most recent common ancestors. See the pyslim
+documentation for further discussion of retaining and remembering individuals
+and the effects of the retainCoalescentOnly flag. The metadata (age, location,
+etc) that are stored in the resulting tree sequence are those values present
+at either (a) the final generation, if the individual is alive when the tree
+sequence is output, or (b) the last time that the individual was remembered,
+if not. Calling treeSeqRememberIndividuals() on an individual that is already
+remembered will cause the archived information about the remembered individual
+to be updated to reflect the individual's current state; care should be taken
+to remember individuals at a point in time when their state is valid. A case
+where this is particularly important is for the spatial location of individuals
+in continuous-space models. SLiM automatically retains the portions of the
+genomes that comprise the first generation of any new subpopulation created with
+addSubpop() that are inherited by extant individuals, for easy recapitation and
+other analysis (see sections 17.2 and 17.10). However, the individuals of the
+first generation are not remembered automatically, only their needed genomic
+information.
 }
 \section{Copyright}{
+
+This is documentation for a function in the SLiM software, and has been
+reproduced from the official manual,
+which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+
 
 This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
@@ -137,9 +227,40 @@ Other SLiMSim:
 \code{\link{treeSeqCoalesced}()},
 \code{\link{treeSeqOutput}()},
 \code{\link{treeSeqSimplify}()}
+
+Other Species: 
+\code{\link{Sp}},
+\code{\link{addSubpopSplit}()},
+\code{\link{addSubpop}()},
+\code{\link{countOfMutationsOfType}()},
+\code{\link{individualsWithPedigreeIDs}()},
+\code{\link{killIndividuals}()},
+\code{\link{mutationCounts}()},
+\code{\link{mutationFrequencies}()},
+\code{\link{mutationsOfType}()},
+\code{\link{outputFixedMutations}()},
+\code{\link{outputFull}()},
+\code{\link{outputMutations}()},
+\code{\link{readFromPopulationFile}()},
+\code{\link{recalculateFitness}()},
+\code{\link{registerFitnessEffectCallback}()},
+\code{\link{registerMateChoiceCallback}()},
+\code{\link{registerModifyChildCallback}()},
+\code{\link{registerMutationCallback}()},
+\code{\link{registerMutationEffectCallback}()},
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{registerSurvivalCallback}()},
+\code{\link{simulationFinished}()},
+\code{\link{skipTick}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqOutput}()},
+\code{\link{treeSeqSimplify}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
 \concept{SLiMSim}
+\concept{Species}

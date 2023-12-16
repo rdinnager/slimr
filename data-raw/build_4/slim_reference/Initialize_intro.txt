@@ -1,7 +1,7 @@
 Before a SLiM simulation can be run, the various classes underlying the simulation need to be
 set up with an initial configuration. Simulation configuration in SLiM is done in initialize()
 callbacks that run prior to the beginning of simulation execution. Eidos callbacks are discussed
-more broadly in chapter 25, but for our present purposes, the idea is very simple. In your input
+more broadly in chapter 26, but for our present purposes, the idea is very simple. In your input
 file, you can write something like this:
 initialize()
 {
@@ -30,7 +30,7 @@ is not yet constructed fully, and accessing partially constructed state would no
 in multispecies models, the community object and the objects representing individual species are
 not yet defined.)
 TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 617
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 646
 The above initialize() callback syntax implicitly declares a single species, with the default
 name of sim, and therefore sets up a single-species model. It is also possible to explicitly declare a
 species, which is done with this extended syntax (using a species name of fox as an example):
@@ -54,10 +54,3 @@ initializeSLiMModelType() and initializeInteractionType() may only be called fro
 specific initialize() callback, since those aspects of model configuration span the entire
 community. In single-species models, these functions may be called from an ordinary
 initialize() callback for simplicity and backward compatibility.
-Once all initialize() callbacks have executed, in the order in which they are specified in the
-SLiM input file, the simulation will begin. The tick number at which it starts is determined by the
-Eidos events you have defined (see section 25.1); the first tick in which an Eidos event is scheduled
-to execute is the tick at which the simulation starts. Similarly, the simulation will terminate after
-the last tick for which a script block (either an event or a callback) is registered to execute, unless
-the stop() function or the simulationFinished() method of Community or Species are called to
-end the simulation earlier.

@@ -29,8 +29,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
-667}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=701}{SLiM manual: page
+701}.
 
 Adds a new data column that provides the cycle counter for species
 (the same as the value of the cycle property of that species). In single-species

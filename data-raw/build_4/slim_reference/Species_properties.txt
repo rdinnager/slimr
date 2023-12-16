@@ -33,7 +33,7 @@ The MutationType objects being used in the species.
 mutations => (object<Mutation>)
 The Mutation objects that are currently active in the species.
 TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 677
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 718
 name => (string$)
 A human-readable string name for the subpopulation. This is always the declared name of the
 species, as given in the explicit species declaration in script, and cannot be changed. The name of a

@@ -30,8 +30,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=632}{SLiM manual: page
-632}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=662}{SLiM manual: page
+662}.
 
 Draw recombination breakpoints, using the chromosome's recombination
 rate map, the current gene conversion parameters, and (in some cases - see

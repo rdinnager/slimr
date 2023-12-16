@@ -42,8 +42,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=647}{SLiM manual: page
-647}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=676}{SLiM manual: page
+676}.
 
 Returns the sum of the selection coefficients of all mutations that
 are of the type specified by mutType, out of all of the mutations in the genome.
@@ -55,8 +55,8 @@ code. Note that this method also exists on Individual, for cases in which the
 sum across both genomes of an individual is desired.
 
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=653}{SLiM manual: page
-653}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=685}{SLiM manual: page
+685}.
 
 Returns the sum of the selection coefficients of all mutations that
 are of the type specified by mutType, out of all of the mutations in the
@@ -114,6 +114,7 @@ Other Individual:
 \code{\link{countOfMutationsOfType}()},
 \code{\link{relatedness}()},
 \code{\link{setSpatialPosition}()},
+\code{\link{sharedParentCount}()},
 \code{\link{uniqueMutationsOfType}()}
 }
 \author{

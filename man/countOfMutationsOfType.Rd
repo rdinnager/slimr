@@ -72,8 +72,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=643}{SLiM manual: page
-643}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=672}{SLiM manual: page
+672}.
 
 Returns the number of mutations that are of the type specified by
 mutType, out of all of the mutations in the genome. If you need a vector of the
@@ -82,8 +82,8 @@ This method is provided for speed; it is much faster than the corresponding
 Eidos code.
 
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=652}{SLiM manual: page
-652}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=683}{SLiM manual: page
+683}.
 
 Returns the number of mutations that are of the type specified by
 mutType, out of all of the mutations in the individual (in both of its genomes;
@@ -104,8 +104,8 @@ lost or fixed). This method is provided for speed; it is much faster than the
 corresponding Eidos code.
 
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=679}{SLiM manual: page
-679}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=720}{SLiM manual: page
+720}.
 
 Returns the number of mutations that are of the type specified by
 mutType, out of all of the mutations that are currently active in the species.
@@ -179,6 +179,7 @@ Other Individual:
 \code{\link{containsMutations}()},
 \code{\link{relatedness}()},
 \code{\link{setSpatialPosition}()},
+\code{\link{sharedParentCount}()},
 \code{\link{sumOfMutationsOfType}()},
 \code{\link{uniqueMutationsOfType}()}
 
@@ -216,6 +217,7 @@ Other SLiMSim:
 
 Other Species: 
 \code{\link{Sp}},
+\code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{individualsWithPedigreeIDs}()},
 \code{\link{killIndividuals}()},
@@ -232,7 +234,16 @@ Other Species:
 \code{\link{registerModifyChildCallback}()},
 \code{\link{registerMutationCallback}()},
 \code{\link{registerMutationEffectCallback}()},
-\code{\link{registerRecombinationCallback}()}
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{registerSurvivalCallback}()},
+\code{\link{simulationFinished}()},
+\code{\link{skipTick}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqOutput}()},
+\code{\link{treeSeqRememberIndividuals}()},
+\code{\link{treeSeqSimplify}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

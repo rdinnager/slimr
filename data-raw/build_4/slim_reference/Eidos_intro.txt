@@ -1,0 +1,139 @@
+1.1 Introduction
+To get the obvious question out of the way at the outset: Eidos is pronounced “A-dose”, with the
+accent on the long “a” (as in “day”). It is a Classical Greek word (εἶδος) meaning “form”,
+“essence”, “type”, or “species”; it is the word that Plato used to refer to his Forms.
+Eidos is, by design, a very simple and unoriginal language. It is intended to be easy to learn for
+anyone with any experience with programming – or indeed, even for those with none. For
+example, the traditional “hello, world” program in Eidos is about as simple as it could possibly be:
+print("hello, world!");
+This manual will set out the language in a very methodical and perhaps tedious manner; it may
+be possible – particularly for those with experience with any ALGOL-based language such as C,
+Java, or R – to learn Eidos largely from the overview given in section 1.3 and the language
+reference sheet in chapter 8. However, reading the rest of this overview is recommended, at least.
+Eidos is mostly a hybrid between the C and R languages, with a bit borrowed from Objective-C
+as well. From R it takes the fact that everything in the language is a vector, and many of the builtin
+functions are vectorized – they are built to operate directly upon vector variables that contain
+any number of individual values, making the use of for loops and similar constructs unnecessary
+in many cases. The names and patterns of functions in the base package of R are also borrowed
+liberally, both because they are generally well-designed, and because this borrowing will allow
+users familiar with R to hit the ground running. R is also the source of the sequence operator, :,
+and the way that subsetting works in Eidos with the [] operator. From C, on the other hand, Eidos
+takes the use of the . operator to address object members, the mandatory use of semicolons to
+terminate statements, zero-based instead of one-based indexing of vectors – and of course a great
+many properties of its grammar and syntax, which R also inherited from C or its relatives.
+However, Eidos also departs from its ancestors – mostly in the direction of simplicity. Unlike C,
+there are no variable declarations, and typing is entirely dynamic; variables are created simply by
+assignment, and types are checked only at runtime. There are no compound assignment operators
+(+=, -=, *=, etc.), no scalar logical operators (&&, ||), no bitwise operators (>>, <<, etc.), no pre/post
+increment or decrement (--, ++), and no pointers. Although built-in object classes exist, you
+cannot define a new class (or even a struct – or even an enum). There is no switch statement and
+no goto. There is only one scope, the global scope, except that user-defined functions execute in
+their own private scope. The hope is that this simplicity will not be excessively limiting, since the
+tasks to which Eidos will be put are expected to be quite simple.
+What sort of tasks are those? Eidos is intended to be used to control other software, referred to
+here as “the Context”; section 1.2 will discuss this in detail.
+It is worth noting that Eidos is an interpreted language – it is not “compiled” to the assembly
+language that is run natively by your computer, but instead “interprets” your code on the fly. You
+might imagine that, rather than the Eidos interpreter being a native speaker of its own language, it
+is a tourist frantically looking up words in a dictionary as it encounters them, piecing together
+meanings from the definitions it finds. This means that Eidos is relatively slow (but not that slow;
+see section 2.6.5). For maximal performance, minimize your use of Eidos script, particularly by
+taking advantage of vectorization when possible rather than writing for loops, and using the builtin
+functions in Eidos to do as much work as possible for you.
+Eidos has been a lot of fun to develop; I hope it is a pleasure to use as well. Enjoy!
+6
+1.2 Why Eidos?
+There are lots of programming languages in the world; do we really need another? Surprisingly,
+the answer is a resounding YES! Eidos is a rather unusual language, designed to fit a rather
+unusual niche. There might be another language out there somewhere that would be well-suited
+to that niche, but certainly no popular mainstream language – C, C++, R, Java, Python, whatever –
+would fit the bill; the closest is perhaps Lua, but even Lua is not quite right. This section will
+explain exactly what Eidos is designed to do and why a new language was needed to do it.
+First of all, Eidos is intended to provide a scriptable layer on top of existing C++ objects. The
+idea is that objects that are designed and written in C++, and are instantiated and controlled
+principally by C++ code, are nevertheless visible and manipulable in Eidos code. These C++
+objects are referred to as the Context; a given use of Eidos is tightly integrated with a Context that
+the script controls. The C++ object and the Eidos object should be, in some sense, one and the
+same object; scripting proxies, message forwarding, etc., should not be needed. The built-in types
+in Eidos, similarly, should be C++ types “under the hood”, allowing C++ code to implement Eidos
+functions and primitives without the added complexity of type translation or bridging. Few
+languages exist that fit this bill; most languages are designed principally to be standalone entities,
+even if some, like R, provide a “back door” to a lower-level language. Lua is designed to interface
+with a Context, like Eidos, but since it is ANSI C, providing a front end to C++ would be complex.
+Second of all, Eidos is intended to support an interactive workflow; it needs to be an interpreted
+language so that the user can work at an interactive console prompt, typing Eidos commands and
+getting results back without a compile-run cycle. This is a reason that C++ itself could not fit the
+niche of Eidos, even though Eidos is designed to control a C++ Context.
+Third, Eidos needs to be cross-platform, open-source, and compatible with the GNU copyleft
+license. This requirement is because the Context that Eidos is particularly designed to control – the
+SLiM evolutionary simulation package – has those requirements.
+Fourth, Eidos needs to be lean, with as few compile-time and run-time dependencies as
+possible. This is in part because it needs to be easily buildable on a wide variety of platforms,
+including places like high performance computing clusters. This is also, in part, because Eidos
+needs to be tight on memory and quick to load, since it will be used in environments where those
+resources are scarce. Eidos is thus self-contained; it uses some code from the GNU Scientific
+Library (GSL), Boost, and other libraries, but that code has been integrated into Eidos itself, such
+that Eidos has no link-time or run-time external dependencies.
+Fifth, it needs to be blazingly fast to set up and tear down a new interpreter. For some
+applications, a new interpreter will need to be instantiated millions or even billions of times, and
+that overhead may be the main execution time bottleneck. For example, in a SLiM simulation a
+fitness() callback may be called for each mutation of a given type, in each individual, in each
+subpopulation, in each generation, but the callback may do only a very simple calculation to get
+the resulting fitness value. Each call to the callback needs a fresh Eidos interpreter with its own
+state variables. Eidos is highly optimized for this usage case.
+Sixth, Eidos needs to be very simple to use; the target users are not professional programmers,
+but rather biologists (in the case of SLiM). Lua and C++, among others, fail this test.
+Seventh, it needs to be able to be tightly integrated into a complex custom GUI environment
+(SLiMgui); the language needs to be designed as a module that can be incorporated into a larger
+software project that introspects into, and even modifies, language elements and language objects
+dynamically. Few languages have been designed for this level of integration with other software.
+Perhaps this makes the need for Eidos more clear. While it is unfortunate to have to learn yet
+another language, we hope that the simplicity of Eidos will make the learning curve painless.
+7
+1.3 A quick summary of the Eidos language
+This section is a one-page summary of the Eidos language, intended for experienced
+programmers who don’t want to slog through the whole manual. If it is gibberish to you, skip it.
+Types. Eidos defines six built-in value types: NULL, logical, integer, float, string, and
+object. NULL is similar to a null pointer; it often represents the absence of a well-defined value,
+often due to an error. The logical type represents Boolean values, and may be either true (T) or
+false (F). The integer and float types represent 64-bit integers and IEEE double-precision floatingpoint
+values, respectively. The string type represents a string of characters; there is no character
+type in Eidos. Finally, the object type represents a C++ object of a particular class, usually defined
+by the Context that Eidos is controlling (see section 1.2); Eidos itself defines only a few classes.
+Vectors. All values in Eidos are vectors of zero or more elements. Elements themselves are not
+accessible in Eidos; you can get a vector containing a single element (a singleton), but you cannot
+extract the element itself, since Eidos provides no syntax to do so. Internally, elements are C++
+types: bool for logical, int64_t for integer, double for float, std::string for string, and a
+subclass of EidosObject for object (NULL is always length zero and thus has no element type).
+Many Eidos operators and functions work with whole vectors, allowing well-designed Eidos code
+to run fairly quickly.
+Expressions. Eidos defines a familiar set of operators. Arithmetic operators include + (addition,
+string concatenation), - (negation, subtraction), * (multiplication), / (division), % (modulo), and
+^ (exponentiation). A range operator, :, produces a vector sequence between its operands.
+Logical operators include | (or), & (and), and ! (not). Comparison operators are ==, !=, <, <=, >,
+and >=, with != being not-equals. A subset operator, [], is provided that is similar to that in R,
+taking either a logical vector specifying which corresponding values to take, or an integer vector
+specifying which indices to take. These operators all work on vector operands, typically allowing
+operands which are either identical in length (in which case the operation is conducted between
+matching pairs of elements) or one of which is a singleton (in which case the singleton is paired
+with every element of the other operand). A non-vectorized ternary conditional operator, ?else, is
+also available, similar to the ?: operator in C/C++. Operator precedence is very similar to C/C++
+precedence; parentheses () may be used to modify the standard order of evaluation.
+Variables. Variables are defined by assigning a value to a symbol with the = operator; no
+declaration is needed. Eidos variables all live in a single global scope, except within user-defined
+functions, which get their own private scope. (However, the Context may choose to modify the
+Eidos symbol tables in a way that resembles scoping, parameter passing, or other such paradigms.)
+Statements. Statements are semicolon-terminated. Statement types include null statements (a
+lone ;), expression statements, assignments, if and if-else statements, loops (while, do-while,
+and an iterator-type for-in statement), control-flow statements (next, break, and return,
+essentially as in R), and compound statements enclosed by braces, {}.
+Functions. Eidos supplies a broad range of built-in functions (see chapter 3), and you may also
+define your own functions within Eidos (see chapter 4). You may also call a lambda, a string that is
+dynamically interpreted as Eidos code, using functions such as executeLambda() and sapply().
+Objects. As mentioned above, object-type elements are C++ objects, usually defined by the
+Context. Objects may have Eidos properties and methods (not the same as their C++ member
+variables and member functions). Properties are lightweight – typically getter/setter access to
+simple values – whereas methods are heavyweight, performing computation or having wider
+effects. The dot operator, ., is used to access properties with the syntax x.property and to call
+methods with the syntax x.method(). The dot operator is also vectorized, which is often useful.
+And there you have it – the Eidos language in one page.

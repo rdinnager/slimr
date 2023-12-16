@@ -16,6 +16,8 @@ A float scaling factor applied to the individual’s fitness (i.e., the fitness 
 individual will be multiplied by this value). This provides a simple, fast way to modify the fitness of an
 individual; conceptually it is similar to returning a fitness effect for the individual from a
 fitnessEffect() callback, but without the complexity and performance overhead of implementing
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 678
 such a callback. To scale the fitness of all individuals in a subpopulation by the same factor, see the
 fitnessScaling property of Subpopulation.
 The value of fitnessScaling is reset to 1.0 every tick, so that any scaling factor set lasts for only a
@@ -39,8 +41,6 @@ The index of the individual in the individuals vector of its Subpopulation.
 meanParentAge => (float$)
 The average age of the parents of this individual, measured in cycles. Parentless individuals will have
 a meanParentAge of 0.0. The mean parent age is determined when a new offspring is generated,
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 649
 from the age property of the parent or parents involved in generating the offspring. For
 addRecombinant() that is somewhat complex; see that method for details.
 migrant => (logical$)
@@ -63,6 +63,8 @@ pedigreeParentIDs contains the values of pedigreeID that were possessed by the p
 individual; it is thus a vector of two values. If pedigree tracking is not enabled, this property is
 unavailable. Parental values may be -1 if insufficient ticks have elapsed for that information to be
 available (because the simulation just started, or because a subpopulation is new).
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 679
 pedigreeGrandparentIDs => (integer)
 If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
 pedigreeGrandparentIDs contains the values of pedigreeID that were possessed by the
@@ -88,8 +90,6 @@ with initializeSLiMOptions(). If the spatial dimensionality is zero (as it is by
 error to access this property. The elements of this property are identical to the values of the x, y, and z
 properties (if those properties are encompassed by the spatial dimensionality of the simulation). In
 other words, if the declared dimensionality is "xy", the individual.spatialPosition property is
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 650
 equivalent to c(individual.x, individual.y); individual.z is not used since it is not
 encompassed by the simulation’s dimensionality. This property cannot be set, but the
 setSpatialPosition() method may be used to achieve the same thing.
@@ -112,9 +112,41 @@ methods (provided by the Dictionary class; see the Eidos manual), for another wa
 to individuals.
 Note that at present, although many classes in SLiM have an integer-type tag property, only
 Individual has a float-type tagF property, because attaching model state to individuals seems to
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 680
 be particularly common and useful. If a tagF property would be helpful on another class, it would be
 easy to add.
 See the description of the tag property above for additional comments.
+tagL0 <–> (logical$)
+A user-defined logical value (see also tag and tagF). The value of tagL0 is initially undefined, and
+it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by
+explicitly setting its value prior to using it elsewhere in your code. The value of tagL0 is not used by
+SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the
+Dictionary class; see the Eidos manual), for another way of attaching state to individuals.
+tagL1 <–> (logical$)
+A user-defined logical value (see also tag and tagF). The value of tagL1 is initially undefined, and
+it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by
+explicitly setting its value prior to using it elsewhere in your code. The value of tagL1 is not used by
+SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the
+Dictionary class; see the Eidos manual), for another way of attaching state to individuals.
+tagL2 <–> (logical$)
+A user-defined logical value (see also tag and tagF). The value of tagL2 is initially undefined, and
+it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by
+explicitly setting its value prior to using it elsewhere in your code. The value of tagL2 is not used by
+SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the
+Dictionary class; see the Eidos manual), for another way of attaching state to individuals.
+tagL3 <–> (logical$)
+A user-defined logical value (see also tag and tagF). The value of tagL3 is initially undefined, and
+it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by
+explicitly setting its value prior to using it elsewhere in your code. The value of tagL3 is not used by
+SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the
+Dictionary class; see the Eidos manual), for another way of attaching state to individuals.
+tagL4 <–> (logical$)
+A user-defined logical value (see also tag and tagF). The value of tagL4 is initially undefined, and
+it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by
+explicitly setting its value prior to using it elsewhere in your code. The value of tagL4 is not used by
+SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the
+Dictionary class; see the Eidos manual), for another way of attaching state to individuals.
 uniqueMutations => (object<Mutation>)
 All of the Mutation objects present in this individual. Mutations present in both genomes will occur
 only once in this property, and the mutations will be given in sorted order by position, so this
@@ -127,29 +159,48 @@ advantageous unless duplicate entries for homozygous mutations are actually need
 x <–> (float$)
 A user-defined float value. The value of x is initially undefined (i.e., has an effectively random value
 that could be different every time you run your model); if you wish it to have a defined value, you
-must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code,
-typically in a modifyChild() callback. The value of x is not used by SLiM unless the optional
-“continuous space” facility is enabled with the dimensionality parameter to
-initializeSLiMOptions(), in which case x will be understood to represent the x coordinate of the
-individual in space. If continuous space is not enabled, you may use x as an additional tag value of
-type float.
+must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The
+value of x is not used by SLiM unless the optional “continuous space” facility is enabled with the
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 681
+dimensionality parameter to initializeSLiMOptions(), in which case x will be understood to
+represent the x coordinate of the individual in space. If continuous space is not enabled, you may use
+x as an additional tag value of type float.
+xy => (float)
+This property provides joint read-only access to the x and y properties; they are returned as a twoelement
+float vector. This can be useful in complex spatial models in which the spatiality of
+interactions/maps differs from the overall dimensionality of the model. See the documentation for the
+separate properties x and y for further comments.
+xyz => (float)
+This property provides joint read-only access to the x, y, and z properties; they are returned as a threeelement
+float vector. This can be useful in complex spatial models in which the spatiality of
+interactions/maps differs from the overall dimensionality of the model. See the documentation for the
+separate properties x, y, and z for further comments.
+xz => (float)
+This property provides joint read-only access to the x and z properties; they are returned as a twoelement
+float vector. This can be useful in complex spatial models in which the spatiality of
+interactions/maps differs from the overall dimensionality of the model. See the documentation for the
+separate properties x and z for further comments.
 y <–> (float$)
 A user-defined float value. The value of y is initially undefined (i.e., has an effectively random value
 that could be different every time you run your model); if you wish it to have a defined value, you
-must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code,
-typically in a modifyChild() callback. The value of y is not used by SLiM unless the optional
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 651
-“continuous space” facility is enabled with the dimensionality parameter to
-initializeSLiMOptions(), in which case y will be understood to represent the y coordinate of the
-individual in space (if the dimensionality is "xy" or "xyz"). If continuous space is not enabled, or the
-dimensionality is not "xy" or "xyz", you may use y as an additional tag value of type float.
+must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The
+value of y is not used by SLiM unless the optional “continuous space” facility is enabled with the
+dimensionality parameter to initializeSLiMOptions(), in which case y will be understood to
+represent the y coordinate of the individual in space (if the dimensionality is "xy" or "xyz"). If
+continuous space is not enabled, or the dimensionality is not "xy" or "xyz", you may use y as an
+additional tag value of type float.
+yz => (float)
+This property provides joint read-only access to the y and z properties; they are returned as a twoelement
+float vector. This can be useful in complex spatial models in which the spatiality of
+interactions/maps differs from the overall dimensionality of the model. See the documentation for the
+separate properties y and z for further comments.
 z <–> (float$)
 A user-defined float value. The value of z is initially undefined (i.e., has an effectively random value
 that could be different every time you run your model); if you wish it to have a defined value, you
-must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code,
-typically in a modifyChild() callback. The value of z is not used by SLiM unless the optional
-“continuous space” facility is enabled with the dimensionality parameter to
-initializeSLiMOptions(), in which case z will be understood to represent the z coordinate of the
-individual in space (if the dimensionality is "xyz"). If continuous space is not enabled, or the
-dimensionality is not "xyz", you may use z as an additional tag value of type float.
+must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The
+value of z is not used by SLiM unless the optional “continuous space” facility is enabled with the
+dimensionality parameter to initializeSLiMOptions(), in which case z will be understood to
+represent the z coordinate of the individual in space (if the dimensionality is "xyz"). If continuous
+space is not enabled, or the dimensionality is not "xyz", you may use z as an additional tag value of
+type float.

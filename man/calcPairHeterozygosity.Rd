@@ -39,8 +39,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=707}{SLiM manual: page
-707}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=752}{SLiM manual: page
+752}.
 
 Calculates the heterozygosity for a pair of genomes; these will
 typically be the two genomes of a diploid individual (individual.genome1 and

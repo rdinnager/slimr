@@ -29,8 +29,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
-667}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
+702}.
 
 Adds a new data column that provides the total population size for
 species. In single-species models, species may be NULL to indicate that single

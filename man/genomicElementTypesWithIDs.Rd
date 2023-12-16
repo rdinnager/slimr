@@ -26,8 +26,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=637}{SLiM manual: page
-637}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=666}{SLiM manual: page
+666}.
 
 Find and return the GenomicElementType objects with id values matching
 the values in ids. If no matching GenomicElementType object can be found with a
@@ -60,7 +60,8 @@ Other Community:
 \code{\link{scriptBlocksWithIDs}()},
 \code{\link{simulationFinished}()},
 \code{\link{speciesWithIDs}()},
-\code{\link{subpopulationsWithIDs}()}
+\code{\link{subpopulationsWithIDs}()},
+\code{\link{usage}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

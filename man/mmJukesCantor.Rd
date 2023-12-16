@@ -27,8 +27,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=704}{SLiM manual: page
-704}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=749}{SLiM manual: page
+749}.
 
 Returns a mutation matrix representing a Jukes-Cantor (1969) model with
 mutation rate alpha to each possible alternative nucleotide at a site: This 2×2

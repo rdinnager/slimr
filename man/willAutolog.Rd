@@ -28,8 +28,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=669}{SLiM manual: page
-669}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=703}{SLiM manual: page
+703}.
 
 Returns T if the log file is configured to log a new row automatically
 at the end of the current tick; otherwise, returns F. This is useful for

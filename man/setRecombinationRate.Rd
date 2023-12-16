@@ -32,8 +32,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=634}{SLiM manual: page
-634}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=663}{SLiM manual: page
+663}.
 
 Set the recombination rate per base position per gamete. All rates must
 be in the interval [0.0, 0.5]. There are two ways to call this method. If the

@@ -40,8 +40,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=637}{SLiM manual: page
-637}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
+667}.
 
 Register a block of Eidos source code, represented as the string
 singleton source, as an Eidos first() event in the current simulation, with
@@ -51,8 +51,8 @@ identifier id (specified as an integer, or as a string symbolic name such as
 "s5"); this may be NULL if there is no need to be able to refer to the block
 later. The registered event is added to the end of the list of registered
 SLiMEidosBlock objects, and is active immediately; it may be eligible to execute
-in the current tick (see section 25.11 for details). The new SLiMEidosBlock will
-be defined as a global variable immediately by this method (see section 24.12),
+in the current tick (see section 26.11 for details). The new SLiMEidosBlock will
+be defined as a global variable immediately by this method (see section 25.12),
 and will also be returned by this method.
 }
 \section{Copyright}{
@@ -82,7 +82,8 @@ Other Community:
 \code{\link{scriptBlocksWithIDs}()},
 \code{\link{simulationFinished}()},
 \code{\link{speciesWithIDs}()},
-\code{\link{subpopulationsWithIDs}()}
+\code{\link{subpopulationsWithIDs}()},
+\code{\link{usage}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

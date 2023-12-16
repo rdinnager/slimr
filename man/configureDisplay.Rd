@@ -33,15 +33,15 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=695}{SLiM manual: page
-695}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=738}{SLiM manual: page
+738}.
 
 This method customizes the display of the subpopulation in SLiMgui's
 Population Visualization graph. When this method is called by a model running
-outside SLiMgui, it will do nothing except type- checking and bounds-checking
+outside SLiMgui, it will do nothing except typechecking and bounds-checking
 its arguments. When called by a model running in SLiMgui, the position,
 size, and color of the subpopulation's displayed circle can be controlled
-as speciﬁed below. The center parameter sets the coordinates of the center
+as specified below. The center parameter sets the coordinates of the center
 of the subpopulation's displayed circle; it must be a float vector of length
 two, such that center[0] provides the x-coordinate and center[1] provides the
 y-coordinate. The square central area of the Population Visualization occupies
@@ -56,9 +56,9 @@ will be used; this is equivalent to supplying a scale of 1.0. Typically the
 same scale value should be used by all subpopulations, to scale all of their
 circles up or down uniformly, but that is not required. The color parameter
 sets the color to be used for the displayed subpopulation's circle. Colors may
-be speciﬁed by name, or with hexadecimal RGB values of the form "#RRGGBB" (see
+be specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see
 the Eidos manual). If color is NULL or the empty string, "", SLiMgui's default
-(ﬁtness-based) color will be used.
+(fitness-based) color will be used.
 }
 \section{Copyright}{
 
@@ -79,16 +79,19 @@ Other Subpopulation:
 \code{\link{addEmpty}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
+\code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{defineSpatialMap}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
+\code{\link{pointDeviated}()},
 \code{\link{pointInBounds}()},
 \code{\link{pointPeriodic}()},
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
 \code{\link{setCloningRate}()},

@@ -54,8 +54,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=638}{SLiM manual: page
-638}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
+667}.
 
 Reschedule the target script block given by block to execute in
 a specified set of ticks. The block parameter may be either an integer
@@ -89,13 +89,13 @@ a call like community.rescheduleScriptBlock(self, community.tick + 10,
 community.tick + 10); made inside a given block would therefore also cause the
 block to execute every tenth tick, although this sort of self-rescheduling code
 is probably harder to read, maintain, and debug. Whichever way of specifying
-the tick set is used, the discussion in section 25.11 applies: block may
+the tick set is used, the discussion in section 26.11 applies: block may
 continue to be executed during the current tick cycle stage even after it has
 been rescheduled, unless it is made inactive using its active property, and
 similarly, the block may not execute during the current tick cycle stage if it
 was not already scheduled to do so. Rescheduling script blocks during the tick
 and tick cycle stage in which they are executing, or in which they are intended
-to execute, should be avoided. Also, as mentioned in section 22.7, script
+to execute, should be avoided. Also, as mentioned in section 23.7, script
 blocks which are open-ended (i.e., with no specified end tick), are not used
 in determining whether the end of the simulation has been reached (because then
 the simulation would run forever); if you reschedule a block to be open-ended,
@@ -199,7 +199,8 @@ Other Community:
 \code{\link{scriptBlocksWithIDs}()},
 \code{\link{simulationFinished}()},
 \code{\link{speciesWithIDs}()},
-\code{\link{subpopulationsWithIDs}()}
+\code{\link{subpopulationsWithIDs}()},
+\code{\link{usage}()}
 
 Other SLiMSim: 
 \code{\link{SS}},

@@ -27,8 +27,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=643}{SLiM manual: page
-643}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=672}{SLiM manual: page
+672}.
 
 Return an integer vector with the frequency counts of all of the
 Mutation objects passed in mutations, within the target Genome vector. If the

@@ -32,34 +32,35 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=620}{SLiM manual: page
-620}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=649}{SLiM manual: page
+649}.
 
 In nucleotide-based models, set the mutation rate multiplier along the
 chromosome. Nucleotidebased models define sequence-based mutation rates that
 are set up with the mutationMatrix parameter to initializeGenomicElementType().
 If no hotspot map is specified by calling initializeHotspotMap(), a hotspot
-map with a multiplier of 1.0 across the whole chromosome is assumed (and so the
-sequence-based rates are the absolute mutation rates used by SLiM). A hotspot
-map modifies the sequence-based rates by scaling them up in some regions,
+map with a multiplier of 1.0 across the whole chromosome is assumed (and so
+the sequence-based rates are the absolute mutation rates used by SLiM). A
+hotspot * PA→C PA→G PA→T PC→A * PC→G PC→T PG→A PG→C * PG→T PT→A PT→C PT→G *
+* PAAA→ACA PAAA→AGA PAAA→ATA * PAAC→ACC PAAC→AGC PAAC→ATC * PAAG→ACG PAAG→AGG
+PAAG→ATG * PAAT→ACT PAAT→AGT PAAT→ATT PACA→AAA * PACA→AGA PACA→ATA PACC→AAC *
+PACC→AGC PACC→ATC PACG→AAG * PACG→AGG PACG→ATG . . . . . . . . . . . . PTTC→TAC
+PTTC→TCC PTTC→TGC * PTTG→TAG PTTG→TCG PTTG→TGG * PTTT→TAT PTTT→TCT PTTT→TGT
+* map modifies the sequence-based rates by scaling them up in some regions,
 with multipliers greater than 1.0 (representing mutational hot spots), and/or
 scaling them down in some regions, with multipliers less than 1.0 (representing
 mutational cold spots). There are two ways to call this function. If the
 optional ends parameter is NULL (the default), then multipliers must be a
 singleton value that specifies a single multiplier to be used along the entire
-chromosome (typically 1.0, but not required to be). If, on the other hand, ends
-is supplied, then multipliers and ends must be the same length, and the values
-in ends must be specified in ascending order. In that case, multipliers and ends
-taken together specify the multipliers to be used along successive contiguous
-stretches of the chromosome, from beginning to end; the last position specified
-in ends should extend to the end of the chromosome (i.e. at least to the end
-of the last genomic element, if not further). For example, if the following
-call is made: initializeHotspotMap(c(1.0, 1.2), c(5000, 9999)); * PAAA→ACA
-PAAA→AGA PAAA→ATA * PAAC→ACC PAAC→AGC PAAC→ATC * PAAG→ACG PAAG→AGG PAAG→ATG
-* PAAT→ACT PAAT→AGT PAAT→ATT PACA→AAA * PACA→AGA PACA→ATA PACC→AAC * PACC→AGC
-PACC→ATC PACG→AAG * PACG→AGG PACG→ATG . . . . . . . . . . . . PTTC→TAC PTTC→TCC
-PTTC→TGC * PTTG→TAG PTTG→TCG PTTG→TGG * PTTT→TAT PTTT→TCT PTTT→TGT * then the
-result is that the mutation rate multiplier for bases 0...5000 (inclusive)
+chromosome (typically 1.0, but not required to be). If, on the other hand,
+ends is supplied, then multipliers and ends must be the same length, and the
+values in ends must be specified in ascending order. In that case, multipliers
+and ends taken together specify the multipliers to be used along successive
+contiguous stretches of the chromosome, from beginning to end; the last position
+specified in ends should extend to the end of the chromosome (i.e. at least
+to the end of the last genomic element, if not further). For example, if the
+following call is made: initializeHotspotMap(c(1.0, 1.2), c(5000, 9999)); then
+the result is that the mutation rate multiplier for bases 0...5000 (inclusive)
 will be 1.0 (and so the specified sequence-based mutation rates will be used
 verbatim), and the multiplier for bases 5001...9999 (inclusive) will be 1.2
 (and so the sequence-based mutation rates will be multiplied by 1.2 within the

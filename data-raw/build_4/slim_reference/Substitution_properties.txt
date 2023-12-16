@@ -19,11 +19,9 @@ The position in the chromosome of this mutation.
 selectionCoeff => (float$)
 The selection coefficient of the mutation, drawn from the distribution of fitness effects of its
 MutationType.
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 702
 subpopID <–> (integer$)
 The identifier of the subpopulation in which this mutation arose. This value is carried over from the
-Mutation object directly; if a “tag” value was used in the Mutation object (see section 24.10.1), that
+Mutation object directly; if a “tag” value was used in the Mutation object (see section 25.10.1), that
 value will carry over to the corresponding Substitution object. The subpopID in Substitution is
 a read-write property to allow it to be used as a “tag” in the same way, if the origin subpopulation
 identifier is not needed.

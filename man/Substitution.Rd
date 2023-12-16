@@ -67,7 +67,7 @@ from the distribution of fitness effects of its MutationType. }
 This property is a variable, so it is modifiable. \strong{Property Description:}
 The identifier of the subpopulation in which this mutation arose. This value
 is carried over from the Mutation object directly; if a "tag" value was used
-in the Mutation object (see section 24.10.1), that value will carry over to the
+in the Mutation object (see section 25.10.1), that value will carry over to the
 corresponding Substitution object. The subpopID in Substitution is a read-write
 property to allow it to be used as a "tag" in the same way, if the origin
 subpopulation identifier is not needed. }

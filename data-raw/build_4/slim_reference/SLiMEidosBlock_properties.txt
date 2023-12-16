@@ -1,6 +1,8 @@
 active <–> (integer$)
 If this evaluates to logical F (i.e., is equal to 0), the script block is inactive and will not be called.
 The value of active for all registered script blocks is reset to -1 at the beginning of each tick, prior to
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 709
 script events being called, thus activating all blocks (except callbacks associated with a species that is
 not active in that tick, which are deactivated as part of the deactivation of the species). Any integer
 value other than -1 may be used instead of -1 to represent that a block is active; for example, active
@@ -36,4 +38,4 @@ type => (string$)
 The type of the script block; this will be "first", "early", or "late" for the three types of Eidos
 events, or "initialize", "fitnessEffect", "interaction", "mateChoice", "modifyChild",
 "mutation", "mutationEffect", "recombination", "reproduction", or "survival" for the
-respective types of Eidos callbacks (see section 24.1 and chapter 25).
+respective types of Eidos callbacks (see section 25.1 and chapter 26).

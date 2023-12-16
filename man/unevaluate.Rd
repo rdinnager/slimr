@@ -26,25 +26,26 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=665}{SLiM manual: page
-665}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=699}{SLiM manual: page
+699}.
 
 Discards all evaluation of this interaction, for all subpopulations.
 The state of the InteractionType is reset to a state prior to evaluation. This
 can be useful if the model state has changed in such a way that the evaluation
-already conducted is no longer valid. For example, if the maximum distance
-or the interaction function of the InteractionType need to be changed with
-immediate effect, or if the data used by an interaction() callback has changed
-in such a way that previously calculated interaction strengths are no longer
-correct, unevaluate() allows the interaction to begin again from scratch. In WF
-models, all interactions are automatically reset to an unevaluated state at the
-moment when the new offspring generation becomes the parental generation (at
-step 4 in the tick cycle; see section 22.4). In nonWF models, all interactions
-are automatically reset to an unevaluated state twice per tick: immediately
-after reproduction() callbacks have completed (after step 1 in the tick cycle;
-see section 23.1), and immediately before viability/survival selection (before
-step 4 in the tick cycle; see section 23.4). Given this automatic invalidation,
-most simulations have no reason to call unevaluate().
+already conducted is no longer valid. For example, if the maximum distance,
+the interaction function, or the receiver or exerter constraints of the
+InteractionType need to be changed with immediate effect, or if the data used by
+an interaction() callback has changed in such a way that previously calculated
+interaction strengths are no longer correct, unevaluate() allows the interaction
+to begin again from scratch. In WF models, all interactions are automatically
+reset to an unevaluated state at the moment when the new offspring generation
+becomes the parental generation (at step 4 in the tick cycle; see section 23.4).
+In nonWF models, all interactions are automatically reset to an unevaluated
+state twice per tick: immediately after reproduction() callbacks have completed
+(after step 1 in the tick cycle; see section 24.1), and immediately before
+viability/survival selection (before step 4 in the tick cycle; see section
+24.4). Given this automatic invalidation, most simulations have no reason to
+call unevaluate().
 }
 \section{Copyright}{
 
@@ -73,8 +74,10 @@ Other InteractionType:
 \code{\link{nearestNeighbors}()},
 \code{\link{neighborCountOfPoint}()},
 \code{\link{neighborCount}()},
+\code{\link{setConstraints}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
+\code{\link{testConstraints}()},
 \code{\link{totalOfNeighborStrengths}()}
 }
 \author{

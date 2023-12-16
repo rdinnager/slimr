@@ -27,14 +27,14 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=633}{SLiM manual: page
-633}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=662}{SLiM manual: page
+662}.
 
 This method, which may be called only in nucleotide-based models
 (see section 1.8), replaces the ancestral nucleotide sequence for the
 model. The sequence parameter is interpreted exactly as it is in the
 initializeAncestralSequence() function; see that documentation for details
-(section 24.1). The length of the ancestral sequence is returned. It is unusual
+(section 25.1). The length of the ancestral sequence is returned. It is unusual
 to replace the ancestral sequence in a running simulation, since the nucleotide
 states of segregating and fixed mutations will depend upon the original
 ancestral sequence. It can be useful when loading a new population state with

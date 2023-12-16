@@ -29,16 +29,14 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=700}{SLiM manual: page
-700}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=745}{SLiM manual: page
+745}.
 
-Looks up the spatial map indicated by name, and uses its
-color-translation machinery (as defined by the valueRange and colors parameters
-to defineSpatialMap()) to translate each element of value into a corresponding
-color string. If the spatial map does not have color-translation capabilities,
-an error will result. See the documentation for defineSpatialMap() for
-information regarding the details of color translation. See the Eidos manual for
-further information on color strings.
+This method has been deprecated, and may be removed in a future release
+of SLiM. In SLiM 4.1 and later, use the SpatialMap method mapColor() instead,
+and see that method's documentation. (This method differs only in taking a name
+parameter, which is used to look up the spatial map from those that have been
+added to the subpopulation.)
 }
 \section{Copyright}{
 
@@ -59,17 +57,20 @@ Other Subpopulation:
 \code{\link{addEmpty}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
+\code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
+\code{\link{pointDeviated}()},
 \code{\link{pointInBounds}()},
 \code{\link{pointPeriodic}()},
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
 \code{\link{setCloningRate}()},

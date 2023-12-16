@@ -27,26 +27,26 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=658}{SLiM manual: page
-658}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=691}{SLiM manual: page
+691}.
 
 Returns a vector containing the integral of the interaction function as
 experienced by each of the individuals in receivers. For each given individual,
 the interaction function is clipped to the edges of the spatial bounds of the
 subpopulation that individual inhabits; the individual's spatial position must
 be within bounds or an error is raised. A periodic boundary will, correctly,
-not clip the interaction function. The interaction function is also clipped to
-the interaction's maximum distance; that distance must be less than half of the
-extent of the spatial bounds in each dimension (so that, for a given dimension,
-the interaction function is clipped by the spatial bounds on only one side),
-otherwise an error is raised. Note that for sex-specific interaction types, the
-sex of the receiver does not matter; an individual might not actually receive
-any interactions because of its sex, but it is still considered to have the
-same interaction function integral. If receivers is NULL, the maximal integral
-is returned, as would be experienced by an individual farther than the maximum
-distance from any edge. The evaluate() method must have been previously called
-for the receiver subpopulation, and positions saved at evaluation time will be
-used. If the InteractionType is non-spatial, this method may not be called. The
+not clip the interaction function. The interaction function is also clipped
+to the interaction's maximum distance; that distance must be less than half
+of the extent of the spatial bounds in each dimension (so that, for a given
+dimension, the interaction function is clipped by the spatial bounds on only
+one side), otherwise an error is raised. Note that receiver constraints are
+not applied; an individual might not actually receive any interactions because
+of those constraints, but it is still considered to have the same interaction
+function integral. If receivers is NULL, the maximal integral is returned,
+as would be experienced by an individual farther than the maximum distance
+from any edge. The evaluate() method must have been previously called for the
+receiver subpopulation, and positions saved at evaluation time will be used.
+If the InteractionType is non-spatial, this method may not be called. The
 computed value of the integral is not exact; it is calculated by an approximate
 numerical method designed to be fast, but the error should be fairly small
 (typically less than 1% from the true value). A large amount of computation will
@@ -96,8 +96,10 @@ Other InteractionType:
 \code{\link{nearestNeighbors}()},
 \code{\link{neighborCountOfPoint}()},
 \code{\link{neighborCount}()},
+\code{\link{setConstraints}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
+\code{\link{testConstraints}()},
 \code{\link{totalOfNeighborStrengths}()},
 \code{\link{unevaluate}()}
 }

@@ -27,8 +27,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=654}{SLiM manual: page
-654}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=685}{SLiM manual: page
+685}.
 
 Returns an object vector of all the mutations that are of the type
 specified by mutType, out of all of the mutations in the individual. Mutations
@@ -63,6 +63,7 @@ Other Individual:
 \code{\link{countOfMutationsOfType}()},
 \code{\link{relatedness}()},
 \code{\link{setSpatialPosition}()},
+\code{\link{sharedParentCount}()},
 \code{\link{sumOfMutationsOfType}()}
 }
 \author{

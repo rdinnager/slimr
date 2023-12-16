@@ -30,8 +30,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=646}{SLiM manual: page
-646}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=676}{SLiM manual: page
+676}.
 
 Remove the mutations in mutations from the target genome(s), if they
 are present (if they are not present, they will be ignored). If NULL is passed

@@ -60,30 +60,30 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=625}{SLiM manual: page
-625}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=654}{SLiM manual: page
+654}.
 
-Configure options for the simulation. If initializeSLiMOptions()
-is called at all then it must be called before any other initialization
-function (except initializeSLiMModelType()), so that SLiM knows from the
-outset which optional features are enabled and which are not. If keepPedigrees
-is T, SLiM will keep pedigree information for every individual in the
-simulation, tracking the identity of its parents and grandparents. This
-allows individuals to assess their degree of pedigree-based relatedness to
-other individuals (see Individual's relatedness() method, section 24.7.2), as
-well as allowing a model to find "trios" (two parents and an offspring they
-generated) using the pedigree properties of Individual (section 24.7.1). As a
+Configure options for the simulation. If initializeSLiMOptions() is
+called at all then it must be called before any other initialization function
+(except initializeSLiMModelType()), so that SLiM knows from the outset which
+optional features are enabled and which are not. If keepPedigrees is T, SLiM
+will keep pedigree information for every individual in the simulation, tracking
+the identity of its parents and grandparents. This allows individuals to
+assess their degree of pedigree-based relatedness to other individuals (see
+Individual's relatedness() and sharedParentCount() methods, section 25.7.2),
+as well as allowing a model to find "trios" (two parents and an offspring they
+generated) using the pedigree properties of Individual (section 25.7.1). As a
 side effect of keepPedigrees being T, the pedigreeID, pedigreeParentIDs, and
 pedigreeGrandparentIDs properties of Individual will have defined values (see
-section 24.7.1), as will the genomePedigreeID property of Genome (see section
-24.4.1). Note that pedigree-based relatedness doesn't necessarily correspond
+section 25.7.1), as will the genomePedigreeID property of Genome (see section
+25.4.1). Note that pedigree-based relatedness doesn't necessarily correspond
 to genetic relatedness, due to effects such as assortment and recombination.
 For an overview of other ways of tracking genetic ancestry, including true
 local ancestry at each position on the chromosome, see sections 1.7 and 14.7.
 Beginning in SLiM 3.5, keepPedigrees=T also enables tracking of individual
 reproductive output, available through the reproductiveOutput property of
-Individual (see section 24.7.1) and the lifetimeReproductiveOutput property
-of Subpopulation (see section 24.15.1). If dimensionality is not "", SLiM will
+Individual (see section 25.7.1) and the lifetimeReproductiveOutput property
+of Subpopulation (see section 25.16.1). If dimensionality is not "", SLiM will
 enable its optional "continuous space" facility. Three values for dimensionality
 are presently supported: "x", "xy", and "xyz", specifying that continuous
 space should be enabled for one, two, or three dimensions, respectively, using

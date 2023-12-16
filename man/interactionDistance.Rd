@@ -30,30 +30,30 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=661}{SLiM manual: page
-661}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=694}{SLiM manual: page
+694}.
 
 Returns a vector containing interaction-dependent distances between
-receiver and individuals in exerters that exert an interaction strength
-upon receiver. If exerters is NULL (the default), then a vector of the
-interaction-dependent distances from receiver to all individuals in its
-subpopulation (including receiver itself) is returned; this case may be handled
-much more efficiently than if a vector of all individuals in the subpopulation
-is explicitly provided. Otherwise, all individuals in exerters must belong to a
-single subpopulation (but not necessarily the same subpopulation as receiver).
-The evaluate() method must have been previously called for the receiver and
-exerter subpopulations, and positions saved at evaluation time will be used. If
-the InteractionType is non- spatial, this method may not be called. Importantly,
-distances are calculated according to the spatiality of the InteractionType (as
-declared in initializeInteractionType()), not the dimensionality of the model
-as a whole (as declared in initializeSLiMOptions()). The distances returned are
+receiver and individuals in exerters. If exerters is NULL (the default),
+then a vector of the interaction-dependent distances from receiver to all
+individuals in its subpopulation (including receiver itself) is returned;
+this case may be handled much more efficiently than if a vector of all
+individuals in the subpopulation is explicitly provided. Otherwise, all
+individuals in exerters must belong to a single subpopulation (but not
+necessarily the same subpopulation as receiver). The evaluate() method must
+have been previously called for the receiver and exerter subpopulations,
+and positions saved at evaluation time will be used. If the InteractionType
+is non-spatial, this method may not be called. Importantly, distances are
+calculated according to the spatiality of the InteractionType (as declared
+in initializeInteractionType()), not the dimensionality of the model as a
+whole (as declared in initializeSLiMOptions()). The distances returned are
 therefore the distances that would be used to calculate interaction strengths.
 In addition, interactionDistance() will return INF as the distance between
 receiver and any individual which does not exert an interaction upon receiver;
-the interactionDistance() between an individual and itself will thus be INF,
-and likewise for pairs excluded from interacting by the sex segregation or max
-distance of the interaction type. See distance() for an alternative distance
-definition.
+the interactionDistance() between an individual and itself will thus be INF, and
+likewise for pairs excluded from interacting by receiver constraints, exerter
+constraints, or the maximum interaction distance of the interaction type. See
+distance() for an alternative distance definition.
 }
 \section{Copyright}{
 
@@ -81,8 +81,10 @@ Other InteractionType:
 \code{\link{nearestNeighbors}()},
 \code{\link{neighborCountOfPoint}()},
 \code{\link{neighborCount}()},
+\code{\link{setConstraints}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
+\code{\link{testConstraints}()},
 \code{\link{totalOfNeighborStrengths}()},
 \code{\link{unevaluate}()}
 }

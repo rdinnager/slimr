@@ -5,7 +5,7 @@ either an integer giving the ID of the new subpopulation, or a string giving the
 subpopulation (such as "p5" to specify an ID of 5). Only if sex is enabled for the species, the initial
 sex ratio may optionally be specified as sexRatio (as the male fraction, M:M+F); if it is not specified,
 a default of 0.5 is used. The new subpopulation will be defined as a global variable immediately by
-this method (see section 24.15), and will also be returned by this method. Subpopulations added by
+this method (see section 25.16), and will also be returned by this method. Subpopulations added by
 this method will initially consist of individuals with empty genomes. In order to model
 subpopulations that split from an already existing subpopulation, use addSubpopSplit().
 Only in nonWF models, the haploid parameter may be T; in this case, the second genome of each
@@ -13,8 +13,8 @@ new individual will be a null genome, rather than an empty genome. For even grea
 nonWF models, you can call addSubpop() with an initial size of 0 and then stock the population with
 new individuals created however you wish in the next tick’s reproduction() callback.
 TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 678
-ject<Subpopulation>$)addSubpopSplit(is$ subpopID, integer$ size,
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 719
+– (object<Subpopulation>$)addSubpopSplit(is$ subpopID, integer$ size,
 io<Subpopulation>$ sourceSubpop, [float$ sexRatio = 0.5])
 Split off a new subpopulation with id subpopID and size individuals derived from subpopulation
 sourceSubpop. The subpopID parameter may be either an integer giving the ID of the new
@@ -23,7 +23,7 @@ of 5). The sourceSubpop parameter may specify the source subpopulation either as
 Subpopulation object or by integer identifier. Only if sex is enabled for the species, the initial sex
 ratio may optionally be specified as sexRatio (as the male fraction, M:M+F); if it is not specified, a
 default of 0.5 is used. The new subpopulation will be defined as a global variable immediately by
-this method (see section 24.15), and will also be returned by this method.
+this method (see section 25.16), and will also be returned by this method.
 Subpopulations added by this method will consist of individuals that are clonal copies of individuals
 from the source subpopulation, randomly chosen with probabilities proportional to fitness. The fitness
 of all of these initial individuals is considered to be 1.0, to avoid a doubled round of selection in the
@@ -65,7 +65,7 @@ to them could still exist in local Eidos variables; instead, the individuals are
 genomes, except that accessing their subpopulation property will raise an error since they no longer
 have a subpopulation.
 TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 679
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 720
 Note that the indices and order of individuals and genomes in all source subpopulations will change
 unpredictably as a side effect of this method. All evaluated interactions are invalidated as a side effect
 of calling this method.
@@ -73,7 +73,7 @@ Note that this method is only for use in nonWF models, in which mortality is man
 the model script. In WF models, mortality is managed automatically by the SLiM core when the new
 offspring generation becomes the parental generation and the previous parental generation dies;
 mortality does not otherwise occur in WF models. In nonWF models, mortality normally occurs
-during the survival stage of the tick cycle (see section 23.4), based upon the fitness values calculated
+during the survival stage of the tick cycle (see section 24.4), based upon the fitness values calculated
 by SLiM, and survival() callbacks can influence the outcome of that survival stage. Calls to
 killIndividuals(), on the other hand, can be made at any time during first(), early(), or
 late() events, and the result cannot be modified by survival() callbacks; the given individuals are
@@ -110,23 +110,23 @@ is no way to keep persistent references to objects in SLiM. This method is provi
 much faster than the corresponding Eidos code.
 – (void)outputFixedMutations([Ns$ filePath = NULL], [logical$ append = F])
 Output all fixed mutations – all Substitution objects, in other words (see section 1.5.2) – in a SLiM
-native format (see section 26.1.2 for output format details). If the optional parameter filePath is
+native format (see section 27.1.2 for output format details). If the optional parameter filePath is
 NULL (the default), output will be sent to Eidos’s output stream (see section 4.2.1). Otherwise, output
 will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or
 appending to the end of it if append is T. Mutations which have fixed but have not been turned into
 Substitution objects – typically because convertToSubstitution has been set to F for their
 TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 680
-mutation type (see section 24.11.1) – are not output; they are still considered to be segregating
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 721
+mutation type (see section 25.11.1) – are not output; they are still considered to be segregating
 mutations by SLiM.
 In SLiM 3.3 and later, the output format includes the nucleotides associated with any nucleotide-based
-mutations; see section 26.1.2.
+mutations; see section 27.1.2.
 Output is generally done in a late() event, so that the output reflects the state of the simulation at
 the end of a tick.
 – (void)outputFull([Ns$ filePath = NULL], [logical$ binary = F],
 [logical$ append = F], [logical$ spatialPositions = T], [logical$ ages = T],
 [logical$ ancestralNucleotides = T], [logical$ pedigreeIDs = F])
-Output the state of the entire population (see section 26.1.1 for output format details). If the optional
+Output the state of the entire population (see section 27.1.1 for output format details). If the optional
 parameter filePath is NULL (the default), output will be sent to Eidos’s output stream (see section
 4.2.1). Otherwise, output will be sent to the filesystem path specified by filePath, overwriting that
 file if append if F, or appending to the end of it if append is T. When writing to a file, a logical flag,
@@ -142,15 +142,15 @@ spatial positions of individuals in species for which continuous space has been 
 dimensionality option of initializeSLiMOptions(). If spatialPositions is F, the output will
 not contain spatial positions, and will be identical to the output generated by SLiM 2.1 and later. If
 spatialPositions is T, spatial position information will be output if it is available (see section
-26.1.1 for format details). If the species does not have continuous space enabled, the
+27.1.1 for format details). If the species does not have continuous space enabled, the
 spatialPositions parameter will be ignored. Positional information may be output for all output
 destinations – the Eidos output stream, a text file, or a binary file.
 Beginning with SLiM 3.0, the ages parameter may be used to control the output of the ages of
 individuals in nonWF simulations. If ages is F, the output will not contain ages, preserving backward
 compatibility with the output format of SLiM 2.1 and later. If ages is T, ages will be output for nonWF
-models (see section 26.1.1 for format details). In WF simulations, the ages parameter will be ignored.
+models (see section 27.1.1 for format details). In WF simulations, the ages parameter will be ignored.
 Beginning with SLiM 3.3, the ancestralNucleotides parameter may be used to control the output
-of the ancestral nucleotide sequence in nucleotide-based models (see section 26.1.1 for format
+of the ancestral nucleotide sequence in nucleotide-based models (see section 27.1.1 for format
 details). If ancestralNucleotides is F, the output will not contain ancestral nucleotide information,
 and so the ancestral sequence will not be restored correctly if the saved file is loaded with
 readPopulationFile(). This option is provided because the ancestral sequence may be quite large,
@@ -163,22 +163,22 @@ ancestralNucleotides flag governs only the ancestral sequence.
 Beginning with SLiM 3.5, the pedigreeIDs parameter may be used to request that pedigree IDs be
 written out (and read in by readFromPopulationFile(), subsequently). This option is turned off (F)
 by default, to preserve backward compatibility; if it is turned on (T), different file version values will be
-used, and backward compatibility with previous versions of SLiM will be lost (see section 26.1.1).
+used, and backward compatibility with previous versions of SLiM will be lost (see section 27.1.1).
 This option may only be used if SLiM’s optional pedigree tracking has been enabled with
 initializeSLiMOptions(keepPedigrees=T).
 Output is generally done in a late() event, so that the output reflects the state of the simulation at
 the end of a tick.
 TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 681
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 722
 – (void)outputMutations(object<Mutation> mutations, [Ns$ filePath = NULL],
 [logical$ append = F])
-Output all of the given mutations (see section 26.1.3 for output format details). This can be used to
+Output all of the given mutations (see section 27.1.3 for output format details). This can be used to
 output all mutations of a given mutation type, for example. If the optional parameter filePath is
 NULL (the default), output will be sent to Eidos’s output stream (see section 4.2.1). Otherwise, output
 will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or
 appending to the end of it if append is T.
 In SLiM 3.3 and later, the output format includes the nucleotides associated with any nucleotide-based
-mutations; see section 26.1.3.
+mutations; see section 27.1.3.
 Output is generally done in a late() event, so that the output reflects the state of the simulation at
 the end of a tick.
 – (integer$)readFromPopulationFile(string$ filePath, [No$ subpopMap = NULL])
@@ -202,12 +202,12 @@ prior to doing so).
 In SLiM 2.3 and later when using the WF model, calling readFromPopulationFile() from any
 context other than a late() event causes a warning; calling from a late() event is almost always
 correct in WF models, so that fitness values can be automatically recalculated by SLiM at the usual
-time in the tick cycle without the need to force their recalculation (see chapter 22, and comments on
+time in the tick cycle without the need to force their recalculation (see chapter 23, and comments on
 recalculateFitness() below).
 In SLiM 3.0 when using the nonWF model, calling readFromPopulationFile() from any context
 other than an early() event causes a warning; calling from an early() event is almost always
 correct in nonWF models, so that fitness values can be automatically recalculated by SLiM at the
-usual time in the tick cycle without the need to force their recalculation (see chapter 23, and
+usual time in the tick cycle without the need to force their recalculation (see chapter 24, and
 comments on recalculateFitness() below).
 As of SLiM 2.1, this method changes the tick and cycle counters to the tick and cycle read from the
 file. If you do not want these counters to be changed, you can change them back after reading, by
@@ -222,7 +222,7 @@ loaded data. Indeed, state such as the selfing and cloning rates of subpopulatio
 properties, and values set onto objects with setValue() will also be lost, since it is not saved out by
 outputFull(). Only information saved by outputFull() will be restored; all other state associated
 TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 682
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 723
 with the species – subpopulations, individuals, genomes, mutations, and substitutions – will be lost,
 and should be re-established by the model if it is still needed.
 As of SLiM 2.3, this method will read and restore the spatial positions of individuals if that information
@@ -245,21 +245,22 @@ information is present in the output file (as requested with outputFull(pedigree
 SLiM’s optional pedigree tracking has been enabled with
 initializeSLiMOptions(keepPedigrees=T).
 This method can also be used to read tree-sequence (.trees) files saved by treeSeqOutput() or
-generated by the Python pyslim package. Beginning with SLiM 4, the subpopMap parameter may be
-supplied to re-order the populations of the input tree sequence when it is loaded in to SLiM. This
-parameter must have a value that is a Dictionary; the keys of this dictionary should be SLiM
-population identifiers as string values (e.g., "p2"), and the values should be indexes of populations
-in the input tree sequence; a key/value pair of "p2", 4 would mean that the fifth population in the
-input (the one at zero-based index 4) should become p2 on loading into SLiM. If subpopMap is non-
-NULL, all populations in the tree sequence must be explicitly mapped, even if their index will not
-change and even if they will not be used by SLiM; the only exception is for unused slots in the
-population table, which can be explicitly remapped but do not have to be. For instance, suppose we
-have a tree sequence in which population 0 is unused, population 1 is not a SLiM population (for
-example, an ancestral population produced by msprime), and population 2 is a SLiM population, and
-we want to load this in with population 2 as p0 in SLiM. To do this, we could supply a value of
-Dictionary("p0", 2, "p1", 1, "p2", 0) for subpopMap, or we could leave out slot 0 since it is
-unused, with Dictionary("p0", 2, "p1", 1). Although this facility cannot be used to remove
-populations in the tree sequence, note that it may add populations that will be visible when
+generated by the Python pyslim package. Note that the user metadata for a tree-sequence file can be
+read separately with the treeSeqMetadata() function. Beginning with SLiM 4, the subpopMap
+parameter may be supplied to re-order the populations of the input tree sequence when it is loaded in
+to SLiM. This parameter must have a value that is a Dictionary; the keys of this dictionary should be
+SLiM population identifiers as string values (e.g., "p2"), and the values should be indexes of
+populations in the input tree sequence; a key/value pair of "p2", 4 would mean that the fifth
+population in the input (the one at zero-based index 4) should become p2 on loading into SLiM. If
+subpopMap is non-NULL, all populations in the tree sequence must be explicitly mapped, even if their
+index will not change and even if they will not be used by SLiM; the only exception is for unused slots
+in the population table, which can be explicitly remapped but do not have to be. For instance,
+suppose we have a tree sequence in which population 0 is unused, population 1 is not a SLiM
+population (for example, an ancestral population produced by msprime), and population 2 is a SLiM
+population, and we want to load this in with population 2 as p0 in SLiM. To do this, we could supply
+a value of Dictionary("p0", 2, "p1", 1, "p2", 0) for subpopMap, or we could leave out slot 0
+since it is unused, with Dictionary("p0", 2, "p1", 1). Although this facility cannot be used to
+remove populations in the tree sequence, note that it may add populations that will be visible when
 treeSeqOutput() is called (although these will not be SLiM populations); if, in this example, we had
 used Dictionary("p0", 0, "p1", 1, "p5", 2) and then we wrote the result out with
 treeSeqOutput(), the resulting tree sequence would have six populations, although three of them
@@ -275,7 +276,7 @@ however, this crosscheck will only occur the first time that readFromPopulationF
 load a tree sequence; subsequent calls will not perform this crosscheck, for greater speed when
 running models that load saved population state many times (such as models that are conditional on
 TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 683
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 724
 fixation). If you suspect that a tree sequence file might be corrupted or read incorrectly, running a
 Debug build of SLiM enables crosschecks after every load.
 – (void)recalculateFitness([Ni$ tick = NULL])
@@ -289,8 +290,8 @@ The optional parameter tick provides the tick for which mutationEffect() and fit
 callbacks should be selected; if it is NULL (the default), the current tick value for the simulation,
 community.tick, is used. If you call recalculateFitness() in an early() event in a WF model,
 you may wish this to be community.tick - 1 in order to utilize the mutationEffect() and
-fitnessEffect() callbacks for the previous tick, as if the changes that you have made to fitness-
-influencing parameters were already in effect at the end of the previous tick when the new generation
+fitnessEffect() callbacks for the previous tick, as if the changes that you have made to fitnessinfluencing
+parameters were already in effect at the end of the previous tick when the new generation
 was first created and evaluated (usually it is simpler to just make such changes in a late() event
 instead, however, in which case calling recalculateFitness() is probably not necessary at all since
 fitness values will be recalculated immediately afterwards). Regardless of the value supplied for tick
@@ -312,8 +313,8 @@ subpopulations), and optional start and end ticks all limiting its applicability
 be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this
 may be NULL if there is no need to be able to refer to the block later. The registered callback is added
 to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be
-eligible to execute in the current tick (see section 25.11 for details). The new SLiMEidosBlock will
-be defined as a global variable immediately by this method (see section 24.12), and will also be
+eligible to execute in the current tick (see section 26.11 for details). The new SLiMEidosBlock will
+be defined as a global variable immediately by this method (see section 25.12), and will also be
 returned by this method.
 – (object<SLiMEidosBlock>$)registerMateChoiceCallback(Nis$ id, string$ source,
 [Nio<Subpopulation>$ subpop = NULL], [Ni$ start = NULL], [Ni$ end = NULL])
@@ -324,11 +325,11 @@ subpopulations) and optional start and end ticks all limiting its applicability.
 given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may
 be NULL if there is no need to be able to refer to the block later. The registered callback is added to
 the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible
-to execute in the current tick (see section 25.11 for details). The new SLiMEidosBlock will be
-defined as a global variable immediately by this method (see section 24.12), and will also be returned
+to execute in the current tick (see section 26.11 for details). The new SLiMEidosBlock will be
+defined as a global variable immediately by this method (see section 25.12), and will also be returned
 by this method.
 TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 684
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 725
 – (object<SLiMEidosBlock>$)registerModifyChildCallback(Nis$ id, string$ source,
 [Nio<Subpopulation>$ subpop = NULL], [Ni$ start = NULL], [Ni$ end = NULL])
 Register a block of Eidos source code, represented as the string singleton source, as an Eidos
@@ -338,8 +339,8 @@ subpopulations) and optional start and end ticks all limiting its applicability.
 given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may
 be NULL if there is no need to be able to refer to the block later. The registered callback is added to
 the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible
-to execute in the current tick (see section 25.11 for details). The new SLiMEidosBlock will be
-defined as a global variable immediately by this method (see section 24.12), and will also be returned
+to execute in the current tick (see section 26.11 for details). The new SLiMEidosBlock will be
+defined as a global variable immediately by this method (see section 25.12), and will also be returned
 by this method.
 – (object<SLiMEidosBlock>$)registerMutationCallback(Nis$ id, string$ source,
 [Nio<MutationType>$ mutType = NULL], [Nio<Subpopulation>$ subpop = NULL],
@@ -347,14 +348,14 @@ by this method.
 Register a block of Eidos source code, represented as the string singleton source, as an Eidos
 mutation() callback in the current simulation (specific to the target species), with an optional
 mutation type mutType (which may be an integer mutation type identifier, or NULL, the default, to
-indicate all mutation types – see section 25.9), optional subpopulation subpop (which may also be an
+indicate all mutation types – see section 26.9), optional subpopulation subpop (which may also be an
 integer identifier, or NULL, the default, to indicate all subpopulations), and optional start and end
 ticks all limiting its applicability. The script block will be given identifier id (specified as an integer,
 or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer
 to the block later. The registered callback is added to the end of the list of registered SLiMEidosBlock
-objects, and is active immediately; it may be eligible to execute in the current tick (see section 25.11
+objects, and is active immediately; it may be eligible to execute in the current tick (see section 26.11
 for details). The new SLiMEidosBlock will be defined as a global variable immediately by this
-method (see section 24.12), and will also be returned by this method.
+method (see section 25.12), and will also be returned by this method.
 – (object<SLiMEidosBlock>$)registerMutationEffectCallback(Nis$ id, string$ source,
 io<MutationType>$ mutType, [Nio<Subpopulation>$ subpop = NULL],
 [Ni$ start = NULL], [Ni$ end = NULL])
@@ -366,8 +367,8 @@ subpopulations), and optional start and end ticks all limiting its applicability
 be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this
 may be NULL if there is no need to be able to refer to the block later. The registered callback is added
 to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be
-eligible to execute in the current tick (see section 25.11 for details). The new SLiMEidosBlock will
-be defined as a global variable immediately by this method (see section 24.12), and will also be
+eligible to execute in the current tick (see section 26.11 for details). The new SLiMEidosBlock will
+be defined as a global variable immediately by this method (see section 25.12), and will also be
 returned by this method.
 – (object<SLiMEidosBlock>$)registerRecombinationCallback(Nis$ id, string$ source,
 [Nio<Subpopulation>$ subpop = NULL], [Ni$ start = NULL], [Ni$ end = NULL])
@@ -378,8 +379,174 @@ subpopulations) and optional start and end ticks all limiting its applicability.
 given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may
 be NULL if there is no need to be able to refer to the block later. The registered callback is added to
 the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible
-to execute in the current tick (see section 25.11 for details). The new SLiMEidosBlock will be
-defined as a global variable immediately by this method (see section 24.12), and will also be returned
+to execute in the current tick (see section 26.11 for details). The new SLiMEidosBlock will be
+defined as a global variable immediately by this method (see section 25.12), and will also be returned
 by this method.
 TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 685
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 726
+– (object<SLiMEidosBlock>$)registerReproductionCallback(Nis$ id, string$ source,
+[Nio<Subpopulation>$ subpop = NULL], [Ns$ sex = NULL], [Ni$ start = NULL],
+[Ni$ end = NULL])
+Register a block of Eidos source code, represented as the string singleton source, as an Eidos
+reproduction() callback in the current simulation (specific to the target species), with optional
+subpopulation subpop (which may be an integer identifier, or NULL, the default, to indicate all
+subpopulations), optional sex-specificity sex (which may be "M" or "F" in sexual species to make the
+callback specific to males or females respectively, or NULL for no sex-specificity), and optional start
+and end ticks all limiting its applicability. The script block will be given identifier id (specified as an
+integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be
+able to refer to the block later. The registered callback is added to the end of the list of registered
+SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in the current tick
+(see section 26.11 for details). The new SLiMEidosBlock will be defined as a global variable
+immediately by this method (see section 25.12), and will also be returned by this method.
+– (object<SLiMEidosBlock>$)registerSurvivalCallback(Nis$ id, string$ source,
+[Nio<Subpopulation>$ subpop = NULL], [Ni$ start = NULL], [Ni$ end = NULL])
+Register a block of Eidos source code, represented as the string singleton source, as an Eidos
+survival() callback in the current simulation (specific to the target species), with optional
+subpopulation subpop (which may be an integer identifier, or NULL, the default, to indicate all
+subpopulations) and optional start and end ticks all limiting its applicability. The script block will be
+given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may
+be NULL if there is no need to be able to refer to the block later. The registered callback is added to
+the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible
+to execute in the current tick (see section 26.11 for details). The new SLiMEidosBlock will be
+defined as a global variable immediately by this method (see section 25.12), and will also be returned
+by this method.
+– (void)simulationFinished(void)
+Declare the current simulation finished. This method is equivalent to the Community method
+simulationFinished(), except that this method is only legal to call in single-species models (to
+provide backward compatibility). It is recommended that new code should call the Community
+method; this method may be deprecated in the future.
+– (void)skipTick(void)
+Deactivate the target species for the current tick. This sets the active property of the species to F; it
+also set the active property of all callbacks that belong to the species (with the species as their
+species specifier) to F, and sets the active property of all events that are synchronized with the
+species (with the species as their ticks specifier) to F. The cycle counter for the species will not be
+incremented at the end of the tick. This method may only be called in first() events, to ensure that
+species are either active or inactive throughout a given tick.
+– (object<Mutation>)subsetMutations([No<Mutation>$ exclude = NULL],
+[Nio<MutationType>$ mutType = NULL], [Ni$ position = NULL],
+[Nis$ nucleotide = NULL], [Ni$ tag = NULL], [Ni$ id = NULL])
+Returns a vector of mutations subset from the list of all active mutations in the species (as would be
+provided by the mutations property). The parameters specify constraints upon the subset of
+mutations that will be returned. Parameter exclude, if non-NULL, may specify a specific mutation that
+should not be included (typically the focal mutation in some operation). Parameter mutType, if non-
+NULL, may specify a mutation type for the mutations to be returned (as either a MutationType object
+or an integer identifier). Parameter position, if non-NULL, may specify a base position for the
+mutations to be returned. Parameter nucleotide, if non-NULL, may specify a nucleotide for the
+mutations to be returned (either as a string, "A" / "C" / "G" / "T", or as an integer, 0 / 1 / 2 / 3
+respectively). Parameter tag, if non-NULL, may specify a tag value for the mutations to be returned.
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 727
+Parameter id, if non-NULL, may specify a required value for the id property of the mutations to be
+returned.
+This method is shorthand for getting the mutations property of the subpopulation, and then using
+operator [] to select only mutations with the desired properties; besides being much simpler than the
+equivalent Eidos code, it is also much faster. Note that if you only need to select on mutation type,
+the mutationsOfType() method will be even faster.
+– (logical$)treeSeqCoalesced(void)
+Returns the coalescence state for the recorded tree sequence at the last simplification. The returned
+value is a logical singleton flag, T to indicate that full coalescence was observed at the last treesequence
+simplification (meaning that there is a single ancestral individual that roots all ancestry trees
+at all sites along the chromosome – although not necessarily the same ancestor at all sites), or F if full
+coalescence was not observed. For simple models, reaching coalescence may indicate that the model
+has reached an equilibrium state, but this may not be true in models that modify the dynamics of the
+model during execution by changing migration rates, introducing new mutations programmatically,
+dictating non-random mating, etc., so be careful not to attach more meaning to coalescence than it is
+due; some models may require burn-in beyond coalescence to reach equilibrium, or may not have an
+equilibrium state at all. Also note that some actions by a model, such as adding a new subpopulation,
+may cause the coalescence state to revert from T back to F (at the next simplification), so a return
+value of T may not necessarily mean that the model is coalesced at the present moment – only that it
+was coalesced at the last simplification.
+This method may only be called if tree sequence recording has been turned on with
+initializeTreeSeq(); in addition, checkCoalescence=T must have been supplied to
+initializeTreeSeq(), so that the necessary work is done during each tree-sequence simplification.
+Since this method does not perform coalescence checking itself, but instead simply returns the
+coalescence state observed at the last simplification, it may be desirable to call treeSeqSimplify()
+immediately before treeSeqCoalesced() to obtain up-to-date information. However, the speed
+penalty of doing this in every tick would be large, and most models do not need this level of
+precision; usually it is sufficient to know that the model has coalesced, without knowing whether that
+happened in the current tick or in a recent preceding tick.
+– (void)treeSeqOutput(string$ path, [logical$ simplify = T],
+[logical$ includeModel = T], [No$ metadata = NULL])
+Outputs the current tree sequence recording tables to the path specified by path. This method may
+only be called if tree sequence recording has been turned on with initializeTreeSeq(). If
+simplify is T (the default), simplification will be done immediately prior to output; this is almost
+always desirable, unless a model wishes to avoid simplification entirely. (Note that if simplification is
+not done, then all genomes since the last simplification will be marked as samples in the resulting tree
+sequence.) A binary tree sequence file will be written to the specified path; a filename extension
+of .trees is suggested for this type of file.
+Normally, the full SLiM script used to generate the tree sequence is written out to the provenance
+entry of the tree sequence file, to the model subkey of the parameters top-level key. Supplying F for
+includeModel suppresses output of the full script; see section 27.4.6 for further discussion.
+A Dictionary object containing user-generated metadata may be supplied with the metadata
+parameter. If present, this dictionary will be serialized as JSON and attached to the saved tree
+sequence under a key named user_metadata, within the SLiM key (see section 27.4.5). If tskit is
+used to read the tree sequence in Python, this metadata will automatically be deserialized and made
+available at ts.metadata["SLiM"]["user_metadata"]. This metadata dictionary is not used by
+SLiM, or by pyslim, tskit, or msprime; you may use it for any purpose you wish. Note that
+metadata may actually be any subclass of Dictionary, such as a DataFrame. It can even be a
+Species object such as sim, or a LogFile instance; however, only the keys and values contained by
+the object’s Dictionary superclass state will be serialized into the metadata (properties of the
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 728
+subclass will be ignored). This metadata dictionary can be recovered from the saved file using the
+treeSeqMetadata() function.
+– (void)treeSeqRememberIndividuals(object<Individual> individuals,
+[logical$ permanent = T])
+Mark the individuals specified by individuals to be kept across tree sequence table simplification.
+This method may only be called if tree sequence recording has been turned on with
+initializeTreeSeq(). All currently living individuals are always kept across simplification; this
+method does not need to be called, and indeed should not be called, for that purpose. Instead,
+treeSeqRememberIndividuals() allows any individual, including dead individuals, to be kept in
+the final tree sequence. Typically this would be used, for example, to keep particular individuals that
+you wanted to be able to trace ancestry back to in later analysis. However, this is not the typical
+usage pattern for tree sequence recording; most models will not need to call this method.
+There are two ways to keep individuals across simplification. If permanent is T (the default), then the
+specified individuals will be permanently remembered: their genomes will be added to the current
+sample, and they will always be present in the tree sequence. Permanently remembering a large
+number of individuals will, of course, markedly increase memory usage and runtime.
+Supplying F for permanent will instead mark the individuals only for (temporary) retention: their
+genomes will not be added to the sample, and they will appear in the final tree sequence only if one
+of their genomes is retained across simplification. In other words, the rule of thumb for retained
+individuals is simple: if a genome is kept by simplification, the genome’s corresponding individual is
+kept also, if it is retained. Note that permanent remembering takes priority; calling this function with
+permanent=F on an individual that has previously been permanently remembered will not remove it
+from the sample.
+The behavior of simplification for individuals retained with permanent=F depends upon the value of
+the retainCoalescentOnly flag passed to initializeTreeSeq(); here we will discuss the behavior
+of that flag in detail. First of all, genomes are always removed by simplification unless they are (a) part
+of the final generation (i.e., in a living individual when simplification occurs), (b) ancestral to the final
+generation, (c) a genome of a permanently remembered individual, or (d) ancestral to a permanently
+remembered individual. If retainCoalescentOnly is T (the default), they are also always removed if
+they are not a branch point (i.e., a coalescent node or most recent common ancestor) in the tree
+sequence. In some cases it may be useful to retain a genome and its associated individual when it is
+simply an intermediate node in the ancestry (i.e., in the middle of a branch). This can be enabled by
+setting retainCoalescentOnly to F in your call to initializeTreeSeq(). In this case, ancestral
+genomes that are intermediate (“unary nodes”, in tskit parlance) and are within an individual that
+has been retained using the permanent=F flag here are kept, along with the retained individual itself.
+Since setting retainCoalescentOnly to F will prevent the unary nodes for retained individuals from
+being pruned, simplification may often be unable to prune very much at all from the tree sequence,
+and memory usage and runtime may increase rapidly. If you are retaining many individuals, this
+setting should therefore be used only with caution; it is not necessary if you are purely interested in
+the most recent common ancestors. See the pyslim documentation for further discussion of retaining
+and remembering individuals and the effects of the retainCoalescentOnly flag.
+The metadata (age, location, etc) that are stored in the resulting tree sequence are those values present
+at either (a) the final generation, if the individual is alive when the tree sequence is output, or (b) the
+last time that the individual was remembered, if not. Calling treeSeqRememberIndividuals() on
+an individual that is already remembered will cause the archived information about the remembered
+individual to be updated to reflect the individual’s current state; care should be taken to remember
+individuals at a point in time when their state is valid. A case where this is particularly important is for
+the spatial location of individuals in continuous-space models. SLiM automatically retains the
+portions of the genomes that comprise the first generation of any new subpopulation created with
+addSubpop() that are inherited by extant individuals, for easy recapitation and other analysis (see
+sections 17.2 and 17.10). However, the individuals of the first generation are not remembered
+automatically, only their needed genomic information.
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 729
+– (void)treeSeqSimplify(void)
+Triggers an immediate simplification of the tree sequence recording tables. This method may only be
+called if tree sequence recording has been turned on with initializeTreeSeq(). A call to this
+method will free up memory being used by entries that are no longer in the ancestral path of any
+individual within the current sample (currently living individuals, in other words, plus those explicitly
+added to the sample with treeSeqRememberIndividuals()), but it can also take a significant
+amount of time. Typically calling this method is not necessary; the automatic simplification performed
+occasionally by SLiM should be sufficient for most models.

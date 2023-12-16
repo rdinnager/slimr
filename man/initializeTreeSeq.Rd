@@ -55,8 +55,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=627}{SLiM manual: page
-627}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=656}{SLiM manual: page
+656}.
 
 Configure options for tree sequence recording. Calling this
 function turns on tree sequence recording, as a side effect, for later
@@ -126,7 +126,7 @@ if your simulation regularly flags many individuals for retaining. In this
 case, changing retainCoalescentOnly to F may dramatically increase memory usage
 and runtime, in a similar way to permanently remembering all the individuals.
 See the documentation of treeSeqRememberIndividuals() for further discussion
-(section 24.14.2). The timeUnit parameter controls the time unit stated in the
+(section 25.15.2). The timeUnit parameter controls the time unit stated in the
 tree sequence when it is saved (which can be accessed through tskit APIs); it
 has no effect on the running simulation whatsoever. The default value, NULL,
 means that a time unit of "ticks" will be used for all model types. (In SLiM

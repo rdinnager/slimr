@@ -29,8 +29,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=707}{SLiM manual: page
-707}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=752}{SLiM manual: page
+752}.
 
 Calculates inbreeding load (the haploid number of lethal equivalents,
 or B) for a vector of genomes passed in genomes. The calculation can be limited

@@ -41,8 +41,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=637}{SLiM manual: page
-637}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=666}{SLiM manual: page
+666}.
 
 Output the current memory usage of the simulation to Eidos's output
 stream. The specifics of what is printed, and in what format, should not be
@@ -50,9 +50,10 @@ relied upon as they may change from version to version of SLiM. This method
 is primarily useful for understanding where the memory usage of a simulation
 predominantly resides, for debugging or optimization. Note that it does not
 capture all memory usage by the process; rather, it summarizes the memory usage
-by SLiM and Eidos in directly allocated objects and buffers. To get the total
-memory usage of the running process (either current or peak), use the Eidos
-function usage().
+by SLiM and Eidos in directly allocated objects and buffers. To get the same
+memory usage reported by outputUsage(), but as a float$ value, use the Community
+method usage(). To get the total memory usage of the running process (either
+current or peak), use the Eidos function usage().
 
 Documentation for this function can be found in the official
 \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
@@ -103,7 +104,8 @@ Other Community:
 \code{\link{scriptBlocksWithIDs}()},
 \code{\link{simulationFinished}()},
 \code{\link{speciesWithIDs}()},
-\code{\link{subpopulationsWithIDs}()}
+\code{\link{subpopulationsWithIDs}()},
+\code{\link{usage}()}
 
 Other SLiMSim: 
 \code{\link{SS}},

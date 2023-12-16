@@ -27,8 +27,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=624}{SLiM manual: page
-624}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=654}{SLiM manual: page
+654}.
 
 Configure the type of SLiM model used for the simulation. At present,
 one of two model types may be selected. If modelType is "WF", SLiM will use a

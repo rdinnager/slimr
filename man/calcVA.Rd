@@ -30,8 +30,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=708}{SLiM manual: page
-708}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=753}{SLiM manual: page
+753}.
 
 Calculates VA, the additive genetic variance, among a vector
 individuals, in a particular mutation type mutType that represents quantitative

@@ -1,0 +1,7 @@
+This class represents the SLiMgui application. When running under SLiMgui, a global object
+singleton constant of class SLiMgui will be defined, named slimgui. This object can be used to
+query and control the SLiMgui application. When running at the command line, the slimgui
+object will not exist; to determine whether the simulation is running under SLiMgui, one may
+therefore test exists("slimgui"). If a model needs to run both at the command line and under
+SLiMgui, all uses of the slimgui object should be protected by if (exists("slimgui")) to avoid
+errors.

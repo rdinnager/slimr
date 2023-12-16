@@ -2,6 +2,8 @@
 .slim_assets <- new.env()
 .resources <- new.env()
 if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
+                                                        "Eidos",
+                                                        ".E",
                                                         ".G",
                                                         "Genome",
                                                         ".GE",
@@ -26,6 +28,12 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
                                                         "SLiMBuiltin",
                                                         ".SS",
                                                         "SLiMSim",
+                                                        ".Sp",
+                                                        "Species",
+                                                        ".SG",
+                                                        "SLiMgui",
+                                                        ".SM",
+                                                        "SpatialMap",
                                                         ".c",
                                                         "Chromosome",
                                                         ".Init",
@@ -104,7 +112,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
                                                                 stringr::coll(basename(.x))))
 
   resources_used <- purrr::map_lgl(recipes_using_resources,
-                               ~length(.x) > 0)
+                               ~!purrr::is_empty(.x) > 0)
   recipes_using_resources <- recipes_using_resources %>%
     purrr::simplify()
 

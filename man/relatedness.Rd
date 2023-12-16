@@ -27,8 +27,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=652}{SLiM manual: page
-652}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=683}{SLiM manual: page
+683}.
 
 Returns a vector containing the degrees of relatedness between the
 receiver and each of the individuals in individuals. The relatedness between A
@@ -36,7 +36,7 @@ and B is always 1.0 if A and B are actually the same individual; this facility
 works even if SLiM's optional pedigree tracking is not enabled (in which case
 all other relatedness values will be 0.0). Otherwise, if pedigree tracking is
 turned on with initializeSLiMOptions(keepPedigrees=T), this method will use
-the pedigree information described in section 24.7.1 to construct a relatedness
+the pedigree information described in section 25.7.1 to construct a relatedness
 estimate. More specifically, this method uses all available pedigree information
 from the grandparental and parental pedigree records of A and B to compute
 an estimate of the degree of consanguinity between A and B. Siblings have a
@@ -62,30 +62,26 @@ relatedness, and does not necessarily correspond to genetic relatedness, because
 of the effects of factors like assortment and recombination. If a metric of
 actual genetic relatedness is desired, tree-sequence recording can be used
 after simulation is complete, to compute the exact genetic relatedness between
-individuals based upon the complete ancestry tree (a topic which is beyond the
-scope of this manual). Actual genetic relatedness cannot presently be calculated
-during a simulation run; the information is implicitly contained in the recorded
-tree-sequence tables, but calculating it is too computationally expensive to be
-reasonable. This method makes a couple of assumptions. One assumption is that
-the grandparents (or the parents, if grandparental information is not available)
-are themselves unrelated and that they are not inbred; this assumption is
-necessary because we have no information about their parentage, since SLiM's
-pedigree tracking information only goes back two generations. Be aware that
-in a model where inbreeding or selfing occurs at all (including "incidental
-selfing", where a hermaphroditic individual happens to choose itself as a mate),
-some level of "background relatedness" will be present and this assumption
-will be violated. In such circumstances, relatedness() will therefore tend to
-underestimate the degree of relatedness between individuals, and the greater
-the degree of inbreeding, the greater the underestimation will be. If inbreeding
-is allowed in a model - and particularly if it is common - the results
-of relatedness() should therefore not be taken as an estimate of absolute
-relatedness, but can still be useful as an estimate of relative relatedness
-(indicating that, say, A appears from the information available to be more
-closely related to B than it is to C). A second assumption is that, in nonWF
-models, addRecombinant() is not being used, since the pedigree relationships
-involved are then too complex to trace. Indeed, addRecombinant() does not
-record pedigree information at all, for this reason, and so the relatedness of
-individuals produced by addRecombinant() will be 0.0.
+individuals based upon the complete ancestry tree (a topic which is beyond
+the scope of this manual). Actual genetic relatedness cannot presently be
+calculated during a simulation run; the information is implicitly contained in
+the recorded tree-sequence tables, but calculating it is too computationally
+expensive to be reasonable. This method assumes that the grandparents (or the
+parents, if grandparental information is not available) are themselves unrelated
+and that they are not inbred; this assumption is necessary because we have no
+information about their parentage, since SLiM's pedigree tracking information
+only goes back two generations. Be aware that in a model where inbreeding or
+selfing occurs at all (including "incidental selfing", where a hermaphroditic
+individual happens to choose itself as a mate), some level of "background
+relatedness" will be present and this assumption will be violated. In such
+circumstances, relatedness() will therefore tend to underestimate the degree of
+relatedness between individuals, and the greater the degree of inbreeding, the
+greater the underestimation will be. If inbreeding is allowed in a model - and
+particularly if it is common - the results of relatedness() should therefore
+not be taken as an estimate of absolute relatedness, but can still be useful as
+an estimate of relative relatedness (indicating that, say, A appears from the
+information available to be more closely related to B than it is to C). See also
+sharedParentCount() for a different metric of relatedness.
 }
 \section{Copyright}{
 
@@ -104,6 +100,7 @@ Other Individual:
 \code{\link{containsMutations}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{setSpatialPosition}()},
+\code{\link{sharedParentCount}()},
 \code{\link{sumOfMutationsOfType}()},
 \code{\link{uniqueMutationsOfType}()}
 }

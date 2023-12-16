@@ -68,8 +68,8 @@ model subpopulations that split from an already existing subpopulation, use
 addSubpopSplit().
 
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=678}{SLiM manual: page
-678}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=719}{SLiM manual: page
+719}.
 
 Add a new subpopulation with id subpopID and size individuals.
 The subpopID parameter may be either an integer giving the ID of the new
@@ -78,37 +78,14 @@ as "p5" to specify an ID of 5). Only if sex is enabled for the species, the
 initial sex ratio may optionally be specified as sexRatio (as the male fraction,
 M:M+F); if it is not specified, a default of 0.5 is used. The new subpopulation
 will be defined as a global variable immediately by this method (see section
-24.15), and will also be returned by this method. Subpopulations added by this
+25.16), and will also be returned by this method. Subpopulations added by this
 method will initially consist of individuals with empty genomes. In order to
 model subpopulations that split from an already existing subpopulation, use
-addSubpopSplit(). Only in nonWF models, the haploid parameter may be T; in
-this case, the second genome of each new individual will be a null genome,
-rather than an empty genome. For even greater control in nonWF models, you can
-call addSubpop() with an initial size of 0 and then stock the population with
-new individuals created however you wish in the next tick's reproduction()
-callback. ject<Subpopulation>$)addSubpopSplit(is$ subpopID, integer$ size,
-io<Subpopulation>$ sourceSubpop, [float$ sexRatio = 0.5]) Split off a new
-subpopulation with id subpopID and size individuals derived from subpopulation
-sourceSubpop. The subpopID parameter may be either an integer giving the ID
-of the new subpopulation, or a string giving the name of the new subpopulation
-(such as "p5" to specify an ID of 5). The sourceSubpop parameter may specify the
-source subpopulation either as a Subpopulation object or by integer identifier.
-Only if sex is enabled for the species, the initial sex ratio may optionally
-be specified as sexRatio (as the male fraction, M:M+F); if it is not specified,
-a default of 0.5 is used. The new subpopulation will be defined as a global
-variable immediately by this method (see section 24.15), and will also be
-returned by this method. Subpopulations added by this method will consist of
-individuals that are clonal copies of individuals from the source subpopulation,
-randomly chosen with probabilities proportional to fitness. The fitness of all
-of these initial individuals is considered to be 1.0, to avoid a doubled round
-of selection in the initial tick, given that fitness values were already used
-to choose the individuals to clone. Once this initial set of individuals has
-mated to produce offspring, the model is effectively of parental individuals in
-the source subpopulation mating randomly according to fitness, as usual in SLiM,
-with juveniles migrating to the newly added subpopulation. Effectively, then,
-then new subpopulation is created empty, and is filled by migrating juveniles
-from the source subpopulation, in accordance with SLiM's usual model of juvenile
-migration.
+addSubpopSplit(). Only in nonWF models, the haploid parameter may be T; in this
+case, the second genome of each new individual will be a null genome, rather
+than an empty genome. For even greater control in nonWF models, you can call
+addSubpop() with an initial size of 0 and then stock the population with new
+individuals created however you wish in the next tick's reproduction() callback.
 }
 \section{Copyright}{
 
@@ -165,6 +142,7 @@ Other SLiMSim:
 
 Other Species: 
 \code{\link{Sp}},
+\code{\link{addSubpopSplit}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{individualsWithPedigreeIDs}()},
 \code{\link{killIndividuals}()},
@@ -181,7 +159,16 @@ Other Species:
 \code{\link{registerModifyChildCallback}()},
 \code{\link{registerMutationCallback}()},
 \code{\link{registerMutationEffectCallback}()},
-\code{\link{registerRecombinationCallback}()}
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{registerSurvivalCallback}()},
+\code{\link{simulationFinished}()},
+\code{\link{skipTick}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqOutput}()},
+\code{\link{treeSeqRememberIndividuals}()},
+\code{\link{treeSeqSimplify}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

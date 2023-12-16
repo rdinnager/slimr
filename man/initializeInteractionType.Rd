@@ -46,8 +46,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=621}{SLiM manual: page
-621}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=650}{SLiM manual: page
+650}.
 
 Add an interaction type at initialization time. The id must not
 already be used for any interaction type in the simulation. The id parameter
@@ -70,7 +70,7 @@ the InteractionType to reduce the amount of computation necessary by up to a
 factor of two (although it may or may not be used). If reciprocal is F, the
 interaction is not guaranteed to be reciprocal and each interaction will be
 computed independently. The built-in interaction formulas are all reciprocal,
-but if you implement an interaction() callback (see section 25.7), you must
+but if you implement an interaction() callback (see section 26.7), you must
 consider whether the callback you have implemented preserves reciprocality
 or not. For this reason, the default is reciprocal=F, so that bugs are not
 inadvertently introduced by an invalid assumption of reciprocality. See
@@ -92,25 +92,27 @@ string value). Either or both characters may be M or F instead; for example,
 "MM" would indicate a male-male interaction, such as male-male competition,
 whereas "FM" would indicate an interaction influencing only female receivers
 that is influenced only by male exerters, such as male mating displays that
-influence female attraction. This parameter may be set only to "**" unless sex
-has been enabled with initializeSex(). Note that a value of sexSegregation other
-than "**" may imply some degree of non-reciprocality, but it is not necessary to
-specify reciprocal to be F for this reason; SLiM will take the sex-segregation
-of the interaction into account for you. The value of reciprocal may therefore
-be interpreted as meaning: in those cases, if any, in which A interacts with
-B and B interacts with A, is the interaction strength guaranteed to be the
-same in both directions? By default, the interaction strength is 1.0 for all
-interactions within maxDistance. Often it is desirable to change the interaction
-function using setInteractionFunction(); modifying interaction strengths
-can also be achieved with interaction() callbacks if necessary (see section
-25.7). In any case, interactions beyond maxDistance always have a strength of
-0.0, and the interaction strength of an individual with itself is always 0.0,
-regardless of the interaction function or callbacks. The global symbol for the
-new interaction type is immediately available; the return value also provides
-the new object. Note that in multispecies models, initializeInteractionType()
-must be called from a non-species-specific interaction() callback (declared
-as species all initialize()), since interactions are managed at the community
-level.
+influence female attraction. This parameter may be set only to "**" unless
+sex has been enabled with initializeSex(). Note that a value of sexSegregation
+other than "**" may imply some degree of non-reciprocality, but it is not
+necessary to specify reciprocal to be F for this reason; SLiM will take the
+sex-segregation of the interaction into account for you. The value of reciprocal
+may therefore be interpreted as meaning: in those cases, if any, in which A
+interacts with B and B interacts with A, is the interaction strength guaranteed
+to be the same in both directions? The sexSegregation parameter is shorthand
+for setting sex constraints on the interaction type using the setConstraints()
+method; see that method for a more extensive set of constraints that may
+be used. By default, the interaction strength is 1.0 for all interactions
+within maxDistance. Often it is desirable to change the interaction function
+using setInteractionFunction(); modifying interaction strengths can also be
+achieved with interaction() callbacks if necessary (see section 26.7). In any
+case, interactions beyond maxDistance always have a strength of 0.0, and the
+interaction strength of an individual with itself is always 0.0, regardless of
+the interaction function or callbacks. The global symbol for the new interaction
+type is immediately available; the return value also provides the new object.
+Note that in multispecies models, initializeInteractionType() must be called
+from a non-species-specific interaction() callback (declared as species all
+initialize()), since interactions are managed at the community level.
 }
 \section{Copyright}{
 

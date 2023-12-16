@@ -32,8 +32,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=703}{SLiM manual: page
-703}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=748}{SLiM manual: page
+748}.
 
 Returns the amino acid sequence corresponding to the codon sequence
 in codons. Codons should be represented with values in [0, 63] where AAA is 0,

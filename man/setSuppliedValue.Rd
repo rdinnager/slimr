@@ -32,8 +32,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
-668}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=703}{SLiM manual: page
+703}.
 
 Registers a value, passed in value, to be used for the supplied column
 named columnName when a row is next logged. This column must have been added

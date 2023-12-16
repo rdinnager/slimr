@@ -29,8 +29,6 @@ Valine 20
 There does not seem to be a widely used standard for integer coding of amino acids, so SLiM just
 numbers them alphabetically, making stop codons 0. If you want a different coding, you can make
 your own 64-element vector and use it to convert codons to whatever integer codes you need. Other
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 703
 integer values of long are reserved for future use (to support other codings), and will currently
 produce an error.
 When long is T or F and paste is T (the default), the amino acid sequence returned will be a
@@ -43,6 +41,8 @@ This function interprets the supplied codon sequence as the sense strand (i.e., 
 transcribed, and which mirrors the mRNA’s sequence). This uses the standard DNA codon table
 directly. For example, if the nucleotide sequence is CAA TTC, that will correspond to a codon vector
 of 16 61, and will result in the amino acid sequence Gln-Phe (“QF").
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 748
 (is)codonsToNucleotides(integer codons, [string$ format = "string"])
 Returns the nucleotide sequence corresponding to the codon sequence supplied in codons. Codons
 should be represented with values in [0, 63] where AAA is 0, AAC is 1, AAG is 2, and TTT is 63; see
@@ -58,7 +58,7 @@ central nucleotide of the trinucleotide, and will be taken from the correspondin
 nucleotide in mutationMatrix16. This function can be used to easily construct a simple
 trinucleotide-based mutation matrix which can then be modified so that specific trinucleotides sustain
 a mutation rate that does not depend only upon their central nucleotide.
-See the documentation for initializeGenomicElementType() in section 24.1 for further discussion
+See the documentation for initializeGenomicElementType() in section 25.1 for further discussion
 of how these 64×4 mutation matrices are interpreted and used.
 (float)mmJukesCantor(float$ alpha)
 Returns a mutation matrix representing a Jukes–Cantor (1969) model with mutation rate alpha to each
@@ -70,16 +70,6 @@ Returns a mutation matrix representing a Kimura (1980) model with transition rat
 transversion rate beta:
 This 2×2 matrix is suitable for use with initializeGenomicElementType(). Note that the actual
 mutation rate produced by this model is alpha+2*beta.
-0 α α α
-α 0 α α
-α α 0 α
-α α α 0
-0 β α β
-β 0 β α
-α β 0 β
-β α β 0
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 704
 (integer)nucleotideCounts(is sequence)
 A convenience function that returns an integer vector of length four, providing the number of
 occurrences of A / C / G / T nucleotides, respectively, in the supplied nucleotide sequence. The
@@ -90,6 +80,16 @@ C=1, G=2, T=3.
 A convenience function that returns a float vector of length four, providing the frequencies of
 occurrences of A / C / G / T nucleotides, respectively, in the supplied nucleotide sequence. The
 parameter sequence may be a singleton string (e.g., "TATA"), a string vector of single characters
+0 α α α
+α 0 α α
+α α 0 α
+α α α 0
+0 β α β
+β 0 β α
+α β 0 β
+β α β 0
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 749
 (e.g., "T", "A", "T", "A"), or an integer vector (e.g., 3, 0, 3, 0), using SLiM’s standard code of A=0,
 C=1, G=2, T=3.
 (integer)nucleotidesToCodons(is sequence)
@@ -160,10 +160,6 @@ purposes of the heterozygosity calculation, just as if they were at different si
 these choices as embodying an infinite-sites interpretation of the segregating mutations. In most
 biologically realistic models, such genetic states will be quite rare, and so the impact of these choices
 will be negligible; however, in some models these distinctions may be important.
-FST = 1 − HS
-HT
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 706
 (float$)calcHeterozygosity(object<Genome> genomes, [No<Mutation> muts = NULL],
 [Ni$ start = NULL], [Ni$ end = NULL])
 Calculates the heterozygosity for a vector of genomes, based upon the frequencies of mutations in the
@@ -174,6 +170,11 @@ be all of the genomes in a subpopulation, or in the entire population, but any g
 used. By default, with muts=NULL, the calculation is based upon all mutations in the simulation; the
 calculation can instead be based upon a subset of mutations, such as mutations of a specific mutation
 type, by passing the desired vector of mutations for muts.
+FST = 1 −
+HS
+HT
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 751
 The calculation can be narrowed to apply to only a window – a subrange of the full chromosome – by
 passing the interval bounds [start, end] for the desired window. In this case, the vector of mutations
 used for the calculation will be subset to include only mutations within the specified window. The
@@ -213,8 +214,6 @@ The calculation can be narrowed to apply to only a window – a subrange of the 
 passing the interval bounds [start, end] for the desired window. In this case, the vector of mutations
 used for the calculation will be subset to include only mutations within the specified window. The
 default behavior, with start and end of NULL, provides the genome-wide heterozygosity.
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 707
 The implementation calcPairHeterozygosity(), viewable with functionSource(), treats every
 mutation as independent in the heterozygosity calculations by default (i.e., with infiniteSites=T).
 If mutations are stacked, the heterozygosity calculated therefore depends upon the number of
@@ -225,6 +224,8 @@ purposes of the heterozygosity calculation, just as if they were at different si
 these choices as embodying an infinite-sites interpretation of the segregating mutations. In most
 biologically realistic models, such genetic states will be quite rare, and so the impact of this choice
 will be negligible; however, in some models this distinction may be important. The behavior of
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 752
 calcPairHeterozygosity() can be switched to calculate based upon the number of differing sites,
 rather than the number of unshared mutations, by passing infiniteSites=F.
 (float$)calcVA(object<Individual> individuals, io<MutationType>$ mutType)
@@ -262,8 +263,6 @@ Returns a vector, matrix, or array that summarizes spatial patterns of informati
 individuals in individuals. In essence, those individuals are assigned into bins according to their
 spatial position, and then a summary value for each bin is calculated based upon the individuals each
 bin contains. The individuals might be binned in one dimension (resulting in a vector of summary
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 708
 values), in two dimensions (resulting in a matrix), or in three dimensions (resulting in an array).
 Typically the spatiality of the result (the dimensions into which the individuals are binned) will match
 the dimensionality of the model, as indicated by the default value of NULL for the optional
@@ -274,12 +273,14 @@ could be passed to summarize individuals into a vector, rather than a matrix, as
 based only upon their y position (i.e., the value of their y property). Whatever spatiality is chosen, the
 parameter dim provides the dimensions of the desired result, in the same form that the dim() function
 does: first the number of rows, then the number of columns, and then the number of planes, as
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 753
 needed (see the Eidos manual for discussion of matrices, arrays, and dim()). The length of dims must
 match the requested spatiality; for spatiality "xy", for example, dims might be c(50,100) to request
 that the returned matrix have 50 rows and 100 columns. The result vector/matrix/array is in the correct
 orientation to be directly usable as a spatial map, by passing it to the defineSpatialMap() method
-of Subpopulation. For further discussion of dimensionality and spatiality, see section 24.1 on
-initializeInteractionType(), and section 24.8 on InteractionType.
+of Subpopulation. For further discussion of dimensionality and spatiality, see section 25.1 on
+initializeInteractionType(), and section 25.8 on InteractionType.
 The spatialBounds parameter defines the spatial boundaries within which the individuals are
 binned. Typically this is the spatial bounds of a particular subpopulation, within which the individuals
 reside; for individuals in p1, for example, you would likely pass p1.spatialBounds for this.
@@ -293,7 +294,7 @@ the form c(x0, y0, x1, y1) even if the summary is being produced with spatiality
 the result, a grid with dimensions defined by dims is conceptually stretched out across the given
 spatial bounds, such that the centers of the edge and corner grid squares are aligned with the limits of
 the spatial bounds. This matches the way that defineSpatialMap() defines its maps; see section
-15.11 for illustration.
+16.11 for illustration.
 The particular summary produced depends upon the parameters operation and empty. Consider a
 single grid square represented by a single element in the result. That grid square contains zero or
 more of the individuals in individuals. If it contains zero individuals and empty is not NULL, the
@@ -317,8 +318,6 @@ individuals in each grid square, again use the default of 0.0 for empty, but now
 empty could be NULL instead and operation would still produce the correct result; but using empty
 makes summarizeIndividuals() more efficient since it allows the execution of operation to be
 skipped for those squares.
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 709
 Lambdas are not limited in their complexity; they can use if, for, etc., and can call methods and
 functions. A typical operation to compute the mean phenotype in a quantitative genetic model that
 stores phenotype values in tagF, for example, would be "mean(individuals.tagF);", and this is
@@ -328,6 +327,8 @@ you may wish to pre-calculate values shared by all of the lambda calls, making t
 lambda code using defineGlobal() or defineConstant().
 There is one last twist, if perUnitArea is T: values are divided by the area (or length, in 1D, or
 volume, in 3D) that their corresponding grid cell comprises, so that each value is in units of “per unit
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 754
 area” (or “per unit length”, or “per unit volume”). The total area of the grid is defined by the spatial
 bounds, and the area of a given grid cell is defined by the portion of the spatial bounds that is within
 that cell. This is not the same for all grid cells; grid cells that fall partially outside spatialBounds
@@ -349,7 +350,7 @@ filePath. If userData is T (the default), the top-level metadata under the SLiM/
 is returned; this is the same metadata that can optionally be supplied to treeSeqOutput() in its
 metadata parameter, so it makes it easy to recover metadata that you attached to the tree sequence
 when it was saved. If userData is F, the entire top-level metadata Dictionary object is returned; this
-can be useful for examining the values of other keys under the SLiM key (see section 26.4), or values
+can be useful for examining the values of other keys under the SLiM key (see section 27.4), or values
 inside the top-level dictionary itself that might have been placed there by msprime or other software.
 This function can be used to read in parameter values or other saved state (tag property values, for
 example), in order to resuscitate the complete state of a simulation that was written to a .trees file.

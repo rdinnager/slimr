@@ -6,13 +6,13 @@
 \alias{.P$spatialMapValue}
 \title{SLiM method spatialMapValue}
 \usage{
-spatialMapValue(name, point)
+spatialMapValue(map, point)
 }
 \arguments{
-\item{name}{An object of type string or float. Must be of length 1 (a
+\item{map}{An object of type string or SpatialMap object. Must be of length 1 (a
 singleton). See details for description.}
 
-\item{point}{An object of type string or float. See details for description.}
+\item{point}{An object of type float. See details for description.}
 }
 \value{
 An object of type float.
@@ -29,15 +29,17 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=701}{SLiM manual: page
-701}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=745}{SLiM manual: page
+745}.
 
-Looks up the spatial map indicated by name, and uses its mapping
+Looks up the spatial map specified by map, and uses its mapping
 machinery (as defined by the gridSize, values, and interpolate parameters to
 defineSpatialMap()) to translate the coordinates of point into a corresponding
-map value. The length of point must be equal to the spatiality of the spatial
-map; in other words, for a spatial map with spatiality "xz", point must be
-of length 2, specifying the x and z coordinates of the point to be evaluated.
+map value. The parameter map may specify the map either as a SpatialMap object,
+or by its string name; in either case, the map must have been added to the
+subpopulation. The length of point must be equal to the spatiality of the
+spatial map; in other words, for a spatial map with spatiality "xz", point must
+be of length 2, specifying the x and z coordinates of the point to be evaluated.
 Interpolation will automatically be used if it was enabled for the spatial map.
 Point coordinates are clamped into the range defined by the spatial boundaries,
 even if the spatial boundaries are periodic; use pointPeriodic() to wrap the
@@ -49,7 +51,10 @@ spatial map with spatiality "xz", for example, the length of point must be an
 exact multiple of 2, and successive pairs of elements from point (elements 0 and
 1, then elements 2 and 3, etc.) will be taken as the x and z coordinates of the
 points to be evaluated. This allows spatialMapValue() to be used in a vectorized
-fashion.
+fashion. The mapValue() method of SpatialMap provides the same functionality
+directly on the SpatialMap class; spatialMapValue() is provided on Subpopulation
+partly for backward compatibility, but also for convenience for the most common
+usage case of spatial maps.
 }
 \section{Copyright}{
 
@@ -70,17 +75,20 @@ Other Subpopulation:
 \code{\link{addEmpty}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
+\code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
+\code{\link{pointDeviated}()},
 \code{\link{pointInBounds}()},
 \code{\link{pointPeriodic}()},
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
 \code{\link{setCloningRate}()},

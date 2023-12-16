@@ -29,8 +29,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
-667}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
+702}.
 
 Adds a new data column that provides the sex ratio M:(M+F) of the
 subpopulation subpop, named pX_sex_ratio. If the subpopulation exists but has a

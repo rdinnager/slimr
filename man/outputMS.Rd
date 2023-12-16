@@ -33,10 +33,10 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=644}{SLiM manual: page
-644}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=674}{SLiM manual: page
+674}.
 
-Output the target genomes in MS format (see section 26.3.2 for output
+Output the target genomes in MS format (see section 27.3.2 for output
 format details). This low-level output method may be used to output any sample
 of Genome objects (the Eidos function sample() may be useful for constructing
 custom samples, as may the SLiM class Individual). For output of a sample

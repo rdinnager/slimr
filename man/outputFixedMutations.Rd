@@ -62,21 +62,21 @@ the nucleotides associated with any nucleotide-based mutations; see section
 the state of the simulation at the end of a generation.
 
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=680}{SLiM manual: page
-680}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=721}{SLiM manual: page
+721}.
 
 Output all fixed mutations - all Substitution objects, in other words
-(see section 1.5.2) - in a SLiM native format (see section 26.1.2 for output
+(see section 1.5.2) - in a SLiM native format (see section 27.1.2 for output
 format details). If the optional parameter filePath is NULL (the default),
 output will be sent to Eidos's output stream (see section 4.2.1). Otherwise,
 output will be sent to the filesystem path specified by filePath, overwriting
 that file if append if F, or appending to the end of it if append is T.
 Mutations which have fixed but have not been turned into Substitution objects
 - typically because convertToSubstitution has been set to F for their mutation
-type (see section 24.11.1) - are not output; they are still considered to be
+type (see section 25.11.1) - are not output; they are still considered to be
 segregating mutations by SLiM. In SLiM 3.3 and later, the output format includes
 the nucleotides associated with any nucleotide-based mutations; see section
-26.1.2. Output is generally done in a late() event, so that the output reflects
+27.1.2. Output is generally done in a late() event, so that the output reflects
 the state of the simulation at the end of a tick.
 }
 \section{Copyright}{
@@ -134,6 +134,7 @@ Other SLiMSim:
 
 Other Species: 
 \code{\link{Sp}},
+\code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{individualsWithPedigreeIDs}()},
@@ -150,7 +151,16 @@ Other Species:
 \code{\link{registerModifyChildCallback}()},
 \code{\link{registerMutationCallback}()},
 \code{\link{registerMutationEffectCallback}()},
-\code{\link{registerRecombinationCallback}()}
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{registerSurvivalCallback}()},
+\code{\link{simulationFinished}()},
+\code{\link{skipTick}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqOutput}()},
+\code{\link{treeSeqRememberIndividuals}()},
+\code{\link{treeSeqSimplify}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

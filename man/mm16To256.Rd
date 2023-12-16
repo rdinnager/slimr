@@ -26,8 +26,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=704}{SLiM manual: page
-704}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=749}{SLiM manual: page
+749}.
 
 Returns a 64×4 mutation matrix that is functionally identical to
 the supplied 4×4 mutation matrix in mutationMatrix16. The mutation rate for
@@ -37,7 +37,7 @@ the same nucleotide in mutationMatrix16. This function can be used to easily
 construct a simple trinucleotide-based mutation matrix which can then be
 modified so that specific trinucleotides sustain a mutation rate that does
 not depend only upon their central nucleotide. See the documentation for
-initializeGenomicElementType() in section 24.1 for further discussion of how
+initializeGenomicElementType() in section 25.1 for further discussion of how
 these 64×4 mutation matrices are interpreted and used.
 }
 \section{Copyright}{

@@ -30,8 +30,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=659}{SLiM manual: page
-659}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=692}{SLiM manual: page
+692}.
 
 Returns a vector containing distances between receiver and the
 individuals in exerters. If exerters is NULL (the default), then a vector of
@@ -49,8 +49,9 @@ not the dimensionality of the model as a whole (as declared in
 initializeSLiMOptions()). The distances returned are therefore the distances
 that would be used to calculate interaction strengths. However, distance() will
 return finite distances for all pairs of individuals, even if the individuals
-are non-interacting; the distance() between an individual and itself will thus
-be 0. See interactionDistance() for an alternative distance definition.
+are non-interacting due to the maximum interaction distance or the interaction
+constraints; the distance() between an individual and itself will thus be 0. See
+interactionDistance() for an alternative distance definition.
 }
 \section{Copyright}{
 
@@ -78,8 +79,10 @@ Other InteractionType:
 \code{\link{nearestNeighbors}()},
 \code{\link{neighborCountOfPoint}()},
 \code{\link{neighborCount}()},
+\code{\link{setConstraints}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
+\code{\link{testConstraints}()},
 \code{\link{totalOfNeighborStrengths}()},
 \code{\link{unevaluate}()}
 }

@@ -60,8 +60,8 @@ and mutationFrequenciesInGenomes(). Eidos events fitness() mateChoice()
 modifyChild() recombination() interaction() reproduction() 567
 
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=680}{SLiM manual: page
-680}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=721}{SLiM manual: page
+721}.
 
 Return a float vector with the frequencies of all of the Mutation
 objects passed in mutations, within the Subpopulation objects in subpops. The
@@ -129,6 +129,7 @@ Other SLiMSim:
 
 Other Species: 
 \code{\link{Sp}},
+\code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{individualsWithPedigreeIDs}()},
@@ -145,7 +146,16 @@ Other Species:
 \code{\link{registerModifyChildCallback}()},
 \code{\link{registerMutationCallback}()},
 \code{\link{registerMutationEffectCallback}()},
-\code{\link{registerRecombinationCallback}()}
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{registerSurvivalCallback}()},
+\code{\link{simulationFinished}()},
+\code{\link{skipTick}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqOutput}()},
+\code{\link{treeSeqRememberIndividuals}()},
+\code{\link{treeSeqSimplify}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

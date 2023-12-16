@@ -35,8 +35,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=707}{SLiM manual: page
-707}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=751}{SLiM manual: page
+751}.
 
 Calculates the heterozygosity for a vector of genomes, based upon
 the frequencies of mutations in the genomes. The result is the expected
@@ -44,11 +44,11 @@ heterozygosity, for the individuals to which the genomes belong, assuming that
 they are under Hardy-Weinberg equilibrium; this can be compared to the observed
 heterozygosity of an individual, as calculated by calcPairHeterozygosity().
 Often genomes will be all of the genomes in a subpopulation, or in the entire
-population, but any genome vector may be used. By default, with muts=NULL,
-the calculation is based upon all mutations in the simulation; the calculation
-can instead be based upon a subset of mutations, such as mutations of a
-specific mutation type, by passing the desired vector of mutations for muts.
-The calculation can be narrowed to apply to only a window - a subrange of the
+population, but any genome vector may be used. By default, with muts=NULL, the
+calculation is based upon all mutations in the simulation; the calculation can
+instead be based upon a subset of mutations, such as mutations of a specific
+mutation type, by passing the desired vector of mutations for muts. FST = 1 − HS
+HT The calculation can be narrowed to apply to only a window - a subrange of the
 full chromosome - by passing the interval bounds [start, end] for the desired
 window. In this case, the vector of mutations used for the calculation will
 be subset to include only mutations within the specified window. The default

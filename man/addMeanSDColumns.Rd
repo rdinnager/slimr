@@ -35,8 +35,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
-667}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
+702}.
 
 Adds two new data columns with names of columnName_mean and
 columnName_sd. When a given row is generated, the code supplied in source is

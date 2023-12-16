@@ -29,8 +29,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=663}{SLiM manual: page
-663}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=697}{SLiM manual: page
+697}.
 
 Returns the number of individuals in exerterSubpop that are within
 the maximum interaction distance according to the distance metric of the
@@ -68,8 +68,10 @@ Other InteractionType:
 \code{\link{nearestNeighborsOfPoint}()},
 \code{\link{nearestNeighbors}()},
 \code{\link{neighborCount}()},
+\code{\link{setConstraints}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
+\code{\link{testConstraints}()},
 \code{\link{totalOfNeighborStrengths}()},
 \code{\link{unevaluate}()}
 }

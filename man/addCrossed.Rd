@@ -6,7 +6,7 @@
 \alias{.P$addCrossed}
 \title{SLiM method addCrossed}
 \usage{
-addCrossed(parent1, parent2, sex)
+addCrossed(parent1, parent2, sex, count, defer)
 }
 \arguments{
 \item{parent1}{An object of type Individual object. Must be of length 1 (a
@@ -17,10 +17,15 @@ singleton). See details for description.}
 
 \item{sex}{An object of type null or float or string. Must be of length 1 (a
 singleton). The default value is \code{NULL}. See details for description.}
+
+\item{count}{An object of type integer. Must be of length 1 (a singleton). The
+default value is \code{1}. See details for description.}
+
+\item{defer}{An object of type logical. Must be of length 1 (a singleton). The
+default value is \code{F}. See details for description.}
 }
 \value{
-An object of type null or Individual object. Return will be of length 1
-(a singleton)
+An object of type Individual object.
 }
 \description{
 Documentation for SLiM function \code{addCrossed}, which is a method of the SLiM
@@ -34,8 +39,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=691}{SLiM manual: page
-691}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=733}{SLiM manual: page
+733}.
 
 Generates a new offspring individual from the given parents
 by biparental sexual reproduction, queues it for addition to the target
@@ -77,21 +82,44 @@ spawning), however, biparental mating may occur between parents that are not
 from the same subpopulation; that is legal in nonWF models, and in that case,
 modifyChild() callbacks for the subpopulation of parent1 are used (since that
 is the maternal parent). If the modifyChild() callback process results in
-rejection of the proposed child (see section 25.5), a new offspring individual
-will not be generated, and this method will return NULL. To force the generation
-of an offspring individual from a given pair of parents, you could loop until
-addCrossed() succeeds, but note that if your modifyChild() callback rejects
-all proposed children from those particular parents, your model will then hang,
-so care must be taken with this approach. Usually, nonWF models do not force
-generation of offspring in this manner; rejection of a proposed offspring by
-a modifyChild() callback typically represents a phenomenon such as post-mating
-reproductive isolation or lethal genetic incompatibilities that would reduce
-the expected litter size, so the default behavior is typically desirable. Note
-that this method is only for use in nonWF models, in which offspring generation
-is managed manually by the model script; in such models, addCrossed() must be
-called only from reproduction() callbacks, and may not be called at any other
-time. In WF models, offspring generation is managed automatically by the SLiM
-core.
+rejection of the proposed child (see section 26.5), a new offspring individual
+is not be generated. To force the generation of an offspring individual from
+a given pair of parents, you could loop until addCrossed() succeeds, but note
+that if your modifyChild() callback rejects all proposed children from those
+particular parents, your model will then hang, so care must be taken with this
+approach. Usually, nonWF models do not force generation of offspring in this
+manner; rejection of a proposed offspring by a modifyChild() callback typically
+represents a phenomenon such as post-mating reproductive isolation or lethal
+genetic incompatibilities that would reduce the expected litter size, so the
+default behavior is typically desirable. Beginning in SLiM 4.1, the count
+parameter dictates how many offspring will be generated (previously, exactly
+one offspring was generated). Each offspring is generated independently, based
+upon the given parameters. The returned vector contains all generated offspring,
+except those that were rejected by a modifyChild() callback. If all offspring
+are rejected, object<Individual>(0) is returned, which is a zero-length object
+vector of class Individual; note that this is a change in behavior from earlier
+versions, which would return NULL. Beginning in SLiM 4.1, passing T for defer
+will defer the generation of the genomes of the produced offspring until the
+end of the reproduction phase. Genome generation can only be deferred if there
+are no active mutation() or recombination() callbacks; otherwise, an error will
+result. Furthermore, when genome generation is deferred the mutations of the
+genomes of the generated offspring may not be accessed until reproduction is
+complete (whether from a modifyChild() callback or otherwise). There is little
+or no advantage to deferring genome generation at this time (it is in place
+for future expansion); the default of F for defer is generally preferable since
+it has fewer restrictions. Also beginning in SLiM 4.1, in spatial models the
+spatial position of the offspring will be inherited (i.e., copied) from parent1;
+more specifically, the x property will be inherited in all spatial models
+(1D/2D/3D), the y property in 2D/3D models, and the z property in 3D models.
+Properties not inherited will be left uninitialized, as they were prior to SLiM
+4.1. The parent's spatial position is probably not desirable in itself; the
+intention here is to make it easy to model the natal dispersal of all the new
+offspring for a given tick with a single vectorized call to pointDeviated().
+Note that this method is only for use in nonWF models, in which offspring
+generation is managed manually by the model script; in such models, addCrossed()
+must be called only from reproduction() callbacks, and may not be called at any
+other time. In WF models, offspring generation is managed automatically by the
+SLiM core.
 }
 \section{Copyright}{
 
@@ -111,17 +139,20 @@ Other Subpopulation:
 \code{\link{addEmpty}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
+\code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
+\code{\link{pointDeviated}()},
 \code{\link{pointInBounds}()},
 \code{\link{pointPeriodic}()},
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
 \code{\link{setCloningRate}()},

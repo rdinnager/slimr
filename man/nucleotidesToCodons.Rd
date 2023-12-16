@@ -27,8 +27,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=705}{SLiM manual: page
-705}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=750}{SLiM manual: page
+750}.
 
 Returns the codon sequence corresponding to the nucleotide sequence
 in sequence. The codon sequence is an integer vector with values from 0 to
@@ -58,14 +58,14 @@ More complex generative models such as Markov processes are not supported
 intrinsically in SLiM at this time, but arbitrary generated sequences may
 always be loaded from files on disk. The format parameter controls the format
 of the returned sequence. It may be "string" to obtain the generated sequence
-as a singleton string (e.g., "TATA"), "char" to obtain it as a string vector
-of single characters (e.g., "T", "A", "T", "A"), or "integer" to obtain it as
-an integer vector (e.g., 3, 0, 3, 0), using SLiM's standard code of A=0, C=1,
-G=2, T=3. For passing directly to initializeAncestralNucleotides(), format
-"string" (a singleton string) will certainly be the most memory-efficient, and
-probably also the fastest. Memory efficiency can be a significant consideration;
-the nucleotide sequence for a chromosome of length 109 will occupy approximately
-1 GB of memory when stored as a singleton string (with one byte per nucleotide),
+as a singleton string (e.g., "TATA"), "char" to obtain it as a string vector of
+single characters (e.g., "T", "A", "T", "A"), or "integer" to obtain it as an
+integer vector (e.g., 3, 0, 3, 0), using SLiM's standard code of A=0, C=1, G=2,
+T=3. For passing directly to initializeAncestralNucleotides(), format "string"
+(a singleton string) will certainly be the most memory-efficient, and probably
+also the fastest. Memory efficiency can be a significant consideration; the
+nucleotide sequence for a chromosome of length 109 will occupy approximately 1
+GB of memory when stored as a singleton string (with one byte per nucleotide),
 and much more if stored in the other formats. However, the other formats can
 be easier to work with in Eidos, and so may be preferable for relatively short
 chromosomes if you are manipulating the generated sequence.

@@ -30,6 +30,7 @@ classes <- c("Chromosome",
              "Mutation",
              "MutationType",
              "SLiMEidosBlock",
+             "SpatialMap",
              #"SLiMSim",
              "Species",
              "Subpopulation",
@@ -70,6 +71,14 @@ initialize_intro_txtfile <- grep("_intro", slim_lang_txtfiles[initialize_methods
                                  value = TRUE, fixed = TRUE)
 slim_lang_txtfiles <- slim_lang_txtfiles[-initialize_methods_index]
 
+
+eidos_methods_index <- grep("/Eidos", slim_lang_txtfiles, fixed = TRUE)
+eidos_methods_txtfile <- grep("_methods", slim_lang_txtfiles[eidos_methods_index],
+                                   value = TRUE, fixed = TRUE)
+eidos_intro_txtfile <- grep("_intro", slim_lang_txtfiles[eidos_methods_index],
+                                 value = TRUE, fixed = TRUE)
+slim_lang_txtfiles <- slim_lang_txtfiles[-eidos_methods_index]
+
 slim_lang_methods_txtfiles <- grep("_methods", slim_lang_txtfiles, value = TRUE, fixed = TRUE)
 slim_lang_properties_txtfiles <- grep("_properties", slim_lang_txtfiles, value = TRUE, fixed = TRUE)
 
@@ -93,6 +102,12 @@ slim_lang_intro_txtfiles <- grep("Builtin", slim_lang_intro_txtfiles, value = TR
 initialize_intro <- readr::read_lines(initialize_intro_txtfile) %>%
   paste(collapse = "\n") %>%
   setNames(stringr::str_remove_all(initialize_intro_txtfile,
+                                   "data-raw/build_4/slim_reference/") %>%
+             stringr::str_remove_all("_intro.txt"))
+
+eidos_intro <- readr::read_lines(eidos_intro_txtfile) %>%
+  paste(collapse = "\n") %>%
+  setNames(stringr::str_remove_all(eidos_intro_txtfile,
                                    "data-raw/build_4/slim_reference/") %>%
              stringr::str_remove_all("_intro.txt"))
 
@@ -162,7 +177,7 @@ find_man_page <- function(func_name, man_txt, pages = NULL) {
                                               as.character(),
                                             dotall = TRUE))
 
-  page <- page[page >= 617 & page <= 710]
+  page <- page[page >= 646 & page <= 755]
 
   if(!is.null(pages)) {
     page <- page[page >= pages[1] & page <= pages[2]]
@@ -264,6 +279,11 @@ initialize_txt <- readr::read_lines(initialize_methods_txtfile) %>%
 
 initialize_methods_data <- extract_methods(initialize_txt, init = TRUE)
 
+eidos_txt <- readr::read_lines(eidos_methods_txtfile) %>%
+  paste(collapse = "\n")
+
+eidos_methods_data <- extract_methods(eidos_txt, init = TRUE, SLiMSim = TRUE)
+
 builtin_txt <- slim_lang_methods_txt$SLiMBuiltin_methods.txt
 builtin_methods_data <- extract_methods(builtin_txt, init = TRUE)
 
@@ -280,10 +300,11 @@ all_methods_data <- purrr::imap(slim_lang_methods_txt,
 #                                ~extract_methods(.x, init = FALSE))
 # names(all_methods_data) <- stringr::str_remove(names(all_methods_data), "_methods.txt")
 
-all_methods_data <- c(list(initialize_methods_data),
+all_methods_data <- c(list(initialize_methods_data, eidos_methods_data),
                       all_methods_data)
 
 names(all_methods_data)[1] <- "Initialize"
+names(all_methods_data)[2] <- "Eidos"
 
 all_methods_data <- c(all_methods_data,
                       list(builtin_methods_data))
@@ -321,8 +342,39 @@ on the official website: \\url{https://messerlab.org/slim/}
 #..  <<class_abbr>>$<<function_name>>(<<paste(arg_data[[1]]$arg_name, collapse = ', ')>>)
 #..}"
 
+eidos_func_template <- "
+Eidos method <<function_name>>
+
+Documentation for Eidos function \\code{<<function_name>>}, which is a method of \\code{\\link{<<class_name>>}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \\code{\\link{slim_block}} function further nested in a \\code{\\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official \\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=<<man_page>>}{SLiM manual: page <<man_page>>}.
+
+<<params>>
+
+@aliases <<class_name>>$<<function_name>> <<class_abbr>>$<<function_name>>
+@family <<class_name>>
+@return An object of type <<return_type_desc>>. <<ifelse(return_singleton, 'Return will be of length 1 (a singleton)', '')>>
+@details <<description>>
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \\url{http://benhaller.com/slim/SLiM_Manual.pdf}. This documentation is
+Copyright © 2016–2020 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \\url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\\email{bhaller@benhaller.com}) and Philipp W Messer (\\email{messer@cornell.edu})
+<<ifelse(class_name %in% c('Initialize', 'SLiMBuiltin'), '@export', '')>>
+#..eidos_<<function_name>> <- function(<<paste(arg_data[[1]]$arg_name, collapse = ', ')>>) {
+#..  <<class_abbr>>$<<function_name>>(<<paste(arg_data[[1]]$arg_name, collapse = ', ')>>)
+#..}"
+
 method_code <- "#..<<class_name>>$<<function_name>> <- <<class_abbr>>$<<function_name>> <- function(<<paste(arg_data[[1]]$arg_name, collapse = ', ')>>) {
 #..  ?<<function_name>>
+#..}"
+
+eidos_method_code <- "#..<<class_name>>$<<function_name>> <- <<class_abbr>>$<<function_name>> <- function(<<paste(arg_data[[1]]$arg_name, collapse = ', ')>>) {
+#..  ?eidos_<<function_name>>
 #..}"
 
 arg_roxy_template <- "
@@ -372,10 +424,17 @@ make_slim_function(func_table, class_name, class_abbr, template = func_template)
 make_slim_function(func_table, class_name, class_abbr, template = method_code) %>%
   cat()
 
+make_slim_function(func_table, class_name, class_abbr, template = eidos_func_template) %>%
+  cat()
+
+make_slim_function(func_table, class_name, class_abbr, template = eidos_method_code) %>%
+  cat()
+
 class_abbrs <- tibble::tribble(~class_name, ~class_abbr, ~class_internal,
                                "Initialize", "Init", ".Init",
                                "Chromosome", "Ch", ".Ch",
                                "Community", "Co", ".Co",
+                               "Eidos", "E", ".E",
                                "Genome", "G", ".G",
                                "GenomicElement", "GE", ".GE",
                                "GenomicElementType", "GET", ".GET",
@@ -386,13 +445,19 @@ class_abbrs <- tibble::tribble(~class_name, ~class_abbr, ~class_internal,
                                "MutationType", "MT", ".MT",
                                "SLiMBuiltin", "SB", ".SB",
                                "SLiMEidosBlock", "SEB", ".SEB",
+                               "SLiMgui", "SG", ".SG",
                                "SLiMSim", "SS", ".SS",
+                               "SpatialMap", "SM", ".SM",
                                "Species", "Sp", ".Sp",
                                "Subpopulation", "P", ".P",
                                "Substitution", "S", ".S")
 
 method_make_df <- dplyr::tibble(class_name = names(all_methods_data)) %>%
-  dplyr::left_join(class_abbrs)
+  dplyr::left_join(class_abbrs) %>%
+  dplyr::mutate(func_template = purrr::map(class_name,
+                           ~if(.x == "Eidos") eidos_func_template else func_template)) %>%
+  dplyr::mutate(method_code = purrr::map(class_name,
+                           ~if(.x == "Eidos") eidos_method_code else method_code))
 
 method_table <- all_methods_data[[1]]
 make_class_funcs <- function(method_table, class_name, class_abbr, template) {
@@ -409,16 +474,18 @@ make_class_funcs <- function(method_table, class_name, class_abbr, template) {
 
 all_methods_txt <- purrr::pmap_chr(list(all_methods_data,
                                    method_make_df$class_name,
-                                   method_make_df$class_internal),
+                                   method_make_df$class_internal,
+                                   method_make_df$func_template),
                                    ~make_class_funcs(..1, ..2, ..3,
-                                                     func_template)) %>%
+                                                     ..4)) %>%
   paste(collapse = "\n\n\n\n")
 
 all_methods_code <- purrr::pmap_chr(list(all_methods_data,
                                          method_make_df$class_name,
-                                         method_make_df$class_internal),
+                                         method_make_df$class_internal,
+                                         method_make_df$method_code),
                                     ~make_class_funcs(..1, ..2, ..3,
-                                                      method_code)) %>%
+                                                      ..4)) %>%
   paste(collapse = "\n\n\n\n")
 
 ## fix issue with assignment operator wrapping
@@ -644,6 +711,7 @@ slim_classes <- class_abbrs
 usethis::use_data(.Init,
                   .Ch,
                   .Co,
+                  .E,
                   .G,
                   .GE,
                   .GET,
@@ -654,6 +722,8 @@ usethis::use_data(.Init,
                   .MT,
                   .SB,
                   .SEB,
+                  .SG,
+                  .SM,
                   .SS,
                   .Sp,
                   .P,

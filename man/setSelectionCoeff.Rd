@@ -27,15 +27,15 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=670}{SLiM manual: page
-670}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=705}{SLiM manual: page
+705}.
 
 Set the selection coefficient of the mutation to selectionCoeff. The
 selection coefficient will be changed for all individuals that possess the
 mutation, since they all share a single Mutation object (note that the dominance
 coefficient will remain unchanged, as it is determined by the mutation type).
 This is normally a constant in simulations, so be sure you know what you are
-doing; often setting up a mutationEffect() callback (see section 25.2) is
+doing; often setting up a mutationEffect() callback (see section 26.2) is
 preferable, in order to modify the selection coefficient in a more limited and
 controlled fashion (see section 10.5 for further discussion of this point).
 Changing this will normally affect the fitness values calculated toward the end

@@ -30,8 +30,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=645}{SLiM manual: page
-645}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=674}{SLiM manual: page
+674}.
 
 Read new mutations from the MS format file at filePath and add them
 to the target genomes. The number of target genomes must match the number

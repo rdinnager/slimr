@@ -6,12 +6,12 @@ identifier values as saved in the population file.
 isFixed => (logical$)
 T if the mutation has fixed (in the SLiM sense of having been converted to a Substitution object), F
 otherwise. Since fixed/substituted mutations are removed from the simulation, you will only see this
-flag be T if you have held onto a mutation beyond its usual lifetime (see section 27.2).
+flag be T if you have held onto a mutation beyond its usual lifetime (see section 28.2).
 isSegregating => (logical$)
 T if the mutation is segregating (in the SLiM sense of not having been either lost or converted to a
 Substitution object), F otherwise. Since both lost and fixed/substituted mutations are removed from
 the simulation, you will only see this flag be F if you have held onto a mutation beyond its usual
-lifetime (see section 27.2). Note that if isSegregating is F, isFixed will let you determine whether
+lifetime (see section 28.2). Note that if isSegregating is F, isFixed will let you determine whether
 the mutation is no longer segregating because it was lost, or because it fixed.
 mutationType => (object<MutationType>$)
 The MutationType from which this mutation was drawn.
@@ -28,10 +28,8 @@ The position in the chromosome of this mutation.
 selectionCoeff => (float$)
 The selection coefficient of the mutation, drawn from the distribution of fitness effects of its
 MutationType. If a mutation has a selectionCoeff of s, the multiplicative fitness effect of the
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 669
 mutation in a homozygote is 1+s; in a heterozygote it is 1+hs, where h is the dominance coefficient
-kept by the mutation type (see section 24.11.1).
+kept by the mutation type (see section 25.11.1).
 Note that this property has a quirk: it is stored internally in SLiM using a single-precision float, not the
 double-precision float type normally used by Eidos. This means that if you set a mutation mut’s
 selection coefficient to some number x, mut.selectionCoeff==x may be F due to floating-point
@@ -43,6 +41,8 @@ The identifier of the subpopulation in which this mutation arose. This property 
 the ancestry of mutations through their subpopulation of origin. For an overview of other ways of
 tracking genetic ancestry, including true local ancestry at each position on the chromosome, see
 sections 1.7 and 14.7.
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 704
 If you don’t care which subpopulation a mutation originated in, the subpopID may be used as an
 arbitrary integer “tag” value for any purpose you wish; SLiM does not do anything with the value of
 subpopID except propagate it to Substitution objects and report it in output. (It must still be >= 0,

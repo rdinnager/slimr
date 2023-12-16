@@ -32,8 +32,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=663}{SLiM manual: page
-663}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=696}{SLiM manual: page
+696}.
 
 Returns up to count individuals in exerterSubpop that are spatially
 closest to point, according to the distance metric of the InteractionType. The
@@ -73,8 +73,10 @@ Other InteractionType:
 \code{\link{nearestNeighbors}()},
 \code{\link{neighborCountOfPoint}()},
 \code{\link{neighborCount}()},
+\code{\link{setConstraints}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
+\code{\link{testConstraints}()},
 \code{\link{totalOfNeighborStrengths}()},
 \code{\link{unevaluate}()}
 }

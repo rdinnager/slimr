@@ -10,8 +10,8 @@
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=618}{SLiM manual: page
-#'618}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=647}{SLiM manual: page
+#'647}.
 #'
 #'@param sequence An object of type integer or string. See details for
 #'description.
@@ -34,7 +34,7 @@
 #'a singleton string that contains only the letters ACGT will be assumed to be a
 #'nucleotide sequence rather than a filename. The length of the ancestral sequence
 #'is returned. A utility function, randomNucleotides(), is provided by SLiM to
-#'assist in generating simple random nucleotide sequences; see section 24.17.1.
+#'assist in generating simple random nucleotide sequences; see section 25.18.1.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -62,18 +62,23 @@ initializeAncestralNucleotides <- function(sequence) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=618}{SLiM manual: page
-#'618}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=647}{SLiM manual: page
+#'647}.
 #'
-#'@param nonCrossoverFraction An object of type numeric or numeric or numeric or
-#'numeric. Must be of length 1 (a singleton). See details for description.
-#'@param meanLength An object of type numeric or numeric or numeric or numeric.
-#'Must be of length 1 (a singleton). See details for description.
-#'@param simpleConversionFraction An object of type numeric or numeric or numeric
-#'or numeric. Must be of length 1 (a singleton). See details for description.
-#'@param bias An object of type numeric or numeric or numeric or numeric. Must
-#'be of length 1 (a singleton). The default value is \code{0}. See details for
+#'@param nonCrossoverFraction An object of type numeric or numeric or numeric
+#'or numeric or logical. Must be of length 1 (a singleton). See details for
 #'description.
+#'@param meanLength An object of type numeric or numeric or numeric or numeric or
+#'logical. Must be of length 1 (a singleton). See details for description.
+#'@param simpleConversionFraction An object of type numeric or numeric or numeric
+#'or numeric or logical. Must be of length 1 (a singleton). See details for
+#'description.
+#'@param bias An object of type numeric or numeric or numeric or numeric or
+#'logical. Must be of length 1 (a singleton). The default value is \code{0}. See
+#'details for description.
+#'@param redrawLengthsOnFailure An object of type numeric or numeric or numeric
+#'or numeric or logical. Must be of length 1 (a singleton). The default value is
+#'\code{F}. See details for description.
 #'
 #'@aliases Initialize$initializeGeneConversion .Init$initializeGeneConversion
 #'@family Initialize
@@ -95,7 +100,24 @@ initializeAncestralNucleotides <- function(sequence) {
 #'for A/T mutations over G/C mutations. A non-zero bias may only be set in
 #'nucleotide-based models (see section 1.8). This function, and the way that gene
 #'conversion is modeled, fundamentally changed in SLiM 3.3; see section 1.5.6 for
-#'discussion.
+#'discussion. Beginning in SLiM 4.1, the redrawLengthsOnFailure parameter can be
+#'used to modify the internal mechanics of layout of gene conversion tracts. If it
+#'is F (the default, and the only behavior supported before SLiM 4.1), then if an
+#'attempt to lay out gene conversion tracts fails (because the tracts overlap each
+#'other, or overlap the start or end of the chromosome), SLiM will try again by
+#'drawing new positions for the tracts - essentially shuffling the tracts around
+#'to try to find positions for them that don't overlap. If redrawLengthsOnFailure
+#'is T, then if an attempt to lay out gene conversion tracts fails, SLiM will
+#'try again by drawing new lengths for the tracts, as well as new positions. This
+#'makes it more likely that layout will succeed, but risks biasing the realized
+#'mean tract length downward from the requested mean length (since layout of long
+#'tracts is more likely fail due to overlap). In either case, if SLiM attempts to
+#'lay out gene conversion tracts 100 times without success, an error will result.
+#'That error indicates that the specified constraints for gene conversion are
+#'difficult to satisfy - tracts may commonly be so long that it is difficult or
+#'impossible to find an acceptable layout for them within the specified chromosome
+#'length. Setting redrawLengthsOnFailure to T may mitigate this problem, at the
+#'price of biasing the mean tract length downward as discussed.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -108,9 +130,9 @@ initializeAncestralNucleotides <- function(sequence) {
 #'(\email{messer@cornell.edu})
 #'@export
 initializeGeneConversion <- function(nonCrossoverFraction, meanLength,
-simpleConversionFraction, bias) {
+simpleConversionFraction, bias, redrawLengthsOnFailure) {
  .Init$initializeGeneConversion(nonCrossoverFraction, meanLength,
-simpleConversionFraction, bias)
+simpleConversionFraction, bias, redrawLengthsOnFailure)
 }
 
 #'SLiM method initializeGenomicElement
@@ -125,8 +147,8 @@ simpleConversionFraction, bias)
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=619}{SLiM manual: page
-#'619}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=648}{SLiM manual: page
+#'648}.
 #'
 #'@param genomicElementType An object of type integer or GenomicElementType
 #'object. See details for description.
@@ -180,8 +202,8 @@ initializeGenomicElement <- function(genomicElementType, start, end) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=619}{SLiM manual: page
-#'619}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=648}{SLiM manual: page
+#'648}.
 #'
 #'@param id An object of type integer or string. Must be of length 1 (a
 #'singleton). See details for description.
@@ -212,18 +234,17 @@ initializeGenomicElement <- function(genomicElementType, start, end) {
 #'in non-nucleotide-based models it must be NULL. In nucleotide-based models, on
 #'the other hand, it must be non-NULL, and therefore must be supplied. In that
 #'case, mutationMatrix should take one of two standard forms. For sequence-based
-#'mutation rates that depend upon only the single nucleotide at a mutation
-#'site, mutationMatrix should be a 4×4 float matrix, specifying mutation rates
-#'for an existing nucleotide state (rows from 0- 3 representing A/C/G/T) to
-#'each of the four possible derived nucleotide states (columns, with the same
-#'meaning): The mutation rates in this matrix are absolute rates, per nucleotide
-#'per gamete; they will be used by SLiM directly unless they are multiplied
-#'by a factor from the hotspot map (see initializeHotspotMap()). Rates in
-#'mutationMatrix that involve the mutation of a nucleotide to * PA→C PA→G PA→T
-#'PC→A * PC→G PC→T PG→A PG→C * PG→T PT→A PT→C PT→G * itself (A to A, C to C,
-#'etc.) are not used by SLiM and must be 0.0 by convention (shown above with
-#'asterisks). It is important to note that the order of the rows and columns used
-#'in SLiM, A/C/G/T, is not a universal convention; other sources will present
+#'mutation rates that depend upon only the single nucleotide at a mutation site,
+#'mutationMatrix should be a 4×4 float matrix, specifying mutation rates for an
+#'existing nucleotide state (rows from 0- 3 representing A/C/G/T) to each of the
+#'four possible derived nucleotide states (columns, with the same meaning): The
+#'mutation rates in this matrix are absolute rates, per nucleotide per gamete;
+#'they will be used by SLiM directly unless they are multiplied by a factor
+#'from the hotspot map (see initializeHotspotMap()). Rates in mutationMatrix
+#'that involve the mutation of a nucleotide to itself (A to A, C to C, etc.) are
+#'not used by SLiM and must be 0.0 by convention (shown above with asterisks).
+#'It is important to note that the order of the rows and columns used in
+#'SLiM, A/C/G/T, is not a universal convention; other sources will present
 #'substitution-rate/transition-rate matrices using different conventions, and so
 #'care must be taken when importing such matrices into SLiM. For sequence-based
 #'mutation rates that depend upon the trinucleotide sequence centered upon a
@@ -238,8 +259,8 @@ initializeGenomicElement <- function(genomicElementType, start, end) {
 #'independently based upon the nucleotides in the first and third positions as
 #'well, with this type of mutation matrix. Several helper functions are defined to
 #'construct common types of mutation matrices, such as mmJukesCantor() to create
-#'a mutation matrix for a Jukes-Cantor model; see section 24.17.1. See chapter
-#'18 for practical examples of mutation matrices, and section 22.2.3 for further
+#'a mutation matrix for a Jukes-Cantor model; see section 25.18.1. See chapter
+#'18 for practical examples of mutation matrices, and section 23.2.3 for further
 #'discussion of the mutational paradigm in nucleotide-based models.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
@@ -270,8 +291,8 @@ mutationMatrix)
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=620}{SLiM manual: page
-#'620}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=649}{SLiM manual: page
+#'649}.
 #'
 #'@param multipliers An object of type numeric. See details for description.
 #'@param ends An object of type null or integer. The default value is \code{NULL}.
@@ -286,27 +307,28 @@ mutationMatrix)
 #'chromosome. Nucleotidebased models define sequence-based mutation rates that
 #'are set up with the mutationMatrix parameter to initializeGenomicElementType().
 #'If no hotspot map is specified by calling initializeHotspotMap(), a hotspot
-#'map with a multiplier of 1.0 across the whole chromosome is assumed (and so the
-#'sequence-based rates are the absolute mutation rates used by SLiM). A hotspot
-#'map modifies the sequence-based rates by scaling them up in some regions,
+#'map with a multiplier of 1.0 across the whole chromosome is assumed (and so
+#'the sequence-based rates are the absolute mutation rates used by SLiM). A
+#'hotspot * PA→C PA→G PA→T PC→A * PC→G PC→T PG→A PG→C * PG→T PT→A PT→C PT→G *
+#'* PAAA→ACA PAAA→AGA PAAA→ATA * PAAC→ACC PAAC→AGC PAAC→ATC * PAAG→ACG PAAG→AGG
+#'PAAG→ATG * PAAT→ACT PAAT→AGT PAAT→ATT PACA→AAA * PACA→AGA PACA→ATA PACC→AAC *
+#'PACC→AGC PACC→ATC PACG→AAG * PACG→AGG PACG→ATG . . . . . . . . . . . . PTTC→TAC
+#'PTTC→TCC PTTC→TGC * PTTG→TAG PTTG→TCG PTTG→TGG * PTTT→TAT PTTT→TCT PTTT→TGT
+#'* map modifies the sequence-based rates by scaling them up in some regions,
 #'with multipliers greater than 1.0 (representing mutational hot spots), and/or
 #'scaling them down in some regions, with multipliers less than 1.0 (representing
 #'mutational cold spots). There are two ways to call this function. If the
 #'optional ends parameter is NULL (the default), then multipliers must be a
 #'singleton value that specifies a single multiplier to be used along the entire
-#'chromosome (typically 1.0, but not required to be). If, on the other hand, ends
-#'is supplied, then multipliers and ends must be the same length, and the values
-#'in ends must be specified in ascending order. In that case, multipliers and ends
-#'taken together specify the multipliers to be used along successive contiguous
-#'stretches of the chromosome, from beginning to end; the last position specified
-#'in ends should extend to the end of the chromosome (i.e. at least to the end
-#'of the last genomic element, if not further). For example, if the following
-#'call is made: initializeHotspotMap(c(1.0, 1.2), c(5000, 9999)); * PAAA→ACA
-#'PAAA→AGA PAAA→ATA * PAAC→ACC PAAC→AGC PAAC→ATC * PAAG→ACG PAAG→AGG PAAG→ATG
-#'* PAAT→ACT PAAT→AGT PAAT→ATT PACA→AAA * PACA→AGA PACA→ATA PACC→AAC * PACC→AGC
-#'PACC→ATC PACG→AAG * PACG→AGG PACG→ATG . . . . . . . . . . . . PTTC→TAC PTTC→TCC
-#'PTTC→TGC * PTTG→TAG PTTG→TCG PTTG→TGG * PTTT→TAT PTTT→TCT PTTT→TGT * then the
-#'result is that the mutation rate multiplier for bases 0...5000 (inclusive)
+#'chromosome (typically 1.0, but not required to be). If, on the other hand,
+#'ends is supplied, then multipliers and ends must be the same length, and the
+#'values in ends must be specified in ascending order. In that case, multipliers
+#'and ends taken together specify the multipliers to be used along successive
+#'contiguous stretches of the chromosome, from beginning to end; the last position
+#'specified in ends should extend to the end of the chromosome (i.e. at least
+#'to the end of the last genomic element, if not further). For example, if the
+#'following call is made: initializeHotspotMap(c(1.0, 1.2), c(5000, 9999)); then
+#'the result is that the mutation rate multiplier for bases 0...5000 (inclusive)
 #'will be 1.0 (and so the specified sequence-based mutation rates will be used
 #'verbatim), and the multiplier for bases 5001...9999 (inclusive) will be 1.2
 #'(and so the sequence-based mutation rates will be multiplied by 1.2 within the
@@ -350,8 +372,8 @@ initializeHotspotMap <- function(multipliers, ends, sex) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=621}{SLiM manual: page
-#'621}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=650}{SLiM manual: page
+#'650}.
 #'
 #'@param id An object of type integer or string. Must be of length 1 (a
 #'singleton). See details for description.
@@ -389,7 +411,7 @@ initializeHotspotMap <- function(multipliers, ends, sex) {
 #'factor of two (although it may or may not be used). If reciprocal is F, the
 #'interaction is not guaranteed to be reciprocal and each interaction will be
 #'computed independently. The built-in interaction formulas are all reciprocal,
-#'but if you implement an interaction() callback (see section 25.7), you must
+#'but if you implement an interaction() callback (see section 26.7), you must
 #'consider whether the callback you have implemented preserves reciprocality
 #'or not. For this reason, the default is reciprocal=F, so that bugs are not
 #'inadvertently introduced by an invalid assumption of reciprocality. See
@@ -411,25 +433,27 @@ initializeHotspotMap <- function(multipliers, ends, sex) {
 #'"MM" would indicate a male-male interaction, such as male-male competition,
 #'whereas "FM" would indicate an interaction influencing only female receivers
 #'that is influenced only by male exerters, such as male mating displays that
-#'influence female attraction. This parameter may be set only to "**" unless sex
-#'has been enabled with initializeSex(). Note that a value of sexSegregation other
-#'than "**" may imply some degree of non-reciprocality, but it is not necessary to
-#'specify reciprocal to be F for this reason; SLiM will take the sex-segregation
-#'of the interaction into account for you. The value of reciprocal may therefore
-#'be interpreted as meaning: in those cases, if any, in which A interacts with
-#'B and B interacts with A, is the interaction strength guaranteed to be the
-#'same in both directions? By default, the interaction strength is 1.0 for all
-#'interactions within maxDistance. Often it is desirable to change the interaction
-#'function using setInteractionFunction(); modifying interaction strengths
-#'can also be achieved with interaction() callbacks if necessary (see section
-#'25.7). In any case, interactions beyond maxDistance always have a strength of
-#'0.0, and the interaction strength of an individual with itself is always 0.0,
-#'regardless of the interaction function or callbacks. The global symbol for the
-#'new interaction type is immediately available; the return value also provides
-#'the new object. Note that in multispecies models, initializeInteractionType()
-#'must be called from a non-species-specific interaction() callback (declared
-#'as species all initialize()), since interactions are managed at the community
-#'level.
+#'influence female attraction. This parameter may be set only to "**" unless
+#'sex has been enabled with initializeSex(). Note that a value of sexSegregation
+#'other than "**" may imply some degree of non-reciprocality, but it is not
+#'necessary to specify reciprocal to be F for this reason; SLiM will take the
+#'sex-segregation of the interaction into account for you. The value of reciprocal
+#'may therefore be interpreted as meaning: in those cases, if any, in which A
+#'interacts with B and B interacts with A, is the interaction strength guaranteed
+#'to be the same in both directions? The sexSegregation parameter is shorthand
+#'for setting sex constraints on the interaction type using the setConstraints()
+#'method; see that method for a more extensive set of constraints that may
+#'be used. By default, the interaction strength is 1.0 for all interactions
+#'within maxDistance. Often it is desirable to change the interaction function
+#'using setInteractionFunction(); modifying interaction strengths can also be
+#'achieved with interaction() callbacks if necessary (see section 26.7). In any
+#'case, interactions beyond maxDistance always have a strength of 0.0, and the
+#'interaction strength of an individual with itself is always 0.0, regardless of
+#'the interaction function or callbacks. The global symbol for the new interaction
+#'type is immediately available; the return value also provides the new object.
+#'Note that in multispecies models, initializeInteractionType() must be called
+#'from a non-species-specific interaction() callback (declared as species all
+#'initialize()), since interactions are managed at the community level.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -459,8 +483,8 @@ sexSegregation)
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=622}{SLiM manual: page
-#'622}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=651}{SLiM manual: page
+#'651}.
 #'
 #'@param rates An object of type numeric. See details for description.
 #'@param ends An object of type null or integer. The default value is \code{NULL}.
@@ -542,8 +566,8 @@ initializeMutationRate <- function(rates, ends, sex) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=623}{SLiM manual: page
-#'623}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=652}{SLiM manual: page
+#'652}.
 #'
 #'@param id An object of type integer or string. Must be of length 1 (a
 #'singleton). See details for description.
@@ -570,22 +594,24 @@ initializeMutationRate <- function(rates, ends, sex) {
 #'a numeric$ mean selection coefficient and a numeric$ alpha shape parameter for
 #'a gamma distribution; "n", in which case the ellipsis should supply a numeric$
 #'mean selection coefficient and a numeric$ sigma (standard deviation) parameter
-#'for a normal distribution; "w", in which case the ellipsis should supply a
-#'numeric$ λ scale parameter and a numeric$ k shape parameter for a Weibull
-#'distribution; or "s", in which case the ellipsis should supply a string$ Eidos
-#'script parameter. See section 24.11 for discussion of the various DFEs and their
-#'uses. The global symbol for the new mutation type is immediately available; the
-#'return value also provides the new object. Note that by default in WF models,
-#'all mutations of a given mutation type will be converted into Substitution
-#'objects when they reach fixation, for efficiency reasons. If you need to disable
-#'this conversion, to keep mutations of a given type active in the simulation
-#'even after they have fixed, you can do so by setting the convertToSubstitution
+#'for a normal distribution; "p", in which case the ellipsis should supply a
+#'numeric$ mean selection coefficient and a numeric$ scale parameter for a Laplace
+#'distribution; "w", in which case the ellipsis should supply a numeric$ λ scale
+#'parameter and a numeric$ k shape parameter for a Weibull distribution; or "s",
+#'in which case the ellipsis should supply a string$ Eidos script parameter.
+#'See section 25.11 for discussion of the various DFEs and their uses. The
+#'global symbol for the new mutation type is immediately available; the return
+#'value also provides the new object. Note that by default in WF models, all
+#'mutations of a given mutation type will be converted into Substitution objects
+#'when they reach fixation, for efficiency reasons. If you need to disable this
+#'conversion, to keep mutations of a given type active in the simulation even
+#'after they have fixed, you can do so by setting the convertToSubstitution
 #'property of MutationType to F. In contrast, by default in nonWF models mutations
 #'will not be converted into Substitution objects when they reach fixation;
 #'convertToSubstitution is F by default in nonWF models. To enable conversion in
 #'nonWF models for neutral mutation types with no indirect fitness effects, you
-#'should therefore set convertToSubstitution to T. See sections 22.3, 23.5, and
-#'24.11.1 for further discussion regarding the convertToSubstitution property.
+#'should therefore set convertToSubstitution to T. See sections 23.3, 24.5, and
+#'25.11.1 for further discussion regarding the convertToSubstitution property.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -614,8 +640,8 @@ initializeMutationType <- function(id, dominanceCoeff, distributionType, ...)
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=623}{SLiM manual: page
-#'623}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=653}{SLiM manual: page
+#'653}.
 #'
 #'@param id An object of type integer or string. Must be of length 1 (a
 #'singleton). See details for description.
@@ -669,8 +695,8 @@ distributionType, ...) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=623}{SLiM manual: page
-#'623}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=653}{SLiM manual: page
+#'653}.
 #'
 #'@param rates An object of type numeric. See details for description.
 #'@param ends An object of type null or integer. The default value is \code{NULL}.
@@ -753,8 +779,8 @@ initializeRecombinationRate <- function(rates, ends, sex) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=624}{SLiM manual: page
-#'624}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=654}{SLiM manual: page
+#'654}.
 #'
 #'@param chromosomeType An object of type string. Must be of length 1 (a
 #'singleton). See details for description.
@@ -801,8 +827,8 @@ initializeSex <- function(chromosomeType) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=624}{SLiM manual: page
-#'624}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=654}{SLiM manual: page
+#'654}.
 #'
 #'@param modelType An object of type string. Must be of length 1 (a singleton).
 #'See details for description.
@@ -846,8 +872,8 @@ initializeSLiMModelType <- function(modelType) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=625}{SLiM manual: page
-#'625}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=654}{SLiM manual: page
+#'654}.
 #'
 #'@param keepPedigrees An object of type logical or string or string or integer
 #'or logical or logical or logical. Must be of length 1 (a singleton). The default
@@ -874,27 +900,27 @@ initializeSLiMModelType <- function(modelType) {
 #'@aliases Initialize$initializeSLiMOptions .Init$initializeSLiMOptions
 #'@family Initialize
 #'@return An object of type void.
-#'@details Configure options for the simulation. If initializeSLiMOptions()
-#'is called at all then it must be called before any other initialization
-#'function (except initializeSLiMModelType()), so that SLiM knows from the
-#'outset which optional features are enabled and which are not. If keepPedigrees
-#'is T, SLiM will keep pedigree information for every individual in the
-#'simulation, tracking the identity of its parents and grandparents. This
-#'allows individuals to assess their degree of pedigree-based relatedness to
-#'other individuals (see Individual's relatedness() method, section 24.7.2), as
-#'well as allowing a model to find "trios" (two parents and an offspring they
-#'generated) using the pedigree properties of Individual (section 24.7.1). As a
+#'@details Configure options for the simulation. If initializeSLiMOptions() is
+#'called at all then it must be called before any other initialization function
+#'(except initializeSLiMModelType()), so that SLiM knows from the outset which
+#'optional features are enabled and which are not. If keepPedigrees is T, SLiM
+#'will keep pedigree information for every individual in the simulation, tracking
+#'the identity of its parents and grandparents. This allows individuals to
+#'assess their degree of pedigree-based relatedness to other individuals (see
+#'Individual's relatedness() and sharedParentCount() methods, section 25.7.2),
+#'as well as allowing a model to find "trios" (two parents and an offspring they
+#'generated) using the pedigree properties of Individual (section 25.7.1). As a
 #'side effect of keepPedigrees being T, the pedigreeID, pedigreeParentIDs, and
 #'pedigreeGrandparentIDs properties of Individual will have defined values (see
-#'section 24.7.1), as will the genomePedigreeID property of Genome (see section
-#'24.4.1). Note that pedigree-based relatedness doesn't necessarily correspond
+#'section 25.7.1), as will the genomePedigreeID property of Genome (see section
+#'25.4.1). Note that pedigree-based relatedness doesn't necessarily correspond
 #'to genetic relatedness, due to effects such as assortment and recombination.
 #'For an overview of other ways of tracking genetic ancestry, including true
 #'local ancestry at each position on the chromosome, see sections 1.7 and 14.7.
 #'Beginning in SLiM 3.5, keepPedigrees=T also enables tracking of individual
 #'reproductive output, available through the reproductiveOutput property of
-#'Individual (see section 24.7.1) and the lifetimeReproductiveOutput property
-#'of Subpopulation (see section 24.15.1). If dimensionality is not "", SLiM will
+#'Individual (see section 25.7.1) and the lifetimeReproductiveOutput property
+#'of Subpopulation (see section 25.16.1). If dimensionality is not "", SLiM will
 #'enable its optional "continuous space" facility. Three values for dimensionality
 #'are presently supported: "x", "xy", and "xyz", specifying that continuous
 #'space should be enabled for one, two, or three dimensions, respectively, using
@@ -1033,8 +1059,8 @@ mutationRuns, preventIncidentalSelfing, nucleotideBased, randomizeCallbacks)
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=627}{SLiM manual: page
-#'627}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=656}{SLiM manual: page
+#'656}.
 #'
 #'@param tickModulo An object of type integer or integer or string or string. Must
 #'be of length 1 (a singleton). The default value is \code{1}. See details for
@@ -1061,7 +1087,7 @@ mutationRuns, preventIncidentalSelfing, nucleotideBased, randomizeCallbacks)
 #'tickModulo ticks, beginning in tick tickPhase. (However, when the species
 #'is activated in a given tick, the skipTick() method may still be called in a
 #'first() event to deactivate it.) See the active property of Species (section
-#'24.14.1) for more details. The avatar parameter, if not "", sets a string value
+#'25.15.1) for more details. The avatar parameter, if not "", sets a string value
 #'used to represent the species graphically, particularly in SLiMgui but perhaps
 #'in other contexts also. The avatar should generally be a single character -
 #'usually an emoji corresponding to the species, such as "🦊 " for foxes or "🐭
@@ -1097,8 +1123,8 @@ initializeSpecies <- function(tickModulo, tickPhase, avatar, color) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=627}{SLiM manual: page
-#'627}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=656}{SLiM manual: page
+#'656}.
 #'
 #'@param recordMutations An object of type logical. Must be of length 1 (a
 #'singleton). The default value is \code{T}. See details for description.
@@ -1188,7 +1214,7 @@ initializeSpecies <- function(tickModulo, tickPhase, avatar, color) {
 #'case, changing retainCoalescentOnly to F may dramatically increase memory usage
 #'and runtime, in a similar way to permanently remembering all the individuals.
 #'See the documentation of treeSeqRememberIndividuals() for further discussion
-#'(section 24.14.2). The timeUnit parameter controls the time unit stated in the
+#'(section 25.15.2). The timeUnit parameter controls the time unit stated in the
 #'tree sequence when it is saved (which can be accessed through tskit APIs); it
 #'has no effect on the running simulation whatsoever. The default value, NULL,
 #'means that a time unit of "ticks" will be used for all model types. (In SLiM
@@ -1222,6 +1248,8097 @@ timeUnit)
 
 
 
+#'Eidos method abs
+#'
+#'Documentation for Eidos function \code{abs}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'
+#'@aliases Eidos$abs .E$abs
+#'@family Eidos
+#'@return An object of type numeric.
+#'@details Returns the absolute value of x. If x is integer, the C++ function
+#'llabs() is used and an integer vector is returned; if x is float, the C++
+#'function fabs() is used and a float vector is returned.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_abs <- function(x) {
+ .E$abs(x)
+}
+
+#'Eidos method acos
+#'
+#'Documentation for Eidos function \code{acos}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'
+#'@aliases Eidos$acos .E$acos
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns the arc cosine of x using the C++ function acos().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_acos <- function(x) {
+ .E$acos(x)
+}
+
+#'Eidos method asin
+#'
+#'Documentation for Eidos function \code{asin}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'
+#'@aliases Eidos$asin .E$asin
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns the arc sine of x using the C++ function asin().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_asin <- function(x) {
+ .E$asin(x)
+}
+
+#'Eidos method atan
+#'
+#'Documentation for Eidos function \code{atan}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'
+#'@aliases Eidos$atan .E$atan
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns the arc tangent of x using the C++ function atan().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_atan <- function(x) {
+ .E$atan(x)
+}
+
+#'Eidos method atan2
+#'
+#'Documentation for Eidos function \code{atan2}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric or numeric. See details for description.
+#'@param y An object of type numeric or numeric. See details for description.
+#'
+#'@aliases Eidos$atan2 .E$atan2
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns the arc tangent of y/x using the C++ function atan2(), which
+#'uses the signs of both x and y to determine the correct quadrant for the result.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_atan2 <- function(x, y) {
+ .E$atan2(x, y)
+}
+
+#'Eidos method ceil
+#'
+#'Documentation for Eidos function \code{ceil}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type float. See details for description.
+#'
+#'@aliases Eidos$ceil .E$ceil
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns the ceiling of x: the smallest integral value greater than
+#'or equal to x. Note that the return value is float even though integral values
+#'are guaranteed, because values could be outside of the range representable by
+#'integer.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_ceil <- function(x) {
+ .E$ceil(x)
+}
+
+#'Eidos method cos
+#'
+#'Documentation for Eidos function \code{cos}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'
+#'@aliases Eidos$cos .E$cos
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns the cosine of x using the C++ function cos(). 52
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_cos <- function(x) {
+ .E$cos(x)
+}
+
+#'Eidos method cumProduct
+#'
+#'Documentation for Eidos function \code{cumProduct}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'
+#'@aliases Eidos$cumProduct .E$cumProduct
+#'@family Eidos
+#'@return An object of type numeric.
+#'@details Returns the cumulative product of x: a vector of equal length as x,
+#'in which the element at index i is equal to the product of the elements of
+#'x across the range 0:i. The return type will match the type of x. If x is of
+#'type integer, but all of the values of the cumulative product vector cannot be
+#'represented in that type, an error condition will result.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_cumProduct <- function(x) {
+ .E$cumProduct(x)
+}
+
+#'Eidos method cumSum
+#'
+#'Documentation for Eidos function \code{cumSum}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'
+#'@aliases Eidos$cumSum .E$cumSum
+#'@family Eidos
+#'@return An object of type numeric.
+#'@details Returns the cumulative sum of x: a vector of equal length as x, in
+#'which the element at index i is equal to the sum of the elements of x across the
+#'range 0:i. The return type will match the type of x. If x is of type integer,
+#'but all of the values of the cumulative sum vector cannot be represented in that
+#'type, an error condition will result.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_cumSum <- function(x) {
+ .E$cumSum(x)
+}
+
+#'Eidos method exp
+#'
+#'Documentation for Eidos function \code{exp}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'
+#'@aliases Eidos$exp .E$exp
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns the base-e exponential of x, ex, using the C++ function exp().
+#'This may be somewhat faster than E^x for large vectors.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_exp <- function(x) {
+ .E$exp(x)
+}
+
+#'Eidos method floor
+#'
+#'Documentation for Eidos function \code{floor}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type float. See details for description.
+#'
+#'@aliases Eidos$floor .E$floor
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns the floor of x: the largest integral value less than or
+#'equal to x. Note that the return value is float even though integral values
+#'are guaranteed, because values could be outside of the range representable by
+#'integer.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_floor <- function(x) {
+ .E$floor(x)
+}
+
+#'Eidos method integerDiv
+#'
+#'Documentation for Eidos function \code{integerDiv}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type integer or integer. See details for description.
+#'@param y An object of type integer or integer. See details for description.
+#'
+#'@aliases Eidos$integerDiv .E$integerDiv
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns the result of integer division of x by y. The / operator in
+#'Eidos always produces a float result; if you want an integer result you may
+#'use this function instead. If any value of y is 0, an error will result. The
+#'parameters x and y must either be of equal length, or one of the two must be a
+#'singleton. The precise behavior of integer division, in terms of how rounding
+#'and negative values are handled, may be platform dependent; it will be whatever
+#'the C++ behavior of integer division is on the given platform. Eidos does not
+#'guarantee any particular behavior, so use this function with caution.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_integerDiv <- function(x, y) {
+ .E$integerDiv(x, y)
+}
+
+#'Eidos method integerMod
+#'
+#'Documentation for Eidos function \code{integerMod}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type integer or integer. See details for description.
+#'@param y An object of type integer or integer. See details for description.
+#'
+#'@aliases Eidos$integerMod .E$integerMod
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns the result of integer modulo of x by y. The % operator in Eidos
+#'always produces a float result; if you want an integer result you may use this
+#'function instead. If any value of y is 0, an error will result. The parameters x
+#'and y must either be of equal length, or one of the two must be a singleton. The
+#'precise behavior of integer modulo, in terms of how rounding and negative values
+#'are handled, may be platform dependent; it will be whatever the C++ behavior of
+#'integer modulo is on the given platform. Eidos does not guarantee any particular
+#'behavior, so use this function with caution.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_integerMod <- function(x, y) {
+ .E$integerMod(x, y)
+}
+
+#'Eidos method isFinite
+#'
+#'Documentation for Eidos function \code{isFinite}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type float. See details for description.
+#'
+#'@aliases Eidos$isFinite .E$isFinite
+#'@family Eidos
+#'@return An object of type logical.
+#'@details Returns the finiteness of x: T if x is not INF or NAN, F if x is INF
+#'or NAN. INF and NAN are defined only for type float, so x is required to be a
+#'float. Note that isFinite() is not the opposite of isInfinite(), because NAN is
+#'considered to be neither finite nor infinite.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_isFinite <- function(x) {
+ .E$isFinite(x)
+}
+
+#'Eidos method isInfinite
+#'
+#'Documentation for Eidos function \code{isInfinite}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type float. See details for description.
+#'
+#'@aliases Eidos$isInfinite .E$isInfinite
+#'@family Eidos
+#'@return An object of type logical.
+#'@details Returns the infiniteness of x: T if x is INF, F otherwise. INF
+#'is defined only for type float, so x is required to be a float. Note that
+#'isInfinite() is not the opposite of isFinite(), because NAN is considered to be
+#'neither finite nor infinite.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_isInfinite <- function(x) {
+ .E$isInfinite(x)
+}
+
+#'Eidos method isNAN
+#'
+#'Documentation for Eidos function \code{isNAN}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type float. See details for description.
+#'
+#'@aliases Eidos$isNAN .E$isNAN
+#'@family Eidos
+#'@return An object of type logical.
+#'@details Returns the undefinedness of x: T if x is not NAN, F if x is NAN. NAN
+#'is defined only for type float, so x is required to be a float.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_isNAN <- function(x) {
+ .E$isNAN(x)
+}
+
+#'Eidos method log
+#'
+#'Documentation for Eidos function \code{log}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'
+#'@aliases Eidos$log .E$log
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns the base-e logarithm of x using the C++ function log(). 53
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_log <- function(x) {
+ .E$log(x)
+}
+
+#'Eidos method log10
+#'
+#'Documentation for Eidos function \code{log10}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'
+#'@aliases Eidos$log10 .E$log10
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns the base-10 logarithm of x using the C++ function log10().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_log10 <- function(x) {
+ .E$log10(x)
+}
+
+#'Eidos method log2
+#'
+#'Documentation for Eidos function \code{log2}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'
+#'@aliases Eidos$log2 .E$log2
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns the base-2 logarithm of x using the C++ function log2().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_log2 <- function(x) {
+ .E$log2(x)
+}
+
+#'Eidos method product
+#'
+#'Documentation for Eidos function \code{product}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'
+#'@aliases Eidos$product .E$product
+#'@family Eidos
+#'@return An object of type numeric. Return will be of length 1 (a singleton)
+#'@details Returns the product of x: the result of multiplying all of the elements
+#'of x together. If x is float, the result will be float. If x is integer, things
+#'are a bit more complex; the result will be integer if it can fit into the
+#'integer type without overflow issues (including during intermediate stages of
+#'the computation), otherwise it will be float.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_product <- function(x) {
+ .E$product(x)
+}
+
+#'Eidos method round
+#'
+#'Documentation for Eidos function \code{round}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type float. See details for description.
+#'
+#'@aliases Eidos$round .E$round
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns the round of x: the integral value nearest to x, rounding
+#'half-way cases away from 0 (different from the rounding policy of R, which
+#'rounds halfway cases toward the nearest even number). Note that the return value
+#'is float even though integral values are guaranteed, because values could be
+#'outside of the range representable by integer.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_round <- function(x) {
+ .E$round(x)
+}
+
+#'Eidos method setDifference
+#'
+#'Documentation for Eidos function \code{setDifference}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any or any. See details for description.
+#'@param y An object of type any or any. See details for description.
+#'
+#'@aliases Eidos$setDifference .E$setDifference
+#'@family Eidos
+#'@return An object of type any.
+#'@details Returns the set-theoretic (asymmetric) difference of x and y, denoted x
+#'∖ y: a vector containing all elements that are in x but are not in y. Duplicate
+#'elements will be stripped out, in the same manner as the unique() function. The
+#'order of elements in the returned vector is arbitrary and should not be relied
+#'upon. The returned vector will be of the same type as x and y, and x and y must
+#'be of the same type. The operation performed by this function can be represented
+#'graphically using a Venn diagram, where the left circle is x and the right
+#'circle is y:
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_setDifference <- function(x, y) {
+ .E$setDifference(x, y)
+}
+
+#'Eidos method setIntersection
+#'
+#'Documentation for Eidos function \code{setIntersection}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any or any. See details for description.
+#'@param y An object of type any or any. See details for description.
+#'
+#'@aliases Eidos$setIntersection .E$setIntersection
+#'@family Eidos
+#'@return An object of type any.
+#'@details Returns the set-theoretic intersection of x and y, denoted x ∩ y: a
+#'vector containing all elements that are in both x and y (but not in only x or
+#'y). Duplicate elements will be stripped out, in the same manner as the unique()
+#'function. The order of elements in the returned vector is arbitrary and should
+#'not be relied upon. The returned vector will be of the same type as x and y, and
+#'x and y must be of the same type. The operation performed by this function can
+#'be represented graphically using a Venn diagram, where the left circle is x and
+#'the right circle is y: 54
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_setIntersection <- function(x, y) {
+ .E$setIntersection(x, y)
+}
+
+#'Eidos method setSymmetricDifference
+#'
+#'Documentation for Eidos function \code{setSymmetricDifference}, which is a
+#'method of \code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any or any. See details for description.
+#'@param y An object of type any or any. See details for description.
+#'
+#'@aliases Eidos$setSymmetricDifference .E$setSymmetricDifference
+#'@family Eidos
+#'@return An object of type any.
+#'@details Returns the set-theoretic symmetric difference of x and y, denoted
+#'x Δ y: a vector containing all elements that are in x or y, but not in both.
+#'Duplicate elements will be stripped out, in the same manner as the unique()
+#'function. The order of elements in the returned vector is arbitrary and should
+#'not be relied upon. The returned vector will be of the same type as x and y, and
+#'x and y must be of the same type. The operation performed by this function can
+#'be represented graphically using a Venn diagram, where the left circle is x and
+#'the right circle is y:
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_setSymmetricDifference <- function(x, y) {
+ .E$setSymmetricDifference(x, y)
+}
+
+#'Eidos method setUnion
+#'
+#'Documentation for Eidos function \code{setUnion}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any or any. See details for description.
+#'@param y An object of type any or any. See details for description.
+#'
+#'@aliases Eidos$setUnion .E$setUnion
+#'@family Eidos
+#'@return An object of type any.
+#'@details Returns the set-theoretic union of x and y, denoted x ∪ y: a vector
+#'containing all elements that are in x and/or y. Duplicate elements will be
+#'stripped out, in the same manner as the unique() function. This function is
+#'therefore roughly equivalent to unique(c(x, y)), but this function will probably
+#'be faster. The order of elements in the returned vector is arbitrary and should
+#'not be relied upon. The returned vector will be of the same type as x and y, and
+#'x and y must be of the same type. The operation performed by this function can
+#'be represented graphically using a Venn diagram, where the left circle is x and
+#'the right circle is y:
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_setUnion <- function(x, y) {
+ .E$setUnion(x, y)
+}
+
+#'Eidos method sin
+#'
+#'Documentation for Eidos function \code{sin}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'
+#'@aliases Eidos$sin .E$sin
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns the sine of x using the C++ function sin().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_sin <- function(x) {
+ .E$sin(x)
+}
+
+#'Eidos method sqrt
+#'
+#'Documentation for Eidos function \code{sqrt}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'
+#'@aliases Eidos$sqrt .E$sqrt
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns the square root of x using the C++ function sqrt(). This may be
+#'somewhat faster than x^0.5 for large vectors.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_sqrt <- function(x) {
+ .E$sqrt(x)
+}
+
+#'Eidos method sum
+#'
+#'Documentation for Eidos function \code{sum}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type logical or integer or float. See details for
+#'description.
+#'
+#'@aliases Eidos$sum .E$sum
+#'@family Eidos
+#'@return An object of type numeric. Return will be of length 1 (a singleton)
+#'@details Returns the sum of x: the result of adding all of the elements of
+#'x together. The unusual parameter type signature lif indicates that x can be
+#'logical, integer, or float. If x is float, the result will be float. If x is
+#'logical, the result will be integer (the number of T values in x, since the
+#'integer values of T and F are 1 and 0 respectively). If x is integer, things
+#'are a bit more complex; in this case, the result will be integer if it can fit
+#'into the integer type without overflow issues (including during intermediate
+#'stages of the computation), otherwise it will be float. Note that floating-point
+#'roundoff issues can cause this function to return inexact results when x is
+#'float type; this is rarely an issue, but see the sumExact() function for an
+#'alternative. 55
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_sum <- function(x) {
+ .E$sum(x)
+}
+
+#'Eidos method sumExact
+#'
+#'Documentation for Eidos function \code{sumExact}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type float. See details for description.
+#'
+#'@aliases Eidos$sumExact .E$sumExact
+#'@family Eidos
+#'@return An object of type float. Return will be of length 1 (a singleton)
+#'@details Returns the exact sum of x: the exact result of adding all of the
+#'elements of x together. Unlike the sum() function, sumExact() accepts only type
+#'float, since the sum() function is already exact for other types. When summing
+#'floating-point values - particularly values that vary across many orders of
+#'magnitude - the precision limits of floating-point numbers can lead to roundoff
+#'errors that cause the sum() function to return an inexact result. This function
+#'does additional work to ensure that the final result is exact within the
+#'possible limits of the float type; some roundoff may still inevitably occur, in
+#'other words, but a more exact result could not be represented with a value of
+#'type float. The disadvantage of using this function instead of sum() is that it
+#'is much slower - about 35 times slower, according to one test on macOS, but that
+#'will vary across operating systems and hardware. This function is rarely truly
+#'needed, but apart from the performance consequences there is no disadvantage to
+#'using it.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_sumExact <- function(x) {
+ .E$sumExact(x)
+}
+
+#'Eidos method tan
+#'
+#'Documentation for Eidos function \code{tan}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'
+#'@aliases Eidos$tan .E$tan
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns the tangent of x using the C++ function tan().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_tan <- function(x) {
+ .E$tan(x)
+}
+
+#'Eidos method trunc
+#'
+#'Documentation for Eidos function \code{trunc}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type float. See details for description.
+#'
+#'@aliases Eidos$trunc .E$trunc
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns the truncation of x: the integral value nearest to, but no
+#'larger in magnitude than, x. Note that the return value is float even though
+#'integral values are guaranteed, because values could be outside of the range
+#'representable by integer.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_trunc <- function(x) {
+ .E$trunc(x)
+}
+
+#'Eidos method cor
+#'
+#'Documentation for Eidos function \code{cor}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric or numeric. See details for description.
+#'@param y An object of type numeric or numeric. See details for description.
+#'
+#'@aliases Eidos$cor .E$cor
+#'@family Eidos
+#'@return An object of type float. Return will be of length 1 (a singleton)
+#'@details Returns the sample Pearson's correlation coefficient between x and y,
+#'usually denoted r. The sizes of x and y must be identical. If x and y have a
+#'size of 0 or 1, the return value will be NULL. At present it is illegal to call
+#'cor() with a matrix or array argument, because the desired behavior in that case
+#'has not yet been implemented.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_cor <- function(x, y) {
+ .E$cor(x, y)
+}
+
+#'Eidos method cov
+#'
+#'Documentation for Eidos function \code{cov}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric or numeric. See details for description.
+#'@param y An object of type numeric or numeric. See details for description.
+#'
+#'@aliases Eidos$cov .E$cov
+#'@family Eidos
+#'@return An object of type float. Return will be of length 1 (a singleton)
+#'@details Returns the corrected sample covariance between x and y. The sizes of x
+#'and y must be identical. If x and y have a size of 0 or 1, the return value will
+#'be NULL. At present it is illegal to call cov() with a matrix or array argument,
+#'because the desired behavior in that case has not yet been implemented.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_cov <- function(x, y) {
+ .E$cov(x, y)
+}
+
+#'Eidos method max
+#'
+#'Documentation for Eidos function \code{max}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any but object. See details for description.
+#'@param ... An object of type NA. NA See details for description.
+#'
+#'@aliases Eidos$max .E$max
+#'@family Eidos
+#'@return An object of type any but object. Return will be of length 1 (a
+#'singleton)
+#'@details Returns the maximum of x and the other arguments supplied: the single
+#'greatest value contained by all of them. All of the arguments must be the same
+#'type as x, and the return type will match that of x. If all of the arguments
+#'have a size of 0, the return value will be NULL; note that this means that
+#'max(x, max(y)) may produce an error, if max(y) is NULL, in cases where max(x, y)
+#'does not.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_max <- function(x, ...) {
+ .E$max(x, ...)
+}
+
+#'Eidos method mean
+#'
+#'Documentation for Eidos function \code{mean}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type logical or integer or float. See details for
+#'description.
+#'
+#'@aliases Eidos$mean .E$mean
+#'@family Eidos
+#'@return An object of type float. Return will be of length 1 (a singleton)
+#'@details Returns the arithmetic mean of x: the sum of x divided by the number
+#'of values in x. If x has a size of 0, the return value will be NULL. The unusual
+#'parameter type signature lif indicates that x can be logical, integer, or float;
+#'if x is logical, it is coerced to integer internally (with F being 0 and T being
+#'1, as always), allowing mean() to calculate the average truth value of a logical
+#'vector.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_mean <- function(x) {
+ .E$mean(x)
+}
+
+#'Eidos method min
+#'
+#'Documentation for Eidos function \code{min}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any but object. See details for description.
+#'@param ... An object of type NA. NA See details for description.
+#'
+#'@aliases Eidos$min .E$min
+#'@family Eidos
+#'@return An object of type any but object. Return will be of length 1 (a
+#'singleton)
+#'@details Returns the minimum of x and the other arguments supplied: the single
+#'smallest value contained by all of them. All of the arguments must be the same
+#'type as x, and the return type will match that of x. If all of the arguments
+#'have a size of 0, the return value will be NULL; note that this means that
+#'min(x, min(y)) may produce an error, if min(y) is NULL, in cases where min(x, y)
+#'does not. 56
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_min <- function(x, ...) {
+ .E$min(x, ...)
+}
+
+#'Eidos method pmax
+#'
+#'Documentation for Eidos function \code{pmax}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any but object or any but object. See details for
+#'description.
+#'@param y An object of type any but object or any but object. See details for
+#'description.
+#'
+#'@aliases Eidos$pmax .E$pmax
+#'@family Eidos
+#'@return An object of type any but object.
+#'@details Returns the parallel maximum of x and y: the element-wise maximum for
+#'each corresponding pair of elements in x and y. The type of x and y must match,
+#'and the returned value will have the same type. In one usage pattern the size of
+#'x and y match, in which case the returned value will have the same size. In the
+#'other usage pattern either x and y is a singleton, in which case the returned
+#'value will match the size of the non-singleton argument, and pairs of elements
+#'for comparison will be formed between the singleton's element and each of the
+#'elements in the non-singleton.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_pmax <- function(x, y) {
+ .E$pmax(x, y)
+}
+
+#'Eidos method pmin
+#'
+#'Documentation for Eidos function \code{pmin}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any but object or any but object. See details for
+#'description.
+#'@param y An object of type any but object or any but object. See details for
+#'description.
+#'
+#'@aliases Eidos$pmin .E$pmin
+#'@family Eidos
+#'@return An object of type any but object.
+#'@details Returns the parallel minimum of x and y: the element-wise minimum for
+#'each corresponding pair of elements in x and y. The type of x and y must match,
+#'and the returned value will have the same type. In one usage pattern the size of
+#'x and y match, in which case the returned value will have the same size. In the
+#'other usage pattern either x and y is a singleton, in which case the returned
+#'value will match the size of the non-singleton argument, and pairs of elements
+#'for comparison will be formed between the singleton's element and each of the
+#'elements in the non-singleton.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_pmin <- function(x, y) {
+ .E$pmin(x, y)
+}
+
+#'Eidos method quantile
+#'
+#'Documentation for Eidos function \code{quantile}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'@param probs An object of type null or float. The default value is \code{NULL}.
+#'See details for description.
+#'
+#'@aliases Eidos$quantile .E$quantile
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns sample quantiles of x for the given probabilities. The smallest
+#'value in x corresponds to a probability of 0, and the largest value in x to a
+#'probability of 1. The probs vector should be a vector of probabilities in [0,
+#'1], or NULL, which is equivalent to c(0.0, 0.25, 0.5, 0.75, 1.0), requesting
+#'sample quartiles. The quantile function linearly interpolates between the points
+#'of the empirical cumulative distribution function. In other words, if x is a
+#'vector of length n+1, then the quantiles with probs equal to (0, 1/n, 2/n, ...,
+#'(n−1)/n, 1) are equal to the sorted values of x, and the quantile is a linear
+#'function of probs otherwise. Note that there are many ways to compute quantiles;
+#'this algorithm corresponds to R's default "type 7" algorithm.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_quantile <- function(x, probs) {
+ .E$quantile(x, probs)
+}
+
+#'Eidos method range
+#'
+#'Documentation for Eidos function \code{range}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'@param ... An object of type NA. NA See details for description.
+#'
+#'@aliases Eidos$range .E$range
+#'@family Eidos
+#'@return An object of type numeric.
+#'@details Returns the range of x and the other arguments supplied: a vector of
+#'length 2 composed of the minimum and maximum values contained by all of them, at
+#'indices 0 and 1 respectively. All of the arguments must be the same type as x,
+#'and the return type will match that of x. If all of the arguments have a size of
+#'0, the return value will be NULL; note that this means that range(x, range(y))
+#'may produce an error, if range(y) is NULL, in cases where range(x, y) does not.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_range <- function(x, ...) {
+ .E$range(x, ...)
+}
+
+#'Eidos method rank
+#'
+#'Documentation for Eidos function \code{rank}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric or string. See details for description.
+#'@param tiesMethod An object of type numeric or string. Must be of length 1 (a
+#'singleton). The default value is \code{"average"}. See details for description.
+#'
+#'@aliases Eidos$rank .E$rank
+#'@family Eidos
+#'@return An object of type numeric.
+#'@details Returns the ranks of the elements of x: a vector of length L (the
+#'length of x), composed of the relative ranks, from 1 to L, of each corresponding
+#'element of x. The tiesMethod parameter may be any of "average" (the default),
+#'"first", "last", "max", or "min" ("random", supported by R, is not supported
+#'by Eidos at this time but could be added if needed). For "average", the return
+#'value is of type float; for all others, it is of type integer. (Note that
+#'the return type does not depend upon the type of x.) The result for all of
+#'these tiesMethod values is identical (except for type) if the elements of x
+#'are unique; the difference between these methods is in how ties are resolved.
+#'Suppose that n elements of x are tied (because they are equal), corresponding to
+#'ranks k through k+n−1. For tiesMethod "average", all n tied elements receive the
+#'same rank, (k + (n−1)/2), which is the average of the ranks. For "first", the
+#'first tied element receives rank k, upward to the last tied element receiving
+#'rank k+n−1. For "last", the last tied element receives rank k, downward to the
+#'first tied element receiving rank k+n−1. For "max", all n tied element receive
+#'the maximum rank, k+n−1. For "min", all n tied element receive the minimum rank,
+#'k.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rank <- function(x, tiesMethod) {
+ .E$rank(x, tiesMethod)
+}
+
+#'Eidos method sd
+#'
+#'Documentation for Eidos function \code{sd}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'
+#'@aliases Eidos$sd .E$sd
+#'@family Eidos
+#'@return An object of type float. Return will be of length 1 (a singleton)
+#'@details Returns the corrected sample standard deviation of x. If x has a size
+#'of 0 or 1, the return value will be NULL. 57
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_sd <- function(x) {
+ .E$sd(x)
+}
+
+#'Eidos method ttest
+#'
+#'Documentation for Eidos function \code{ttest}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type float. See details for description.
+#'@param y An object of type null or float. The default value is \code{NULL}. See
+#'details for description.
+#'@param mu An object of type null or float. Must be of length 1 (a singleton).
+#'The default value is \code{NULL}. See details for description.
+#'
+#'@aliases Eidos$ttest .E$ttest
+#'@family Eidos
+#'@return An object of type float. Return will be of length 1 (a singleton)
+#'@details Returns the p-value resulting from running a t-test with the supplied
+#'data. Two types of t-tests can be performed. If x and y are supplied (i.e., y is
+#'non-NULL), a two-sample unpaired two-sided Welch's ttest is conducted using the
+#'samples in x and y, each of which must contain at least two elements. The null
+#'hypothesis for this test is that the two samples are drawn from populations with
+#'the same mean. Other options, such as pooled-variance t-tests, paired t-tests,
+#'and one-sided t-tests, are not presently available. If x and mu are supplied
+#'(i.e., mu is non-NULL), a one-sample t-test is conducted in which the null
+#'hypothesis is that the sample is drawn from a population with mean mu. Note that
+#'the results from this function are substantially different from those produced
+#'by R. The Eidos ttest() function uses uncorrected sample statistics, which means
+#'they will be biased for small sample sizes, whereas R probably uses corrected,
+#'unbiased sample statistics. This is an Eidos bug, and might be fixed if anyone
+#'complains. If large sample sizes are used, however, the bias is likely to be
+#'small, and uncorrected statistics are simpler and faster to compute.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_ttest <- function(x, y, mu) {
+ .E$ttest(x, y, mu)
+}
+
+#'Eidos method var
+#'
+#'Documentation for Eidos function \code{var}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric. See details for description.
+#'
+#'@aliases Eidos$var .E$var
+#'@family Eidos
+#'@return An object of type float. Return will be of length 1 (a singleton)
+#'@details Returns the corrected sample variance of x. If x has a size of 0 or
+#'1, the return value will be NULL. This is the square of the standard deviation
+#'calculated by sd(). At present it is illegal to call var() with a matrix or
+#'array argument, because the desired behavior in that case has not yet been
+#'implemented.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_var <- function(x) {
+ .E$var(x)
+}
+
+#'Eidos method dmvnorm
+#'
+#'Documentation for Eidos function \code{dmvnorm}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type float or numeric or numeric. See details for
+#'description.
+#'@param mu An object of type float or numeric or numeric. See details for
+#'description.
+#'@param sigma An object of type float or numeric or numeric. See details for
+#'description.
+#'
+#'@aliases Eidos$dmvnorm .E$dmvnorm
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns a vector of probability densities for a k-dimensional
+#'multivariate normal distribution with a length k mean vector mu and a k × k
+#'variance-covariance matrix sigma. The mu and sigma parameters are used for all
+#'densities. The quantile values, x, should be supplied as a matrix with one row
+#'per vector of quantile values and k columns (one column per dimension); for
+#'convenience, a single quantile may be supplied as a vector rather than a matrix
+#'with just one row. The number of dimensions k must be at least two; for k=1,
+#'use dnorm(). Cholesky decomposition of the variance-covariance matrix sigma is
+#'involved as an internal step, and this requires that sigma be positive-definite;
+#'if it is not, an error will result. When more than one density is needed, it
+#'is much more efficient to call dmvnorm() once to generate all of the densities,
+#'since the Cholesky decomposition of sigma can then be done just once.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_dmvnorm <- function(x, mu, sigma) {
+ .E$dmvnorm(x, mu, sigma)
+}
+
+#'Eidos method dbeta
+#'
+#'Documentation for Eidos function \code{dbeta}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type float or numeric or numeric. See details for
+#'description.
+#'@param alpha An object of type float or numeric or numeric. See details for
+#'description.
+#'@param beta An object of type float or numeric or numeric. See details for
+#'description.
+#'
+#'@aliases Eidos$dbeta .E$dbeta
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns a vector of probability densities for a beta distribution
+#'at quantiles x with parameters alpha and beta. The alpha and beta parameters
+#'may either be singletons, specifying a single value to be used for all of the
+#'draws, or they may be vectors of the same length as x, specifying a value for
+#'each density computation. The probability density function is P(s | α,β) =
+#'[Γ(α+β)/Γ(α)Γ(β)]sα−1(1−s)β−1, where α is alpha and β is beta. Both parameters
+#'must be greater than 0. 58
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_dbeta <- function(x, alpha, beta) {
+ .E$dbeta(x, alpha, beta)
+}
+
+#'Eidos method dexp
+#'
+#'Documentation for Eidos function \code{dexp}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type float or numeric. See details for description.
+#'@param mu An object of type float or numeric. The default value is \code{1}. See
+#'details for description.
+#'
+#'@aliases Eidos$dexp .E$dexp
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns a vector of probability densities for an exponential
+#'distribution at quantiles x with mean mu (i.e. rate 1/mu). The mu parameter
+#'may either be a singleton, specifying a single value to be used for all of the
+#'draws, or they may be vectors of the same length as x, specifying a value for
+#'each density computation.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_dexp <- function(x, mu) {
+ .E$dexp(x, mu)
+}
+
+#'Eidos method dgamma
+#'
+#'Documentation for Eidos function \code{dgamma}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type float or numeric or numeric. See details for
+#'description.
+#'@param mean An object of type float or numeric or numeric. See details for
+#'description.
+#'@param shape An object of type float or numeric or numeric. See details for
+#'description.
+#'
+#'@aliases Eidos$dgamma .E$dgamma
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns a vector of probability densities for a gamma distribution
+#'at quantiles x with mean mean and shape parameter shape. The mean and shape
+#'parameters may either be singletons, specifying a single value to be used for
+#'all of the draws, or they may be vectors of the same length as x, specifying a
+#'value for each density computation. The probability density function is P(s |
+#'α,β) = [Γ(α)βα]−1sα−1exp(−s/β), where α is the shape parameter shape, and the
+#'mean of the distribution given by mean is equal to αβ.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_dgamma <- function(x, mean, shape) {
+ .E$dgamma(x, mean, shape)
+}
+
+#'Eidos method dnorm
+#'
+#'Documentation for Eidos function \code{dnorm}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type float or numeric or numeric. See details for
+#'description.
+#'@param mean An object of type float or numeric or numeric. The default value is
+#'\code{0}. See details for description.
+#'@param sd An object of type float or numeric or numeric. The default value is
+#'\code{1}. See details for description.
+#'
+#'@aliases Eidos$dnorm .E$dnorm
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns a vector of probability densities for a normal distribution at
+#'quantiles x with mean mean and standard deviation sd. The mean and sd parameters
+#'may either be singletons, specifying a single value to be used for all of the
+#'densities, or they may be vectors of the same length as x, specifying a value
+#'for each density computation.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_dnorm <- function(x, mean, sd) {
+ .E$dnorm(x, mean, sd)
+}
+
+#'Eidos method findInterval
+#'
+#'Documentation for Eidos function \code{findInterval}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric or numeric or logical or logical. See details
+#'for description.
+#'@param vec An object of type numeric or numeric or logical or logical. See
+#'details for description.
+#'@param rightmostClosed An object of type numeric or numeric or logical or
+#'logical. Must be of length 1 (a singleton). The default value is \code{F}. See
+#'details for description.
+#'@param allInside An object of type numeric or numeric or logical or logical.
+#'Must be of length 1 (a singleton). The default value is \code{F}. See details
+#'for description.
+#'
+#'@aliases Eidos$findInterval .E$findInterval
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns a vector of interval indices for the values in x within a
+#'vector of non-decreasing breakpoints vec. The returned integer vector contains,
+#'for each corresponding element of x, the index of the interval in vec within
+#'which that element of x is contained. More precisely, if i is the returned
+#'integer vector from findInterval(x, v), and N is length(v), then for each index
+#'j in x, it will be true that v[i[j]] ≤ x[j] < v[i[j]+1], treating v[-1] as -INF
+#'and v[N] as INF, assuming that the two flags rightmostClosed and allInside have
+#'their default value of F. The effects of the flags will be discussed below.
+#'Note that vec must be non-decreasing; in other words, it must be sorted in
+#'ascending order, although it may have duplicate values. The returned vector will
+#'thus be equal in length to x, and each of its elements will be in the interval
+#'[-1, N-1]. The rightmostClosed flag, if T, alters the above behavior to treat
+#'the rightmost interval, vec[N-2] .. vec[N-1], as closed. This means that if
+#'x[j]==vec[N-1] (i.e., equals max(vec)), the corresponding result i[j] will be
+#'N-2 as for all other values in the last interval. The allInside flag, if T,
+#'alters the above behavior to coerce returned indices into 0 .. N-2. In other
+#'words, -1 is mapped to 0, and N-1 is mapped to N-2.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_findInterval <- function(x, vec, rightmostClosed, allInside) {
+ .E$findInterval(x, vec, rightmostClosed, allInside)
+}
+
+#'Eidos method pnorm
+#'
+#'Documentation for Eidos function \code{pnorm}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param q An object of type float or numeric or numeric. See details for
+#'description.
+#'@param mean An object of type float or numeric or numeric. The default value is
+#'\code{0}. See details for description.
+#'@param sd An object of type float or numeric or numeric. The default value is
+#'\code{1}. See details for description.
+#'
+#'@aliases Eidos$pnorm .E$pnorm
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns a vector of cumulative distribution function values for a
+#'normal distribution at quantiles q with mean mean and standard deviation sd. The
+#'mean and sd parameters may either be singletons, specifying a single value to be
+#'used for all of the quantiles, or they may be vectors of the same length as q,
+#'specifying a value for each quantile.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_pnorm <- function(q, mean, sd) {
+ .E$pnorm(q, mean, sd)
+}
+
+#'Eidos method qnorm
+#'
+#'Documentation for Eidos function \code{qnorm}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param p An object of type float or numeric or numeric. See details for
+#'description.
+#'@param mean An object of type float or numeric or numeric. The default value is
+#'\code{0}. See details for description.
+#'@param sd An object of type float or numeric or numeric. The default value is
+#'\code{1}. See details for description.
+#'
+#'@aliases Eidos$qnorm .E$qnorm
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns a vector of quantiles for a normal distribution with lower
+#'tail probabilities less than p, with mean mean and standard deviation sd. The
+#'mean and sd parameters may either be singletons, specifying a single value to be
+#'used for all of the quantiles, or they may be vectors of the same length as p,
+#'specifying a value for each quantile computation.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_qnorm <- function(p, mean, sd) {
+ .E$qnorm(p, mean, sd)
+}
+
+#'Eidos method rbeta
+#'
+#'Documentation for Eidos function \code{rbeta}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer or numeric or numeric. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param alpha An object of type integer or numeric or numeric. See details for
+#'description.
+#'@param beta An object of type integer or numeric or numeric. See details for
+#'description.
+#'
+#'@aliases Eidos$rbeta .E$rbeta
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns a vector of n random draws from a beta distribution with
+#'parameters alpha and beta. The alpha and beta parameters may either be
+#'singletons, specifying a single value to be used for all of the draws, or
+#'they may be vectors of length n, specifying a value for each draw. Draws
+#'are made from a beta distribution with probability density P(s | α,β) =
+#'[Γ(α+β)/Γ(α)Γ(β)]sα−1(1−s)β−1, where α is alpha and β is beta. Both parameters
+#'must be greater than 0. The values drawn are in the interval [0, 1]. 59
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rbeta <- function(n, alpha, beta) {
+ .E$rbeta(n, alpha, beta)
+}
+
+#'Eidos method rbinom
+#'
+#'Documentation for Eidos function \code{rbinom}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer or integer or float. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param size An object of type integer or integer or float. See details for
+#'description.
+#'@param prob An object of type integer or integer or float. See details for
+#'description.
+#'
+#'@aliases Eidos$rbinom .E$rbinom
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns a vector of n random draws from a binomial distribution with
+#'a number of trials specified by size and a probability of success specified by
+#'prob. The size and prob parameters may either be singletons, specifying a single
+#'value to be used for all of the draws, or they may be vectors of length n,
+#'specifying a value for each draw.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rbinom <- function(n, size, prob) {
+ .E$rbinom(n, size, prob)
+}
+
+#'Eidos method rcauchy
+#'
+#'Documentation for Eidos function \code{rcauchy}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer or numeric or numeric. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param location An object of type integer or numeric or numeric. The default
+#'value is \code{0}. See details for description.
+#'@param scale An object of type integer or numeric or numeric. The default value
+#'is \code{1}. See details for description.
+#'
+#'@aliases Eidos$rcauchy .E$rcauchy
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns a vector of n random draws from a Cauchy distribution with
+#'location location and scale scale. The location and scale parameters may either
+#'be singletons, specifying a single value to be used for all of the draws, or
+#'they may be vectors of length n, specifying a value for each draw.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rcauchy <- function(n, location, scale) {
+ .E$rcauchy(n, location, scale)
+}
+
+#'Eidos method rdunif
+#'
+#'Documentation for Eidos function \code{rdunif}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer or integer or integer. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param min An object of type integer or integer or integer. The default value is
+#'\code{0}. See details for description.
+#'@param max An object of type integer or integer or integer. The default value is
+#'\code{1}. See details for description.
+#'
+#'@aliases Eidos$rdunif .E$rdunif
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns a vector of n random draws from a discrete uniform distribution
+#'from min to max, inclusive. The min and max parameters may either be singletons,
+#'specifying a single value to be used for all of the draws, or they may be
+#'vectors of length n, specifying a value for each draw. See runif() for draws
+#'from a continuous uniform distribution.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rdunif <- function(n, min, max) {
+ .E$rdunif(n, min, max)
+}
+
+#'Eidos method rexp
+#'
+#'Documentation for Eidos function \code{rexp}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer or numeric. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param mu An object of type integer or numeric. The default value is \code{1}.
+#'See details for description.
+#'
+#'@aliases Eidos$rexp .E$rexp
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns a vector of n random draws from an exponential distribution
+#'with mean mu (i.e. rate 1/mu). The mu parameter may either be a singleton,
+#'specifying a single value to be used for all of the draws, or it may be a vector
+#'of length n, specifying a value for each draw.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rexp <- function(n, mu) {
+ .E$rexp(n, mu)
+}
+
+#'Eidos method rf
+#'
+#'Documentation for Eidos function \code{rf}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer or numeric or numeric. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param d1 An object of type integer or numeric or numeric. See details for
+#'description.
+#'@param d2 An object of type integer or numeric or numeric. See details for
+#'description.
+#'
+#'@aliases Eidos$rf .E$rf
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns a vector of n random draws from an F-distribution with degrees
+#'of freedom d1 and d2. The d1 and d2 parameters may either be singletons,
+#'specifying a single value to be used for all of the draws, or they may be
+#'vectors of length n, specifying a value for each draw.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rf <- function(n, d1, d2) {
+ .E$rf(n, d1, d2)
+}
+
+#'Eidos method rgamma
+#'
+#'Documentation for Eidos function \code{rgamma}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer or numeric or numeric. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param mean An object of type integer or numeric or numeric. See details for
+#'description.
+#'@param shape An object of type integer or numeric or numeric. See details for
+#'description.
+#'
+#'@aliases Eidos$rgamma .E$rgamma
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns a vector of n random draws from a gamma distribution with
+#'mean mean and shape parameter shape. The mean and shape parameters may either
+#'be singletons, specifying a single value to be used for all of the draws,
+#'or they may be vectors of length n, specifying a value for each draw. Draws
+#'are made from a gamma distribution with probability density P(s | α,β) =
+#'[Γ(α)βα]−1sα−1exp(−s/β), where α is the shape parameter shape, and the mean of
+#'the distribution given by mean is equal to αβ. Values of mean less than zero
+#'are allowed, and are equivalent (in principle) to the negation of a draw from
+#'a gamma distribution with the same shape parameter and the negation of the mean
+#'parameter.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rgamma <- function(n, mean, shape) {
+ .E$rgamma(n, mean, shape)
+}
+
+#'Eidos method rgeom
+#'
+#'Documentation for Eidos function \code{rgeom}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer or float. Must be of length 1 (a singleton).
+#'See details for description.
+#'@param p An object of type integer or float. See details for description.
+#'
+#'@aliases Eidos$rgeom .E$rgeom
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns a vector of n random draws from a geometric distribution
+#'with parameter p. The p parameter may either be a singleton, specifying a
+#'single value to be used for all of the draws, or it may be a vector of length
+#'n, specifying a value for each draw. Eidos follows R in using the geometric
+#'distribution with support on the set {0, 1, 2, …}, where the drawn value
+#'indicates the number of failures prior to success. There is an alternative
+#'definition, based upon the number of trial required to get one success, so
+#'beware.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rgeom <- function(n, p) {
+ .E$rgeom(n, p)
+}
+
+#'Eidos method rlnorm
+#'
+#'Documentation for Eidos function \code{rlnorm}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer or numeric or numeric. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param meanlog An object of type integer or numeric or numeric. The default
+#'value is \code{0}. See details for description.
+#'@param sdlog An object of type integer or numeric or numeric. The default value
+#'is \code{1}. See details for description.
+#'
+#'@aliases Eidos$rlnorm .E$rlnorm
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns a vector of n random draws from a lognormal distribution with
+#'mean meanlog and standard deviation sdlog, specified on the log scale. The
+#'meanlog and sdlog parameters may either be singletons, specifying a single value
+#'to be used for all of the draws, or they may be vectors of length n, specifying
+#'a value for each draw.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rlnorm <- function(n, meanlog, sdlog) {
+ .E$rlnorm(n, meanlog, sdlog)
+}
+
+#'Eidos method rmvnorm
+#'
+#'Documentation for Eidos function \code{rmvnorm}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer or numeric or numeric. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param mu An object of type integer or numeric or numeric. See details for
+#'description.
+#'@param sigma An object of type integer or numeric or numeric. See details for
+#'description.
+#'
+#'@aliases Eidos$rmvnorm .E$rmvnorm
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns a matrix of n random draws from a k-dimensional
+#'multivariate normal distribution with a length k mean vector mu and a k × k
+#'variance-covariance matrix sigma. The mu and sigma parameters are used for
+#'all n draws. The draws are returned as a matrix with n rows (one row per
+#'draw) and k 60 columns (one column per dimension). The number of dimensions
+#'k must be at least two; for k=1, use rnorm(). Cholesky decomposition of the
+#'variance-covariance matrix sigma is involved as an internal step, and this
+#'requires that sigma be positive-definite; if it is not, an error will result.
+#'When more than one draw is needed, it is much more efficient to call rmvnorm()
+#'once to generate all of the draws, since the Cholesky decomposition of sigma can
+#'then be done just once.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rmvnorm <- function(n, mu, sigma) {
+ .E$rmvnorm(n, mu, sigma)
+}
+
+#'Eidos method rnbinom
+#'
+#'Documentation for Eidos function \code{rnbinom}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer or numeric or float. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param size An object of type integer or numeric or float. See details for
+#'description.
+#'@param prob An object of type integer or numeric or float. See details for
+#'description.
+#'
+#'@aliases Eidos$rnbinom .E$rnbinom
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns a vector of n random draws from a negative binomial
+#'distribution representing the number of failures which occur in a sequence of
+#'Bernoulli trials before reaching a target number of successful trials specified
+#'by size, given a probability of success specified by prob. The mean of this
+#'distribution for size s and prob p is s(1−p)/p, with variance s(1−p)/p2. The
+#'size and prob parameters may either be singletons, specifying a single value to
+#'be used for all of the draws, or they may be vectors of length n, specifying a
+#'value for each draw.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rnbinom <- function(n, size, prob) {
+ .E$rnbinom(n, size, prob)
+}
+
+#'Eidos method rnorm
+#'
+#'Documentation for Eidos function \code{rnorm}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer or numeric or numeric. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param mean An object of type integer or numeric or numeric. The default value
+#'is \code{0}. See details for description.
+#'@param sd An object of type integer or numeric or numeric. The default value is
+#'\code{1}. See details for description.
+#'
+#'@aliases Eidos$rnorm .E$rnorm
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns a vector of n random draws from a normal distribution with
+#'mean mean and standard deviation sd. The mean and sd parameters may either be
+#'singletons, specifying a single value to be used for all of the draws, or they
+#'may be vectors of length n, specifying a value for each draw.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rnorm <- function(n, mean, sd) {
+ .E$rnorm(n, mean, sd)
+}
+
+#'Eidos method rpois
+#'
+#'Documentation for Eidos function \code{rpois}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer or numeric. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param lambda An object of type integer or numeric. See details for description.
+#'
+#'@aliases Eidos$rpois .E$rpois
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns a vector of n random draws from a Poisson distribution with
+#'parameter lambda (not to be confused with the language concept of a "lambda";
+#'lambda here is just the name of a parameter, because the symbol typically used
+#'for the parameter of a Poisson distribution is the Greek letter λ). The lambda
+#'parameter may either be a singleton, specifying a single value to be used for
+#'all of the draws, or it may be a vector of length n, specifying a value for each
+#'draw.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rpois <- function(n, lambda) {
+ .E$rpois(n, lambda)
+}
+
+#'Eidos method runif
+#'
+#'Documentation for Eidos function \code{runif}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer or numeric or numeric. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param min An object of type integer or numeric or numeric. The default value is
+#'\code{0}. See details for description.
+#'@param max An object of type integer or numeric or numeric. The default value is
+#'\code{1}. See details for description.
+#'
+#'@aliases Eidos$runif .E$runif
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns a vector of n random draws from a continuous uniform
+#'distribution from min to max, inclusive. The min and max parameters may either
+#'be singletons, specifying a single value to be used for all of the draws, or
+#'they may be vectors of length n, specifying a value for each draw. See rdunif()
+#'for draws from a discrete uniform distribution.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_runif <- function(n, min, max) {
+ .E$runif(n, min, max)
+}
+
+#'Eidos method rweibull
+#'
+#'Documentation for Eidos function \code{rweibull}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer or numeric or numeric. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param lambda An object of type integer or numeric or numeric. See details for
+#'description.
+#'@param k An object of type integer or numeric or numeric. See details for
+#'description.
+#'
+#'@aliases Eidos$rweibull .E$rweibull
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns a vector of n random draws from a Weibull distribution with
+#'scale parameter lambda and shape parameter k, both greater than zero. The lambda
+#'and k parameters may either be singletons, specifying a single value to be used
+#'for all of the draws, or they may be vectors of length n, specifying a value
+#'for each draw. Draws are made from a Weibull distribution with probability
+#'distribution P(s | λ,k) = (k / λk) sk−1 exp(-(s/λ)k).
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rweibull <- function(n, lambda, k) {
+ .E$rweibull(n, lambda, k)
+}
+
+#'Eidos method c
+#'
+#'Documentation for Eidos function \code{c}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param ... An object of type . See details for description.
+#'
+#'@aliases Eidos$c .E$c
+#'@family Eidos
+#'@return An object of type any.
+#'@details Returns the concatenation of all of its parameters into a single
+#'vector, stripped of all matrix/array dimensions (see rbind() and cbind() for
+#'concatenation that does not strip this information). The parameters will be
+#'promoted to the highest type represented among them, and that type will be the
+#'return type. NULL values are ignored; they have no effect on the result.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_c <- function(...) {
+ .E$c(...)
+}
+
+#'Eidos method float
+#'
+#'Documentation for Eidos function \code{float}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param length An object of type integer. Must be of length 1 (a singleton). See
+#'details for description.
+#'
+#'@aliases Eidos$float .E$float
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns a new float vector of the length specified by length, filled
+#'with 0.0 values. This can be useful for pre-allocating a vector which you then
+#'fill with values by subscripting. 61
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_float <- function(length) {
+ .E$float(length)
+}
+
+#'Eidos method integer
+#'
+#'Documentation for Eidos function \code{integer}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param length An object of type integer. Must be of length 1 (a singleton). See
+#'details for description.
+#'@param fill1 An object of type integer. Must be of length 1 (a singleton). The
+#'default value is \code{0}. See details for description.
+#'@param fill2 An object of type integer. Must be of length 1 (a singleton). The
+#'default value is \code{1}. See details for description.
+#'@param fill2Indices An object of type null or integer. The default value is
+#'\code{NULL}. See details for description.
+#'
+#'@aliases Eidos$integer .E$integer
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns a new integer vector of the length specified by length, filled
+#'with 0 values by default. This can be useful for pre-allocating a vector which
+#'you then fill with values by subscripting. If a value is supplied for fill1,
+#'the new vector will be filled with that value instead of the default of 0.
+#'Additionally, if a non-NULL vector is supplied for fill2Indices, the indices
+#'specified by fill2Indices will be filled with the value provided by fill2. For
+#'example, given the default values of 0 and 1 for fill1 and fill2, the returned
+#'vector will contain 1 at all positions specified by fill2Indices, and will
+#'contain 0 at all other positions.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_integer <- function(length, fill1, fill2, fill2Indices) {
+ .E$integer(length, fill1, fill2, fill2Indices)
+}
+
+#'Eidos method logical
+#'
+#'Documentation for Eidos function \code{logical}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param length An object of type integer. Must be of length 1 (a singleton). See
+#'details for description.
+#'
+#'@aliases Eidos$logical .E$logical
+#'@family Eidos
+#'@return An object of type logical.
+#'@details Returns a new logical vector of the length specified by length, filled
+#'with F values. This can be useful for pre-allocating a vector which you then
+#'fill with values by subscripting.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_logical <- function(length) {
+ .E$logical(length)
+}
+
+#'Eidos method object
+#'
+#'Documentation for Eidos function \code{object}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param void An object of type . See details for description.
+#'
+#'@aliases Eidos$object .E$object
+#'@family Eidos
+#'@return An object of type Object object.
+#'@details Returns a new empty object vector. Unlike float(), integer(),
+#'logical(), and string(), a length cannot be specified and the new vector
+#'contains no elements. This is because there is no default value for the object
+#'type. Adding to such a vector is typically done with c(). Note that the return
+#'value is of type object<Object>; this method creates an object vector that
+#'does not know what element type it contains. Such object vectors may be mixed
+#'freely with other object vectors in c() and similar contexts; the result of such
+#'mixing will take its object-element type from the object vector with a defined
+#'object-element type (if any).
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_object <- function(void) {
+ .E$object(void)
+}
+
+#'Eidos method rep
+#'
+#'Documentation for Eidos function \code{rep}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any or integer. See details for description.
+#'@param count An object of type any or integer. Must be of length 1 (a
+#'singleton). See details for description.
+#'
+#'@aliases Eidos$rep .E$rep
+#'@family Eidos
+#'@return An object of type any.
+#'@details Returns the repetition of x: the entirety of x is repeated count times.
+#'The return type matches the type of x.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rep <- function(x, count) {
+ .E$rep(x, count)
+}
+
+#'Eidos method repEach
+#'
+#'Documentation for Eidos function \code{repEach}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any or integer. See details for description.
+#'@param count An object of type any or integer. See details for description.
+#'
+#'@aliases Eidos$repEach .E$repEach
+#'@family Eidos
+#'@return An object of type any.
+#'@details Returns the repetition of elements of x: each element of x is repeated.
+#'If count is a singleton, it specifies the number of times that each element of
+#'x will be repeated. Otherwise, the length of count must be equal to the length
+#'of x; in this case, each element of x is repeated a number of times specified by
+#'the corresponding value of count.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_repEach <- function(x, count) {
+ .E$repEach(x, count)
+}
+
+#'Eidos method sample
+#'
+#'Documentation for Eidos function \code{sample}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. See details for description.
+#'@param size An object of type integer. Must be of length 1 (a singleton). See
+#'details for description.
+#'@param replace An object of type logical. Must be of length 1 (a singleton). The
+#'default value is \code{F}. See details for description.
+#'@param weights An object of type null or integer or float. The default value is
+#'\code{NULL}. See details for description.
+#'
+#'@aliases Eidos$sample .E$sample
+#'@family Eidos
+#'@return An object of type any.
+#'@details Returns a vector of size containing a sample from the elements of x.
+#'If replace is T, sampling is conducted with replacement (the same element may be
+#'drawn more than once); if it is F (the default), then sampling is done without
+#'replacement. A vector of weights may be supplied in the optional parameter
+#'weights; if not NULL, it must be equal in size to x, all weights must be
+#'non-negative, and the sum of the weights must be greater than 0. If weights is
+#'NULL (the default), then equal weights are used for all elements of x. An error
+#'occurs if sample() runs out of viable elements from which to draw; most notably,
+#'if sampling is done without replacement then size must be at most equal to the
+#'size of x, but if weights of zero are supplied then the restriction on size will
+#'be even more stringent. The draws are obtained from the standard Eidos random
+#'number generator, which might be shared with the Context.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_sample <- function(x, size, replace, weights) {
+ .E$sample(x, size, replace, weights)
+}
+
+#'Eidos method seq
+#'
+#'Documentation for Eidos function \code{seq}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param from An object of type numeric. Must be of length 1 (a singleton). See
+#'details for description.
+#'@param to An object of type numeric. Must be of length 1 (a singleton). See
+#'details for description.
+#'@param by An object of type null or integer or float. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param length An object of type null or integer. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'
+#'@aliases Eidos$seq .E$seq
+#'@family Eidos
+#'@return An object of type numeric.
+#'@details Returns a sequence, starting at from and proceeding in the direction
+#'of to until the next value in the sequence would fall beyond to. If the
+#'optional parameters by and length are both NULL (the default), the sequence
+#'steps by values of 1 or -1 (as needed to proceed in the direction of to). A
+#'different step value may be supplied with by, but must have the necessary sign.
+#'Alternatively, a sequence length may be supplied in length, in which case the
+#'step magnitude will be chosen to produce a sequence of the requested length
+#'(with the necessary sign, as before). If from and to are both integer then
+#'the return type will be integer when possible (but this may not be possible,
+#'depending upon values supplied for by or length), otherwise it will be float. 62
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_seq <- function(from, to, by, length) {
+ .E$seq(from, to, by, length)
+}
+
+#'Eidos method seqAlong
+#'
+#'Documentation for Eidos function \code{seqAlong}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. See details for description.
+#'
+#'@aliases Eidos$seqAlong .E$seqAlong
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns an index sequence along x, from 0 to size(x) - 1, with a step
+#'of 1. This is a convenience function for easily obtaining a set of indices to
+#'address or iterate through a vector. Any matrix/array dimension information is
+#'ignored; the index sequence is suitable for indexing into x as a vector.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_seqAlong <- function(x) {
+ .E$seqAlong(x)
+}
+
+#'Eidos method seqLen
+#'
+#'Documentation for Eidos function \code{seqLen}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param length An object of type integer. Must be of length 1 (a singleton). See
+#'details for description.
+#'
+#'@aliases Eidos$seqLen .E$seqLen
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns an index sequence of length, from 0 to length - 1, with a step
+#'of 1; if length is 0 the sequence will be zero-length. This is a convenience
+#'function for easily obtaining a set of indices to address or iterate through
+#'a vector. Note that when length is 0, using the sequence operator with 0:
+#'(length-1) will produce 0 -1, and calling seq(a, b, length=length) will raise an
+#'error, but seqLen(length) will return integer(0), making seqLen() particularly
+#'useful for generating a sequence of a given length that might be zero.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_seqLen <- function(length) {
+ .E$seqLen(length)
+}
+
+#'Eidos method string
+#'
+#'Documentation for Eidos function \code{string}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param length An object of type integer. Must be of length 1 (a singleton). See
+#'details for description.
+#'
+#'@aliases Eidos$string .E$string
+#'@family Eidos
+#'@return An object of type string.
+#'@details Returns a new string vector of the length specified by length, filled
+#'with "" values. This can be useful for pre-allocating a vector which you then
+#'fill with values by subscripting.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_string <- function(length) {
+ .E$string(length)
+}
+
+#'Eidos method all
+#'
+#'Documentation for Eidos function \code{all}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type logical. See details for description.
+#'@param ... An object of type NA. NA See details for description.
+#'
+#'@aliases Eidos$all .E$all
+#'@family Eidos
+#'@return An object of type logical. Return will be of length 1 (a singleton)
+#'@details Returns T if all values are T in x and in any other arguments supplied;
+#'if any value is F, returns F. All arguments must be of logical type. If all
+#'arguments are zero-length, T is returned.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_all <- function(x, ...) {
+ .E$all(x, ...)
+}
+
+#'Eidos method any
+#'
+#'Documentation for Eidos function \code{any}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type logical. See details for description.
+#'@param ... An object of type NA. NA See details for description.
+#'
+#'@aliases Eidos$any .E$any
+#'@family Eidos
+#'@return An object of type logical. Return will be of length 1 (a singleton)
+#'@details Returns T if any value is T in x or in any other arguments supplied;
+#'if all values are F, returns F. All arguments must be of logical type. If all
+#'arguments are zero-length, F is returned.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_any <- function(x, ...) {
+ .E$any(x, ...)
+}
+
+#'Eidos method cat
+#'
+#'Documentation for Eidos function \code{cat}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any or string or logical. See details for
+#'description.
+#'@param sep An object of type any or string or logical. Must be of length 1 (a
+#'singleton). The default value is \code{" "}. See details for description.
+#'@param error An object of type any or string or logical. Must be of length 1 (a
+#'singleton). The default value is \code{F}. See details for description.
+#'
+#'@aliases Eidos$cat .E$cat
+#'@family Eidos
+#'@return An object of type void.
+#'@details Concatenates output to Eidos's output stream, joined together by sep.
+#'The value x that is output may be of any type. A newline is not appended to the
+#'output, unlike the behavior of print(); if a trailing newline is desired, you
+#'can use "\n" (or use the catn() function). Also unlike print(), cat() tends to
+#'emit very literal output; print(logical(0)) will emit "logical(0)", for example
+#'- showing a semantic interpretation of the value - whereas cat(logical(0))
+#'will emit nothing at all, since there are no elements in the value (it is
+#'zero-length). Similarly, print(NULL) will emit "NULL", but cat(NULL) will emit
+#'nothing. By default (when error is F), the output is sent to the standard Eidos
+#'output stream. When running at the command line, this sends it to stdout; when
+#'running in SLiMgui, this sends it to the simulation window's output textview. If
+#'error is T, the output is instead sent to the Eidos error stream. When running
+#'at the command line, this sends it to stderr; when running in SLiMgui, the
+#'output is routed to the simulation's debugging output window.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_cat <- function(x, sep, error) {
+ .E$cat(x, sep, error)
+}
+
+#'Eidos method catn
+#'
+#'Documentation for Eidos function \code{catn}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any or string or logical. The default value is
+#'\code{""}. See details for description.
+#'@param sep An object of type any or string or logical. Must be of length 1 (a
+#'singleton). The default value is \code{" "}. See details for description.
+#'@param error An object of type any or string or logical. Must be of length 1 (a
+#'singleton). The default value is \code{F}. See details for description.
+#'
+#'@aliases Eidos$catn .E$catn
+#'@family Eidos
+#'@return An object of type void.
+#'@details Concatenates output (with a trailing newline) to Eidos's output stream,
+#'joined together by sep. The behavior of catn() is identical to that of cat(),
+#'except that a final newline character is appended to the output for convenience.
+#'For catn() a default value of "" is supplied for x, to allow a simple catn()
+#'call with no parameters to emit a newline. By default (when error is F), the
+#'output is sent to the standard Eidos output stream. When running at the command
+#'line, this sends it to stdout; when running in SLiMgui, this sends it to the
+#'simulation window's output textview. If error is T, the output is instead sent
+#'to the Eidos error stream. When running at the command line, this sends it
+#'to stderr; when running in SLiMgui, the output is routed to the simulation's
+#'debugging output window. 63
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_catn <- function(x, sep, error) {
+ .E$catn(x, sep, error)
+}
+
+#'Eidos method format
+#'
+#'Documentation for Eidos function \code{format}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param format An object of type string or numeric. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param x An object of type string or numeric. See details for description.
+#'
+#'@aliases Eidos$format .E$format
+#'@family Eidos
+#'@return An object of type string.
+#'@details Returns a vector of formatted strings generated from x, based upon
+#'the formatting string format. The format parameter may be any string value,
+#'but must contain exactly one escape sequence beginning with the % character.
+#'This escape sequence specifies how to format a single value from the vector
+#'x. The returned vector contains one string value for each element of x; each
+#'string value is identical to the string supplied in format, except with a
+#'formatted version of the corresponding value from x substituted in place
+#'of the escape sequence. The syntax for format is a subset of the standard
+#'C/C++ printf()-style format strings (available in many places online, such
+#'as http://en.cppreference.com/w/c/io/fprintf). The escape sequence used to
+#'format each value of x is composed of several elements: - A % character at
+#'the beginning, initiating the escape sequence (if an actual % character is
+#'desired, rather than an escape sequence, %% may be used) - Optional flags that
+#'modify the style of formatting: • - : The value is left-justified with the
+#'field (as opposed to the default of right-justification). • + : The sign of
+#'the value is always prepended, even if the value is positive (as opposed to
+#'the default of appending the sign only if the value is negative). • space :
+#'The value is prepended by a space when a sign is not prepended. This is ignored
+#'if the + flag is present, since values are then always prepended by a sign. •
+#'# : An alternative format is used. For %o, at least one leading zero is always
+#'produced. For %x and %X, 0x or 0X (respectively) is prepended if the value is
+#'nonzero. For %f, %F, %e, %E, %g, and %G, a decimal point is forced even if no
+#'zeros follow. • 0 : Leading zeros are used to pad the field instead of spaces.
+#'This flag is ignored if the left-justification flag, -, is present. It is also
+#'ignored for integer values, if a precision is specified. - An optional minimum
+#'field width, specified as an integer value. Fields will be padded out to this
+#'minimum width. Padding will be done with space characters by default (or with
+#'zeros, if the 0 flag is used), on the left by default (or on the right, if the
+#'- flag is used). - An optional precision, given as an integer value preceded
+#'by a . character. If no integer value follows the . character, a precision of
+#'zero will be used. For integer values of x (formatted with %d, %i, %o, %x, or
+#'%X) the precision specifies the minimum number of digits that will appear (with
+#'extra zeros on the left if necessary), with a default precision of 1. For float
+#'values of x formatted with %f, %F, %e, %E, %g, or %G, the precision specifies
+#'the minimum number of digits that will appear to the right of the decimal
+#'point (with extra zeros on the right if necessary), with a default precision
+#'of 6. - A format specifier. For integer values, this may be %d or %i (producing
+#'base-10 output; there is no difference between the two), %o (producing base-8
+#'or octal output), %x (producing base-16 hexadecimal output using lowercase
+#'letters), or %X (producing base-16 hexadecimal output using uppercase letters).
+#'For float values, this may be %f or %F to produce decimal notation (of the
+#'form [−]ddd.ddd; there is no difference between the two), %e or %E to produce
+#'scientific notation (of the form [−]d.ddde±dd or [−]d.dddE±dd, respectively),
+#'or %g or %G to produce either decimal notation or scientific notation (using
+#'the formatting of %f / %e or %F / %E, respectively) on a per-value basis,
+#'depending upon the range of the value. Note that relative to the standard C/C++
+#'printf()-style behavior, there are a few differences: (1) only a single escape
+#'sequence may be present in the format string, (2) the use of * to defer field
+#'width and precision values to a passed parameter is not supported, (3) only
+#'integer and float values of x are supported, (4) only the %d, %i, %o, %x, %X,
+#'%f, %F, %e, %E, %g, and %G format specifiers are supported, and (5) no length
+#'modifiers may be supplied, since Eidos does not support different sizes of the
+#'integer and float types. Note also that the Eidos conventions of emitting INF
+#'and NAN for infinities and Not-A-Number values respectively is not honored by
+#'this function; the strings generated for such 64 values are platform-dependent,
+#'following the implementation definition of the C++ compiler used to build
+#'Eidos, since format() calls through to snprintf() to assemble the final string
+#'values. For example, format("A number: %+7.2f", c(-4.1, 15.375, 8)) will produce
+#'a vector with three elements: "A number: -4.10" "A number: +15.38" "A number:
+#'+8.00". The precision of .2 results in two digits after the decimal point, the
+#'minimum field width of 7 results in padding of the values on the left (with
+#'spaces) to a minimum of seven characters, the flag + causes a sign to be shown
+#'on positive values as well as negative values, and the format specifier f leads
+#'to the float values of x being formatted in base-10 decimal. One string value
+#'is produced in the result vector for each value in the parameter x. These values
+#'could then be merged into a single string with paste(), for example, or printed
+#'with print() or cat().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_format <- function(format, x) {
+ .E$format(format, x)
+}
+
+#'Eidos method identical
+#'
+#'Documentation for Eidos function \code{identical}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any or any. See details for description.
+#'@param y An object of type any or any. See details for description.
+#'
+#'@aliases Eidos$identical .E$identical
+#'@family Eidos
+#'@return An object of type logical. Return will be of length 1 (a singleton)
+#'@details Returns a logical value indicating whether two values are identical.
+#'If x and y have exactly the same type and size, and all of their corresponding
+#'elements are exactly the same, and (for matrices and arrays) their dimensions
+#'are identical, this will return T, otherwise it will return F. The test here
+#'is for exact equality; an integer value of 1 is not considered identical to a
+#'float value of 1.0, for example. Elements in object values must be literally the
+#'same element, not simply identical in all of their properties. Type promotion
+#'is never done. For testing whether two values are the same, this is generally
+#'preferable to the use of operator == or operator !=; see the discussion at
+#'section 2.5.1. Note that identical(NULL,NULL) is T.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_identical <- function(x, y) {
+ .E$identical(x, y)
+}
+
+#'Eidos method ifelse
+#'
+#'Documentation for Eidos function \code{ifelse}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param test An object of type logical or any or any. See details for
+#'description.
+#'@param trueValues An object of type logical or any or any. See details for
+#'description.
+#'@param falseValues An object of type logical or any or any. See details for
+#'description.
+#'
+#'@aliases Eidos$ifelse .E$ifelse
+#'@family Eidos
+#'@return An object of type any.
+#'@details Returns the result of a vector conditional operation: a vector
+#'composed of values from trueValues, for indices where test is T, and values
+#'from falseValues, for indices where test is F. The lengths of trueValues
+#'and falseValues must either be equal to 1 or to the length of test; however,
+#'trueValues and falseValues don't need to be the same length as each other.
+#'Furthermore, the type of trueValues and falseValues must be the same (including,
+#'if they are object type, their element type). The return will be of the same
+#'length as test, and of the same type as trueValues and falseValues. Each element
+#'of the return vector will be taken from the corresponding element of trueValues
+#'if the corresponding element of test is T, or from the corresponding element of
+#'falseValues if the corresponding element of test is F; if the vector from which
+#'the value is to be taken (i.e., trueValues or falseValues) has a length of 1,
+#'that single value is used repeatedly, recycling the vector. If test, trueValues,
+#'and/or falseValues are matrices or arrays, that will be ignored by ifelse()
+#'except that the result will be of the same dimensionality as test. This is quite
+#'similar to a function in R of the same name; note, however, that Eidos evaluates
+#'all arguments to functions calls immediately, so trueValues and falseValues
+#'will be evaluated fully regardless of the values in test, unlike in R. Value
+#'expressions without side effects are therefore recommended.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_ifelse <- function(test, trueValues, falseValues) {
+ .E$ifelse(test, trueValues, falseValues)
+}
+
+#'Eidos method length
+#'
+#'Documentation for Eidos function \code{length}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. See details for description.
+#'
+#'@aliases Eidos$length .E$length
+#'@family Eidos
+#'@return An object of type integer. Return will be of length 1 (a singleton)
+#'@details Returns the size (e.g., length) of x: the number of elements contained
+#'in x. Note that length() is a synonym for size().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_length <- function(x) {
+ .E$length(x)
+}
+
+#'Eidos method match
+#'
+#'Documentation for Eidos function \code{match}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any or any. See details for description.
+#'@param table An object of type any or any. See details for description.
+#'
+#'@aliases Eidos$match .E$match
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns a vector of the positions of (first) matches of x in table.
+#'Type promotion is not performed; x and table must be of the same type. For
+#'each element of x, the corresponding element in the result will give the
+#'position of the first match for that element of x in table; if the element has
+#'no match in table, the element in the result vector will be -1. The result is
+#'therefore a vector of the same length as x. If a logical result is desired,
+#'with T indicating that a match was found for the corresponding element of x, use
+#'(match(x, table) >= 0).
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_match <- function(x, table) {
+ .E$match(x, table)
+}
+
+#'Eidos method order
+#'
+#'Documentation for Eidos function \code{order}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any but object or logical. See details for
+#'description.
+#'@param ascending An object of type any but object or logical. Must be of length
+#'1 (a singleton). The default value is \code{T}. See details for description.
+#'
+#'@aliases Eidos$order .E$order
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns a vector of sorting indices for x: a new integer vector of
+#'the same length as x, containing the indices into x that would sort x. In other
+#'words, x[order(x)]==sort(x). This can be useful for 65 more complex sorting
+#'problems, such as sorting several vectors in parallel by a sort order determined
+#'by one of the vectors. If the optional logical parameter ascending is T (the
+#'default), then the sorted order will be ascending; if it is F, the sorted order
+#'will be descending. The ordering is determined according to the same logic as
+#'the < and > operators in Eidos. To easily sort vectors in a single step, use
+#'sort() or sortBy(), for non-object and object vectors respectively.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_order <- function(x, ascending) {
+ .E$order(x, ascending)
+}
+
+#'Eidos method paste
+#'
+#'Documentation for Eidos function \code{paste}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param ... An object of type NA. NA See details for description.
+#'@param sep An object of type string. Must be of length 1 (a singleton). The
+#'default value is \code{" "}. See details for description.
+#'
+#'@aliases Eidos$paste .E$paste
+#'@family Eidos
+#'@return An object of type string. Return will be of length 1 (a singleton)
+#'@details Returns a joined string composed from the string representations of the
+#'elements of the parameters passed in, taken in order, joined together by sep.
+#'Although this function is based upon the R paste() function of the same name,
+#'note that it is much simpler and less powerful; in particular, the result is
+#'always a singleton string, rather than returning a non-singleton string vector
+#'when one of the parameters is a non-singleton. The string representation used by
+#'paste() is the same as that emitted by cat().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_paste <- function(..., sep) {
+ .E$paste(..., sep)
+}
+
+#'Eidos method paste0
+#'
+#'Documentation for Eidos function \code{paste0}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param ... An object of type . See details for description.
+#'
+#'@aliases Eidos$paste0 .E$paste0
+#'@family Eidos
+#'@return An object of type string. Return will be of length 1 (a singleton)
+#'@details Returns a joined string composed from the string representations of the
+#'elements of the parameters passed in, taken in order, joined together with no
+#'separator. This function is identical to paste(), except that no separator is
+#'used. Note that this differs from the semantics of paste0() in R.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_paste0 <- function(...) {
+ .E$paste0(...)
+}
+
+#'Eidos method print
+#'
+#'Documentation for Eidos function \code{print}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any or logical. See details for description.
+#'@param error An object of type any or logical. Must be of length 1 (a
+#'singleton). The default value is \code{F}. See details for description.
+#'
+#'@aliases Eidos$print .E$print
+#'@family Eidos
+#'@return An object of type void.
+#'@details Prints output to Eidos's output stream. The value x that is output may
+#'be of any type. A newline is appended to the output. See cat() for a discussion
+#'of the differences between print() and cat(). By default (when error is F), the
+#'output is sent to the standard Eidos output stream. When running at the command
+#'line, this sends it to stdout; when running in SLiMgui, this sends it to the
+#'simulation window's output textview. If error is T, the output is instead sent
+#'to the Eidos error stream. When running at the command line, this sends it
+#'to stderr; when running in SLiMgui, the output is routed to the simulation's
+#'debugging output window.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_print <- function(x, error) {
+ .E$print(x, error)
+}
+
+#'Eidos method rev
+#'
+#'Documentation for Eidos function \code{rev}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. See details for description.
+#'
+#'@aliases Eidos$rev .E$rev
+#'@family Eidos
+#'@return An object of type any.
+#'@details Returns the reverse of x: a new vector with the same elements as x, but
+#'in the opposite order.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rev <- function(x) {
+ .E$rev(x)
+}
+
+#'Eidos method size
+#'
+#'Documentation for Eidos function \code{size}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. See details for description.
+#'
+#'@aliases Eidos$size .E$size
+#'@family Eidos
+#'@return An object of type integer. Return will be of length 1 (a singleton)
+#'@details Returns the size of x: the number of elements contained in x. Note that
+#'length() is a synonym for size().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_size <- function(x) {
+ .E$size(x)
+}
+
+#'Eidos method sort
+#'
+#'Documentation for Eidos function \code{sort}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any but object or logical. See details for
+#'description.
+#'@param ascending An object of type any but object or logical. Must be of length
+#'1 (a singleton). The default value is \code{T}. See details for description.
+#'
+#'@aliases Eidos$sort .E$sort
+#'@family Eidos
+#'@return An object of type any but object.
+#'@details Returns a sorted copy of x: a new vector with the same elements as
+#'x, but in sorted order. If the optional logical parameter ascending is T (the
+#'default), then the sorted order will be ascending; if it is F, the sorted order
+#'will be descending. The ordering is determined according to the same logic
+#'as the < and > operators in Eidos. To sort an object vector, use sortBy(). To
+#'obtain indices for sorting, use order().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_sort <- function(x, ascending) {
+ .E$sort(x, ascending)
+}
+
+#'Eidos method sortBy
+#'
+#'Documentation for Eidos function \code{sortBy}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type . See details for description.
+#'@param property An object of type string. Must be of length 1 (a singleton). See
+#'details for description.
+#'@param ascending An object of type logical. Must be of length 1 (a singleton).
+#'The default value is \code{T}. See details for description.
+#'
+#'@aliases Eidos$sortBy .E$sortBy
+#'@family Eidos
+#'@return An object of type .
+#'@details Returns a sorted copy of x: a new vector with the same elements as
+#'x, but in sorted order. If the optional logical parameter ascending is T (the
+#'default), then the sorted order will be ascending; if it is F, the sorted order
+#'will be descending. The ordering is determined according to the same logic as
+#'the < and > operators in Eidos. The property argument gives the name of the
+#'property within the elements of x according to which sorting should be done.
+#'This must be a simple property name; it cannot be a property path. For example,
+#'to sort a Mutation vector by the selection coefficients of the mutations, you
+#'would simply pass "selectionCoeff", including the quotes, for property. To sort
+#'a non-object vector, use sort(). To obtain indices for sorting, use order().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_sortBy <- function(x, property, ascending) {
+ .E$sortBy(x, property, ascending)
+}
+
+#'Eidos method str
+#'
+#'Documentation for Eidos function \code{str}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any or logical. See details for description.
+#'@param error An object of type any or logical. Must be of length 1 (a
+#'singleton). The default value is \code{F}. See details for description.
+#'
+#'@aliases Eidos$str .E$str
+#'@family Eidos
+#'@return An object of type void.
+#'@details Prints the structure of x: a summary of its type and the values it
+#'contains. If x is an object, note that str() produces different results from the
+#'str() method of x; the str() function prints the external 66 structure of x (the
+#'fact that it is an object, and the number and type of its elements), whereas
+#'the str() method prints the internal structure of x (the external structure of
+#'all the properties contained by x). By default (when error is F), the output is
+#'sent to the standard Eidos output stream. When running at the command line, this
+#'sends it to stdout; when running in SLiMgui, this sends it to the simulation
+#'window's output textview. If error is T, the output is instead sent to the Eidos
+#'error stream. When running at the command line, this sends it to stderr; when
+#'running in SLiMgui, the output is routed to the simulation's debugging output
+#'window.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_str <- function(x, error) {
+ .E$str(x, error)
+}
+
+#'Eidos method tabulate
+#'
+#'Documentation for Eidos function \code{tabulate}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param bin An object of type integer. See details for description.
+#'@param maxbin An object of type null or integer. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'
+#'@aliases Eidos$tabulate .E$tabulate
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns occurrence counts for each non-negative integer in bin.
+#'Occurrence counts are tabulated into bins for each value 0:maxbin in bin; values
+#'outside that range are ignored. The default value of maxbin, NULL, is equivalent
+#'to passing maxbin=max(0, bin); in other words, by default the result vector will
+#'be exactly large enough to accommodate counts for every integer in bin. In any
+#'case, the result vector will contain maxbin+1 elements (some or all of which
+#'might be zero, if the occurrence count of that integer in bin is zero). Note
+#'that the semantics of this function differ slightly from the tabulate() function
+#'in R, because R is 1-based and Eidos is 0-based.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_tabulate <- function(bin, maxbin) {
+ .E$tabulate(bin, maxbin)
+}
+
+#'Eidos method unique
+#'
+#'Documentation for Eidos function \code{unique}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any or logical. See details for description.
+#'@param preserveOrder An object of type any or logical. Must be of length 1 (a
+#'singleton). The default value is \code{T}. See details for description.
+#'
+#'@aliases Eidos$unique .E$unique
+#'@family Eidos
+#'@return An object of type any.
+#'@details Returns the unique values in x. In other words, for each value k in
+#'x that occurs at least once, the vector returned will contain k exactly once.
+#'If preserveOrder is T (the default), the order of values in x is preserved,
+#'taking the first instance of each value; this is relatively slow, with O(n2)
+#'performance. If preserveOrder if F instead, the order of values in x is not
+#'preserved, and no particular ordering should be relied upon; this is relatively
+#'fast, with O(n log n) performance. This performance difference will only matter
+#'for large vectors, however; for most applications the default behavior can be
+#'retained whether the order of the result matters or not.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_unique <- function(x, preserveOrder) {
+ .E$unique(x, preserveOrder)
+}
+
+#'Eidos method which
+#'
+#'Documentation for Eidos function \code{which}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type logical. See details for description.
+#'
+#'@aliases Eidos$which .E$which
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns the indices of T values in x. In other words, if an index k
+#'in x is T, then the vector returned will contain k; if index k in x is F, the
+#'vector returned will omit k. One way to look at this is that it converts from a
+#'logical subsetting vector to an integer (index-based) subsetting vector, without
+#'changing which subset positions would be selected.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_which <- function(x) {
+ .E$which(x)
+}
+
+#'Eidos method whichMax
+#'
+#'Documentation for Eidos function \code{whichMax}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any but object. See details for description.
+#'
+#'@aliases Eidos$whichMax .E$whichMax
+#'@family Eidos
+#'@return An object of type integer. Return will be of length 1 (a singleton)
+#'@details Returns the index of the (first) maximum value in x. In other words,
+#'if k is equal to the maximum value in x, then the vector returned will contain
+#'the index of the first occurrence of k in x. If the maximum value is unique, the
+#'result is the same as (but more efficient than) the expression which(x==max(x)),
+#'which returns the indices of all of the occurrences of the maximum value in x.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_whichMax <- function(x) {
+ .E$whichMax(x)
+}
+
+#'Eidos method whichMin
+#'
+#'Documentation for Eidos function \code{whichMin}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any but object. See details for description.
+#'
+#'@aliases Eidos$whichMin .E$whichMin
+#'@family Eidos
+#'@return An object of type integer. Return will be of length 1 (a singleton)
+#'@details Returns the index of the (first) minimum value in x. In other words,
+#'if k is equal to the minimum value in x, then the vector returned will contain
+#'the index of the first occurrence of k in x. If the minimum value is unique, the
+#'result is the same as (but more efficient than) the expression which(x==min(x)),
+#'which returns the indices of all of the occurrences of the minimum value in x.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_whichMin <- function(x) {
+ .E$whichMin(x)
+}
+
+#'Eidos method asFloat
+#'
+#'Documentation for Eidos function \code{asFloat}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any but object. See details for description.
+#'
+#'@aliases Eidos$asFloat .E$asFloat
+#'@family Eidos
+#'@return An object of type float.
+#'@details Returns the conversion to float of x. If x is string and cannot be
+#'converted to float, Eidos will throw an error. 67
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_asFloat <- function(x) {
+ .E$asFloat(x)
+}
+
+#'Eidos method asInteger
+#'
+#'Documentation for Eidos function \code{asInteger}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any but object. See details for description.
+#'
+#'@aliases Eidos$asInteger .E$asInteger
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns the conversion to integer of x. If x is of type string or float
+#'and cannot be converted to integer, Eidos will throw an error.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_asInteger <- function(x) {
+ .E$asInteger(x)
+}
+
+#'Eidos method asLogical
+#'
+#'Documentation for Eidos function \code{asLogical}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any but object. See details for description.
+#'
+#'@aliases Eidos$asLogical .E$asLogical
+#'@family Eidos
+#'@return An object of type logical.
+#'@details Returns the conversion to logical of x. Recall that in Eidos the
+#'empty string "" is considered F, and all other string values are considered T.
+#'Converting INF or -INF to logical yields T (since those values are not equal to
+#'zero); converting NAN to logical throws an error.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_asLogical <- function(x) {
+ .E$asLogical(x)
+}
+
+#'Eidos method asString
+#'
+#'Documentation for Eidos function \code{asString}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any but object. See details for description.
+#'
+#'@aliases Eidos$asString .E$asString
+#'@family Eidos
+#'@return An object of type string.
+#'@details Returns the conversion to string of x. Note that asString(NULL) returns
+#'"NULL" even though NULL is zero-length.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_asString <- function(x) {
+ .E$asString(x)
+}
+
+#'Eidos method elementType
+#'
+#'Documentation for Eidos function \code{elementType}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. See details for description.
+#'
+#'@aliases Eidos$elementType .E$elementType
+#'@family Eidos
+#'@return An object of type string. Return will be of length 1 (a singleton)
+#'@details Returns the element type of x, as a string. For the non-object types,
+#'the element type is the same as the type: "NULL", "logical", "integer", "float",
+#'or "string". For object type, however, elementType() returns the name of the
+#'type of element contained by the object, such as "Species" or "Mutation" in the
+#'Context of SLiM. Contrast this with type().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_elementType <- function(x) {
+ .E$elementType(x)
+}
+
+#'Eidos method isFloat
+#'
+#'Documentation for Eidos function \code{isFloat}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. See details for description.
+#'
+#'@aliases Eidos$isFloat .E$isFloat
+#'@family Eidos
+#'@return An object of type logical. Return will be of length 1 (a singleton)
+#'@details Returns T if x is float type, F otherwise.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_isFloat <- function(x) {
+ .E$isFloat(x)
+}
+
+#'Eidos method isInteger
+#'
+#'Documentation for Eidos function \code{isInteger}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. See details for description.
+#'
+#'@aliases Eidos$isInteger .E$isInteger
+#'@family Eidos
+#'@return An object of type logical. Return will be of length 1 (a singleton)
+#'@details Returns T if x is integer type, F otherwise.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_isInteger <- function(x) {
+ .E$isInteger(x)
+}
+
+#'Eidos method isLogical
+#'
+#'Documentation for Eidos function \code{isLogical}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. See details for description.
+#'
+#'@aliases Eidos$isLogical .E$isLogical
+#'@family Eidos
+#'@return An object of type logical. Return will be of length 1 (a singleton)
+#'@details Returns T if x is logical type, F otherwise.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_isLogical <- function(x) {
+ .E$isLogical(x)
+}
+
+#'Eidos method isNULL
+#'
+#'Documentation for Eidos function \code{isNULL}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. See details for description.
+#'
+#'@aliases Eidos$isNULL .E$isNULL
+#'@family Eidos
+#'@return An object of type logical. Return will be of length 1 (a singleton)
+#'@details Returns T if x is NULL type, F otherwise.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_isNULL <- function(x) {
+ .E$isNULL(x)
+}
+
+#'Eidos method isObject
+#'
+#'Documentation for Eidos function \code{isObject}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. See details for description.
+#'
+#'@aliases Eidos$isObject .E$isObject
+#'@family Eidos
+#'@return An object of type logical. Return will be of length 1 (a singleton)
+#'@details Returns T if x is object type, F otherwise.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_isObject <- function(x) {
+ .E$isObject(x)
+}
+
+#'Eidos method isString
+#'
+#'Documentation for Eidos function \code{isString}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. See details for description.
+#'
+#'@aliases Eidos$isString .E$isString
+#'@family Eidos
+#'@return An object of type logical. Return will be of length 1 (a singleton)
+#'@details Returns T if x is string type, F otherwise.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_isString <- function(x) {
+ .E$isString(x)
+}
+
+#'Eidos method type
+#'
+#'Documentation for Eidos function \code{type}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. See details for description.
+#'
+#'@aliases Eidos$type .E$type
+#'@family Eidos
+#'@return An object of type string. Return will be of length 1 (a singleton)
+#'@details Returns the type of x, as a string: "NULL", "logical", "integer",
+#'"float", "string", or "object". Contrast this with elementType().
+#'(lis)grep(string$ pattern, string x, [logical$ ignoreCase = F], [string$ grammar
+#'= "ECMAScript"], [string$ value = "indices"], [logical$ fixed = F], [logical$
+#'invert = F]) Searches for regular expression matches in the string-elements of
+#'x. Regular expressions (regexes) express patterns that strings can either match
+#'or not match; they are very widely used in programming languages and terminal
+#'shells. The topic of regexes is very complex, and a great deal of information
+#'about them can be found online, including examples and tutorials; this manual
+#'will not attempt to document the topic in detail. The grep() function uses a
+#'regex supplied in pattern, looking for matches for the regex in each element
+#'of x. If ignoreCase is F (the default), the pattern matching will be case
+#'sensitive (i.e., uppercase versus lowercase will matter); if it is T, the
+#'pattern matching will be case-insensitive. 68 The grammar parameter determines
+#'the regex grammar used to find matches. Several options are available. The
+#'default, "ECMAScript", is a straightforward regex grammar, the specification
+#'for which can be found at https://www.cplusplus.com/reference/regex/ECMAScript/
+#'among many other links. The "basic" grammar uses POSIX basic
+#'regular expressions, often called BRE; this is documented at
+#'https://en.wikibooks.org/wiki/Regular_Expressions/POSIX_Basic_Regular_Expressions.
+#'The "extended" grammar uses POSIX extended regular
+#'expressions, often called ERE; this is documented at
+#'https://en.wikibooks.org/wiki/Regular_Expressions/POSIX-Extended_Regular_Expressions.
+#'The "awk" grammar is based upon the "extended" grammar, with more escapes for
+#'non-printing characters. The "grep" and "egrep" grammars are based upon the
+#'"basic" and "extended" grammars, respectively, but also allow newline characters
+#'("\n") to separate alternations. If you are not sure which grammar you want
+#'to use, "ECMAScript" is recommended. All of these grammars are implemented
+#'internally in Eidos using the C++ <regex> library, so if you need clarification
+#'on the details of a grammar, you can search for related C++ materials online.
+#'Information about the matches found is returned in one of four ways. If value is
+#'"indices" (the default), an integer vector is returned containing the index in
+#'x for each match. If value is "elements", a string vector is returned containing
+#'the actual string-elements of x for each match. If value is "matches", a
+#'string vector is returned containing only the substring that matched, within
+#'each string-element in x that matched (if more than one substring in a given
+#'element matched, the first match is returned). Finally, if value is "logical"
+#'a logical vector is returned, of the same length as x, containing T where the
+#'corresponding element of x matched, or F where it did not match. This function
+#'therefore encapsulates the functionality of both the grep() and grepl()
+#'functions of R; use value="logical" for functionality like that of R's grepl().
+#'If fixed is F (the default), matching is determined using pattern following the
+#'specified regex grammar as described above. If fixed is T, matching is instead
+#'determined using pattern as a string value to be matched "as is", rather than
+#'as a regular expression; the grammar specified does not matter in this case,
+#'but ignoreCase still applies. This could be thought of as another grammar value,
+#'really, meaning "no grammar", but it is supplied as a separate flag following R.
+#'Finally, if invert if F (the default) matching proceeds as normal for the chosen
+#'regex grammar, whereas if invert if T matching is inverted: indices, elements,
+#'or logical values are returned for the elements of x that did not match. If
+#'invert is T, the value parameter may not be "matches". Note that there is not
+#'presently any way to extract subpattern matches, nor is there any way to perform
+#'replacements of matches.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_type <- function(x) {
+ .E$type(x)
+}
+
+#'Eidos method nchar
+#'
+#'Documentation for Eidos function \code{nchar}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type string. See details for description.
+#'
+#'@aliases Eidos$nchar .E$nchar
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns a vector of the number of characters in the string-elements of
+#'x.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_nchar <- function(x) {
+ .E$nchar(x)
+}
+
+#'Eidos method strcontains
+#'
+#'Documentation for Eidos function \code{strcontains}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type string or string or integer. See details for
+#'description.
+#'@param s An object of type string or string or integer. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param pos An object of type string or string or integer. Must be of length 1 (a
+#'singleton). The default value is \code{0}. See details for description.
+#'
+#'@aliases Eidos$strcontains .E$strcontains
+#'@family Eidos
+#'@return An object of type logical.
+#'@details Returns the occurrence of a string specified by s in each of the
+#'elements of x, starting at position pos. Position 0, the default, is the
+#'beginning of x; a position of 0 means the entire string is searched. A starting
+#'search position that is at or beyond the end of a given element of x is not
+#'an error; it just implies that a match will not be found in that element. The
+#'existences of matches are returned as a logical vector; if a match was found in
+#'a given element, the corresponding value in the returned vector is T, otherwise
+#'it is F. This function is a simplified version of strfind(), which returns
+#'the positions of matches. The strprefix() and strsuffix() functions are also
+#'related.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_strcontains <- function(x, s, pos) {
+ .E$strcontains(x, s, pos)
+}
+
+#'Eidos method strfind
+#'
+#'Documentation for Eidos function \code{strfind}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type string or string or integer. See details for
+#'description.
+#'@param s An object of type string or string or integer. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param pos An object of type string or string or integer. Must be of length 1 (a
+#'singleton). The default value is \code{0}. See details for description.
+#'
+#'@aliases Eidos$strfind .E$strfind
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns the first occurrence of a string specified by s in each of
+#'the elements of x, starting at position pos. Position 0, the default, is the
+#'beginning of x; a position of 0 means the entire string is searched. A starting
+#'search position that is at or beyond the end of a given element of x is not
+#'an error; it just implies that a match will not be found in that element. The
+#'positions of matches are returned as an integer vector; if no match was found
+#'in a given element, the corresponding value in the returned vector is -1. The
+#'strcontains() function may be used when a logical value (found / not found) is
+#'desired. 69
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_strfind <- function(x, s, pos) {
+ .E$strfind(x, s, pos)
+}
+
+#'Eidos method strprefix
+#'
+#'Documentation for Eidos function \code{strprefix}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type string or string. See details for description.
+#'@param s An object of type string or string. Must be of length 1 (a singleton).
+#'See details for description.
+#'
+#'@aliases Eidos$strprefix .E$strprefix
+#'@family Eidos
+#'@return An object of type logical.
+#'@details Returns the occurrence of a prefix string specified by s at the
+#'beginning of each of the elements of x. The existences of prefixes are
+#'returned as a logical vector; if a given element begins with the prefix, the
+#'corresponding value in the returned vector is T, otherwise it is F.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_strprefix <- function(x, s) {
+ .E$strprefix(x, s)
+}
+
+#'Eidos method strsplit
+#'
+#'Documentation for Eidos function \code{strsplit}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type string or string. Must be of length 1 (a singleton).
+#'See details for description.
+#'@param sep An object of type string or string. Must be of length 1 (a
+#'singleton). The default value is \code{" "}. See details for description.
+#'
+#'@aliases Eidos$strsplit .E$strsplit
+#'@family Eidos
+#'@return An object of type string.
+#'@details Returns substrings of x that were separated by the separator string
+#'sep. Every substring defined by an occurrence of the separator is included, and
+#'thus zero-length substrings may be returned. For example, strsplit(".foo..bar.",
+#'".") returns a string vector containing "", "foo", "", "bar", "". In that
+#'example, the empty string between "foo" and "bar" in the returned vector is
+#'present because there were two periods between foo and bar in the input string
+#'- the empty string is the substring between those two separators. If sep is "",
+#'a vector of single characters will be returned, resulting from splitting x at
+#'every position. Note that paste() performs the inverse operation of strsplit().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_strsplit <- function(x, sep) {
+ .E$strsplit(x, sep)
+}
+
+#'Eidos method strsuffix
+#'
+#'Documentation for Eidos function \code{strsuffix}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type string or string. See details for description.
+#'@param s An object of type string or string. Must be of length 1 (a singleton).
+#'See details for description.
+#'
+#'@aliases Eidos$strsuffix .E$strsuffix
+#'@family Eidos
+#'@return An object of type logical.
+#'@details Returns the occurrence of a suffix string specified by s at the end of
+#'each of the elements of x. The existences of suffixes are returned as a logical
+#'vector; if a given element ends with the suffix, the corresponding value in the
+#'returned vector is T, otherwise it is F.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_strsuffix <- function(x, s) {
+ .E$strsuffix(x, s)
+}
+
+#'Eidos method substr
+#'
+#'Documentation for Eidos function \code{substr}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type string. See details for description.
+#'@param first An object of type integer. See details for description.
+#'@param last An object of type null or integer. The default value is \code{NULL}.
+#'See details for description.
+#'
+#'@aliases Eidos$substr .E$substr
+#'@family Eidos
+#'@return An object of type string.
+#'@details Returns substrings extracted from the elements of x, spanning character
+#'position first to character position last (inclusive). Character positions are
+#'numbered from 0 to nchar(x)-1. Positions that fall outside of that range are
+#'legal; a substring range that encompasses no characters will produce an empty
+#'string. If first is greater than last, an empty string will also result. If last
+#'is NULL (the default), then the substring will extend to the end of the string.
+#'The parameters first and last may either be singletons, specifying a single
+#'value to be used for all of the substrings, or they may be vectors of the same
+#'length as x, specifying a value for each substring.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_substr <- function(x, first, last) {
+ .E$substr(x, first, last)
+}
+
+#'Eidos method apply
+#'
+#'Documentation for Eidos function \code{apply}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any or integer or string. See details for
+#'description.
+#'@param margin An object of type any or integer or string. See details for
+#'description.
+#'@param lambdaSource An object of type any or integer or string. Must be of
+#'length 1 (a singleton). See details for description.
+#'
+#'@aliases Eidos$apply .E$apply
+#'@family Eidos
+#'@return An object of type any.
+#'@details Prior to Eidos 1.6 / SLiM 2.6, sapply() was named apply(), and this
+#'function did not yet exist Applies a block of Eidos code to margins of x. This
+#'function is essentially an extension of sapply() for use with matrices and
+#'arrays; it is recommended that you fully understand sapply() before tackling
+#'this function. As with sapply(), the lambda specified by lambdaSource will
+#'be executed for subsets of x, and the results will be concatenated together
+#'with type-promotion in the style of c() to produce a result. Unlike sapply(),
+#'however, the subsets of x used might be rows, columns, or higher-dimensional
+#'slices of x, rather than just single elements, depending upon the value of
+#'margin. For apply(), x must be a matrix or array (see section 2.9). The apply()
+#'function in Eidos is patterned directly after the apply() function in R, and
+#'should behave identically, except that dimension indices in Eidos are zero-based
+#'whereas in R they are one-based. The margin parameter gives the indices of
+#'dimensions of x that will be iterated over when assembling values to supply to
+#'lambdaSource. If x is a matrix it has two dimensions: rows, of dimension index
+#'0, and columns, of dimension index 1. These are the indices of the dimension
+#'sizes returned by dim(); dim(x)[0] gives the number of rows of x, and dim(x)[1]
+#'gives the number of columns. These dimension indices are also apparent when
+#'subsetting x; a subset index in position 0, such as x[m,], gives row m of x,
+#'whereas a subset index in position 1, such as x[,n], gives column n of x. In the
+#'same manner, supplying 0 for margin specifies that subsets of x from x[0,] to
+#'x[m,] should be "passed" to lambdaSource, through the applyValue "parameter";
+#'dimension 0 is iterated over, whereas dimension 1 is taken in aggregate since
+#'it is not included in margin. The final effect of this is that whole rows of
+#'x are passed to lambdaSource through applyValue. Similarly, margin=1 would
+#'specify that subsets of x from x[,0] to x[,n] should be passed to lambdaSource,
+#'resulting in whole 70 columns being passed. Specifying margin=c(0,1) would
+#'indicate that dimensions 0 and 1 should both be iterated over (dimension 0
+#'more rapidly), so for a matrix each each individual value of x would be passed
+#'to lambdaSource. Specifying margin=c(1,0) would similarly iterate over both
+#'dimensions, but dimension 1 more rapidly; the traversal order would therefore
+#'be different, and the dimensionality of the result would also differ (see
+#'below). For higher-dimensional arrays dimension indices beyond 1 exist, and so
+#'margin=c(0,1) or margin=c(1,0) would provide slices of x to lambdaSource, each
+#'slice having a specific row and column index. Slices are generated by subsetting
+#'in the same way as operator [], but additionally, redundant dimensions are
+#'dropped as by drop(). The return value from apply() is built up from the
+#'type-promoted concatenated results, as if by the c() function, from the iterated
+#'execution of lambdaSource; the only question is what dimensional structure is
+#'imposed upon that vector of values. If the results from lambdaSource are not of
+#'a consistent length, or are of length zero, then the concatenated results are
+#'returned as a plain vector. If all results are of length n > 1, the return value
+#'is an array of dimensions c(n, dim(x)[margin]); in other words, each n-vector
+#'provides the lowest dimension of the result, and the sizes of the marginal
+#'dimensions are imposed upon the data above that. If all results are of length
+#'n == 1, then if a single margin was specified the result is a vector (of length
+#'equal to the size of that marginal dimension), or if more than one margin was
+#'specified the result is an array of dimension dim(x)[margin]; in other words,
+#'the sizes of the marginal dimensions are imposed upon the data. Since apply()
+#'iterates over the marginal dimensions in the same manner, these structures
+#'follows the structure of the data. The above explanation may not be entirely
+#'clear, so let's look at an example. If x is a matrix with two rows and three
+#'columns, such as defined by x = matrix(1:6, nrow=2);, then executing apply(x,
+#'0, "sum(applyValue);"); would cause each row of x to be supplied to the lambda
+#'through applyValue, and the values in each row would thus be summed to produce
+#'9 12 as a result. The call apply(x, 1, "sum(applyValue);"); would instead sum
+#'columns of x, producing 3 7 11 as a result. Now consider using range() rather
+#'than sum() in the lambda, thus producing two values for each row or column. The
+#'call apply(x, 0, "range(applyValue);"); produces a result of matrix(c(1,5,2,6),
+#'nrow=2), with the range of the first row of x, 1-5, in the first column of
+#'the result, and the range of the second row of x, 2-6, in the second column.
+#'Although visualization becomes more difficult, these same patterns extend to
+#'higher dimensions and arbitrary margins of x.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_apply <- function(x, margin, lambdaSource) {
+ .E$apply(x, margin, lambdaSource)
+}
+
+#'Eidos method array
+#'
+#'Documentation for Eidos function \code{array}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param data An object of type any or integer. See details for description.
+#'@param dim An object of type any or integer. See details for description.
+#'
+#'@aliases Eidos$array .E$array
+#'@family Eidos
+#'@return An object of type any.
+#'@details Creates a new array from the data specified by data, with the dimension
+#'sizes specified by dim. The first dimension size in dim is the number of rows,
+#'and the second is the number of columns; further entries specify the sizes of
+#'higher-order dimensions. As many dimensions may be specified as desired, but
+#'with a minimum of two dimensions. An array with two dimensions is a matrix (by
+#'definition); note that matrix() may provide a more convenient way to make a new
+#'matrix. Each dimension must be of size 1 or greater; 0-size dimensions are not
+#'allowed. The elements of data are used to populate the new array; the size of
+#'data must therefore be equal to the size of the new array, which is the product
+#'of all the values in dim. The new array will be filled in dimension order: one
+#'element in each row until a column is filled, then on to the next column in the
+#'same manner until all columns are filled, and then onward into the higher-order
+#'dimensions in the same manner.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_array <- function(data, dim) {
+ .E$array(data, dim)
+}
+
+#'Eidos method cbind
+#'
+#'Documentation for Eidos function \code{cbind}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param ... An object of type . See details for description.
+#'
+#'@aliases Eidos$cbind .E$cbind
+#'@family Eidos
+#'@return An object of type any.
+#'@details Combines vectors or matrices by column to produce a single matrix.
+#'The parameters must be vectors (which are interpreted by cbind() as if they
+#'were one-column matrices) or matrices. They must be of the same type, of the
+#'same class if they are of type object, and have the same number of rows. If
+#'these conditions are met, the result is a single matrix with the parameters
+#'joined together, left to right. Parameters may instead be NULL, in which
+#'case they are ignored; or if all parameters are NULL, the result is NULL. A
+#'sequence of vectors, matrices, and NULLs may thus be concatenated with the NULL
+#'values removed, analogous to c(). Calling cbind(x) is an easy way to create
+#'a one-column matrix from a vector. 71 To combine vectors or matrices by row
+#'instead, see rbind().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_cbind <- function(...) {
+ .E$cbind(...)
+}
+
+#'Eidos method diag
+#'
+#'Documentation for Eidos function \code{diag}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. The default value is \code{1}. See details for
+#'description.
+#'@param nrow An object of type null or integer. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param ncol An object of type null or integer. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'
+#'@aliases Eidos$diag .E$diag
+#'@family Eidos
+#'@return An object of type any.
+#'@details Returns the diagonal of x. This function has four distinct usage
+#'patterns (matching R). First, if x is a matrix of any type, it returns the
+#'diagonal elements of x as a vector; in this case, nrow and ncol must be NULL.
+#'Second, if x is 1 (the default) and nrow is non-NULL, it returns an identity
+#'matrix with the requested number of rows (and, if ncol is also non-NULL, the
+#'requested number of columns, otherwise the matrix will be square). Third,
+#'if x is a singleton integer value and nrow and ncol are NULL, it returns a
+#'square identity matrix of size x. Fourth, if x is a logical, integer, or float
+#'vector of length at least 2, it returns a matrix that uses the values of x as
+#'its diagonal (without recycling or truncation, unlike R) and has F, 0, or 0.0
+#'off-diagonal entries as appropriate. Note that using diag(x), without nrow or
+#'ncol, can have unexpected effects if x is a vector that could be of length one.
+#'Use diag(x, nrow=length(x)) for consistent behavior.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_diag <- function(x, nrow, ncol) {
+ .E$diag(x, nrow, ncol)
+}
+
+#'Eidos method dim
+#'
+#'Documentation for Eidos function \code{dim}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. See details for description.
+#'
+#'@aliases Eidos$dim .E$dim
+#'@family Eidos
+#'@return An object of type integer.
+#'@details Returns the dimensions of matrix or array x. The first dimension value
+#'is the number of rows, the second is the number of columns, and further values
+#'indicate the sizes of higher-order dimensions, identically to how dimensions are
+#'supplied to array(). NULL is returned if x is not a matrix or array.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_dim <- function(x) {
+ .E$dim(x)
+}
+
+#'Eidos method drop
+#'
+#'Documentation for Eidos function \code{drop}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. See details for description.
+#'
+#'@aliases Eidos$drop .E$drop
+#'@family Eidos
+#'@return An object of type any.
+#'@details Returns the result of dropping redundant dimensions from matrix or
+#'array x. Redundant dimensions are those with a size of exactly 1. Non-redundant
+#'dimensions are retained. If only one nonredundant dimension is present, the
+#'result is a vector; if more than one non-redundant dimension is present, the
+#'result will be a matrix or array. If x is not a matrix or array, it is returned
+#'unmodified.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_drop <- function(x) {
+ .E$drop(x)
+}
+
+#'Eidos method lowerTri
+#'
+#'Documentation for Eidos function \code{lowerTri}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any or logical. See details for description.
+#'@param diag An object of type any or logical. Must be of length 1 (a singleton).
+#'The default value is \code{F}. See details for description.
+#'
+#'@aliases Eidos$lowerTri .E$lowerTri
+#'@family Eidos
+#'@return An object of type logical.
+#'@details Returns the lower triangle of x, which must be a matrix. The return
+#'value will be a logical matrix of the same dimensions as x, with elements T in
+#'the lower triangle, F elsewhere. If diag is F (the default), the diagonal is not
+#'included in the lower triangle; if diag is T, the diagonal is included in the
+#'lower triangle (i.e., its elements will be T).
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_lowerTri <- function(x, diag) {
+ .E$lowerTri(x, diag)
+}
+
+#'Eidos method matrix
+#'
+#'Documentation for Eidos function \code{matrix}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param data An object of type any. See details for description.
+#'@param nrow An object of type null or integer. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param ncol An object of type null or integer. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param byrow An object of type logical. Must be of length 1 (a singleton). The
+#'default value is \code{F}. See details for description.
+#'
+#'@aliases Eidos$matrix .E$matrix
+#'@family Eidos
+#'@return An object of type any.
+#'@details Creates a new matrix from the data specified by data. By default this
+#'creates a one-column matrix. If non-NULL values are supplied for nrow and/or
+#'ncol, a matrix will be made with the requested number of rows and/or columns if
+#'possible; if the length of data is not compatible with the requested dimensions,
+#'an error will result. By default, values from data will populate the matrix by
+#'columns, filling each column sequentially before moving on to the next column;
+#'if byrow is T the matrix will be populated by rows instead.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_matrix <- function(data, nrow, ncol, byrow) {
+ .E$matrix(data, nrow, ncol, byrow)
+}
+
+#'Eidos method matrixMult
+#'
+#'Documentation for Eidos function \code{matrixMult}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric or numeric. See details for description.
+#'@param y An object of type numeric or numeric. See details for description.
+#'
+#'@aliases Eidos$matrixMult .E$matrixMult
+#'@family Eidos
+#'@return An object of type numeric.
+#'@details Returns the result of matrix multiplication of x with y. In Eidos
+#'(as in R), with two matrices A and B the simple product A * B multiplies the
+#'corresponding elements of the matrices; in other words, if X is the result
+#'of A * B, then Xij = Aij * Bij. This is parallel to the definition of other
+#'operators; A + B adds the corresponding elements of the matrices (Xij = Aij +
+#'Bij), etc. In R, true matrix multiplication is achieved with a special operator,
+#'%*%; in Eidos, the matrixMult() function is used instead. Both x and y must be
+#'matrices, and must be conformable according to the standard definition of matrix
+#'multiplication (i.e., if x is an n × m matrix then y must be a m × p matrix, and
+#'the result will be a n × p matrix). Vectors will not be promoted to matrices by
+#'this function, even if such promotion would lead to a conformable matrix.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_matrixMult <- function(x, y) {
+ .E$matrixMult(x, y)
+}
+
+#'Eidos method ncol
+#'
+#'Documentation for Eidos function \code{ncol}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. See details for description.
+#'
+#'@aliases Eidos$ncol .E$ncol
+#'@family Eidos
+#'@return An object of type integer. Return will be of length 1 (a singleton)
+#'@details Returns the number of columns in matrix or array x. For vector
+#'x, ncol() returns NULL; size() should be used. An equivalent of R's NCOL()
+#'function, which treats vectors as 1-column matrices, is not provided but would
+#'be trivial to implement as a user-defined function. 72
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_ncol <- function(x) {
+ .E$ncol(x)
+}
+
+#'Eidos method nrow
+#'
+#'Documentation for Eidos function \code{nrow}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. See details for description.
+#'
+#'@aliases Eidos$nrow .E$nrow
+#'@family Eidos
+#'@return An object of type integer. Return will be of length 1 (a singleton)
+#'@details Returns the number of rows in matrix or array x. For vector x, nrow()
+#'returns NULL; size() should be used. An equivalent of R's NROW() function, which
+#'treats vectors as 1-column matrices, is not provided but would be trivial to
+#'implement as a user-defined function.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_nrow <- function(x) {
+ .E$nrow(x)
+}
+
+#'Eidos method rbind
+#'
+#'Documentation for Eidos function \code{rbind}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param ... An object of type . See details for description.
+#'
+#'@aliases Eidos$rbind .E$rbind
+#'@family Eidos
+#'@return An object of type any.
+#'@details Combines vectors or matrices by row to produce a single matrix. The
+#'parameters must be vectors (which are interpreted by rbind() as if they were
+#'one-row matrices) or matrices. They must be of the same type, of the same
+#'class if they are of type object, and have the same number of columns. If these
+#'conditions are met, the result is a single matrix with the parameters joined
+#'together, top to bottom. Parameters may instead be NULL, in which case they
+#'are ignored; or if all parameters are NULL, the result is NULL. A sequence
+#'of vectors, matrices, and NULLs may thus be concatenated with the NULL values
+#'removed, analogous to c(). Calling rbind(x) is an easy way to create a one-row
+#'matrix from a vector. To combine vectors or matrices by column instead, see
+#'cbind().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rbind <- function(...) {
+ .E$rbind(...)
+}
+
+#'Eidos method t
+#'
+#'Documentation for Eidos function \code{t}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any. See details for description.
+#'
+#'@aliases Eidos$t .E$t
+#'@family Eidos
+#'@return An object of type any.
+#'@details Returns the transpose of x, which must be a matrix. This is the matrix
+#'reflected across its diagonal; or alternatively, the matrix with its columns
+#'written out instead as rows in the same order.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_t <- function(x) {
+ .E$t(x)
+}
+
+#'Eidos method upperTri
+#'
+#'Documentation for Eidos function \code{upperTri}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any or logical. See details for description.
+#'@param diag An object of type any or logical. Must be of length 1 (a singleton).
+#'The default value is \code{F}. See details for description.
+#'
+#'@aliases Eidos$upperTri .E$upperTri
+#'@family Eidos
+#'@return An object of type logical.
+#'@details Returns the upper triangle of x, which must be a matrix. The return
+#'value will be a logical matrix of the same dimensions as x, with elements T in
+#'the upper triangle, F elsewhere. If diag is F (the default), the diagonal is not
+#'included in the upper triangle; if diag is T, the diagonal is included in the
+#'upper triangle (i.e., its elements will be T).
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_upperTri <- function(x, diag) {
+ .E$upperTri(x, diag)
+}
+
+#'Eidos method createDirectory
+#'
+#'Documentation for Eidos function \code{createDirectory}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param path An object of type string. Must be of length 1 (a singleton). See
+#'details for description.
+#'
+#'@aliases Eidos$createDirectory .E$createDirectory
+#'@family Eidos
+#'@return An object of type logical. Return will be of length 1 (a singleton)
+#'@details Creates a new filesystem directory at the path specified by path and
+#'returns a logical value indicating if the creation succeeded (T) or failed (F).
+#'If the path already exists, createDirectory() will do nothing to the filesystem,
+#'will emit a warning, and will return T to indicate success if the existing
+#'path is a directory, or F to indicate failure if the existing path is not a
+#'directory.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_createDirectory <- function(path) {
+ .E$createDirectory(path)
+}
+
+#'Eidos method deleteFile
+#'
+#'Documentation for Eidos function \code{deleteFile}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param filePath An object of type string. Must be of length 1 (a singleton). See
+#'details for description.
+#'
+#'@aliases Eidos$deleteFile .E$deleteFile
+#'@family Eidos
+#'@return An object of type logical. Return will be of length 1 (a singleton)
+#'@details Deletes the file specified by filePath and returns a logical value
+#'indicating if the deletion succeeded (T) or failed (F).
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_deleteFile <- function(filePath) {
+ .E$deleteFile(filePath)
+}
+
+#'Eidos method fileExists
+#'
+#'Documentation for Eidos function \code{fileExists}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param filePath An object of type string. Must be of length 1 (a singleton). See
+#'details for description.
+#'
+#'@aliases Eidos$fileExists .E$fileExists
+#'@family Eidos
+#'@return An object of type logical. Return will be of length 1 (a singleton)
+#'@details Checks the existence of the file specified by filePath and returns a
+#'logical value indicating if it exists (T) or does not exist (F). This also works
+#'for directories.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_fileExists <- function(filePath) {
+ .E$fileExists(filePath)
+}
+
+#'Eidos method filesAtPath
+#'
+#'Documentation for Eidos function \code{filesAtPath}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param path An object of type string or logical. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param fullPaths An object of type string or logical. Must be of length 1 (a
+#'singleton). The default value is \code{F}. See details for description.
+#'
+#'@aliases Eidos$filesAtPath .E$filesAtPath
+#'@family Eidos
+#'@return An object of type string.
+#'@details Returns a string vector containing the names of all files in a
+#'directory specified by path. If the optional parameter fullPaths is T, full
+#'filesystem paths are returned for each file; if fullPaths is F (the default),
+#'then only the filenames relative to the specified directory are returned.
+#'This list includes directories (i.e. subfolders), including the "." and ".."
+#'directories on Un*x systems. The list also includes invisible files, such as
+#'those that begin with a "." on Un*x systems. This function does not descend
+#'recursively into subdirectories. If an error occurs during the read, NULL will
+#'be returned.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_filesAtPath <- function(path, fullPaths) {
+ .E$filesAtPath(path, fullPaths)
+}
+
+#'Eidos method flushFile
+#'
+#'Documentation for Eidos function \code{flushFile}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param filePath An object of type string. Must be of length 1 (a singleton). See
+#'details for description.
+#'
+#'@aliases Eidos$flushFile .E$flushFile
+#'@family Eidos
+#'@return An object of type logical. Return will be of length 1 (a singleton)
+#'@details Flushes buffered content to a file specified by filePath. Normally,
+#'written data is buffered by writeFile() if the compress option of that function
+#'is T, holding the data in memory rather than writing it to disk immediately.
+#'This buffering improves both performance and file size; however, 73 sometimes
+#'it is desirable to flush the buffered data to disk with flush() so that
+#'the filesystem is up to date. Note that flushing after every write is not
+#'recommended, since it will lose all of the benefits of buffering. Calling
+#'flushFile() for a path that has not been written to, or is not being buffered,
+#'will do nothing. If the flush is successful, T will be returned; if not, F will
+#'be returned (but at present, an error will result instead).
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_flushFile <- function(filePath) {
+ .E$flushFile(filePath)
+}
+
+#'Eidos method getwd
+#'
+#'Documentation for Eidos function \code{getwd}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param void An object of type . See details for description.
+#'
+#'@aliases Eidos$getwd .E$getwd
+#'@family Eidos
+#'@return An object of type string. Return will be of length 1 (a singleton)
+#'@details Gets the current filesystem working directory. The filesystem working
+#'directory is the directory which will be used as a base path for relative
+#'filesystem paths. For example, if the working directory is "~/Desktop" (the
+#'Desktop subdirectory within the current user's home directory, as represented
+#'by ~), then the filename "foo.txt" would correspond to the filesystem path
+#'"~/Desktop/foo.txt", and the relative path "bar/baz/" would correspond to the
+#'filesystem path "~/Desktop/bar/baz/". Note that the path returned may not be
+#'identical to the path previously set with setwd(), if for example symbolic
+#'links are involved; but it ought to refer to the same actual directory in the
+#'filesystem. The initial working directory is - as is generally the case on Un*x
+#'- simply the directory given to the running Eidos process by its parent process
+#'(the operating system, a shell, a job scheduler, a debugger, or whatever the
+#'case may be). If you launch Eidos (or SLiM) from the command line in a Un*x
+#'shell, it is typically the current directory in that shell. Before relative
+#'filesystem paths are used, you may therefore wish check what the initial working
+#'directory is on your platform, with getwd(), if you are not sure. Alternatively,
+#'you can simply use setwd() to set the working directory to a known path.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_getwd <- function(void) {
+ .E$getwd(void)
+}
+
+#'Eidos method readCSV
+#'
+#'Documentation for Eidos function \code{readCSV}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param filePath An object of type string. Must be of length 1 (a singleton). See
+#'details for description.
+#'@param colNames An object of type logical or string. The default value is
+#'\code{T}. See details for description.
+#'@param colTypes An object of type null or string. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param sep An object of type string. Must be of length 1 (a singleton). The
+#'default value is \code{","}. See details for description.
+#'@param quote An object of type string. Must be of length 1 (a singleton). The
+#'default value is \code{'"'}. See details for description.
+#'@param dec An object of type string. Must be of length 1 (a singleton). The
+#'default value is \code{"."}. See details for description.
+#'@param comment An object of type string. Must be of length 1 (a singleton). The
+#'default value is \code{""}. See details for description.
+#'
+#'@aliases Eidos$readCSV .E$readCSV
+#'@family Eidos
+#'@return An object of type DataFrame object. Return will be of length 1 (a
+#'singleton)
+#'@details Reads data from a CSV or other delimited file specified by filePath
+#'and returns a DataFrame object containing the data in a tabular form. CSV
+#'(comma-separated value) files use a somewhat standard file format in which
+#'a table of data is provided, with values within a row separated by commas,
+#'while rows in the table are separated by newlines. Software from R to Excel
+#'(and Eidos; see the serialize() method of Dictionary) can export data in CSV
+#'format. This function can actually also read files that use a delimiter other
+#'than commas; TSV (tab-separated value) files are a popular alternative. Since
+#'there is substantial variation in the exact file format for CSV files, this
+#'documentation will try to specify the precise format expected by this function.
+#'Note that CSV files represent values differently that Eidos usually does, and
+#'some of the format options allowed by readCSV(), such as decimal commas, are
+#'not otherwise available in Eidos. If colNames is T (the default), the first
+#'row of data is taken to be a header, containing the string names of the columns
+#'in the data table; those names will be used by the resulting DataFrame. If
+#'colNames is F, a header row is not expected and column names are auto-generated
+#'as X1, X2, etc. If colNames is a string vector, a header row is not expected
+#'and colNames will be used as the column names; if additional columns exist
+#'beyond the length of colNames their names will be auto-generated. Duplicate
+#'column names will generate a warning and be made unique. If colTypes is NULL
+#'(the default), the value type for each column will be guessed from the values
+#'it contains, as described below. If colTypes is a singleton string, it should
+#'contain single-letter codes indicating the desired type for each column, from
+#'left to right. The letters lifs have the same meaning as in Eidos signatures
+#'(logical, integer, float, and string); in addition, ? may be used to indicate
+#'that the type for that column should be guessed as by default, and _ or -
+#'may be used to indicate that that column should be skipped - omitted from the
+#'returned DataFrame. Other characters in colTypes will result in an error. If
+#'additional columns exist beyond the end of the colTypes string their types will
+#'be guessed as by default. The separator between values is supplied by sep; it
+#'is a comma by default, but a tab can be used instead by supplying tab ("\\t"
+#'in Eidos), or another character may also be used. If sep is the empty string
+#'"", the separator between values is "whitespace", meaning one or more spaces
+#'or tabs. When the separator is whitespace, whitespace at the beginning or the
+#'end of a line will be ignored. 74 Similarly, the character used to quote string
+#'values is a double quote ('"' in Eidos), by default, but another character may
+#'be supplied in quote. When the string delimiter is encountered, all following
+#'characters are considered to be part of the string until another string
+#'delimiter is encountered, terminating the string; this includes spaces, comment
+#'characters, newlines, and everything else. Within a string value, the string
+#'delimiter itself is used twice in a row to indicate that the delimiter itself
+#'is present within the string; for example, if the string value (shown without
+#'the usual surrounding quotes to try to avoid confusion) is she said "hello", and
+#'the string delimiter is the double quote as it is by default, then in the CSV
+#'file the value would be given as "she said ""hello""". The usual Eidos style of
+#'escaping characters using a backslash is not part of the CSV standard followed
+#'here. (When a string value is provided without using the string delimiter,
+#'all following characters are considered part of the string except a newline,
+#'the value separator sep, the quote separator quote, and the comment separator
+#'comment; if none of those characters are present in the string value, the quote
+#'delimiter may be omitted.) The character used to indicate a decimal delimiter
+#'in numbers may be supplied with dec; by default this is "." (and so 10.0 would
+#'be ten, written with a decimal point), but "," is common in European data files
+#'(and so 10,0 would be ten, written with a decimal comma). Note that dec and
+#'sep may not be the same, so that it is unambiguous whether 10,0 is two numbers
+#'(10 and 0) or one number (10.0). For this reason, European CSV files that use
+#'a decimal comma typically use a semicolon as the value separator, which may be
+#'supplied with sep=";" to readCSV(). Finally, the remainder of a line following
+#'a comment character will be ignored when the file is read; by default comment
+#'is the empty string, "", indicating that comments do not exist at all, but "#"
+#'is a popular comment prefix. To translate the CSV data into a DataFrame, it
+#'is necessary for Eidos to guess what value type each column is unless a column
+#'type is specified by colTypes. Quotes surrounding a value are irrelevant to
+#'this guess; for example, 1997 and "1997" are both candidates to be integer
+#'values (because some programs generate CSV output in which every value is quoted
+#'regardless of type). If every value in a column is either true, false, TRUE,
+#'FALSE, T, or F, the column will be taken to be logical. Otherwise, if every
+#'value in a column is an integer (here defined as an optional + or -, followed by
+#'nothing but decimal digits 0123456789), the column will be taken to be integer.
+#'Otherwise, if every value in a column is a floating-point number (here defined
+#'as an optional + or -, followed by decimal digits 0123456789, optionally a
+#'decimal separator and then optionally more decimal digits, and ending with an
+#'optional exponent like e7, E+05, or e-2), the column will be taken to be float;
+#'the special values NAN, INF, INFINITY, -INF, and -INFINITY (not case-sensitive)
+#'are also candidates to be float (if the rest of the column is also convertible
+#'to float), representing the corresponding float constants. Otherwise, the column
+#'will be taken to be string. NULL and NA are not recognized by readCSV() in CSV
+#'files and will be read as strings. Every line in a CSV file must contain the
+#'same number of values (forming a rectangular data table); missing values are not
+#'allowed by readCSV() since there is no way to represent them in DataFrame (since
+#'Eidos has no equivalent of R's NA value). Spaces are considered part of a data
+#'field and are not trimmed, following the RFC 4180 standard. These choices are
+#'an attempt to provide optimal behavior for most clients, but given the lack of
+#'any universal standard for CSV files, and the lack of any type information in
+#'the CSV format, they will not always work as desired; in such cases, it should
+#'be reasonably straightforward to preprocess input files using standard Unix
+#'text-processing tools like sed and awk.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_readCSV <- function(filePath, colNames, colTypes, sep, quote, dec,
+comment) {
+ .E$readCSV(filePath, colNames, colTypes, sep, quote, dec, comment)
+}
+
+#'Eidos method readFile
+#'
+#'Documentation for Eidos function \code{readFile}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param filePath An object of type string. Must be of length 1 (a singleton). See
+#'details for description.
+#'
+#'@aliases Eidos$readFile .E$readFile
+#'@family Eidos
+#'@return An object of type string.
+#'@details Reads in the contents of a file specified by filePath and returns a
+#'string vector containing the lines (separated by \n and \r characters) of the
+#'file. Reading files other than text files is not presently supported. If an
+#'error occurs during the read, NULL will be returned.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_readFile <- function(filePath) {
+ .E$readFile(filePath)
+}
+
+#'Eidos method setwd
+#'
+#'Documentation for Eidos function \code{setwd}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param path An object of type string. Must be of length 1 (a singleton). See
+#'details for description.
+#'
+#'@aliases Eidos$setwd .E$setwd
+#'@family Eidos
+#'@return An object of type string. Return will be of length 1 (a singleton)
+#'@details Sets the current filesystem working directory. The filesystem working
+#'directory is the directory which will be used as a base path for relative
+#'filesystem paths (see getwd() for further discussion). An error will result if
+#'the working directory cannot be set to the given path. 75 The current working
+#'directory prior to the change will be returned as an invisible string value;
+#'the value returned is identical to the value that would have been returned by
+#'getwd(), apart from its invisibility. See getwd() for discussion regarding the
+#'initial working directory, before it is set with setwd().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_setwd <- function(path) {
+ .E$setwd(path)
+}
+
+#'Eidos method tempdir
+#'
+#'Documentation for Eidos function \code{tempdir}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param void An object of type . See details for description.
+#'
+#'@aliases Eidos$tempdir .E$tempdir
+#'@family Eidos
+#'@return An object of type string. Return will be of length 1 (a singleton)
+#'@details Returns a path to a directory appropriate for saving temporary files.
+#'The path returned by tempdir() is platform-specific, and is not guaranteed
+#'to be the same from one run of SLiM to the next. It is guaranteed to end in a
+#'slash, so further path components should be appended without a leading slash. At
+#'present, on macOS and Linux systems, the path will be "/tmp/"; this may change
+#'in future Eidos versions without warning.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_tempdir <- function(void) {
+ .E$tempdir(void)
+}
+
+#'Eidos method writeFile
+#'
+#'Documentation for Eidos function \code{writeFile}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param filePath An object of type string or string or logical or logical. Must
+#'be of length 1 (a singleton). See details for description.
+#'@param contents An object of type string or string or logical or logical. See
+#'details for description.
+#'@param append An object of type string or string or logical or logical. Must
+#'be of length 1 (a singleton). The default value is \code{F}. See details for
+#'description.
+#'@param compress An object of type string or string or logical or logical. Must
+#'be of length 1 (a singleton). The default value is \code{F}. See details for
+#'description.
+#'
+#'@aliases Eidos$writeFile .E$writeFile
+#'@family Eidos
+#'@return An object of type logical. Return will be of length 1 (a singleton)
+#'@details Writes or appends to a file specified by filePath with contents
+#'specified by contents, a string vector of lines. If append is T, the write
+#'will be appended to the existing file (if any) at filePath; if it is F (the
+#'default), then the write will replace an existing file at that path. If the
+#'write is successful, T will be returned; if not, F will be returned (but at
+#'present, an error will result instead). If compress is T, the contents will be
+#'compressed with zlib as they are written, and the standard .gz extension for
+#'gzip-compressed files will be appended to the filename in filePath if it is not
+#'already present. If the compress option is used in conjunction with append==T,
+#'Eidos will buffer data to append and flush it to the file in a delayed fashion
+#'(for performance reasons), and so appended data may not be visible in the file
+#'until later - potentially not until the process ends (i.e., the end of the SLiM
+#'simulation, for example). If that delay if undesirable, buffered data can be
+#'explicitly flushed to the filesystem with flushFile(). The compress option was
+#'added in Eidos 2.4 (SLiM 3.4). Note that readFile() does not currently support
+#'reading in compressed data. Note that newline characters will be added at
+#'the ends of the lines in contents. If you do not wish to have newlines added,
+#'you should use paste() to assemble the elements of contents together into a
+#'singleton string.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_writeFile <- function(filePath, contents, append, compress) {
+ .E$writeFile(filePath, contents, append, compress)
+}
+
+#'Eidos method writeTempFile
+#'
+#'Documentation for Eidos function \code{writeTempFile}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param prefix An object of type string or string or string or logical. Must be
+#'of length 1 (a singleton). See details for description.
+#'@param suffix An object of type string or string or string or logical. Must be
+#'of length 1 (a singleton). See details for description.
+#'@param contents An object of type string or string or string or logical. See
+#'details for description.
+#'@param compress An object of type string or string or string or logical. Must
+#'be of length 1 (a singleton). The default value is \code{F}. See details for
+#'description.
+#'
+#'@aliases Eidos$writeTempFile .E$writeTempFile
+#'@family Eidos
+#'@return An object of type string. Return will be of length 1 (a singleton)
+#'@details Writes to a unique temporary file with contents specified by contents,
+#'a string vector of lines. The filename used will begin with prefix and end
+#'with suffix, and will contain six random characters in between; for example,
+#'if prefix is "plot1_" and suffix is ".pdf", the generated filename might look
+#'like "plot1_r5Mq0t.pdf". It is legal for prefix, suffix, or both to be the empty
+#'string, "", but supplying a file extension is usually advisable at minimum.
+#'The file will be created inside the / tmp/ directory of the system, which is
+#'provided by Un*x systems as a standard location for temporary files; the /tmp/
+#'directory should not be specified as part of prefix (nor should any other
+#'directory information). The filename generated is guaranteed not to already
+#'exist in /tmp/. The file is created with Un*x permissions 0600, allowing reading
+#'and writing only by the user for security. If the write is successful, the full
+#'path to the temporary file will be returned; if not, "" will be returned. If
+#'compress is T, the contents will be compressed with zlib as they are written,
+#'and the standard .gz extension for gzip-compressed files will be appended to
+#'the filename suffix in suffix if it is not already present. The compress option
+#'was added in Eidos 2.4 (SLiM 3.4). Note that readFile() does not currently
+#'support reading in compressed data. Note that newline characters will be added
+#'at the ends of the lines in contents. If you do not wish to have newlines added,
+#'you should use paste() to assemble the elements of contents together into a
+#'singleton string.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_writeTempFile <- function(prefix, suffix, contents, compress) {
+ .E$writeTempFile(prefix, suffix, contents, compress)
+}
+
+#'Eidos method cmColors
+#'
+#'Documentation for Eidos function \code{cmColors}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer. Must be of length 1 (a singleton). See
+#'details for description.
+#'
+#'@aliases Eidos$cmColors .E$cmColors
+#'@family Eidos
+#'@return An object of type string.
+#'@details This method has been deprecated, and may be removed in a future release
+#'of Eidos. In SLiM 3.5 and later, use colors(n, "cm") instead. Generate colors in
+#'a "cyan-magenta" color palette.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_cmColors <- function(n) {
+ .E$cmColors(n)
+}
+
+#'Eidos method colors
+#'
+#'Documentation for Eidos function \code{colors}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type numeric or string. See details for description.
+#'@param name An object of type numeric or string. Must be of length 1 (a
+#'singleton). See details for description.
+#'
+#'@aliases Eidos$colors .E$colors
+#'@family Eidos
+#'@return An object of type string.
+#'@details Generate colors in a standard color palette. If x is a singleton
+#'integer, the returned vector will contain x color strings representing x colors
+#'equidistant along the named palette, spanning its full extent. Alternatively,
+#'if x is a float vector of values in [0,1], the returned vector will contain one
+#'color string for each value in x, representing the color at the corresponding
+#'fraction along the named palette (values outside [0,1] will be clamped to that
+#'range). (Note that the function signature states the type of x as numeric, but
+#'in this function the integer and float cases have completely different semantic
+#'meanings.) The color palette specified by name may be any of the following color
+#'palettes based upon color palettes in R: "cm" "heat" "terrain" It may also be
+#'one of the following color palettes based on color palettes in MATLAB (and the
+#'Turbo palette from Anton Mikhailov of the Google AI group, based upon the Jet
+#'palette provided by MATLAB): "parula" "hot" "jet" "turbo" "gray" Finally, it may
+#'be one of the following color palettes based upon color palettes in Matplotlib,
+#'also available in the viridis R package. These color palettes are designed
+#'to be perceptually uniform, changing continuously and linearly. They are also
+#'designed to perform well even for users with redgreen colorblindness; the
+#'"cividis" palette, in particular, is designed to look nearly identical to those
+#'with and without red-green colorblindness, to be perceptually uniform in both
+#'hue and brightness, and to increase linearly in brightness. 77 "magma" "inferno"
+#'"plasma" "viridis" "cividis" This function replaces the deprecated cmColors(),
+#'heatColors(), and terrainColors() functions, and adds several several additional
+#'color palettes to Eidos. See rainbow() for another color palette function.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_colors <- function(x, name) {
+ .E$colors(x, name)
+}
+
+#'Eidos method color2rgb
+#'
+#'Documentation for Eidos function \code{color2rgb}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param color An object of type string. See details for description.
+#'
+#'@aliases Eidos$color2rgb .E$color2rgb
+#'@family Eidos
+#'@return An object of type float.
+#'@details Converts a color string to RGB. The color string specified in color may
+#'be either a named color (see chapter 7) or a color in hexadecimal format such
+#'as "#007FC0". The equivalent RGB color is returned as a float vector of length
+#'three (red, green, blue). Returned RGB values will be in the interval [0, 1].
+#'This function can also be called with a non-singleton vector of color strings
+#'in color. In this case, the returned float value will be a matrix of RGB values,
+#'with three columns (red, green, blue) and one row per element of color.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_color2rgb <- function(color) {
+ .E$color2rgb(color)
+}
+
+#'Eidos method heatColors
+#'
+#'Documentation for Eidos function \code{heatColors}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer. Must be of length 1 (a singleton). See
+#'details for description.
+#'
+#'@aliases Eidos$heatColors .E$heatColors
+#'@family Eidos
+#'@return An object of type string.
+#'@details This method has been deprecated, and may be removed in a future release
+#'of Eidos. In SLiM 3.5 and later, use colors(n, "heat") instead. Generate colors
+#'in a "heat map" color palette.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_heatColors <- function(n) {
+ .E$heatColors(n)
+}
+
+#'Eidos method hsv2rgb
+#'
+#'Documentation for Eidos function \code{hsv2rgb}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param hsv An object of type float. See details for description.
+#'
+#'@aliases Eidos$hsv2rgb .E$hsv2rgb
+#'@family Eidos
+#'@return An object of type float.
+#'@details Converts an HSV color to RGB. The HSV color is specified in hsv as a
+#'float vector of length three (hue, saturation, value), and the equivalent RGB
+#'color is returned as a float vector of length three (red, green, blue). HSV
+#'values will be clamped to the interval [0, 1], and returned RGB values will also
+#'be in the interval [0, 1]. This function can also be called with a matrix of HSV
+#'values, with three columns (hue, saturation, value). In this case, the returned
+#'float value will be a matrix of RGB values, with three columns (red, green,
+#'blue) and one row per row of hsv.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_hsv2rgb <- function(hsv) {
+ .E$hsv2rgb(hsv)
+}
+
+#'Eidos method rainbow
+#'
+#'Documentation for Eidos function \code{rainbow}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer. Must be of length 1 (a singleton). See
+#'details for description.
+#'@param s An object of type float. Must be of length 1 (a singleton). The default
+#'value is \code{1.0}. See details for description.
+#'@param v An object of type float. Must be of length 1 (a singleton). The default
+#'value is \code{1.0}. See details for description.
+#'@param start An object of type float. Must be of length 1 (a singleton). The
+#'default value is \code{0.0}. See details for description.
+#'@param end An object of type null or float. Must be of length 1 (a singleton).
+#'The default value is \code{NULL}. See details for description.
+#'@param ccw An object of type logical. Must be of length 1 (a singleton). The
+#'default value is \code{T}. See details for description.
+#'
+#'@aliases Eidos$rainbow .E$rainbow
+#'@family Eidos
+#'@return An object of type string.
+#'@details Generate colors in a "rainbow" color palette. The number of colors
+#'desired is passed in n, and the returned vector will contain n color strings.
+#'Parameters s and v control the saturation and value of the rainbow colors
+#'generated. The color sequence begins with the hue start, and ramps to the hue
+#'end, in a counter-clockwise direction around the standard HSV color wheel if
+#'ccw is T (the default, following R), otherwise in a clockwise direction. If end
+#'is NULL (the default), a value of (n-1)/n is used, producing a complete rainbow
+#'around the color wheel when start is also the default value of 0.0. See colors()
+#'for other color palettes.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rainbow <- function(n, s, v, start, end, ccw) {
+ .E$rainbow(n, s, v, start, end, ccw)
+}
+
+#'Eidos method rgb2color
+#'
+#'Documentation for Eidos function \code{rgb2color}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param rgb An object of type float. See details for description.
+#'
+#'@aliases Eidos$rgb2color .E$rgb2color
+#'@family Eidos
+#'@return An object of type string.
+#'@details Converts an RGB color to a color string. The RGB color is specified
+#'in rgb as a float vector of length three (red, green, blue). The equivalent
+#'color string is returned as singleton string specifying the color in the format
+#'"#RRGGBB", such as "#007FC0". RGB values will be clamped to the interval [0,
+#'1]. 78 This function can also be called with a matrix of RGB values, with three
+#'columns (red, green, blue). In this case, the returned string value will be a
+#'vector of color strings, with one element per row of rgb.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rgb2color <- function(rgb) {
+ .E$rgb2color(rgb)
+}
+
+#'Eidos method rgb2hsv
+#'
+#'Documentation for Eidos function \code{rgb2hsv}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param rgb An object of type float. See details for description.
+#'
+#'@aliases Eidos$rgb2hsv .E$rgb2hsv
+#'@family Eidos
+#'@return An object of type float.
+#'@details Converts an RGB color to HSV. The RGB color is specified in rgb as a
+#'float vector of length three (red, green, blue), and the equivalent HSV color
+#'is returned as a float vector of length three (hue, saturation, value). RGB
+#'values will be clamped to the interval [0, 1], and returned HSV values will also
+#'be in the interval [0, 1]. This function can also be called with a matrix of
+#'RGB values, with three columns (red, green, blue). In this case, the returned
+#'float value will be a matrix of HSV values, with three columns (hue, saturation,
+#'value) and one row per row of rgb.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rgb2hsv <- function(rgb) {
+ .E$rgb2hsv(rgb)
+}
+
+#'Eidos method terrainColors
+#'
+#'Documentation for Eidos function \code{terrainColors}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param n An object of type integer. Must be of length 1 (a singleton). See
+#'details for description.
+#'
+#'@aliases Eidos$terrainColors .E$terrainColors
+#'@family Eidos
+#'@return An object of type string.
+#'@details This method has been deprecated, and may be removed in a future release
+#'of Eidos. In SLiM 3.5 and later, use colors(n, "terrain") instead.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_terrainColors <- function(n) {
+ .E$terrainColors(n)
+}
+
+#'Eidos method assert
+#'
+#'Documentation for Eidos function \code{assert}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param assertions An object of type logical. See details for description.
+#'@param message An object of type null or string. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'
+#'@aliases Eidos$assert .E$assert
+#'@family Eidos
+#'@return An object of type void.
+#'@details Assert that a condition or conditions are true. If any element of
+#'assertions is F, execution will be stopped. A message, "assertion failed",
+#'will be printed before stopping; if message is not NULL; its value will then be
+#'printed.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_assert <- function(assertions, message) {
+ .E$assert(assertions, message)
+}
+
+#'Eidos method beep
+#'
+#'Documentation for Eidos function \code{beep}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param soundName An object of type null or string. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'
+#'@aliases Eidos$beep .E$beep
+#'@family Eidos
+#'@return An object of type void.
+#'@details Plays a sound or beeps. On macOS in a GUI environment (i.e., in
+#'EidosScribe or SLiMgui), the optional parameter soundName can be the name
+#'of a sound file to play; in other cases (if soundName is NULL, or at the
+#'command line, or on platforms other than OS X) soundName is ignored and a
+#'standard system beep is played. When soundName is not NULL, a sound file in
+#'a supported format (such as .aiff or .mp3) is searched for sequentially in
+#'four standard locations, in this order: ~/Library/Sounds, /Library/Sounds, /
+#'Network/Library/Sounds, and finally /System/Library/Sounds. Standard OS X sounds
+#'located in /System/Library/Sounds include "Basso", "Blow", "Bottle", "Frog",
+#'"Funk", "Glass", "Hero", "Morse", "Ping", "Pop", "Purr", "Sosumi", "Submarine",
+#'and "Tink". Do not include the file extension, such as .aiff or .mp3, in
+#'soundName. CAUTION: When not running in EidosScribe or SLiMgui, it is often
+#'the case that the only simple means available to play a beep is to send a BEL
+#'character (ASCII 7) to the standard output. Unfortunately, when this is the
+#'case, it means that (1) no beep will be audible if output is being redirected
+#'into a file, and (2) a control character, ^G, will occur in the output at the
+#'point when the beep was requested. It is therefore recommended that beep() be
+#'used only when doing interactive work in a terminal shell (or in a GUI), not
+#'when producing output files. However, this issue is platform-specific; on some
+#'platforms beep() may result in a beep, and no emitted ^G, even when output is
+#'redirected. When a ^G must be emitted to the standard output to generate the
+#'beep, a warning message will also be emitted to make any associated problems
+#'easier to diagnose.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_beep <- function(soundName) {
+ .E$beep(soundName)
+}
+
+#'Eidos method citation
+#'
+#'Documentation for Eidos function \code{citation}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param void An object of type . See details for description.
+#'
+#'@aliases Eidos$citation .E$citation
+#'@family Eidos
+#'@return An object of type void.
+#'@details Prints citation information for Eidos to Eidos's output stream.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_citation <- function(void) {
+ .E$citation(void)
+}
+
+#'Eidos method clock
+#'
+#'Documentation for Eidos function \code{clock}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param type An object of type string. Must be of length 1 (a singleton). The
+#'default value is \code{"cpu"}. See details for description.
+#'
+#'@aliases Eidos$clock .E$clock
+#'@family Eidos
+#'@return An object of type float. Return will be of length 1 (a singleton)
+#'@details Returns the value of a system clock. If type is "cpu", this returns
+#'the current value of the CPU usage clock. This is the amount of CPU time used
+#'by the current process, in seconds; it is unrelated to the current time of day
+#'(for that, see the time() function). This is useful mainly for determining how
+#'79 much processor time a given section of code takes; clock() can be called
+#'before and after a block of code, and the end clock minus the start clock gives
+#'the elapsed CPU time consumed in the execution of the block of code. See also
+#'the timed parameter of executeLambda(), which automates this procedure. Note
+#'that if multiple cores are utilized by the process, the CPU usage clock will be
+#'the sum of the CPU usage across all cores, and may therefore run faster than the
+#'wall clock. If type is "mono", this returns the value of the system's monotonic
+#'clock. This represents userperceived ("wall clock") elapsed time from some
+#'arbitrary timebase (which will not change during the execution of the program),
+#'but it will not jump if the time zone or the wall clock time are changed for
+#'the system. This clock is useful for measuring user-perceived elapsed time, as
+#'described above, and may provide a more useful metric for performance than CPU
+#'time if multiple cores are being utilized.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_clock <- function(type) {
+ .E$clock(type)
+}
+
+#'Eidos method date
+#'
+#'Documentation for Eidos function \code{date}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param void An object of type . See details for description.
+#'
+#'@aliases Eidos$date .E$date
+#'@family Eidos
+#'@return An object of type string. Return will be of length 1 (a singleton)
+#'@details Returns a standard date string for the current date in the local time
+#'of the executing machine. The format is %d-%m-%Y (day in two digits, then month
+#'in two digits, then year in four digits, zero-padded and separated by dashes)
+#'regardless of the localization of the executing machine, for predictability and
+#'consistency.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_date <- function(void) {
+ .E$date(void)
+}
+
+#'Eidos method debugIndent
+#'
+#'Documentation for Eidos function \code{debugIndent}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param void An object of type . See details for description.
+#'
+#'@aliases Eidos$debugIndent .E$debugIndent
+#'@family Eidos
+#'@return An object of type string. Return will be of length 1 (a singleton)
+#'@details Returns the indentation string currently being used to start lines
+#'in the debugging output stream. In a pure Eidos context this will currently be
+#'the empty string, "". In specific Contexts, such as SLiM, the debugging output
+#'stream may be structured with nested indentation, in which case this string will
+#'typically be a series of spaces or tabs. To make your debugging output (such as
+#'from cat(), catn(), or print() with the error=T optional argument set) line up
+#'with other output at the current level of execution nesting, you can start your
+#'new lines of output with this string if you wish.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_debugIndent <- function(void) {
+ .E$debugIndent(void)
+}
+
+#'Eidos method defineConstant
+#'
+#'Documentation for Eidos function \code{defineConstant}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param symbol An object of type string or any. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param value An object of type string or any. See details for description.
+#'
+#'@aliases Eidos$defineConstant .E$defineConstant
+#'@family Eidos
+#'@return An object of type void.
+#'@details Defines a new constant with the name symbol and the value specified
+#'by value. The name cannot previously be defined in any way (i.e., as either
+#'a variable or a constant). The defined constant acts identically to intrinsic
+#'Eidos constants such as T, NAN, and PI, and will remain defined for as long
+#'as the Eidos context lives even if it is defined inside a block being executed
+#'by executeLambda(), apply(), sapply(), or a Context-defined script block.
+#'Syntactically, value may be any value at all; semantically, however, if value
+#'is of object type then value's class must be under an internal memory-management
+#'scheme called "retain-release". Objects that are not under retain-release
+#'can cease to exist whenever the Context is finished using them, and thus a
+#'defined constant referencing such an object could become invalid, which must
+#'be prevented. Objects that are under retain-release will not cease to exist if
+#'they are referenced by a global constant; the reference to them from the global
+#'constant "retains" them and keeps them in existence. All object classes built
+#'into Eidos are under retain-release; see the SLiM manual (section "SLiM scoping
+#'rules") for discussion of which SLiM object classes are under retain-release.
+#'Section 4.5 of this manual discusses this topic further.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_defineConstant <- function(symbol, value) {
+ .E$defineConstant(symbol, value)
+}
+
+#'Eidos method defineGlobal
+#'
+#'Documentation for Eidos function \code{defineGlobal}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param symbol An object of type string or any. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param value An object of type string or any. See details for description.
+#'
+#'@aliases Eidos$defineGlobal .E$defineGlobal
+#'@family Eidos
+#'@return An object of type void.
+#'@details Defines a new global variable with the name symbol and the value
+#'specified by value. The name cannot previously be defined as a constant. The
+#'result is similar to a standard variable assignment with operator =, except that
+#'the variable is always defined in the global scope (even if the defineGlobal()
+#'call is made inside a user-defined function or other locally-scoped block, such
+#'as a SLiM event or callback). This means that the variable will remain defined
+#'even after the current scope is exited. Note that global variables can be hidden
+#'by local variables with the same name; unlike defined constants, such scoped
+#'masking is allowed. Syntactically, value may be any value at all; semantically,
+#'however, if value is of object type then value's class must be under an internal
+#'memory-management scheme called "retain-release". Objects that are not under
+#'retain-release can cease to exist whenever the Context is finished using them,
+#'and thus a global variable referencing such an object could become invalid,
+#'which must be 80 prevented. Objects that are under retain-release will not
+#'cease to exist if they are referenced by a global variable; the reference to
+#'them from the global variable "retains" them and keeps them in existence. All
+#'object classes built into Eidos are under retain-release; see the SLiM manual
+#'(section "SLiM scoping rules") for discussion of which SLiM object classes are
+#'under retain-release. Section 4.5 of this manual discusses this topic further.
+#'(vNlifso)doCall(string$ functionName, ...) Returns the results from a call to a
+#'specified function. The function named by the parameter functionName is called,
+#'and the remaining parameters to doCall() are forwarded on to that function
+#'verbatim. This can be useful for calling one of a set of similar functions, such
+#'as sin(), cos(), etc., to perform a math function determined at runtime, or one
+#'of the as...() family of functions to convert to a type determined at runtime.
+#'Note that named arguments and default arguments, beyond the functionName
+#'argument, are not supported by doCall(); all arguments to the target function
+#'must be specified explicitly, without names. (vNlifso)executeLambda(string$
+#'lambdaSource, [ls$ timed = F]) Executes a block of Eidos code defined by
+#'lambdaSource. Eidos allows you to execute lambdas: blocks of Eidos code which
+#'can be called directly within the same scope as the caller. Eidos lambdas do not
+#'take arguments; for this reason, they are not first-class functions. (Since they
+#'share the scope of the caller, however, you may effectively pass values in and
+#'out of a lambda using variables.) The string argument lambdaSource may contain
+#'one or many Eidos statements as a single string value. Lambdas are represented,
+#'to the caller, only as the source code string lambdaSource; the executable
+#'code is not made available programmatically. If an error occurs during the
+#'tokenization, parsing, or execution of the lambda, that error is raised as
+#'usual; executing code inside a lambda does not provide any additional protection
+#'against exceptions raised. The return value produced by the code in the lambda
+#'is returned by executeLambda(). If the optional parameter timed is T, the total
+#'(CPU clock) execution time for the lambda will be printed after the lambda has
+#'completed (see clock()); if it is F (the default), no timing information will be
+#'printed. The timed parameter may also be "cpu" or "mono" to specifically request
+#'timing with the CPU clock (which will count the usage across all cores, and
+#'may thus run faster than wall clock time if multiple cores are being utilized)
+#'or the monotonic clock (which will correspond, more or less, to elapsed wall
+#'clock time regardless of multithreading); see the documentation for clock()
+#'for further discussion of these timing options. The current implementation
+#'of executeLambda() caches a tokenized and parsed version of lambdaSource,
+#'so calling executeLambda() repeatedly on a single source string is much more
+#'efficient than calling executeLambda() with a newly constructed string each
+#'time. If you can use a string literal for lambdaSource, or reuse a constructed
+#'source string stored in a variable, that will improve performance considerably.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_defineGlobal <- function(symbol, value) {
+ .E$defineGlobal(symbol, value)
+}
+
+#'Eidos method exists
+#'
+#'Documentation for Eidos function \code{exists}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param symbol An object of type string. See details for description.
+#'
+#'@aliases Eidos$exists .E$exists
+#'@family Eidos
+#'@return An object of type logical.
+#'@details Returns a logical vector indicating whether symbols exist. If a symbol
+#'has been defined as an intrinsic Eidos constant like T, INF, and PI, or as a
+#'Context-defined constant like sim in SLiM, or as a user-defined constant using
+#'defineConstant(), or as a variable by assignment, this function returns T.
+#'Otherwise, the symbol has not been defined, and exists() returns F. This is
+#'commonly used to check whether a user-defined constant already exists, with the
+#'intention of defining the constant if it has not already been defined. A vector
+#'of symbols may be passed, producing a vector of corresponding results.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_exists <- function(symbol) {
+ .E$exists(symbol)
+}
+
+#'Eidos method functionSignature
+#'
+#'Documentation for Eidos function \code{functionSignature}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param functionName An object of type null or string. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'
+#'@aliases Eidos$functionSignature .E$functionSignature
+#'@family Eidos
+#'@return An object of type void.
+#'@details Prints function signatures for all functions (if functionName is NULL,
+#'the default), or for the function named by functionName, to Eidos's output
+#'stream. See section 2.7.4 for more information.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_functionSignature <- function(functionName) {
+ .E$functionSignature(functionName)
+}
+
+#'Eidos method functionSource
+#'
+#'Documentation for Eidos function \code{functionSource}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param functionName An object of type string. Must be of length 1 (a singleton).
+#'See details for description.
+#'
+#'@aliases Eidos$functionSource .E$functionSource
+#'@family Eidos
+#'@return An object of type void.
+#'@details Prints the Eidos source code for the function specified by
+#'functionName, or prints a diagnostic message if the function is implemented in
+#'C++ rather than Eidos. 81
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_functionSource <- function(functionName) {
+ .E$functionSource(functionName)
+}
+
+#'Eidos method getSeed
+#'
+#'Documentation for Eidos function \code{getSeed}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param void An object of type . See details for description.
+#'
+#'@aliases Eidos$getSeed .E$getSeed
+#'@family Eidos
+#'@return An object of type integer. Return will be of length 1 (a singleton)
+#'@details Returns the random number seed. This is the last seed value set using
+#'setSeed(); if setSeed() has not been called, it will be a seed value chosen
+#'based on the process-id and the current time when Eidos was initialized, unless
+#'the Context has set a different seed value.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_getSeed <- function(void) {
+ .E$getSeed(void)
+}
+
+#'Eidos method license
+#'
+#'Documentation for Eidos function \code{license}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param void An object of type . See details for description.
+#'
+#'@aliases Eidos$license .E$license
+#'@family Eidos
+#'@return An object of type void.
+#'@details Prints Eidos's license terms to Eidos's output stream.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_license <- function(void) {
+ .E$license(void)
+}
+
+#'Eidos method ls
+#'
+#'Documentation for Eidos function \code{ls}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param showSymbolTables An object of type logical. Must be of length 1 (a
+#'singleton). The default value is \code{F}. See details for description.
+#'
+#'@aliases Eidos$ls .E$ls
+#'@family Eidos
+#'@return An object of type void.
+#'@details Prints all currently defined variables to Eidos's output stream. See
+#'section 2.4.1 for more information. Beginning in Eidos 2.5 (SLiM 3.5), the
+#'showSymbolTables optional argument can be set to T to request full information
+#'on the current symbol table chain. This will show which symbol table a given
+#'symbol is defined in, as well as revealing whether there are other symbols with
+#'the same name that have been masked by a local definition. This is mostly useful
+#'for debugging.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_ls <- function(showSymbolTables) {
+ .E$ls(showSymbolTables)
+}
+
+#'Eidos method rm
+#'
+#'Documentation for Eidos function \code{rm}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param variableNames An object of type null or string. The default value is
+#'\code{NULL}. See details for description.
+#'
+#'@aliases Eidos$rm .E$rm
+#'@family Eidos
+#'@return An object of type void.
+#'@details Removes variables from the Eidos namespace; in other words, it causes
+#'the variables to become undefined. Variables are specified by their string name
+#'in the variableNames parameter. If the optional variableNames parameter is NULL
+#'(the default), all variables will be removed (be careful!). In SLiM 3, there was
+#'an optional parameter removeConstants that, if T, allowed you to remove defined
+#'constants (and then potentially redefine them to have a different value).
+#'The removeConstants parameter was removed in SLiM 4, since the defineGlobal()
+#'function now provides the ability to define (and redefine) global variables that
+#'are not constant.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_rm <- function(variableNames) {
+ .E$rm(variableNames)
+}
+
+#'Eidos method sapply
+#'
+#'Documentation for Eidos function \code{sapply}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param x An object of type any or string or string. See details for description.
+#'@param lambdaSource An object of type any or string or string. Must be of length
+#'1 (a singleton). See details for description.
+#'@param simplify An object of type any or string or string. Must be of length
+#'1 (a singleton). The default value is \code{"vector"}. See details for
+#'description.
+#'
+#'@aliases Eidos$sapply .E$sapply
+#'@family Eidos
+#'@return An object of type any.
+#'@details Named apply() prior to Eidos 1.6 / SLiM 2.6 Applies a block of Eidos
+#'code to the elements of x. This function is sort of a hybrid between c() and
+#'executeLambda(); it might be useful to consult the documentation for both of
+#'those functions to better understand what sapply() does. For each element in
+#'x, the lambda defined by lambdaSource will be called. For the duration of that
+#'callout, a variable named applyValue will be defined to have as its value the
+#'element of x currently being processed. The expectation is that the lambda
+#'will use applyValue in some way, and will return either NULL or a new value
+#'(which need not be a singleton, and need not be of the same type as x). The
+#'return value of sapply() is generated by concatenating together all of the
+#'individual vectors returned by the lambda, in exactly the same manner as the
+#'c() function (including the possibility of type promotion). Since this function
+#'can be hard to understand at first, here is an example: sapply(1:10, "if
+#'(applyValue % 2) applyValue ^ 2; else NULL;"); This produces the output 1 9 25
+#'49 81. The sapply() operation begins with the vector 1:10. For each element of
+#'that vector, the lambda is called and applyValue is defined with the element
+#'value. In this respect, sapply() is actually very much like a for loop. If
+#'applyValue is even (as evaluated by the modulo operator, %), the condition of
+#'the if statement is F and so NULL is returned by the lambda; this must be done
+#'explicitly, since a void return is not allowed by sapply(). If applyValue is
+#'odd, on the other hand, the lambda returns its square (as calculated by the
+#'exponential operator, ^). Just as with the c() function, NULL values are dropped
+#'during concatenation, so the final result contains only the squares of the odd
+#'values. This example illustrates that the lambda can "drop" values by returning
+#'NULL, so sapply() can be used to select particular elements of a vector that
+#'satisfy some condition, much like the subscript operator, []. The example also
+#'illustrates that input and result types do not have to match; the vector passed
+#'in is integer, whereas the result vector is float. Beginning in Eidos 1.6, a new
+#'optional parameter named simplify allows the result of sapply() to be a matrix
+#'or array in certain cases, better organizing the elements of the result. If the
+#'simplify 82 parameter is "vector", the concatenated result value is returned
+#'as a plain vector in all cases; this is the default behavior, for backward
+#'compatibility. Two other possible values for simplify are presently supported.
+#'If simplify is "matrix", the concatenated result value will be turned into a
+#'matrix with one column for each non-NULL value returned by the lambda, as if
+#'the values were joined together with cbind(), as long as all of the lambda's
+#'return values are either (a) NULL or (b) the same length as the other non-NULL
+#'values returned. If simplify is "match", the concatenated result value will
+#'be turned into a vector, matrix, or array that exactly matches the dimensions
+#'as x, with a one-toone correspondence between x and the elements of the return
+#'value just like a unary operator, as long as all of the lambda's return values
+#'are singletons (with no NULL values). Both "matrix" and "match" will raise an
+#'error if their preconditions are not met, to avoid unexpected behavior, so care
+#'should be taken that the preconditions are always met when these options are
+#'used. As with executeLambda(), all defined variables are accessible within the
+#'lambda, and changes made to variables inside the lambda will persist beyond the
+#'end of the sapply() call; the lambda is executing in the same scope as the rest
+#'of your code. The sapply() function can seem daunting at first, but it is an
+#'essential tool in the Eidos toolbox. It combines the iteration of a for loop,
+#'the ability to select elements like operator [], and the ability to assemble
+#'results of mixed type together into a single vector like c(), all with the power
+#'of arbitrary Eidos code execution like executeLambda(). It is relatively fast,
+#'compared to other ways of achieving similar results such as a for loop that
+#'accumulates results with c(). Like executeLambda(), sapply() is most efficient
+#'if it is called multiple times with a single string script variable, rather than
+#'with a newly constructed string for lambdaSource each time. Prior to Eidos 1.6
+#'(SLiM 2.6), sapply() was instead named apply(); it was renamed to sapply() in
+#'order to more closely match the naming of functions in R. This renaming allowed
+#'a new apply() function to be added to Eidos that operates on the margins of
+#'matrices and arrays, similar to the apply() function of R (see apply(), above).
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_sapply <- function(x, lambdaSource, simplify) {
+ .E$sapply(x, lambdaSource, simplify)
+}
+
+#'Eidos method setSeed
+#'
+#'Documentation for Eidos function \code{setSeed}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param seed An object of type integer. Must be of length 1 (a singleton). See
+#'details for description.
+#'
+#'@aliases Eidos$setSeed .E$setSeed
+#'@family Eidos
+#'@return An object of type void.
+#'@details Set the random number seed. Future random numbers will be based upon
+#'the seed value set, and the random number sequence generated from a particular
+#'seed value is guaranteed to be reproducible. The last seed set can be recovered
+#'with the getSeed() function.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_setSeed <- function(seed) {
+ .E$setSeed(seed)
+}
+
+#'Eidos method source
+#'
+#'Documentation for Eidos function \code{source}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param filePath An object of type string or logical. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param chdir An object of type string or logical. Must be of length 1 (a
+#'singleton). The default value is \code{F}. See details for description.
+#'
+#'@aliases Eidos$source .E$source
+#'@family Eidos
+#'@return An object of type void.
+#'@details Executes the contents of an Eidos source file found at the filesystem
+#'path filePath. This is essentially shorthand for calling readFile(), joining
+#'the read lines with newlines to form a single string using paste(), and then
+#'passing that string to executeLambda(). The source file must consist of complete
+#'Eidos statements. Regardless of what the last executed source line evaluates
+#'to, source() has no return value. If no file exists at filePath, an error will
+#'be raised. The chdir parameter controls the current working directory in effect
+#'while the source file is executed. If chdir is F (the default), the current
+#'working directory will remain unchanged. If chdir is T, the current working
+#'directory will be temporarily changed to the filesystem path at which the source
+#'file is located, and restored after execution of the source file is complete.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_source <- function(filePath, chdir) {
+ .E$source(filePath, chdir)
+}
+
+#'Eidos method stop
+#'
+#'Documentation for Eidos function \code{stop}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param message An object of type null or string. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'
+#'@aliases Eidos$stop .E$stop
+#'@family Eidos
+#'@return An object of type void.
+#'@details Stops execution of Eidos (and of the Context, such as the running SLiM
+#'simulation, if applicable), in the event of an error. If the optional message
+#'parameter is not NULL, it will be printed to Eidos's error stream prior to
+#'stopping.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_stop <- function(message) {
+ .E$stop(message)
+}
+
+#'Eidos method suppressWarnings
+#'
+#'Documentation for Eidos function \code{suppressWarnings}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param suppress An object of type logical. Must be of length 1 (a singleton).
+#'See details for description.
+#'
+#'@aliases Eidos$suppressWarnings .E$suppressWarnings
+#'@family Eidos
+#'@return An object of type logical. Return will be of length 1 (a singleton)
+#'@details Turns suppression of warning messages on or off. The suppress flag
+#'indicates whether suppression of warnings should be enabled (T) or disabled (F).
+#'The previous warning-suppression value is returned by suppressWarnings(), making
+#'it easy to suppress warnings from a given call and then return to the previous
+#'suppression state afterwards. It is recommended that warnings be suppressed only
+#'around short blocks of code (not all the time), so that unexpected but perhaps
+#'important warnings are 83 not missed. And of course warnings are generally
+#'emitted for good reasons; before deciding to disregard a given warning, make
+#'sure that you understand exactly why it is being issued, and are certain that it
+#'does not represent a serious problem.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_suppressWarnings <- function(suppress) {
+ .E$suppressWarnings(suppress)
+}
+
+#'Eidos method sysinfo
+#'
+#'Documentation for Eidos function \code{sysinfo}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param key An object of type string. Must be of length 1 (a singleton). See
+#'details for description.
+#'
+#'@aliases Eidos$sysinfo .E$sysinfo
+#'@family Eidos
+#'@return An object of type any.
+#'@details Returns information about the system. The information returned by
+#'tempdir() depends upon the value of key, which selects one of the pieces of
+#'information listed: key value os the name of the OS; "macOS" or "Windows",
+#'or "Unix" for all others sysname the name of the kernel release the operating
+#'system (kernel) release version the operating system (kernel) version nodename
+#'the name by which the machine is known on the network machine the hardware
+#'type; often the CPU type (e.g., "x86_64") The value "unknown" will be returned
+#'for a key if the correct value cannot be ascertained. Note that the values of
+#'keys that refer to the kernel may not be what you expect; for example, on one
+#'particular macOS 10.15.7 system, sysname returns "Darwin", release returns
+#'"19.6.0", and version returns "Darwin Kernel Version 19.6.0: Thu Sep 16 20:58:47
+#'PDT 2021; root:xnu-6153.141.40.1~1/RELEASE_X86_64". Further keys can be added if
+#'there is information that would be useful, particularly if a cross-platform way
+#'to obtain the information can be found.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_sysinfo <- function(key) {
+ .E$sysinfo(key)
+}
+
+#'Eidos method system
+#'
+#'Documentation for Eidos function \code{system}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param command An object of type string or string or string or logical or
+#'logical. Must be of length 1 (a singleton). See details for description.
+#'@param args An object of type string or string or string or logical or logical.
+#'The default value is \code{""}. See details for description.
+#'@param input An object of type string or string or string or logical or logical.
+#'The default value is \code{""}. See details for description.
+#'@param stderr An object of type string or string or string or logical or
+#'logical. Must be of length 1 (a singleton). The default value is \code{F}. See
+#'details for description.
+#'@param wait An object of type string or string or string or logical or logical.
+#'Must be of length 1 (a singleton). The default value is \code{T}. See details
+#'for description.
+#'
+#'@aliases Eidos$system .E$system
+#'@family Eidos
+#'@return An object of type string.
+#'@details Runs a Un*x command in a /bin/sh shell with optional arguments and
+#'input, and returns the result as a vector of output lines. The args parameter
+#'may contain a vector of arguments to command; they will be passed directly to
+#'the shell without any quoting, so applying the appropriate quoting as needed
+#'by /bin/sh is the caller's responsibility. The arguments are appended to
+#'command, separated by spaces, and the result is passed to the shell as a single
+#'command string, so arguments may simply be given as part of command instead, if
+#'preferred. By default no input is supplied to command; if input is non-empty,
+#'however, it will be written to a temporary file (one line per string element)
+#'and the standard input of command will be redirected to that temporary file
+#'(using standard /bin/sh redirection with <, appended to the command string
+#'passed to the shell). By default, output sent to standard error will not be
+#'captured (and thus may end up in the output of the SLiM process, or may be
+#'lost); if stderr is T, however, the standard error stream will be redirected
+#'into standard out (using standard /bin/sh redirection with 2>&1, appended to
+#'the command string passed to the shell). Arbitrary command strings involving
+#'multiple commands, pipes, redirection, etc., may be used with system(), but
+#'may be incompatible with the way that args, input, and stderr are handled by
+#'this function, so in this case supplying the whole command string in command
+#'may be the simplest course. You may redirect standard error into standard
+#'output yourself in command with 2>&1. Supplying input to a complex command
+#'line can often be facilitated by the use of parentheses to create a subshell;
+#'for example, system("(wc -l | sed 's/ //g')", input=c('foo', 'bar', 'baz'));
+#'will supply the input lines to wc courtesy of the subshell started for the
+#'() operator. If this strategy doesn't work for the command line you want to
+#'execute, you can always write a temporary file yourself using writeFile() or
+#'writeTempFile() and redirect that file to standard input in command with <.
+#'If wait is T (the default), system() will wait for the command to finish, and
+#'return the output generated as a string vector, as described above. If wait is
+#'F, system() will instead append " &" to the end of the command line to request
+#'that it be run in the background, and it will not collect and 84 return the
+#'output from the command; instead it will return string(0) immediately. If the
+#'output from the command is needed, it could be redirected to a file, and that
+#'file could be checked periodically in Eidos for some indication that the command
+#'had completed; if output is not redirected to a file, it may appear in SLiM's
+#'output stream. If the final command line executed by system() ends in " &", the
+#'behavior of system() should be just as if wait=T had been supplied, but it is
+#'recommended to use wait=T instead to ensure that the command line is correctly
+#'assembled.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_system <- function(command, args, input, stderr, wait) {
+ .E$system(command, args, input, stderr, wait)
+}
+
+#'Eidos method time
+#'
+#'Documentation for Eidos function \code{time}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param void An object of type . See details for description.
+#'
+#'@aliases Eidos$time .E$time
+#'@family Eidos
+#'@return An object of type string. Return will be of length 1 (a singleton)
+#'@details Returns a standard time string for the current time in the local time
+#'of the executing machine. The format is %H:%M:%S (hour in two digits, then
+#'minute in two digits, then seconds in two digits, zeropadded and separated
+#'by dashes) regardless of the localization of the executing machine, for
+#'predictability and consistency. The 24-hour clock time is used (i.e., no AM/PM).
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_time <- function(void) {
+ .E$time(void)
+}
+
+#'Eidos method usage
+#'
+#'Documentation for Eidos function \code{usage}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param type An object of type logical or string. Must be of length 1 (a
+#'singleton). The default value is \code{"rss"}. See details for description.
+#'
+#'@aliases Eidos$usage .E$usage
+#'@family Eidos
+#'@return An object of type float. Return will be of length 1 (a singleton)
+#'@details Returns the memory usage. This is the amount of memory used by the
+#'current process, in MB (megabytes); multiply by 1024*1024 to get the usage
+#'in bytes. Memory usage is a surprisingly complex topic. One metric reported
+#'by usage() is the resident set size, or RSS, which includes memory usage from
+#'shared libraries, but does not include memory that is swapped out or has never
+#'been used. For most purposes, RSS is a useful metric of memory usage from
+#'a practical perspective. On some platforms (AIX, BSD, Solaris) the memory
+#'usage reported may be zero, but it should be correct on both macOS and Linux
+#'platforms. On macOS, memory pages that have not been used for a while may
+#'get compressed by the kernel to reduce the RSS of the process; the RSS metric
+#'reported by usage() will reflect the compressed size of such pages, not their
+#'original size, so surprising decreases in memory usage may be observed when
+#'the kernel decides to compress some memory pages. The RSS is requested with
+#'a type of "rss", which is the default; for historical reasons, it can also
+#'be requested with a type of F. Another metric reported by usage() is the peak
+#'RSS. This is just the highest RSS value that has ever been recorded by the
+#'kernel. It should generally mirror the behavior of RSS, except that it ratchets
+#'upward monotonically. The peak RSS is requested with a type of "rss_peak"; for
+#'historical reasons, it can also be requested with a type of T. The third metric
+#'currently reported by usage() is the virtual memory usage. This is essentially
+#'the amount of memory used by pages that have been assigned to the process,
+#'whether those pages are resident, compressed, or swapped. It is typically
+#'much larger than the RSS, because it includes various types of memory that
+#'are not counted in the RSS; indeed, for some system configurations the virtual
+#'memory usage can be reported as being the entire memory space of the computer.
+#'Whether it is a useful metric will be platform-dependent; caveat emptor. This
+#'function can be useful for documenting the memory usage of long runs as they
+#'are in progress. In SLiM, the RSS could also be used to trigger tree-sequence
+#'simplification with a call to treeSeqSimplify(), to reduce memory usage when
+#'it becomes too large, but keep in mind that the simplification process itself
+#'may cause a substantial spike in memory usage, and that page compression and
+#'swaps may reduce the RSS even though the memory actually used by tree-sequence
+#'recording continues to increase. When running under SLiM, other tools for
+#'monitoring memory usage include the slim command-line options -m[em] and
+#'-M[emhist], and the usage() and outputUsage() methods of Community; see the SLiM
+#'manual for more information.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_usage <- function(type) {
+ .E$usage(type)
+}
+
+#'Eidos method version
+#'
+#'Documentation for Eidos function \code{version}, which is a method of
+#'\code{\link{Eidos}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+#'
+#'@param print An object of type logical. Must be of length 1 (a singleton). The
+#'default value is \code{T}. See details for description.
+#'
+#'@aliases Eidos$version .E$version
+#'@family Eidos
+#'@return An object of type float.
+#'@details Get Eidos's version. There are two ways to use this function. If print
+#'is T, the default, then the version number is printed to the Eidos output stream
+#'in a formatted manner, like "Eidos version 2.1". If Eidos is attached to a
+#'Context that provides a version number, that is also printed, like "SLiM version
+#'3.1". In this case, the Eidos version number, and the Context version number if
+#'available, are returned as an invisible float vector. This is most useful when
+#'using Eidos interactively. If print is F, on the other hand, nothing is printed,
+#'but the returned float vector of version numbers is not 85 invisible. This
+#'is useful for scripts that need to test the Eidos or Context version they are
+#'running against. In both cases, in the float version numbers returned, a version
+#'like 2.4.2 would be returned as 2.42; this would not scale well to subversions
+#'greater than nine, so that will be avoided in our versioning.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+eidos_version <- function(print) {
+ .E$version(print)
+}
+
+
+
 #'SLiM method ancestralNucleotides
 #'
 #'Documentation for SLiM function \code{ancestralNucleotides}, which is a method
@@ -1234,8 +9351,8 @@ timeUnit)
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=632}{SLiM manual: page
-#'632}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=661}{SLiM manual: page
+#'661}.
 #'
 #'@param start An object of type null or integer. Must be of length 1 (a
 #'singleton). The default value is \code{NULL}. See details for description.
@@ -1273,7 +9390,7 @@ timeUnit)
 #'nucleotide sequence AACACATTT is requested in codon format, the codon vector 1
 #'4 63 will therefore be returned. These codon values can be useful in themselves;
 #'they can also be passed to codonsToAminoAcids() to translate them into the
-#'corresponding amino acid sequence if desired (see section 24.17.1).
+#'corresponding amino acid sequence if desired (see section 25.18.1).
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -1301,8 +9418,8 @@ ancestralNucleotides <- function(start, end, format = "string") {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=632}{SLiM manual: page
-#'632}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=662}{SLiM manual: page
+#'662}.
 #'
 #'@param parent An object of type null or Individual object. Must be of length 1
 #'(a singleton). The default value is \code{NULL}. See details for description.
@@ -1367,8 +9484,8 @@ drawBreakpoints <- function(parent, n) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=633}{SLiM manual: page
-#'633}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=662}{SLiM manual: page
+#'662}.
 #'
 #'@param sequence An object of type integer or string. See details for
 #'description.
@@ -1380,7 +9497,7 @@ drawBreakpoints <- function(parent, n) {
 #'(see section 1.8), replaces the ancestral nucleotide sequence for the
 #'model. The sequence parameter is interpreted exactly as it is in the
 #'initializeAncestralSequence() function; see that documentation for details
-#'(section 24.1). The length of the ancestral sequence is returned. It is unusual
+#'(section 25.1). The length of the ancestral sequence is returned. It is unusual
 #'to replace the ancestral sequence in a running simulation, since the nucleotide
 #'states of segregating and fixed mutations will depend upon the original
 #'ancestral sequence. It can be useful when loading a new population state with
@@ -1414,8 +9531,8 @@ setAncestralNucleotides <- function(sequence) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=633}{SLiM manual: page
-#'633}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=662}{SLiM manual: page
+#'662}.
 #'
 #'@param nonCrossoverFraction An object of type numeric or numeric or numeric or
 #'numeric. Must be of length 1 (a singleton). See details for description.
@@ -1435,7 +9552,7 @@ setAncestralNucleotides <- function(sequence) {
 #'details of the gene conversion tracts that will therefore be modeled (see
 #'section 1.5.6 for discussion of the "DSB" recombination model). The meanings
 #'and effects of the parameters exactly mirror the initializeGeneConversion()
-#'function; see section 24.1 for details.
+#'function; see section 25.1 for details.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -1465,8 +9582,8 @@ simpleConversionFraction, bias)
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=633}{SLiM manual: page
-#'633}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=662}{SLiM manual: page
+#'662}.
 #'
 #'@param multipliers An object of type numeric. See details for description.
 #'@param ends An object of type null or integer. The default value is \code{NULL}.
@@ -1486,21 +9603,20 @@ simpleConversionFraction, bias)
 #'that case, multipliers and ends taken together specify the multipliers to be
 #'used along successive contiguous stretches of the chromosome, from beginning
 #'to end; the last position specified in ends should extend to the end of the
-#'chromosome (as previously determined, during simulation initialization). See
-#'the initializeHotspotMap() function for further discussion of precisely how
-#'these multipliers and positions are interpreted. If the optional sex parameter
-#'is "*" (the default), then the supplied hotspot map will be used for both
-#'sexes (which is the only option for hermaphroditic simulations). In sexual
-#'simulations sex may be "M" or "F" instead, in which case the supplied hotspot
-#'map is used only for that sex. Note that whether sex-specific hotspot maps
-#'will be used is set by the way that the simulation is initially configured
-#'with initializeHotspot(), and cannot be changed with this method; so if the
-#'simulation was set up to use sex-specific hotspot maps then sex must be "M" or
-#'"F" here, whereas if it was set up not to, then sex must be "*" or unsupplied
-#'here. If a simulation needs sex-specific hotspot maps only some of the time, the
-#'male and female maps can simply be set to be identical the rest of the time. The
-#'hotspot map is normally constant in simulations, so be sure you know what you
-#'are doing.
+#'chromosome (as previously determined, during simulation initialization). See the
+#'initializeHotspotMap() function for further discussion of precisely how these
+#'multipliers and positions are interpreted. If the optional sex parameter is "*"
+#'(the default), then the supplied hotspot map will be used for both sexes (which
+#'is the only option for hermaphroditic simulations). In sexual simulations sex
+#'may be "M" or "F" instead, in which case the supplied hotspot map is used only
+#'for that sex. Note that whether sex-specific hotspot maps will be used is set
+#'by the way that the simulation is initially configured with initializeHotspot(),
+#'and cannot be changed with this method; so if the simulation was set up to use
+#'sex-specific hotspot maps then sex must be "M" or "F" here, whereas if it was
+#'set up not to, then sex must be "*" or unsupplied here. If a simulation needs
+#'sex-specific hotspot maps only some of the time, the male and female maps can
+#'simply be set to be identical the rest of the time. The hotspot map is normally
+#'constant in simulations, so be sure you know what you are doing.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -1528,8 +9644,8 @@ setHotspotMap <- function(multipliers, ends, sex) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=634}{SLiM manual: page
-#'634}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=663}{SLiM manual: page
+#'663}.
 #'
 #'@param rates An object of type numeric. See details for description.
 #'@param ends An object of type null or integer. The default value is \code{NULL}.
@@ -1540,32 +9656,32 @@ setHotspotMap <- function(multipliers, ends, sex) {
 #'@aliases Chromosome$setMutationRate .Ch$setMutationRate
 #'@family Chromosome
 #'@return An object of type void.
-#'@details Set the mutation rate per base position per gamete. There are two ways
-#'to call this method. If the optional ends parameter is NULL (the default), then
-#'rates must be a singleton value that specifies a single mutation rate to be
-#'used along the entire chromosome. If, on the other hand, ends is supplied, then
-#'rates and ends must be the same length, and the values in ends must be specified
-#'in ascending order. In that case, rates and ends taken together specify
-#'the mutation rates to be used along successive contiguous stretches of the
-#'chromosome, from beginning to end; the last position specified in ends should
-#'extend to the end of the chromosome (as previously determined, during simulation
-#'initialization). See the initializeMutationRate() function for further
-#'discussion of precisely how these rates and positions are interpreted. If the
-#'optional sex parameter is "*" (the default), then the supplied mutation rate
-#'map will be used for both sexes (which is the only option for hermaphroditic
-#'simulations). In sexual simulations sex may be "M" or "F" instead, in which
-#'case the supplied mutation rate map is used only for that sex. Note that
-#'whether sex-specific mutation rate maps will be used is set by the way that the
-#'simulation is initially configured with initializeMutationRate(), and cannot be
-#'changed with this method; so if the simulation was set up to use sex-specific
-#'mutation rate maps then sex must be "M" or "F" here, whereas if it was set up
-#'not to, then sex must be "*" or unsupplied here. If a simulation needs sex-
-#'specific mutation rate maps only some of the time, the male and female maps can
-#'simply be set to be identical the rest of the time. The mutation rate intervals
-#'are normally a constant in simulations, so be sure you know what you are doing.
-#'In nucleotide-based models, setMutationRate() may not be called. If variation
-#'in the mutation rate along the chromosome is desired, setHotspotMap() should be
-#'used.
+#'@details Set the mutation rate per base position per gamete. There are two
+#'ways to call this method. If the optional ends parameter is NULL (the default),
+#'then rates must be a singleton value that specifies a single mutation rate to
+#'be used along the entire chromosome. If, on the other hand, ends is supplied,
+#'then rates and ends must be the same length, and the values in ends must be
+#'specified in ascending order. In that case, rates and ends taken together
+#'specify the mutation rates to be used along successive contiguous stretches
+#'of the chromosome, from beginning to end; the last position specified in ends
+#'should extend to the end of the chromosome (as previously determined, during
+#'simulation initialization). See the initializeMutationRate() function for
+#'further discussion of precisely how these rates and positions are interpreted.
+#'If the optional sex parameter is "*" (the default), then the supplied
+#'mutation rate map will be used for both sexes (which is the only option for
+#'hermaphroditic simulations). In sexual simulations sex may be "M" or "F"
+#'instead, in which case the supplied mutation rate map is used only for that sex.
+#'Note that whether sex-specific mutation rate maps will be used is set by the
+#'way that the simulation is initially configured with initializeMutationRate(),
+#'and cannot be changed with this method; so if the simulation was set up to use
+#'sex-specific mutation rate maps then sex must be "M" or "F" here, whereas if
+#'it was set up not to, then sex must be "*" or unsupplied here. If a simulation
+#'needs sexspecific mutation rate maps only some of the time, the male and female
+#'maps can simply be set to be identical the rest of the time. The mutation rate
+#'intervals are normally a constant in simulations, so be sure you know what you
+#'are doing. In nucleotide-based models, setMutationRate() may not be called. If
+#'variation in the mutation rate along the chromosome is desired, setHotspotMap()
+#'should be used.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -1593,8 +9709,8 @@ setMutationRate <- function(rates, ends, sex) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=634}{SLiM manual: page
-#'634}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=663}{SLiM manual: page
+#'663}.
 #'
 #'@param rates An object of type numeric. See details for description.
 #'@param ends An object of type null or integer. The default value is \code{NULL}.
@@ -1659,8 +9775,8 @@ setRecombinationRate <- function(rates, ends, sex) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=636}{SLiM manual: page
-#'636}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=665}{SLiM manual: page
+#'665}.
 #'
 #'@param filePath An object of type string. Must be of length 1 (a singleton). See
 #'details for description.
@@ -1717,7 +9833,7 @@ setRecombinationRate <- function(rates, ends, sex) {
 #'contents; the initial write is not buffered. When compression is not enabled,
 #'the flushInterval setting is ignored. The LogFile documentation discusses how to
 #'configure and use LogFile to write out the data you are interested in from your
-#'simulation; see section 24.10.
+#'simulation; see section 25.10.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -1747,8 +9863,8 @@ logInterval, flushInterval)
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=637}{SLiM manual: page
-#'637}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=666}{SLiM manual: page
+#'666}.
 #'
 #'@param scriptBlocks An object of type integer or SLiMEidosBlock object. See
 #'details for description.
@@ -1759,12 +9875,12 @@ logInterval, flushInterval)
 #'@details All SLiMEidosBlock objects specified by scriptBlocks (either with
 #'SLiMEidosBlock objects or with integer identifiers) will be scheduled for
 #'deregistration. The deregistered blocks remain valid, and may even still be
-#'executed in the current stage of the current tick (see section 25.11); the
+#'executed in the current stage of the current tick (see section 26.11); the
 #'blocks are not actually deregistered and deallocated until sometime after the
 #'currently executing script block has completed. To immediately prevent a script
 #'block from executing, even when it is scheduled to execute in the current stage
 #'of the current tick, use the active property of the script block (see sections
-#'24.12.1 and 25.11).
+#'25.12.1 and 26.11).
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -1792,8 +9908,8 @@ deregisterScriptBlock <- function(scriptBlocks) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=637}{SLiM manual: page
-#'637}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=666}{SLiM manual: page
+#'666}.
 #'
 #'@param ids An object of type integer. See details for description.
 #'
@@ -1830,8 +9946,8 @@ genomicElementTypesWithIDs <- function(ids) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=637}{SLiM manual: page
-#'637}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=666}{SLiM manual: page
+#'666}.
 #'
 #'@param ids An object of type integer. See details for description.
 #'
@@ -1868,8 +9984,8 @@ interactionTypesWithIDs <- function(ids) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=637}{SLiM manual: page
-#'637}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=666}{SLiM manual: page
+#'666}.
 #'
 #'@param ids An object of type integer. See details for description.
 #'
@@ -1906,8 +10022,8 @@ mutationTypesWithIDs <- function(ids) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=637}{SLiM manual: page
-#'637}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=666}{SLiM manual: page
+#'666}.
 #'
 #'@param void An object of type . See details for description.
 #'
@@ -1920,9 +10036,10 @@ mutationTypesWithIDs <- function(ids) {
 #'is primarily useful for understanding where the memory usage of a simulation
 #'predominantly resides, for debugging or optimization. Note that it does not
 #'capture all memory usage by the process; rather, it summarizes the memory usage
-#'by SLiM and Eidos in directly allocated objects and buffers. To get the total
-#'memory usage of the running process (either current or peak), use the Eidos
-#'function usage().
+#'by SLiM and Eidos in directly allocated objects and buffers. To get the same
+#'memory usage reported by outputUsage(), but as a float$ value, use the Community
+#'method usage(). To get the total memory usage of the running process (either
+#'current or peak), use the Eidos function usage().
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -1950,8 +10067,8 @@ outputUsage <- function(void) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=637}{SLiM manual: page
-#'637}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=666}{SLiM manual: page
+#'666}.
 #'
 #'@param id An object of type null or integer or string. Must be of length 1 (a
 #'singleton). See details for description.
@@ -1976,8 +10093,8 @@ outputUsage <- function(void) {
 #'"s5"); this may be NULL if there is no need to be able to refer to the block
 #'later. The registered event is added to the end of the list of registered
 #'SLiMEidosBlock objects, and is active immediately; it may be eligible to execute
-#'in the current tick (see section 25.11 for details). The new SLiMEidosBlock will
-#'be defined as a global variable immediately by this method (see section 24.12),
+#'in the current tick (see section 26.11 for details). The new SLiMEidosBlock will
+#'be defined as a global variable immediately by this method (see section 25.12),
 #'and will also be returned by this method.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
@@ -2006,8 +10123,8 @@ registerEarlyEvent <- function(id, source, start, end, ticksSpec) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=637}{SLiM manual: page
-#'637}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
+#'667}.
 #'
 #'@param id An object of type null or integer or string. Must be of length 1 (a
 #'singleton). See details for description.
@@ -2032,8 +10149,8 @@ registerEarlyEvent <- function(id, source, start, end, ticksSpec) {
 #'"s5"); this may be NULL if there is no need to be able to refer to the block
 #'later. The registered event is added to the end of the list of registered
 #'SLiMEidosBlock objects, and is active immediately; it may be eligible to execute
-#'in the current tick (see section 25.11 for details). The new SLiMEidosBlock will
-#'be defined as a global variable immediately by this method (see section 24.12),
+#'in the current tick (see section 26.11 for details). The new SLiMEidosBlock will
+#'be defined as a global variable immediately by this method (see section 25.12),
 #'and will also be returned by this method.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
@@ -2062,8 +10179,8 @@ registerFirstEvent <- function(id, source, start, end, ticksSpec) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=638}{SLiM manual: page
-#'638}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
+#'667}.
 #'
 #'@param id An object of type null or integer or string. Must be of length 1 (a
 #'singleton). See details for description.
@@ -2095,7 +10212,7 @@ registerFirstEvent <- function(id, source, start, end, ticksSpec) {
 #'list of registered SLiMEidosBlock objects, and is active immediately; it will
 #'be eligible to execute the next time an InteractionType is evaluated. The new
 #'SLiMEidosBlock will be defined as a global variable immediately by this method
-#'(see section 24.12), and will also be returned by this method.
+#'(see section 25.12), and will also be returned by this method.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -2124,8 +10241,8 @@ end) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=638}{SLiM manual: page
-#'638}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
+#'667}.
 #'
 #'@param id An object of type null or integer or string. Must be of length 1 (a
 #'singleton). See details for description.
@@ -2150,8 +10267,8 @@ end) {
 #'"s5"); this may be NULL if there is no need to be able to refer to the block
 #'later. The registered event is added to the end of the list of registered
 #'SLiMEidosBlock objects, and is active immediately; it may be eligible to execute
-#'in the current tick (see section 25.11 for details). The new SLiMEidosBlock will
-#'be defined as a global variable immediately by this method (see section 24.12),
+#'in the current tick (see section 26.11 for details). The new SLiMEidosBlock will
+#'be defined as a global variable immediately by this method (see section 25.12),
 #'and will also be returned by this method.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
@@ -2180,8 +10297,8 @@ registerLateEvent <- function(id, source, start, end, ticksSpec) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=638}{SLiM manual: page
-#'638}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
+#'667}.
 #'
 #'@param block An object of type integer or SLiMEidosBlock object. Must be of
 #'length 1 (a singleton). See details for description.
@@ -2227,13 +10344,13 @@ registerLateEvent <- function(id, source, start, end, ticksSpec) {
 #'community.tick + 10); made inside a given block would therefore also cause the
 #'block to execute every tenth tick, although this sort of self-rescheduling code
 #'is probably harder to read, maintain, and debug. Whichever way of specifying
-#'the tick set is used, the discussion in section 25.11 applies: block may
+#'the tick set is used, the discussion in section 26.11 applies: block may
 #'continue to be executed during the current tick cycle stage even after it has
 #'been rescheduled, unless it is made inactive using its active property, and
 #'similarly, the block may not execute during the current tick cycle stage if it
 #'was not already scheduled to do so. Rescheduling script blocks during the tick
 #'and tick cycle stage in which they are executing, or in which they are intended
-#'to execute, should be avoided. Also, as mentioned in section 22.7, script
+#'to execute, should be avoided. Also, as mentioned in section 23.7, script
 #'blocks which are open-ended (i.e., with no specified end tick), are not used
 #'in determining whether the end of the simulation has been reached (because then
 #'the simulation would run forever); if you reschedule a block to be open-ended,
@@ -2274,8 +10391,8 @@ rescheduleScriptBlock <- function(block, start, end, ticks) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=639}{SLiM manual: page
-#'639}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
+#'668}.
 #'
 #'@param ids An object of type integer. See details for description.
 #'
@@ -2312,8 +10429,8 @@ scriptBlocksWithIDs <- function(ids) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=639}{SLiM manual: page
-#'639}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
+#'668}.
 #'
 #'@param void An object of type . See details for description.
 #'
@@ -2356,8 +10473,8 @@ simulationFinished <- function(void) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=639}{SLiM manual: page
-#'639}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
+#'668}.
 #'
 #'@param ids An object of type integer. See details for description.
 #'
@@ -2394,8 +10511,8 @@ speciesWithIDs <- function(ids) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=639}{SLiM manual: page
-#'639}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
+#'668}.
 #'
 #'@param ids An object of type integer. See details for description.
 #'
@@ -2420,6 +10537,50 @@ subpopulationsWithIDs <- function(ids) {
  .Co$subpopulationsWithIDs(ids)
 }
 
+#'SLiM method usage
+#'
+#'Documentation for SLiM function \code{usage}, which is a method of the SLiM
+#'class \code{\link{Community}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=669}{SLiM manual: page
+#'669}.
+#'
+#'@param void An object of type . See details for description.
+#'
+#'@aliases Community$usage .Co$usage
+#'@family Community
+#'@return An object of type float. Return will be of length 1 (a singleton)
+#'@details Return the current memory usage of the simulation. The specifics of
+#'what is totalled up should not be relied upon as it may change from version
+#'to version of SLiM. This method is primarily useful for understanding where
+#'the memory usage of a simulation predominantly resides, for debugging or
+#'optimization. Note that it does not capture all memory usage by the process;
+#'rather, it summarizes the memory usage by SLiM and Eidos in directly allocated
+#'objects and buffers. To see details of this internal memory usage, use the
+#'Community method outputUsage(). To get the total memory usage of the running
+#'process (either current or peak), use the Eidos function usage().
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+usage <- function(void) {
+ .Co$usage(void)
+}
+
 
 
 #'SLiM method addMutations
@@ -2434,8 +10595,8 @@ subpopulationsWithIDs <- function(ids) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=640}{SLiM manual: page
-#'640}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=670}{SLiM manual: page
+#'670}.
 #'
 #'@param mutations An object of type Mutation object. See details for description.
 #'
@@ -2445,7 +10606,7 @@ subpopulationsWithIDs <- function(ids) {
 #'@details Add the existing mutations in mutations to the genome, if they are
 #'not already present (if they are already present, they will be ignored), and
 #'if the addition is not prevented by the mutation stacking policy (see the
-#'mutationStackPolicy property of MutationType, section 24.11.1). Calling this
+#'mutationStackPolicy property of MutationType, section 25.11.1). Calling this
 #'will normally affect the fitness values calculated toward the end of the
 #'current tick; if you want current fitness values to be affected, you can call
 #'the Species method recalculateFitness() - but see the documentation of that
@@ -2480,8 +10641,8 @@ addMutations <- function(mutations) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=640}{SLiM manual: page
-#'640}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=670}{SLiM manual: page
+#'670}.
 #'
 #'@param mutationType An object of type integer or MutationType object. See
 #'details for description.
@@ -2505,7 +10666,7 @@ addMutations <- function(mutations) {
 #'the default, to specify the subpopulation to which the first target genome
 #'belongs). If originSubpop is supplied as an integer, it is intentionally not
 #'checked for validity; you may use arbitrary values of originSubpop to "tag" the
-#'mutations that you create (see section 24.10.1). The selection coefficients of
+#'mutations that you create (see section 25.10.1). The selection coefficients of
 #'the mutations are drawn from their mutation types; addNewMutation() may be used
 #'instead if you wish to specify selection coefficients. In non-nucleotide-based
 #'models, mutationType will always be a non-nucleotide-based mutation type, and so
@@ -2516,7 +10677,7 @@ addMutations <- function(mutations) {
 #'with the new mutation(s). Nucleotides may be specified with string values ("A",
 #'"C", "G", or "T"), or with integer values (A=0, C=1, G=2, T=3). If a nucleotide
 #'mutation already exists at the mutating position, it is replaced automatically
-#'in accordance with the stacking policy for nucleotide- based mutation types. No
+#'in accordance with the stacking policy for nucleotidebased mutation types. No
 #'check is performed that a new mutation's nucleotide differs from the ancestral
 #'sequence, or that its selection coefficient is consistent with other mutations
 #'that may already exist at the given position with the same nucleotide; model
@@ -2524,14 +10685,14 @@ addMutations <- function(mutations) {
 #'method is vectorized, so all of these parameters may be singletons (in which
 #'case that single value is used for all mutations created by the call) or
 #'non-singleton vectors (in which case one element is used for each corresponding
-#'mutation created). Non- singleton parameters must match in length, since their
-#'elements need to be matched up one- to-one. The new mutations created by this
+#'mutation created). Nonsingleton parameters must match in length, since their
+#'elements need to be matched up oneto- one. The new mutations created by this
 #'method are returned, even if their actual addition is prevented by the mutation
 #'stacking policy (see the mutationStackPolicy property of MutationType, section
-#'24.11.1). However, the order of the mutations in the returned vector is not
+#'25.11.1). However, the order of the mutations in the returned vector is not
 #'guaranteed to be the same as the order in which the values are specified in
 #'parameter vectors, unless the position parameter is specified in ascending
-#'order. In other words, pre- sorting the parameters to this method into ascending
+#'order. In other words, presorting the parameters to this method into ascending
 #'order by position, using order() and subsetting, will guarantee that the order
 #'of the returned vector of mutations corresponds to the order of elements in the
 #'parameters to this method; otherwise, no such guarantee exists. Beginning in
@@ -2585,8 +10746,8 @@ nucleotide)
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=641}{SLiM manual: page
-#'641}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=671}{SLiM manual: page
+#'671}.
 #'
 #'@param mutationType An object of type integer or MutationType object. See
 #'details for description.
@@ -2611,7 +10772,7 @@ nucleotide)
 #'or by NULL, the default, to specify the subpopulation to which the first target
 #'genome belongs). If originSubpop is supplied as an integer, it is intentionally
 #'not checked for validity; you may use arbitrary values of originSubpop to "tag"
-#'the mutations that you create (see section 24.10.1). The addNewDrawnMutation()
+#'the mutations that you create (see section 25.10.1). The addNewDrawnMutation()
 #'method may be used instead if you wish selection coefficients to be drawn
 #'from the mutation types of the mutations. In non-nucleotide-based models,
 #'mutationType will always be a non-nucleotide-based mutation type, and so
@@ -2622,17 +10783,17 @@ nucleotide)
 #'with the new mutation(s). Nucleotides may be specified with string values ("A",
 #'"C", "G", or "T"), or with integer values (A=0, C=1, G=2, T=3). If a nucleotide
 #'mutation already exists at the mutating position, it is replaced automatically
-#'in accordance with the stacking policy for nucleotide- based mutation types. No
+#'in accordance with the stacking policy for nucleotidebased mutation types. No
 #'check is performed that a new mutation's nucleotide differs from the ancestral
 #'sequence, or that its selection coefficient is consistent with other mutations
 #'that may already exist at the given position with the same nucleotide; model
 #'consistency is the responsibility of the model. The new mutations created by
 #'this method are returned, even if their actual addition is prevented by the
 #'mutation stacking policy (see the mutationStackPolicy property of MutationType,
-#'section 24.11.1). However, the order of the mutations in the returned vector
+#'section 25.11.1). However, the order of the mutations in the returned vector
 #'is not guaranteed to be the same as the order in which the values are specified
 #'in parameter vectors, unless the position parameter is specified in ascending
-#'order. In other words, pre- sorting the parameters to this method into ascending
+#'order. In other words, presorting the parameters to this method into ascending
 #'order by position, using order() and subsetting, will guarantee that the order
 #'of the returned vector of mutations corresponds to the order of elements in
 #'the parameters to this method; otherwise, no such guarantee exists. Beginning
@@ -2686,8 +10847,8 @@ originSubpop, nucleotide)
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=642}{SLiM manual: page
-#'642}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=672}{SLiM manual: page
+#'672}.
 #'
 #'@param mutType An object of type integer or MutationType object. Must be of
 #'length 1 (a singleton). See details for description.
@@ -2746,8 +10907,8 @@ containsMarkerMutation <- function(mutType, position, returnMutation) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=643}{SLiM manual: page
-#'643}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=672}{SLiM manual: page
+#'672}.
 #'
 #'@param mutations An object of type Mutation object. See details for description.
 #'
@@ -2786,8 +10947,8 @@ containsMutations <- function(mutations) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=643}{SLiM manual: page
-#'643}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=672}{SLiM manual: page
+#'672}.
 #'
 #'@param mutType An object of type integer or MutationType object. Must be of
 #'length 1 (a singleton). See details for description.
@@ -2827,8 +10988,8 @@ countOfMutationsOfType <- function(mutType) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=643}{SLiM manual: page
-#'643}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=672}{SLiM manual: page
+#'672}.
 #'
 #'@param mutations An object of type null or Mutation object. The default value is
 #'\code{NULL}. See details for description.
@@ -2873,8 +11034,8 @@ mutationCountsInGenomes <- function(mutations) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=643}{SLiM manual: page
-#'643}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=673}{SLiM manual: page
+#'673}.
 #'
 #'@param mutations An object of type null or Mutation object. The default value is
 #'\code{NULL}. See details for description.
@@ -2918,8 +11079,8 @@ mutationFrequenciesInGenomes <- function(mutations) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=643}{SLiM manual: page
-#'643}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=673}{SLiM manual: page
+#'673}.
 #'
 #'@param mutType An object of type integer or MutationType object. Must be of
 #'length 1 (a singleton). See details for description.
@@ -2962,8 +11123,8 @@ mutationsOfType <- function(mutType) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=644}{SLiM manual: page
-#'644}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=673}{SLiM manual: page
+#'673}.
 #'
 #'@param start An object of type null or integer. Must be of length 1 (a
 #'singleton). The default value is \code{NULL}. See details for description.
@@ -2997,7 +11158,7 @@ mutationsOfType <- function(mutType) {
 #'nucleotides in a sequence, nucleotideFrequencies() to get the same information
 #'as frequencies, and codonsToAminoAcids() to convert a codon sequence (such as
 #'provided by the codon format described above) to an amino acid sequence; see
-#'section 24.17.1.
+#'section 25.18.1.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -3025,8 +11186,8 @@ nucleotides <- function(start, end, format) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=644}{SLiM manual: page
-#'644}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=673}{SLiM manual: page
+#'673}.
 #'
 #'@param filePath An object of type null or string. Must be of length 1 (a
 #'singleton). The default value is \code{NULL}. See details for description.
@@ -3036,7 +11197,7 @@ nucleotides <- function(start, end, format) {
 #'@aliases Genome$output .G$output
 #'@family Genome
 #'@return An object of type void.
-#'@details Output the target genomes in SLiM's native format (see section 26.3.1
+#'@details Output the target genomes in SLiM's native format (see section 27.3.1
 #'for output format details). This low-level output method may be used to output
 #'any sample of Genome objects (the Eidos function sample() may be useful for
 #'constructing custom samples, as may the SLiM class Individual). For output of
@@ -3074,8 +11235,8 @@ output <- function(filePath, append) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=644}{SLiM manual: page
-#'644}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=674}{SLiM manual: page
+#'674}.
 #'
 #'@param filePath An object of type null or string. Must be of length 1 (a
 #'singleton). The default value is \code{NULL}. See details for description.
@@ -3087,7 +11248,7 @@ output <- function(filePath, append) {
 #'@aliases Genome$outputMS .G$outputMS
 #'@family Genome
 #'@return An object of type void.
-#'@details Output the target genomes in MS format (see section 26.3.2 for output
+#'@details Output the target genomes in MS format (see section 27.3.2 for output
 #'format details). This low-level output method may be used to output any sample
 #'of Genome objects (the Eidos function sample() may be useful for constructing
 #'custom samples, as may the SLiM class Individual). For output of a sample
@@ -3133,8 +11294,8 @@ outputMS <- function(filePath, append, filterMonomorphic) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=645}{SLiM manual: page
-#'645}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=674}{SLiM manual: page
+#'674}.
 #'
 #'@param filePath An object of type null or string. Must be of length 1 (a
 #'singleton). The default value is \code{NULL}. See details for description.
@@ -3150,8 +11311,8 @@ outputMS <- function(filePath, append, filterMonomorphic) {
 #'@aliases Genome$outputVCF .G$outputVCF
 #'@family Genome
 #'@return An object of type void.
-#'@details Output the target genomes in VCF format (see sections 26.2.3, 26.2.4,
-#'and 26.3.3 for output format details). The target genomes are treated as pairs
+#'@details Output the target genomes in VCF format (see sections 27.2.3, 27.2.4,
+#'and 27.3.3 for output format details). The target genomes are treated as pairs
 #'comprising individuals for purposes of structuring the VCF output, so an even
 #'number of genomes is required. This low-level output method may be used to
 #'output any sample of Genome objects (the Eidos function sample() may be useful
@@ -3162,7 +11323,7 @@ outputMS <- function(filePath, append, filterMonomorphic) {
 #'the output is sent to the file specified by filePath, overwriting that file
 #'if append if F, or appending to the end of it if append is T. The parameters
 #'outputMultiallelics, simplifyNucleotides, and outputNonnucleotides affect
-#'the format of the output produced; see sections 26.2.3 and 26.2.4 for further
+#'the format of the output produced; see sections 27.2.3 and 27.2.4 for further
 #'discussion. See outputMS() and output() for other output formats. Output is
 #'generally done in a late() event, so that the output reflects the state of the
 #'simulation at the end of a tick.
@@ -3195,8 +11356,8 @@ outputNonnucleotides)
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=645}{SLiM manual: page
-#'645}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=674}{SLiM manual: page
+#'674}.
 #'
 #'@param mutType An object of type integer or MutationType object. Must be of
 #'length 1 (a singleton). See details for description.
@@ -3236,8 +11397,8 @@ positionsOfMutationsOfType <- function(mutType) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=645}{SLiM manual: page
-#'645}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=674}{SLiM manual: page
+#'674}.
 #'
 #'@param filePath An object of type string. Must be of length 1 (a singleton). See
 #'details for description.
@@ -3293,8 +11454,8 @@ readFromMS <- function(filePath, mutationType) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=645}{SLiM manual: page
-#'645}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=675}{SLiM manual: page
+#'675}.
 #'
 #'@param filePath An object of type string. Must be of length 1 (a singleton). See
 #'details for description.
@@ -3313,12 +11474,12 @@ readFromMS <- function(filePath, mutationType) {
 #'subpopulation's size matches that of the VCF file taking ploidy into account.
 #'A vector containing all of the mutations created by readFromVCF() is returned.
 #'SLiM's VCF parsing is quite primitive. The header is parsed only inasmuch as
-#'SLiM looks to see whether SLiM-specific VCF fields (see sections 26.2.3 and
-#'26.2.4) are defined or not; the rest of the header information is ignored.
+#'SLiM looks to see whether SLiM-specific VCF fields (see sections 27.2.3 and
+#'27.2.4) are defined or not; the rest of the header information is ignored.
 #'Call lines are assumed to follow the format: #CHROM POS ID REF ALT QUAL FILTER
 #'INFO FORMAT i0...iN The CHROM, ID, QUAL, FILTER, and FORMAT fields are ignored,
 #'and information in the genotype fields beyond the GT genotype subfield are
-#'also ignored. SLiM's own VCF annotations (see section 26.2.3) are honored; in
+#'also ignored. SLiM's own VCF annotations (see section 27.2.3) are honored; in
 #'particular, mutations will be created using the given values of MID, S, PO, TO,
 #'and MT if those subfields are present, and DOM, if it is present, must match
 #'the dominance coefficient of the mutation type. The parameter mutationType (a
@@ -3341,11 +11502,11 @@ readFromMS <- function(filePath, mutationType) {
 #'present (as when nucleotide-based output is generated by SLiM): Second, if a
 #'NONNUC field is present in the INFO field the call line is taken to represent
 #'a non-nucleotide-based mutation, and REF and ALT are again ignored. In this
-#'case the mutation type used must be non-nucleotide- based. Third, if NONNUC is
+#'case the mutation type used must be non-nucleotidebased. Third, if NONNUC is
 #'not present the call line is taken to represent a nucleotide-based mutation. In
 #'this case, the mutation type used must be nucleotide-based. Also, in this case,
 #'the specified reference nucleotide must match the existing ancestral nucleotide
-#'at the given position. In nucleotide- based models, when a header definition
+#'at the given position. In nucleotidebased models, when a header definition
 #'for SLiM's NONNUC tag is not present (as when loading a non- SLiM-generated
 #'VCF file): The mutation type will govern the way nucleotides are handled.
 #'If the mutation type used for a mutation is nucleotide-based, the nucleotide
@@ -3353,7 +11514,7 @@ readFromMS <- function(filePath, mutationType) {
 #'is non-nucleotide-based, the nucleotide provided will be ignored. If multiple
 #'alleles using the same nucleotide at the same position are specified in the VCF
 #'file, a separate mutation will be created for each, mirroring SLiM's behavior
-#'with independent mutational lineages when writing VCF (see section 26.2.4). The
+#'with independent mutational lineages when writing VCF (see section 27.2.4). The
 #'MULTIALLELIC flag is ignored by readFromVCF(); call lines for mutations at the
 #'same base position in the same genome will result in stacked mutations whether
 #'or not MULTIALLELIC is present. The target genomes correspond, in order, to the
@@ -3389,8 +11550,8 @@ readFromVCF <- function(filePath, mutationType) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=646}{SLiM manual: page
-#'646}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=676}{SLiM manual: page
+#'676}.
 #'
 #'@param mutations An object of type null or Mutation object. The default value is
 #'\code{NULL}. See details for description.
@@ -3452,8 +11613,8 @@ removeMutations <- function(mutations, substitute) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=647}{SLiM manual: page
-#'647}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=676}{SLiM manual: page
+#'676}.
 #'
 #'@param mutType An object of type integer or MutationType object. Must be of
 #'length 1 (a singleton). See details for description.
@@ -3498,8 +11659,8 @@ sumOfMutationsOfType <- function(mutType) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=647}{SLiM manual: page
-#'647}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=677}{SLiM manual: page
+#'677}.
 #'
 #'@param genomicElementType An object of type integer or GenomicElementType
 #'object. Must be of length 1 (a singleton). See details for description.
@@ -3541,8 +11702,8 @@ setGenomicElementType <- function(genomicElementType) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=648}{SLiM manual: page
-#'648}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=678}{SLiM manual: page
+#'678}.
 #'
 #'@param mutationTypes An object of type integer or MutationType object. See
 #'details for description.
@@ -3585,8 +11746,8 @@ setMutationFractions <- function(mutationTypes, proportions) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=648}{SLiM manual: page
-#'648}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=678}{SLiM manual: page
+#'678}.
 #'
 #'@param mutationMatrix An object of type float. See details for description.
 #'
@@ -3626,8 +11787,8 @@ setMutationMatrix <- function(mutationMatrix) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=652}{SLiM manual: page
-#'652}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=682}{SLiM manual: page
+#'682}.
 #'
 #'@param mutations An object of type Mutation object. See details for description.
 #'
@@ -3666,8 +11827,8 @@ containsMutations <- function(mutations) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=652}{SLiM manual: page
-#'652}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=683}{SLiM manual: page
+#'683}.
 #'
 #'@param mutType An object of type integer or MutationType object. Must be of
 #'length 1 (a singleton). See details for description.
@@ -3708,8 +11869,8 @@ countOfMutationsOfType <- function(mutType) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=652}{SLiM manual: page
-#'652}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=683}{SLiM manual: page
+#'683}.
 #'
 #'@param individuals An object of type Individual object. See details for
 #'description.
@@ -3723,7 +11884,7 @@ countOfMutationsOfType <- function(mutType) {
 #'works even if SLiM's optional pedigree tracking is not enabled (in which case
 #'all other relatedness values will be 0.0). Otherwise, if pedigree tracking is
 #'turned on with initializeSLiMOptions(keepPedigrees=T), this method will use
-#'the pedigree information described in section 24.7.1 to construct a relatedness
+#'the pedigree information described in section 25.7.1 to construct a relatedness
 #'estimate. More specifically, this method uses all available pedigree information
 #'from the grandparental and parental pedigree records of A and B to compute
 #'an estimate of the degree of consanguinity between A and B. Siblings have a
@@ -3749,30 +11910,26 @@ countOfMutationsOfType <- function(mutType) {
 #'of the effects of factors like assortment and recombination. If a metric of
 #'actual genetic relatedness is desired, tree-sequence recording can be used
 #'after simulation is complete, to compute the exact genetic relatedness between
-#'individuals based upon the complete ancestry tree (a topic which is beyond the
-#'scope of this manual). Actual genetic relatedness cannot presently be calculated
-#'during a simulation run; the information is implicitly contained in the recorded
-#'tree-sequence tables, but calculating it is too computationally expensive to be
-#'reasonable. This method makes a couple of assumptions. One assumption is that
-#'the grandparents (or the parents, if grandparental information is not available)
-#'are themselves unrelated and that they are not inbred; this assumption is
-#'necessary because we have no information about their parentage, since SLiM's
-#'pedigree tracking information only goes back two generations. Be aware that
-#'in a model where inbreeding or selfing occurs at all (including "incidental
-#'selfing", where a hermaphroditic individual happens to choose itself as a mate),
-#'some level of "background relatedness" will be present and this assumption
-#'will be violated. In such circumstances, relatedness() will therefore tend to
-#'underestimate the degree of relatedness between individuals, and the greater
-#'the degree of inbreeding, the greater the underestimation will be. If inbreeding
-#'is allowed in a model - and particularly if it is common - the results
-#'of relatedness() should therefore not be taken as an estimate of absolute
-#'relatedness, but can still be useful as an estimate of relative relatedness
-#'(indicating that, say, A appears from the information available to be more
-#'closely related to B than it is to C). A second assumption is that, in nonWF
-#'models, addRecombinant() is not being used, since the pedigree relationships
-#'involved are then too complex to trace. Indeed, addRecombinant() does not
-#'record pedigree information at all, for this reason, and so the relatedness of
-#'individuals produced by addRecombinant() will be 0.0.
+#'individuals based upon the complete ancestry tree (a topic which is beyond
+#'the scope of this manual). Actual genetic relatedness cannot presently be
+#'calculated during a simulation run; the information is implicitly contained in
+#'the recorded tree-sequence tables, but calculating it is too computationally
+#'expensive to be reasonable. This method assumes that the grandparents (or the
+#'parents, if grandparental information is not available) are themselves unrelated
+#'and that they are not inbred; this assumption is necessary because we have no
+#'information about their parentage, since SLiM's pedigree tracking information
+#'only goes back two generations. Be aware that in a model where inbreeding or
+#'selfing occurs at all (including "incidental selfing", where a hermaphroditic
+#'individual happens to choose itself as a mate), some level of "background
+#'relatedness" will be present and this assumption will be violated. In such
+#'circumstances, relatedness() will therefore tend to underestimate the degree of
+#'relatedness between individuals, and the greater the degree of inbreeding, the
+#'greater the underestimation will be. If inbreeding is allowed in a model - and
+#'particularly if it is common - the results of relatedness() should therefore
+#'not be taken as an estimate of absolute relatedness, but can still be useful as
+#'an estimate of relative relatedness (indicating that, say, A appears from the
+#'information available to be more closely related to B than it is to C). See also
+#'sharedParentCount() for a different metric of relatedness.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -3800,8 +11957,8 @@ relatedness <- function(individuals) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=653}{SLiM manual: page
-#'653}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=684}{SLiM manual: page
+#'684}.
 #'
 #'@param position An object of type float. See details for description.
 #'
@@ -3847,6 +12004,69 @@ setSpatialPosition <- function(position) {
  .I$setSpatialPosition(position)
 }
 
+#'SLiM method sharedParentCount
+#'
+#'Documentation for SLiM function \code{sharedParentCount}, which is a method of
+#'the SLiM class \code{\link{Individual}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=684}{SLiM manual: page
+#'684}.
+#'
+#'@param individuals An object of type Individual object. See details for
+#'description.
+#'
+#'@aliases Individual$sharedParentCount .I$sharedParentCount
+#'@family Individual
+#'@return An object of type integer.
+#'@details Returns a vector containing the number of parents shared between
+#'the receiver and each of the individuals in individuals. The number of shared
+#'parents between A and B is always 2 if A and B are actually the same individual;
+#'this facility works even if SLiM's optional pedigree tracking is not enabled
+#'(in which case all other relatedness values will be 0). Otherwise, if pedigree
+#'tracking is turned on with initializeSLiMOptions(keepPedigrees=T), this method
+#'will use the pedigree information described in section 25.7.1 to construct a
+#'relatedness estimate. More specifically, this method uses the parental pedigree
+#'IDs from the pedigree records of a pair of individuals to count the number
+#'of shared parents between them, such that full siblings (with all of the same
+#'parents) have a count of 2, and half siblings (with half of the same parents)
+#'have a count of 1. If possible parents of the two individuals are A, B, C, and
+#'D, then the shared parent count is as follows, for some illustrative examples.
+#'The first column showing the two parents of the first individual, the second
+#'column showing the two parents of the second individual; note that the two
+#'parents of an individual can be the same due to cloning or selfing: AB CD → 0
+#'(no shared parents) AB CC → 0 (no shared parents) AB AC → 1 (half siblings) AB
+#'AA → 1 (half siblings) AA AB → 1 (half siblings) AB AB → 2 (full siblings) AB
+#'BA → 2 (full siblings) AA AA → 2 (full siblings) This method does not estimate
+#'consanguinity. For example, if one individual is itself a parent of the other
+#'individual, that is irrelevant for this method. Similarly, in simulations of
+#'sex chromosomes, the sexes of the parents are irrelevant, even if no genetic
+#'material would have been inherited from a given parent. See relatedness() for an
+#'assessment of pedigree-based relatedness that does estimate the consanguinity of
+#'individuals. The sharedParentCount() method is preferable if your exact question
+#'is simply whether individuals are full siblings, half siblings, or non-siblings;
+#'in other cases, relatedness() is probably more useful.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+sharedParentCount <- function(individuals) {
+ .I$sharedParentCount(individuals)
+}
+
 #'SLiM method sumOfMutationsOfType
 #'
 #'Documentation for SLiM function \code{sumOfMutationsOfType}, which is a method
@@ -3859,8 +12079,8 @@ setSpatialPosition <- function(position) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=653}{SLiM manual: page
-#'653}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=685}{SLiM manual: page
+#'685}.
 #'
 #'@param mutType An object of type integer or MutationType object. Must be of
 #'length 1 (a singleton). See details for description.
@@ -3903,8 +12123,8 @@ sumOfMutationsOfType <- function(mutType) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=654}{SLiM manual: page
-#'654}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=685}{SLiM manual: page
+#'685}.
 #'
 #'@param mutType An object of type integer or MutationType object. Must be of
 #'length 1 (a singleton). See details for description.
@@ -3955,8 +12175,8 @@ uniqueMutationsOfType <- function(mutType) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=658}{SLiM manual: page
-#'658}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=691}{SLiM manual: page
+#'691}.
 #'
 #'@param receivers An object of type null or Individual object. See details for
 #'description.
@@ -3969,18 +12189,18 @@ uniqueMutationsOfType <- function(mutType) {
 #'the interaction function is clipped to the edges of the spatial bounds of the
 #'subpopulation that individual inhabits; the individual's spatial position must
 #'be within bounds or an error is raised. A periodic boundary will, correctly,
-#'not clip the interaction function. The interaction function is also clipped to
-#'the interaction's maximum distance; that distance must be less than half of the
-#'extent of the spatial bounds in each dimension (so that, for a given dimension,
-#'the interaction function is clipped by the spatial bounds on only one side),
-#'otherwise an error is raised. Note that for sex-specific interaction types, the
-#'sex of the receiver does not matter; an individual might not actually receive
-#'any interactions because of its sex, but it is still considered to have the
-#'same interaction function integral. If receivers is NULL, the maximal integral
-#'is returned, as would be experienced by an individual farther than the maximum
-#'distance from any edge. The evaluate() method must have been previously called
-#'for the receiver subpopulation, and positions saved at evaluation time will be
-#'used. If the InteractionType is non-spatial, this method may not be called. The
+#'not clip the interaction function. The interaction function is also clipped
+#'to the interaction's maximum distance; that distance must be less than half
+#'of the extent of the spatial bounds in each dimension (so that, for a given
+#'dimension, the interaction function is clipped by the spatial bounds on only
+#'one side), otherwise an error is raised. Note that receiver constraints are
+#'not applied; an individual might not actually receive any interactions because
+#'of those constraints, but it is still considered to have the same interaction
+#'function integral. If receivers is NULL, the maximal integral is returned,
+#'as would be experienced by an individual farther than the maximum distance
+#'from any edge. The evaluate() method must have been previously called for the
+#'receiver subpopulation, and positions saved at evaluation time will be used.
+#'If the InteractionType is non-spatial, this method may not be called. The
 #'computed value of the integral is not exact; it is calculated by an approximate
 #'numerical method designed to be fast, but the error should be fairly small
 #'(typically less than 1% from the true value). A large amount of computation will
@@ -4030,8 +12250,8 @@ clippedIntegral <- function(receivers) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=659}{SLiM manual: page
-#'659}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=692}{SLiM manual: page
+#'692}.
 #'
 #'@param receiver An object of type Individual object. Must be of length 1 (a
 #'singleton). See details for description.
@@ -4057,8 +12277,9 @@ clippedIntegral <- function(receivers) {
 #'initializeSLiMOptions()). The distances returned are therefore the distances
 #'that would be used to calculate interaction strengths. However, distance() will
 #'return finite distances for all pairs of individuals, even if the individuals
-#'are non-interacting; the distance() between an individual and itself will thus
-#'be 0. See interactionDistance() for an alternative distance definition.
+#'are non-interacting due to the maximum interaction distance or the interaction
+#'constraints; the distance() between an individual and itself will thus be 0. See
+#'interactionDistance() for an alternative distance definition.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -4086,8 +12307,8 @@ distance <- function(receiver, exerters) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=659}{SLiM manual: page
-#'659}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=692}{SLiM manual: page
+#'692}.
 #'
 #'@param point An object of type float. See details for description.
 #'@param exerters An object of type Individual object. See details for
@@ -4117,8 +12338,9 @@ distance <- function(receiver, exerters) {
 #'declared in initializeInteractionType()) not the dimensionality of the model as
 #'a whole (as declared in initializeSLiMOptions()). The distances are therefore
 #'interaction distances: the distances that are used to calculate interaction
-#'strengths. This method replaces the distanceToPoint() method that existed prior
-#'to SLiM 4.
+#'strengths. However, the maximum interaction distance and interaction constraints
+#'are not used. This method replaces the distanceToPoint() method that existed
+#'prior to SLiM 4.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -4146,36 +12368,55 @@ distanceFromPoint <- function(point, exerters) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=660}{SLiM manual: page
-#'660}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=692}{SLiM manual: page
+#'692}.
 #'
-#'@param receiver An object of type Individual object. Must be of length 1 (a
-#'singleton). See details for description.
+#'@param receiver An object of type Individual object. See details for
+#'description.
 #'@param count An object of type integer. Must be of length 1 (a singleton). The
 #'default value is \code{1}. See details for description.
 #'@param exerterSubpop An object of type null or Subpopulation object. Must be
 #'of length 1 (a singleton). The default value is \code{NULL}. See details for
 #'description.
+#'@param returnDict An object of type logical. Must be of length 1 (a singleton).
+#'The default value is \code{F}. See details for description.
 #'
 #'@aliases InteractionType$drawByStrength .IT$drawByStrength
 #'@family InteractionType
-#'@return An object of type Individual object.
-#'@details Returns up to count individuals drawn from exerterSubpop, or if that
-#'is NULL (the default), then from the subpopulation of receiver. The probability
-#'of drawing particular individuals is proportional to the strength of interaction
-#'they exert upon receiver. All exerters must belong to a single subpopulation
+#'@return An object of type .
+#'@details Returns an object<Individual> vector containing up to count individuals
+#'drawn from exerterSubpop, or if that is NULL (the default), then from the
+#'subpopulation of receiver, which must be singleton in the default mode of
+#'operation (but see below). The probability of drawing particular individuals is
+#'proportional to the strength of interaction they exert upon receiver (which is
+#'zero for receiver itself). All exerters must belong to a single subpopulation
 #'(but not necessarily the same subpopulation as receiver). The evaluate() method
 #'must have been previously called for the receiver and exerter subpopulations,
 #'and positions saved at evaluation time will be used. This method may be used
 #'with either spatial or non-spatial interactions, but will be more efficient
-#'with spatial interactions that set a short maximum interaction distance. Draws
-#'are done with replacement, so the same individual may be drawn more than once;
-#'sometimes using unique() on the result of this call is therefore desirable. If
-#'more than one draw will be needed, it is much more efficient to use a single
-#'call to drawByStrength(), rather than drawing individuals one at a time. Note
-#'that if no individuals exert a non-zero interaction strength upon receiver,
-#'the vector returned will be zero- length; it is important to consider this
-#'possibility.
+#'with spatial interactions that set a short maximum interaction distance.
+#'Draws are done with replacement, so the same individual may be drawn more
+#'than once; sometimes using unique() on the result of this call is therefore
+#'desirable. If more than one draw will be needed, it is much more efficient
+#'to use a single call to drawByStrength(), rather than drawing individuals one
+#'at a time. Note that if no individuals exert a non-zero interaction strength
+#'upon receiver, the vector returned will be zerolength; it is important to
+#'consider this possibility. Beginning in SLiM 4.1, this method has a vectorized
+#'mode of operation in which the receiver parameter may be non-singleton. To
+#'switch the method to this mode, pass T for returnDict, rather than the default
+#'of F (the operation of which is described above). In this mode, the return
+#'value is a Dictionary object instead of a vector of Individual objects. This
+#'dictionary uses integer keys that range from 0 to N-1, where N is the number
+#'of individuals passed in receiver; these keys thus correspond directly to the
+#'indices of the individuals in receiver, and there is one entry in the dictionary
+#'for each receiver. The value in the dictionary, for a given integer key, is
+#'an object<Individual> vector with the individuals drawn for the corresponding
+#'receiver, exactly as described above for the non-vectorized case. The results
+#'for each receiver can therefore be obtained from the returned dictionary
+#'with getValue(), passing the index of the receiver. The speed of this mode
+#'of operation will probably be similar to the speed of making N separate
+#'non-vectorized calls to drawByStrength(), but may have other advantages. In this
+#'mode of operation, all receivers must belong to the same subpopulation.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -4187,8 +12428,8 @@ distanceFromPoint <- function(point, exerters) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
-drawByStrength <- function(receiver, count, exerterSubpop) {
- .IT$drawByStrength(receiver, count, exerterSubpop)
+drawByStrength <- function(receiver, count, exerterSubpop, returnDict) {
+ .IT$drawByStrength(receiver, count, exerterSubpop, returnDict)
 }
 
 #'SLiM method evaluate
@@ -4203,8 +12444,8 @@ drawByStrength <- function(receiver, count, exerterSubpop) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=660}{SLiM manual: page
-#'660}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=693}{SLiM manual: page
+#'693}.
 #'
 #'@param subpops An object of type integer or Subpopulation object. See details
 #'for description.
@@ -4219,31 +12460,35 @@ drawByStrength <- function(receiver, count, exerterSubpop) {
 #'subpopulation(s), and will cache the current spatial positions of all
 #'individuals they contain (so that the spatial positions of those individuals
 #'may then change without disturbing the state of the interaction at the moment
-#'of evaluation). Particular interaction distances and strengths are not computed
-#'by evaluate(), and interaction() callbacks will not be called in response to
-#'this method; that work is deferred until required to satisfy a query (at which
-#'point the tick and cycle counters may have advanced, so be careful with the
-#'tick ranges used in defining interaction() callbacks). You must explicitly call
-#'evaluate() at an appropriate time in the tick cycle before the interaction is
-#'used, but after any relevant changes have been made to the population. SLiM
-#'will invalidate any existing interactions after any portion of the tick cycle
-#'in which new individuals have been born or existing individuals have died. In a
-#'WF model, this occurs just before late() events execute (see the WF tick cycle
-#'diagram in chapter 22), so late() events are often the appropriate place to put
-#'evaluate() calls, but first() or early() events can work too if the interaction
-#'is not needed until that point in the tick cycle anyway. In nonWF models, on
-#'the other hand, new offspring are produced just before early() events and then
-#'individuals die just before late() events (see the nonWF tick cycle diagram in
-#'chapter 23), so interactions will be invalidated twice during each tick cycle.
-#'This means that in a nonWF model, an interaction that influences reproduction
-#'should usually be evaluated in a first() event, while an interaction that
-#'influences fitness or mortality should usually be evaluated in an early() event
-#'(and an interaction that affects both may need to be evaluated at both times).
-#'If an interaction is never evaluated for a given subpopulation, it is guaranteed
-#'that there will be essentially no memory or computational overhead associated
-#'with the interaction for that subpopulation. Furthermore, attempting to query
-#'an interaction for a receiver or exerter in a subpopulation that has not been
-#'evaluated is guaranteed to raise an error.
+#'of evaluation). It will also cache which individuals in the subpopulation are
+#'eligible to act as exerters, according to the configured exerter constraints,
+#'but it will not cache such eligibility information for receiver constraints
+#'(which are applied at the time a spatial query is made). Particular interaction
+#'distances and strengths are not computed by evaluate(), and interaction()
+#'callbacks will not be called in response to this method; that work is deferred
+#'until required to satisfy a query (at which point the tick and cycle counters
+#'may have advanced, so be careful with the tick ranges used in defining
+#'interaction() callbacks). You must explicitly call evaluate() at an appropriate
+#'time in the tick cycle before the interaction is used, but after any relevant
+#'changes have been made to the population. SLiM will invalidate any existing
+#'interactions after any portion of the tick cycle in which new individuals have
+#'been born or existing individuals have died. In a WF model, this occurs just
+#'before late() events execute (see the WF tick cycle diagram in chapter 23),
+#'so late() events are often the appropriate place to put evaluate() calls, but
+#'first() or early() events can work too if the interaction is not needed until
+#'that point in the tick cycle anyway. In nonWF models, on the other hand, new
+#'offspring are produced just before early() events and then individuals die
+#'just before late() events (see the nonWF tick cycle diagram in chapter 24), so
+#'interactions will be invalidated twice during each tick cycle. This means that
+#'in a nonWF model, an interaction that influences reproduction should usually be
+#'evaluated in a first() event, while an interaction that influences fitness or
+#'mortality should usually be evaluated in an early() event (and an interaction
+#'that affects both may need to be evaluated at both times). If an interaction is
+#'never evaluated for a given subpopulation, it is guaranteed that there will be
+#'essentially no memory or computational overhead associated with the interaction
+#'for that subpopulation. Furthermore, attempting to query an interaction for a
+#'receiver or exerter in a subpopulation that has not been evaluated is guaranteed
+#'to raise an error.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -4271,8 +12516,8 @@ evaluate <- function(subpops) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=661}{SLiM manual: page
-#'661}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=693}{SLiM manual: page
+#'693}.
 #'
 #'@param receivers An object of type Individual object. See details for
 #'description.
@@ -4288,21 +12533,21 @@ evaluate <- function(subpops) {
 #'metric of the InteractionType, from among the exerters in exerterSubpop (or, if
 #'that is NULL, then from among all individuals in the receiver's subpopulation).
 #'More specifically, this method counts the number of individuals which can exert
-#'an interaction upon each receiver. All of the receivers must belong to a single
-#'subpopulation, and all of the exerters must belong to a single subpopulation,
-#'but those two subpopulations do not need to be the same. The evaluate() method
-#'must have been previously called for the receiver and exerter subpopulations,
-#'and positions saved at evaluation time will be used. This method is similar to
-#'nearestInteractingNeighbors() (when passed a large count so as to guarantee that
-#'all interacting individuals are returned), but this method returns only a count
-#'of the interacting individuals, not a vector containing the individuals. This
-#'method may also be called in a vectorized fashion, with a non-singleton vector
-#'of individuals, unlike nearestInteractingNeighbors(). Note that this method uses
-#'interaction eligibility as a criterion; it will not count neighbors that cannot
-#'exert an interaction upon a receiver (due to sex-segregation, e.g.). (It also
-#'does not count a receiver as a neighbor of itself.) If a count of all neighbors
-#'is desired, rather than just interacting neighbors, use neighborCount(). If the
-#'InteractionType is non-spatial, this method may not be called.
+#'an interaction upon each receiver (which does not include the receiver itself).
+#'All of the receivers must belong to a single subpopulation, and all of the
+#'exerters must belong to a single subpopulation, but those two subpopulations do
+#'not need to be the same. The evaluate() method must have been previously called
+#'for the receiver and exerter subpopulations, and positions saved at evaluation
+#'time will be used. This method is similar to nearestInteractingNeighbors() (when
+#'passed a large count so as to guarantee that all interacting individuals are
+#'returned), but this method returns only a count of the interacting individuals,
+#'not a vector containing the individuals. Note that this method uses interaction
+#'eligibility as a criterion; it will not count neighbors that do not exert an
+#'interaction upon a given receiver (due to the configured receiver or exerter
+#'constraints). (It also does not count a receiver as a neighbor of itself.) If a
+#'count of all neighbors is desired, rather than just interacting neighbors, use
+#'neighborCount(). If the InteractionType is non-spatial, this method may not be
+#'called.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -4330,8 +12575,8 @@ interactingNeighborCount <- function(receivers, exerterSubpop) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=661}{SLiM manual: page
-#'661}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=694}{SLiM manual: page
+#'694}.
 #'
 #'@param receiver An object of type Individual object. Must be of length 1 (a
 #'singleton). See details for description.
@@ -4342,26 +12587,26 @@ interactingNeighborCount <- function(receivers, exerterSubpop) {
 #'@family InteractionType
 #'@return An object of type float.
 #'@details Returns a vector containing interaction-dependent distances between
-#'receiver and individuals in exerters that exert an interaction strength
-#'upon receiver. If exerters is NULL (the default), then a vector of the
-#'interaction-dependent distances from receiver to all individuals in its
-#'subpopulation (including receiver itself) is returned; this case may be handled
-#'much more efficiently than if a vector of all individuals in the subpopulation
-#'is explicitly provided. Otherwise, all individuals in exerters must belong to a
-#'single subpopulation (but not necessarily the same subpopulation as receiver).
-#'The evaluate() method must have been previously called for the receiver and
-#'exerter subpopulations, and positions saved at evaluation time will be used. If
-#'the InteractionType is non- spatial, this method may not be called. Importantly,
-#'distances are calculated according to the spatiality of the InteractionType (as
-#'declared in initializeInteractionType()), not the dimensionality of the model
-#'as a whole (as declared in initializeSLiMOptions()). The distances returned are
+#'receiver and individuals in exerters. If exerters is NULL (the default),
+#'then a vector of the interaction-dependent distances from receiver to all
+#'individuals in its subpopulation (including receiver itself) is returned;
+#'this case may be handled much more efficiently than if a vector of all
+#'individuals in the subpopulation is explicitly provided. Otherwise, all
+#'individuals in exerters must belong to a single subpopulation (but not
+#'necessarily the same subpopulation as receiver). The evaluate() method must
+#'have been previously called for the receiver and exerter subpopulations,
+#'and positions saved at evaluation time will be used. If the InteractionType
+#'is non-spatial, this method may not be called. Importantly, distances are
+#'calculated according to the spatiality of the InteractionType (as declared
+#'in initializeInteractionType()), not the dimensionality of the model as a
+#'whole (as declared in initializeSLiMOptions()). The distances returned are
 #'therefore the distances that would be used to calculate interaction strengths.
 #'In addition, interactionDistance() will return INF as the distance between
 #'receiver and any individual which does not exert an interaction upon receiver;
-#'the interactionDistance() between an individual and itself will thus be INF,
-#'and likewise for pairs excluded from interacting by the sex segregation or max
-#'distance of the interaction type. See distance() for an alternative distance
-#'definition.
+#'the interactionDistance() between an individual and itself will thus be INF, and
+#'likewise for pairs excluded from interacting by receiver constraints, exerter
+#'constraints, or the maximum interaction distance of the interaction type. See
+#'distance() for an alternative distance definition.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -4389,8 +12634,8 @@ interactionDistance <- function(receiver, exerters) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=661}{SLiM manual: page
-#'661}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=694}{SLiM manual: page
+#'694}.
 #'
 #'@param receivers An object of type Individual object. See details for
 #'description.
@@ -4481,41 +12726,61 @@ localPopulationDensity <- function(receivers, exerterSubpop) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=662}{SLiM manual: page
-#'662}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=695}{SLiM manual: page
+#'695}.
 #'
-#'@param receiver An object of type Individual object. Must be of length 1 (a
-#'singleton). See details for description.
+#'@param receiver An object of type Individual object. See details for
+#'description.
 #'@param count An object of type integer. Must be of length 1 (a singleton). The
 #'default value is \code{1}. See details for description.
 #'@param exerterSubpop An object of type null or Subpopulation object. Must be
 #'of length 1 (a singleton). The default value is \code{NULL}. See details for
 #'description.
+#'@param returnDict An object of type logical. Must be of length 1 (a singleton).
+#'The default value is \code{F}. See details for description.
 #'
 #'@aliases
 #'InteractionType$nearestInteractingNeighbors .IT$nearestInteractingNeighbors
 #'@family InteractionType
-#'@return An object of type Individual object.
-#'@details Returns up to count interacting individuals that are spatially closest
-#'to receiver, according to the distance metric of the InteractionType, from
-#'among the exerters in exerterSubpop (or, if that is NULL, then from among all
-#'individuals in the receiver's subpopulation). More specifically, this method
-#'returns only individuals which can exert an interaction upon the receiver.
-#'To obtain all of the interacting individuals within the maximum interaction
-#'distance of individual, simply pass a value for count that is greater than or
-#'equal to the size of the exerter subpopulation. Note that if fewer than count
-#'interacting individuals are within the maximum interaction distance, the vector
-#'returned may be shorter than count, or even zero-length; it is important to
-#'check for this possibility even when requesting a single neighbor. If only the
-#'number of interacting individuals is needed, use interactingNeighborCount()
-#'instead. The evaluate() method must have been previously called for the receiver
-#'and exerter subpopulations, and positions saved at evaluation time will be
-#'used. If the InteractionType is non-spatial, this method may not be called.
-#'Note that this method uses interaction eligibility as a criterion; it will not
-#'return neighbors that cannot exert an interaction upon the receiver (due to
-#'sex-segregation, e.g.). (It will also never return the receiver as a neighbor of
-#'itself.) To find all neighbors of the receiver, whether they can interact with
-#'it or not, use nearestNeighbors().
+#'@return An object of type .
+#'@details Returns an object<Individual> vector containing up to count interacting
+#'individuals that are spatially closest to receiver, according to the distance
+#'metric of the InteractionType, from among the exerters in exerterSubpop (or, if
+#'that is NULL, then from among all individuals in the receiver's subpopulation).
+#'More specifically, this method returns only individuals which can exert
+#'an interaction upon receiver, which must be singleton in the default mode
+#'of operation (but see below). To obtain all of the interacting individuals
+#'within the maximum interaction distance of receiver, simply pass a value for
+#'count that is greater than or equal to the size of the exerter subpopulation.
+#'Note that if fewer than count interacting individuals are within the maximum
+#'interaction distance, the vector returned may be shorter than count, or even
+#'zero-length; it is important to check for this possibility even when requesting
+#'a single neighbor. If only the number of interacting individuals is needed,
+#'use interactingNeighborCount() instead. The evaluate() method must have been
+#'previously called for the receiver and exerter subpopulations, and positions
+#'saved at evaluation time will be used. If the InteractionType is non-spatial,
+#'this method may not be called. Note that this method uses interaction
+#'eligibility as a criterion; it will not return neighbors that cannot exert
+#'an interaction upon the receiver (due to the configured receiver or exerter
+#'constraints). (It will also never return the receiver as a neighbor of itself.)
+#'To find all neighbors of a receiver, whether they can interact with it or not,
+#'use nearestNeighbors(). Beginning in SLiM 4.1, this method has a vectorized
+#'mode of operation in which the receiver parameter may be non-singleton. To
+#'switch the method to this mode, pass T for returnDict, rather than the default
+#'of F (the operation of which is described above). In this mode, the return
+#'value is a Dictionary object instead of a vector of Individual objects. This
+#'dictionary uses integer keys that range from 0 to N-1, where N is the number
+#'of individuals passed in receiver; these keys thus correspond directly to
+#'the indices of the individuals in receiver, and there is one entry in the
+#'dictionary for each receiver. The value in the dictionary, for a given integer
+#'key, is an object<Individual> vector with the interacting neighbors found for
+#'the corresponding receiver, exactly as described above for the non-vectorized
+#'case. The results for each receiver can therefore be obtained from the returned
+#'dictionary with getValue(), passing the index of the receiver. The speed of this
+#'mode of operation will probably be similar to the speed of making N separate
+#'non-vectorized calls to nearestInteractingNeighbors(), but may have other
+#'advantages. In this mode of operation, all receivers must belong to the same
+#'subpopulation.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -4527,8 +12792,9 @@ localPopulationDensity <- function(receivers, exerterSubpop) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
-nearestInteractingNeighbors <- function(receiver, count, exerterSubpop) {
- .IT$nearestInteractingNeighbors(receiver, count, exerterSubpop)
+nearestInteractingNeighbors <- function(receiver, count, exerterSubpop,
+returnDict) {
+ .IT$nearestInteractingNeighbors(receiver, count, exerterSubpop, returnDict)
 }
 
 #'SLiM method nearestNeighbors
@@ -4543,37 +12809,56 @@ nearestInteractingNeighbors <- function(receiver, count, exerterSubpop) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=663}{SLiM manual: page
-#'663}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=696}{SLiM manual: page
+#'696}.
 #'
-#'@param receiver An object of type Individual object. Must be of length 1 (a
-#'singleton). See details for description.
+#'@param receiver An object of type Individual object. See details for
+#'description.
 #'@param count An object of type integer. Must be of length 1 (a singleton). The
 #'default value is \code{1}. See details for description.
 #'@param exerterSubpop An object of type null or Subpopulation object. Must be
 #'of length 1 (a singleton). The default value is \code{NULL}. See details for
 #'description.
+#'@param returnDict An object of type logical. Must be of length 1 (a singleton).
+#'The default value is \code{F}. See details for description.
 #'
 #'@aliases InteractionType$nearestNeighbors .IT$nearestNeighbors
 #'@family InteractionType
-#'@return An object of type Individual object.
-#'@details Returns up to count individuals that are spatially closest to
-#'individual, according to the distance metric of the InteractionType, from
-#'among the exerters in exerterSubpop (or, if that is NULL, then from among all
-#'individuals in the receiver's subpopulation). To obtain all of the individuals
-#'within the maximum interaction distance of individual, simply pass a value for
-#'count that is greater than or equal to the size of individual's subpopulation.
-#'Note that if fewer than count individuals are within the maximum interaction
-#'distance, the vector returned may be shorter than count, or even zero- length;
-#'it is important to check for this possibility even when requesting a single
-#'neighbor. The evaluate() method must have been previously called for the
-#'receiver and exerter subpopulations, and positions saved at evaluation time will
-#'be used. If the InteractionType is non-spatial, this method may not be called.
-#'Note that this method does not use interaction eligibility as a criterion;
-#'it will return neighbors that could not interact with the receiver due to
-#'sex-segregation. (It will never return the receiver as a neighbor of itself,
-#'however.) To find only neighbors that are eligible to exert an interaction upon
-#'the receiver, use nearestInteractingNeighbors().
+#'@return An object of type .
+#'@details Returns an object<Individual> vector containing up to count individuals
+#'that are spatially closest to receiver, according to the distance metric of
+#'the InteractionType, from among the exerters in exerterSubpop (or, if that
+#'is NULL, then from among all individuals in the receiver's subpopulation).
+#'In the default mode of operation, receiver must be singleton (but see below).
+#'To obtain all of the individuals within the maximum interaction distance of
+#'receiver, simply pass a value for count that is greater than or equal to the
+#'size of individual's subpopulation. Note that if fewer than count individuals
+#'are within the maximum interaction distance, the vector returned may be shorter
+#'than count, or even zero-length; it is important to check for this possibility
+#'even when requesting a single neighbor. The evaluate() method must have been
+#'previously called for the receiver and exerter subpopulations, and positions
+#'saved at evaluation time will be used. If the InteractionType is nonspatial,
+#'this method may not be called. Note that this method does not use interaction
+#'eligibility as a criterion; it will return neighbors that could not interact
+#'with the receiver due to the configured receiver or exerter constraints. (It
+#'will never return the receiver as a neighbor of itself, however.) To find
+#'only neighbors that are eligible to exert an interaction upon the receiver,
+#'use nearestInteractingNeighbors(). Beginning in SLiM 4.1, this method
+#'has a vectorized mode of operation in which the receiver parameter may be
+#'non-singleton. To switch the method to this mode, pass T for returnDict, rather
+#'than the default of F (the operation of which is described above). In this
+#'mode, the return value is a Dictionary object instead of a vector of Individual
+#'objects. This dictionary uses integer keys that range from 0 to N-1, where N
+#'is the number of individuals passed in receiver; these keys thus correspond
+#'directly to the indices of the individuals in receiver, and there is one entry
+#'in the dictionary for each receiver. The value in the dictionary, for a given
+#'integer key, is an object<Individual> vector with the neighbors found for
+#'the corresponding receiver, exactly as described above for the non-vectorized
+#'case. The results for each receiver can therefore be obtained from the returned
+#'dictionary with getValue(), passing the index of the receiver. The speed of this
+#'mode of operation will probably be similar to the speed of making N separate
+#'non-vectorized calls to nearestNeighbors(), but may have other advantages. In
+#'this mode of operation, all receivers must belong to the same subpopulation.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -4585,8 +12870,8 @@ nearestInteractingNeighbors <- function(receiver, count, exerterSubpop) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
-nearestNeighbors <- function(receiver, count, exerterSubpop) {
- .IT$nearestNeighbors(receiver, count, exerterSubpop)
+nearestNeighbors <- function(receiver, count, exerterSubpop, returnDict) {
+ .IT$nearestNeighbors(receiver, count, exerterSubpop, returnDict)
 }
 
 #'SLiM method nearestNeighborsOfPoint
@@ -4601,8 +12886,8 @@ nearestNeighbors <- function(receiver, count, exerterSubpop) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=663}{SLiM manual: page
-#'663}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=696}{SLiM manual: page
+#'696}.
 #'
 #'@param point An object of type float. See details for description.
 #'@param exerterSubpop An object of type integer or Subpopulation object. Must be
@@ -4651,8 +12936,8 @@ nearestNeighborsOfPoint <- function(point, exerterSubpop, count) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=663}{SLiM manual: page
-#'663}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=696}{SLiM manual: page
+#'696}.
 #'
 #'@param receivers An object of type Individual object. See details for
 #'description.
@@ -4673,14 +12958,13 @@ nearestNeighborsOfPoint <- function(point, exerterSubpop, count) {
 #'receiver and exerter subpopulations, and positions saved at evaluation time will
 #'be used. This method is similar to nearestNeighbors() (when passed a large count
 #'so as to guarantee that all neighbors are returned), but this method returns
-#'only a count of the individuals, not a vector containing the individuals. This
-#'method may also be called in a vectorized fashion, with a non- singleton vector
-#'of individuals, unlike nearestNeighbors(). Note that this method does not use
-#'interaction eligibility as a criterion; it will count neighbors that cannot
-#'exert an interaction upon a receiver (due to sex-segregation, e.g.). (It still
-#'does not count a receiver as a neighbor of itself, however.) If a count of
-#'only interacting neighbors is desired, use interactingNeighborCount(). If the
-#'InteractionType is non-spatial, this method may not be called.
+#'only a count of the individuals, not a vector containing the individuals. Note
+#'that this method does not use interaction eligibility as a criterion; it will
+#'count neighbors that cannot exert an interaction upon a receiver (due to the
+#'configured receiver or exerter constraints). (It still does not count a receiver
+#'as a neighbor of itself, however.) If a count of only interacting neighbors is
+#'desired, use interactingNeighborCount(). If the InteractionType is non-spatial,
+#'this method may not be called.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -4708,8 +12992,8 @@ neighborCount <- function(receivers, exerterSubpop) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=663}{SLiM manual: page
-#'663}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=697}{SLiM manual: page
+#'697}.
 #'
 #'@param point An object of type float. See details for description.
 #'@param exerterSubpop An object of type integer or Subpopulation object. Must be
@@ -4742,6 +13026,109 @@ neighborCountOfPoint <- function(point, exerterSubpop) {
  .IT$neighborCountOfPoint(point, exerterSubpop)
 }
 
+#'SLiM method setConstraints
+#'
+#'Documentation for SLiM function \code{setConstraints}, which is a method of the
+#'SLiM class \code{\link{InteractionType}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=697}{SLiM manual: page
+#'697}.
+#'
+#'@param who An object of type string. Must be of length 1 (a singleton). See
+#'details for description.
+#'@param sex An object of type null or string. Must be of length 1 (a singleton).
+#'The default value is \code{NULL}. See details for description.
+#'@param tag An object of type null or integer. Must be of length 1 (a singleton).
+#'The default value is \code{NULL}. See details for description.
+#'@param minAge An object of type null or integer. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param maxAge An object of type null or integer. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param migrant An object of type null or logical. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param tagL0 An object of type null or logical. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param tagL1 An object of type null or logical. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param tagL2 An object of type null or logical. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param tagL3 An object of type null or logical. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param tagL4 An object of type null or logical. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'
+#'@aliases InteractionType$setConstraints .IT$setConstraints
+#'@family InteractionType
+#'@return An object of type void.
+#'@details Sets constraints upon which individuals can be receivers and/or
+#'exerters, making the target InteractionType measure interactions between
+#'only subsets of the population. The parameter who specifies upon whom the
+#'specified constraints apply; it may be "exerters" to set constraints upon
+#'exerters, "receivers" to set constraints upon receivers, or "both" to set
+#'constraints upon both. If "both" is used, the same constraints are set for
+#'both exerters and receivers; different constraints can be set for exerters
+#'versus receivers by making a separate call to setConstraints() for each.
+#'Constraints only affect queries that involve the concept of interaction; for
+#'example, they will affect the result of nearestInteractingNeighbors(), but not
+#'the result of nearestNeighbors(). The constraints specified by a given call
+#'to setConstraints() override all previously set constraints for the category
+#'specified (receivers, exerter, or both). There is a general policy for the
+#'remaining arguments: they are NULL by default, and if NULL is used, it specifies
+#'"no constraint" for that property (removing any currently existing constraint
+#'for that property). The sex parameter constrains the sex of individuals; it may
+#'be "M" or "F" (or "*" as another way of specifying no constraint, for historical
+#'reasons). If sex is "M" or "F", the individuals to which the constraint is
+#'applied (potential receivers/exerters) must belong to a sexual species. The
+#'tag parameter constrains the tag property of individuals; if this set, the
+#'individuals to which the constraint is applied must have defined tag values. The
+#'minAge and maxAge properties constrain the age property of individuals to the
+#'given minimum and/or maximum values; these constraints can only be used in nonWF
+#'models. The migrant property constraints the migrant property of individuals
+#'(T constrains to only migrants, F to only non-migrants). Finally, the tagL0,
+#'tagL1, tagL2, tagL3, and tagL4 properties constrain the corresponding logical
+#'properties of individuals, requiring them to be either T or F as specified;
+#'the individuals to which these constraints are applied must have defined values
+#'for the constrained property or properties. Again, NULL should be supplied
+#'(as it is by default) for any property which you do not wish to constrain.
+#'These constraints may be used in any combination, as desired. For example,
+#'calling setConstraints("receivers", sex="M", minAge=5, tagL0=T) constrains
+#'the interaction type's operation so that receivers must be males, with an age
+#'of at least 5, with a tagL0 property value of T. For that configuration the
+#'potential receivers used with the interaction type must be sexual (since sex is
+#'specified), must be in a nonWF model (since minAge is specified), and must have
+#'a defined value for their tagL0 property (since that property is constrained).
+#'Note that the sexSegregation parameter to initializeInteractionType()
+#'is a shortcut which does the same thing as the corresponding calls to
+#'setConstraints(). Exerter constraints are applied at evaluate() time, whereas
+#'receiver constraints are applied at query time; see the InteractionType class
+#'documentation (section 25.8) for further discussion. The interaction constraints
+#'for an interaction type are normally a constant in simulations; in any case,
+#'they cannot be changed when an interaction has already been evaluated, so either
+#'they should be set prior to evaluation, or unevaluate() should be called first.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+setConstraints <- function(who, sex, tag, minAge, maxAge, migrant, tagL0,
+tagL1, tagL2, tagL3, tagL4) {
+ .IT$setConstraints(who, sex, tag, minAge, maxAge, migrant, tagL0, tagL1,
+tagL2, tagL3, tagL4)
+}
+
 #'SLiM method setInteractionFunction
 #'
 #'Documentation for SLiM function \code{setInteractionFunction}, which is a method
@@ -4754,8 +13141,8 @@ neighborCountOfPoint <- function(point, exerterSubpop) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=664}{SLiM manual: page
-#'664}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=698}{SLiM manual: page
+#'698}.
 #'
 #'@param functionType An object of type string. Must be of length 1 (a singleton).
 #'See details for description.
@@ -4769,17 +13156,19 @@ neighborCountOfPoint <- function(point, exerterSubpop) {
 #'the ellipsis ... should supply a numeric$ fixed interaction strength; "l", in
 #'which case the ellipsis should supply a numeric$ maximum strength for a linear
 #'function; "e", in which case the ellipsis should supply a numeric$ maximum
-#'strength and a numeric$ lambda (shape) parameter for a negative exponential
+#'strength and a numeric$ lambda (rate) parameter for a negative exponential
 #'function; "n", in which case the ellipsis should supply a numeric$ maximum
 #'strength and a numeric$ sigma (standard deviation) parameter for a Gaussian
-#'function; or "c", in which case the ellipsis should supply a numeric$ maximum
-#'strength and a numeric$ scale parameter for a Cauchy distribution function. See
-#'section 24.8 above for discussions of these interaction functions. Non-spatial
-#'interactions must use function type "f", since no distance values are available
-#'in that case. The interaction function for an interaction type is normally a
-#'constant in simulations; in any case, it cannot be changed when an interaction
-#'has already been evaluated, so either it should be set prior to evaluation, or
-#'unevaluate() should be called first.
+#'function; "c", in which case the ellipsis should supply a numeric$ maximum
+#'strength and a numeric$ scale parameter for a Cauchy distribution function; or
+#'"t", in which case the ellipsis should supply a numeric$ maximum strength, a
+#'numeric$ degrees of freedom, and a numeric$ scale parameter for a t-distribution
+#'function. See section 25.8 above for discussions of these interaction functions.
+#'Non-spatial interactions must use function type "f", since no distance values
+#'are available in that case. The interaction function for an interaction type
+#'is normally a constant in simulations; in any case, it cannot be changed when
+#'an interaction has already been evaluated, so either it should be set prior to
+#'evaluation, or unevaluate() should be called first.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -4807,8 +13196,8 @@ setInteractionFunction <- function(functionType, ...) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=664}{SLiM manual: page
-#'664}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=698}{SLiM manual: page
+#'698}.
 #'
 #'@param receiver An object of type Individual object. Must be of length 1 (a
 #'singleton). See details for description.
@@ -4821,22 +13210,23 @@ setInteractionFunction <- function(functionType, ...) {
 #'@details Returns a vector containing the interaction strengths exerted upon
 #'receiver by the individuals in exerters. If exerters is NULL (the default),
 #'then a vector of the interaction strengths exerted by all individuals in the
-#'subpopulation of receiver (including receiver itself) is returned; this case
-#'may be handled much more efficiently than if a vector of all individuals
-#'in the subpopulation is explicitly provided. Otherwise, all individuals in
-#'exerters must belong to a single subpopulation (but not necessarily the same
-#'subpopulation as receiver). The evaluate() method must have been previously
-#'called for the receiver and exerter subpopulations, and positions saved at
-#'evaluation time will be used. If the strengths of interactions exerted by a
-#'single individual upon multiple individuals are needed instead (the inverse of
-#'what this method provides), multiple calls to this method will be necessary,
-#'one per pairwise interaction queried; the interaction engine is not optimized
-#'for the inverse case, and so it will likely be quite slow to compute. If the
-#'interaction is reciprocal and sex-symmetric, the opposite query should provide
-#'identical results in a single efficient call (because then the interactions
-#'exerted are equal to the interactions received); otherwise, the best approach
-#'might be to define a second interaction type representing the inverse
-#'interaction that you wish to be able to query efficiently.
+#'subpopulation of receiver (including receiver itself, with a strength of 0.0)
+#'is returned; this case may be handled much more efficiently than if a vector
+#'of all individuals in the subpopulation is explicitly provided. Otherwise,
+#'all individuals in exerters must belong to a single subpopulation (but not
+#'necessarily the same subpopulation as receiver). The evaluate() method must
+#'have been previously called for the receiver and exerter subpopulations,
+#'and positions saved at evaluation time will be used. If the strengths of
+#'interactions exerted by a single individual upon multiple individuals are needed
+#'instead (the inverse of what this method provides), multiple calls to this
+#'method will be necessary, one per pairwise interaction queried; the interaction
+#'engine is not optimized for the inverse case, and so it will likely be quite
+#'slow to compute. If the interaction is reciprocal and has the same receiver and
+#'exerter constraints, the opposite query should provide identical results in a
+#'single efficient call (because then the interactions exerted are equal to the
+#'interactions received); otherwise, the best approach might be to define a second
+#'interaction type representing the inverse interaction that you wish to be able
+#'to query efficiently.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -4852,6 +13242,70 @@ strength <- function(receiver, exerters) {
  .IT$strength(receiver, exerters)
 }
 
+#'SLiM method testConstraints
+#'
+#'Documentation for SLiM function \code{testConstraints}, which is a method of the
+#'SLiM class \code{\link{InteractionType}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=698}{SLiM manual: page
+#'698}.
+#'
+#'@param individuals An object of type Individual object. See details for
+#'description.
+#'@param constraints An object of type string. Must be of length 1 (a singleton).
+#'See details for description.
+#'@param returnIndividuals An object of type logical. Must be of length 1 (a
+#'singleton). The default value is \code{F}. See details for description.
+#'
+#'@aliases InteractionType$testConstraints .IT$testConstraints
+#'@family InteractionType
+#'@return An object of type logical or Individual object.
+#'@details Tests the individuals in the parameter individuals against the
+#'interaction constraints specified by constraints. The value of constraints may
+#'be "receiver" to use the receiver constraints, or "exerter" to use the exerter
+#'constraints. If returnIndividuals is F (the default), a logical vector will be
+#'returned, with T values indicating that the corresponding individual satisfied
+#'the constraints, F values indicating that it did not. If returnIndividuals is
+#'T, an object vector of class Individual will be returned containing only those
+#'elements of individuals that satisfied the constraints (in the same order as
+#'individuals). Note that unlike most queries, the InteractionType does not need
+#'to have been evaluated before calling this method, and the individuals passed in
+#'need not belong to a single population or even a single species. This method can
+#'be useful for narrowing a vector of individuals down to just those that satisfy
+#'constraints. Outside the context of InteractionType, similar functionality is
+#'provided by the Subpopulation method subsetIndividuals(). Note that the use
+#'of testConstraints() is somewhat rare; usually, queries are evaluated across
+#'a vector of individuals, each of which might or might not satisfy the defined
+#'constraints. Individuals that do not satisfy constraints do not participate in
+#'interactions, so their interaction strength with other individuals will simply
+#'be zero. See the setConstraints() method to set up constraints, as well as
+#'the sexSegregation parameter to initializeInteractionType(). Note that if the
+#'constraints tested involve tag values (including tagL0 / tagL1 / tagL2 / tagL3 /
+#'tagL4), the corresponding property or properties of the tested individuals
+#'must be defined (i.e., must have been set to a value), or an error will result
+#'because the constraints cannot be applied.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+testConstraints <- function(individuals, constraints, returnIndividuals) {
+ .IT$testConstraints(individuals, constraints, returnIndividuals)
+}
+
 #'SLiM method totalOfNeighborStrengths
 #'
 #'Documentation for SLiM function \code{totalOfNeighborStrengths}, which is a
@@ -4864,8 +13318,8 @@ strength <- function(receiver, exerters) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=664}{SLiM manual: page
-#'664}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=699}{SLiM manual: page
+#'699}.
 #'
 #'@param receivers An object of type Individual object. See details for
 #'description.
@@ -4885,26 +13339,26 @@ strength <- function(receiver, exerters) {
 #'a single subpopulation, but those two subpopulations do not need to be
 #'the same. The evaluate() method must have been previously called for the
 #'receiver and exerter subpopulations, and positions saved at evaluation
-#'time will be used. If the InteractionType is non- spatial, this method may
+#'time will be used. If the InteractionType is nonspatial, this method may
 #'not be called. For one individual, this is essentially the same as calling
-#'nearestInteractingNeighbors() with a large count so as to obtain the complete
-#'vector of all interacting neighbors, calling strength() for each of those
-#'interactions to get each interaction strength, and adding those interaction
-#'strengths together with sum(). This method is much faster than that
-#'implementation, however, since all of that work is done as a single operation.
-#'Also, totalOfNeighborStrengths() can total up interactions for more than one
-#'receiver in a single call. Similarly, for one individual this is essentially the
-#'same as calling strength() to get the interaction strengths between a receiver
-#'and all individuals in the exerter subpopulation, and then calling sum().
-#'Again, this method should be much faster, since this algorithm looks only at
-#'neighbors, whereas calling strength() directly assesses interaction strengths
-#'with all other individuals. This will make a particularly large difference when
-#'the subpopulation size is large and the maximum distance of the InteractionType
-#'is small. See localPopulationDensity() for a related method that calculates the
-#'total interaction strength divided by the amount of "interaction field" present
-#'for an individual (i.e., the integral of the interaction function clipped to the
-#'spatial bounds of the subpopulation) to provide an estimate of the "interaction
-#'density" felt by an individual.
+#'nearestInteractingNeighbors() with a large count so as to obtain the
+#'complete vector of all interacting neighbors, calling strength() for each
+#'of those interactions to get each interaction strength, and adding those
+#'interaction strengths together with sum(). This method is much faster than
+#'that implementation, however, since all of that work is done as a single
+#'operation. Also, totalOfNeighborStrengths() can total up interactions for more
+#'than one receiver in a single vectorized call. Similarly, for one individual
+#'this is essentially the same as calling strength() to get the interaction
+#'strengths between a receiver and all individuals in the exerter subpopulation,
+#'and then calling sum(). Again, this method should be much faster, since this
+#'algorithm looks only at neighbors, whereas calling strength() directly assesses
+#'interaction strengths with all other individuals. This will make a particularly
+#'large difference when the subpopulation size is large and the maximum distance
+#'of the InteractionType is small. See localPopulationDensity() for a related
+#'method that calculates the total interaction strength divided by the amount
+#'of "interaction field" present for an individual (i.e., the integral of the
+#'interaction function clipped to the spatial bounds of the subpopulation) to
+#'provide an estimate of the "interaction density" felt by an individual.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -4932,8 +13386,8 @@ totalOfNeighborStrengths <- function(receivers, exerterSubpop) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=665}{SLiM manual: page
-#'665}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=699}{SLiM manual: page
+#'699}.
 #'
 #'@param void An object of type . See details for description.
 #'
@@ -4943,19 +13397,20 @@ totalOfNeighborStrengths <- function(receivers, exerterSubpop) {
 #'@details Discards all evaluation of this interaction, for all subpopulations.
 #'The state of the InteractionType is reset to a state prior to evaluation. This
 #'can be useful if the model state has changed in such a way that the evaluation
-#'already conducted is no longer valid. For example, if the maximum distance
-#'or the interaction function of the InteractionType need to be changed with
-#'immediate effect, or if the data used by an interaction() callback has changed
-#'in such a way that previously calculated interaction strengths are no longer
-#'correct, unevaluate() allows the interaction to begin again from scratch. In WF
-#'models, all interactions are automatically reset to an unevaluated state at the
-#'moment when the new offspring generation becomes the parental generation (at
-#'step 4 in the tick cycle; see section 22.4). In nonWF models, all interactions
-#'are automatically reset to an unevaluated state twice per tick: immediately
-#'after reproduction() callbacks have completed (after step 1 in the tick cycle;
-#'see section 23.1), and immediately before viability/survival selection (before
-#'step 4 in the tick cycle; see section 23.4). Given this automatic invalidation,
-#'most simulations have no reason to call unevaluate().
+#'already conducted is no longer valid. For example, if the maximum distance,
+#'the interaction function, or the receiver or exerter constraints of the
+#'InteractionType need to be changed with immediate effect, or if the data used by
+#'an interaction() callback has changed in such a way that previously calculated
+#'interaction strengths are no longer correct, unevaluate() allows the interaction
+#'to begin again from scratch. In WF models, all interactions are automatically
+#'reset to an unevaluated state at the moment when the new offspring generation
+#'becomes the parental generation (at step 4 in the tick cycle; see section 23.4).
+#'In nonWF models, all interactions are automatically reset to an unevaluated
+#'state twice per tick: immediately after reproduction() callbacks have completed
+#'(after step 1 in the tick cycle; see section 24.1), and immediately before
+#'viability/survival selection (before step 4 in the tick cycle; see section
+#'24.4). Given this automatic invalidation, most simulations have no reason to
+#'call unevaluate().
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -4985,8 +13440,8 @@ unevaluate <- function(void) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=666}{SLiM manual: page
-#'666}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=701}{SLiM manual: page
+#'701}.
 #'
 #'@param columnName An object of type string or string or any. Must be of length 1
 #'(a singleton). See details for description.
@@ -5037,8 +13492,8 @@ addCustomColumn <- function(columnName, source, context) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
-#'667}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=701}{SLiM manual: page
+#'701}.
 #'
 #'@param species An object of type null or Species object. Must be of length 1 (a
 #'singleton). The default value is \code{NULL}. See details for description.
@@ -5080,8 +13535,8 @@ addCycle <- function(species) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
-#'667}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=701}{SLiM manual: page
+#'701}.
 #'
 #'@param void An object of type . See details for description.
 #'
@@ -5123,8 +13578,8 @@ addCycleStage <- function(void) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
-#'667}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
+#'702}.
 #'
 #'@param source An object of type . Must be of length 1 (a singleton). See details
 #'for description.
@@ -5163,8 +13618,8 @@ addKeysAndValuesFrom <- function(source) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
-#'667}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
+#'702}.
 #'
 #'@param columnName An object of type string or string or any. Must be of length 1
 #'(a singleton). See details for description.
@@ -5214,8 +13669,8 @@ addMeanSDColumns <- function(columnName, source, context) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
-#'667}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
+#'702}.
 #'
 #'@param species An object of type null or Species object. Must be of length 1 (a
 #'singleton). The default value is \code{NULL}. See details for description.
@@ -5226,7 +13681,7 @@ addMeanSDColumns <- function(columnName, source, context) {
 #'or void or void or void or void or void or void or void or void or void or void
 #'or void or logical.
 #'@details Adds a new data column that provides the population sex ratio M:(M+F)
-#'for species. In single- species models, species may be NULL to indicate that
+#'for species. In singlespecies models, species may be NULL to indicate that
 #'single species. The column will simply be named sex_ratio in single-species
 #'models; an underscore and the name of the species will be appended in
 #'multispecies models. If the species is hermaphroditic, NA will be written.
@@ -5257,8 +13712,8 @@ addPopulationSexRatio <- function(species) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
-#'667}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
+#'702}.
 #'
 #'@param species An object of type null or Species object. Must be of length 1 (a
 #'singleton). The default value is \code{NULL}. See details for description.
@@ -5300,8 +13755,8 @@ addPopulationSize <- function(species) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
-#'667}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
+#'702}.
 #'
 #'@param subpop An object of type integer or Subpopulation object. Must be of
 #'length 1 (a singleton). See details for description.
@@ -5341,8 +13796,8 @@ addSubpopulationSexRatio <- function(subpop) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
-#'667}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
+#'702}.
 #'
 #'@param subpop An object of type integer or Subpopulation object. Must be of
 #'length 1 (a singleton). See details for description.
@@ -5382,8 +13837,8 @@ addSubpopulationSize <- function(subpop) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
-#'667}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
+#'702}.
 #'
 #'@param columnName An object of type string. Must be of length 1 (a singleton).
 #'See details for description.
@@ -5430,8 +13885,8 @@ addSuppliedColumn <- function(columnName) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
-#'668}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
+#'702}.
 #'
 #'@param void An object of type . See details for description.
 #'
@@ -5469,8 +13924,8 @@ addTick <- function(void) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
-#'668}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
+#'702}.
 #'
 #'@param void An object of type . See details for description.
 #'
@@ -5508,8 +13963,8 @@ clearKeysAndValues <- function(void) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
-#'668}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
+#'702}.
 #'
 #'@param void An object of type . See details for description.
 #'
@@ -5552,8 +14007,8 @@ flush <- function(void) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
-#'668}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=703}{SLiM manual: page
+#'703}.
 #'
 #'@param void An object of type . See details for description.
 #'
@@ -5595,8 +14050,8 @@ logRow <- function(void) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
-#'668}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=703}{SLiM manual: page
+#'703}.
 #'
 #'@param logInterval An object of type null or integer. Must be of length 1 (a
 #'singleton). The default value is \code{NULL}. See details for description.
@@ -5638,8 +14093,8 @@ setLogInterval <- function(logInterval) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
-#'668}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=703}{SLiM manual: page
+#'703}.
 #'
 #'@param filePath An object of type string. Must be of length 1 (a singleton). See
 #'details for description.
@@ -5695,8 +14150,8 @@ setFilePath <- function(filePath, initialContents, append, compress, sep) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
-#'668}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=703}{SLiM manual: page
+#'703}.
 #'
 #'@param columnName An object of type string or any but object. Must be of length
 #'1 (a singleton). See details for description.
@@ -5743,8 +14198,8 @@ setSuppliedValue <- function(columnName, value) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
-#'668}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=703}{SLiM manual: page
+#'703}.
 #'
 #'@param key An object of type string or any. Must be of length 1 (a singleton).
 #'See details for description.
@@ -5784,8 +14239,8 @@ setValue <- function(key, value) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=669}{SLiM manual: page
-#'669}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=703}{SLiM manual: page
+#'703}.
 #'
 #'@param void An object of type . See details for description.
 #'
@@ -5826,8 +14281,8 @@ willAutolog <- function(void) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=670}{SLiM manual: page
-#'670}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=705}{SLiM manual: page
+#'705}.
 #'
 #'@param mutType An object of type integer or MutationType object. Must be of
 #'length 1 (a singleton). See details for description.
@@ -5877,8 +14332,8 @@ setMutationType <- function(mutType) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=670}{SLiM manual: page
-#'670}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=705}{SLiM manual: page
+#'705}.
 #'
 #'@param selectionCoeff An object of type float. Must be of length 1 (a
 #'singleton). See details for description.
@@ -5891,7 +14346,7 @@ setMutationType <- function(mutType) {
 #'mutation, since they all share a single Mutation object (note that the dominance
 #'coefficient will remain unchanged, as it is determined by the mutation type).
 #'This is normally a constant in simulations, so be sure you know what you are
-#'doing; often setting up a mutationEffect() callback (see section 25.2) is
+#'doing; often setting up a mutationEffect() callback (see section 26.2) is
 #'preferable, in order to modify the selection coefficient in a more limited and
 #'controlled fashion (see section 10.5 for further discussion of this point).
 #'Changing this will normally affect the fitness values calculated toward the end
@@ -5927,8 +14382,8 @@ setSelectionCoeff <- function(selectionCoeff) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=674}{SLiM manual: page
-#'674}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=709}{SLiM manual: page
+#'709}.
 #'
 #'@param n An object of type integer. Must be of length 1 (a singleton). The
 #'default value is \code{1}. See details for description.
@@ -5938,7 +14393,7 @@ setSelectionCoeff <- function(selectionCoeff) {
 #'@return An object of type float or void.
 #'@details Draws and returns a vector of n selection coefficients using the
 #'currently defined distribution of fitness effects (DFE) for the target mutation
-#'type. See section 24.11 above for discussion of the supported distributions
+#'type. See section 25.11 above for discussion of the supported distributions
 #'and their uses. If the DFE is type "s", this method will result in synchronous
 #'execution of the DFE's script.
 #'@section Copyright:
@@ -5968,8 +14423,8 @@ drawSelectionCoefficient <- function(n) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=674}{SLiM manual: page
-#'674}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=709}{SLiM manual: page
+#'709}.
 #'
 #'@param distributionType An object of type string. Must be of length 1 (a
 #'singleton). See details for description.
@@ -5986,9 +14441,11 @@ drawSelectionCoefficient <- function(n) {
 #'coefficient and a numeric$ alpha shape parameter for a gamma distribution; "n",
 #'in which case the ellipsis should supply a numeric$ mean selection coefficient
 #'and a numeric$ sigma (standard deviation) parameter for a normal distribution;
-#'"w", in which case the ellipsis should supply a numeric$ λ scale parameter and a
+#'"p", in which case the ellipsis should supply a numeric$ mean selection
+#'coefficient and a numeric$ scale parameter for a Laplace distribution; "w",
+#'in which case the ellipsis should supply a numeric$ λ scale parameter and a
 #'numeric$ k shape parameter for a Weibull distribution; or "s", in which case the
-#'ellipsis should supply a string$ Eidos script parameter. See section 24.11 above
+#'ellipsis should supply a string$ Eidos script parameter. See section 25.11 above
 #'for discussions of these distributions and their uses. The DFE for a mutation
 #'type is normally a constant in simulations, so be sure you know what you are
 #'doing.
@@ -6005,6 +14462,99 @@ drawSelectionCoefficient <- function(n) {
 #'
 setDistribution <- function(distributionType, ...) {
  .MT$setDistribution(distributionType, ...)
+}
+
+
+
+#'SLiM method openDocument
+#'
+#'Documentation for SLiM function \code{openDocument}, which is a method of the
+#'SLiM class \code{\link{SLiMgui}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=711}{SLiM manual: page
+#'711}.
+#'
+#'@param filePath An object of type string. Must be of length 1 (a singleton). See
+#'details for description.
+#'
+#'@aliases SLiMgui$openDocument .SG$openDocument
+#'@family SLiMgui
+#'@return An object of type void or void.
+#'@details Open the document at filePath in SLiMgui, if possible. Supported
+#'document types include SLiM model files (typically with a .slim path
+#'extension), text files (typically with a .txt path extension, and opened as
+#'untitled model files), and PNG, JPG/JPEG, BMP, and GIF image file formats
+#'(typically .png / .jpg / .jpeg / .bmp / .gif, respectively). (Note that in
+#'SLiMguiLegacy, PDF files (.pdf) are supported but these other image file formats
+#'are not.) This method can be particularly useful for opening images created by
+#'the simulation itself, often by sublaunching a plotting process in R or another
+#'environment; see section 14.8 for an example.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+openDocument <- function(filePath) {
+ .SG$openDocument(filePath)
+}
+
+#'SLiM method pauseExecution
+#'
+#'Documentation for SLiM function \code{pauseExecution}, which is a method of the
+#'SLiM class \code{\link{SLiMgui}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=711}{SLiM manual: page
+#'711}.
+#'
+#'@param filePath An object of type string. Must be of length 1 (a singleton). See
+#'details for description.
+#'
+#'@aliases SLiMgui$pauseExecution .SG$pauseExecution
+#'@family SLiMgui
+#'@return An object of type void or void.
+#'@details Pauses a model that is playing in SLiMgui. This is essentially
+#'equivalent to clicking the "Play" button to stop the execution of the model.
+#'Execution can be resumed by the user, by clicking the "Play" button again;
+#'unlike calling stop() or simulationFinished(), the simulation is not terminated.
+#'This method can be useful for debugging or exploratory purposes, to pause the
+#'model at a point of interest. Execution is paused at the end of the currently
+#'executing tick, not mid-tick. If the model is being profiled, or is executing
+#'forward to a tick number entered in the tick field, pauseExecution() will do
+#'nothing; by design, pauseExecution() only pauses execution when SLiMgui is doing
+#'a simple "Play" of the model.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+pauseExecution <- function(filePath) {
+ .SG$pauseExecution(filePath)
 }
 
 
@@ -7852,6 +16402,997 @@ treeSeqSimplify <- function(void) {
 
 
 
+#'SLiM method add
+#'
+#'Documentation for SLiM function \code{add}, which is a method of the SLiM class
+#'\code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=713}{SLiM manual: page
+#'713}.
+#'
+#'@param x An object of type integer or float or SpatialMap object. See details
+#'for description.
+#'
+#'@aliases SpatialMap$add .SM$add
+#'@family SpatialMap
+#'@return An object of type SpatialMap object. Return will be of length 1 (a
+#'singleton)
+#'@details Adds x to the spatial map. One possibility is that x is a singleton
+#'integer or float value; in this case, x is added to each grid value of the
+#'target spatial map. Another possibility is that x is an integer or float
+#'vector/matrix/array of the same dimensions as the target spatial map's grid;
+#'in this case, each value of x is added to the corresponding grid value of the
+#'target spatial map. The third possibility is that x is itself a (singleton)
+#'spatial map; in this case, each grid value of x is added to the corresponding
+#'grid value of the target spatial map (and thus the two spatial maps must match
+#'in their spatiality, their spatial bounds, and their grid dimensions). The
+#'target spatial map is returned, to allow easy chaining of operations.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+add <- function(x) {
+ .SM$add(x)
+}
+
+#'SLiM method blend
+#'
+#'Documentation for SLiM function \code{blend}, which is a method of the SLiM
+#'class \code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=713}{SLiM manual: page
+#'713}.
+#'
+#'@param x An object of type integer or float or SpatialMap object. See details
+#'for description.
+#'@param xFraction An object of type float. Must be of length 1 (a singleton). See
+#'details for description.
+#'
+#'@aliases SpatialMap$blend .SM$blend
+#'@family SpatialMap
+#'@return An object of type SpatialMap object. Return will be of length 1 (a
+#'singleton)
+#'@details Blends x into the spatial map, giving x a weight of xFraction and the
+#'existing values in the target spatial map a weight of 1 - xFraction, such that
+#'the resulting values in the target spatial map are then given by x * xFraction
+#'+ target * (1 - xFraction). The value of xFraction must be in [0.0, 1.0]. One
+#'possibility is that x is a singleton integer or float value; in this case, x
+#'is blended with each grid value of the target spatial map. Another possibility
+#'is that x is an integer or float vector/ matrix/array of the same dimensions
+#'as the target spatial map's grid; in this case, each value of x is blended with
+#'the corresponding grid value of the target spatial map. The third possibility
+#'is that x is itself a (singleton) spatial map; in this case, each grid value of
+#'x is blended with the corresponding grid value of the target spatial map (and
+#'thus the two spatial maps must match in their spatiality, their spatial bounds,
+#'and their grid dimensions). The target spatial map is returned, to allow easy
+#'chaining of operations.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+blend <- function(x, xFraction) {
+ .SM$blend(x, xFraction)
+}
+
+#'SLiM method changeColors
+#'
+#'Documentation for SLiM function \code{changeColors}, which is a method of the
+#'SLiM class \code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=713}{SLiM manual: page
+#'713}.
+#'
+#'@param valueRange An object of type null or integer or float. The default value
+#'is \code{NULL}. See details for description.
+#'@param colors An object of type null or string. The default value is
+#'\code{NULL}. See details for description.
+#'
+#'@aliases SpatialMap$changeColors .SM$changeColors
+#'@family SpatialMap
+#'@return An object of type void.
+#'@details Changes the color scheme for the target spatial map. The meaning of
+#'valueRange and colors are identical to their meaning in defineSpatialMap(), but
+#'are also described here. The valueRange and colors parameters travel together;
+#'either both are NULL, or both are specified. They control how map values
+#'will be transformed into colors, by SLiMgui and by the mapColor() method. The
+#'valueRange parameter establishes the color-mapped range of spatial map values,
+#'as a vector of length two specifying a minimum and maximum; this does not
+#'need to match the actual range of values in the map. The colors parameter then
+#'establishes the corresponding colors for values within the interval defined by
+#'valueRange: values less than or equal to valueRange[0] will map to colors[0],
+#'values greater than or equal to valueRange[1] will map to the last colors value,
+#'and intermediate values will shade continuously through the specified vector
+#'of colors, with interpolation between adjacent colors to produce a continuous
+#'spectrum. This is much simpler than it sounds in this description; see the
+#'recipes in chapter 16 for an illustration of its use. If valueRange and colors
+#'are both NULL, a default grayscale color scheme will be used in SLiMgui, but an
+#'error will result if mapColor() is called.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+changeColors <- function(valueRange, colors) {
+ .SM$changeColors(valueRange, colors)
+}
+
+#'SLiM method changeValues
+#'
+#'Documentation for SLiM function \code{changeValues}, which is a method of the
+#'SLiM class \code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=713}{SLiM manual: page
+#'713}.
+#'
+#'@param x An object of type integer or float or SpatialMap object. See details
+#'for description.
+#'
+#'@aliases SpatialMap$changeValues .SM$changeValues
+#'@family SpatialMap
+#'@return An object of type void.
+#'@details Changes the grid values used for the target spatial map. The parameter
+#'x should be either a SpatialMap object from which values are taken directly, or
+#'a vector, matrix, or array of numeric values as described in the documentation
+#'for defineSpatialMap(). Other characteristics of the spatial map, such as its
+#'color mapping (if defined), its spatial bounds, and its spatiality, will remain
+#'unchanged. The grid resolution of the spatial map is allowed to change with
+#'this method. This method is useful for changing the values of a spatial map
+#'over time, such as to implement changes to the landscape's characteristics due
+#'to seasonality, climate change, processes such as fire or urbanization, and
+#'so forth. As with the original map values provided to defineSpatialMap(), it
+#'is often useful to read map values from a PNG image file using the Eidos class
+#'Image.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+changeValues <- function(x) {
+ .SM$changeValues(x)
+}
+
+#'SLiM method divide
+#'
+#'Documentation for SLiM function \code{divide}, which is a method of the SLiM
+#'class \code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=714}{SLiM manual: page
+#'714}.
+#'
+#'@param x An object of type integer or float or SpatialMap object. See details
+#'for description.
+#'
+#'@aliases SpatialMap$divide .SM$divide
+#'@family SpatialMap
+#'@return An object of type SpatialMap object. Return will be of length 1 (a
+#'singleton)
+#'@details Divides the spatial map by x. One possibility is that x is a
+#'singleton integer or float value; in this case, each grid value of the target
+#'spatial map is divided by x. Another possibility is that x is an integer or
+#'float vector/matrix/array of the same dimensions as the target spatial map's
+#'grid; in this case, each grid value of the target spatial map is divided by
+#'the corresponding value of x. The third possibility is that x is itself a
+#'(singleton) spatial map; in this case, each grid value of the target spatial
+#'map is divided by the corresponding grid value of x (and thus the two spatial
+#'maps must match in their spatiality, their spatial bounds, and their grid
+#'dimensions). The target spatial map is returned, to allow easy chaining of
+#'operations.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+divide <- function(x) {
+ .SM$divide(x)
+}
+
+#'SLiM method exp
+#'
+#'Documentation for SLiM function \code{exp}, which is a method of the SLiM class
+#'\code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=714}{SLiM manual: page
+#'714}.
+#'
+#'@param void An object of type . See details for description.
+#'
+#'@aliases SpatialMap$exp .SM$exp
+#'@family SpatialMap
+#'@return An object of type SpatialMap object. Return will be of length 1 (a
+#'singleton)
+#'@details Exponentiates the values of the spatial map. More precisely, each grid
+#'value x of the target spatial map is exponentiated - replaced by the value ex.
+#'The target spatial map is returned, to allow easy chaining of operations.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+exp <- function(void) {
+ .SM$exp(void)
+}
+
+#'SLiM method gridValues
+#'
+#'Documentation for SLiM function \code{gridValues}, which is a method of the SLiM
+#'class \code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=714}{SLiM manual: page
+#'714}.
+#'
+#'@param void An object of type . See details for description.
+#'
+#'@aliases SpatialMap$gridValues .SM$gridValues
+#'@family SpatialMap
+#'@return An object of type float.
+#'@details Returns the values for the spatial map's grid as a vector (for a
+#'1D map), a matrix (for a 2D map), or an array (for a 3D map). The form and
+#'orientation of the returned values is such that it could be used to create a new
+#'spatial map, with defineSpatialMap(), which would be identical to the original.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+gridValues <- function(void) {
+ .SM$gridValues(void)
+}
+
+#'SLiM method interpolate
+#'
+#'Documentation for SLiM function \code{interpolate}, which is a method of the
+#'SLiM class \code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=714}{SLiM manual: page
+#'714}.
+#'
+#'@param factor An object of type integer or string. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param method An object of type integer or string. Must be of length 1 (a
+#'singleton). The default value is \code{"linear"}. See details for description.
+#'
+#'@aliases SpatialMap$interpolate .SM$interpolate
+#'@family SpatialMap
+#'@return An object of type SpatialMap object. Return will be of length 1 (a
+#'singleton)
+#'@details Increases the resolution of the spatial map by factor, changing the
+#'dimensions of the spatial map's grid of values (while leaving its spatial
+#'bounds unchanged), by interpolating new values between the existing values.
+#'The parameter factor must be an integer in [2, 10001], somewhat arbitrarily.
+#'The target spatial map is returned, to allow easy chaining of operations. For
+#'a 1D spatial map, factor-1 new values will be inserted between every pair of
+#'values in the original value grid. A factor of 2 would therefore insert one
+#'new value between each pair of existing values, thereby increasing the map's
+#'resolution by a factor of two. Note that if the spatial map's original grid
+#'dimension was N, the new grid dimension with a factor of k would be k(N−1)+1,
+#'not kN, because new values are inserted only between existing values. For 2D
+#'and 3D spatial maps, essentially the same process is conducted along each axis
+#'of the map's spatiality, increasing the resolution of the map by factor in
+#'every dimension. If method is "linear" (the default), linear (or bilinear or
+#'trilinear, for 2D/3D maps) interpolation will be used to interpolate the values
+#'for the new grid points. Alternatively, if method is "nearest", the nearest
+#'value in the old grid will be used for new grid points; with this method, it is
+#'recommended that factor be odd, not even, to avoid artifacts due to rounding of
+#'coordinates midway between the original grid positions. If method is "cubic",
+#'cubic (or bicubic, for 2D maps) will be used; this generally produces smoother
+#'interpolation with fewer artifacts than "linear", but it is not supported for 3D
+#'maps. The choice of interpolation method used here is independent of the map's
+#'interpolate property. Note that while the "nearest" and "linear" interpolation
+#'methods will leave the range of values in the map unchanged, "cubic"
+#'interpolation may produce interpolated values that are outside the original
+#'range of values (by design). Periodic boundaries are currently supported only
+#'for "nearest", "linear", and 1D "cubic" interpolation.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+interpolate <- function(factor, method) {
+ .SM$interpolate(factor, method)
+}
+
+#'SLiM method mapColor
+#'
+#'Documentation for SLiM function \code{mapColor}, which is a method of the SLiM
+#'class \code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=714}{SLiM manual: page
+#'714}.
+#'
+#'@param value An object of type numeric. See details for description.
+#'
+#'@aliases SpatialMap$mapColor .SM$mapColor
+#'@family SpatialMap
+#'@return An object of type string.
+#'@details Uses the spatial map's color-translation machinery (as defined by
+#'the valueRange and colors parameters to defineSpatialMap()) to translate each
+#'element of value into a corresponding color string. If the spatial map does not
+#'have color-translation capabilities, an error will result. See the documentation
+#'for defineSpatialMap() for information regarding the details of color
+#'translation. See the Eidos manual for further information on color strings.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+mapColor <- function(value) {
+ .SM$mapColor(value)
+}
+
+#'SLiM method mapImage
+#'
+#'Documentation for SLiM function \code{mapImage}, which is a method of the SLiM
+#'class \code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=715}{SLiM manual: page
+#'715}.
+#'
+#'@param width An object of type null or integer. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param height An object of type null or integer. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param centers An object of type logical. Must be of length 1 (a singleton). The
+#'default value is \code{F}. See details for description.
+#'@param color An object of type logical. Must be of length 1 (a singleton). The
+#'default value is \code{T}. See details for description.
+#'
+#'@aliases SpatialMap$mapImage .SM$mapImage
+#'@family SpatialMap
+#'@return An object of type Image object. Return will be of length 1 (a singleton)
+#'@details Returns an Image object sampled from the spatial map. The image will
+#'be width pixels wide and height pixels tall; the intrinsic size of the spatial
+#'map itself will be used if one of these parameters is NULL. The image will
+#'be oriented in the same way as it is displayed in SLiMgui (which conceptually
+#'entails a transformation from matrix coordinates, which store values by column,
+#'to standard image coordinates, which store values by row; see the Eidos manual's
+#'documentation of Image for details). This method may only be called for 2D
+#'spatial maps at present. The sampling of the spatial map can be done in one of
+#'two ways, as controlled by the centers parameter. If centers is T, a (width+1)
+#'× (height+1) grid of lines that delineates width × height rectangular pixels
+#'will be overlaid on top of the spatial map, and values will be sampled from
+#'the spatial map at the center of each of these pixels. If centers is F (the
+#'default), a width × height grid of lines will be overlaid on top of the spatial
+#'map, and values will be sampled from the spatial map at the vertices of the
+#'grid. If interpolation is not enabled for the spatial map, these two options
+#'will both recover the original matrix of values used to define the spatial map
+#'(assuming, here and below, that width and height are NULL). If interpolation
+#'is enabled for the spatial map, however, centers == F will recover the original
+#'values, but will not capture the "typical" value of each pixel in the image;
+#'centers == T, on the other hand, will not recover the original values, but will
+#'capture the "typical" value of each pixel in the image (i.e., the value at the
+#'center of each pixel, as produced by interpolation). The figures in section
+#'16.11 may be helpful for visualizing the difference between these options; the
+#'overlaid grids span the full extent of the spatial map, just as shown in that
+#'section. If color is T (the default), the valueRange and colors parameters
+#'supplied to defineSpatialMap() will be used to translate map values to RGB color
+#'values as described in the documentation of that method, providing the same
+#'appearance as in SLiMgui; of course those parameters must have been supplied,
+#'otherwise an error will result. If color is F, on the other hand, a grayscale
+#'image will be produced that directly reflects the map values without color
+#'translation. In this case, this method needs to translate map values, which
+#'can have any float value, into grayscale pixel values that are integers in [0,
+#'255]. To do so, the map values are multiplied by 255.0, clamped to [0.0, 255.0],
+#'and then rounded to the nearest integer. This translation scheme essentially
+#'assumes that map values are in [0, 1]; for spatial maps that were defined using
+#'the floatK channel of a grayscale PNG image, this should recover the original
+#'image's pixel values. (If a different translation scheme is desired, color=T
+#'with the desired valueRange and colors should be used.)
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+mapImage <- function(width, height, centers, color) {
+ .SM$mapImage(width, height, centers, color)
+}
+
+#'SLiM method mapValue
+#'
+#'Documentation for SLiM function \code{mapValue}, which is a method of the SLiM
+#'class \code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=715}{SLiM manual: page
+#'715}.
+#'
+#'@param point An object of type float. See details for description.
+#'
+#'@aliases SpatialMap$mapValue .SM$mapValue
+#'@family SpatialMap
+#'@return An object of type float.
+#'@details Uses the spatial map's mapping machinery (as defined by the gridSize,
+#'values, and interpolate parameters to defineSpatialMap()) to translate the
+#'coordinates of point into a corresponding map value. The length of point must
+#'be equal to the spatiality of the spatial map; in other words, for a spatial
+#'map with spatiality "xz", point must be of length 2, specifying the x and z
+#'coordinates of the point to be evaluated. Interpolation will automatically be
+#'used if it was enabled for the spatial map. Point coordinates are clamped into
+#'the range defined by the spatial boundaries, even if the spatial boundaries
+#'are periodic; use pointPeriodic() to wrap the point coordinates first if
+#'desired. See the documentation for defineSpatialMap() for information regarding
+#'the details of value mapping. Beginning in SLiM 3.3, point may contain more
+#'than one point to be looked up. In this case, the length of point must be an
+#'exact multiple of the spatiality of the spatial map; for a spatial map with
+#'spatiality "xz", for example, the length of point must be an exact multiple of
+#'2, and successive pairs of elements from point (elements 0 and 1, then elements
+#'2 and 3, etc.) will be taken as the x and z coordinates of the points to be
+#'evaluated. This allows spatialMapValue() to be used in a vectorized fashion.
+#'The spatialMapValue() method of Subpopulation provides the same functionality
+#'as this method; it may be more convenient to use, for some usage cases, and it
+#'checks that the spatial map is actually added to the subpopulation in question,
+#'providing an additional consistency check. However, either method may be used.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+mapValue <- function(point) {
+ .SM$mapValue(point)
+}
+
+#'SLiM method multiply
+#'
+#'Documentation for SLiM function \code{multiply}, which is a method of the SLiM
+#'class \code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=716}{SLiM manual: page
+#'716}.
+#'
+#'@param x An object of type integer or float or SpatialMap object. See details
+#'for description.
+#'
+#'@aliases SpatialMap$multiply .SM$multiply
+#'@family SpatialMap
+#'@return An object of type SpatialMap object. Return will be of length 1 (a
+#'singleton)
+#'@details Multiplies the spatial map by x. One possibility is that x is a
+#'singleton integer or float value; in this case, each grid value of the target
+#'spatial map is multiplied by x. Another possibility is that x is an integer or
+#'float vector/matrix/array of the same dimensions as the target spatial map's
+#'grid; in this case, each grid value of the target spatial map is multiplied
+#'by the corresponding value of x. The third possibility is that x is itself a
+#'(singleton) spatial map; in this case, each grid value of the target spatial
+#'map is multiplied by the corresponding grid value of x (and thus the two
+#'spatial maps must match in their spatiality, their spatial bounds, and their
+#'grid dimensions). The target spatial map is returned, to allow easy chaining of
+#'operations.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+multiply <- function(x) {
+ .SM$multiply(x)
+}
+
+#'SLiM method power
+#'
+#'Documentation for SLiM function \code{power}, which is a method of the SLiM
+#'class \code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=716}{SLiM manual: page
+#'716}.
+#'
+#'@param x An object of type integer or float or SpatialMap object. See details
+#'for description.
+#'
+#'@aliases SpatialMap$power .SM$power
+#'@family SpatialMap
+#'@return An object of type SpatialMap object. Return will be of length 1 (a
+#'singleton)
+#'@details Raises the spatial map to the power x. One possibility is that x
+#'is a singleton integer or float value; in this case, each grid value of the
+#'target spatial map is raised to the power x. Another possibility is that x is
+#'an integer or float vector/matrix/array of the same dimensions as the target
+#'spatial map's grid; in this case, each grid value of the target spatial map is
+#'raised to the power of the corresponding value of x. The third possibility is
+#'that x is itself a (singleton) spatial map; in this case, each grid value of the
+#'target spatial map is raised to power of the corresponding grid value of x (and
+#'thus the two spatial maps must match in their spatiality, their spatial bounds,
+#'and their grid dimensions). The target spatial map is returned, to allow easy
+#'chaining of operations.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+power <- function(x) {
+ .SM$power(x)
+}
+
+#'SLiM method range
+#'
+#'Documentation for SLiM function \code{range}, which is a method of the SLiM
+#'class \code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=716}{SLiM manual: page
+#'716}.
+#'
+#'@param void An object of type . See details for description.
+#'
+#'@aliases SpatialMap$range .SM$range
+#'@family SpatialMap
+#'@return An object of type float.
+#'@details Returns the range of values contained in the spatial map. The result is
+#'a float vector of length 2; the first element is the minimum map value, and the
+#'second element is the maximum map value.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+range <- function(void) {
+ .SM$range(void)
+}
+
+#'SLiM method rescale
+#'
+#'Documentation for SLiM function \code{rescale}, which is a method of the SLiM
+#'class \code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=716}{SLiM manual: page
+#'716}.
+#'
+#'@param min An object of type numeric or numeric. Must be of length 1 (a
+#'singleton). The default value is \code{0.0}. See details for description.
+#'@param max An object of type numeric or numeric. Must be of length 1 (a
+#'singleton). The default value is \code{1.0}. See details for description.
+#'
+#'@aliases SpatialMap$rescale .SM$rescale
+#'@family SpatialMap
+#'@return An object of type SpatialMap object. Return will be of length 1 (a
+#'singleton)
+#'@details Rescales the values of the spatial map to the range [min, max]. By
+#'default, the rescaling is to the range [0.0, 1.0]. It is required that min be
+#'less than max, and that both be finite. Note that the final range may not be
+#'exactly [min, max] due to numerical error. The target spatial map is returned,
+#'to allow easy chaining of operations.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+rescale <- function(min, max) {
+ .SM$rescale(min, max)
+}
+
+#'SLiM method sampleImprovedNearbyPoint
+#'
+#'Documentation for SLiM function \code{sampleImprovedNearbyPoint}, which is a
+#'method of the SLiM class \code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=716}{SLiM manual: page
+#'716}.
+#'
+#'@param point An object of type float. See details for description.
+#'@param maxDistance An object of type float. Must be of length 1 (a singleton).
+#'See details for description.
+#'@param functionType An object of type string. Must be of length 1 (a singleton).
+#'See details for description.
+#'@param ... An object of type NA. NA See details for description.
+#'
+#'@aliases SpatialMap$sampleImprovedNearbyPoint .SM$sampleImprovedNearbyPoint
+#'@family SpatialMap
+#'@return An object of type float.
+#'@details This variant of sampleNearbyPoint() samples a Metropolis-Hastings
+#'move on the spatial map. See sampleNearbyPoint() for discussion of the basic
+#'idea. This method proposes a nearby point drawn from the given kernel. If the
+#'drawn point has a larger map value than the original point, the new point is
+#'returned. If the drawn point has a smaller map value than the original point, it
+#'is returned with a probability equal to the ratio between its map value and the
+#'original map value, otherwise the original point is returned. The distribution
+#'of individuals that move (or not) to new locations governed by this method will
+#'converge upon the map itself, in a similar manner to how MCMC converges upon
+#'the posterior distribution (assuming no other forces, such as birth or death,
+#'influence the distribution of individuals). Movement governed by this method
+#'is "improved" in the sense that individuals will tend to remain where they are
+#'unless the new sampled point is an improvement for them - a higher map value.
+#'Note that unlike sampleNearbyPoint(), this method requires that all map values
+#'are non-negative.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+sampleImprovedNearbyPoint <- function(point, maxDistance, functionType, ...)
+{
+ .SM$sampleImprovedNearbyPoint(point, maxDistance, functionType, ...)
+}
+
+#'SLiM method sampleNearbyPoint
+#'
+#'Documentation for SLiM function \code{sampleNearbyPoint}, which is a method of
+#'the SLiM class \code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=716}{SLiM manual: page
+#'716}.
+#'
+#'@param point An object of type float. See details for description.
+#'@param maxDistance An object of type float. Must be of length 1 (a singleton).
+#'See details for description.
+#'@param functionType An object of type string. Must be of length 1 (a singleton).
+#'See details for description.
+#'@param ... An object of type NA. NA See details for description.
+#'
+#'@aliases SpatialMap$sampleNearbyPoint .SM$sampleNearbyPoint
+#'@family SpatialMap
+#'@return An object of type float.
+#'@details For a spatial point supplied in point, returns a nearby point sampled
+#'from a kernel weighted by the spatial map's values. Only points within the
+#'maximum distance of the kernel, maxDistance, will be chosen, and the probability
+#'that a given point is chosen will be proportional to the density of the kernel
+#'at that point multiplied by the value of the map at that point (interpolated,
+#'if interpolation is enabled for the map). Negative values of the map will be
+#'treated as zero. The point returned will be within spatial bounds, respecting
+#'periodic boundaries if in effect (so there is no need to call pointPeriodic() on
+#'the result). The kernel is specified with a kernel shape, functionType, followed
+#'by zero or more ellipsis arguments; see smooth() for further information.
+#'For this method, at present only kernel types "f", "l", "e", "n", and "t" are
+#'supported, and type "t" is not presently supported for 3D kernels. This method
+#'can be used to find points in the vicinity of individuals that are favorable
+#'- possessing more resources, or better environmental conditions, etc. It can
+#'also be used to guide the dispersal or foraging behavior of individuals. See
+#'sampleImprovedNearbyPoint() for a variant that may be useful for directed
+#'movement across a landscape. Note that the algorithm for sampleNearbyPoint()
+#'works by rejection sampling, and so will be very inefficient if the maximum
+#'value of the map (anywhere, across the entire map) is much larger than
+#'the typical value of the map where individuals are. The algorithm for
+#'sampleImprovedNearbyPoint() is different, and does not exhibit this performance
+#'issue.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+sampleNearbyPoint <- function(point, maxDistance, functionType, ...) {
+ .SM$sampleNearbyPoint(point, maxDistance, functionType, ...)
+}
+
+#'SLiM method smooth
+#'
+#'Documentation for SLiM function \code{smooth}, which is a method of the SLiM
+#'class \code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=717}{SLiM manual: page
+#'717}.
+#'
+#'@param maxDistance An object of type float. Must be of length 1 (a singleton).
+#'See details for description.
+#'@param functionType An object of type string. Must be of length 1 (a singleton).
+#'See details for description.
+#'@param ... An object of type NA. NA See details for description.
+#'
+#'@aliases SpatialMap$smooth .SM$smooth
+#'@family SpatialMap
+#'@return An object of type SpatialMap object. Return will be of length 1 (a
+#'singleton)
+#'@details Smooths (or blurs, one could say) the values of the spatial map by
+#'convolution with a kernel. The kernel is specified with a maximum distance
+#'maxDistance (beyond which the kernel cuts off to a value of zero), a kernel
+#'type functionType that should be "f", "l", "e", "n", "c", or "t", and
+#'additional parameters in the ellipsis ... that depend upon the kernel type and
+#'further specify its shape. The target spatial map is returned, to allow easy
+#'chaining of operations. The kernel specification is similar to that for the
+#'setInteractionType() method of InteractionType, but omits the maximum value of
+#'the kernel. Specifically, functionType may be "f", in which case no ellipsis
+#'arguments should be supplied; "l", similarly with no ellipsis arguments; "e",
+#'in which case the ellipsis should supply a numeric$ lambda (rate) parameter
+#'for a negative exponential function; "n", in which case the ellipsis should
+#'supply a numeric$ sigma (standard deviation) parameter for a Gaussian function;
+#'"c", in which case the ellipsis should supply a numeric$ scale parameter for a
+#'Cauchy distribution function; or "t", in which case the ellipsis should supply a
+#'numeric$ degrees of freedom and a numeric$ scale parameter for a t-distribution
+#'function. See the InteractionType class documentation for discussions of these
+#'kernel types. Distance metrics specified to this method, such as maxDistance and
+#'the additional kernel shape parameters, are measured in the distance scale of
+#'the spatial map - the same distance scale in which the spatial bounds of the map
+#'are specified. The operation is performed upon the grid values of the spatial
+#'map; distances are internally translated into the scale of the value grid. For
+#'non-periodic boundaries, clipping at the edge of the spatial map is done; in a
+#'2D map with no periodic boundaries, for example, the weights of edge and corner
+#'grid values are adjusted for their partial (one-half and one-quarter) coverage.
+#'For periodic boundaries, the smoothing operation will automatically wrap around
+#'based upon the assumption that the grid values at the two connected edges of the
+#'periodic boundary have identical values (which they should, since by definition
+#'they represent the same position in space). The density scale of the kernel
+#'has no effect and will be normalized; this is the reason that smooth(), unlike
+#'InteractionType, does not require specification of the maximum value of the
+#'kernel. This normalization prevents the kernel from increasing or decreasing the
+#'average spatial map value (apart from possible edge effects).
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+smooth <- function(maxDistance, functionType, ...) {
+ .SM$smooth(maxDistance, functionType, ...)
+}
+
+#'SLiM method subtract
+#'
+#'Documentation for SLiM function \code{subtract}, which is a method of the SLiM
+#'class \code{\link{SpatialMap}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=717}{SLiM manual: page
+#'717}.
+#'
+#'@param x An object of type integer or float or SpatialMap object. See details
+#'for description.
+#'
+#'@aliases SpatialMap$subtract .SM$subtract
+#'@family SpatialMap
+#'@return An object of type SpatialMap object. Return will be of length 1 (a
+#'singleton)
+#'@details Subtracts x from the spatial map. One possibility is that x is a
+#'singleton integer or float value; in this case, x is subtracted from each grid
+#'value of the target spatial map. Another possibility is that x is an integer
+#'or float vector/matrix/array of the same dimensions as the target spatial map's
+#'grid; in this case, each value of x is subtracted from the corresponding grid
+#'value of the target spatial map. The third possibility is that x is itself
+#'a (singleton) spatial map; in this case, each grid value of x is subtracted
+#'from the corresponding grid value of the target spatial map (and thus the two
+#'spatial maps must match in their spatiality, their spatial bounds, and their
+#'grid dimensions). The target spatial map is returned, to allow easy chaining of
+#'operations.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+subtract <- function(x) {
+ .SM$subtract(x)
+}
+
+
+
 #'SLiM method addSubpop
 #'
 #'Documentation for SLiM function \code{addSubpop}, which is a method of the SLiM
@@ -7864,8 +17405,8 @@ treeSeqSimplify <- function(void) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=678}{SLiM manual: page
-#'678}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=719}{SLiM manual: page
+#'719}.
 #'
 #'@param subpopID An object of type integer or string. Must be of length 1 (a
 #'singleton). See details for description.
@@ -7887,37 +17428,14 @@ treeSeqSimplify <- function(void) {
 #'initial sex ratio may optionally be specified as sexRatio (as the male fraction,
 #'M:M+F); if it is not specified, a default of 0.5 is used. The new subpopulation
 #'will be defined as a global variable immediately by this method (see section
-#'24.15), and will also be returned by this method. Subpopulations added by this
+#'25.16), and will also be returned by this method. Subpopulations added by this
 #'method will initially consist of individuals with empty genomes. In order to
 #'model subpopulations that split from an already existing subpopulation, use
-#'addSubpopSplit(). Only in nonWF models, the haploid parameter may be T; in
-#'this case, the second genome of each new individual will be a null genome,
-#'rather than an empty genome. For even greater control in nonWF models, you can
-#'call addSubpop() with an initial size of 0 and then stock the population with
-#'new individuals created however you wish in the next tick's reproduction()
-#'callback. ject<Subpopulation>$)addSubpopSplit(is$ subpopID, integer$ size,
-#'io<Subpopulation>$ sourceSubpop, [float$ sexRatio = 0.5]) Split off a new
-#'subpopulation with id subpopID and size individuals derived from subpopulation
-#'sourceSubpop. The subpopID parameter may be either an integer giving the ID
-#'of the new subpopulation, or a string giving the name of the new subpopulation
-#'(such as "p5" to specify an ID of 5). The sourceSubpop parameter may specify the
-#'source subpopulation either as a Subpopulation object or by integer identifier.
-#'Only if sex is enabled for the species, the initial sex ratio may optionally
-#'be specified as sexRatio (as the male fraction, M:M+F); if it is not specified,
-#'a default of 0.5 is used. The new subpopulation will be defined as a global
-#'variable immediately by this method (see section 24.15), and will also be
-#'returned by this method. Subpopulations added by this method will consist of
-#'individuals that are clonal copies of individuals from the source subpopulation,
-#'randomly chosen with probabilities proportional to fitness. The fitness of all
-#'of these initial individuals is considered to be 1.0, to avoid a doubled round
-#'of selection in the initial tick, given that fitness values were already used
-#'to choose the individuals to clone. Once this initial set of individuals has
-#'mated to produce offspring, the model is effectively of parental individuals in
-#'the source subpopulation mating randomly according to fitness, as usual in SLiM,
-#'with juveniles migrating to the newly added subpopulation. Effectively, then,
-#'then new subpopulation is created empty, and is filled by migrating juveniles
-#'from the source subpopulation, in accordance with SLiM's usual model of juvenile
-#'migration.
+#'addSubpopSplit(). Only in nonWF models, the haploid parameter may be T; in this
+#'case, the second genome of each new individual will be a null genome, rather
+#'than an empty genome. For even greater control in nonWF models, you can call
+#'addSubpop() with an initial size of 0 and then stock the population with new
+#'individuals created however you wish in the next tick's reproduction() callback.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -7933,6 +17451,70 @@ addSubpop <- function(subpopID, size, sexRatio, haploid) {
  .Sp$addSubpop(subpopID, size, sexRatio, haploid)
 }
 
+#'SLiM method addSubpopSplit
+#'
+#'Documentation for SLiM function \code{addSubpopSplit}, which is a method of the
+#'SLiM class \code{\link{Species}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=720}{SLiM manual: page
+#'720}.
+#'
+#'@param subpopID An object of type integer or string. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param size An object of type integer. Must be of length 1 (a singleton). See
+#'details for description.
+#'@param sourceSubpop An object of type integer or Subpopulation object. Must be
+#'of length 1 (a singleton). See details for description.
+#'@param sexRatio An object of type float. Must be of length 1 (a singleton). The
+#'default value is \code{0.5}. See details for description.
+#'
+#'@aliases Species$addSubpopSplit .Sp$addSubpopSplit
+#'@family Species
+#'@return An object of type Subpopulation object. Return will be of length 1 (a
+#'singleton)
+#'@details Split off a new subpopulation with id subpopID and size individuals
+#'derived from subpopulation sourceSubpop. The subpopID parameter may be either
+#'an integer giving the ID of the new subpopulation, or a string giving the name
+#'of the new subpopulation (such as "p5" to specify an ID of 5). The sourceSubpop
+#'parameter may specify the source subpopulation either as a Subpopulation object
+#'or by integer identifier. Only if sex is enabled for the species, the initial
+#'sex ratio may optionally be specified as sexRatio (as the male fraction, M:M+F);
+#'if it is not specified, a default of 0.5 is used. The new subpopulation will be
+#'defined as a global variable immediately by this method (see section 25.16), and
+#'will also be returned by this method. Subpopulations added by this method will
+#'consist of individuals that are clonal copies of individuals from the source
+#'subpopulation, randomly chosen with probabilities proportional to fitness. The
+#'fitness of all of these initial individuals is considered to be 1.0, to avoid
+#'a doubled round of selection in the initial tick, given that fitness values
+#'were already used to choose the individuals to clone. Once this initial set of
+#'individuals has mated to produce offspring, the model is effectively of parental
+#'individuals in the source subpopulation mating randomly according to fitness,
+#'as usual in SLiM, with juveniles migrating to the newly added subpopulation.
+#'Effectively, then, then new subpopulation is created empty, and is filled by
+#'migrating juveniles from the source subpopulation, in accordance with SLiM's
+#'usual model of juvenile migration.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+addSubpopSplit <- function(subpopID, size, sourceSubpop, sexRatio) {
+ .Sp$addSubpopSplit(subpopID, size, sourceSubpop, sexRatio)
+}
+
 #'SLiM method countOfMutationsOfType
 #'
 #'Documentation for SLiM function \code{countOfMutationsOfType}, which is a method
@@ -7945,8 +17527,8 @@ addSubpop <- function(subpopID, size, sexRatio, haploid) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=679}{SLiM manual: page
-#'679}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=720}{SLiM manual: page
+#'720}.
 #'
 #'@param mutType An object of type integer or MutationType object. Must be of
 #'length 1 (a singleton). See details for description.
@@ -7988,8 +17570,8 @@ countOfMutationsOfType <- function(mutType) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=679}{SLiM manual: page
-#'679}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=720}{SLiM manual: page
+#'720}.
 #'
 #'@param pedigreeIDs An object of type integer. See details for description.
 #'@param subpops An object of type null or integer or Subpopulation object. The
@@ -8045,8 +17627,8 @@ individualsWithPedigreeIDs <- function(pedigreeIDs, subpops) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=679}{SLiM manual: page
-#'679}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=720}{SLiM manual: page
+#'720}.
 #'
 #'@param individuals An object of type Individual object. See details for
 #'description.
@@ -8069,7 +17651,7 @@ individualsWithPedigreeIDs <- function(pedigreeIDs, subpops) {
 #'core when the new offspring generation becomes the parental generation and the
 #'previous parental generation dies; mortality does not otherwise occur in WF
 #'models. In nonWF models, mortality normally occurs during the survival stage
-#'of the tick cycle (see section 23.4), based upon the fitness values calculated
+#'of the tick cycle (see section 24.4), based upon the fitness values calculated
 #'by SLiM, and survival() callbacks can influence the outcome of that survival
 #'stage. Calls to killIndividuals(), on the other hand, can be made at any time
 #'during first(), early(), or late() events, and the result cannot be modified by
@@ -8103,8 +17685,8 @@ killIndividuals <- function(individuals) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=680}{SLiM manual: page
-#'680}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=721}{SLiM manual: page
+#'721}.
 #'
 #'@param subpops An object of type null or integer or Subpopulation object. See
 #'details for description.
@@ -8152,8 +17734,8 @@ mutationCounts <- function(subpops, mutations) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=680}{SLiM manual: page
-#'680}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=721}{SLiM manual: page
+#'721}.
 #'
 #'@param subpops An object of type null or integer or Subpopulation object. See
 #'details for description.
@@ -8200,8 +17782,8 @@ mutationFrequencies <- function(subpops, mutations) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=680}{SLiM manual: page
-#'680}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=721}{SLiM manual: page
+#'721}.
 #'
 #'@param mutType An object of type integer or MutationType object. Must be of
 #'length 1 (a singleton). See details for description.
@@ -8244,8 +17826,8 @@ mutationsOfType <- function(mutType) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=680}{SLiM manual: page
-#'680}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=721}{SLiM manual: page
+#'721}.
 #'
 #'@param filePath An object of type null or string. Must be of length 1 (a
 #'singleton). The default value is \code{NULL}. See details for description.
@@ -8256,17 +17838,17 @@ mutationsOfType <- function(mutType) {
 #'@family Species
 #'@return An object of type void.
 #'@details Output all fixed mutations - all Substitution objects, in other words
-#'(see section 1.5.2) - in a SLiM native format (see section 26.1.2 for output
+#'(see section 1.5.2) - in a SLiM native format (see section 27.1.2 for output
 #'format details). If the optional parameter filePath is NULL (the default),
 #'output will be sent to Eidos's output stream (see section 4.2.1). Otherwise,
 #'output will be sent to the filesystem path specified by filePath, overwriting
 #'that file if append if F, or appending to the end of it if append is T.
 #'Mutations which have fixed but have not been turned into Substitution objects
 #'- typically because convertToSubstitution has been set to F for their mutation
-#'type (see section 24.11.1) - are not output; they are still considered to be
+#'type (see section 25.11.1) - are not output; they are still considered to be
 #'segregating mutations by SLiM. In SLiM 3.3 and later, the output format includes
 #'the nucleotides associated with any nucleotide-based mutations; see section
-#'26.1.2. Output is generally done in a late() event, so that the output reflects
+#'27.1.2. Output is generally done in a late() event, so that the output reflects
 #'the state of the simulation at the end of a tick.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
@@ -8295,8 +17877,8 @@ outputFixedMutations <- function(filePath, append) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=681}{SLiM manual: page
-#'681}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=722}{SLiM manual: page
+#'722}.
 #'
 #'@param filePath An object of type null or string. Must be of length 1 (a
 #'singleton). The default value is \code{NULL}. See details for description.
@@ -8316,7 +17898,7 @@ outputFixedMutations <- function(filePath, append) {
 #'@aliases Species$outputFull .Sp$outputFull
 #'@family Species
 #'@return An object of type void.
-#'@details Output the state of the entire population (see section 26.1.1 for
+#'@details Output the state of the entire population (see section 27.1.1 for
 #'output format details). If the optional parameter filePath is NULL (the
 #'default), output will be sent to Eidos's output stream (see section 4.2.1).
 #'Otherwise, output will be sent to the filesystem path specified by filePath,
@@ -8335,7 +17917,7 @@ outputFixedMutations <- function(filePath, append) {
 #'using the dimensionality option of initializeSLiMOptions(). If spatialPositions
 #'is F, the output will not contain spatial positions, and will be identical to
 #'the output generated by SLiM 2.1 and later. If spatialPositions is T, spatial
-#'position information will be output if it is available (see section 26.1.1
+#'position information will be output if it is available (see section 27.1.1
 #'for format details). If the species does not have continuous space enabled,
 #'the spatialPositions parameter will be ignored. Positional information may
 #'be output for all output destinations - the Eidos output stream, a text file,
@@ -8343,10 +17925,10 @@ outputFixedMutations <- function(filePath, append) {
 #'control the output of the ages of individuals in nonWF simulations. If ages is
 #'F, the output will not contain ages, preserving backward compatibility with the
 #'output format of SLiM 2.1 and later. If ages is T, ages will be output for nonWF
-#'models (see section 26.1.1 for format details). In WF simulations, the ages
+#'models (see section 27.1.1 for format details). In WF simulations, the ages
 #'parameter will be ignored. Beginning with SLiM 3.3, the ancestralNucleotides
 #'parameter may be used to control the output of the ancestral nucleotide
-#'sequence in nucleotide-based models (see section 26.1.1 for format details).
+#'sequence in nucleotide-based models (see section 27.1.1 for format details).
 #'If ancestralNucleotides is F, the output will not contain ancestral nucleotide
 #'information, and so the ancestral sequence will not be restored correctly if the
 #'saved file is loaded with readPopulationFile(). This option is provided because
@@ -8362,7 +17944,7 @@ outputFixedMutations <- function(filePath, append) {
 #'readFromPopulationFile(), subsequently). This option is turned off (F)
 #'by default, to preserve backward compatibility; if it is turned on (T),
 #'different file version values will be used, and backward compatibility with
-#'previous versions of SLiM will be lost (see section 26.1.1). This option
+#'previous versions of SLiM will be lost (see section 27.1.1). This option
 #'may only be used if SLiM's optional pedigree tracking has been enabled with
 #'initializeSLiMOptions(keepPedigrees=T). Output is generally done in a late()
 #'event, so that the output reflects the state of the simulation at the end of a
@@ -8396,8 +17978,8 @@ ancestralNucleotides, pedigreeIDs)
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=682}{SLiM manual: page
-#'682}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=723}{SLiM manual: page
+#'723}.
 #'
 #'@param mutations An object of type Mutation object. See details for description.
 #'@param filePath An object of type null or string. Must be of length 1 (a
@@ -8408,14 +17990,14 @@ ancestralNucleotides, pedigreeIDs)
 #'@aliases Species$outputMutations .Sp$outputMutations
 #'@family Species
 #'@return An object of type void.
-#'@details Output all of the given mutations (see section 26.1.3 for output
+#'@details Output all of the given mutations (see section 27.1.3 for output
 #'format details). This can be used to output all mutations of a given mutation
 #'type, for example. If the optional parameter filePath is NULL (the default),
 #'output will be sent to Eidos's output stream (see section 4.2.1). Otherwise,
 #'output will be sent to the filesystem path specified by filePath, overwriting
 #'that file if append if F, or appending to the end of it if append is T. In SLiM
 #'3.3 and later, the output format includes the nucleotides associated with any
-#'nucleotide-based mutations; see section 26.1.3. Output is generally done in a
+#'nucleotide-based mutations; see section 27.1.3. Output is generally done in a
 #'late() event, so that the output reflects the state of the simulation at the end
 #'of a tick.
 #'@section Copyright:
@@ -8445,8 +18027,8 @@ outputMutations <- function(mutations, filePath, append) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=682}{SLiM manual: page
-#'682}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=723}{SLiM manual: page
+#'723}.
 #'
 #'@param filePath An object of type string. Must be of length 1 (a singleton). See
 #'details for description.
@@ -8481,12 +18063,12 @@ outputMutations <- function(mutations, filePath, append) {
 #'other than a late() event causes a warning; calling from a late() event is
 #'almost always correct in WF models, so that fitness values can be automatically
 #'recalculated by SLiM at the usual time in the tick cycle without the need to
-#'force their recalculation (see chapter 22, and comments on recalculateFitness()
+#'force their recalculation (see chapter 23, and comments on recalculateFitness()
 #'below). In SLiM 3.0 when using the nonWF model, calling readFromPopulationFile()
 #'from any context other than an early() event causes a warning; calling from an
 #'early() event is almost always correct in nonWF models, so that fitness values
 #'can be automatically recalculated by SLiM at the usual time in the tick cycle
-#'without the need to force their recalculation (see chapter 23, and comments
+#'without the need to force their recalculation (see chapter 24, and comments
 #'on recalculateFitness() below). As of SLiM 2.1, this method changes the tick
 #'and cycle counters to the tick and cycle read from the file. If you do not
 #'want these counters to be changed, you can change them back after reading,
@@ -8522,30 +18104,32 @@ outputMutations <- function(mutations, filePath, append) {
 #'will restore the ancestral nucleotide sequence, if that information is present
 #'in the output file. Loading an output file that contains nucleotide information
 #'in a non-nucleotide-based model, and vice versa, will produce an error. As of
-#'SLiM 3.5, this method will read and restore the pedigree IDs of individuals and
-#'genomes if that information is present in the output file (as requested with
-#'outputFull(pedigreeIDs=T)) and if SLiM's optional pedigree tracking has been
-#'enabled with initializeSLiMOptions(keepPedigrees=T). This method can also be
-#'used to read tree-sequence (.trees) files saved by treeSeqOutput() or generated
-#'by the Python pyslim package. Beginning with SLiM 4, the subpopMap parameter may
-#'be supplied to re-order the populations of the input tree sequence when it is
-#'loaded in to SLiM. This parameter must have a value that is a Dictionary; the
-#'keys of this dictionary should be SLiM population identifiers as string values
-#'(e.g., "p2"), and the values should be indexes of populations in the input
-#'tree sequence; a key/value pair of "p2", 4 would mean that the fifth population
-#'in the input (the one at zero-based index 4) should become p2 on loading into
-#'SLiM. If subpopMap is non- NULL, all populations in the tree sequence must be
-#'explicitly mapped, even if their index will not change and even if they will not
-#'be used by SLiM; the only exception is for unused slots in the population table,
-#'which can be explicitly remapped but do not have to be. For instance, suppose
-#'we have a tree sequence in which population 0 is unused, population 1 is not a
-#'SLiM population (for example, an ancestral population produced by msprime), and
-#'population 2 is a SLiM population, and we want to load this in with population 2
-#'as p0 in SLiM. To do this, we could supply a value of Dictionary("p0", 2, "p1",
-#'1, "p2", 0) for subpopMap, or we could leave out slot 0 since it is unused,
-#'with Dictionary("p0", 2, "p1", 1). Although this facility cannot be used to
-#'remove populations in the tree sequence, note that it may add populations that
-#'will be visible when treeSeqOutput() is called (although these will not be SLiM
+#'SLiM 3.5, this method will read and restore the pedigree IDs of individuals
+#'and genomes if that information is present in the output file (as requested
+#'with outputFull(pedigreeIDs=T)) and if SLiM's optional pedigree tracking has
+#'been enabled with initializeSLiMOptions(keepPedigrees=T). This method can
+#'also be used to read tree-sequence (.trees) files saved by treeSeqOutput()
+#'or generated by the Python pyslim package. Note that the user metadata for a
+#'tree-sequence file can be read separately with the treeSeqMetadata() function.
+#'Beginning with SLiM 4, the subpopMap parameter may be supplied to re-order
+#'the populations of the input tree sequence when it is loaded in to SLiM. This
+#'parameter must have a value that is a Dictionary; the keys of this dictionary
+#'should be SLiM population identifiers as string values (e.g., "p2"), and the
+#'values should be indexes of populations in the input tree sequence; a key/value
+#'pair of "p2", 4 would mean that the fifth population in the input (the one
+#'at zero-based index 4) should become p2 on loading into SLiM. If subpopMap
+#'is non-NULL, all populations in the tree sequence must be explicitly mapped,
+#'even if their index will not change and even if they will not be used by SLiM;
+#'the only exception is for unused slots in the population table, which can be
+#'explicitly remapped but do not have to be. For instance, suppose we have a tree
+#'sequence in which population 0 is unused, population 1 is not a SLiM population
+#'(for example, an ancestral population produced by msprime), and population
+#'2 is a SLiM population, and we want to load this in with population 2 as p0
+#'in SLiM. To do this, we could supply a value of Dictionary("p0", 2, "p1", 1,
+#'"p2", 0) for subpopMap, or we could leave out slot 0 since it is unused, with
+#'Dictionary("p0", 2, "p1", 1). Although this facility cannot be used to remove
+#'populations in the tree sequence, note that it may add populations that will
+#'be visible when treeSeqOutput() is called (although these will not be SLiM
 #'populations); if, in this example, we had used Dictionary("p0", 0, "p1", 1,
 #'"p5", 2) and then we wrote the result out with treeSeqOutput(), the resulting
 #'tree sequence would have six populations, although three of them would be empty
@@ -8592,8 +18176,8 @@ readFromPopulationFile <- function(filePath, subpopMap) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=684}{SLiM manual: page
-#'684}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=725}{SLiM manual: page
+#'725}.
 #'
 #'@param tick An object of type null or integer. Must be of length 1 (a
 #'singleton). The default value is \code{NULL}. See details for description.
@@ -8609,18 +18193,18 @@ readFromPopulationFile <- function(filePath, subpopMap) {
 #'immediately rather than taking effect at the next automatic recalculation, you
 #'may call recalculateFitness() to force an immediate recalculation and recache.
 #'The optional parameter tick provides the tick for which mutationEffect() and
-#'fitnessEffect() callbacks should be selected; if it is NULL (the default),
-#'the current tick value for the simulation, community.tick, is used. If you
-#'call recalculateFitness() in an early() event in a WF model, you may wish
-#'this to be community.tick - 1 in order to utilize the mutationEffect() and
-#'fitnessEffect() callbacks for the previous tick, as if the changes that you have
-#'made to fitness- influencing parameters were already in effect at the end of the
-#'previous tick when the new generation was first created and evaluated (usually
-#'it is simpler to just make such changes in a late() event instead, however, in
-#'which case calling recalculateFitness() is probably not necessary at all since
-#'fitness values will be recalculated immediately afterwards). Regardless of the
-#'value supplied for tick here, community.tick inside callbacks will report the
-#'true tick number, so if your callbacks consult that parameter in order to create
+#'fitnessEffect() callbacks should be selected; if it is NULL (the default), the
+#'current tick value for the simulation, community.tick, is used. If you call
+#'recalculateFitness() in an early() event in a WF model, you may wish this to be
+#'community.tick - 1 in order to utilize the mutationEffect() and fitnessEffect()
+#'callbacks for the previous tick, as if the changes that you have made to
+#'fitnessinfluencing parameters were already in effect at the end of the previous
+#'tick when the new generation was first created and evaluated (usually it is
+#'simpler to just make such changes in a late() event instead, however, in which
+#'case calling recalculateFitness() is probably not necessary at all since fitness
+#'values will be recalculated immediately afterwards). Regardless of the value
+#'supplied for tick here, community.tick inside callbacks will report the true
+#'tick number, so if your callbacks consult that parameter in order to create
 #'tick-specific fitness effects you will need to handle the discrepancy somehow.
 #'(Similar considerations apply for nonWF models that call recalculateFitness()
 #'in a late() event, which is also not advisable in general.) After this call,
@@ -8657,8 +18241,8 @@ recalculateFitness <- function(tick) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=684}{SLiM manual: page
-#'684}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=725}{SLiM manual: page
+#'725}.
 #'
 #'@param id An object of type null or integer or string. Must be of length 1 (a
 #'singleton). See details for description.
@@ -8686,8 +18270,8 @@ recalculateFitness <- function(tick) {
 #'is no need to be able to refer to the block later. The registered callback is
 #'added to the end of the list of registered SLiMEidosBlock objects, and is active
 #'immediately; it may be eligible to execute in the current tick (see section
-#'25.11 for details). The new SLiMEidosBlock will be defined as a global variable
-#'immediately by this method (see section 24.12), and will also be returned by
+#'26.11 for details). The new SLiMEidosBlock will be defined as a global variable
+#'immediately by this method (see section 25.12), and will also be returned by
 #'this method.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
@@ -8716,8 +18300,8 @@ registerFitnessEffectCallback <- function(id, source, subpop, start, end) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=684}{SLiM manual: page
-#'684}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=725}{SLiM manual: page
+#'725}.
 #'
 #'@param id An object of type null or integer or string. Must be of length 1 (a
 #'singleton). See details for description.
@@ -8744,9 +18328,9 @@ registerFitnessEffectCallback <- function(id, source, subpop, start, end) {
 #'symbolic name such as "s5"); this may be NULL if there is no need to be able
 #'to refer to the block later. The registered callback is added to the end of the
 #'list of registered SLiMEidosBlock objects, and is active immediately; it may be
-#'eligible to execute in the current tick (see section 25.11 for details). The new
+#'eligible to execute in the current tick (see section 26.11 for details). The new
 #'SLiMEidosBlock will be defined as a global variable immediately by this method
-#'(see section 24.12), and will also be returned by this method.
+#'(see section 25.12), and will also be returned by this method.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -8774,8 +18358,8 @@ registerMateChoiceCallback <- function(id, source, subpop, start, end) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=685}{SLiM manual: page
-#'685}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=726}{SLiM manual: page
+#'726}.
 #'
 #'@param id An object of type null or integer or string. Must be of length 1 (a
 #'singleton). See details for description.
@@ -8802,9 +18386,9 @@ registerMateChoiceCallback <- function(id, source, subpop, start, end) {
 #'symbolic name such as "s5"); this may be NULL if there is no need to be able
 #'to refer to the block later. The registered callback is added to the end of the
 #'list of registered SLiMEidosBlock objects, and is active immediately; it may be
-#'eligible to execute in the current tick (see section 25.11 for details). The new
+#'eligible to execute in the current tick (see section 26.11 for details). The new
 #'SLiMEidosBlock will be defined as a global variable immediately by this method
-#'(see section 24.12), and will also be returned by this method.
+#'(see section 25.12), and will also be returned by this method.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -8832,8 +18416,8 @@ registerModifyChildCallback <- function(id, source, subpop, start, end) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=685}{SLiM manual: page
-#'685}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=726}{SLiM manual: page
+#'726}.
 #'
 #'@param id An object of type null or integer or string. Must be of length 1 (a
 #'singleton). See details for description.
@@ -8858,7 +18442,7 @@ registerModifyChildCallback <- function(id, source, subpop, start, end) {
 #'singleton source, as an Eidos mutation() callback in the current simulation
 #'(specific to the target species), with an optional mutation type mutType
 #'(which may be an integer mutation type identifier, or NULL, the default,
-#'to indicate all mutation types - see section 25.9), optional subpopulation
+#'to indicate all mutation types - see section 26.9), optional subpopulation
 #'subpop (which may also be an integer identifier, or NULL, the default, to
 #'indicate all subpopulations), and optional start and end ticks all limiting its
 #'applicability. The script block will be given identifier id (specified as an
@@ -8866,8 +18450,8 @@ registerModifyChildCallback <- function(id, source, subpop, start, end) {
 #'is no need to be able to refer to the block later. The registered callback is
 #'added to the end of the list of registered SLiMEidosBlock objects, and is active
 #'immediately; it may be eligible to execute in the current tick (see section
-#'25.11 for details). The new SLiMEidosBlock will be defined as a global variable
-#'immediately by this method (see section 24.12), and will also be returned by
+#'26.11 for details). The new SLiMEidosBlock will be defined as a global variable
+#'immediately by this method (see section 25.12), and will also be returned by
 #'this method.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
@@ -8897,8 +18481,8 @@ registerMutationCallback <- function(id, source, mutType, subpop, start, end)
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=685}{SLiM manual: page
-#'685}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=726}{SLiM manual: page
+#'726}.
 #'
 #'@param id An object of type null or integer or string. Must be of length 1 (a
 #'singleton). See details for description.
@@ -8930,8 +18514,8 @@ registerMutationCallback <- function(id, source, mutType, subpop, start, end)
 #'may be NULL if there is no need to be able to refer to the block later. The
 #'registered callback is added to the end of the list of registered SLiMEidosBlock
 #'objects, and is active immediately; it may be eligible to execute in the current
-#'tick (see section 25.11 for details). The new SLiMEidosBlock will be defined as
-#'a global variable immediately by this method (see section 24.12), and will also
+#'tick (see section 26.11 for details). The new SLiMEidosBlock will be defined as
+#'a global variable immediately by this method (see section 25.12), and will also
 #'be returned by this method.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
@@ -8961,8 +18545,8 @@ start, end) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=685}{SLiM manual: page
-#'685}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=726}{SLiM manual: page
+#'726}.
 #'
 #'@param id An object of type null or integer or string. Must be of length 1 (a
 #'singleton). See details for description.
@@ -8987,13 +18571,11 @@ start, end) {
 #'and optional start and end ticks all limiting its applicability. The script
 #'block will be given identifier id (specified as an integer, or as a string
 #'symbolic name such as "s5"); this may be NULL if there is no need to be able
-#'to refer to the block later. The registered callback is added to the end of
-#'the list of registered SLiMEidosBlock objects, and is active immediately; it
-#'may be eligible to execute in the current tick (see section 25.11 for details).
-#'The new SLiMEidosBlock will be defined as a global variable immediately by
-#'this method (see section 24.12), and will also be returned by this method.
-#'events mutationEffect() interaction() mateChoice() modifyChild() mutation()
-#'recombination() reproduction() survival() 685
+#'to refer to the block later. The registered callback is added to the end of the
+#'list of registered SLiMEidosBlock objects, and is active immediately; it may be
+#'eligible to execute in the current tick (see section 26.11 for details). The new
+#'SLiMEidosBlock will be defined as a global variable immediately by this method
+#'(see section 25.12), and will also be returned by this method.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -9007,6 +18589,549 @@ start, end) {
 #'
 registerRecombinationCallback <- function(id, source, subpop, start, end) {
  .Sp$registerRecombinationCallback(id, source, subpop, start, end)
+}
+
+#'SLiM method registerReproductionCallback
+#'
+#'Documentation for SLiM function \code{registerReproductionCallback}, which is a
+#'method of the SLiM class \code{\link{Species}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=727}{SLiM manual: page
+#'727}.
+#'
+#'@param id An object of type null or integer or string. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param source An object of type string. Must be of length 1 (a singleton). See
+#'details for description.
+#'@param subpop An object of type null or integer or Subpopulation object. Must
+#'be of length 1 (a singleton). The default value is \code{NULL}. See details for
+#'description.
+#'@param sex An object of type null or string. Must be of length 1 (a singleton).
+#'The default value is \code{NULL}. See details for description.
+#'@param start An object of type null or integer. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param end An object of type null or integer. Must be of length 1 (a singleton).
+#'The default value is \code{NULL}. See details for description.
+#'
+#'@aliases Species$registerReproductionCallback .Sp$registerReproductionCallback
+#'@family Species
+#'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
+#'singleton)
+#'@details Register a block of Eidos source code, represented as the string
+#'singleton source, as an Eidos reproduction() callback in the current simulation
+#'(specific to the target species), with optional subpopulation subpop (which may
+#'be an integer identifier, or NULL, the default, to indicate all subpopulations),
+#'optional sex-specificity sex (which may be "M" or "F" in sexual species
+#'to make the callback specific to males or females respectively, or NULL
+#'for no sex-specificity), and optional start and end ticks all limiting its
+#'applicability. The script block will be given identifier id (specified as an
+#'integer, or as a string symbolic name such as "s5"); this may be NULL if there
+#'is no need to be able to refer to the block later. The registered callback is
+#'added to the end of the list of registered SLiMEidosBlock objects, and is active
+#'immediately; it may be eligible to execute in the current tick (see section
+#'26.11 for details). The new SLiMEidosBlock will be defined as a global variable
+#'immediately by this method (see section 25.12), and will also be returned by
+#'this method.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+registerReproductionCallback <- function(id, source, subpop, sex, start, end)
+{
+ .Sp$registerReproductionCallback(id, source, subpop, sex, start, end)
+}
+
+#'SLiM method registerSurvivalCallback
+#'
+#'Documentation for SLiM function \code{registerSurvivalCallback}, which is a
+#'method of the SLiM class \code{\link{Species}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=727}{SLiM manual: page
+#'727}.
+#'
+#'@param id An object of type null or integer or string. Must be of length 1 (a
+#'singleton). See details for description.
+#'@param source An object of type string. Must be of length 1 (a singleton). See
+#'details for description.
+#'@param subpop An object of type null or integer or Subpopulation object. Must
+#'be of length 1 (a singleton). The default value is \code{NULL}. See details for
+#'description.
+#'@param start An object of type null or integer. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param end An object of type null or integer. Must be of length 1 (a singleton).
+#'The default value is \code{NULL}. See details for description.
+#'
+#'@aliases Species$registerSurvivalCallback .Sp$registerSurvivalCallback
+#'@family Species
+#'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
+#'singleton)
+#'@details Register a block of Eidos source code, represented as the string
+#'singleton source, as an Eidos survival() callback in the current simulation
+#'(specific to the target species), with optional subpopulation subpop (which may
+#'be an integer identifier, or NULL, the default, to indicate all subpopulations)
+#'and optional start and end ticks all limiting its applicability. The script
+#'block will be given identifier id (specified as an integer, or as a string
+#'symbolic name such as "s5"); this may be NULL if there is no need to be able
+#'to refer to the block later. The registered callback is added to the end of the
+#'list of registered SLiMEidosBlock objects, and is active immediately; it may be
+#'eligible to execute in the current tick (see section 26.11 for details). The new
+#'SLiMEidosBlock will be defined as a global variable immediately by this method
+#'(see section 25.12), and will also be returned by this method.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+registerSurvivalCallback <- function(id, source, subpop, start, end) {
+ .Sp$registerSurvivalCallback(id, source, subpop, start, end)
+}
+
+#'SLiM method simulationFinished
+#'
+#'Documentation for SLiM function \code{simulationFinished}, which is a method of
+#'the SLiM class \code{\link{Species}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=727}{SLiM manual: page
+#'727}.
+#'
+#'@param void An object of type . See details for description.
+#'
+#'@aliases Species$simulationFinished .Sp$simulationFinished
+#'@family Species
+#'@return An object of type void.
+#'@details Declare the current simulation finished. This method is equivalent to
+#'the Community method simulationFinished(), except that this method is only legal
+#'to call in single-species models (to provide backward compatibility). It is
+#'recommended that new code should call the Community method; this method may be
+#'deprecated in the future.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+simulationFinished <- function(void) {
+ .Sp$simulationFinished(void)
+}
+
+#'SLiM method skipTick
+#'
+#'Documentation for SLiM function \code{skipTick}, which is a method of the SLiM
+#'class \code{\link{Species}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=727}{SLiM manual: page
+#'727}.
+#'
+#'@param void An object of type . See details for description.
+#'
+#'@aliases Species$skipTick .Sp$skipTick
+#'@family Species
+#'@return An object of type void.
+#'@details Deactivate the target species for the current tick. This sets
+#'the active property of the species to F; it also set the active property
+#'of all callbacks that belong to the species (with the species as their
+#'species specifier) to F, and sets the active property of all events that are
+#'synchronized with the species (with the species as their ticks specifier) to
+#'F. The cycle counter for the species will not be incremented at the end of the
+#'tick. This method may only be called in first() events, to ensure that species
+#'are either active or inactive throughout a given tick.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+skipTick <- function(void) {
+ .Sp$skipTick(void)
+}
+
+#'SLiM method subsetMutations
+#'
+#'Documentation for SLiM function \code{subsetMutations}, which is a method of the
+#'SLiM class \code{\link{Species}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=727}{SLiM manual: page
+#'727}.
+#'
+#'@param exclude An object of type null or Mutation object. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param mutType An object of type null or integer or MutationType object. Must
+#'be of length 1 (a singleton). The default value is \code{NULL}. See details for
+#'description.
+#'@param position An object of type null or integer. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param nucleotide An object of type null or integer or string. Must be of length
+#'1 (a singleton). The default value is \code{NULL}. See details for description.
+#'@param tag An object of type null or integer. Must be of length 1 (a singleton).
+#'The default value is \code{NULL}. See details for description.
+#'@param id An object of type null or integer. Must be of length 1 (a singleton).
+#'The default value is \code{NULL}. See details for description.
+#'
+#'@aliases Species$subsetMutations .Sp$subsetMutations
+#'@family Species
+#'@return An object of type Mutation object.
+#'@details Returns a vector of mutations subset from the list of all active
+#'mutations in the species (as would be provided by the mutations property).
+#'The parameters specify constraints upon the subset of mutations that will
+#'be returned. Parameter exclude, if non-NULL, may specify a specific mutation
+#'that should not be included (typically the focal mutation in some operation).
+#'Parameter mutType, if non- NULL, may specify a mutation type for the mutations
+#'to be returned (as either a MutationType object or an integer identifier).
+#'Parameter position, if non-NULL, may specify a base position for the mutations
+#'to be returned. Parameter nucleotide, if non-NULL, may specify a nucleotide
+#'for the mutations to be returned (either as a string, "A" / "C" / "G" / "T",
+#'or as an integer, 0 / 1 / 2 / 3 respectively). Parameter tag, if non-NULL,
+#'may specify a tag value for the mutations to be returned. Parameter id, if
+#'non-NULL, may specify a required value for the id property of the mutations
+#'to be returned. This method is shorthand for getting the mutations property of
+#'the subpopulation, and then using operator [] to select only mutations with the
+#'desired properties; besides being much simpler than the equivalent Eidos code,
+#'it is also much faster. Note that if you only need to select on mutation type,
+#'the mutationsOfType() method will be even faster.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+subsetMutations <- function(exclude, mutType, position, nucleotide, tag, id)
+{
+ .Sp$subsetMutations(exclude, mutType, position, nucleotide, tag, id)
+}
+
+#'SLiM method treeSeqCoalesced
+#'
+#'Documentation for SLiM function \code{treeSeqCoalesced}, which is a method of
+#'the SLiM class \code{\link{Species}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=728}{SLiM manual: page
+#'728}.
+#'
+#'@param void An object of type . See details for description.
+#'
+#'@aliases Species$treeSeqCoalesced .Sp$treeSeqCoalesced
+#'@family Species
+#'@return An object of type logical. Return will be of length 1 (a singleton)
+#'@details Returns the coalescence state for the recorded tree sequence at
+#'the last simplification. The returned value is a logical singleton flag,
+#'T to indicate that full coalescence was observed at the last treesequence
+#'simplification (meaning that there is a single ancestral individual that roots
+#'all ancestry trees at all sites along the chromosome - although not necessarily
+#'the same ancestor at all sites), or F if full coalescence was not observed. For
+#'simple models, reaching coalescence may indicate that the model has reached an
+#'equilibrium state, but this may not be true in models that modify the dynamics
+#'of the model during execution by changing migration rates, introducing new
+#'mutations programmatically, dictating non-random mating, etc., so be careful
+#'not to attach more meaning to coalescence than it is due; some models may
+#'require burn-in beyond coalescence to reach equilibrium, or may not have an
+#'equilibrium state at all. Also note that some actions by a model, such as adding
+#'a new subpopulation, may cause the coalescence state to revert from T back
+#'to F (at the next simplification), so a return value of T may not necessarily
+#'mean that the model is coalesced at the present moment - only that it was
+#'coalesced at the last simplification. This method may only be called if tree
+#'sequence recording has been turned on with initializeTreeSeq(); in addition,
+#'checkCoalescence=T must have been supplied to initializeTreeSeq(), so that the
+#'necessary work is done during each tree-sequence simplification. Since this
+#'method does not perform coalescence checking itself, but instead simply returns
+#'the coalescence state observed at the last simplification, it may be desirable
+#'to call treeSeqSimplify() immediately before treeSeqCoalesced() to obtain
+#'up-to-date information. However, the speed penalty of doing this in every tick
+#'would be large, and most models do not need this level of precision; usually it
+#'is sufficient to know that the model has coalesced, without knowing whether that
+#'happened in the current tick or in a recent preceding tick.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+treeSeqCoalesced <- function(void) {
+ .Sp$treeSeqCoalesced(void)
+}
+
+#'SLiM method treeSeqOutput
+#'
+#'Documentation for SLiM function \code{treeSeqOutput}, which is a method of the
+#'SLiM class \code{\link{Species}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=728}{SLiM manual: page
+#'728}.
+#'
+#'@param path An object of type string. Must be of length 1 (a singleton). See
+#'details for description.
+#'@param simplify An object of type logical. Must be of length 1 (a singleton).
+#'The default value is \code{T}. See details for description.
+#'@param includeModel An object of type logical. Must be of length 1 (a
+#'singleton). The default value is \code{T}. See details for description.
+#'@param metadata An object of type null. Must be of length 1 (a singleton). The
+#'default value is \code{NULL}. See details for description.
+#'
+#'@aliases Species$treeSeqOutput .Sp$treeSeqOutput
+#'@family Species
+#'@return An object of type void.
+#'@details Outputs the current tree sequence recording tables to the path
+#'specified by path. This method may only be called if tree sequence recording
+#'has been turned on with initializeTreeSeq(). If simplify is T (the default),
+#'simplification will be done immediately prior to output; this is almost always
+#'desirable, unless a model wishes to avoid simplification entirely. (Note that if
+#'simplification is not done, then all genomes since the last simplification will
+#'be marked as samples in the resulting tree sequence.) A binary tree sequence
+#'file will be written to the specified path; a filename extension of .trees
+#'is suggested for this type of file. Normally, the full SLiM script used to
+#'generate the tree sequence is written out to the provenance entry of the tree
+#'sequence file, to the model subkey of the parameters top-level key. Supplying
+#'F for includeModel suppresses output of the full script; see section 27.4.6
+#'for further discussion. A Dictionary object containing user-generated metadata
+#'may be supplied with the metadata parameter. If present, this dictionary will
+#'be serialized as JSON and attached to the saved tree sequence under a key
+#'named user_metadata, within the SLiM key (see section 27.4.5). If tskit is
+#'used to read the tree sequence in Python, this metadata will automatically be
+#'deserialized and made available at ts.metadata["SLiM"]["user_metadata"]. This
+#'metadata dictionary is not used by SLiM, or by pyslim, tskit, or msprime; you
+#'may use it for any purpose you wish. Note that metadata may actually be any
+#'subclass of Dictionary, such as a DataFrame. It can even be a Species object
+#'such as sim, or a LogFile instance; however, only the keys and values contained
+#'by the object's Dictionary superclass state will be serialized into the metadata
+#'(properties of the subclass will be ignored). This metadata dictionary can be
+#'recovered from the saved file using the treeSeqMetadata() function.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+treeSeqOutput <- function(path, simplify, includeModel, metadata) {
+ .Sp$treeSeqOutput(path, simplify, includeModel, metadata)
+}
+
+#'SLiM method treeSeqRememberIndividuals
+#'
+#'Documentation for SLiM function \code{treeSeqRememberIndividuals}, which is a
+#'method of the SLiM class \code{\link{Species}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=729}{SLiM manual: page
+#'729}.
+#'
+#'@param individuals An object of type Individual object. See details for
+#'description.
+#'@param permanent An object of type logical. Must be of length 1 (a singleton).
+#'The default value is \code{T}. See details for description.
+#'
+#'@aliases Species$treeSeqRememberIndividuals .Sp$treeSeqRememberIndividuals
+#'@family Species
+#'@return An object of type void.
+#'@details Mark the individuals specified by individuals to be kept across
+#'tree sequence table simplification. This method may only be called if tree
+#'sequence recording has been turned on with initializeTreeSeq(). All currently
+#'living individuals are always kept across simplification; this method does
+#'not need to be called, and indeed should not be called, for that purpose.
+#'Instead, treeSeqRememberIndividuals() allows any individual, including dead
+#'individuals, to be kept in the final tree sequence. Typically this would be
+#'used, for example, to keep particular individuals that you wanted to be able
+#'to trace ancestry back to in later analysis. However, this is not the typical
+#'usage pattern for tree sequence recording; most models will not need to call
+#'this method. There are two ways to keep individuals across simplification.
+#'If permanent is T (the default), then the specified individuals will be
+#'permanently remembered: their genomes will be added to the current sample,
+#'and they will always be present in the tree sequence. Permanently remembering
+#'a large number of individuals will, of course, markedly increase memory usage
+#'and runtime. Supplying F for permanent will instead mark the individuals only
+#'for (temporary) retention: their genomes will not be added to the sample, and
+#'they will appear in the final tree sequence only if one of their genomes is
+#'retained across simplification. In other words, the rule of thumb for retained
+#'individuals is simple: if a genome is kept by simplification, the genome's
+#'corresponding individual is kept also, if it is retained. Note that permanent
+#'remembering takes priority; calling this function with permanent=F on an
+#'individual that has previously been permanently remembered will not remove
+#'it from the sample. The behavior of simplification for individuals retained
+#'with permanent=F depends upon the value of the retainCoalescentOnly flag
+#'passed to initializeTreeSeq(); here we will discuss the behavior of that flag
+#'in detail. First of all, genomes are always removed by simplification unless
+#'they are (a) part of the final generation (i.e., in a living individual when
+#'simplification occurs), (b) ancestral to the final generation, (c) a genome
+#'of a permanently remembered individual, or (d) ancestral to a permanently
+#'remembered individual. If retainCoalescentOnly is T (the default), they are
+#'also always removed if they are not a branch point (i.e., a coalescent node
+#'or most recent common ancestor) in the tree sequence. In some cases it may
+#'be useful to retain a genome and its associated individual when it is simply
+#'an intermediate node in the ancestry (i.e., in the middle of a branch).
+#'This can be enabled by setting retainCoalescentOnly to F in your call to
+#'initializeTreeSeq(). In this case, ancestral genomes that are intermediate
+#'("unary nodes", in tskit parlance) and are within an individual that has been
+#'retained using the permanent=F flag here are kept, along with the retained
+#'individual itself. Since setting retainCoalescentOnly to F will prevent the
+#'unary nodes for retained individuals from being pruned, simplification may
+#'often be unable to prune very much at all from the tree sequence, and memory
+#'usage and runtime may increase rapidly. If you are retaining many individuals,
+#'this setting should therefore be used only with caution; it is not necessary if
+#'you are purely interested in the most recent common ancestors. See the pyslim
+#'documentation for further discussion of retaining and remembering individuals
+#'and the effects of the retainCoalescentOnly flag. The metadata (age, location,
+#'etc) that are stored in the resulting tree sequence are those values present
+#'at either (a) the final generation, if the individual is alive when the tree
+#'sequence is output, or (b) the last time that the individual was remembered,
+#'if not. Calling treeSeqRememberIndividuals() on an individual that is already
+#'remembered will cause the archived information about the remembered individual
+#'to be updated to reflect the individual's current state; care should be taken
+#'to remember individuals at a point in time when their state is valid. A case
+#'where this is particularly important is for the spatial location of individuals
+#'in continuous-space models. SLiM automatically retains the portions of the
+#'genomes that comprise the first generation of any new subpopulation created with
+#'addSubpop() that are inherited by extant individuals, for easy recapitation and
+#'other analysis (see sections 17.2 and 17.10). However, the individuals of the
+#'first generation are not remembered automatically, only their needed genomic
+#'information.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+treeSeqRememberIndividuals <- function(individuals, permanent) {
+ .Sp$treeSeqRememberIndividuals(individuals, permanent)
+}
+
+#'SLiM method treeSeqSimplify
+#'
+#'Documentation for SLiM function \code{treeSeqSimplify}, which is a method of the
+#'SLiM class \code{\link{Species}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=730}{SLiM manual: page
+#'730}.
+#'
+#'@param void An object of type . See details for description.
+#'
+#'@aliases Species$treeSeqSimplify .Sp$treeSeqSimplify
+#'@family Species
+#'@return An object of type void.
+#'@details Triggers an immediate simplification of the tree sequence recording
+#'tables. This method may only be called if tree sequence recording has been
+#'turned on with initializeTreeSeq(). A call to this method will free up memory
+#'being used by entries that are no longer in the ancestral path of any individual
+#'within the current sample (currently living individuals, in other words, plus
+#'those explicitly added to the sample with treeSeqRememberIndividuals()), but it
+#'can also take a significant amount of time. Typically calling this method is not
+#'necessary; the automatic simplification performed occasionally by SLiM should be
+#'sufficient for most models.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+treeSeqSimplify <- function(void) {
+ .Sp$treeSeqSimplify(void)
 }
 
 
@@ -9023,24 +19148,51 @@ registerRecombinationCallback <- function(id, source, subpop, start, end) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=691}{SLiM manual: page
-#'691}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=732}{SLiM manual: page
+#'732}.
 #'
 #'@param parent An object of type Individual object. Must be of length 1 (a
 #'singleton). See details for description.
+#'@param count An object of type integer. Must be of length 1 (a singleton). The
+#'default value is \code{1}. See details for description.
+#'@param defer An object of type logical. Must be of length 1 (a singleton). The
+#'default value is \code{F}. See details for description.
 #'
 #'@aliases Subpopulation$addCloned .P$addCloned
 #'@family Subpopulation
-#'@return An object of type null or Individual object. Return will be of length 1
-#'(a singleton)
+#'@return An object of type Individual object.
 #'@details Generates a new offspring individual from the given parent by
 #'clonal reproduction, queues it for addition to the target subpopulation, and
 #'returns it. The new offspring will not be visible as a member of the target
 #'subpopulation until the end of the offspring generation tick cycle stage.
 #'The subpopulation of parent will be used to locate applicable mutation() and
 #'modifyChild() callbacks governing the generation of the offspring individual.
-#'Note that this method is only for use in nonWF models. See addCrossed() for
-#'further general notes on the addition of new offspring individuals.
+#'Beginning in SLiM 4.1, the count parameter dictates how many offspring will
+#'be generated (previously, exactly one offspring was generated). Each offspring
+#'is generated independently, based upon the given parameters. The returned
+#'vector contains all generated offspring, except those that were rejected by a
+#'modifyChild() callback. If all offspring are rejected, object<Individual>(0)
+#'is returned, which is a zero-length object vector of class Individual; note
+#'that this is a change in behavior from earlier versions, which would return
+#'NULL. Beginning in SLiM 4.1, passing T for defer will defer the generation
+#'of the genomes of the produced offspring until the end of the reproduction
+#'phase. Genome generation can only be deferred if there are no active mutation()
+#'callbacks; otherwise, an error will result. Furthermore, when genome generation
+#'is deferred the mutations of the genomes of the generated offspring may not be
+#'accessed until reproduction is complete (whether from a modifyChild() callback
+#'or otherwise). There is little or no advantage to deferring genome generation
+#'at this time (it is in place for future expansion); the default of F for defer
+#'is generally preferable since it has fewer restrictions. Also beginning in SLiM
+#'4.1, in spatial models the spatial position of the offspring will be inherited
+#'(i.e., copied) from parent; more specifically, the x property will be inherited
+#'in all spatial models (1D/ 2D/3D), the y property in 2D/3D models, and the z
+#'property in 3D models. Properties not inherited will be left uninitialized,
+#'as they were prior to SLiM 4.1. The parent's spatial position is probably not
+#'desirable in itself; the intention here is to make it easy to model the natal
+#'dispersal of all the new offspring for a given tick with a single vectorized
+#'call to pointDeviated(). Note that this method is only for use in nonWF models.
+#'See addCrossed() for further general notes on the addition of new offspring
+#'individuals.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -9052,8 +19204,8 @@ registerRecombinationCallback <- function(id, source, subpop, start, end) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
-addCloned <- function(parent) {
- .P$addCloned(parent)
+addCloned <- function(parent, count, defer) {
+ .P$addCloned(parent, count, defer)
 }
 
 #'SLiM method addCrossed
@@ -9068,8 +19220,8 @@ addCloned <- function(parent) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=691}{SLiM manual: page
-#'691}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=733}{SLiM manual: page
+#'733}.
 #'
 #'@param parent1 An object of type Individual object. Must be of length 1 (a
 #'singleton). See details for description.
@@ -9077,11 +19229,14 @@ addCloned <- function(parent) {
 #'singleton). See details for description.
 #'@param sex An object of type null or float or string. Must be of length 1 (a
 #'singleton). The default value is \code{NULL}. See details for description.
+#'@param count An object of type integer. Must be of length 1 (a singleton). The
+#'default value is \code{1}. See details for description.
+#'@param defer An object of type logical. Must be of length 1 (a singleton). The
+#'default value is \code{F}. See details for description.
 #'
 #'@aliases Subpopulation$addCrossed .P$addCrossed
 #'@family Subpopulation
-#'@return An object of type null or Individual object. Return will be of length 1
-#'(a singleton)
+#'@return An object of type Individual object.
 #'@details Generates a new offspring individual from the given parents
 #'by biparental sexual reproduction, queues it for addition to the target
 #'subpopulation, and returns it. The new offspring will not be visible as a
@@ -9122,21 +19277,44 @@ addCloned <- function(parent) {
 #'from the same subpopulation; that is legal in nonWF models, and in that case,
 #'modifyChild() callbacks for the subpopulation of parent1 are used (since that
 #'is the maternal parent). If the modifyChild() callback process results in
-#'rejection of the proposed child (see section 25.5), a new offspring individual
-#'will not be generated, and this method will return NULL. To force the generation
-#'of an offspring individual from a given pair of parents, you could loop until
-#'addCrossed() succeeds, but note that if your modifyChild() callback rejects
-#'all proposed children from those particular parents, your model will then hang,
-#'so care must be taken with this approach. Usually, nonWF models do not force
-#'generation of offspring in this manner; rejection of a proposed offspring by
-#'a modifyChild() callback typically represents a phenomenon such as post-mating
-#'reproductive isolation or lethal genetic incompatibilities that would reduce
-#'the expected litter size, so the default behavior is typically desirable. Note
-#'that this method is only for use in nonWF models, in which offspring generation
-#'is managed manually by the model script; in such models, addCrossed() must be
-#'called only from reproduction() callbacks, and may not be called at any other
-#'time. In WF models, offspring generation is managed automatically by the SLiM
-#'core.
+#'rejection of the proposed child (see section 26.5), a new offspring individual
+#'is not be generated. To force the generation of an offspring individual from
+#'a given pair of parents, you could loop until addCrossed() succeeds, but note
+#'that if your modifyChild() callback rejects all proposed children from those
+#'particular parents, your model will then hang, so care must be taken with this
+#'approach. Usually, nonWF models do not force generation of offspring in this
+#'manner; rejection of a proposed offspring by a modifyChild() callback typically
+#'represents a phenomenon such as post-mating reproductive isolation or lethal
+#'genetic incompatibilities that would reduce the expected litter size, so the
+#'default behavior is typically desirable. Beginning in SLiM 4.1, the count
+#'parameter dictates how many offspring will be generated (previously, exactly
+#'one offspring was generated). Each offspring is generated independently, based
+#'upon the given parameters. The returned vector contains all generated offspring,
+#'except those that were rejected by a modifyChild() callback. If all offspring
+#'are rejected, object<Individual>(0) is returned, which is a zero-length object
+#'vector of class Individual; note that this is a change in behavior from earlier
+#'versions, which would return NULL. Beginning in SLiM 4.1, passing T for defer
+#'will defer the generation of the genomes of the produced offspring until the
+#'end of the reproduction phase. Genome generation can only be deferred if there
+#'are no active mutation() or recombination() callbacks; otherwise, an error will
+#'result. Furthermore, when genome generation is deferred the mutations of the
+#'genomes of the generated offspring may not be accessed until reproduction is
+#'complete (whether from a modifyChild() callback or otherwise). There is little
+#'or no advantage to deferring genome generation at this time (it is in place
+#'for future expansion); the default of F for defer is generally preferable since
+#'it has fewer restrictions. Also beginning in SLiM 4.1, in spatial models the
+#'spatial position of the offspring will be inherited (i.e., copied) from parent1;
+#'more specifically, the x property will be inherited in all spatial models
+#'(1D/2D/3D), the y property in 2D/3D models, and the z property in 3D models.
+#'Properties not inherited will be left uninitialized, as they were prior to SLiM
+#'4.1. The parent's spatial position is probably not desirable in itself; the
+#'intention here is to make it easy to model the natal dispersal of all the new
+#'offspring for a given tick with a single vectorized call to pointDeviated().
+#'Note that this method is only for use in nonWF models, in which offspring
+#'generation is managed manually by the model script; in such models, addCrossed()
+#'must be called only from reproduction() callbacks, and may not be called at any
+#'other time. In WF models, offspring generation is managed automatically by the
+#'SLiM core.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -9148,8 +19326,8 @@ addCloned <- function(parent) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
-addCrossed <- function(parent1, parent2, sex) {
- .P$addCrossed(parent1, parent2, sex)
+addCrossed <- function(parent1, parent2, sex, count, defer) {
+ .P$addCrossed(parent1, parent2, sex, count, defer)
 }
 
 #'SLiM method addEmpty
@@ -9164,8 +19342,8 @@ addCrossed <- function(parent1, parent2, sex) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=692}{SLiM manual: page
-#'692}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=734}{SLiM manual: page
+#'734}.
 #'
 #'@param sex An object of type null or float or string. Must be of length 1 (a
 #'singleton). The default value is \code{NULL}. See details for description.
@@ -9173,11 +19351,12 @@ addCrossed <- function(parent1, parent2, sex) {
 #'singleton). The default value is \code{NULL}. See details for description.
 #'@param genome2Null An object of type null or logical. Must be of length 1 (a
 #'singleton). The default value is \code{NULL}. See details for description.
+#'@param count An object of type integer. Must be of length 1 (a singleton). The
+#'default value is \code{1}. See details for description.
 #'
 #'@aliases Subpopulation$addEmpty .P$addEmpty
 #'@family Subpopulation
-#'@return An object of type null or Individual object. Return will be of length 1
-#'(a singleton)
+#'@return An object of type Individual object.
 #'@details Generates a new offspring individual with empty genomes (i.e.,
 #'containing no mutations), queues it for addition to the target subpopulation,
 #'and returns it. The new offspring will not be visible as a member of the
@@ -9200,7 +19379,14 @@ addCrossed <- function(parent1, parent2, sex) {
 #'passing F (since that would be the default behavior anyway), but passing T can
 #'be used to make one or both genomes be null genomes, which can be useful for,
 #'e.g., modeling haploids (for which, by convention, the second genome is usually
-#'a null genome in SLiM). Note that this method is only for use in nonWF models.
+#'a null genome in SLiM). Beginning in SLiM 4.1, the count parameter dictates
+#'how many offspring will be generated (previously, exactly one offspring was
+#'generated). Each offspring is generated independently, based upon the given
+#'parameters. The returned vector contains all generated offspring, except those
+#'that were rejected by a modifyChild() callback. If all offspring are rejected,
+#'object<Individual>(0) is returned, which is a zero-length object vector of
+#'class Individual; note that this is a change in behavior from earlier versions,
+#'which would return NULL. Note that this method is only for use in nonWF models.
 #'See addCrossed() for further general notes on the addition of new offspring
 #'individuals.
 #'@section Copyright:
@@ -9214,8 +19400,8 @@ addCrossed <- function(parent1, parent2, sex) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
-addEmpty <- function(sex, genome1Null, genome2Null) {
- .P$addEmpty(sex, genome1Null, genome2Null)
+addEmpty <- function(sex, genome1Null, genome2Null, count) {
+ .P$addEmpty(sex, genome1Null, genome2Null, count)
 }
 
 #'SLiM method addRecombinant
@@ -9230,8 +19416,8 @@ addEmpty <- function(sex, genome1Null, genome2Null) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=693}{SLiM manual: page
-#'693}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=735}{SLiM manual: page
+#'735}.
 #'
 #'@param strand1 An object of type null or Genome object. Must be of length 1 (a
 #'singleton). See details for description.
@@ -9245,13 +19431,22 @@ addEmpty <- function(sex, genome1Null, genome2Null) {
 #'@param breaks2 An object of type null or integer. See details for description.
 #'@param sex An object of type null or float or string. Must be of length 1 (a
 #'singleton). The default value is \code{NULL}. See details for description.
+#'@param parent1 An object of type null or Individual object. Must be of length 1
+#'(a singleton). The default value is \code{NULL}. See details for description.
+#'@param parent2 An object of type null or Individual object. Must be of length 1
+#'(a singleton). The default value is \code{NULL}. See details for description.
+#'@param randomizeStrands An object of type logical. Must be of length 1 (a
+#'singleton). The default value is \code{F}. See details for description.
+#'@param count An object of type integer. Must be of length 1 (a singleton). The
+#'default value is \code{1}. See details for description.
+#'@param defer An object of type logical. Must be of length 1 (a singleton). The
+#'default value is \code{F}. See details for description.
 #'
 #'@aliases Subpopulation$addRecombinant .P$addRecombinant
 #'@family Subpopulation
-#'@return An object of type null or Individual object. Return will be of length 1
-#'(a singleton)
+#'@return An object of type Individual object.
 #'@details Generates a new offspring individual from the given parental genomes
-#'with the speciﬁed crossover breakpoints, queues it for addition to the target
+#'with the specified crossover breakpoints, queues it for addition to the target
 #'subpopulation, and returns it. The new offspring will not be visible as a
 #'member of the target subpopulation until the end of the offspring generation
 #'tick cycle stage. The target subpopulation will be used to locate applicable
@@ -9260,7 +19455,7 @@ addEmpty <- function(sex, genome1Null, genome2Null) {
 #'to four parental individuals to reference); recombination() callbacks will not
 #'be called by this method. This method is an advanced feature; most models will
 #'use addCrossed(), addSelfed(), or addCloned() instead. This method supports
-#'several possible conﬁgurations for strand1, strand2, and breaks1 (and the same
+#'several possible configurations for strand1, strand2, and breaks1 (and the same
 #'applies for strand3, strand4, and breaks2). If strand1 and strand2 are both
 #'NULL, the corresponding genome in the generated offspring will be empty, as
 #'from addEmpty(), with no parental genomes and no added mutations; in this case,
@@ -9280,49 +19475,92 @@ addEmpty <- function(sex, genome1Null, genome2Null) {
 #'the offspring's subpopulation, since the parental subpopulation is ambiguous
 #'in the general case; this behavior differs from the other add...() methods.
 #'The sex parameter is interpreted exactly as in addCrossed(); see that method
-#'for discussion. If the offspring sex is speciﬁed in any way (i.e., if sex is
+#'for discussion. If the offspring sex is specified in any way (i.e., if sex is
 #'non-NULL), the strands provided must be compatible with the sex chosen. If the
-#'offspring sex is not speciﬁed (i.e., if sex is NULL), the sex will be inferred
+#'offspring sex is not specified (i.e., if sex is NULL), the sex will be inferred
 #'from the strands provided where possible (when modeling an X or Y chromosome),
 #'or will be chosen randomly otherwise (when modeling autosomes); it will not be
 #'inferred from the sex of the individuals possessing the parental strands, even
 #'when the reproductive mode is essentially clonal from a single parent, since
-#'such inference would be ambiguous in the general case. Similarly, the offspring
+#'such inference would be ambiguous in the general case. When modeling the X or
+#'Y, strand1 and strand2 must be X genomes (or NULL), and strand3 and strand4
+#'must both be X genomes or both be Y genomes (or NULL). By default, the offspring
 #'is considered to have no parents for the purposes of pedigree tracking, since
-#'there may be more than two "parents" in the general case. When modeling the X or
-#'Y, strand1 and strand2 must be X genomes (or NULL), and strand3 and strand4 must
-#'both be X genomes or both be Y genomes (or NULL). These semantics allow several
-#'uses for addRecombinant(). When all strands are non-NULL, it is similar to
-#'addCrossed() except that the recombination breakpoints are speciﬁed explicitly,
-#'allowing very precise offspring generation without having to override SLiM's
-#'breakpoint generation with a recombination() callback. When only strand1 and
-#'strand3 are supplied, it is very similar to addCloned(), creating a clonal
-#'offspring, except that the two parental genomes need not belong to the same
-#'individual (whatever that might mean biologically). Supplying only strand1 is
-#'useful for modeling clonally reproducing haploids; the second genome of every
-#'offspring will be kept empty and will not receive new mutations. For a model
-#'of clonally reproducing haploids that undergo horizontal gene transfer (HGT),
-#'supplying only strand1 and strand2 will allow HGT from strand2 to replace
-#'segments of an otherwise clonal copy of strand1, while the second genome of the
-#'generated offspring will again be kept empty; this could be useful for modeling
-#'bacterial conjugation, for example. Other variations are also possible. The
-#'value of the meanParentAge property of the generated offspring is calculated
-#'from the mean parent age of each of its two genomes (whether they turn out
-#'to be null genomes or not); that may be an average of two values (if both
-#'offspring genomes have at least one parent), a single value (if one offspring
-#'genome has no parent), or no values (if both offspring genomes have no parent,
-#'in which case 0.0 results). The mean parent age of a given offspring genome
-#'is the mean of the ages of the parents of the two strands used to generate
-#'that offspring genome; if one strand is NULL then the mean parent age for that
-#'offspring genome is the age of the parent of the non-NULL strand, while if both
-#'strands are NULL then that offspring genome is parentless and is not used in
-#'the ﬁnal calculation. In other words, if one offspring genome has two parents
-#'with ages A and B, and the other offspring genome has one parent with age C,
-#'the meanParentAge of the offspring will be (A+B+C+C) / 4, not (A+B+C) / 3. Note
-#'that gene conversion tracts are not explicitly supported by this method; the
-#'breaks vectors provide crossover breakpoints, which may be used to implement
-#'crossovers or simple gene conversion tracts. There is no way to specify complex
-#'gene conversion tracts with heteroduplex mismatch repair. Note that this method
+#'there may be more than two "parents" in the general case. If pedigree tracking
+#'of parentage is desired, parent1 and/or parent2 may be passed to explicitly
+#'establish particular individuals as the parents of the offspring for purposes
+#'of pedigree tracking. In this case, if only one of parent1 and parent2 is
+#'non-NULL, that individual will be set as both of the parents of the offspring,
+#'mirroring the way that parentage is tracked for other cases such as addCloned()
+#'and addSelfed(). It is not required for parent1 or parent2 to actually be a
+#'genetic parent of the offspring at all, although typically they would be. If
+#'randomizeStrands is F (the default), strand1 will be the initial copy strand
+#'when generating the first gamete to form the offspring, and strand3 will be
+#'the initial copy strand when generating the second gamete. If randomizeStrands
+#'is T, then if strand1 and strand2 are both non-NULL, 50% of the time they
+#'will be swapped, making strand2 the initial copy strand for the first gamete;
+#'and similarly, if strand3 and strand4 are both non-NULL, 50% of the time they
+#'will be swapped, making strand4 the initial copy strand for the second gamete.
+#'This is probably usually the desired behavior, to avoid an inheritance bias
+#'due to a lack of randomization in the initial copy strand, so passing T for
+#'randomizeStrands is recommended unless you specifically desire otherwise.
+#'It is not the default behavior only for reasons of backward compatibility.
+#'These semantics allow several uses for addRecombinant(). When all strands
+#'are non-NULL, it is similar to addCrossed() except that the recombination
+#'breakpoints are specified explicitly, allowing very precise offspring generation
+#'without having to override SLiM's breakpoint generation with a recombination()
+#'callback. When only strand1 and strand3 are supplied, it is very similar to
+#'addCloned(), creating a clonal offspring, except that the two parental genomes
+#'need not belong to the same individual (whatever that might mean biologically).
+#'Supplying only strand1 is useful for modeling clonally reproducing haploids;
+#'the second genome of every offspring will be kept empty and will not receive new
+#'mutations. For a model of clonally reproducing haploids that undergo horizontal
+#'gene transfer (HGT), supplying only strand1 and strand2 will allow HGT from
+#'strand2 to replace segments of an otherwise clonal copy of strand1, while the
+#'second genome of the generated offspring will again be kept empty; this could
+#'be useful for modeling bacterial conjugation, for example. Other variations
+#'are also possible. The value of the meanParentAge property of the generated
+#'offspring is calculated from the mean parent age of each of its two genomes
+#'(whether they turn out to be null genomes or not); that may be an average of
+#'two values (if both offspring genomes have at least one parent), a single value
+#'(if one offspring genome has no parent), or no values (if both offspring genomes
+#'have no parent, in which case 0.0 results). The mean parent age of a given
+#'offspring genome is the mean of the ages of the parents of the two strands used
+#'to generate that offspring genome; if one strand is NULL then the mean parent
+#'age for that offspring genome is the age of the parent of the non-NULL strand,
+#'while if both strands are NULL then that offspring genome is parentless and
+#'is not used in the final calculation. In other words, if one offspring genome
+#'has two parents with ages A and B, and the other offspring genome has one
+#'parent with age C, the meanParentAge of the offspring will be (A+B+C+C) / 4,
+#'not (A+B+C) / 3. Note that gene conversion tracts are not explicitly supported
+#'by this method; the breaks vectors provide crossover breakpoints, which may be
+#'used to implement crossovers or simple gene conversion tracts. There is no way
+#'to specify complex gene conversion tracts with heteroduplex mismatch repair.
+#'Beginning in SLiM 4.1, the count parameter dictates how many offspring will
+#'be generated (previously, exactly one offspring was generated). Each offspring
+#'is generated independently, based upon the given parameters. The returned
+#'vector contains all generated offspring, except those that were rejected by a
+#'modifyChild() callback. If all offspring are rejected, object<Individual>(0)
+#'is returned, which is a zero-length object vector of class Individual; note
+#'that this is a change in behavior from earlier versions, which would return
+#'NULL. Beginning in SLiM 4.1, passing T for defer will defer the generation
+#'of the genomes of the produced offspring until the end of the reproduction
+#'phase. Genome generation can only be deferred if there are no active mutation()
+#'callbacks; otherwise, an error will result. Furthermore, when genome generation
+#'is deferred the mutations of the genomes of the generated offspring may not be
+#'accessed until reproduction is complete (whether from a modifyChild() callback
+#'or otherwise). There is little or no advantage to deferring genome generation
+#'at this time (it is in place for future expansion); the default of F for defer
+#'is generally preferable since it has fewer restrictions. Also beginning in SLiM
+#'4.1, in spatial models the spatial position of the offspring will be inherited
+#'(i.e., copied) from parent1; more specifically, the x property will be inherited
+#'in all spatial models (1D/2D/3D), the y property in 2D/3D models, and the z
+#'property in 3D models. Properties not inherited will be left uninitialized,
+#'as they were prior to SLiM 4.1. The parent's spatial position is probably not
+#'desirable in itself; the intention here is to make it easy to model the natal
+#'dispersal of all the new offspring for a given tick with a single vectorized
+#'call to pointDeviated(). If parent1 is NULL (the default), parent2 will be used;
+#'if it is also NULL, no spatial position will be inherited. Note that this method
 #'is only for use in nonWF models. See addCrossed() for further general notes on
 #'the addition of new offspring individuals.
 #'@section Copyright:
@@ -9337,8 +19575,9 @@ addEmpty <- function(sex, genome1Null, genome2Null) {
 #'(\email{messer@cornell.edu})
 #'
 addRecombinant <- function(strand1, strand2, breaks1, strand3, strand4,
-breaks2, sex) {
- .P$addRecombinant(strand1, strand2, breaks1, strand3, strand4, breaks2, sex)
+breaks2, sex, parent1, parent2, randomizeStrands, count, defer) {
+ .P$addRecombinant(strand1, strand2, breaks1, strand3, strand4, breaks2, sex,
+parent1, parent2, randomizeStrands, count, defer)
 }
 
 #'SLiM method addSelfed
@@ -9353,30 +19592,56 @@ breaks2, sex) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=694}{SLiM manual: page
-#'694}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=737}{SLiM manual: page
+#'737}.
 #'
 #'@param parent An object of type Individual object. Must be of length 1 (a
 #'singleton). See details for description.
+#'@param count An object of type integer. Must be of length 1 (a singleton). The
+#'default value is \code{1}. See details for description.
+#'@param defer An object of type logical. Must be of length 1 (a singleton). The
+#'default value is \code{F}. See details for description.
 #'
 #'@aliases Subpopulation$addSelfed .P$addSelfed
 #'@family Subpopulation
-#'@return An object of type null or Individual object. Return will be of length 1
-#'(a singleton)
-#'@details Generates a new offspring individual from the given parent by selﬁng,
+#'@return An object of type Individual object.
+#'@details Generates a new offspring individual from the given parent by selfing,
 #'queues it for addition to the target subpopulation, and returns it. The new
 #'offspring will not be visible as a member of the target subpopulation until
 #'the end of the offspring generation tick cycle stage. The subpopulation of
 #'parent will be used to locate applicable mutation(), recombination(), and
 #'modifyChild() callbacks governing the generation of the offspring individual.
-#'Since selﬁng requires that parent act as a source of both a male and a female
+#'Since selfing requires that parent act as a source of both a male and a female
 #'gamete, this method may be called only in hermaphroditic models; calling it in
 #'sexual models will result in an error. This method represents a non-incidental
-#'selﬁng event, so the preventIncidentalSelfing ﬂag of initializeSLiMOptions()
-#'has no effect on this method (in contrast to the behavior of addCrossed(), where
-#'selﬁng is assumed to be incidental). Note that this method is only for use in
-#'nonWF models. See addCrossed() for further general notes on the addition of new
-#'offspring individuals.
+#'selfing event, so the preventIncidentalSelfing flag of initializeSLiMOptions()
+#'has no effect on this method (in contrast to the behavior of addCrossed(),
+#'where selfing is assumed to be incidental). Beginning in SLiM 4.1, the count
+#'parameter dictates how many offspring will be generated (previously, exactly
+#'one offspring was generated). Each offspring is generated independently, based
+#'upon the given parameters. The returned vector contains all generated offspring,
+#'except those that were rejected by a modifyChild() callback. If all offspring
+#'are rejected, object<Individual>(0) is returned, which is a zero-length object
+#'vector of class Individual; note that this is a change in behavior from earlier
+#'versions, which would return NULL. Beginning in SLiM 4.1, passing T for defer
+#'will defer the generation of the genomes of the produced offspring until the
+#'end of the reproduction phase. Genome generation can only be deferred if there
+#'are no active mutation() or recombination() callbacks; otherwise, an error will
+#'result. Furthermore, when genome generation is deferred the mutations of the
+#'genomes of the generated offspring may not be accessed until reproduction is
+#'complete (whether from a modifyChild() callback or otherwise). There is little
+#'or no advantage to deferring genome generation at this time (it is in place
+#'for future expansion); the default of F for defer is generally preferable since
+#'it has fewer restrictions. Also beginning in SLiM 4.1, in spatial models the
+#'spatial position of the offspring will be inherited (i.e., copied) from parent;
+#'more specifically, the x property will be inherited in all spatial models
+#'(1D/ 2D/3D), the y property in 2D/3D models, and the z property in 3D models.
+#'Properties not inherited will be left uninitialized, as they were prior to SLiM
+#'4.1. The parent's spatial position is probably not desirable in itself; the
+#'intention here is to make it easy to model the natal dispersal of all the new
+#'offspring for a given tick with a single vectorized call to pointDeviated().
+#'Note that this method is only for use in nonWF models. See addCrossed() for
+#'further general notes on the addition of new offspring individuals.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -9388,8 +19653,65 @@ breaks2, sex) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
-addSelfed <- function(parent) {
- .P$addSelfed(parent)
+addSelfed <- function(parent, count, defer) {
+ .P$addSelfed(parent, count, defer)
+}
+
+#'SLiM method addSpatialMap
+#'
+#'Documentation for SLiM function \code{addSpatialMap}, which is a method of the
+#'SLiM class \code{\link{Subpopulation}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=737}{SLiM manual: page
+#'737}.
+#'
+#'@param map An object of type SpatialMap object. Must be of length 1 (a
+#'singleton). See details for description.
+#'
+#'@aliases Subpopulation$addSpatialMap .P$addSpatialMap
+#'@family Subpopulation
+#'@return An object of type void.
+#'@details Adds the given SpatialMap object, map, to the subpopulation. (The
+#'spatial map would have been previously created with a call to defineSpatialMap()
+#'on a different subpopulation; addSpatialMap() can then be used to add that
+#'existing spatial map with other subpopulations, sharing the map between
+#'subpopulations.) If the map is already added to the target subpopulation, this
+#'method does nothing; if a different map with the same name is already added to
+#'the subpopulation, an error results (because map names must be unique within
+#'each subpopulation). The map being added must be compatible with the target
+#'subpopulation; in particular, the spatial bounds utilized by the map must
+#'exactly match the corresponding spatial bounds for the subpopulation, and the
+#'dimensionality of the subpopulation must encompass the spatiality of the map.
+#'For example, if the map has a spatiality of "xz" then the subpopulation must
+#'have a dimensionality of "xyz" so that it encompasses both "x" and "z", and
+#'the subpopulation's spatial bounds for "x" and "z" must match those for the
+#'map (but the spatial bounds for "y" are unimportant, since the map does not use
+#'that dimension). Adding a map to a subpopulation is not strictly necessary, at
+#'present; one may query a SpatialMap object directly using mapValue(), regarding
+#'points in a subpopulation, without the map actually having been added to that
+#'subpopulation. However, it is a good idea to use addSpatialMap(), both for its
+#'compatibility check that prevents unnoticed scripting errors, and because it
+#'ensures correct display of the model in SLiMgui.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+addSpatialMap <- function(map) {
+ .P$addSpatialMap(map)
 }
 
 #'SLiM method cachedFitness
@@ -9404,28 +19726,28 @@ addSelfed <- function(parent) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=694}{SLiM manual: page
-#'694}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=738}{SLiM manual: page
+#'738}.
 #'
 #'@param indices An object of type null or integer. See details for description.
 #'
 #'@aliases Subpopulation$cachedFitness .P$cachedFitness
 #'@family Subpopulation
 #'@return An object of type float.
-#'@details The ﬁtness values calculated for the individuals at the indices
-#'given are returned. If NULL is passed, ﬁtness values for all individuals in
-#'the subpopulation are returned. The ﬁtness values returned are cached values;
-#'mutationEffect() and fitnessEffect() callbacks are therefore not called as a
-#'side effect of this method. It is always an error to call cachedFitness() from
-#'inside a mutationEffect() or fitnessEffect() callback, since ﬁtness values
-#'are in the middle of being set up. In WF models, it is also an error to call
-#'cachedFitness() from a late() event, because ﬁtness values for the new offspring
-#'generation have not yet been calculated and are undeﬁned. In nonWF models,
-#'the population may be a mixture of new and old individuals, so instead, NAN
-#'will be returned as the ﬁtness of any new individuals whose ﬁtness has not
-#'yet been calculated. When new subpopulations are ﬁrst created with addSubpop()
-#'or addSubpopSplit(), the ﬁtness of all of the newly created individuals is
-#'considered to be 1.0 until ﬁtness values are recalculated.
+#'@details The fitness values calculated for the individuals at the indices
+#'given are returned. If NULL is passed, fitness values for all individuals in
+#'the subpopulation are returned. The fitness values returned are cached values;
+#'mutationEffect() and fitnessEffect() callbacks are therefore not called as
+#'a side effect of this method. It is always an error to call cachedFitness()
+#'from inside a mutationEffect() or fitnessEffect() callback, since fitness
+#'values are in the middle of being set up. In WF models, it is also an error to
+#'call cachedFitness() from a late() event, because fitness values for the new
+#'offspring generation have not yet been calculated and are undefined. In nonWF
+#'models, the population may be a mixture of new and old individuals, so instead,
+#'NAN will be returned as the fitness of any new individuals whose fitness has not
+#'yet been calculated. When new subpopulations are first created with addSubpop()
+#'or addSubpopSplit(), the fitness of all of the newly created individuals is
+#'considered to be 1.0 until fitness values are recalculated.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -9453,8 +19775,8 @@ cachedFitness <- function(indices) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=695}{SLiM manual: page
-#'695}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=738}{SLiM manual: page
+#'738}.
 #'
 #'@param center An object of type null or float. The default value is \code{NULL}.
 #'See details for description.
@@ -9468,10 +19790,10 @@ cachedFitness <- function(indices) {
 #'@return An object of type void.
 #'@details This method customizes the display of the subpopulation in SLiMgui's
 #'Population Visualization graph. When this method is called by a model running
-#'outside SLiMgui, it will do nothing except type- checking and bounds-checking
+#'outside SLiMgui, it will do nothing except typechecking and bounds-checking
 #'its arguments. When called by a model running in SLiMgui, the position,
 #'size, and color of the subpopulation's displayed circle can be controlled
-#'as speciﬁed below. The center parameter sets the coordinates of the center
+#'as specified below. The center parameter sets the coordinates of the center
 #'of the subpopulation's displayed circle; it must be a float vector of length
 #'two, such that center[0] provides the x-coordinate and center[1] provides the
 #'y-coordinate. The square central area of the Population Visualization occupies
@@ -9486,9 +19808,9 @@ cachedFitness <- function(indices) {
 #'same scale value should be used by all subpopulations, to scale all of their
 #'circles up or down uniformly, but that is not required. The color parameter
 #'sets the color to be used for the displayed subpopulation's circle. Colors may
-#'be speciﬁed by name, or with hexadecimal RGB values of the form "#RRGGBB" (see
+#'be specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see
 #'the Eidos manual). If color is NULL or the empty string, "", SLiMgui's default
-#'(ﬁtness-based) color will be used.
+#'(fitness-based) color will be used.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -9516,8 +19838,8 @@ configureDisplay <- function(center, scale, color) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=695}{SLiM manual: page
-#'695}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=738}{SLiM manual: page
+#'738}.
 #'
 #'@param name An object of type string. Must be of length 1 (a singleton). See
 #'details for description.
@@ -9533,43 +19855,54 @@ configureDisplay <- function(center, scale, color) {
 #'
 #'@aliases Subpopulation$defineSpatialMap .P$defineSpatialMap
 #'@family Subpopulation
-#'@return An object of type void.
-#'@details Deﬁnes a spatial map for the subpopulation. The map will henceforth
-#'be identiﬁed by name. The map uses the spatial dimensions referenced by
-#'spatiality, which must be a subset of the dimensions deﬁned for the simulation
-#'in initializeSLiMOptions(). Spatiality "x" is permitted for dimensionality
-#'"x"; spatiality "x", "y", or "xy" for dimensionality "xy"; and spatiality "x",
-#'"y", "z", "xy", "yz", "xz", or "xyz" for dimensionality "xyz". The spatial
-#'map is deﬁned by a grid of values supplied in parameter values. The remaining
-#'optional parameters are described below. Note that the semantics of this method
-#'changed in SLiM 3.5; in particular, the gridSize parameter was removed, and
-#'the interpretation of the values parameter changed as described below. Existing
-#'code written prior to SLiM 3.5 will produce an error, due to the removed
-#'gridSize parameter, and must be revised carefully to obtain the same result,
-#'even if NULL had been passed for gridSize previously. Beginning in SLiM 3.5,
-#'the values parameter must be a vector/matrix/array with the number of dimensions
-#'appropriate for the declared spatiality of the map; for example, a map with
-#'spatiality "x" would require a (one-dimensional) vector, spatiality "xy" would
-#'require a (two-dimensional) matrix, and a map with spatiality of "xyz" would
-#'require a three-dimensional array. (See the Eidos manual for discussion of
-#'vectors, matrices, and arrays.) The data in values is interpreted in such a way
-#'that a two-dimensional matrix of values, with (0, 0) at upper left and values
-#'by column, is transformed into the format expected by SLiM, with (0, 0) at lower
-#'left and values by row; in other words, the two- dimensional matrix as it prints
+#'@return An object of type SpatialMap object. Return will be of length 1 (a
+#'singleton)
+#'@details Defines a spatial map for the subpopulation; see the SpatialMap
+#'documentation regarding this class. The new map is automatically added to the
+#'subpopulation; addSpatialMap() does not need to be called. (That method is for
+#'sharing the map with additional subpopulations, beyond the one for which the
+#'map was originally defined.) The new SpatialMap object is returned, and may be
+#'retained permanently using defineConstant() or defineGlobal() for convenience.
+#'The name of the map is given by name, and can be used to identify it. The map
+#'uses the spatial dimensions referenced by spatiality, which must be a subset
+#'of the dimensions defined for the simulation in initializeSLiMOptions().
+#'Spatiality "x" is permitted for dimensionality "x"; spatiality "x", "y", or
+#'"xy" for dimensionality "xy"; and spatiality "x", "y", "z", "xy", "yz", "xz",
+#'or "xyz" for dimensionality "xyz". The spatial map is defined by a grid of
+#'values supplied in parameter values. That grid of values is aligned with the
+#'spatial bounds of the subpopulation, as described in more detail below; the
+#'spatial map is therefore coupled to those spatial bounds, and can only be
+#'used in subpopulations that match those particular spatial bounds (to avoid
+#'stretching or shrinking the map). The remaining optional parameters are
+#'described below. Note that the semantics of this method changed in SLiM 3.5;
+#'in particular, the gridSize parameter was removed, and the interpretation of
+#'the values parameter changed as described below. Existing code written prior
+#'to SLiM 3.5 will produce an error, due to the removed gridSize parameter, and
+#'must be revised carefully to obtain the same result, even if NULL had been
+#'passed for gridSize previously. Beginning in SLiM 3.5, the values parameter
+#'must be a vector/matrix/array with the number of dimensions appropriate for
+#'the declared spatiality of the map; for example, a map with spatiality "x"
+#'would require a (one-dimensional) vector, spatiality "xy" would require a
+#'(two-dimensional) matrix, and a map with spatiality of "xyz" would require
+#'a three-dimensional array. (See the Eidos manual for discussion of vectors,
+#'matrices, and arrays.) The data in values is interpreted in such a way that
+#'a two-dimensional matrix of values, with (0, 0) at upper left and values by
+#'column, is transformed into the format expected by SLiM, with (0, 0) at lower
+#'left and values by row; in other words, the twodimensional matrix as it prints
 #'in the Eidos console will match the appearance of the two-dimensional spatial
 #'map as seen in SLiMgui. This is a change in behavior from versions prior to SLiM
 #'3.5; it ensures that images loaded from disk with the Eidos class Image can be
 #'used directly as spatial maps, achieving the expected orientation, with no need
-#'for transposition or ﬂipping. If the spatial map is a three-dimensional array,
+#'for transposition or flipping. If the spatial map is a three-dimensional array,
 #'it is read as successive z-axis "planes", each of which is a two-dimensional
 #'matrix that is treated as described above. Moving on to the other parameters of
 #'defineSpatialMap(): if interpolate is F, values across the spatial map are not
-#'interpolated; the value at a given point is equal to the nearest value deﬁned
-#'by the grid of values speciﬁed. If interpolate is T, values across the spatial
+#'interpolated; the value at a given point is equal to the nearest value defined
+#'by the grid of values specified. If interpolate is T, values across the spatial
 #'map will be interpolated (using linear, bilinear, or trilinear interpolation
 #'as appropriate) to produce spatially continuous variation in values. In either
 #'case, the corners of the value grid are exactly aligned with the corners of the
-#'spatial boundaries of the subpopulation as speciﬁed by setSpatialBoundary(), and
+#'spatial boundaries of the subpopulation as specified by setSpatialBounds(), and
 #'the value grid is then stretched across the spatial extent of the subpopulation
 #'in such a manner as to produce equal spacing between the values along each
 #'dimension. The setting of interpolation only affects how values between these
@@ -9577,29 +19910,33 @@ configureDisplay <- function(center, scale, color) {
 #'Interpolation of spatial maps with periodic boundaries is not handled specially;
 #'to ensure that the edges of a periodic spatial map join smoothly, simply ensure
 #'that the grid values at the edges of the map are identical, since they will be
-#'coincident after periodic wrapping. The valueRange and colors parameters travel
-#'together; either both are unspeciﬁed, or both are speciﬁed. They control how map
-#'values will be transformed into colors, by SLiMgui and by the spatialMapColor()
-#'method. The valueRange parameter establishes the color-mapped range of spatial
-#'map values, as a vector of length two specifying a minimum and maximum; this
-#'does not need to match the actual range of values in the map. The colors
-#'parameter then establishes the corresponding colors for values within the
-#'interval deﬁned by valueRange: values less than or equal to valueRange[0] will
-#'map to colors[0], values greater than or equal to valueRange[1] will map to the
-#'last colors value, and intermediate values will shade continuously through the
-#'speciﬁed vector of colors, with interpolation between adjacent colors to produce
-#'a continuous spectrum. This is much simpler than it sounds in this description;
-#'see the recipes in chapter 15 for an illustration of its use. Note that at
-#'present, SLiMgui will only display spatial maps of spatiality "x", "y", or
-#'"xy"; the color- mapping parameters will simply be ignored by SLiMgui for other
-#'spatiality values (even if the spatiality is a superset of these values; SLiMgui
-#'will not attempt to display an "xyz" spatial map, for example, since it has no
-#'way to choose which 2D slice through the xyz space it ought to display). The
-#'spatialMapColor() method will return translated color strings for any spatial
-#'map, however, even if SLiMgui is unable to display the spatial map. If there are
-#'multiple spatial maps that SLiMgui is capable of displaying, it choose one for
-#'display by default, but other maps may be selected from the context menu on the
-#'individuals view (with a right-click or control-click).
+#'coincident after periodic wrapping. Note that cubic/bicubic interpolation is
+#'generally smoother than linear/bilinear interpolation, with fewer artifacts,
+#'but it is substantially slower to calculate; use the interpolate() method
+#'of SpatialMap to precalculate an interpolated map using cubic/bucubic
+#'interpolation. The valueRange and colors parameters travel together; either
+#'both are unspecified, or both are specified. They control how map values
+#'will be transformed into colors, by SLiMgui and by the mapColor() method. The
+#'valueRange parameter establishes the color-mapped range of spatial map values,
+#'as a vector of length two specifying a minimum and maximum; this does not
+#'need to match the actual range of values in the map. The colors parameter then
+#'establishes the corresponding colors for values within the interval defined by
+#'valueRange: values less than or equal to valueRange[0] will map to colors[0],
+#'values greater than or equal to valueRange[1] will map to the last colors value,
+#'and intermediate values will shade continuously through the specified vector
+#'of colors, with interpolation between adjacent colors to produce a continuous
+#'spectrum. This is much simpler than it sounds in this description; see the
+#'recipes in chapter 16 for an illustration of its use. Note that at present,
+#'SLiMgui will only display spatial maps of spatiality "x", "y", or "xy"; the
+#'colormapping parameters will simply be ignored by SLiMgui for other spatiality
+#'values (even if the spatiality is a superset of these values; SLiMgui will not
+#'attempt to display an "xyz" spatial map, for example, since it has no way to
+#'choose which 2D slice through the xyz space it ought to display). The mapColor()
+#'method will return translated color strings for any spatial map, however, even
+#'if SLiMgui is unable to display the spatial map. If there are multiple spatial
+#'maps that SLiMgui is capable of displaying, it choose one for display by
+#'default, but other maps may be selected from the action menu on the individuals
+#'view (by clicking on the button with the gear icon).
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -9629,8 +19966,8 @@ colors)
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=696}{SLiM manual: page
-#'696}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=740}{SLiM manual: page
+#'740}.
 #'
 #'@param sampleSize An object of type integer. Must be of length 1 (a singleton).
 #'See details for description.
@@ -9649,28 +19986,28 @@ colors)
 #'@family Subpopulation
 #'@return An object of type void.
 #'@details Output a random sample from the subpopulation in MS format (see
-#'section 26.2.2 for output format details). Positions in the output will span
+#'section 27.2.2 for output format details). Positions in the output will span
 #'the interval [0,1]. A sample of genomes (not entire individuals, note) of
 #'size sampleSize from the subpopulation will be output. The sample may be done
-#'either with or without replacement, as speciﬁed by replace; the default is to
+#'either with or without replacement, as specified by replace; the default is to
 #'sample with replacement. A particular sex of individuals may be requested for
 #'the sample, for simulations in which sex is enabled, by passing "M" or "F" for
 #'requestedSex; passing "*", the default, indicates that genomes from individuals
 #'should be selected randomly, without respect to sex. If the sampling options
 #'provided by this method are not adequate, see the outputMS() method of Genome
-#'for a more ﬂexible low-level option. If the optional parameter filePath is NULL
+#'for a more flexible low-level option. If the optional parameter filePath is NULL
 #'(the default), output will be sent to Eidos's output stream (see section 4.2.1).
-#'Otherwise, output will be sent to the ﬁlesystem path speciﬁed by filePath,
-#'overwriting that ﬁle if append if F, or appending to the end of it if append is
-#'T. If filterMonomorphic is F (the default), all mutations that are present in
-#'the sample will be included in the output. This means that some mutations may
+#'Otherwise, output will be sent to the filesystem path specified by filePath,
+#'overwriting that file if append if F, or appending to the end of it if append
+#'is T. If filterMonomorphic is F (the default), all mutations that are present
+#'in the sample will be included in the output. This means that some mutations may
 #'be included that are actually monomorphic within the sample (i.e., that exist
-#'in every sampled genome, and are thus apparently ﬁxed). These may be ﬁltered
+#'in every sampled genome, and are thus apparently fixed). These may be filtered
 #'out with filterMonomorphic = T if desired; note that this option means that
 #'some mutations that do exist in the sampled genomes might not be included in the
 #'output, simply because they exist in every sampled genome. See outputSample()
 #'and outputVCFSample() for other output formats. Output is generally done in a
-#'late() event, so that the output reﬂects the state of the simulation at the end
+#'late() event, so that the output reflects the state of the simulation at the end
 #'of a tick.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
@@ -9701,8 +20038,8 @@ filterMonomorphic)
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=697}{SLiM manual: page
-#'697}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=740}{SLiM manual: page
+#'740}.
 #'
 #'@param sampleSize An object of type integer. Must be of length 1 (a singleton).
 #'See details for description.
@@ -9719,21 +20056,21 @@ filterMonomorphic)
 #'@family Subpopulation
 #'@return An object of type void.
 #'@details Output a random sample from the subpopulation in SLiM's native format
-#'(see section 26.2.1 for output format details). A sample of genomes (not entire
+#'(see section 27.2.1 for output format details). A sample of genomes (not entire
 #'individuals, note) of size sampleSize from the subpopulation will be output. The
-#'sample may be done either with or without replacement, as speciﬁed by replace;
+#'sample may be done either with or without replacement, as specified by replace;
 #'the default is to sample with replacement. A particular sex of individuals may
 #'be requested for the sample, for simulations in which sex is enabled, by passing
 #'"M" or "F" for requestedSex; passing "*", the default, indicates that genomes
 #'from individuals should be selected randomly, without respect to sex. If the
 #'sampling options provided by this method are not adequate, see the output()
-#'method of Genome for a more ﬂexible low-level option. If the optional parameter
+#'method of Genome for a more flexible low-level option. If the optional parameter
 #'filePath is NULL (the default), output will be sent to Eidos's output stream
-#'(see section 4.2.1). Otherwise, output will be sent to the ﬁlesystem path
-#'speciﬁed by filePath, overwriting that ﬁle if append if F, or appending to the
+#'(see section 4.2.1). Otherwise, output will be sent to the filesystem path
+#'specified by filePath, overwriting that file if append if F, or appending to the
 #'end of it if append is T. See outputMSSample() and outputVCFSample() for other
 #'output formats. Output is generally done in a late() event, so that the output
-#'reﬂects the state of the simulation at the end of a tick.
+#'reflects the state of the simulation at the end of a tick.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -9762,8 +20099,8 @@ outputSample <- function(sampleSize, replace, requestedSex, filePath, append)
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=697}{SLiM manual: page
-#'697}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=741}{SLiM manual: page
+#'741}.
 #'
 #'@param sampleSize An object of type integer. Must be of length 1 (a singleton).
 #'See details for description.
@@ -9786,24 +20123,24 @@ outputSample <- function(sampleSize, replace, requestedSex, filePath, append)
 #'@family Subpopulation
 #'@return An object of type void.
 #'@details Output a random sample from the subpopulation in VCF format (see
-#'sections 26.2.3 and 26.2.4 for output format details). A sample of individuals
+#'sections 27.2.3 and 27.2.4 for output format details). A sample of individuals
 #'(not genomes, note - unlike the outputSample() and outputMSSample() methods) of
 #'size sampleSize from the subpopulation will be output. The sample may be done
-#'either with or without replacement, as speciﬁed by replace; the default is to
+#'either with or without replacement, as specified by replace; the default is to
 #'sample with replacement. A particular sex of individuals may be requested for
 #'the sample, for simulations in which sex is enabled, by passing "M" or "F" for
 #'requestedSex; passing "*", the default, indicates that genomes from individuals
 #'should be selected randomly, without respect to sex. If the sampling options
 #'provided by this method are not adequate, see the outputVCF() method of Genome
-#'for a more ﬂexible low-level option. If the optional parameter filePath is
+#'for a more flexible low-level option. If the optional parameter filePath is
 #'NULL (the default), output will be sent to Eidos's output stream (see section
-#'4.2.1). Otherwise, output will be sent to the ﬁlesystem path speciﬁed by
-#'filePath, overwriting that ﬁle if append if F, or appending to the end of
+#'4.2.1). Otherwise, output will be sent to the filesystem path specified by
+#'filePath, overwriting that file if append if F, or appending to the end of
 #'it if append is T. The parameters outputMultiallelics, simplifyNucleotides,
 #'and outputNonnucleotides affect the format of the output produced; see
-#'sections 26.2.3 and 26.2.4 for further discussion. See outputMSSample() and
+#'sections 27.2.3 and 27.2.4 for further discussion. See outputMSSample() and
 #'outputSample() for other output formats. Output is generally done in a late()
-#'event, so that the output reﬂects the state of the simulation at the end of a
+#'event, so that the output reflects the state of the simulation at the end of a
 #'tick.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
@@ -9823,6 +20160,107 @@ outputNonnucleotides) {
 filePath, append, simplifyNucleotides, outputNonnucleotides)
 }
 
+#'SLiM method pointDeviated
+#'
+#'Documentation for SLiM function \code{pointDeviated}, which is a method of the
+#'SLiM class \code{\link{Subpopulation}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=741}{SLiM manual: page
+#'741}.
+#'
+#'@param n An object of type integer. Must be of length 1 (a singleton). See
+#'details for description.
+#'@param point An object of type float. See details for description.
+#'@param boundary An object of type string. Must be of length 1 (a singleton). See
+#'details for description.
+#'@param maxDistance An object of type numeric. Must be of length 1 (a singleton).
+#'See details for description.
+#'@param functionType An object of type string. Must be of length 1 (a singleton).
+#'See details for description.
+#'@param ... An object of type NA. NA See details for description.
+#'
+#'@aliases Subpopulation$pointDeviated .P$pointDeviated
+#'@family Subpopulation
+#'@return An object of type float.
+#'@details Returns a vector containing n points that are derived from point by
+#'adding a deviation drawn from a dispersal kernel (specified by maxDistance,
+#'functionType, and the ellipsis parameters ..., as detailed below) and then
+#'applying a boundary condition specified by boundary. This method therefore
+#'performs the steps of a simple dispersal algorithm in a single vectorized call.
+#'The parameter point may contain a single point which is deviated and bounded
+#'n independent times, or may contain n points each of which is deviated and
+#'bounded. In any case, each point in point should match the dimensionality of the
+#'model - one element in a 1D model, two elements in a 2D model, or three elements
+#'in a 3D model. This method should not be called in a non-spatial model. The
+#'dispersal kernel is specified similarly to other kernel-based methods, such as
+#'setInteractionFunction() and smooth(). For pointDeviated(), functionType may be
+#'"f" with no ellipsis arguments ... to use a flat kernel out to maxDistance; "l"
+#'with no ellipsis arguments for a kernel that decreases linearly from the center
+#'to zero at maxDistance; "e", in which case the ellipsis should supply a numeric$
+#'lambda (rate) parameter for a negative exponential function; "n", in which case
+#'the ellipsis should supply a numeric$ sigma (standard deviation) parameter for
+#'a Gaussian function; or "t", in which case the ellipsis should supply a numeric$
+#'degrees of freedom and a numeric$ scale parameter for a t-distribution function.
+#'The Cauchy ("c") kernel is not supported by pointDeviated() since it is not
+#'well-behaved for this purpose, and the Student's t ("t") kernel is not allowed
+#'in 3D models at present simply because it hasn't been implemented. See the
+#'InteractionType class documentation (section 25.8) for more detailed discussion
+#'of the available kernel types and their parameters and probability distribution
+#'functions. The random points returned from this method are drawn from the
+#'probability distribution that is radially symmetric and has density proportional
+#'to the kernel - in other words, at distance r the density is proportional to
+#'the kernel type referred to by functionType. (Said another way, the shape of
+#'the cross-section through the probability density function is given by the
+#'kernel.) For instance, the value of the type "e" (exponential) kernel with rate
+#'a at r is proportional to exp(−ar), and so in 2D, the probability density that
+#'this method with kernel type "e" draws from has density proportional to p(x,
+#'y) = exp(−a sqrt(x2 + y2)), since r = sqrt(x2 + y2) is the distance. Note that
+#'the distribution of the distance is not given by the kernel except in 1D: in
+#'the type "e" example, the distribution of the distance in 1D is exponential,
+#'while in 2D it has density proportional to r exp(−ar) (i.e., Gamma with shape
+#'parameter 1). For another example, the value of the type "n" (Normal) kernel
+#'at r with standard deviation 1 is proportional to exp(−r2 / 2), and so the
+#'density is proportional to p(x, y) = exp(− (x2 + y2) / 2). This is the standard
+#'bivariate Normal, and equivalent to drawing independent Normals for the x and y
+#'directions; however, the Normal is the only distribution for which independent
+#'draws along each axis will result in a radially symmetric distribution. The
+#'distribution of the distance in 2D with type "n" is proportional to r exp(−r2 /
+#'2), i.e., Rayleigh. The boundary condition must be one of "none", "periodic",
+#'"reflecting", "stopping", or "reprising". For "none", no boundary condition
+#'is enforced; the deviated points are simply returned as is. For "periodic",
+#'"reflecting", and "stopping", the boundary condition is enforced just as it is
+#'by the pointPeriodic(), pointReflected(), and pointStopped() methods; see their
+#'documentation for further details. For "reprising", if the deviated point is
+#'out of bounds a new deviated point will be chosen, based upon the same original
+#'point, until a point inside bounds is obtained. Note that absorbing boundaries
+#'(for which being out-of-bounds is lethal) would be implemented in script; this
+#'method cannot enforce them. In the typical usage case, point comes from the
+#'spatialPosition property for a vector of individuals, and the result is then set
+#'back onto the same vector of individuals using the setSpatialPosition() method;
+#'however, this method might be useful in other situations too.
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+pointDeviated <- function(n, point, boundary, maxDistance, functionType, ...)
+{
+ .P$pointDeviated(n, point, boundary, maxDistance, functionType, ...)
+}
+
 #'SLiM method pointInBounds
 #'
 #'Documentation for SLiM function \code{pointInBounds}, which is a method of the
@@ -9835,8 +20273,8 @@ filePath, append, simplifyNucleotides, outputNonnucleotides)
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=697}{SLiM manual: page
-#'697}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=742}{SLiM manual: page
+#'742}.
 #'
 #'@param point An object of type float. See details for description.
 #'
@@ -9882,8 +20320,8 @@ pointInBounds <- function(point) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=697}{SLiM manual: page
-#'697}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=742}{SLiM manual: page
+#'742}.
 #'
 #'@param point An object of type float. See details for description.
 #'
@@ -9891,7 +20329,7 @@ pointInBounds <- function(point) {
 #'@family Subpopulation
 #'@return An object of type float.
 #'@details Returns a revised version of point that has been brought inside
-#'the periodic spatial boundaries of the subpopulation (as speciﬁed by the
+#'the periodic spatial boundaries of the subpopulation (as specified by the
 #'periodicity parameter of initializeSLiMOptions()) by wrapping around periodic
 #'spatial boundaries. In brief, if a coordinate of point lies beyond a periodic
 #'spatial boundary, that coordinate is wrapped around the boundary, so that it
@@ -9938,24 +20376,24 @@ pointPeriodic <- function(point) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=698}{SLiM manual: page
-#'698}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=742}{SLiM manual: page
+#'742}.
 #'
 #'@param point An object of type float. See details for description.
 #'
 #'@aliases Subpopulation$pointReflected .P$pointReflected
 #'@family Subpopulation
 #'@return An object of type float.
-#'@details Returns a revised version of point that has been brought inside the
-#'spatial boundaries of the subpopulation by reﬂection. In brief, if a coordinate
-#'of point lies beyond a spatial boundary, that coordinate is reﬂected across
-#'the boundary, so that it lies inside the boundary by the same magnitude
-#'that it previously lay outside the boundary. This is done iteratively until
-#'all coordinates lie inside the subpopulation's boundaries. This method
-#'is useful for implementing reﬂecting boundary conditions. This may only
-#'be called in simulations for which continuous space has been enabled with
-#'initializeSLiMOptions(). The length of point must be an exact multiple of the
-#'dimensionality of the simulation; in other words, point may contain values
+#'@details Returns a revised version of point that has been brought inside
+#'the spatial boundaries of the subpopulation by reflection. In brief, if
+#'a coordinate of point lies beyond a spatial boundary, that coordinate is
+#'reflected across the boundary, so that it lies inside the boundary by the
+#'same magnitude that it previously lay outside the boundary. This is done
+#'iteratively until all coordinates lie inside the subpopulation's boundaries.
+#'This method is useful for implementing reflecting boundary conditions. This
+#'may only be called in simulations for which continuous space has been enabled
+#'with initializeSLiMOptions(). The length of point must be an exact multiple of
+#'the dimensionality of the simulation; in other words, point may contain values
 #'comprising more than one point. In this case, each point will be processed as
 #'described above and a new vector containing all of the processed points will be
 #'returned.
@@ -9986,8 +20424,8 @@ pointReflected <- function(point) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=698}{SLiM manual: page
-#'698}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=743}{SLiM manual: page
+#'743}.
 #'
 #'@param point An object of type float. See details for description.
 #'
@@ -10032,8 +20470,8 @@ pointStopped <- function(point) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=698}{SLiM manual: page
-#'698}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=743}{SLiM manual: page
+#'743}.
 #'
 #'@param n An object of type integer. Must be of length 1 (a singleton). The
 #'default value is \code{1}. See details for description.
@@ -10062,6 +20500,49 @@ pointUniform <- function(n) {
  .P$pointUniform(n)
 }
 
+#'SLiM method removeSpatialMap
+#'
+#'Documentation for SLiM function \code{removeSpatialMap}, which is a method of
+#'the SLiM class \code{\link{Subpopulation}}.
+#'Note that the R function is a stub, it does not do anything in R (except bring
+#'up this documentation). It will only do
+#'anything useful when used inside a \code{\link{slim_block}} function further
+#'nested in a \code{\link{slim_script}}
+#'function call, where it will be translated into valid SLiM code as part of a
+#'full SLiM script.
+#'
+#'Documentation for this function can be found in the official
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=743}{SLiM manual: page
+#'743}.
+#'
+#'@param map An object of type string or SpatialMap object. Must be of length 1 (a
+#'singleton). See details for description.
+#'
+#'@aliases Subpopulation$removeSpatialMap .P$removeSpatialMap
+#'@family Subpopulation
+#'@return An object of type void.
+#'@details Removes the SpatialMap object specified by map from the subpopulation.
+#'The parameter map may be either a SpatialMap object, or a string name
+#'for spatial map. The map must have been added to the subpopulation with
+#'addSpatialMap(); if it has not been, an error results. Removing spatial maps
+#'that are no longer in use is optional in most cases. It is generally a good idea
+#'because it might decrease SLiM's memory footprint; also, it avoids an error if
+#'the subpopulation's spatial bounds are changed (see setSpatialBounds()).
+#'@section Copyright:
+#'This is documentation for a function in the SLiM software, and has been
+#'reproduced from the official manual,
+#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
+#'documentation is
+#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+#'about SLiM can be found
+#'on the official website: \url{https://messerlab.org/slim/}
+#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
+#'(\email{messer@cornell.edu})
+#'
+removeSpatialMap <- function(map) {
+ .P$removeSpatialMap(map)
+}
+
 #'SLiM method removeSubpopulation
 #'
 #'Documentation for SLiM function \code{removeSubpopulation}, which is a method of
@@ -10074,8 +20555,8 @@ pointUniform <- function(n) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=698}{SLiM manual: page
-#'698}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=743}{SLiM manual: page
+#'743}.
 #'
 #'@param void An object of type . See details for description.
 #'
@@ -10084,7 +20565,7 @@ pointUniform <- function(n) {
 #'@return An object of type void.
 #'@details Removes this subpopulation from the model. The subpopulation is
 #'immediately removed from the list of active subpopulations, and the symbol
-#'representing the subpopulation is undeﬁned. The subpopulation object itself
+#'representing the subpopulation is undefined. The subpopulation object itself
 #'remains unchanged until children are next generated (at which point it is
 #'deallocated), but it is no longer part of the simulation and should not be
 #'used. Note that this method is only for use in nonWF models, in which there
@@ -10122,8 +20603,8 @@ removeSubpopulation <- function(void) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=699}{SLiM manual: page
-#'699}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=743}{SLiM manual: page
+#'743}.
 #'
 #'@param size An object of type integer. Must be of length 1 (a singleton). See
 #'details for description.
@@ -10139,6 +20620,16 @@ removeSubpopulation <- function(void) {
 #'singleton). The default value is \code{NULL}. See details for description.
 #'@param migrant An object of type null or logical. Must be of length 1 (a
 #'singleton). The default value is \code{NULL}. See details for description.
+#'@param tagL0 An object of type null or logical. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param tagL1 An object of type null or logical. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param tagL2 An object of type null or logical. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param tagL3 An object of type null or logical. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param tagL4 An object of type null or logical. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
 #'
 #'@aliases Subpopulation$sampleIndividuals .P$sampleIndividuals
 #'@family Subpopulation
@@ -10146,26 +20637,33 @@ removeSubpopulation <- function(void) {
 #'@details Returns a vector of individuals, of size less than or equal to
 #'parameter size, sampled from the individuals in the target subpopulation.
 #'Sampling is done without replacement if replace is F (the default), or with
-#'replacement if replace is T. The remaining parameters specify constraints
-#'upon the pool of individuals that will be considered candidates for the
-#'sampling. Parameter exclude, if non- NULL, may specify a speciﬁc individual
-#'that should not be considered a candidate (typically the focal individual in
-#'some operation). Parameter sex, if non-NULL, may specify a sex ("M" or "F")
-#'for the individuals to be drawn, in sexual models. Parameter tag, if non-NULL,
-#'may specify a tag value for the individuals to be drawn. Parameters minAge and
-#'maxAge, if non-NULL, may specify a minimum or maximum age for the individuals
-#'to be drawn, in nonWF models. Parameter migrant, if non-NULL, may specify a
-#'required value for the migrant property of the individuals to be drawn (so
-#'T will require that individuals be migrants, F will require that they not
-#'be). If the candidate pool is smaller than the requested sample size, all
-#'eligible candidates will be returned (in randomized order); the result will be
-#'a zero-length vector if no eligible candidates exist (unlike sample()). This
-#'method is similar to getting the individuals property of the subpopulation,
-#'using operator [] to select only individuals with the desired properties, and
-#'then using sample() to sample from that candidate pool. However, besides being
-#'much simpler than the equivalent Eidos code, it is also much faster, and it does
-#'not fail if less than the full sample size is available. See subsetIndividuals()
-#'for a similar method that returns a full subset, rather than a sample.
+#'replacement if replace is T. The remaining parameters specify constraints upon
+#'the pool of individuals that will be considered candidates for the sampling.
+#'Parameter exclude, if non- NULL, may specify a specific individual that
+#'should not be considered a candidate (typically the focal individual in some
+#'operation). Parameter sex, if non-NULL, may specify a sex ("M" or "F") for
+#'the individuals to be drawn, in sexual models. Parameter tag, if non-NULL,
+#'may specify a tag property value for the individuals to be drawn. Parameters
+#'minAge and maxAge, if non-NULL, may specify a minimum or maximum age for the
+#'individuals to be drawn, in nonWF models. Parameter migrant, if non-NULL, may
+#'specify a required value for the migrant property of the individuals to be drawn
+#'(so T will require that individuals be migrants, F will require that they not
+#'be). Finally, parameters tagL0, tagL1, tagL2, tagL3, and tagL4, if non-NULL,
+#'may specify a required value (T or F) for the corresponding properties (tagL0,
+#'tagL1, tagL2, tagL3, and tagL4) of the individuals to be drawn. Note that if
+#'any tag/tagL parameter is specified as non-NULL, that tag/tagL property must
+#'have a defined value for every individual in the subpopulation, otherwise an
+#'error may result (although this requirement will not necessarily be checked
+#'comprehensively by this method in every invocation). If the candidate pool
+#'is smaller than the requested sample size, all eligible candidates will be
+#'returned (in randomized order); the result will be a zero-length vector if no
+#'eligible candidates exist (unlike sample()). This method is similar to getting
+#'the individuals property of the subpopulation, using operator [] to select only
+#'individuals with the desired properties, and then using sample() to sample from
+#'that candidate pool. However, besides being much simpler than the equivalent
+#'Eidos code, it is also much faster, and it does not fail if less than the full
+#'sample size is available. See subsetIndividuals() for a similar method that
+#'returns a full subset, rather than a sample.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -10178,8 +20676,9 @@ removeSubpopulation <- function(void) {
 #'(\email{messer@cornell.edu})
 #'
 sampleIndividuals <- function(size, replace, exclude, sex, minAge, maxAge,
-migrant) {
- .P$sampleIndividuals(size, replace, exclude, sex, minAge, maxAge, migrant)
+migrant, tagL0, tagL1, tagL2, tagL3, tagL4) {
+ .P$sampleIndividuals(size, replace, exclude, sex, minAge, maxAge, migrant,
+tagL0, tagL1, tagL2, tagL3, tagL4)
 }
 
 #'SLiM method setCloningRate
@@ -10194,8 +20693,8 @@ migrant) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=699}{SLiM manual: page
-#'699}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=744}{SLiM manual: page
+#'744}.
 #'
 #'@param rate An object of type numeric. See details for description.
 #'
@@ -10209,7 +20708,7 @@ migrant) {
 #'clonal reproduction rate for the subpopulation. In sexual simulations, rate
 #'may be either a singleton (specifying the clonal reproduction rate for both
 #'sexes) or a vector containing two numeric values (the female and male cloning
-#'rates speciﬁed separately, at indices 0 and 1 respectively). During mating and
+#'rates specified separately, at indices 0 and 1 respectively). During mating and
 #'offspring generation, the probability that any given offspring individual will
 #'be generated by cloning - by asexual reproduction without gametes or meiosis -
 #'will be equal to the cloning rate (for its sex, in sexual simulations) set in
@@ -10241,8 +20740,8 @@ setCloningRate <- function(rate) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=699}{SLiM manual: page
-#'699}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=744}{SLiM manual: page
+#'744}.
 #'
 #'@param sourceSubpops An object of type integer or Subpopulation object. See
 #'details for description.
@@ -10252,14 +20751,14 @@ setCloningRate <- function(rate) {
 #'@family Subpopulation
 #'@return An object of type void.
 #'@details Set the migration rates to this subpopulation from the subpopulations
-#'in sourceSubpops to the corresponding rates speciﬁed in rates; in other words,
+#'in sourceSubpops to the corresponding rates specified in rates; in other words,
 #'rates gives the expected fractions of the children in this subpopulation that
 #'will subsequently be generated from parents in the subpopulations sourceSubpops
-#'(see section 22.2.1). This method will only set the migration fractions from
+#'(see section 23.2.1). This method will only set the migration fractions from
 #'the subpopulations given; migration rates from other subpopulations will be
 #'left unchanged (explicitly set a zero rate to turn off migration from a given
 #'subpopulation). The type of sourceSubpops may be either integer, specifying
-#'subpopulations by identiﬁer, or object, specifying subpopulations directly.
+#'subpopulations by identifier, or object, specifying subpopulations directly.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -10287,8 +20786,8 @@ setMigrationRates <- function(sourceSubpops, rates) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=699}{SLiM manual: page
-#'699}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=744}{SLiM manual: page
+#'744}.
 #'
 #'@param rate An object of type numeric. Must be of length 1 (a singleton). See
 #'details for description.
@@ -10296,13 +20795,13 @@ setMigrationRates <- function(sourceSubpops, rates) {
 #'@aliases Subpopulation$setSelfingRate .P$setSelfingRate
 #'@family Subpopulation
 #'@return An object of type void.
-#'@details Set the selﬁng rate of this subpopulation. The rate is changed to
-#'rate, which should be between 0.0 and 1.0, inclusive. Selﬁng can only be enabled
-#'in non-sexual (i.e. hermaphroditic) simulations. During mating and offspring
-#'generation, the probability that any given offspring individual will be
-#'generated by selﬁng - by self-fertilization via gametes produced by meiosis by
-#'a single parent - will be equal to the selﬁng rate set in the parental (not the
-#'offspring!) subpopulation (see section 22.2.1).
+#'@details Set the selfing rate of this subpopulation. The rate is changed to
+#'rate, which should be between 0.0 and 1.0, inclusive. Selfing can only be
+#'enabled in non-sexual (i.e. hermaphroditic) simulations. During mating and
+#'offspring generation, the probability that any given offspring individual will
+#'be generated by selfing - by self-fertilization via gametes produced by meiosis
+#'by a single parent - will be equal to the selfing rate set in the parental (not
+#'the offspring!) subpopulation (see section 23.2.1).
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -10330,8 +20829,8 @@ setSelfingRate <- function(rate) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=700}{SLiM manual: page
-#'700}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=744}{SLiM manual: page
+#'744}.
 #'
 #'@param sexRatio An object of type float. Must be of length 1 (a singleton). See
 #'details for description.
@@ -10345,7 +20844,7 @@ setSelfingRate <- function(rate) {
 #'next generated; it does not change the current subpopulation state. Unlike
 #'the selfing rate, the cloning rate, and migration rates, the sex ratio is
 #'deterministic: SLiM will generate offspring that exactly satisfy the requested
-#'sex ratio (within integer roundoff limits). See section 22.2.1 for further
+#'sex ratio (within integer roundoff limits). See section 23.2.1 for further
 #'details.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
@@ -10374,8 +20873,8 @@ setSexRatio <- function(sexRatio) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=700}{SLiM manual: page
-#'700}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=745}{SLiM manual: page
+#'745}.
 #'
 #'@param bounds An object of type numeric. See details for description.
 #'
@@ -10396,8 +20895,16 @@ setSexRatio <- function(sexRatio) {
 #'each dimension. Spatial dimensions that are periodic (as established with the
 #'periodicity parameter to initializeSLiMOptions()) must have a minimum coordinate
 #'value of 0.0 (a restriction that allows the handling of periodicity to be
-#'somewhat more efficient). The current spatial bounds for the subpopulation may
-#'be obtained through the spatialBounds property.
+#'somewhat more efficient). The current spatial bounds for the subpopulation
+#'may be obtained through the spatialBounds property. The spatial bounds of a
+#'subpopulation are shared with any SpatialMap objects added to the subpopulation.
+#'For this reason, once a spatial map has been added to a subpopulation, the
+#'spatial bounds of the subpopulation can no longer be changed (because it
+#'would stretch or shrink the associated spatial map, which does not seem to
+#'make physical sense). The bounds for a subpopulation should therefore be
+#'configured before any spatial maps are added to it. If those bounds do need
+#'to change subsequently, any associated spatial maps must first be removed with
+#'removeSpatialMap(), to ensure model consistency.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -10425,8 +20932,8 @@ setSpatialBounds <- function(bounds) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=700}{SLiM manual: page
-#'700}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=745}{SLiM manual: page
+#'745}.
 #'
 #'@param size An object of type integer. Must be of length 1 (a singleton). See
 #'details for description.
@@ -10471,8 +20978,8 @@ setSubpopulationSize <- function(size) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=700}{SLiM manual: page
-#'700}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=745}{SLiM manual: page
+#'745}.
 #'
 #'@param name An object of type string or numeric. Must be of length 1 (a
 #'singleton). See details for description.
@@ -10481,13 +20988,11 @@ setSubpopulationSize <- function(size) {
 #'@aliases Subpopulation$spatialMapColor .P$spatialMapColor
 #'@family Subpopulation
 #'@return An object of type string.
-#'@details Looks up the spatial map indicated by name, and uses its
-#'color-translation machinery (as defined by the valueRange and colors parameters
-#'to defineSpatialMap()) to translate each element of value into a corresponding
-#'color string. If the spatial map does not have color-translation capabilities,
-#'an error will result. See the documentation for defineSpatialMap() for
-#'information regarding the details of color translation. See the Eidos manual for
-#'further information on color strings.
+#'@details This method has been deprecated, and may be removed in a future release
+#'of SLiM. In SLiM 4.1 and later, use the SpatialMap method mapColor() instead,
+#'and see that method's documentation. (This method differs only in taking a name
+#'parameter, which is used to look up the spatial map from those that have been
+#'added to the subpopulation.)
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -10515,8 +21020,8 @@ spatialMapColor <- function(name, value) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=700}{SLiM manual: page
-#'700}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=745}{SLiM manual: page
+#'745}.
 #'
 #'@param name An object of type string. Must be of length 1 (a singleton). See
 #'details for description.
@@ -10532,44 +21037,11 @@ spatialMapColor <- function(name, value) {
 #'@aliases Subpopulation$spatialMapImage .P$spatialMapImage
 #'@family Subpopulation
 #'@return An object of type Image object. Return will be of length 1 (a singleton)
-#'@details Looks up the spatial map indicated by name, and returns an Image object
-#'sampled from it. The image will be width pixels wide and height pixels tall; the
-#'intrinsic size of the spatial map itself will be used if one of these parameters
-#'is NULL. The image will be oriented in the same way as it is displayed in
-#'SLiMgui (which conceptually entails a transformation from matrix coordinates,
-#'which store values by column, to standard image coordinates, which store values
-#'by row; see the Eidos manual's documentation of Image for details). This method
-#'may only be called for 2D spatial maps at present. The sampling of the spatial
-#'map can be done in one of two ways, as controlled by the centers parameter. If
-#'centers is T, a (width+1) × (height+1) grid of lines that delineates width ×
-#'height rectangular pixels will be overlaid on top of the spatial map, and values
-#'will be sampled from the spatial map at the center of each of these pixels.
-#'If centers is F (the default), a width × height grid of lines will be overlaid
-#'on top of the spatial map, and values will be sampled from the spatial map
-#'at the vertices of the grid. If interpolation is not enabled for the spatial
-#'map, these two options will both recover the original matrix of values used
-#'to define the spatial map (assuming, here and below, that width and height are
-#'NULL). If interpolation is enabled for the spatial map, however, centers == F
-#'will recover the original values, but will not capture the "typical" value of
-#'each pixel in the image; centers == T, on the other hand, will not recover the
-#'original values, but will capture the "typical" value of each pixel in the image
-#'(i.e., the value at the center of each pixel, as produced by interpolation). The
-#'figures in section 15.11 may be helpful for visualizing the difference between
-#'these options; the overlaid grids span the full extent of the spatial map,
-#'just as shown in that section. If color is T (the default), the valueRange and
-#'colors parameters supplied to defineSpatialMap() will be used to translate map
-#'values to RGB color values as described in the documentation of that method,
-#'providing the same appearance as in SLiMgui; of course those parameters must
-#'have been supplied, otherwise an error will result. If color is F, on the other
-#'hand, a grayscale image will be produced that directly reflects the map values
-#'without color translation. In this case, this method needs to translate map
-#'values, which can have any float value, into grayscale pixel values that are
-#'integers in [0, 255]. To do so, the map values are multiplied by 255.0, clamped
-#'to [0.0, 255.0], and then rounded to the nearest integer. This translation
-#'scheme essentially assumes that map values are in [0, 1]; for spatial maps that
-#'were defined using the floatK channel of a grayscale PNG image, this should
-#'recover the original image's pixel values. (If a different translation scheme is
-#'desired, color=T with the desired valueRange and colors should be used.)
+#'@details This method has been deprecated, and may be removed in a future release
+#'of SLiM. In SLiM 4.1 and later, use the SpatialMap method mapImage() instead,
+#'and see that method's documentation. (This method differs only in taking a name
+#'parameter, which is used to look up the spatial map from those that have been
+#'added to the subpopulation.)
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -10597,22 +21069,24 @@ spatialMapImage <- function(name, width, height, centers, color) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=701}{SLiM manual: page
-#'701}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=745}{SLiM manual: page
+#'745}.
 #'
-#'@param name An object of type string or float. Must be of length 1 (a
+#'@param map An object of type string or SpatialMap object. Must be of length 1 (a
 #'singleton). See details for description.
-#'@param point An object of type string or float. See details for description.
+#'@param point An object of type float. See details for description.
 #'
 #'@aliases Subpopulation$spatialMapValue .P$spatialMapValue
 #'@family Subpopulation
 #'@return An object of type float.
-#'@details Looks up the spatial map indicated by name, and uses its mapping
+#'@details Looks up the spatial map specified by map, and uses its mapping
 #'machinery (as defined by the gridSize, values, and interpolate parameters to
 #'defineSpatialMap()) to translate the coordinates of point into a corresponding
-#'map value. The length of point must be equal to the spatiality of the spatial
-#'map; in other words, for a spatial map with spatiality "xz", point must be
-#'of length 2, specifying the x and z coordinates of the point to be evaluated.
+#'map value. The parameter map may specify the map either as a SpatialMap object,
+#'or by its string name; in either case, the map must have been added to the
+#'subpopulation. The length of point must be equal to the spatiality of the
+#'spatial map; in other words, for a spatial map with spatiality "xz", point must
+#'be of length 2, specifying the x and z coordinates of the point to be evaluated.
 #'Interpolation will automatically be used if it was enabled for the spatial map.
 #'Point coordinates are clamped into the range defined by the spatial boundaries,
 #'even if the spatial boundaries are periodic; use pointPeriodic() to wrap the
@@ -10624,7 +21098,10 @@ spatialMapImage <- function(name, width, height, centers, color) {
 #'exact multiple of 2, and successive pairs of elements from point (elements 0 and
 #'1, then elements 2 and 3, etc.) will be taken as the x and z coordinates of the
 #'points to be evaluated. This allows spatialMapValue() to be used in a vectorized
-#'fashion.
+#'fashion. The mapValue() method of SpatialMap provides the same functionality
+#'directly on the SpatialMap class; spatialMapValue() is provided on Subpopulation
+#'partly for backward compatibility, but also for convenience for the most common
+#'usage case of spatial maps.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -10636,8 +21113,8 @@ spatialMapImage <- function(name, width, height, centers, color) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
-spatialMapValue <- function(name, point) {
- .P$spatialMapValue(name, point)
+spatialMapValue <- function(map, point) {
+ .P$spatialMapValue(map, point)
 }
 
 #'SLiM method subsetIndividuals
@@ -10652,8 +21129,8 @@ spatialMapValue <- function(name, point) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=701}{SLiM manual: page
-#'701}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=746}{SLiM manual: page
+#'746}.
 #'
 #'@param exclude An object of type null or Individual object. Must be of length 1
 #'(a singleton). The default value is \code{NULL}. See details for description.
@@ -10667,6 +21144,16 @@ spatialMapValue <- function(name, point) {
 #'singleton). The default value is \code{NULL}. See details for description.
 #'@param migrant An object of type null or logical. Must be of length 1 (a
 #'singleton). The default value is \code{NULL}. See details for description.
+#'@param tagL0 An object of type null or logical. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param tagL1 An object of type null or logical. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param tagL2 An object of type null or logical. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param tagL3 An object of type null or logical. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
+#'@param tagL4 An object of type null or logical. Must be of length 1 (a
+#'singleton). The default value is \code{NULL}. See details for description.
 #'
 #'@aliases Subpopulation$subsetIndividuals .P$subsetIndividuals
 #'@family Subpopulation
@@ -10677,16 +21164,23 @@ spatialMapValue <- function(name, point) {
 #'specify a specific individual that should not be included (typically the focal
 #'individual in some operation). Parameter sex, if non-NULL, may specify a sex
 #'("M" or "F") for the individuals to be returned, in sexual models. Parameter
-#'tag, if non-NULL, may specify a tag value for the individuals to be returned.
-#'Parameters minAge and maxAge, if non-NULL, may specify a minimum or maximum
-#'age for the individuals to be returned, in nonWF models. Parameter migrant,
-#'if non-NULL, may specify a required value for the migrant property of the
-#'individuals to be returned (so T will require that individuals be migrants,
-#'F will require that they not be). This method is shorthand for getting the
-#'individuals property of the subpopulation, and then using operator [] to select
-#'only individuals with the desired properties; besides being much simpler than
-#'the equivalent Eidos code, it is also much faster. See sampleIndividuals() for a
-#'similar method that returns a sample taken from a chosen subset of individuals.
+#'tag, if non-NULL, may specify a tag property value for the individuals to be
+#'returned. Parameters minAge and maxAge, if non-NULL, may specify a minimum
+#'or maximum age for the individuals to be returned, in nonWF models. Parameter
+#'migrant, if non-NULL, may specify a required value for the migrant property
+#'of the individuals to be returned (so T will require that individuals be
+#'migrants, F will require that they not be). Finally, parameters tagL0, tagL1,
+#'tagL2, tagL3, and tagL4, if non-NULL, may specify a required value (T or F)
+#'for the corresponding properties (tagL0, tagL1, tagL2, tagL3, and tagL4) of the
+#'individuals to be returned. Note that if any tag/tagL parameter is specified as
+#'non-NULL, that tag/tagL property must have a defined value for every individual
+#'in the subpopulation, otherwise an error may result (although this requirement
+#'will not necessarily be checked comprehensively by this method in every
+#'invocation). This method is shorthand for getting the individuals property of
+#'the subpopulation, and then using operator [] to select only individuals with
+#'the desired properties; besides being much simpler than the equivalent Eidos
+#'code, it is also much faster. See sampleIndividuals() for a similar method that
+#'returns a sample taken from a chosen subset of individuals.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -10698,8 +21192,10 @@ spatialMapValue <- function(name, point) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
-subsetIndividuals <- function(exclude, sex, tag, minAge, maxAge, migrant) {
- .P$subsetIndividuals(exclude, sex, tag, minAge, maxAge, migrant)
+subsetIndividuals <- function(exclude, sex, tag, minAge, maxAge, migrant,
+tagL0, tagL1, tagL2, tagL3, tagL4) {
+ .P$subsetIndividuals(exclude, sex, tag, minAge, maxAge, migrant, tagL0,
+tagL1, tagL2, tagL3, tagL4)
 }
 
 #'SLiM method takeMigrants
@@ -10714,8 +21210,8 @@ subsetIndividuals <- function(exclude, sex, tag, minAge, maxAge, migrant) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
-#'702}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=746}{SLiM manual: page
+#'746}.
 #'
 #'@param migrants An object of type Individual object. See details for
 #'description.
@@ -10761,8 +21257,8 @@ takeMigrants <- function(migrants) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=703}{SLiM manual: page
-#'703}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=748}{SLiM manual: page
+#'748}.
 #'
 #'@param codons An object of type integer. See details for description.
 #'@param long An object of type logical or integer. Must be of length 1 (a
@@ -10837,8 +21333,8 @@ codonsToAminoAcids <- function(codons, long, paste) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=704}{SLiM manual: page
-#'704}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=749}{SLiM manual: page
+#'749}.
 #'
 #'@param mutationMatrix16 An object of type float. See details for description.
 #'
@@ -10853,7 +21349,7 @@ codonsToAminoAcids <- function(codons, long, paste) {
 #'construct a simple trinucleotide-based mutation matrix which can then be
 #'modified so that specific trinucleotides sustain a mutation rate that does
 #'not depend only upon their central nucleotide. See the documentation for
-#'initializeGenomicElementType() in section 24.1 for further discussion of how
+#'initializeGenomicElementType() in section 25.1 for further discussion of how
 #'these 64×4 mutation matrices are interpreted and used.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
@@ -10882,8 +21378,8 @@ mm16To256 <- function(mutationMatrix16) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=704}{SLiM manual: page
-#'704}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=749}{SLiM manual: page
+#'749}.
 #'
 #'@param alpha An object of type float. Must be of length 1 (a singleton). See
 #'details for description.
@@ -10922,8 +21418,8 @@ mmJukesCantor <- function(alpha) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=704}{SLiM manual: page
-#'704}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=749}{SLiM manual: page
+#'749}.
 #'
 #'@param alpha An object of type float or float. Must be of length 1 (a
 #'singleton). See details for description.
@@ -10936,8 +21432,7 @@ mmJukesCantor <- function(alpha) {
 #'@details Returns a mutation matrix representing a Kimura (1980) model with
 #'transition rate alpha and transversion rate beta: This 2×2 matrix is suitable
 #'for use with initializeGenomicElementType(). Note that the actual mutation rate
-#'produced by this model is alpha+2*beta. 0 α α α α 0 α α α α 0 α α α α 0 0 β α β
-#'β 0 β α α β 0 β β α β 0
+#'produced by this model is alpha+2*beta.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -10965,8 +21460,8 @@ mmKimura <- function(alpha, beta) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=705}{SLiM manual: page
-#'705}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=749}{SLiM manual: page
+#'749}.
 #'
 #'@param sequence An object of type integer or string. See details for
 #'description.
@@ -11007,8 +21502,8 @@ nucleotideCounts <- function(sequence) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=705}{SLiM manual: page
-#'705}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=749}{SLiM manual: page
+#'749}.
 #'
 #'@param sequence An object of type integer or string. See details for
 #'description.
@@ -11018,10 +21513,11 @@ nucleotideCounts <- function(sequence) {
 #'@return An object of type float.
 #'@details A convenience function that returns a float vector of length four,
 #'providing the frequencies of occurrences of A / C / G / T nucleotides,
-#'respectively, in the supplied nucleotide sequence. The parameter sequence may be
-#'a singleton string (e.g., "TATA"), a string vector of single characters (e.g.,
-#'"T", "A", "T", "A"), or an integer vector (e.g., 3, 0, 3, 0), using SLiM's
-#'standard code of A=0, C=1, G=2, T=3.
+#'respectively, in the supplied nucleotide sequence. The parameter sequence may
+#'be a singleton string (e.g., "TATA"), a string vector of single characters 0 α α
+#'α α 0 α α α α 0 α α α α 0 0 β α β β 0 β α α β 0 β β α β 0 (e.g., "T", "A", "T",
+#'"A"), or an integer vector (e.g., 3, 0, 3, 0), using SLiM's standard code of
+#'A=0, C=1, G=2, T=3.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -11049,8 +21545,8 @@ nucleotideFrequencies <- function(sequence) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=705}{SLiM manual: page
-#'705}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=750}{SLiM manual: page
+#'750}.
 #'
 #'@param sequence An object of type integer or string. See details for
 #'description.
@@ -11086,14 +21582,14 @@ nucleotideFrequencies <- function(sequence) {
 #'intrinsically in SLiM at this time, but arbitrary generated sequences may
 #'always be loaded from files on disk. The format parameter controls the format
 #'of the returned sequence. It may be "string" to obtain the generated sequence
-#'as a singleton string (e.g., "TATA"), "char" to obtain it as a string vector
-#'of single characters (e.g., "T", "A", "T", "A"), or "integer" to obtain it as
-#'an integer vector (e.g., 3, 0, 3, 0), using SLiM's standard code of A=0, C=1,
-#'G=2, T=3. For passing directly to initializeAncestralNucleotides(), format
-#'"string" (a singleton string) will certainly be the most memory-efficient, and
-#'probably also the fastest. Memory efficiency can be a significant consideration;
-#'the nucleotide sequence for a chromosome of length 109 will occupy approximately
-#'1 GB of memory when stored as a singleton string (with one byte per nucleotide),
+#'as a singleton string (e.g., "TATA"), "char" to obtain it as a string vector of
+#'single characters (e.g., "T", "A", "T", "A"), or "integer" to obtain it as an
+#'integer vector (e.g., 3, 0, 3, 0), using SLiM's standard code of A=0, C=1, G=2,
+#'T=3. For passing directly to initializeAncestralNucleotides(), format "string"
+#'(a singleton string) will certainly be the most memory-efficient, and probably
+#'also the fastest. Memory efficiency can be a significant consideration; the
+#'nucleotide sequence for a chromosome of length 109 will occupy approximately 1
+#'GB of memory when stored as a singleton string (with one byte per nucleotide),
 #'and much more if stored in the other formats. However, the other formats can
 #'be easier to work with in Eidos, and so may be preferable for relatively short
 #'chromosomes if you are manipulating the generated sequence.
@@ -11124,8 +21620,8 @@ nucleotidesToCodons <- function(sequence) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=706}{SLiM manual: page
-#'706}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=751}{SLiM manual: page
+#'751}.
 #'
 #'@param genomes1 An object of type Genome object. See details for description.
 #'@param genomes2 An object of type Genome object. See details for description.
@@ -11177,7 +21673,7 @@ nucleotidesToCodons <- function(sequence) {
 #'infinite-sites interpretation of the segregating mutations. In most biologically
 #'realistic models, such genetic states will be quite rare, and so the impact of
 #'these choices will be negligible; however, in some models these distinctions may
-#'be important. FST = 1 − HS HT
+#'be important.
 #'@section Copyright:
 #'This is documentation for a function in the SLiM software, and has been
 #'reproduced from the official manual,
@@ -11205,8 +21701,8 @@ calcFST <- function(genomes1, genomes2, muts, start, end) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=707}{SLiM manual: page
-#'707}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=751}{SLiM manual: page
+#'751}.
 #'
 #'@param genomes An object of type Genome object. See details for description.
 #'@param muts An object of type null or Mutation object. The default value is
@@ -11225,11 +21721,11 @@ calcFST <- function(genomes1, genomes2, muts, start, end) {
 #'they are under Hardy-Weinberg equilibrium; this can be compared to the observed
 #'heterozygosity of an individual, as calculated by calcPairHeterozygosity().
 #'Often genomes will be all of the genomes in a subpopulation, or in the entire
-#'population, but any genome vector may be used. By default, with muts=NULL,
-#'the calculation is based upon all mutations in the simulation; the calculation
-#'can instead be based upon a subset of mutations, such as mutations of a
-#'specific mutation type, by passing the desired vector of mutations for muts.
-#'The calculation can be narrowed to apply to only a window - a subrange of the
+#'population, but any genome vector may be used. By default, with muts=NULL, the
+#'calculation is based upon all mutations in the simulation; the calculation can
+#'instead be based upon a subset of mutations, such as mutations of a specific
+#'mutation type, by passing the desired vector of mutations for muts. FST = 1 − HS
+#'HT The calculation can be narrowed to apply to only a window - a subrange of the
 #'full chromosome - by passing the interval bounds [start, end] for the desired
 #'window. In this case, the vector of mutations used for the calculation will
 #'be subset to include only mutations within the specified window. The default
@@ -11268,8 +21764,8 @@ calcHeterozygosity <- function(genomes, muts, start, end) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=707}{SLiM manual: page
-#'707}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=752}{SLiM manual: page
+#'752}.
 #'
 #'@param genomes An object of type Genome object. See details for description.
 #'@param mutType An object of type null or MutationType object. Must be of length
@@ -11326,8 +21822,8 @@ calcInbreedingLoad <- function(genomes, mutType) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=707}{SLiM manual: page
-#'707}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=752}{SLiM manual: page
+#'752}.
 #'
 #'@param genome1 An object of type Genome object. Must be of length 1 (a
 #'singleton). See details for description.
@@ -11394,8 +21890,8 @@ infiniteSites) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=708}{SLiM manual: page
-#'708}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=753}{SLiM manual: page
+#'753}.
 #'
 #'@param individuals An object of type Individual object. See details for
 #'description.
@@ -11443,8 +21939,8 @@ calcVA <- function(individuals, mutType) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=708}{SLiM manual: page
-#'708}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=753}{SLiM manual: page
+#'753}.
 #'
 #'@param genomes An object of type Genome object. See details for description.
 #'@param muts An object of type null or Mutation object. The default value is
@@ -11504,8 +22000,8 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=708}{SLiM manual: page
-#'708}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=753}{SLiM manual: page
+#'753}.
 #'
 #'@param individuals An object of type Individual object. See details for
 #'description.
@@ -11548,7 +22044,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'100 columns. The result vector/matrix/array is in the correct orientation to
 #'be directly usable as a spatial map, by passing it to the defineSpatialMap()
 #'method of Subpopulation. For further discussion of dimensionality and
-#'spatiality, see section 24.1 on initializeInteractionType(), and section 24.8
+#'spatiality, see section 25.1 on initializeInteractionType(), and section 25.8
 #'on InteractionType. The spatialBounds parameter defines the spatial boundaries
 #'within which the individuals are binned. Typically this is the spatial bounds of
 #'a particular subpopulation, within which the individuals reside; for individuals
@@ -11565,7 +22061,7 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'grid with dimensions defined by dims is conceptually stretched out across the
 #'given spatial bounds, such that the centers of the edge and corner grid squares
 #'are aligned with the limits of the spatial bounds. This matches the way that
-#'defineSpatialMap() defines its maps; see section 15.11 for illustration. The
+#'defineSpatialMap() defines its maps; see section 16.11 for illustration. The
 #'particular summary produced depends upon the parameters operation and empty.
 #'Consider a single grid square represented by a single element in the result.
 #'That grid square contains zero or more of the individuals in individuals. If
@@ -11652,8 +22148,8 @@ perUnitArea, spatiality)
 #'full SLiM script.
 #'
 #'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=710}{SLiM manual: page
-#'710}.
+#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=755}{SLiM manual: page
+#'755}.
 #'
 #'@param filePath An object of type string or logical. Must be of length 1 (a
 #'singleton). See details for description.
@@ -11671,7 +22167,7 @@ perUnitArea, spatiality)
 #'it makes it easy to recover metadata that you attached to the tree sequence when
 #'it was saved. If userData is F, the entire top-level metadata Dictionary object
 #'is returned; this can be useful for examining the values of other keys under the
-#'SLiM key (see section 26.4), or values inside the top-level dictionary itself
+#'SLiM key (see section 27.4), or values inside the top-level dictionary itself
 #'that might have been placed there by msprime or other software. This function
 #'can be used to read in parameter values or other saved state (tag property
 #'values, for example), in order to resuscitate the complete state of a simulation
@@ -11714,7 +22210,7 @@ treeSeqMetadata <- function(filePath, userData) {
 #'in initialize()
 #'callbacks that run prior to the beginning of simulation execution. Eidos
 #'callbacks are discussed
-#'more broadly in chapter 25, but for our present purposes, the idea is very
+#'more broadly in chapter 26, but for our present purposes, the idea is very
 #'simple. In your input
 #'file, you can write something like this:
 #'initialize()
@@ -11802,19 +22298,6 @@ treeSeqMetadata <- function(filePath, userData) {
 #'community. In single-species models, these functions may be called from an
 #'ordinary
 #'initialize() callback for simplicity and backward compatibility.
-#'Once all initialize() callbacks have executed, in the order in which they are
-#'specified in the
-#'SLiM input file, the simulation will begin. The tick number at which it starts
-#'is determined by the
-#'Eidos events you have defined (see section 25.1); the first tick in which an
-#'Eidos event is scheduled
-#'to execute is the tick at which the simulation starts. Similarly, the simulation
-#'will terminate after
-#'the last tick for which a script block (either an event or a callback) is
-#'registered to execute, unless
-#'the stop() function or the simulationFinished() method of Community or Species
-#'are called to
-#'end the simulation earlier.
 #'This class has the following methods (functions):
 #'\itemize{
 #'\item{\code{\link{initializeAncestralNucleotides}}}
@@ -11982,9 +22465,9 @@ NULL
 #'one (a singleton). This property is a constant, so it is not modifiable.
 #'\strong{Property Description:} The overall mutation rate across the whole
 #'chromosome determining the overall number of mutation ranges and rates as well
-#'as the coverage of the chromosome by genomic elements (since mutations are only
-#'generated within genomic elements, regardless of the mutation rate map). When
-#'using sex- specific mutation rate maps, this property will unavailable; see
+#'as the coverage of the chromosome by genomic elements (since mutations are
+#'only generated within genomic elements, regardless of the mutation rate map).
+#'When using sexspecific mutation rate maps, this property will unavailable; see
 #'overallMutationRateF and overallMutationRateM. This property is unavailable in
 #'nucleotide-based models. }
 #'\item{overallMutationRateF}{A property of type float. It is of length
@@ -12098,6 +22581,7 @@ NULL
 #'\item{\code{\link{simulationFinished}}}
 #'\item{\code{\link{speciesWithIDs}}}
 #'\item{\code{\link{subpopulationsWithIDs}}}
+#'\item{\code{\link{usage}}}
 #'}
 #'This class has the following properties:
 #'\describe{
@@ -12122,8 +22606,8 @@ NULL
 #'\item{cycleStage}{A property of type string. It is of length one (a singleton).
 #'This property is a constant, so it is not modifiable. \strong{Property
 #'Description:} The current cycle stage, as a string. The values of this property
-#'essentially mirror the cycle stages of WF and nonWF models (see chapters 22
-#'and 23). Common values include "first" (during execution of first() events),
+#'essentially mirror the cycle stages of WF and nonWF models (see chapters 23
+#'and 24). Common values include "first" (during execution of first() events),
 #'"early" (during execution of early() events), "reproduction" (during offspring
 #'generation), "fitness" (during fitness evaluation), "survival" (while applying
 #'selection and mortality in nonWF models), and "late" (during execution of late()
@@ -12173,6 +22657,204 @@ NULL
 #'
 #'}
 NULL
+#'Eidos
+#'
+#'Documentation for Eidos class from SLiM
+#'
+#'@name Eidos
+#'@export
+#'@aliases E
+#'@family Eidos
+#'@details NA
+#'This class has the following methods (functions):
+#'\itemize{
+#'\item{\code{\link{abs}}}
+#'\item{\code{\link{acos}}}
+#'\item{\code{\link{asin}}}
+#'\item{\code{\link{atan}}}
+#'\item{\code{\link{atan2}}}
+#'\item{\code{\link{ceil}}}
+#'\item{\code{\link{cos}}}
+#'\item{\code{\link{cumProduct}}}
+#'\item{\code{\link{cumSum}}}
+#'\item{\code{\link{exp}}}
+#'\item{\code{\link{floor}}}
+#'\item{\code{\link{integerDiv}}}
+#'\item{\code{\link{integerMod}}}
+#'\item{\code{\link{isFinite}}}
+#'\item{\code{\link{isInfinite}}}
+#'\item{\code{\link{isNAN}}}
+#'\item{\code{\link{log}}}
+#'\item{\code{\link{log10}}}
+#'\item{\code{\link{log2}}}
+#'\item{\code{\link{product}}}
+#'\item{\code{\link{round}}}
+#'\item{\code{\link{setDifference}}}
+#'\item{\code{\link{setIntersection}}}
+#'\item{\code{\link{setSymmetricDifference}}}
+#'\item{\code{\link{setUnion}}}
+#'\item{\code{\link{sin}}}
+#'\item{\code{\link{sqrt}}}
+#'\item{\code{\link{sum}}}
+#'\item{\code{\link{sumExact}}}
+#'\item{\code{\link{tan}}}
+#'\item{\code{\link{trunc}}}
+#'\item{\code{\link{cor}}}
+#'\item{\code{\link{cov}}}
+#'\item{\code{\link{max}}}
+#'\item{\code{\link{mean}}}
+#'\item{\code{\link{min}}}
+#'\item{\code{\link{pmax}}}
+#'\item{\code{\link{pmin}}}
+#'\item{\code{\link{quantile}}}
+#'\item{\code{\link{range}}}
+#'\item{\code{\link{rank}}}
+#'\item{\code{\link{sd}}}
+#'\item{\code{\link{ttest}}}
+#'\item{\code{\link{var}}}
+#'\item{\code{\link{dmvnorm}}}
+#'\item{\code{\link{dbeta}}}
+#'\item{\code{\link{dexp}}}
+#'\item{\code{\link{dgamma}}}
+#'\item{\code{\link{dnorm}}}
+#'\item{\code{\link{findInterval}}}
+#'\item{\code{\link{pnorm}}}
+#'\item{\code{\link{qnorm}}}
+#'\item{\code{\link{rbeta}}}
+#'\item{\code{\link{rbinom}}}
+#'\item{\code{\link{rcauchy}}}
+#'\item{\code{\link{rdunif}}}
+#'\item{\code{\link{rexp}}}
+#'\item{\code{\link{rf}}}
+#'\item{\code{\link{rgamma}}}
+#'\item{\code{\link{rgeom}}}
+#'\item{\code{\link{rlnorm}}}
+#'\item{\code{\link{rmvnorm}}}
+#'\item{\code{\link{rnbinom}}}
+#'\item{\code{\link{rnorm}}}
+#'\item{\code{\link{rpois}}}
+#'\item{\code{\link{runif}}}
+#'\item{\code{\link{rweibull}}}
+#'\item{\code{\link{c}}}
+#'\item{\code{\link{float}}}
+#'\item{\code{\link{integer}}}
+#'\item{\code{\link{logical}}}
+#'\item{\code{\link{object}}}
+#'\item{\code{\link{rep}}}
+#'\item{\code{\link{repEach}}}
+#'\item{\code{\link{sample}}}
+#'\item{\code{\link{seq}}}
+#'\item{\code{\link{seqAlong}}}
+#'\item{\code{\link{seqLen}}}
+#'\item{\code{\link{string}}}
+#'\item{\code{\link{all}}}
+#'\item{\code{\link{any}}}
+#'\item{\code{\link{cat}}}
+#'\item{\code{\link{catn}}}
+#'\item{\code{\link{format}}}
+#'\item{\code{\link{identical}}}
+#'\item{\code{\link{ifelse}}}
+#'\item{\code{\link{length}}}
+#'\item{\code{\link{match}}}
+#'\item{\code{\link{order}}}
+#'\item{\code{\link{paste}}}
+#'\item{\code{\link{paste0}}}
+#'\item{\code{\link{print}}}
+#'\item{\code{\link{rev}}}
+#'\item{\code{\link{size}}}
+#'\item{\code{\link{sort}}}
+#'\item{\code{\link{sortBy}}}
+#'\item{\code{\link{str}}}
+#'\item{\code{\link{tabulate}}}
+#'\item{\code{\link{unique}}}
+#'\item{\code{\link{which}}}
+#'\item{\code{\link{whichMax}}}
+#'\item{\code{\link{whichMin}}}
+#'\item{\code{\link{asFloat}}}
+#'\item{\code{\link{asInteger}}}
+#'\item{\code{\link{asLogical}}}
+#'\item{\code{\link{asString}}}
+#'\item{\code{\link{elementType}}}
+#'\item{\code{\link{isFloat}}}
+#'\item{\code{\link{isInteger}}}
+#'\item{\code{\link{isLogical}}}
+#'\item{\code{\link{isNULL}}}
+#'\item{\code{\link{isObject}}}
+#'\item{\code{\link{isString}}}
+#'\item{\code{\link{type}}}
+#'\item{\code{\link{nchar}}}
+#'\item{\code{\link{strcontains}}}
+#'\item{\code{\link{strfind}}}
+#'\item{\code{\link{strprefix}}}
+#'\item{\code{\link{strsplit}}}
+#'\item{\code{\link{strsuffix}}}
+#'\item{\code{\link{substr}}}
+#'\item{\code{\link{apply}}}
+#'\item{\code{\link{array}}}
+#'\item{\code{\link{cbind}}}
+#'\item{\code{\link{diag}}}
+#'\item{\code{\link{dim}}}
+#'\item{\code{\link{drop}}}
+#'\item{\code{\link{lowerTri}}}
+#'\item{\code{\link{matrix}}}
+#'\item{\code{\link{matrixMult}}}
+#'\item{\code{\link{ncol}}}
+#'\item{\code{\link{nrow}}}
+#'\item{\code{\link{rbind}}}
+#'\item{\code{\link{t}}}
+#'\item{\code{\link{upperTri}}}
+#'\item{\code{\link{createDirectory}}}
+#'\item{\code{\link{deleteFile}}}
+#'\item{\code{\link{fileExists}}}
+#'\item{\code{\link{filesAtPath}}}
+#'\item{\code{\link{flushFile}}}
+#'\item{\code{\link{getwd}}}
+#'\item{\code{\link{readCSV}}}
+#'\item{\code{\link{readFile}}}
+#'\item{\code{\link{setwd}}}
+#'\item{\code{\link{tempdir}}}
+#'\item{\code{\link{writeFile}}}
+#'\item{\code{\link{writeTempFile}}}
+#'\item{\code{\link{cmColors}}}
+#'\item{\code{\link{colors}}}
+#'\item{\code{\link{color2rgb}}}
+#'\item{\code{\link{heatColors}}}
+#'\item{\code{\link{hsv2rgb}}}
+#'\item{\code{\link{rainbow}}}
+#'\item{\code{\link{rgb2color}}}
+#'\item{\code{\link{rgb2hsv}}}
+#'\item{\code{\link{terrainColors}}}
+#'\item{\code{\link{assert}}}
+#'\item{\code{\link{beep}}}
+#'\item{\code{\link{citation}}}
+#'\item{\code{\link{clock}}}
+#'\item{\code{\link{date}}}
+#'\item{\code{\link{debugIndent}}}
+#'\item{\code{\link{defineConstant}}}
+#'\item{\code{\link{defineGlobal}}}
+#'\item{\code{\link{exists}}}
+#'\item{\code{\link{functionSignature}}}
+#'\item{\code{\link{functionSource}}}
+#'\item{\code{\link{getSeed}}}
+#'\item{\code{\link{license}}}
+#'\item{\code{\link{ls}}}
+#'\item{\code{\link{rm}}}
+#'\item{\code{\link{sapply}}}
+#'\item{\code{\link{setSeed}}}
+#'\item{\code{\link{source}}}
+#'\item{\code{\link{stop}}}
+#'\item{\code{\link{suppressWarnings}}}
+#'\item{\code{\link{sysinfo}}}
+#'\item{\code{\link{system}}}
+#'\item{\code{\link{time}}}
+#'\item{\code{\link{usage}}}
+#'\item{\code{\link{version}}}
+#'}
+#'This class has the following properties:
+#'\describe{
+#'\item{None.}{This class has no properties.}
+#'}
+NULL
 #'Genome
 #'
 #'Documentation for Genome class from SLiM
@@ -12214,13 +22896,13 @@ NULL
 #'(a singleton). This property is a constant, so it is not modifiable.
 #'\strong{Property Description:} If pedigree tracking is turned on with
 #'initializeSLiMOptions(keepPedigrees=T), genomePedigreeID is a unique
-#'non-negative identifier for each genome in a simulation, never re- used
-#'throughout the duration of the simulation run. Furthermore, the genomePedigreeID
-#'of a given genome will be equal to either (2*pedigreeID) or (2*pedigreeID + 1)
-#'of the individual that the genome belongs to (the former for the first genome
-#'of the individual, the latter for the second genome of the individual); this
-#'invariant relationship is guaranteed. If pedigree tracking is not enabled, this
-#'property is unavailable. }
+#'non-negative identifier for each genome in a simulation, never reused throughout
+#'the duration of the simulation run. Furthermore, the genomePedigreeID of a
+#'given genome will be equal to either (2*pedigreeID) or (2*pedigreeID + 1) of the
+#'individual that the genome belongs to (the former for the first genome of the
+#'individual, the latter for the second genome of the individual); this invariant
+#'relationship is guaranteed. If pedigree tracking is not enabled, this property
+#'is unavailable. }
 #'\item{genomeType}{A property of type string. It is of length one (a singleton).
 #'This property is a constant, so it is not modifiable. \strong{Property
 #'Description:} The type of chromosome represented by this genome; one of "A",
@@ -12376,6 +23058,7 @@ NULL
 #'\item{\code{\link{countOfMutationsOfType}}}
 #'\item{\code{\link{relatedness}}}
 #'\item{\code{\link{setSpatialPosition}}}
+#'\item{\code{\link{sharedParentCount}}}
 #'\item{\code{\link{sumOfMutationsOfType}}}
 #'\item{\code{\link{uniqueMutationsOfType}}}
 #'}
@@ -12535,6 +23218,51 @@ NULL
 #'individuals seems to be particularly common and useful. If a tagF property would
 #'be helpful on another class, it would be easy to add. See the description of the
 #'tag property above for additional comments. }
+#'\item{tagL0}{A property of type logical. It is of length one (a singleton).
+#'This property is a variable, so it is modifiable. \strong{Property Description:}
+#'A user-defined logical value (see also tag and tagF). The value of tagL0 is
+#'initially undefined, and it is an error to try to read it; if you wish it to
+#'have a defined value, you must arrange that yourself by explicitly setting its
+#'value prior to using it elsewhere in your code. The value of tagL0 is not used
+#'by SLiM; it is free for you to use. See also the getValue() and setValue()
+#'methods (provided by the Dictionary class; see the Eidos manual), for another
+#'way of attaching state to individuals. }
+#'\item{tagL1}{A property of type logical. It is of length one (a singleton).
+#'This property is a variable, so it is modifiable. \strong{Property Description:}
+#'A user-defined logical value (see also tag and tagF). The value of tagL1 is
+#'initially undefined, and it is an error to try to read it; if you wish it to
+#'have a defined value, you must arrange that yourself by explicitly setting its
+#'value prior to using it elsewhere in your code. The value of tagL1 is not used
+#'by SLiM; it is free for you to use. See also the getValue() and setValue()
+#'methods (provided by the Dictionary class; see the Eidos manual), for another
+#'way of attaching state to individuals. }
+#'\item{tagL2}{A property of type logical. It is of length one (a singleton).
+#'This property is a variable, so it is modifiable. \strong{Property Description:}
+#'A user-defined logical value (see also tag and tagF). The value of tagL2 is
+#'initially undefined, and it is an error to try to read it; if you wish it to
+#'have a defined value, you must arrange that yourself by explicitly setting its
+#'value prior to using it elsewhere in your code. The value of tagL2 is not used
+#'by SLiM; it is free for you to use. See also the getValue() and setValue()
+#'methods (provided by the Dictionary class; see the Eidos manual), for another
+#'way of attaching state to individuals. }
+#'\item{tagL3}{A property of type logical. It is of length one (a singleton).
+#'This property is a variable, so it is modifiable. \strong{Property Description:}
+#'A user-defined logical value (see also tag and tagF). The value of tagL3 is
+#'initially undefined, and it is an error to try to read it; if you wish it to
+#'have a defined value, you must arrange that yourself by explicitly setting its
+#'value prior to using it elsewhere in your code. The value of tagL3 is not used
+#'by SLiM; it is free for you to use. See also the getValue() and setValue()
+#'methods (provided by the Dictionary class; see the Eidos manual), for another
+#'way of attaching state to individuals. }
+#'\item{tagL4}{A property of type logical. It is of length one (a singleton).
+#'This property is a variable, so it is modifiable. \strong{Property Description:}
+#'A user-defined logical value (see also tag and tagF). The value of tagL4 is
+#'initially undefined, and it is an error to try to read it; if you wish it to
+#'have a defined value, you must arrange that yourself by explicitly setting its
+#'value prior to using it elsewhere in your code. The value of tagL4 is not used
+#'by SLiM; it is free for you to use. See also the getValue() and setValue()
+#'methods (provided by the Dictionary class; see the Eidos manual), for another
+#'way of attaching state to individuals. }
 #'\item{uniqueMutations}{A property of type Mutation object. This property
 #'is a constant, so it is not modifiable. \strong{Property Description:}
 #'All of the Mutation objects present in this individual. Mutations present
@@ -12553,36 +23281,64 @@ NULL
 #'A user-defined float value. The value of x is initially undefined (i.e., has
 #'an effectively random value that could be different every time you run your
 #'model); if you wish it to have a defined value, you must arrange that yourself
-#'by explicitly setting its value prior to using it elsewhere in your code,
-#'typically in a modifyChild() callback. The value of x is not used by SLiM unless
-#'the optional "continuous space" facility is enabled with the dimensionality
-#'parameter to initializeSLiMOptions(), in which case x will be understood to
-#'represent the x coordinate of the individual in space. If continuous space is
-#'not enabled, you may use x as an additional tag value of type float. }
+#'by explicitly setting its value prior to using it elsewhere in your code. The
+#'value of x is not used by SLiM unless the optional "continuous space" facility
+#'is enabled with the dimensionality parameter to initializeSLiMOptions(), in
+#'which case x will be understood to represent the x coordinate of the individual
+#'in space. If continuous space is not enabled, you may use x as an additional tag
+#'value of type float. }
+#'\item{xy}{A property of type float. This property is a constant, so it is
+#'not modifiable. \strong{Property Description:} This property provides joint
+#'read-only access to the x and y properties; they are returned as a twoelement
+#'float vector. This can be useful in complex spatial models in which the
+#'spatiality of interactions/maps differs from the overall dimensionality of the
+#'model. See the documentation for the separate properties x and y for further
+#'comments. }
+#'\item{xyz}{A property of type float. This property is a constant, so it
+#'is not modifiable. \strong{Property Description:} This property provides
+#'joint read-only access to the x, y, and z properties; they are returned as a
+#'threeelement float vector. This can be useful in complex spatial models in which
+#'the spatiality of interactions/maps differs from the overall dimensionality of
+#'the model. See the documentation for the separate properties x, y, and z for
+#'further comments. }
+#'\item{xz}{A property of type float. This property is a constant, so it is
+#'not modifiable. \strong{Property Description:} This property provides joint
+#'read-only access to the x and z properties; they are returned as a twoelement
+#'float vector. This can be useful in complex spatial models in which the
+#'spatiality of interactions/maps differs from the overall dimensionality of the
+#'model. See the documentation for the separate properties x and z for further
+#'comments. }
 #'\item{y}{A property of type float. It is of length one (a singleton). This
 #'property is a variable, so it is modifiable. \strong{Property Description:}
 #'A user-defined float value. The value of y is initially undefined (i.e., has
 #'an effectively random value that could be different every time you run your
 #'model); if you wish it to have a defined value, you must arrange that yourself
-#'by explicitly setting its value prior to using it elsewhere in your code,
-#'typically in a modifyChild() callback. The value of y is not used by SLiM unless
-#'the optional "continuous space" facility is enabled with the dimensionality
-#'parameter to initializeSLiMOptions(), in which case y will be understood to
-#'represent the y coordinate of the individual in space (if the dimensionality is
-#'"xy" or "xyz"). If continuous space is not enabled, or the dimensionality is not
-#'"xy" or "xyz", you may use y as an additional tag value of type float. }
+#'by explicitly setting its value prior to using it elsewhere in your code. The
+#'value of y is not used by SLiM unless the optional "continuous space" facility
+#'is enabled with the dimensionality parameter to initializeSLiMOptions(), in
+#'which case y will be understood to represent the y coordinate of the individual
+#'in space (if the dimensionality is "xy" or "xyz"). If continuous space is
+#'not enabled, or the dimensionality is not "xy" or "xyz", you may use y as an
+#'additional tag value of type float. }
+#'\item{yz}{A property of type float. This property is a constant, so it is
+#'not modifiable. \strong{Property Description:} This property provides joint
+#'read-only access to the y and z properties; they are returned as a twoelement
+#'float vector. This can be useful in complex spatial models in which the
+#'spatiality of interactions/maps differs from the overall dimensionality of the
+#'model. See the documentation for the separate properties y and z for further
+#'comments. }
 #'\item{z}{A property of type float. It is of length one (a singleton). This
 #'property is a variable, so it is modifiable. \strong{Property Description:}
 #'A user-defined float value. The value of z is initially undefined (i.e., has
 #'an effectively random value that could be different every time you run your
 #'model); if you wish it to have a defined value, you must arrange that yourself
-#'by explicitly setting its value prior to using it elsewhere in your code,
-#'typically in a modifyChild() callback. The value of z is not used by SLiM unless
-#'the optional "continuous space" facility is enabled with the dimensionality
-#'parameter to initializeSLiMOptions(), in which case z will be understood to
-#'represent the z coordinate of the individual in space (if the dimensionality is
-#'"xyz"). If continuous space is not enabled, or the dimensionality is not "xyz",
-#'you may use z as an additional tag value of type float.}
+#'by explicitly setting its value prior to using it elsewhere in your code. The
+#'value of z is not used by SLiM unless the optional "continuous space" facility
+#'is enabled with the dimensionality parameter to initializeSLiMOptions(), in
+#'which case z will be understood to represent the z coordinate of the individual
+#'in space (if the dimensionality is "xyz"). If continuous space is not enabled,
+#'or the dimensionality is not "xyz", you may use z as an additional tag value of
+#'type float.}
 #'
 #'}
 NULL
@@ -12598,7 +23354,7 @@ NULL
 #'is an advanced feature, the
 #'use of which is optional. Once an interaction type is set up with
 #'initializeInteractionType()
-#'(see section 24.1), it can be evaluated and then queried to give information
+#'(see section 25.1), it can be evaluated and then queried to give information
 #'such as the nearest
 #'interacting neighbors of an individual, or the total strength of interactions
 #'felt by an individual,
@@ -12617,27 +23373,30 @@ NULL
 #'Interactions therefore
 #'fundamentally define a one-to-many relationship, from one receiver to the
 #'(potentially) many
-#'exerters that act upon that receiver. In using InteractionType, you will
-#'generally start with a
-#'receiver, and ask an InteractionType object to handle a query about that
-#'receiver, such as "what
-#'are the ten nearest exerters to this receiver?". InteractionType is optimized to
-#'find and return the
-#'set of exerters influencing a given receiver; it is not optimized for the
-#'reverse, finding and returning
-#'the set of receivers influenced by a given exerter. (If that seems desirable,
-#'you might wish to flip
-#'your perspective and regard the interaction as actually working in the opposite
-#'direction!)
+#'exerters that act upon that receiver. Note that a receiver will never be an
+#'exerter of an interaction
+#'upon itself; a given individual is never both receiver and exerter in the same
+#'interaction. When
+#'using InteractionType, you will generally start with a receiver, and ask an
+#'InteractionType
+#'object to handle a query about that receiver, such as "what are the ten nearest
+#'exerters to this
+#'receiver?". InteractionType is optimized to find and return the set of exerters
+#'influencing a given
+#'receiver; it is not optimized for the reverse, finding and returning the set of
+#'receivers influenced by
+#'a given exerter. (If that seems desirable, you might wish to flip your
+#'perspective and regard the
+#'interaction as actually working in the opposite direction!)
 #'Interactions are usually spatial, depending upon the spatial dimensionality
 #'established with
-#'initializeSLiMOptions() (section 24.1), but they do not have to be spatial. For
+#'initializeSLiMOptions() (section 25.1), but they do not have to be spatial. For
 #'spatial
 #'interactions, the strength of the interaction from an exerter to a receiver
 #'often depends (partly, at
-#'least) upon the distance between the two; nearby exerters often wield a stronger
-#'influence upon a
-#'receiver than more distant exerters do. Non-spatial interactions, on the other
+#'least) upon the distance d between the two; nearby exerters often wield a
+#'stronger influence upon
+#'a receiver than more distant exerters do. Non-spatial interactions, on the other
 #'hand, are of course
 #'unrelated to distance, and the strength of interaction between two individuals
 #'depends entirely
@@ -12677,7 +23436,17 @@ NULL
 #'females, etc.)
 #'can be declared to be sex-specific, which can also substantially reduce the
 #'overhead of querying
-#'them.
+#'them. This "sex-segregation" is just one facet of a larger feature, called
+#'"interaction constraints",
+#'that allows you to specify a variety of constraints upon which individuals can
+#'be exerters and
+#'which individuals can be receivers; these constraints can include not only sex,
+#'but also age,
+#'migrant status, and the values of Individual properties such as tag and tagL0 -
+#'tagL4. Setting up
+#'constraints allows you to model the interaction of just a subset of a
+#'subpopulation with a different
+#'subset of a (perhaps different) subpopulation.
 #'We will focus, in the remaining discussion, on spatial interactions since they
 #'are more
 #'common. The first step in InteractionType's evaluation of a spatial interaction
@@ -12698,14 +23467,27 @@ NULL
 #'maximum distance for
 #'the interaction type; if it is beyond that limit, the interaction strength is
 #'always zero (and it is also
-#'always zero for the interaction of an individual with itself). Third (when the
-#'distance is less than
-#'the maximum), the distance is converted into an interaction strength by an
-#'interaction function (IF),
-#'which is a characteristic of the InteractionType. Finally, this interaction
-#'strength may be modified
-#'by the interaction() callbacks currently active in the simulation, if any (see
-#'section 25.7).
+#'always zero for the interaction of an individual with itself, since a given
+#'individual is never both
+#'receiver and exerter, as mentioned above). At this stage, the receiver and
+#'exerter are then
+#'considered "neighbors" - individuals that are within the maximum interaction
+#'distance. Some
+#'spatial queries stop at this stage, processing the neighbors of receivers.
+#'Third, receiver and exerter
+#'constraints are applied, potentially disqualifying some interactions;
+#'interacting pairs that remain
+#'after this cull are called "interacting neighbors". Some queries stop at this
+#'stage, processing the
+#'interacting neighbors of receivers. Fourth, for all interacting neighbors, the
+#'distance is converted
+#'into an interaction strength by an interaction function (IF), which is a
+#'characteristic of the
+#'InteractionType. Finally, this interaction strength may be modified by the
+#'interaction()
+#'callbacks currently active in the simulation, if any (see section 26.7). Some
+#'queries stop at this
+#'stage, processing the interaction strengths between interacting neighbors.
 #'InteractionType is actually a wrapper for three different spatial query engines
 #'that share some
 #'of their data but work very differently. The first engine is a brute-force
@@ -12720,32 +23502,32 @@ NULL
 #'optimize searches for spatially proximate points. This engine is usually used
 #'directly in response to
 #'queries involving "neighbors", such as nearestNeighbors() and
-#'nearestNeighborsOfPoint(). In
-#'SLiM, the term "neighbor" means an individual that is within the maximum
-#'interaction distance of
-#'a receiver (excluding the receiver itself) or a focal point; the neighbors of
-#'the receiver or point are
-#'therefore those that fall within the fixed radius defined by the maximum
-#'interaction distance. Calls
-#'with "neighbor" in their name explicitly use the k-d tree engine, and may
-#'therefore be called only
-#'for spatial interactions; in non-spatial interactions there is no concept of a
-#'"neighbor". In terms of
-#'computational complexity, finding the nearest neighbor of a given receiver by
-#'brute force would be
-#'an O(N) computation, whereas with the k-d tree it is typically an O(log N)
-#'computation - a very
-#'important difference, especially for large N. In general, to get the best
-#'performance from a spatial
-#'model, you should use neighbor-based calls to make minimal queries when
-#'possible. If all you
-#'really care about is the distance to the nearest neighbor of a receiver, for
-#'example, then use
-#'nearestNeighbors() to find the neighbor and then call distance() to get the
-#'distance to that
-#'neighbor, rather than getting the distances to all individuals with distance()
-#'and then using min()
-#'to select the smallest.
+#'nearestNeighborsOfPoint(). As
+#'mentioned above, the term "neighbor" means an individual that is within the
+#'maximum interaction
+#'distance of a receiver (excluding the receiver itself) or a focal point; the
+#'neighbors of the receiver
+#'or point are therefore those that fall within the fixed radius defined by the
+#'maximum interaction
+#'distance. Calls with "neighbor" in their name explicitly use the k-d tree
+#'engine, and may therefore
+#'be called only for spatial interactions; in non-spatial interactions there is no
+#'concept of a
+#'"neighbor". In terms of computational complexity, finding the nearest neighbor
+#'of a given receiver
+#'by brute force would be an O(N) computation, whereas with the k-d tree it is
+#'typically an O(log N)
+#'computation - a very important difference, especially for large N. In general,
+#'to get the best
+#'performance from a spatial model, you should use neighbor-based calls to make
+#'minimal queries
+#'when possible. If all you really care about is the distance to the nearest
+#'neighbor of a receiver, for
+#'example, then use nearestNeighbors() to find the neighbor and then call
+#'distance() to get the
+#'distance to that neighbor, rather than getting the distances to all individuals
+#'with distance() and
+#'then using min() to select the smallest.
 #'The third engine, introduced in SLiM 3.1 and radically modified in SLiM 4, is
 #'based upon a data
 #'structure called a "sparse array" that is designed to track sparse non-zero
@@ -12753,8 +23535,8 @@ NULL
 #'that contains mostly zeros. It applies to spatial interactions because most
 #'pairs of individuals
 #'probably interact with a strength of zero (because typically N >> M, because few
-#'individuals fall
-#'within the maximum interaction radius from a given individual). In SLiM 4, the
+#'exerters fall
+#'within the maximum interaction radius from a given receiver). In SLiM 4, the
 #'full sparse array of
 #'interactions is no longer calculated (as it was in SLiM 3); instead, single rows
 #'of the sparse array
@@ -12781,9 +23563,11 @@ NULL
 #'interactions.
 #'As mentioned above, once an interaction distance has been found it is translated
 #'into an
-#'interaction strength by an interaction function. There are currently five
-#'options for interaction
-#'functions (IFs) in SLiM, represented by single-character codes:
+#'interaction strength by an interaction function that depends upon the distance d
+#'between
+#'individuals. There are currently six options for interaction functions (IFs) in
+#'SLiM, represented by
+#'single-character codes:
 #'"f" - a fixed interaction strength. This IF type has a single parameter, the
 #'interaction strength to
 #'be used for all interactions of this type. By default, interaction types use a
@@ -12799,15 +23583,15 @@ NULL
 #'d / dmax).
 #'"e" - A negative exponential interaction strength. This IF type is specified by
 #'two parameters, a
-#'maximum interaction strength and a shape parameter. The interaction strength
-#'falls off non-
-#'linearly from the maximum, and cuts off discontinuously at the maximum distance;
-#'typically a
+#'maximum interaction strength and a rate (inverse scale) parameter. The
+#'interaction strength falls off
+#'non-linearly from the maximum, and cuts off discontinuously at the maximum
+#'distance; typically a
 #'maximum distance is chosen such that the interaction strength at that distance
 #'is very small
 #'anyway. The IF for this type is f(d) = fmaxexp(−λd), where λ is the specified
-#'shape parameter. Note
-#'that this parameterization is not the same as for the Eidos function rexp().
+#'rate parameter. Note that
+#'this parameterization is not the same as for the Eidos function rexp().
 #'"n" - A normal interaction strength (i.e., Gaussian, but "g" is avoided to
 #'prevent confusion with
 #'the gamma-function option provided for, e.g., MutationType). The interaction
@@ -12837,36 +23621,95 @@ NULL
 #'that this parameterization
 #'is not the same as for the Eidos function rcauchy(). A Cauchy distribution can
 #'be used to model
+#'interactions with relatively fat tails, but for spatiality greater than 1D, the
+#'t-distribution (type "t")
+#'with degrees of freedom larger than one might be a better choice since the
+#'interaction function as
+#'we define it with the Cauchy distribution is not normalizable in more than one
+#'dimension.
+#'"t" - A t-distributed interaction strength. The interaction strength falls off
+#'non-linearly from the
+#'maximum, and cuts off discontinuously at the maximum distance; typically a
+#'maximum distance is
+#'chosen such that the interaction strength at that distance is very small anyway.
+#'This IF type is
+#'specified by three parameters: a maximum interaction strength, the "degrees of
+#'freedom" of the tdistribution
+#'ν (which must be greater than the spatial dimension minus one), and a scale
+#'parameter
+#'τ. The IF for this type is f(d) = fmax/(1+(d/τ)2/ν)−(ν+1)/2. The t-distribution
+#'can be used to model
 #'interactions with relatively fat tails.
 #'An InteractionType may be created using the initializeInteractionType() function
 #'(see
-#'section 24.1). It must then be evaluated, with the evaluate() method, for the
+#'section 25.1). It is often then configured with a specific interaction function,
+#'using
+#'setInteractionFunction(), and perhaps a set of interaction constraints for
+#'receivers and/or
+#'exerters, using setConstraints(). It must then be evaluated, with the evaluate()
+#'method, for the
+#'subpopulations containing exerters and receivers before it will respond to
+#'queries regarding
+#'individuals in those subpopulations; querying with exerters or receivers whose
 #'subpopulations
-#'containing exerters and receivers before it will respond to queries regarding
-#'individuals in those
-#'subpopulations; querying with exerters or receivers whose subpopulations have
-#'not been
-#'evaluated will result in an error. Calling evaluate() causes the positions of
-#'all receivers and
-#'exerters to be cached, thus defining a snapshot in time that the InteractionType
-#'will then use to
-#'respond to queries (allowing it to build its k-d tree based upon the snapshot
-#'positions). In WF
-#'models, this evaluated state will last until the current parental generation
-#'expires, at the end of the
-#'next offspring-generation stage. Before the InteractionType may be used with the
-#'new parental
-#'generation (the offspring of the old parental generation), the interaction must
-#'be evaluated again.
-#'In nonWF models, interactions are invalidated twice during the tick cycle: once
-#'after new offspring
-#'are produced (just before early() events), and once just before individuals die
-#'(just after fitness
-#'calculations); they are also invalidated any time takeMigrants() is called to
-#'move individuals
-#'between subpopulations. Note that interaction() callbacks are called when
-#'queries are served,
-#'not when evaluate() is called.
+#'have not been evaluated will result in an error. Calling evaluate() causes the
+#'positions of all
+#'receivers and exerters to be cached, thus defining a snapshot in time that the
+#'InteractionType will
+#'then use to respond to queries (allowing it to build its k-d tree based upon the
+#'snapshot positions).
+#'In WF models, this evaluated state will last until the current parental
+#'generation expires, at the end
+#'of the next offspring-generation stage. Before the InteractionType may be used
+#'with the new
+#'parental generation (the offspring of the old parental generation), the
+#'interaction must be evaluated
+#'again. In nonWF models, interactions are invalidated twice during the tick
+#'cycle: once after new
+#'offspring are produced (just before early() events), and once just before
+#'individuals die (just after
+#'fitness calculations); they are also invalidated any time takeMigrants() is
+#'called to move
+#'individuals between subpopulations. Note that interaction() callbacks are called
+#'when queries
+#'are served, not when evaluate() is called.
+#'As mentioned above, InteractionType supports eligibility constraints for both
+#'receivers and
+#'exerters, configured with setConstraints(). The snapshot taken by evaluate()
+#'also encompasses
+#'information about which individuals satisfy any configured exerter constraints;
+#'changing the state
+#'of individuals after evaluate() is called will not change whether those
+#'individuals are qualified to
+#'act as exerters in interactions. However - caveat lector - it does not encompass
+#'the corresponding
+#'constraint information about receivers! Changing the state of individuals (in
+#'particular, their tag /
+#'tagL0 / tagL1 / tagL2 / tagL3 / tagL4 values) after evaluate() is called may
+#'cause individuals to
+#'become qualified, or to become disqualified, to act as receivers, because
+#'receiver constraints are
+#'evaluated at query time, not at evaluate() time. This small discrepancy in
+#'InteractionType's
+#'conceptual model was chosen for performance reasons, but it can be regarded as a
+#'feature, not a
+#'bug, since it allows the receivers for each query to be tailored without
+#'re-evaluating the interaction
+#'type. In any case, if you need receiver constraints to be cached at evaluate()
+#'time you can
+#'evaluate those constraints yourself, in script, and cache the result in an
+#'Individual property such
+#'as tagL0, and then use that property as the receiver criterion for the
+#'interaction, thereby using the
+#'eligibility status that you precalculated and cached. This approach is also
+#'useful for enforcing
+#'complex eligibility constraints, for either receivers or exerters, that go
+#'beyond what
+#'InteractionType supports intrinsically; you can always calculate eligibility
+#'yourself, cache the
+#'result in a property such as tagL0, and use that property as the interaction
+#'type's receiver
+#'constraint.
 #'InteractionType will automatically account for any periodic spatial boundaries
 #'established
 #'with the periodicity parameter of initializeSLiMOptions(); interactions will
@@ -12877,13 +23720,14 @@ NULL
 #'and processor
 #'time; in particular, setting up the k-d tree after the interaction is evaluated
 #'may take many times
-#'longer than in the non-periodic case (but this is rarely a bottleneck anyway).
-#'Once the k-d tree has
-#'been set up, responses to spatial queries involving it should then be nearly as
-#'fast as in the non-
-#'periodic case. Spatial queries that do not involve the k-d tree will generally
-#'be marginally slower
-#'than in the non-periodic case, but the difference should not be large.
+#'longer than in the non-periodic case (but this is rarely a bottleneck anyway
+#'since it is quite fast).
+#'Once the k-d tree has been set up, responses to spatial queries involving it
+#'should then be nearly
+#'as fast as in the non-periodic case. Spatial queries that do not involve the k-d
+#'tree will generally
+#'be marginally slower than in the non-periodic case, but the difference should
+#'not be large.
 #'InteractionType provides a fairly large and confusingly similar set of methods,
 #'designed to
 #'answer every common type of spatial query efficiently. To help find the right
@@ -12891,29 +23735,31 @@ NULL
 #'here is a summary of the methods that involve distances or interaction
 #'strengths, either between
 #'receivers and exerters, or between a focal point and exerters:
-#'Consider whether you want to query for neighbors (all individual near the
+#'Consider whether you want to query for neighbors (all individuals near the
 #'receiver), for
 #'interacting neighbors (nearby individuals that exert an interaction strength
 #'upon the receiver,
 #'regardless of what that strength is), or for something about the actual
 #'interaction strengths. In
-#'general, the simpler queries will be faster; finding neighbors is faster than
-#'finding interacting
-#'neighbors, which is in turn faster than actually evaluating strengths.
-#'Furthermore, counting
-#'individuals is faster than actually returning the individuals in question. The
-#'last three methods in
-#'the table have to evaluate the interaction strength between a receiver and every
-#'exerter that
-#'interacts with it, so they can be quite slow; if you can, for example, simply
-#'count the number of
-#'neighbors with neighborCount(), rather than using totalOfNeighborStrengths() to
-#'sum up their
-#'interaction strengths, the former will likely be significantly faster than the
-#'latter. As has been
-#'mentioned above, for best performance the maximum interaction distance should be
-#'set to as
-#'small a value as possible.
+#'general, the simpler queries will be faster; finding neighbors or interacting
+#'neighbors is going to be
+#'faster than actually evaluating strengths. Furthermore, counting individuals is
+#'faster than actually
+#'returning the individuals in question. The last three methods in the table have
+#'to evaluate the
+#'interaction strength between a receiver and every exerter that interacts with
+#'it, so they can be fairly
+#'slow; if you can, for example, simply count the number of neighbors with
+#'neighborCount(), or
+#'count the number of interacting neighbors with interactingNeighborCount(),
+#'rather than using
+#'totalOfNeighborStrengths() to sum up their interaction strengths, the former
+#'alternatives will
+#'likely be significantly faster than the latter. Finally, as has been mentioned
+#'above, for best
+#'performance the maximum interaction distance should be set to as small a value
+#'as possible; this
+#'point is crucial for performance.
 #'This class has the following methods (functions):
 #'\itemize{
 #'\item{\code{\link{clippedIntegral}}}
@@ -12929,8 +23775,10 @@ NULL
 #'\item{\code{\link{nearestNeighborsOfPoint}}}
 #'\item{\code{\link{neighborCount}}}
 #'\item{\code{\link{neighborCountOfPoint}}}
+#'\item{\code{\link{setConstraints}}}
 #'\item{\code{\link{setInteractionFunction}}}
 #'\item{\code{\link{strength}}}
+#'\item{\code{\link{testConstraints}}}
 #'\item{\code{\link{totalOfNeighborStrengths}}}
 #'\item{\code{\link{unevaluate}}}
 #'}
@@ -12955,11 +23803,11 @@ NULL
 #'\item{sexSegregation}{A property of type integer or float or logical or
 #'string or string or integer. It is of length one (a singleton). This property
 #'is a constant, so it is not modifiable. \strong{Property Description:} The
-#'sex-segregation of the interaction, as specified in initializeInteractionType().
-#'For non- sexual simulations, this will be "**". For sexual simulations, this
-#'string value indicates the sex of individuals feeling the interaction, and the
-#'sex of individuals exerting the interaction; see initializeInteractionType() for
-#'details. }
+#'sex-segregation of the interaction, as specified in initializeInteractionType()
+#'or with setConstraints(). For non-sexual simulations, this will be "**". For
+#'sexual simulations, this string value indicates the sex of individuals feeling
+#'the interaction, and the sex of individuals exerting the interaction; see
+#'initializeInteractionType() for details. }
 #'\item{spatiality}{A property of type integer or float or logical or string
 #'or string or integer. It is of length one (a singleton). This property is a
 #'constant, so it is not modifiable. \strong{Property Description:} The spatial
@@ -13005,7 +23853,7 @@ NULL
 #'performance and
 #'smaller file size. A new LogFile object attached to the simulation can be
 #'created with the
-#'Community method createLogFile(), discussed in section 24.3.2. Any number of
+#'Community method createLogFile(), discussed in section 25.3.2. Any number of
 #'LogFile objects
 #'can be active simultaneously, writing to different files.
 #'Logging can be done automatically, at the end of ticks at a given periodic
@@ -13156,14 +24004,14 @@ NULL
 #'Description:} T if the mutation has fixed (in the SLiM sense of having been
 #'converted to a Substitution object), F otherwise. Since fixed/substituted
 #'mutations are removed from the simulation, you will only see this flag be T if
-#'you have held onto a mutation beyond its usual lifetime (see section 27.2). }
+#'you have held onto a mutation beyond its usual lifetime (see section 28.2). }
 #'\item{isSegregating}{A property of type logical. It is of length one
 #'(a singleton). This property is a constant, so it is not modifiable.
 #'\strong{Property Description:} T if the mutation is segregating (in the SLiM
 #'sense of not having been either lost or converted to a Substitution object), F
 #'otherwise. Since both lost and fixed/substituted mutations are removed from the
 #'simulation, you will only see this flag be F if you have held onto a mutation
-#'beyond its usual lifetime (see section 27.2). Note that if isSegregating is F,
+#'beyond its usual lifetime (see section 28.2). Note that if isSegregating is F,
 #'isFixed will let you determine whether the mutation is no longer segregating
 #'because it was lost, or because it fixed. }
 #'\item{mutationType}{A property of type MutationType object. It is of length
@@ -13192,7 +24040,7 @@ NULL
 #'from the distribution of fitness effects of its MutationType. If a mutation
 #'has a selectionCoeff of s, the multiplicative fitness effect of the mutation
 #'in a homozygote is 1+s; in a heterozygote it is 1+hs, where h is the dominance
-#'coefficient kept by the mutation type (see section 24.11.1). Note that this
+#'coefficient kept by the mutation type (see section 25.11.1). Note that this
 #'property has a quirk: it is stored internally in SLiM using a single-precision
 #'float, not the double-precision float type normally used by Eidos. This means
 #'that if you set a mutation mut's selection coefficient to some number x,
@@ -13274,6 +24122,15 @@ NULL
 #'normal distribution is often used to model mutations that can be either
 #'beneficial or deleterious,
 #'since both tails of the distribution are unbounded.
+#'"p" - A Laplace-distributed fitness effect. This DFE type is specified by two
+#'parameters, a mean
+#'and a scale. The Laplace distribution from which mutations are drawn is given by
+#'the probability
+#'density function P(s | μ,b) = exp(−|s−μ|/b)/2b, where μ is the mean and b is the
+#'scale parameter. A
+#'Laplace distribution is sometimes used to model a mix of both deleterious and
+#'beneficial
+#'mutations.
 #'"w" - A Weibull-distributed fitness effect. This DFE type is specified by a
 #'scale parameter and a
 #'shape parameter. The Weibull distribution from which mutations are drawn is
@@ -13309,9 +24166,9 @@ NULL
 #'\item{color}{A property of type string. It is of length one (a singleton). This
 #'property is a variable, so it is modifiable. \strong{Property Description:}
 #'The color used to display mutations of this type in SLiMgui. Outside of
-#'SLiMgui, this property still exists, but is not used by SLiM. Colors may be
-#'specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see
-#'the Eidos manual). If color is the empty string, "", SLiMgui's default
+#'SLiMgui, this property still exists, but is not used by SLiM. Colors may
+#'be specified by name, or with hexadecimal RGB values of the form "#RRGGBB"
+#'(see the Eidos manual). If color is the empty string, "", SLiMgui's default
 #'(selection-coefficient-based) color scheme is used; this is the default for new
 #'MutationType objects. }
 #'\item{colorSubstitution}{A property of type string. It is of length one (a
@@ -13336,11 +24193,11 @@ NULL
 #'influence even after reaching fixation, but if the simulation were to replace
 #'the fixed mutation with a Substitution object the mutation would no longer be
 #'considered in fitness calculations (unless the callback explicitly consulted
-#'the list of Substitution objects kept by the simulation). Other script- defined
+#'the list of Substitution objects kept by the simulation). Other scriptdefined
 #'behaviors in mutationEffect(), interaction(), mateChoice(), modifyChild(), and
 #'recombination() callbacks might also necessitate the disabling of substitution
 #'for a given mutation type; this is an important consideration to keep in mind.
-#'See section 22.3 for further discussion of convertToSubstitution in WF models.
+#'See section 23.3 for further discussion of convertToSubstitution in WF models.
 #'In contrast, for nonWF models this property is F by default, because even
 #'mutations with no epistatis or other indirect fitness effects will continue
 #'to influence the survival probabilities of individuals. For nonWF models, only
@@ -13349,7 +24206,7 @@ NULL
 #'type is defined in a nonWF model, this property should be set to T to tell
 #'SLiM that substitution is allowed; this may have very large positive effects
 #'on performance, so it is important to remember when modeling background neutral
-#'mutations. See section 23.5 for further discussion of convertToSubstitution
+#'mutations. See section 24.5 for further discussion of convertToSubstitution
 #'in nonWF models. SLiM consults this flag at the end of each tick when deciding
 #'whether to substitute each fixed mutation. If this flag is T, all eligible
 #'fixed mutations will be converted at the end of the current tick, even if they
@@ -13363,7 +24220,7 @@ NULL
 #'\item{distributionType}{A property of type string. It is of length one
 #'(a singleton). This property is a constant, so it is not modifiable.
 #'\strong{Property Description:} The type of distribution of fitness effects; one
-#'of "f", "g", "e", "n", "w", or "s" (see section 24.11, above). }
+#'of "f", "g", "e", "n", "p", "w", or "s" (see section 25.11, above). }
 #'\item{dominanceCoeff}{A property of type float. It is of length one (a
 #'singleton). This property is a variable, so it is modifiable. \strong{Property
 #'Description:} The dominance coefficient used for mutations of this type when
@@ -13426,10 +24283,10 @@ NULL
 #'group at the same site are discarded with no effect. This can be useful for
 #'modeling one-way changes; once a gene is disabled by a premature stop codon,
 #'for example, you might wish to assume, for simplicity, that further mutations
-#'cannot alter that fact. If the policy is set to "l", the last mutation of this
-#'stacking group at a given site is retained; earlier mutation of this stacking
-#'group at the same site are discarded. This can be useful for modeling an
-#'"infinite- alleles" scenario in which every new mutation at a site generates
+#'cannot alter that fact. If the policy is set to "l", the last mutation of
+#'this stacking group at a given site is retained; earlier mutation of this
+#'stacking group at the same site are discarded. This can be useful for modeling
+#'an "infinitealleles" scenario in which every new mutation at a site generates
 #'a completely new allele, rather than retaining the previous mutations at the
 #'site. The mutation stacking policy applies only within the given mutation type's
 #'stacking group; mutations of different stacking groups are always allowed to
@@ -13518,15 +24375,15 @@ NULL
 #'instantiated as
 #'SLiMEidosBlock objects and are available through the allScriptBlocks property of
 #'Community and
-#'the scriptBlocks property of Species; see sections 24.3.1 and 24.14.1. In
+#'the scriptBlocks property of Species; see sections 25.3.1 and 25.15.1. In
 #'addition, new script
 #'blocks can be created programmatically and registered with the simulation, and
 #'registered script
 #'blocks can be deregistered; see the ‑register...() and ‑deregisterScriptBlock()
 #'methods of
-#'Community and Species in sections 24.3.2 and 24.14.2. The currently executing
+#'Community and Species in sections 25.3.2 and 25.15.2. The currently executing
 #'script block is
-#'available through the self global; see section 25.11.
+#'available through the self global; see section 26.11.
 #'This class has the following methods (functions):
 #'\itemize{
 #'\item{None. This class has no methods.}
@@ -13588,7 +24445,43 @@ NULL
 #'The type of the script block; this will be "first", "early", or "late" for
 #'the three types of Eidos "mutation", "mutationEffect", "recombination",
 #'"reproduction", or "survival" for the respective types of Eidos callbacks (see
-#'section 24.1 and chapter 25).}
+#'section 25.1 and chapter 26).}
+#'
+#'}
+NULL
+#'SLiMgui
+#'
+#'Documentation for SLiMgui class from SLiM
+#'
+#'@name SLiMgui
+#'@export
+#'@aliases SG
+#'@family SLiMgui
+#'@details This class represents the SLiMgui application. When running under
+#'SLiMgui, a global object
+#'singleton constant of class SLiMgui will be defined, named slimgui. This object
+#'can be used to
+#'query and control the SLiMgui application. When running at the command line, the
+#'slimgui
+#'object will not exist; to determine whether the simulation is running under
+#'SLiMgui, one may
+#'therefore test exists("slimgui"). If a model needs to run both at the command
+#'line and under
+#'SLiMgui, all uses of the slimgui object should be protected by if
+#'(exists("slimgui")) to avoid
+#'errors.
+#'This class has the following methods (functions):
+#'\itemize{
+#'\item{\code{\link{openDocument}}}
+#'\item{\code{\link{pauseExecution}}}
+#'}
+#'This class has the following properties:
+#'\describe{
+#'\item{pid}{A property of type integer. It is of length one (a singleton). This
+#'property is a constant, so it is not modifiable. \strong{Property Description:}
+#'The Un*x process identifier (commonly called the "pid") of the running SLiMgui
+#'application. This can be useful for scripts that wish to use system calls to
+#'influence the SLiMgui application.}
 #'
 #'}
 NULL
@@ -13761,6 +24654,128 @@ NULL
 #'
 #'}
 NULL
+#'SpatialMap
+#'
+#'Documentation for SpatialMap class from SLiM
+#'
+#'@name SpatialMap
+#'@export
+#'@aliases SM
+#'@family SpatialMap
+#'@details This class represents a "spatial map": a grid of values overlaid across
+#'a simulated spatial
+#'landscape, representing some variable that varies across space. This variable
+#'could be something
+#'environmental (elevation, temperature), something that affects local dynamics
+#'(local carryingcapacity
+#'density, local mean dispersal distance), or anything else needed for the model
+#'(years since
+#'the last wildfire in that location, for example). A new spatial map is created
+#'with the
+#'defineSpatialMap() method of Subpopulation, because spatial maps are tightly
+#'associated with
+#'subpopulations; in particular, they must share the spatial bounds of any
+#'subpopulation to which
+#'they have been added, because the spatial map's grid of values is overlaid onto
+#'those spatial
+#'bounds.
+#'There is a constructor for SpatialMap, but it is only used to copy an existing
+#'spatial map:
+#'(object<SpatialMap>$)SpatialMap(string$ name, object<SpatialMap>$ map)
+#'Creates a new SpatialMap object that is a copy of map, named name.
+#'That can be useful if you wish to derive a new spatial map from an existing map,
+#'but it is not
+#'very commonly used. Usually a new map is created with defineSpatialMap(), often
+#'using spatial
+#'data from a PNG image file that has been loaded using the Eidos class Image. If
+#'you wish to add a
+#'spatial map to additional subpopulations, beyond the subpopulation for which the
+#'map was
+#'originally defined, the Subpopulation method addSpatialMap() can be used to do
+#'so, thereby
+#'sharing the map across more than one subpopulation.
+#'The SpatialMap class was added in SLiM 4.1; before that, spatial maps were a
+#'sub-component
+#'of Subpopulation. Splitting spatial maps out into their own class provides more
+#'flexibility to
+#'extend their capabilities in the future.
+#'This class has the following methods (functions):
+#'\itemize{
+#'\item{\code{\link{add}}}
+#'\item{\code{\link{blend}}}
+#'\item{\code{\link{changeColors}}}
+#'\item{\code{\link{changeValues}}}
+#'\item{\code{\link{divide}}}
+#'\item{\code{\link{exp}}}
+#'\item{\code{\link{gridValues}}}
+#'\item{\code{\link{interpolate}}}
+#'\item{\code{\link{mapColor}}}
+#'\item{\code{\link{mapImage}}}
+#'\item{\code{\link{mapValue}}}
+#'\item{\code{\link{multiply}}}
+#'\item{\code{\link{power}}}
+#'\item{\code{\link{range}}}
+#'\item{\code{\link{rescale}}}
+#'\item{\code{\link{sampleImprovedNearbyPoint}}}
+#'\item{\code{\link{sampleNearbyPoint}}}
+#'\item{\code{\link{smooth}}}
+#'\item{\code{\link{subtract}}}
+#'}
+#'This class has the following properties:
+#'\describe{
+#'\item{gridDimensions}{A property of type integer or logical or string or float
+#'or string or integer. This property is a constant, so it is not modifiable.
+#'\strong{Property Description:} The dimensions of the spatial map's grid of
+#'values, in the order of the components of the map's spatiality. For example, a
+#'map with spatiality "xz" and a grid of values that is 500 in the "x" dimension
+#'by 300 in the "z" dimension would return c(500, 300) for this property. }
+#'\item{interpolate}{A property of type integer or logical or string or float
+#'or string or integer. It is of length one (a singleton). This property is
+#'a variable, so it is modifiable. \strong{Property Description:} Whether
+#'interpolation between grid values is enabled (T) or disabled (F). The initial
+#'value of this property is set by defineSpatialMap(), but it can be changed.
+#'The interpolation performed is linear; for cubic interpolation, use the
+#'interpolate() method. }
+#'\item{name}{A property of type integer or logical or string or float or string
+#'or integer. It is of length one (a singleton). This property is a constant, so
+#'it is not modifiable. \strong{Property Description:} The name of the spatial
+#'map, usually as provided to defineSpatialMap(). The names of spatial maps must
+#'be unique within any given subpopulation, but the same name may be reused for
+#'different spatial maps in different subpopulations. The name is used to identify
+#'a map for methods such as spatialMapValue(), and is also used for display in
+#'SLiMgui. }
+#'\item{spatialBounds}{A property of type integer or logical or string or float
+#'or string or integer. This property is a constant, so it is not modifiable.
+#'\strong{Property Description:} The spatial bounds to which the spatial map is
+#'aligned. These bounds come from the subpopulation that originally created the
+#'map, with the defineSpatialMap() method, and cannot be subsequently changed.
+#'All subpopulations that use a given spatial map must match that map's spatial
+#'bounds, so that the map does not stretch or shrink relative to its initial
+#'configuration. The components of the spatial bounds of a map correspond to the
+#'components of the map's spatiality; for example, a map with spatiality "xz"
+#'will have bounds (x0, z0, x1, z1); bounds for "y" are not included, since that
+#'dimension is not used by the spatial map. }
+#'\item{spatiality}{A property of type integer or logical or string or float
+#'or string or integer. It is of length one (a singleton). This property is a
+#'constant, so it is not modifiable. \strong{Property Description:} The spatiality
+#'of the map: the subset of the model's dimensions that are used by the spatial
+#'map. The spatiality of a map is configured by defineSpatialMap() and cannot
+#'subsequently be changed. For example, a 3D model (with dimensionality "xyz")
+#'might define a 2D spatial map with spatiality "xz", providing spatial values
+#'that do not depend upon the "y" dimension. Often, however, the spatiality of a
+#'map will match the dimensionality of the model. }
+#'\item{tag}{A property of type integer or logical or string or float or string
+#'or integer. It is of length one (a singleton). This property is a variable, so
+#'it is modifiable. \strong{Property Description:} A user-defined integer value.
+#'The value of tag is initially undefined, and it is an error to try to read
+#'it; if you wish it to have a defined value, you must arrange that yourself by
+#'explicitly setting its value prior to using it elsewhere in your code. The value
+#'of tag is not used by SLiM; it is free for you to use. See also the getValue()
+#'and setValue() methods (provided by the Dictionary class; see the Eidos manual),
+#'for another way of attaching state to spatial maps.}
+#'
+#'}
+NULL
 #'Species
 #'
 #'Documentation for Species class from SLiM
@@ -13777,6 +24792,7 @@ NULL
 #'This class has the following methods (functions):
 #'\itemize{
 #'\item{\code{\link{addSubpop}}}
+#'\item{\code{\link{addSubpopSplit}}}
 #'\item{\code{\link{countOfMutationsOfType}}}
 #'\item{\code{\link{individualsWithPedigreeIDs}}}
 #'\item{\code{\link{killIndividuals}}}
@@ -13794,6 +24810,15 @@ NULL
 #'\item{\code{\link{registerMutationCallback}}}
 #'\item{\code{\link{registerMutationEffectCallback}}}
 #'\item{\code{\link{registerRecombinationCallback}}}
+#'\item{\code{\link{registerReproductionCallback}}}
+#'\item{\code{\link{registerSurvivalCallback}}}
+#'\item{\code{\link{simulationFinished}}}
+#'\item{\code{\link{skipTick}}}
+#'\item{\code{\link{subsetMutations}}}
+#'\item{\code{\link{treeSeqCoalesced}}}
+#'\item{\code{\link{treeSeqOutput}}}
+#'\item{\code{\link{treeSeqRememberIndividuals}}}
+#'\item{\code{\link{treeSeqSimplify}}}
 #'}
 #'This class has the following properties:
 #'\describe{
@@ -13920,17 +24945,20 @@ NULL
 #'\item{\code{\link{addEmpty}}}
 #'\item{\code{\link{addRecombinant}}}
 #'\item{\code{\link{addSelfed}}}
+#'\item{\code{\link{addSpatialMap}}}
 #'\item{\code{\link{cachedFitness}}}
 #'\item{\code{\link{configureDisplay}}}
 #'\item{\code{\link{defineSpatialMap}}}
 #'\item{\code{\link{outputMSSample}}}
 #'\item{\code{\link{outputSample}}}
 #'\item{\code{\link{outputVCFSample}}}
+#'\item{\code{\link{pointDeviated}}}
 #'\item{\code{\link{pointInBounds}}}
 #'\item{\code{\link{pointPeriodic}}}
 #'\item{\code{\link{pointReflected}}}
 #'\item{\code{\link{pointStopped}}}
 #'\item{\code{\link{pointUniform}}}
+#'\item{\code{\link{removeSpatialMap}}}
 #'\item{\code{\link{removeSubpopulation}}}
 #'\item{\code{\link{sampleIndividuals}}}
 #'\item{\code{\link{setCloningRate}}}
@@ -14082,6 +25110,9 @@ NULL
 #'z coordinate will not be included in that case, since that coordinate is not
 #'used in the simulation's dimensionality. This property cannot be set, but the
 #'setSpatialBounds() method may be used to achieve the same thing. }
+#'\item{spatialMaps}{A property of type SpatialMap object. This property is a
+#'constant, so it is not modifiable. \strong{Property Description:} The spatial
+#'maps that are currently added to the subpopulation. }
 #'\item{species}{A property of type Species object. It is of length one
 #'(a singleton). This property is a constant, so it is not modifiable.
 #'\strong{Property Description:} The species to which the target object belongs. }
@@ -14164,7 +25195,7 @@ NULL
 #'This property is a variable, so it is modifiable. \strong{Property Description:}
 #'The identifier of the subpopulation in which this mutation arose. This value
 #'is carried over from the Mutation object directly; if a "tag" value was used
-#'in the Mutation object (see section 24.10.1), that value will carry over to the
+#'in the Mutation object (see section 25.10.1), that value will carry over to the
 #'corresponding Substitution object. The subpopID in Substitution is a read-write
 #'property to allow it to be used as a "tag" in the same way, if the origin
 #'subpopulation identifier is not needed. }

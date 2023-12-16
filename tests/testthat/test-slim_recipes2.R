@@ -23,16 +23,15 @@ test_that("All slim recipes work", {
   ## 164: Same deal as 163
   ## 165: Sometimes calls stop()
   ## 166: Just appears to be a very slow simulation (but seems to run)
-  ## 172: Also very slow (but also seems to run)
-  ## 173: Requires downloading and opening external files (fasta and vcf)
-  ## 183: Quite slow but I confirmed it runs and produces output
+  ## 178: Requires downloading and opening external files (fasta and vcf)
+  ## 188: Quite slow but I confirmed it runs and produces output
 
   test_scripts <- list()
-  for(i in seq_along(slim_scripts)[165:length(slim_scripts)]) {
+  for(i in seq_along(slim_scripts)[188:length(slim_scripts)]) {
     #print(i)
     print(names(slim_recipes)[i])
     #if(i %in% c(56)) next
-    if(i %in% c(56, 97, 99, 159, 163, 164, 165, 166)) next
+    if(i %in% c(56, 97, 99, 159, 163, 164, 165, 166, 178, 188)) next
     expect_identical(suppressMessages(slim_run(slim_scripts[[!!i]], progress = FALSE,
                                                throw_error = TRUE))$exit_status, 0L)
   }

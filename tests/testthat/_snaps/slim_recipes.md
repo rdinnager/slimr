@@ -2053,11 +2053,11 @@
       }
       
       block_4:late() {
-          p1.individuals.tag = rbinom(1000, 1, 0.5);
+          p1.individuals.tagL0 = (runif(1000) < 0.5);
       }
       
       block_5:mutationEffect(m2) {
-          if (individual.tag == 0) return(asFloat(1)) else return(effect);
+          if (individual.tagL0) return(effect) else return(asFloat(1));
       }
 
 ---
@@ -2387,18 +2387,18 @@
       
       block_2:1 early() {
           sim.addSubpop("p1", 1000);
-          p1.individuals.tag = rbinom(1000, 1, 0.5);
+          p1.individuals.tagL0 = (runif(1000) < 0.5);
       }
       
       block_3:modifyChild() {
-          parentCulture = (parent1.tag + parent2.tag)/2;
-          childCulture = rbinom(1, 1, 0.1 + 0.8 * parentCulture);
-          child.tag = childCulture;
+          parentCulture = mean(c(parent1.tagL0, parent2.tagL0));
+          childCulture = (runif(1) < 0.1 + 0.8 * parentCulture);
+          child.tagL0 = childCulture;
           return(T);
       }
       
       block_4:mutationEffect(m2) {
-          if (individual.tag == 0) return(asFloat(1)) else return(effect);
+          if (individual.tagL0) return(effect) else return(asFloat(1));
       }
       
       block_5:10000 early() {
@@ -2571,17 +2571,17 @@
       
       block_2:1 early() {
           sim.addSubpop("p1", 500);
-          p1.individuals.tag = repEach(0:1, 250);
+          p1.individuals.tagL0 = repEach(c(F, T), 250);
       }
       
       block_3:modifyChild() {
-          if (parent1.tag + parent2.tag != 1) return(F);
-          child.tag = rdunif(1);
+          if (parent1.tagL0 == parent2.tagL0) return(F);
+          child.tagL0 = (runif(1) <= 0.5);
           return(T);
       }
       
       block_4:1:2000 late() {
-          catn("Sex ratio (M:M+F): " + mean(p1.individuals.tag));
+          catn("Sex ratio (M:M+F): " + mean(p1.individuals.tagL0));
       }
       
       block_5:2000 late() {
@@ -3846,6 +3846,1345 @@
     Code
       print(slim_scripts[[i]])
     Output
+      <slimr_script[5]>
+      block_1:function (float)biallelicFrequencies(void) {
+          g = NULL;
+          for (ind in p1.individuals) g = rbind(g, ind.getValue("G1"), ind.getValue("G2"));
+          f = apply(g, 1, "mean(applyValue);");
+          return(f);
+      }
+      
+      block_init_1:initialize() {
+          defineConstant("MU", 1e-04);
+          defineConstant("L", 100);
+      }
+      
+      block_3:1 early() {
+          sim.addSubpop("p1", 100);
+          p1.individuals.setValue("G1", rep(F, L));
+          p1.individuals.setValue("G2", rep(F, L));
+          log = community.createLogFile("freq.csv", logInterval = 10);
+          log.addTick();
+          log.addMeanSDColumns("freq", "biallelicFrequencies();");
+      }
+      
+      block_4:modifyChild() {
+          parentG1 = parent1.getValue("G1");
+          parentG2 = parent1.getValue("G2");
+          recombined = ifelse(rbinom(L, 1, 0.5) == 0, parentG1, parentG2);
+          mutated = ifelse(rbinom(L, 1, MU) == 1, !recombined, recombined);
+          child.setValue("G1", mutated);
+          parentG1 = parent2.getValue("G1");
+          parentG2 = parent2.getValue("G2");
+          recombined = ifelse(rbinom(L, 1, 0.5) == 0, parentG1, parentG2);
+          mutated = ifelse(rbinom(L, 1, MU) == 1, !recombined, recombined);
+          child.setValue("G2", mutated);
+          return(T);
+      }
+      
+      block_5:50000 late() {
+          ;
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[6]>
+      block_init_1:initialize() {
+          initializeSLiMModelType("nonWF");
+          defineConstant("K", 500);
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_2:reproduction() {
+          subpop.addCrossed(individual, subpop.sampleIndividuals(1));
+      }
+      
+      block_3:1 early() {
+          sim.addSubpop("p1", 10);
+      }
+      
+      block_4:early() {
+          p1.fitnessScaling = K/p1.individualCount;
+      }
+      
+      block_5:late() {
+          inds = p1.individuals;
+          catn(sim.cycle + ": " + size(inds) + " (" + max(inds.age) + ")");
+      }
+      
+      block_6:2000 late() {
+          sim.outputFull(ages = T);
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[6]>
+      block_init_1:initialize() {
+          initializeSLiMModelType("nonWF");
+          defineConstant("K", 30);
+          defineConstant("L", c(0.7, asFloat(0), asFloat(0), asFloat(0), 0.25, 0.5, 0.75, asFloat(1)));
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_2:reproduction() {
+          if (individual.age > 2) {
+              mate = subpop.sampleIndividuals(1, minAge = 3);
+              subpop.addCrossed(individual, mate);
+          }
+      }
+      
+      block_3:1 early() {
+          sim.addSubpop("p1", 10);
+          p1.individuals.age = rdunif(10, min = 0, max = 7);
+      }
+      
+      block_4:early() {
+          inds = p1.individuals;
+          ages = inds.age;
+          mortality = L[ages];
+          survival = 1 - mortality;
+          inds.fitnessScaling = survival;
+          p1.fitnessScaling = K/(p1.individualCount * mean(survival));
+      }
+      
+      block_5:late() {
+          catn(sim.cycle + ": " + paste(sort(p1.individuals.age)));
+      }
+      
+      block_6:2000 late() {
+          sim.outputFixedMutations();
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[6]>
+      block_init_1:initialize() {
+          initializeSLiMModelType("nonWF");
+          defineConstant("K", 500);
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_2:reproduction() {
+          parents = sample(p1.individuals, p1.individualCount);
+          for (i in seq(0, p1.individualCount - 2, by = 2)) {
+              parent1 = parents[i];
+              parent2 = parents[i + 1];
+              p1.addCrossed(parent1, parent2, count = rpois(1, 2.7));
+          }
+          self.active = 0;
+      }
+      
+      block_3:1 early() {
+          sim.addSubpop("p1", 10);
+      }
+      
+      block_4:early() {
+          p1.fitnessScaling = K/p1.individualCount;
+      }
+      
+      block_5:late() {
+          inds = p1.individuals;
+          catn(sim.cycle + ": " + size(inds) + " (" + max(inds.age) + ")");
+      }
+      
+      block_6:2000 late() {
+          sim.outputFull(ages = T);
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[7]>
+      block_init_1:initialize() {
+          initializeSLiMModelType("nonWF");
+          defineConstant("K", 500);
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeMutationType("m2", asFloat(1), "f", 0.5);
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_2:reproduction() {
+          for (i in 1:5) subpop.addCrossed(individual, subpop.sampleIndividuals(1));
+      }
+      
+      block_3:1 early() {
+          sim.addSubpop("p1", 10);
+      }
+      
+      block_4:100 early() {
+          mutant = sample(p1.individuals.genomes, 10);
+          mutant.addNewDrawnMutation(m2, 10000);
+      }
+      
+      block_5:early() {
+          p1.fitnessScaling = K/p1.individualCount;
+      }
+      
+      block_6:late() {
+          inds = p1.individuals;
+          catn(sim.cycle + ": " + size(inds) + " (" + max(inds.age) + ")");
+      }
+      
+      block_7:2000 late() {
+          sim.outputFull(ages = T);
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[6]>
+      block_init_1:initialize() {
+          initializeSLiMModelType("nonWF");
+          defineConstant("K", 50);
+          defineConstant("N", 10);
+          defineConstant("m", 0.01);
+          defineConstant("e", 0.1);
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_2:reproduction() {
+          subpop.addCrossed(individual, subpop.sampleIndividuals(1));
+      }
+      
+      block_3:1 early() {
+          for (i in 1:N) sim.addSubpop(i, (i == 1) %?% 10 %else% 0);
+      }
+      
+      block_4:early() {
+          nIndividuals = sum(sim.subpopulations.individualCount);
+          nMigrants = rpois(1, nIndividuals * m);
+          migrants = sample(sim.subpopulations.individuals, nMigrants);
+          for (migrant in migrants) {
+              do
+              {
+                  dest = sample(sim.subpopulations, 1);
+              }
+              while (dest == migrant.subpopulation) slimr_special__;
+              dest.takeMigrants(migrant);
+          }
+          for (subpop in sim.subpopulations) {
+              if (runif(1) < e) sim.killIndividuals(subpop.individuals) else subpop.fitnessScaling = K/subpop.individualCount;
+          }
+      }
+      
+      block_5:late() {
+          if (sum(sim.subpopulations.individualCount) == 0) stop("Global extinction in cycle " + sim.cycle + ".");
+      }
+      
+      block_6:2000 late() {
+          sim.outputFixedMutations();
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[8]>
+      block_init_1:initialize() {
+          initializeSLiMModelType("nonWF");
+          defineConstant("K", 500);
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeMutationType("m2", 0.5, "e", 0.1);
+          m2.color = "red";
+          initializeMutationType("m3", 0.5, "e", 0.1);
+          m3.color = "green";
+          initializeGenomicElementType("g1", c(m1, m2, m3), c(0.98, 0.01, 0.01));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_2:reproduction() {
+          dest = sample(sim.subpopulations, 1);
+          dest.addCrossed(individual, subpop.sampleIndividuals(1));
+      }
+      
+      block_3:1 early() {
+          sim.addSubpop("p1", 10);
+          sim.addSubpop("p2", 10);
+      }
+      
+      block_4:early() {
+          inds = sim.subpopulations.individuals;
+          inds_m2 = inds.countOfMutationsOfType(m2);
+          inds_m3 = inds.countOfMutationsOfType(m3);
+          pref_p1 = 0.5 + (inds_m2 - inds_m3) * 0.1;
+          pref_p1 = pmax(pmin(pref_p1, asFloat(1)), asFloat(0));
+          inertia = ifelse(inds.subpopulation.id == 1, asFloat(1), asFloat(0));
+          pref_p1 = pref_p1 * 0.75 + inertia * 0.25;
+          choice = ifelse(runif(inds.size()) < pref_p1, 1, 2);
+          moving = inds[choice != inds.subpopulation.id];
+          from_p1 = moving[moving.subpopulation == p1];
+          from_p2 = moving[moving.subpopulation == p2];
+          p2.takeMigrants(from_p1);
+          p1.takeMigrants(from_p2);
+      }
+      
+      block_5:early() {
+          p1.fitnessScaling = K/p1.individualCount;
+          p2.fitnessScaling = K/p2.individualCount;
+      }
+      
+      block_6:mutationEffect(m2, p2) {
+          return(1/effect);
+      }
+      
+      block_7:mutationEffect(m3, p1) {
+          return(1/effect);
+      }
+      
+      block_8:1000 late() {
+          for (id in 1:2) {
+              subpop = sim.subpopulations[sim.subpopulations.id == id];
+              s = subpop.individualCount;
+              inds = subpop.individuals;
+              c2 = sum(inds.countOfMutationsOfType(m2));
+              c3 = sum(inds.countOfMutationsOfType(m3));
+              catn("subpop " + id + " (" + s + "): " + c2 + " m2, " + c3 + " m3");
+          }
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[7]>
+      block_init_1:initialize() {
+          initializeSLiMModelType("nonWF");
+          defineConstant("K", 500);
+          defineConstant("opt1", asFloat(0));
+          defineConstant("opt2", asFloat(10));
+          defineConstant("Tdelta", 10000);
+          initializeMutationType("m1", 0.5, "n", asFloat(0), asFloat(1));
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_2:reproduction() {
+          subpop.addCrossed(individual, subpop.sampleIndividuals(1));
+      }
+      
+      block_3:1 early() {
+          sim.addSubpop("p1", 500);
+      }
+      
+      block_4:early() {
+          inds = sim.subpopulations.individuals;
+          phenotypes = inds.sumOfMutationsOfType(m1);
+          optimum = (sim.cycle < Tdelta) %?% opt1 %else% opt2;
+          deviations = optimum - phenotypes;
+          fitnessFunctionMax = dnorm(asFloat(0), asFloat(0), asFloat(5));
+          adaptation = dnorm(deviations, asFloat(0), asFloat(5))/fitnessFunctionMax;
+          inds.fitnessScaling = 0.1 + adaptation * 0.9;
+          inds.tagF = phenotypes;
+          p1.fitnessScaling = min(K/p1.individualCount, 1.5);
+      }
+      
+      block_5:mutationEffect(m1) {
+          return(asFloat(1));
+      }
+      
+      block_6:late() {
+          if (p1.individualCount == 0) {
+              catn("Extinction in cycle " + sim.cycle + ".");
+              sim.simulationFinished();
+          } else {
+              phenotypes = p1.individuals.tagF;
+              cat(sim.cycle + ": " + p1.individualCount + " individuals");
+              cat(", phenotype mean " + mean(phenotypes));
+              if (size(phenotypes) > 1) cat(" (sd " + sd(phenotypes) + ")");
+              catn();
+          }
+      }
+      
+      block_7:20000 late() {
+          sim.simulationFinished();
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[5]>
+      block_init_1:initialize() {
+          initializeSLiMModelType("nonWF");
+          defineConstant("K", 200);
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_2:reproduction() {
+          fertilizedOvules = rbinom(1, 30, 0.5);
+          other = (subpop == p1) %?% p2 %else% p1;
+          pollenSources = ifelse(runif(fertilizedOvules) < 0.99, subpop, other);
+          for (source in pollenSources) subpop.addCrossed(individual, source.sampleIndividuals(1));
+      }
+      
+      block_3:1 early() {
+          sim.addSubpop("p1", 10);
+          sim.addSubpop("p2", 10);
+      }
+      
+      block_4:early() {
+          for (subpop in sim.subpopulations) subpop.fitnessScaling = K/subpop.individualCount;
+      }
+      
+      block_5:10000 late() {
+          sim.outputFixedMutations();
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[7]>
+      block_init_1:initialize() {
+          initializeSLiMModelType("nonWF");
+          initializeSex("A");
+          defineConstant("K", 500);
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeMutationType("m2", 0.5, "n", asFloat(0), 0.3);
+          initializeGenomicElementType("g1", c(m1, m2), c(asFloat(1), 0.1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_2:reproduction(NULL, "F") {
+          mate = subpop.sampleIndividuals(1, sex = "M");
+          if (mate.size()) {
+              qtlValue = individual.tagF;
+              expectedLitterSize = max(asFloat(0), qtlValue + 3);
+              litterSize = rpois(1, expectedLitterSize);
+              penalty = asFloat(3)/litterSize;
+              for (i in seqLen(litterSize)) {
+                  offspring = subpop.addCrossed(individual, mate);
+                  offspring.setValue("penalty", rgamma(1, penalty, 20));
+              }
+          }
+      }
+      
+      block_3:1 early() {
+          sim.addSubpop("p1", 500);
+          p1.individuals.setValue("penalty", asFloat(1));
+      }
+      
+      block_4:early() {
+          inds = sim.subpopulations.individuals;
+          inds[inds.age > 0] %.% fitnessScaling = asFloat(0);
+          inds = inds[inds.age == 0];
+          inds.tagF = inds.sumOfMutationsOfType(m2);
+          inds.fitnessScaling = inds.getValue("penalty");
+          p1.fitnessScaling = K/size(inds);
+      }
+      
+      block_5:mutationEffect(m2) {
+          return(asFloat(1));
+      }
+      
+      block_6:late() {
+          qtlValues = p1.individuals.tagF;
+          expectedSizes = pmax(asFloat(0), qtlValues + 3);
+          cat(sim.cycle + ": " + p1.individualCount + " individuals");
+          cat(", mean litter size " + mean(expectedSizes));
+          catn();
+      }
+      
+      block_7:20000 late() {
+          sim.simulationFinished();
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[6]>
+      block_init_1:initialize() {
+          initializeSLiMModelType("nonWF");
+          defineConstant("K", 10);
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+          deleteFile("mating.txt");
+          deleteFile("death.txt");
+      }
+      
+      block_2:reproduction() {
+          mate = subpop.sampleIndividuals(1);
+          child = subpop.addCrossed(individual, mate);
+          child.tag = sim.tag;
+          sim.tag = sim.tag + 1;
+          line = paste(community.tick, individual.tag, mate.tag, child.tag);
+          writeFile("mating.txt", line, append = T);
+      }
+      
+      block_3:1 early() {
+          sim.addSubpop("p1", 10);
+          p1.individuals.tag = 1:10;
+          sim.tag = 11;
+      }
+      
+      block_4:early() {
+          p1.fitnessScaling = K/p1.individualCount;
+      }
+      
+      block_5:survival() {
+          if (!surviving) {
+              line = community.tick + " " + individual.tag;
+              writeFile("death.txt", line, append = T);
+          }
+          return(NULL);
+      }
+      
+      block_6:100 late() {
+          sim.simulationFinished();
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[6]>
+      block_init_1:initialize() {
+          initializeSLiMModelType("nonWF");
+          defineConstant("K", 10);
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+          deleteFile("mating.txt");
+          deleteFile("death.txt");
+      }
+      
+      block_2:reproduction() {
+          mate = subpop.sampleIndividuals(1);
+          child = subpop.addCrossed(individual, mate);
+          child.tag = sim.tag;
+          sim.tag = sim.tag + 1;
+          line = paste(community.tick, individual.tag, mate.tag, child.tag);
+          writeFile("mating.txt", line, append = T);
+      }
+      
+      block_3:1 early() {
+          sim.addSubpop("p1", 10);
+          p1.individuals.tag = 1:10;
+          sim.tag = 11;
+      }
+      
+      block_4:early() {
+          p1.fitnessScaling = K/p1.individualCount;
+      }
+      
+      block_5:survival() {
+          if (!surviving) {
+              line = community.tick + " " + individual.tag;
+              writeFile("death.txt", line, append = T);
+          }
+          return(NULL);
+      }
+      
+      block_6:100 late() {
+          sim.simulationFinished();
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[5]>
+      block_init_1:initialize() {
+          initializeSLiMModelType("nonWF");
+          defineConstant("K", 500);
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_2:reproduction() {
+          subpop.addRecombinant(individual.genome1, NULL, NULL, NULL, NULL, NULL);
+      }
+      
+      block_3:1 early() {
+          sim.addSubpop("p1", 500, haploid = T);
+      }
+      
+      block_4:early() {
+          p1.fitnessScaling = K/p1.individualCount;
+      }
+      
+      block_5:50000 late() {
+          sim.outputFixedMutations();
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[6]>
+      block_init_1:initialize() {
+          initializeSLiMModelType("nonWF");
+          defineConstant("K", 1e+05);
+          defineConstant("L", 1e+05);
+          defineConstant("H", 0.001);
+          initializeMutationType("m1", asFloat(1), "f", asFloat(0));
+          initializeMutationType("m2", asFloat(1), "f", 0.1);
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, L - 1);
+          initializeMutationRate(0);
+          initializeRecombinationRate(0);
+      }
+      
+      block_2:reproduction() {
+          if (runif(1) < H) {
+              HGTsource = p1.sampleIndividuals(1, exclude = individual) %.% genome1;
+              do
+              {
+                  breaks = rdunif(2, max = L - 1);
+              }
+              while (breaks[0] == breaks[1]) slimr_special__;
+              if (breaks[0] > breaks[1]) breaks = c(0, breaks[1], breaks[0]);
+              subpop.addRecombinant(individual.genome1, HGTsource, breaks, NULL, NULL, NULL);
+          } else {
+              subpop.addRecombinant(individual.genome1, NULL, NULL, NULL, NULL, NULL);
+          }
+      }
+      
+      block_3:1 early() {
+          sim.addSubpop("p1", 2, haploid = T);
+          g = p1.individuals.genome1;
+          g[0] %.% addNewDrawnMutation(m2, asInteger(L * 0.25));
+          g[1] %.% addNewDrawnMutation(m2, asInteger(L * 0.75));
+      }
+      
+      block_4:early() {
+          p1.fitnessScaling = K/p1.individualCount;
+      }
+      
+      block_5:late() {
+          muts = sim.mutations;
+          freqs = sim.mutationFrequencies(NULL, muts);
+          if (all(freqs == asFloat(1))) {
+              catn(sim.cycle + ": " + sum(freqs == asFloat(1)) + " fixed.");
+              sim.simulationFinished();
+          }
+      }
+      
+      block_6:1e6 late() {
+          catn(sim.cycle + ": no result.");
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[5]>
+      block_init_1:initialize() {
+          initializeSLiMModelType("nonWF");
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeMutationType("m2", asFloat(0), "f", -0.5);
+          initializeGenomicElementType("g1", c(m1, m2), c(asFloat(1), 0.05));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_2:reproduction() {
+          K = sim.getValue("K");
+          parents1 = p1.sampleIndividuals(K, replace = T);
+          parents2 = p1.sampleIndividuals(K, replace = T);
+          for (i in seqLen(K)) p1.addCrossed(parents1[i], parents2[i]);
+          self.active = 0;
+      }
+      
+      block_3:1 early() {
+          sim.setValue("K", 500);
+          sim.addSubpop("p1", sim.getValue("K"));
+      }
+      
+      block_4:early() {
+          inds = sim.subpopulations.individuals;
+          inds[inds.age > 0] %.% fitnessScaling = asFloat(0);
+      }
+      
+      block_5:10000 late() {
+          sim.outputFixedMutations();
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[5]>
+      block_init_1:initialize() {
+          initializeSLiMModelType("nonWF");
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeMutationType("m2", asFloat(0), "f", -0.5);
+          initializeGenomicElementType("g1", c(m1, m2), c(asFloat(1), 0.05));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_2:reproduction() {
+          K = sim.getValue("K");
+          parents1 = p1.sampleIndividuals(K, replace = T);
+          parents2 = p1.sampleIndividuals(K, replace = T);
+          for (i in seqLen(K)) p1.addCrossed(parents1[i], parents2[i]);
+          self.active = 0;
+      }
+      
+      block_3:1 early() {
+          sim.setValue("K", 500);
+          sim.addSubpop("p1", sim.getValue("K"));
+      }
+      
+      block_4:early() {
+          inds = sim.subpopulations.individuals;
+          inds[inds.age > 0] %.% fitnessScaling = asFloat(0);
+      }
+      
+      block_5:10000 late() {
+          sim.outputFixedMutations();
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[6]>
+      block_init_1:initialize() {
+          defineConstant("K", 500);
+          defineConstant("MU", 1e-07);
+          defineConstant("R", 1e-07);
+          defineConstant("L1", 1e+05 - 1);
+          initializeSLiMModelType("nonWF");
+          initializeSex("A");
+          initializeMutationRate(MU);
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, L1);
+          initializeRecombinationRate(R);
+      }
+      
+      block_2:1 early() {
+          sim.addSubpop("p1", K);
+          sim.addSubpop("p2", 0);
+      }
+      
+      block_3:reproduction(p1) {
+          g_1 = individual.genome1;
+          g_2 = individual.genome2;
+          for (meiosisCount in 1:5) {
+              if (individual.sex == "M") {
+                  breaks = sim.chromosome.drawBreakpoints(individual);
+                  s_1 = p2.addRecombinant(g_1, g_2, breaks, NULL, NULL, NULL, "M");
+                  s_2 = p2.addRecombinant(g_2, g_1, breaks, NULL, NULL, NULL, "M");
+                  breaks = sim.chromosome.drawBreakpoints(individual);
+                  s_3 = p2.addRecombinant(g_1, g_2, breaks, NULL, NULL, NULL, "M");
+                  s_4 = p2.addRecombinant(g_2, g_1, breaks, NULL, NULL, NULL, "M");
+              } else if (individual.sex == "F") {
+                  breaks = sim.chromosome.drawBreakpoints(individual);
+                  e = p2.addRecombinant(g_1, g_2, breaks, NULL, NULL, NULL, "F", randomizeStrands = T);
+              }
+          }
+      }
+      
+      block_4:reproduction(p2, "F") {
+          mate = p2.sampleIndividuals(1, sex = "M", tagL0 = F);
+          mate.tagL0 = T;
+          child = p1.addRecombinant(individual.genome1, NULL, NULL, mate.genome1, NULL, NULL);
+      }
+      
+      block_5:early() {
+          if (sim.cycle%%2 == 0) {
+              p1.fitnessScaling = asFloat(0);
+              p2.individuals.tagL0 = F;
+              sim.chromosome.setMutationRate(asFloat(0));
+          } else {
+              p2.fitnessScaling = asFloat(0);
+              p1.fitnessScaling = K/p1.individualCount;
+              sim.chromosome.setMutationRate(MU);
+          }
+      }
+      
+      block_6:10000 late() {
+          sim.simulationFinished();
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[7]>
+      block_1:function (i)driveBreakpoints(o<Genome>$ gen1, o<Genome>$ gen2) {
+          breaks = sim.chromosome.drawBreakpoints();
+          gen1has = gen1.containsMarkerMutation(m2, D_pos);
+          gen2has = gen2.containsMarkerMutation(m2, D_pos);
+          if (gen1has == gen2has) return(breaks);
+          polarity = sum(breaks <= D_pos)%%2;
+          polarityI = (gen1has %?% 0 %else% 1);
+          desiredPolarity = (runif(1) < D_prob) %?% polarityI %else% !polarityI;
+          if (desiredPolarity != polarity) return(c(0, breaks));
+          return(breaks);
+      }
+      
+      block_init_1:initialize() {
+          initializeSLiMModelType("nonWF");
+          defineConstant("K", 500);
+          defineConstant("D_pos", 20000);
+          defineConstant("D_prob", 0.8);
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeMutationType("m2", 0.1, "f", -0.1);
+          m2.color = "red";
+          m2.convertToSubstitution = F;
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_3:reproduction() {
+          m = subpop.sampleIndividuals(1);
+          b1 = driveBreakpoints(individual.genome1, individual.genome2);
+          b2 = driveBreakpoints(m.genome1, m.genome2);
+          subpop.addRecombinant(individual.genome1, individual.genome2, b1, m.genome1, m.genome2, b2);
+      }
+      
+      block_4:1 early() {
+          sim.addSubpop("p1", 10);
+      }
+      
+      block_5:early() {
+          p1.fitnessScaling = K/p1.individualCount;
+      }
+      
+      block_6:100 early() {
+          target = sample(p1.genomes, 10);
+          target.addNewDrawnMutation(m2, D_pos);
+      }
+      
+      block_7:100:1000 late() {
+          mut = sim.mutationsOfType(m2);
+          if (size(mut) == 0) {
+              catn(sim.cycle + ": LOST");
+              sim.simulationFinished();
+          } else if (sim.mutationFrequencies(NULL, mut) == asFloat(1)) {
+              catn(sim.cycle + ": FIXED");
+              sim.simulationFinished();
+          }
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[6]>
+      block_init_1:initialize() {
+          defineConstant("K", 1000);
+          defineConstant("N", 10);
+          defineConstant("M", 0.01);
+          defineConstant("R", 1.04);
+          initializeSLiMModelType("nonWF");
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_2:reproduction() {
+          litterSize = rpois(1, R);
+          for (i in seqLen(litterSize)) {
+              mate = subpop.sampleIndividuals(1, exclude = individual);
+              if (mate.size()) subpop.addCrossed(individual, mate);
+          }
+      }
+      
+      block_3:1 early() {
+          for (i in seqLen(N)) sim.addSubpop(i, (i == 0) %?% 100 %else% 0);
+      }
+      
+      block_4:1 late() {
+          log = community.createLogFile("sim_log.txt", sep = "\t", logInterval = 10);
+          log.addCycle();
+          log.addPopulationSize();
+          log.addMeanSDColumns("size", "sim.subpopulations.individualCount;");
+          log.addCustomColumn("pop_migrants", "sum(sim.subpopulations.individuals.migrant);");
+          log.addMeanSDColumns("migrants", "sapply(sim.subpopulations, 'sum(applyValue.individuals.migrant);');");
+      }
+      
+      block_5:early() {
+          inds = sim.subpopulations.individuals;
+          ages = inds.age;
+          inds[ages > 0] %.% fitnessScaling = asFloat(0);
+          inds = inds[ages == 0];
+          numMigrants = rbinom(1, inds.size(), M);
+          if (numMigrants) {
+              migrants = sample(inds, numMigrants);
+              currentSubpopID = migrants.subpopulation.id;
+              displacement = -1 + rbinom(migrants.size(), 1, 0.5) * 2;
+              newSubpopID = currentSubpopID + displacement;
+              actuallyMoving = (newSubpopID >= 0) & (newSubpopID < N);
+              if (sum(actuallyMoving)) {
+                  migrants = migrants[actuallyMoving];
+                  newSubpopID = newSubpopID[actuallyMoving];
+                  for (subpop in sim.subpopulations) subpop.takeMigrants(migrants[newSubpopID == subpop.id]);
+              }
+          }
+          for (subpop in sim.subpopulations) {
+              juvenileCount = sum(subpop.individuals.age == 0);
+              subpop.fitnessScaling = K/juvenileCount;
+          }
+      }
+      
+      block_6:1001 late() {
+          sim.outputFixedMutations();
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[6]>
+      block_init_1:initialize() {
+          defineConstant("K", 1000);
+          defineConstant("N", 10);
+          defineConstant("M", 0.01);
+          defineConstant("R", 1.04);
+          initializeSLiMModelType("nonWF");
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_2:reproduction() {
+          litterSize = rpois(1, R);
+          for (i in seqLen(litterSize)) {
+              mate = subpop.sampleIndividuals(1, exclude = individual);
+              if (mate.size()) subpop.addCrossed(individual, mate);
+          }
+      }
+      
+      block_3:1 early() {
+          for (i in seqLen(N)) sim.addSubpop(i, (i == 0) %?% 100 %else% 0);
+      }
+      
+      block_4:1 late() {
+          log = community.createLogFile("sim_log.txt", sep = "\t", logInterval = 10);
+          log.addCycle();
+          log.addPopulationSize();
+          log.addMeanSDColumns("size", "sim.subpopulations.individualCount;");
+          log.addCustomColumn("pop_migrants", "sum(sim.subpopulations.individuals.migrant);");
+          log.addMeanSDColumns("migrants", "sapply(sim.subpopulations, 'sum(applyValue.individuals.migrant);');");
+      }
+      
+      block_5:early() {
+          inds = sim.subpopulations.individuals;
+          ages = inds.age;
+          inds[ages > 0] %.% fitnessScaling = asFloat(0);
+          inds = inds[ages == 0];
+          numMigrants = rbinom(1, inds.size(), M);
+          if (numMigrants) {
+              migrants = sample(inds, numMigrants);
+              currentSubpopID = migrants.subpopulation.id;
+              displacement = -1 + rbinom(migrants.size(), 1, 0.5) * 2;
+              newSubpopID = currentSubpopID + displacement;
+              actuallyMoving = (newSubpopID >= 0) & (newSubpopID < N);
+              if (sum(actuallyMoving)) {
+                  migrants = migrants[actuallyMoving];
+                  newSubpopID = newSubpopID[actuallyMoving];
+                  for (subpop in sim.subpopulations) subpop.takeMigrants(migrants[newSubpopID == subpop.id]);
+              }
+          }
+          for (subpop in sim.subpopulations) {
+              juvenileCount = sum(subpop.individuals.age == 0);
+              subpop.fitnessScaling = K/juvenileCount;
+          }
+      }
+      
+      block_6:1001 late() {
+          sim.outputFixedMutations();
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[6]>
+      block_init_1:initialize() {
+          defineConstant("K", 50000);
+          defineConstant("R", 1.1);
+          defineConstant("M", K/(R - 1));
+          initializeSLiMModelType("nonWF");
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_2:1 early() {
+          sim.addSubpop("p1", 50);
+          sim.addSubpop("p2", 50);
+          sim.addSubpop("p3", 50);
+          log = community.createLogFile("sim_log.txt", logInterval = 1);
+          log.addCycle();
+          log.addSubpopulationSize(p1);
+          log.addSubpopulationSize(p2);
+          log.addSubpopulationSize(p3);
+      }
+      
+      block_3:reproduction(p1) {
+          litterSize = rpois(1, R);
+          for (i in seqLen(litterSize)) subpop.addCrossed(individual, subpop.sampleIndividuals(1));
+      }
+      
+      block_4:reproduction(p2) {
+          n_t = subpop.individualCount;
+          n_t_plus_1 = (R * n_t)/(1 + n_t/M);
+          mean_litter_size = n_t_plus_1/n_t;
+          litterSize = rpois(1, mean_litter_size);
+          for (i in seqLen(litterSize)) subpop.addCrossed(individual, subpop.sampleIndividuals(1));
+      }
+      
+      block_5:reproduction(p3) {
+          litterSize = rpois(1, R);
+          for (i in seqLen(litterSize)) subpop.addCrossed(individual, subpop.sampleIndividuals(1));
+      }
+      
+      block_6::200 early() {
+          inds = p1.individuals;
+          inds[inds.age > 0] %.% fitnessScaling = 0;
+          n_t_plus_pt5 = sum(inds.age == 0);
+          p1.fitnessScaling = K/n_t_plus_pt5;
+          inds = p2.individuals;
+          inds[inds.age > 0] %.% fitnessScaling = 0;
+          inds = p3.individuals;
+          inds[inds.age > 0] %.% fitnessScaling = 0;
+          n_t_plus_pt5 = sum(inds.age == 0);
+          p3.fitnessScaling = 1/(1 + (n_t_plus_pt5/R)/M);
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[10]>
+      block_init_01:initialize() {
+          initializeSLiMModelType("nonWF");
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_02:reproduction() {
+          subpop.addCrossed(individual, subpop.sampleIndividuals(1));
+      }
+      
+      block_03:1 early() {
+          sim.addSubpop("p1", 10) %.% setValue("K", 500);
+          sim.addSubpop("p2", 10) %.% setValue("K", 600);
+      }
+      
+      block_04:early() {
+          for (subpop in sim.subpopulations) {
+              K = subpop.getValue("K");
+              subpop.fitnessScaling = K/subpop.individualCount;
+          }
+      }
+      
+      block_05:5000 late() {
+          ;
+      }
+      
+      block_06:999 late() {
+          sim.addSubpop("p3", 0) %.% setValue("K", 750);
+      }
+      
+      block_07:1000 reproduction() {
+          founderCount = rdunif(1, 10, 20);
+          p1_inds = p1.individuals;
+          p2_inds = p2.individuals;
+          all_inds = c(p1_inds, p2_inds);
+          for (i in seqLen(founderCount)) {
+              parent1 = sample(all_inds, 1);
+              if (rdunif(1) < 0.2) parent2 = sample(p1_inds, 1) else parent2 = sample(p2_inds, 1);
+              p3.addCrossed(parent1, parent2);
+          }
+          self.active = 0;
+      }
+      
+      block_08:1000 early() {
+          c(p1, p2) %.% fitnessScaling = asFloat(0);
+      }
+      
+      block_09:1999 late() {
+          sim.addSubpop("p4", 0) %.% setValue("K", 100);
+      }
+      
+      block_10:2000 reproduction() {
+          founderCount = rdunif(1, 10, 20);
+          all_inds = p3.individuals;
+          for (i in seqLen(founderCount)) {
+              parent1 = sample(all_inds, 1);
+              parent2 = sample(all_inds, 1);
+              p4.addCrossed(parent1, parent2);
+          }
+          self.active = 0;
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[8]>
+      block_init_1:initialize() {
+          initializeSLiMModelType("nonWF");
+          initializeSLiMOptions(keepPedigrees = T);
+          initializeSex("A");
+          defineConstant("K", 500);
+          initializeMutationRate(1e-07);
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_2:reproduction(p1) {
+          matureFemales = subpop.subsetIndividuals(sex = "F", minAge = 7);
+          for (female in matureFemales) {
+              if (female.tag < 0) {
+                  mate = subpop.sampleIndividuals(1, sex = "M", minAge = 7);
+              } else {
+                  mate = sim.individualsWithPedigreeIDs(female.tag);
+              }
+              if (mate.size()) {
+                  female.tag = mate.pedigreeID;
+                  subpop.addCrossed(female, mate, count = rpois(1, 5));
+              } else {
+                  catn(sim.cycle + ": No mate found for tag " + female.tag);
+              }
+          }
+          self.active = 0;
+      }
+      
+      block_3:1 early() {
+          sim.addSubpop("p1", 100);
+          p1inds = p1.individuals;
+          p1inds.age = rdunif(size(p1.individuals), min = 0, max = 10);
+          p1inds.tag = -1;
+          sim.addSubpop("p1000", 0);
+      }
+      
+      block_4:early() {
+          offspringFemales = p1.subsetIndividuals(sex = "F", maxAge = 0);
+          offspringFemales.tag = -1;
+          p1.fitnessScaling = K/p1.individualCount;
+          p1000.individuals.tag = 0;
+          maleRefs = p1.subsetIndividuals(sex = "F") %.% tag;
+          maleRefs = maleRefs[maleRefs != -1];
+          referencedDeadMales = sim.individualsWithPedigreeIDs(maleRefs, p1000);
+          referencedDeadMales.tag = 1;
+      }
+      
+      block_5:survival(p1) {
+          if (!surviving) if (individual.sex == "M") return(p1000);
+          return(NULL);
+      }
+      
+      block_6:survival(p1000) {
+          return((individual.tag == 1));
+      }
+      
+      block_7:late() {
+          catn(sim.cycle + ": p1 (" + p1.individualCount + ")" + ", p1000 (" + p1000.individualCount + ")");
+      }
+      
+      block_8:10000 late() {
+          sim.outputFixedMutations();
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[5]>
+      block_init_1:initialize() {
+          initializeSLiMModelType("nonWF");
+          defineConstant("K", 500);
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeMutationRate(1e-07);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_2:reproduction() {
+          if (individual.tagL0 == F) {
+              if (runif(1) < 0.7) {
+                  mate = subpop.sampleIndividuals(1, tagL0 = T);
+                  offspring = subpop.addCrossed(individual, mate);
+                  offspring.tagL0 = (runif(1) <= 0.5);
+              } else {
+                  offspring = subpop.addSelfed(individual);
+                  offspring.tagL0 = F;
+              }
+          }
+      }
+      
+      block_3:1 early() {
+          sim.addSubpop("p1", K);
+          p1.individuals.tagL0 = (runif(p1.individualCount) <= 0.5);
+      }
+      
+      block_4:early() {
+          p1.fitnessScaling = K/p1.individualCount;
+      }
+      
+      block_5:1:2000 late() {
+          ratio = mean(p1.individuals.tagL0);
+          catn(sim.cycle + ": " + ratio);
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[5]>
+      block_init_1:initialize() {
+          defineConstant("K", 2000);
+          defineConstant("P_OFFSPRING_MALE", 0.8);
+          initializeSLiMModelType("nonWF");
+          initializeMutationRate(1e-08);
+          initializeMutationType("m1", asFloat(0), "f", asFloat(0));
+          m1.convertToSubstitution = T;
+          m1.haploidDominanceCoeff = asFloat(1);
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 999999);
+          initializeRecombinationRate(1e-06);
+          initializeSex("A");
+      }
+      
+      block_2:reproduction(NULL, "F") {
+          gen1 = individual.genome1;
+          gen2 = individual.genome2;
+          breaks = sim.chromosome.drawBreakpoints(individual);
+          if (rbinom(1, 1, P_OFFSPRING_MALE)) {
+              subpop.addRecombinant(gen1, gen2, breaks, NULL, NULL, NULL, "M", randomizeStrands = T);
+          } else {
+              mate = subpop.sampleIndividuals(1, sex = "M");
+              subpop.addRecombinant(gen1, gen2, breaks, mate.genome1, NULL, NULL, "F", randomizeStrands = T);
+          }
+      }
+      
+      block_3:1 early() {
+          mCount = asInteger(K * P_OFFSPRING_MALE);
+          fCount = K - mCount;
+          sim.addSubpop("p1", mCount, sexRatio = asFloat(1), haploid = T);
+          sim.addSubpop("p2", fCount, sexRatio = asFloat(0), haploid = F);
+          p1.takeMigrants(p2.individuals);
+          p2.removeSubpopulation();
+      }
+      
+      block_4:early() {
+          p1.fitnessScaling = K/p1.individualCount;
+      }
+      
+      block_5:10000 late() {
+          sim.simulationFinished();
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
       <slimr_script[4]>
       block_init_1:initialize() {
           initializeSLiMOptions(dimensionality = "xy");
@@ -3923,6 +5262,47 @@
               child.y = parent1.y + rnorm(1, 0, 0.02);
           }
           while ((child.y < asFloat(0)) | (child.y > asFloat(1))) slimr_special__;
+          return(T);
+      }
+      
+      block_6:2000 late() {
+          sim.outputFixedMutations();
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[6]>
+      block_init_1:initialize() {
+          initializeSLiMOptions(dimensionality = "xy");
+          initializeMutationRate(1e-07);
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 99999);
+          initializeRecombinationRate(1e-08);
+          initializeInteractionType(1, "xy", reciprocal = T, maxDistance = 0.3);
+          i1.setInteractionFunction("n", asFloat(3), 0.1);
+      }
+      
+      block_2:1 late() {
+          sim.addSubpop("p1", 500);
+          p1.individuals.setSpatialPosition(p1.pointUniform(500));
+      }
+      
+      block_3:1:2000 late() {
+          i1.evaluate(p1);
+      }
+      
+      block_4:fitnessEffect() {
+          totalStrength = i1.totalOfNeighborStrengths(individual);
+          return(1.1 - totalStrength/p1.individualCount);
+      }
+      
+      block_5:modifyChild() {
+          pos = parent1.spatialPosition + rnorm(2, 0, 0.02);
+          child.setSpatialPosition(p1.pointStopped(pos));
           return(T);
       }
       
@@ -4613,457 +5993,57 @@
     Code
       print(slim_scripts[[i]])
     Output
-      <slimr_script[6]>
+      <slimr_script[9]>
       block_init_1:initialize() {
+          defineConstant("K", 1000);
           initializeSLiMModelType("nonWF");
-          defineConstant("K", 500);
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
+          initializeSLiMOptions(dimensionality = "xy", periodicity = "xy");
       }
       
-      block_2:reproduction() {
-          subpop.addCrossed(individual, subpop.sampleIndividuals(1));
+      block_2:1 late() {
+          sim.addSubpop("p1", K);
+          p1.individuals.setSpatialPosition(c(asFloat(0), asFloat(0)));
+          p1.individuals.color = rainbow(K);
+          do
+          {
+              m = matrix(rbinom(16, 1, 0.2), ncol = 4, byrow = T);
+              m = cbind(m, m[, 0]);
+              m = rbind(m, m[0, ]);
+          }
+          while ((sum(m) == 0) | (sum(m) == 1)) slimr_special__;
+          map = p1.defineSpatialMap("habitat", "xy", m, valueRange = c(0, 1), colors = c("black", "white"));
+          defineConstant("MAP", map);
       }
       
-      block_3:1 early() {
-          sim.addSubpop("p1", 10);
+      block_3:2 late() {
+          MAP.interpolate(15, method = "cubic");
       }
       
-      block_4:early() {
-          p1.fitnessScaling = K/p1.individualCount;
+      block_4:3 late() {
+          MAP.rescale();
       }
       
-      block_5:late() {
+      block_5:4 late() {
+          MAP.smooth(0.3, "n", 0.1);
+      }
+      
+      block_6:5 late() {
+          MAP.rescale();
+      }
+      
+      block_7:6 late() {
+          MAP.interpolate = T;
+      }
+      
+      block_8:10 late() {
+          p1.individuals.setSpatialPosition(p1.pointUniform(K));
+      }
+      
+      block_9:11:100000 late() {
           inds = p1.individuals;
-          catn(sim.cycle + ": " + size(inds) + " (" + max(inds.age) + ")");
-      }
-      
-      block_6:2000 late() {
-          sim.outputFull(ages = T);
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[6]>
-      block_init_1:initialize() {
-          initializeSLiMModelType("nonWF");
-          defineConstant("K", 30);
-          defineConstant("L", c(0.7, asFloat(0), asFloat(0), asFloat(0), 0.25, 0.5, 0.75, asFloat(1)));
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
-      }
-      
-      block_2:reproduction() {
-          if (individual.age > 2) {
-              mate = subpop.sampleIndividuals(1, minAge = 3);
-              subpop.addCrossed(individual, mate);
-          }
-      }
-      
-      block_3:1 early() {
-          sim.addSubpop("p1", 10);
-          p1.individuals.age = rdunif(10, min = 0, max = 7);
-      }
-      
-      block_4:early() {
-          inds = p1.individuals;
-          ages = inds.age;
-          mortality = L[ages];
-          survival = 1 - mortality;
-          inds.fitnessScaling = survival;
-          p1.fitnessScaling = K/(p1.individualCount * mean(survival));
-      }
-      
-      block_5:late() {
-          catn(sim.cycle + ": " + paste(sort(p1.individuals.age)));
-      }
-      
-      block_6:2000 late() {
-          sim.outputFixedMutations();
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[6]>
-      block_init_1:initialize() {
-          initializeSLiMModelType("nonWF");
-          defineConstant("K", 500);
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
-      }
-      
-      block_2:reproduction() {
-          parents = sample(p1.individuals, p1.individualCount);
-          for (i in seq(0, p1.individualCount - 2, by = 2)) {
-              parent1 = parents[i];
-              parent2 = parents[i + 1];
-              litterSize = rpois(1, 2.7);
-              for (j in seqLen(litterSize)) p1.addCrossed(parent1, parent2);
-          }
-          self.active = 0;
-      }
-      
-      block_3:1 early() {
-          sim.addSubpop("p1", 10);
-      }
-      
-      block_4:early() {
-          p1.fitnessScaling = K/p1.individualCount;
-      }
-      
-      block_5:late() {
-          inds = p1.individuals;
-          catn(sim.cycle + ": " + size(inds) + " (" + max(inds.age) + ")");
-      }
-      
-      block_6:2000 late() {
-          sim.outputFull(ages = T);
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[7]>
-      block_init_1:initialize() {
-          initializeSLiMModelType("nonWF");
-          defineConstant("K", 500);
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeMutationType("m2", asFloat(1), "f", 0.5);
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
-      }
-      
-      block_2:reproduction() {
-          for (i in 1:5) subpop.addCrossed(individual, subpop.sampleIndividuals(1));
-      }
-      
-      block_3:1 early() {
-          sim.addSubpop("p1", 10);
-      }
-      
-      block_4:100 early() {
-          mutant = sample(p1.individuals.genomes, 10);
-          mutant.addNewDrawnMutation(m2, 10000);
-      }
-      
-      block_5:early() {
-          p1.fitnessScaling = K/p1.individualCount;
-      }
-      
-      block_6:late() {
-          inds = p1.individuals;
-          catn(sim.cycle + ": " + size(inds) + " (" + max(inds.age) + ")");
-      }
-      
-      block_7:2000 late() {
-          sim.outputFull(ages = T);
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[6]>
-      block_init_1:initialize() {
-          initializeSLiMModelType("nonWF");
-          defineConstant("K", 50);
-          defineConstant("N", 10);
-          defineConstant("m", 0.01);
-          defineConstant("e", 0.1);
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
-      }
-      
-      block_2:reproduction() {
-          subpop.addCrossed(individual, subpop.sampleIndividuals(1));
-      }
-      
-      block_3:1 early() {
-          for (i in 1:N) sim.addSubpop(i, (i == 1) %?% 10 %else% 0);
-      }
-      
-      block_4:early() {
-          nIndividuals = sum(sim.subpopulations.individualCount);
-          nMigrants = rpois(1, nIndividuals * m);
-          migrants = sample(sim.subpopulations.individuals, nMigrants);
-          for (migrant in migrants) {
-              do
-              {
-                  dest = sample(sim.subpopulations, 1);
-              }
-              while (dest == migrant.subpopulation) slimr_special__;
-              dest.takeMigrants(migrant);
-          }
-          for (subpop in sim.subpopulations) {
-              if (runif(1) < e) sim.killIndividuals(subpop.individuals) else subpop.fitnessScaling = K/subpop.individualCount;
-          }
-      }
-      
-      block_5:late() {
-          if (sum(sim.subpopulations.individualCount) == 0) stop("Global extinction in cycle " + sim.cycle + ".");
-      }
-      
-      block_6:2000 late() {
-          sim.outputFixedMutations();
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[8]>
-      block_init_1:initialize() {
-          initializeSLiMModelType("nonWF");
-          defineConstant("K", 500);
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeMutationType("m2", 0.5, "e", 0.1);
-          m2.color = "red";
-          initializeMutationType("m3", 0.5, "e", 0.1);
-          m3.color = "green";
-          initializeGenomicElementType("g1", c(m1, m2, m3), c(0.98, 0.01, 0.01));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
-      }
-      
-      block_2:reproduction() {
-          dest = sample(sim.subpopulations, 1);
-          dest.addCrossed(individual, subpop.sampleIndividuals(1));
-      }
-      
-      block_3:1 early() {
-          sim.addSubpop("p1", 10);
-          sim.addSubpop("p2", 10);
-      }
-      
-      block_4:early() {
-          inds = sim.subpopulations.individuals;
-          inds_m2 = inds.countOfMutationsOfType(m2);
-          inds_m3 = inds.countOfMutationsOfType(m3);
-          pref_p1 = 0.5 + (inds_m2 - inds_m3) * 0.1;
-          pref_p1 = pmax(pmin(pref_p1, asFloat(1)), asFloat(0));
-          inertia = ifelse(inds.subpopulation.id == 1, asFloat(1), asFloat(0));
-          pref_p1 = pref_p1 * 0.75 + inertia * 0.25;
-          choice = ifelse(runif(inds.size()) < pref_p1, 1, 2);
-          moving = inds[choice != inds.subpopulation.id];
-          from_p1 = moving[moving.subpopulation == p1];
-          from_p2 = moving[moving.subpopulation == p2];
-          p2.takeMigrants(from_p1);
-          p1.takeMigrants(from_p2);
-      }
-      
-      block_5:early() {
-          p1.fitnessScaling = K/p1.individualCount;
-          p2.fitnessScaling = K/p2.individualCount;
-      }
-      
-      block_6:mutationEffect(m2, p2) {
-          return(1/effect);
-      }
-      
-      block_7:mutationEffect(m3, p1) {
-          return(1/effect);
-      }
-      
-      block_8:1000 late() {
-          for (id in 1:2) {
-              subpop = sim.subpopulations[sim.subpopulations.id == id];
-              s = subpop.individualCount;
-              inds = subpop.individuals;
-              c2 = sum(inds.countOfMutationsOfType(m2));
-              c3 = sum(inds.countOfMutationsOfType(m3));
-              catn("subpop " + id + " (" + s + "): " + c2 + " m2, " + c3 + " m3");
-          }
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[7]>
-      block_init_1:initialize() {
-          initializeSLiMModelType("nonWF");
-          defineConstant("K", 500);
-          defineConstant("opt1", asFloat(0));
-          defineConstant("opt2", asFloat(10));
-          defineConstant("Tdelta", 10000);
-          initializeMutationType("m1", 0.5, "n", asFloat(0), asFloat(1));
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
-      }
-      
-      block_2:reproduction() {
-          subpop.addCrossed(individual, subpop.sampleIndividuals(1));
-      }
-      
-      block_3:1 early() {
-          sim.addSubpop("p1", 500);
-      }
-      
-      block_4:early() {
-          inds = sim.subpopulations.individuals;
-          phenotypes = inds.sumOfMutationsOfType(m1);
-          optimum = (sim.cycle < Tdelta) %?% opt1 %else% opt2;
-          deviations = optimum - phenotypes;
-          fitnessFunctionMax = dnorm(asFloat(0), asFloat(0), asFloat(5));
-          adaptation = dnorm(deviations, asFloat(0), asFloat(5))/fitnessFunctionMax;
-          inds.fitnessScaling = 0.1 + adaptation * 0.9;
-          inds.tagF = phenotypes;
-          p1.fitnessScaling = min(K/p1.individualCount, 1.5);
-      }
-      
-      block_5:mutationEffect(m1) {
-          return(asFloat(1));
-      }
-      
-      block_6:late() {
-          if (p1.individualCount == 0) {
-              catn("Extinction in cycle " + sim.cycle + ".");
-              sim.simulationFinished();
-          } else {
-              phenotypes = p1.individuals.tagF;
-              cat(sim.cycle + ": " + p1.individualCount + " individuals");
-              cat(", phenotype mean " + mean(phenotypes));
-              if (size(phenotypes) > 1) cat(" (sd " + sd(phenotypes) + ")");
-              catn();
-          }
-      }
-      
-      block_7:20000 late() {
-          sim.simulationFinished();
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[5]>
-      block_init_1:initialize() {
-          initializeSLiMModelType("nonWF");
-          defineConstant("K", 200);
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
-      }
-      
-      block_2:reproduction() {
-          fertilizedOvules = rbinom(1, 30, 0.5);
-          other = (subpop == p1) %?% p2 %else% p1;
-          pollenSources = ifelse(runif(fertilizedOvules) < 0.99, subpop, other);
-          for (source in pollenSources) subpop.addCrossed(individual, source.sampleIndividuals(1));
-      }
-      
-      block_3:1 early() {
-          sim.addSubpop("p1", 10);
-          sim.addSubpop("p2", 10);
-      }
-      
-      block_4:early() {
-          for (subpop in sim.subpopulations) subpop.fitnessScaling = K/subpop.individualCount;
-      }
-      
-      block_5:10000 late() {
-          sim.outputFixedMutations();
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[7]>
-      block_init_1:initialize() {
-          initializeSLiMModelType("nonWF");
-          initializeSex("A");
-          defineConstant("K", 500);
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeMutationType("m2", 0.5, "n", asFloat(0), 0.3);
-          initializeGenomicElementType("g1", c(m1, m2), c(asFloat(1), 0.1));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
-      }
-      
-      block_2:reproduction(NULL, "F") {
-          mate = subpop.sampleIndividuals(1, sex = "M");
-          if (mate.size()) {
-              qtlValue = individual.tagF;
-              expectedLitterSize = max(asFloat(0), qtlValue + 3);
-              litterSize = rpois(1, expectedLitterSize);
-              penalty = asFloat(3)/litterSize;
-              for (i in seqLen(litterSize)) {
-                  offspring = subpop.addCrossed(individual, mate);
-                  offspring.setValue("penalty", rgamma(1, penalty, 20));
-              }
-          }
-      }
-      
-      block_3:1 early() {
-          sim.addSubpop("p1", 500);
-          p1.individuals.setValue("penalty", asFloat(1));
-      }
-      
-      block_4:early() {
-          inds = sim.subpopulations.individuals;
-          inds[inds.age > 0] %.% fitnessScaling = asFloat(0);
-          inds = inds[inds.age == 0];
-          inds.tagF = inds.sumOfMutationsOfType(m2);
-          inds.fitnessScaling = inds.getValue("penalty");
-          p1.fitnessScaling = K/size(inds);
-      }
-      
-      block_5:mutationEffect(m2) {
-          return(asFloat(1));
-      }
-      
-      block_6:late() {
-          qtlValues = p1.individuals.tagF;
-          expectedSizes = pmax(asFloat(0), qtlValues + 3);
-          cat(sim.cycle + ": " + p1.individualCount + " individuals");
-          cat(", mean litter size " + mean(expectedSizes));
-          catn();
-      }
-      
-      block_7:20000 late() {
-          sim.simulationFinished();
+          pos = inds.spatialPosition;
+          pos = MAP.sampleNearbyPoint(pos, INF, "n", 0.002);
+          inds.setSpatialPosition(pos);
       }
 
 ---
@@ -5195,406 +6175,6 @@
     Code
       print(slim_scripts[[i]])
     Output
-      <slimr_script[6]>
-      block_init_1:initialize() {
-          initializeSLiMModelType("nonWF");
-          defineConstant("K", 10);
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
-          deleteFile("mating.txt");
-          deleteFile("death.txt");
-      }
-      
-      block_2:reproduction() {
-          mate = subpop.sampleIndividuals(1);
-          child = subpop.addCrossed(individual, mate);
-          child.tag = sim.tag;
-          sim.tag = sim.tag + 1;
-          line = paste(community.tick, individual.tag, mate.tag, child.tag);
-          writeFile("mating.txt", line, append = T);
-      }
-      
-      block_3:1 early() {
-          sim.addSubpop("p1", 10);
-          p1.individuals.tag = 1:10;
-          sim.tag = 11;
-      }
-      
-      block_4:early() {
-          p1.fitnessScaling = K/p1.individualCount;
-      }
-      
-      block_5:survival() {
-          if (!surviving) {
-              line = community.tick + " " + individual.tag;
-              writeFile("death.txt", line, append = T);
-          }
-          return(NULL);
-      }
-      
-      block_6:100 late() {
-          sim.simulationFinished();
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[6]>
-      block_init_1:initialize() {
-          initializeSLiMModelType("nonWF");
-          defineConstant("K", 10);
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
-          deleteFile("mating.txt");
-          deleteFile("death.txt");
-      }
-      
-      block_2:reproduction() {
-          mate = subpop.sampleIndividuals(1);
-          child = subpop.addCrossed(individual, mate);
-          child.tag = sim.tag;
-          sim.tag = sim.tag + 1;
-          line = paste(community.tick, individual.tag, mate.tag, child.tag);
-          writeFile("mating.txt", line, append = T);
-      }
-      
-      block_3:1 early() {
-          sim.addSubpop("p1", 10);
-          p1.individuals.tag = 1:10;
-          sim.tag = 11;
-      }
-      
-      block_4:early() {
-          p1.fitnessScaling = K/p1.individualCount;
-      }
-      
-      block_5:survival() {
-          if (!surviving) {
-              line = community.tick + " " + individual.tag;
-              writeFile("death.txt", line, append = T);
-          }
-          return(NULL);
-      }
-      
-      block_6:100 late() {
-          sim.simulationFinished();
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[5]>
-      block_init_1:initialize() {
-          initializeSLiMModelType("nonWF");
-          defineConstant("K", 500);
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
-      }
-      
-      block_2:reproduction() {
-          subpop.addRecombinant(individual.genome1, NULL, NULL, NULL, NULL, NULL);
-      }
-      
-      block_3:1 early() {
-          sim.addSubpop("p1", 500, haploid = T);
-      }
-      
-      block_4:early() {
-          p1.fitnessScaling = K/p1.individualCount;
-      }
-      
-      block_5:50000 late() {
-          sim.outputFixedMutations();
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[6]>
-      block_init_1:initialize() {
-          initializeSLiMModelType("nonWF");
-          defineConstant("K", 1e+05);
-          defineConstant("L", 1e+05);
-          defineConstant("H", 0.001);
-          initializeMutationType("m1", asFloat(1), "f", asFloat(0));
-          initializeMutationType("m2", asFloat(1), "f", 0.1);
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, L - 1);
-          initializeMutationRate(0);
-          initializeRecombinationRate(0);
-      }
-      
-      block_2:reproduction() {
-          if (runif(1) < H) {
-              HGTsource = p1.sampleIndividuals(1, exclude = individual) %.% genome1;
-              do
-              {
-                  breaks = rdunif(2, max = L - 1);
-              }
-              while (breaks[0] == breaks[1]) slimr_special__;
-              if (breaks[0] > breaks[1]) breaks = c(0, breaks[1], breaks[0]);
-              subpop.addRecombinant(individual.genome1, HGTsource, breaks, NULL, NULL, NULL);
-          } else {
-              subpop.addRecombinant(individual.genome1, NULL, NULL, NULL, NULL, NULL);
-          }
-      }
-      
-      block_3:1 early() {
-          sim.addSubpop("p1", 2, haploid = T);
-          g = p1.individuals.genome1;
-          g[0] %.% addNewDrawnMutation(m2, asInteger(L * 0.25));
-          g[1] %.% addNewDrawnMutation(m2, asInteger(L * 0.75));
-      }
-      
-      block_4:early() {
-          p1.fitnessScaling = K/p1.individualCount;
-      }
-      
-      block_5:late() {
-          muts = sim.mutations;
-          freqs = sim.mutationFrequencies(NULL, muts);
-          if (all(freqs == asFloat(1))) {
-              catn(sim.cycle + ": " + sum(freqs == asFloat(1)) + " fixed.");
-              sim.simulationFinished();
-          }
-      }
-      
-      block_6:1e6 late() {
-          catn(sim.cycle + ": no result.");
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[5]>
-      block_init_1:initialize() {
-          initializeSLiMModelType("nonWF");
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeMutationType("m2", asFloat(0), "f", -0.5);
-          initializeGenomicElementType("g1", c(m1, m2), c(asFloat(1), 0.05));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
-      }
-      
-      block_2:reproduction() {
-          K = sim.getValue("K");
-          parents1 = p1.sampleIndividuals(K, replace = T);
-          parents2 = p1.sampleIndividuals(K, replace = T);
-          for (i in seqLen(K)) p1.addCrossed(parents1[i], parents2[i]);
-          self.active = 0;
-      }
-      
-      block_3:1 early() {
-          sim.setValue("K", 500);
-          sim.addSubpop("p1", sim.getValue("K"));
-      }
-      
-      block_4:early() {
-          inds = sim.subpopulations.individuals;
-          inds[inds.age > 0] %.% fitnessScaling = asFloat(0);
-      }
-      
-      block_5:10000 late() {
-          sim.outputFixedMutations();
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[5]>
-      block_init_1:initialize() {
-          initializeSLiMModelType("nonWF");
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeMutationType("m2", asFloat(0), "f", -0.5);
-          initializeGenomicElementType("g1", c(m1, m2), c(asFloat(1), 0.05));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
-      }
-      
-      block_2:reproduction() {
-          K = sim.getValue("K");
-          parents1 = p1.sampleIndividuals(K, replace = T);
-          parents2 = p1.sampleIndividuals(K, replace = T);
-          for (i in seqLen(K)) p1.addCrossed(parents1[i], parents2[i]);
-          self.active = 0;
-      }
-      
-      block_3:1 early() {
-          sim.setValue("K", 500);
-          sim.addSubpop("p1", sim.getValue("K"));
-      }
-      
-      block_4:early() {
-          inds = sim.subpopulations.individuals;
-          inds[inds.age > 0] %.% fitnessScaling = asFloat(0);
-      }
-      
-      block_5:10000 late() {
-          sim.outputFixedMutations();
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[6]>
-      block_init_1:initialize() {
-          defineConstant("K", 500);
-          defineConstant("MU", 1e-07);
-          defineConstant("R", 1e-07);
-          defineConstant("L1", 1e+05 - 1);
-          initializeSLiMModelType("nonWF");
-          initializeSex("A");
-          initializeMutationRate(MU);
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, L1);
-          initializeRecombinationRate(R);
-      }
-      
-      block_2:1 early() {
-          sim.addSubpop("p1", K);
-          sim.addSubpop("p2", 0);
-      }
-      
-      block_3:reproduction(p1) {
-          g_1 = individual.genome1;
-          g_2 = individual.genome2;
-          for (meiosisCount in 1:5) {
-              if (individual.sex == "M") {
-                  breaks = sim.chromosome.drawBreakpoints(individual);
-                  s_1 = p2.addRecombinant(g_1, g_2, breaks, NULL, NULL, NULL, "M");
-                  s_2 = p2.addRecombinant(g_2, g_1, breaks, NULL, NULL, NULL, "M");
-                  breaks = sim.chromosome.drawBreakpoints(individual);
-                  s_3 = p2.addRecombinant(g_1, g_2, breaks, NULL, NULL, NULL, "M");
-                  s_4 = p2.addRecombinant(g_2, g_1, breaks, NULL, NULL, NULL, "M");
-              } else if (individual.sex == "F") {
-                  breaks = sim.chromosome.drawBreakpoints(individual);
-                  if (runif(1) <= 0.5) e = p2.addRecombinant(g_1, g_2, breaks, NULL, NULL, NULL, "F") else e = p2.addRecombinant(g_2, g_1, breaks, NULL, NULL, NULL, "F");
-              }
-          }
-      }
-      
-      block_4:reproduction(p2, "F") {
-          mate = p2.sampleIndividuals(1, sex = "M", tag = 0);
-          mate.tag = 1;
-          child = p1.addRecombinant(individual.genome1, NULL, NULL, mate.genome1, NULL, NULL);
-      }
-      
-      block_5:early() {
-          if (sim.cycle%%2 == 0) {
-              p1.fitnessScaling = asFloat(0);
-              p2.individuals.tag = 0;
-              sim.chromosome.setMutationRate(asFloat(0));
-          } else {
-              p2.fitnessScaling = asFloat(0);
-              p1.fitnessScaling = K/p1.individualCount;
-              sim.chromosome.setMutationRate(MU);
-          }
-      }
-      
-      block_6:10000 late() {
-          sim.simulationFinished();
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[7]>
-      block_1:function (i)driveBreakpoints(o<Genome>$ gen1, o<Genome>$ gen2) {
-          breaks = sim.chromosome.drawBreakpoints();
-          gen1has = gen1.containsMarkerMutation(m2, D_pos);
-          gen2has = gen2.containsMarkerMutation(m2, D_pos);
-          if (gen1has == gen2has) return(breaks);
-          polarity = sum(breaks <= D_pos)%%2;
-          polarityI = (gen1has %?% 0 %else% 1);
-          desiredPolarity = (runif(1) < D_prob) %?% polarityI %else% !polarityI;
-          if (desiredPolarity != polarity) return(c(0, breaks));
-          return(breaks);
-      }
-      
-      block_init_1:initialize() {
-          initializeSLiMModelType("nonWF");
-          defineConstant("K", 500);
-          defineConstant("D_pos", 20000);
-          defineConstant("D_prob", 0.8);
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeMutationType("m2", 0.1, "f", -0.1);
-          m2.color = "red";
-          m2.convertToSubstitution = F;
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
-      }
-      
-      block_3:reproduction() {
-          m = subpop.sampleIndividuals(1);
-          b1 = driveBreakpoints(individual.genome1, individual.genome2);
-          b2 = driveBreakpoints(m.genome1, m.genome2);
-          subpop.addRecombinant(individual.genome1, individual.genome2, b1, m.genome1, m.genome2, b2);
-      }
-      
-      block_4:1 early() {
-          sim.addSubpop("p1", 10);
-      }
-      
-      block_5:early() {
-          p1.fitnessScaling = K/p1.individualCount;
-      }
-      
-      block_6:100 early() {
-          target = sample(p1.genomes, 10);
-          target.addNewDrawnMutation(m2, D_pos);
-      }
-      
-      block_7:100:1000 late() {
-          mut = sim.mutationsOfType(m2);
-          if (size(mut) == 0) {
-              catn(sim.cycle + ": LOST");
-              sim.simulationFinished();
-          } else if (sim.mutationFrequencies(NULL, mut) == asFloat(1)) {
-              catn(sim.cycle + ": FIXED");
-              sim.simulationFinished();
-          }
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
       <slimr_script[8]>
       block_init_1:initialize() {
           initializeSLiMModelType("nonWF");
@@ -5698,436 +6278,52 @@
     Output
       <slimr_script[6]>
       block_init_1:initialize() {
-          defineConstant("K", 1000);
-          defineConstant("N", 10);
-          defineConstant("M", 0.01);
-          defineConstant("R", 1.04);
           initializeSLiMModelType("nonWF");
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
-      }
-      
-      block_2:reproduction() {
-          litterSize = rpois(1, R);
-          for (i in seqLen(litterSize)) {
-              mate = subpop.sampleIndividuals(1, exclude = individual);
-              if (mate.size()) subpop.addCrossed(individual, mate);
-          }
-      }
-      
-      block_3:1 early() {
-          for (i in seqLen(N)) sim.addSubpop(i, (i == 0) %?% 100 %else% 0);
-      }
-      
-      block_4:1 late() {
-          log = community.createLogFile("sim_log.txt", sep = "\t", logInterval = 10);
-          log.addCycle();
-          log.addPopulationSize();
-          log.addMeanSDColumns("size", "sim.subpopulations.individualCount;");
-          log.addCustomColumn("pop_migrants", "sum(sim.subpopulations.individuals.migrant);");
-          log.addMeanSDColumns("migrants", "sapply(sim.subpopulations, 'sum(applyValue.individuals.migrant);');");
-      }
-      
-      block_5:early() {
-          inds = sim.subpopulations.individuals;
-          ages = inds.age;
-          inds[ages > 0] %.% fitnessScaling = asFloat(0);
-          inds = inds[ages == 0];
-          numMigrants = rbinom(1, inds.size(), M);
-          if (numMigrants) {
-              migrants = sample(inds, numMigrants);
-              currentSubpopID = migrants.subpopulation.id;
-              displacement = -1 + rbinom(migrants.size(), 1, 0.5) * 2;
-              newSubpopID = currentSubpopID + displacement;
-              actuallyMoving = (newSubpopID >= 0) & (newSubpopID < N);
-              if (sum(actuallyMoving)) {
-                  migrants = migrants[actuallyMoving];
-                  newSubpopID = newSubpopID[actuallyMoving];
-                  for (subpop in sim.subpopulations) subpop.takeMigrants(migrants[newSubpopID == subpop.id]);
-              }
-          }
-          for (subpop in sim.subpopulations) {
-              juvenileCount = sum(subpop.individuals.age == 0);
-              subpop.fitnessScaling = K/juvenileCount;
-          }
-      }
-      
-      block_6:1001 late() {
-          sim.outputFixedMutations();
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[6]>
-      block_init_1:initialize() {
-          defineConstant("K", 1000);
-          defineConstant("N", 10);
-          defineConstant("M", 0.01);
-          defineConstant("R", 1.04);
-          initializeSLiMModelType("nonWF");
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
-      }
-      
-      block_2:reproduction() {
-          litterSize = rpois(1, R);
-          for (i in seqLen(litterSize)) {
-              mate = subpop.sampleIndividuals(1, exclude = individual);
-              if (mate.size()) subpop.addCrossed(individual, mate);
-          }
-      }
-      
-      block_3:1 early() {
-          for (i in seqLen(N)) sim.addSubpop(i, (i == 0) %?% 100 %else% 0);
-      }
-      
-      block_4:1 late() {
-          log = community.createLogFile("sim_log.txt", sep = "\t", logInterval = 10);
-          log.addCycle();
-          log.addPopulationSize();
-          log.addMeanSDColumns("size", "sim.subpopulations.individualCount;");
-          log.addCustomColumn("pop_migrants", "sum(sim.subpopulations.individuals.migrant);");
-          log.addMeanSDColumns("migrants", "sapply(sim.subpopulations, 'sum(applyValue.individuals.migrant);');");
-      }
-      
-      block_5:early() {
-          inds = sim.subpopulations.individuals;
-          ages = inds.age;
-          inds[ages > 0] %.% fitnessScaling = asFloat(0);
-          inds = inds[ages == 0];
-          numMigrants = rbinom(1, inds.size(), M);
-          if (numMigrants) {
-              migrants = sample(inds, numMigrants);
-              currentSubpopID = migrants.subpopulation.id;
-              displacement = -1 + rbinom(migrants.size(), 1, 0.5) * 2;
-              newSubpopID = currentSubpopID + displacement;
-              actuallyMoving = (newSubpopID >= 0) & (newSubpopID < N);
-              if (sum(actuallyMoving)) {
-                  migrants = migrants[actuallyMoving];
-                  newSubpopID = newSubpopID[actuallyMoving];
-                  for (subpop in sim.subpopulations) subpop.takeMigrants(migrants[newSubpopID == subpop.id]);
-              }
-          }
-          for (subpop in sim.subpopulations) {
-              juvenileCount = sum(subpop.individuals.age == 0);
-              subpop.fitnessScaling = K/juvenileCount;
-          }
-      }
-      
-      block_6:1001 late() {
-          sim.outputFixedMutations();
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[6]>
-      block_init_1:initialize() {
-          defineConstant("K", 50000);
-          defineConstant("R", 1.1);
-          defineConstant("M", K/(R - 1));
-          initializeSLiMModelType("nonWF");
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
+          initializeSLiMOptions(dimensionality = "xy");
+          initializeSex("A");
+          defineConstant("K", 300);
+          defineConstant("S", 0.1);
+          initializeInteractionType(1, "xy", reciprocal = T, maxDistance = S * 3);
+          i1.setInteractionFunction("n", asFloat(1), S);
+          initializeInteractionType(2, "xy", reciprocal = T, maxDistance = 0.1);
+          i2.setConstraints("receiver", sex = "F", minAge = 2, maxAge = 4);
+          i2.setConstraints("exerter", sex = "M", minAge = 2);
       }
       
       block_2:1 early() {
-          sim.addSubpop("p1", 50);
-          sim.addSubpop("p2", 50);
-          sim.addSubpop("p3", 50);
-          log = community.createLogFile("sim_log.txt", logInterval = 1);
-          log.addCycle();
-          log.addSubpopulationSize(p1);
-          log.addSubpopulationSize(p2);
-          log.addSubpopulationSize(p3);
-      }
-      
-      block_3:reproduction(p1) {
-          litterSize = rpois(1, R);
-          for (i in seqLen(litterSize)) subpop.addCrossed(individual, subpop.sampleIndividuals(1));
-      }
-      
-      block_4:reproduction(p2) {
-          n_t = subpop.individualCount;
-          n_t_plus_1 = (R * n_t)/(1 + n_t/M);
-          mean_litter_size = n_t_plus_1/n_t;
-          litterSize = rpois(1, mean_litter_size);
-          for (i in seqLen(litterSize)) subpop.addCrossed(individual, subpop.sampleIndividuals(1));
-      }
-      
-      block_5:reproduction(p3) {
-          litterSize = rpois(1, R);
-          for (i in seqLen(litterSize)) subpop.addCrossed(individual, subpop.sampleIndividuals(1));
-      }
-      
-      block_6::200 early() {
-          inds = p1.individuals;
-          inds[inds.age > 0] %.% fitnessScaling = 0;
-          n_t_plus_pt5 = sum(inds.age == 0);
-          p1.fitnessScaling = K/n_t_plus_pt5;
-          inds = p2.individuals;
-          inds[inds.age > 0] %.% fitnessScaling = 0;
-          inds = p3.individuals;
-          inds[inds.age > 0] %.% fitnessScaling = 0;
-          n_t_plus_pt5 = sum(inds.age == 0);
-          p3.fitnessScaling = 1/(1 + (n_t_plus_pt5/R)/M);
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[10]>
-      block_init_01:initialize() {
-          initializeSLiMModelType("nonWF");
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
-      }
-      
-      block_02:reproduction() {
-          subpop.addCrossed(individual, subpop.sampleIndividuals(1));
-      }
-      
-      block_03:1 early() {
-          sim.addSubpop("p1", 10) %.% setValue("K", 500);
-          sim.addSubpop("p2", 10) %.% setValue("K", 600);
-      }
-      
-      block_04:early() {
-          for (subpop in sim.subpopulations) {
-              K = subpop.getValue("K");
-              subpop.fitnessScaling = K/subpop.individualCount;
-          }
-      }
-      
-      block_05:5000 late() {
-          ;
-      }
-      
-      block_06:999 late() {
-          sim.addSubpop("p3", 0) %.% setValue("K", 750);
-      }
-      
-      block_07:1000 reproduction() {
-          founderCount = rdunif(1, 10, 20);
-          p1_inds = p1.individuals;
-          p2_inds = p2.individuals;
-          all_inds = c(p1_inds, p2_inds);
-          for (i in seqLen(founderCount)) {
-              parent1 = sample(all_inds, 1);
-              if (rdunif(1) < 0.2) parent2 = sample(p1_inds, 1) else parent2 = sample(p2_inds, 1);
-              p3.addCrossed(parent1, parent2);
-          }
-          self.active = 0;
-      }
-      
-      block_08:1000 early() {
-          c(p1, p2) %.% fitnessScaling = asFloat(0);
-      }
-      
-      block_09:1999 late() {
-          sim.addSubpop("p4", 0) %.% setValue("K", 100);
-      }
-      
-      block_10:2000 reproduction() {
-          founderCount = rdunif(1, 10, 20);
-          all_inds = p3.individuals;
-          for (i in seqLen(founderCount)) {
-              parent1 = sample(all_inds, 1);
-              parent2 = sample(all_inds, 1);
-              p4.addCrossed(parent1, parent2);
-          }
-          self.active = 0;
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[8]>
-      block_init_1:initialize() {
-          initializeSLiMModelType("nonWF");
-          initializeSLiMOptions(keepPedigrees = T);
-          initializeSex("A");
-          defineConstant("K", 500);
-          initializeMutationRate(1e-07);
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeRecombinationRate(1e-08);
-      }
-      
-      block_2:reproduction(p1) {
-          matureFemales = subpop.subsetIndividuals(sex = "F", minAge = 7);
-          for (female in matureFemales) {
-              if (female.tag < 0) {
-                  mate = subpop.sampleIndividuals(1, sex = "M", minAge = 7);
-              } else {
-                  mate = sim.individualsWithPedigreeIDs(female.tag);
-              }
-              if (mate.size()) {
-                  female.tag = mate.pedigreeID;
-                  litterSize = rpois(1, 5);
-                  for (i in seqLen(litterSize)) subpop.addCrossed(female, mate);
-              } else {
-                  catn(sim.cycle + ": No mate found for tag " + female.tag);
-              }
-          }
-          self.active = 0;
-      }
-      
-      block_3:1 early() {
-          sim.addSubpop("p1", 100);
-          p1inds = p1.individuals;
-          p1inds.age = rdunif(size(p1.individuals), min = 0, max = 10);
-          p1inds.tag = -1;
-          sim.addSubpop("p1000", 0);
-      }
-      
-      block_4:early() {
-          offspringFemales = p1.subsetIndividuals(sex = "F", maxAge = 0);
-          offspringFemales.tag = -1;
-          p1.fitnessScaling = K/p1.individualCount;
-          p1000.individuals.tag = 0;
-          maleRefs = p1.subsetIndividuals(sex = "F") %.% tag;
-          maleRefs = maleRefs[maleRefs != -1];
-          referencedDeadMales = sim.individualsWithPedigreeIDs(maleRefs, p1000);
-          referencedDeadMales.tag = 1;
-      }
-      
-      block_5:survival(p1) {
-          if (!surviving) if (individual.sex == "M") return(p1000);
-          return(NULL);
-      }
-      
-      block_6:survival(p1000) {
-          return((individual.tag == 1));
-      }
-      
-      block_7:late() {
-          catn(sim.cycle + ": p1 (" + p1.individualCount + ")" + ", p1000 (" + p1000.individualCount + ")");
-      }
-      
-      block_8:10000 late() {
-          sim.outputFixedMutations();
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[5]>
-      block_init_1:initialize() {
-          initializeSLiMModelType("nonWF");
-          defineConstant("K", 500);
-          initializeMutationType("m1", 0.5, "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, 99999);
-          initializeMutationRate(1e-07);
-          initializeRecombinationRate(1e-08);
-      }
-      
-      block_2:reproduction() {
-          if (individual.tag == 1) {
-              if (runif(1) < 0.7) {
-                  mate = subpop.sampleIndividuals(1, tag = 0);
-                  offspring = subpop.addCrossed(individual, mate);
-                  offspring.tag = rbinom(1, 1, 0.5);
-              } else {
-                  offspring = subpop.addSelfed(individual);
-                  offspring.tag = 1;
-              }
-          }
-      }
-      
-      block_3:1 early() {
           sim.addSubpop("p1", K);
-          p1.individuals.tag = rbinom(p1.individualCount, 1, 0.5);
+          p1.individuals.setSpatialPosition(p1.pointUniform(K));
       }
       
-      block_4:early() {
-          p1.fitnessScaling = K/p1.individualCount;
+      block_3:2:10000 first() {
+          i2.evaluate(p1);
       }
       
-      block_5:1:2000 late() {
-          ratio = sum(p1.individuals.tag == 0)/p1.individualCount;
-          catn(sim.cycle + ": " + ratio);
-      }
-
----
-
-    Code
-      print(slim_scripts[[i]])
-    Output
-      <slimr_script[5]>
-      block_init_1:initialize() {
-          defineConstant("K", 2000);
-          defineConstant("P_OFFSPRING_MALE", 0.8);
-          initializeSLiMModelType("nonWF");
-          initializeMutationRate(1e-08);
-          initializeMutationType("m1", asFloat(0), "f", asFloat(0));
-          m1.convertToSubstitution = T;
-          m1.haploidDominanceCoeff = asFloat(1);
-          initializeGenomicElementType("g1", m1, asFloat(1));
-          initializeGenomicElement(g1, 0, 999999);
-          initializeRecombinationRate(1e-06);
-          initializeSex("A");
+      block_4:reproduction(NULL, "F") {
+          mate = i2.nearestInteractingNeighbors(individual, 1);
+          if (mate.size() > 0) subpop.addCrossed(individual, mate, count = rpois(1, 1.5));
       }
       
-      block_2:reproduction(NULL, "F") {
-          strand = rbinom(1, 1, 0.5);
-          gen1 = strand %?% individual.genome1 %else% individual.genome2;
-          gen2 = strand %?% individual.genome2 %else% individual.genome1;
-          breaks = sim.chromosome.drawBreakpoints(individual);
-          if (rbinom(1, 1, P_OFFSPRING_MALE)) {
-              subpop.addRecombinant(gen1, gen2, breaks, NULL, NULL, NULL, "M");
-          } else {
-              mate = subpop.sampleIndividuals(1, sex = "M");
-              subpop.addRecombinant(gen1, gen2, breaks, mate.genome1, NULL, NULL, "F");
-          }
+      block_5:early() {
+          inds = p1.individuals;
+          ages = inds.age;
+          inds4 = inds[ages == 4];
+          inds5 = inds[ages == 5];
+          inds6 = inds[ages >= 6];
+          death4 = (runif(inds4.size()) < 0.1);
+          death5 = (runif(inds5.size()) < 0.3);
+          sim.killIndividuals(c(inds4[death4], inds5[death5], inds6));
+          inds = p1.individuals;
+          pos = inds.spatialPosition;
+          pos = p1.pointDeviated(inds.size(), pos, "reprising", INF, "n", 0.02);
+          inds.setSpatialPosition(pos);
+          i1.evaluate(p1);
+          competition = i1.localPopulationDensity(inds);
+          inds.fitnessScaling = K/competition;
       }
       
-      block_3:1 early() {
-          mCount = asInteger(K * P_OFFSPRING_MALE);
-          fCount = K - mCount;
-          sim.addSubpop("p1", mCount, sexRatio = asFloat(1), haploid = T);
-          sim.addSubpop("p2", fCount, sexRatio = asFloat(0), haploid = F);
-          p1.takeMigrants(p2.individuals);
-          p2.removeSubpopulation();
-      }
-      
-      block_4:early() {
-          p1.fitnessScaling = K/p1.individualCount;
-      }
-      
-      block_5:10000 late() {
-          sim.simulationFinished();
+      block_6:10000 late() {
+          ;
       }
 
 ---
@@ -6150,7 +6346,7 @@
       }
       
       block_3:5000 late() {
-          sim.treeSeqOutput("./recipe_17.1.trees");
+          sim.treeSeqOutput("./overlay.trees");
       }
 
 ---
@@ -6177,7 +6373,8 @@
       block_3:1000 late() {
           target = sample(p1.genomes, 1);
           target.addNewDrawnMutation(m3, 10000);
-          sim.outputFull(tempdir() + "slim_" + simID + ".txt");
+          defineConstant("PATH", tempdir() + "slim_" + simID + ".trees");
+          sim.outputFull(PATH);
       }
       
       block_4:1000:100000 late() {
@@ -6187,8 +6384,7 @@
                   sim.simulationFinished();
               } else {
                   cat(simID + ": LOST - RESTARTING\n");
-                  sim.readFromPopulationFile(tempdir() + "slim_" + simID + ".txt");
-                  setSeed(rdunif(1, 0, asInteger(2^62) - 1));
+                  sim.readFromPopulationFile(PATH);
               }
           }
       }
@@ -6217,7 +6413,8 @@
       block_3:1000 late() {
           target = sample(p1.genomes, 1);
           target.addNewDrawnMutation(m3, 10000);
-          sim.outputFull(tempdir() + "slim_" + simID + ".txt");
+          defineConstant("PATH", tempdir() + "slim_" + simID + ".trees");
+          sim.outputFull(PATH);
       }
       
       block_4:1000:100000 late() {
@@ -6227,8 +6424,7 @@
                   sim.simulationFinished();
               } else {
                   cat(simID + ": LOST - RESTARTING\n");
-                  sim.readFromPopulationFile(tempdir() + "slim_" + simID + ".txt");
-                  setSeed(rdunif(1, 0, asInteger(2^62) - 1));
+                  sim.readFromPopulationFile(PATH);
               }
           }
       }
@@ -6258,7 +6454,7 @@
       }
       
       block_3:s1 10 late() {
-          sim.treeSeqOutput("./recipe_17.4.trees");
+          sim.treeSeqOutput("./diversity.trees");
       }
 
 ---
@@ -6295,7 +6491,7 @@
       
       block_4:2:10000 late() {
           if (sim.mutationsOfType(m1) %.% size() == 0) {
-              sim.treeSeqOutput("./recipe_17.5.trees");
+              sim.treeSeqOutput("./admix.trees");
               sim.simulationFinished();
           }
       }
@@ -6355,7 +6551,7 @@
       }
       
       block_3:20000 late() {
-          sim.treeSeqOutput("./recipe_17.7.trees");
+          sim.treeSeqOutput("./selcoeff.trees");
       }
 
 ---
@@ -6375,7 +6571,7 @@
       }
       
       block_2:1 late() {
-          sim.readFromPopulationFile("recipe_17.8.trees");
+          sim.readFromPopulationFile("coalasex.trees");
           target = sample(sim.subpopulations.genomes, 1);
           target.addNewDrawnMutation(m2, 10000);
       }
@@ -6383,7 +6579,7 @@
       block_3:1:2000 late() {
           if (sim.mutationsOfType(m2) %.% size() == 0) {
               print(sim.substitutions.size() %?% "FIXED" %else% "LOST");
-              sim.treeSeqOutput("recipe_17.8_II.trees");
+              sim.treeSeqOutput("coalasex_II.trees");
               sim.simulationFinished();
           }
       }
@@ -6416,7 +6612,7 @@
       }
       
       block_3:1 early() {
-          sim.readFromPopulationFile("recipe_17.9.trees");
+          sim.readFromPopulationFile("coalsex.trees");
       }
       
       block_4:early() {
@@ -6426,7 +6622,7 @@
       block_5:1:2000 late() {
           if (sim.mutationsOfType(m2) %.% size() == 0) {
               print(sim.substitutions.size() %?% "FIXED" %else% "LOST");
-              sim.treeSeqOutput("recipe_17.9_II.trees");
+              sim.treeSeqOutput("coalsex_II.trees");
               sim.simulationFinished();
           }
       }
@@ -6442,7 +6638,7 @@
     Output
       <slimr_script[4]>
       block_init_1:initialize() {
-          initializeTreeSeq(simplificationRatio = INF);
+          initializeTreeSeq(simplificationRatio = INF, timeUnit = "generations");
           initializeMutationRate(0);
           initializeMutationType("m2", 0.5, "f", asFloat(1));
           m2.convertToSubstitution = F;
@@ -6462,9 +6658,33 @@
       block_4:100:10000 late() {
           mut = sim.mutationsOfType(m2);
           if (mut.size() != 1) stop(sim.cycle + ": LOST") else if (sum(sim.mutationFrequencies(NULL, mut)) == asFloat(1)) {
-              sim.treeSeqOutput("recipe_17.10_decap.trees");
+              sim.treeSeqOutput("decap.trees");
               sim.simulationFinished();
           }
+      }
+
+---
+
+    Code
+      print(slim_scripts[[i]])
+    Output
+      <slimr_script[3]>
+      block_init_1:initialize() {
+          setSeed(0);
+          initializeTreeSeq(simplificationInterval = 1000);
+          initializeMutationRate(0);
+          initializeMutationType("m1", 0.5, "f", asFloat(0));
+          initializeGenomicElementType("g1", m1, asFloat(1));
+          initializeGenomicElement(g1, 0, 1e+08 - 1);
+          initializeRecombinationRate(1e-08);
+      }
+      
+      block_2:1 early() {
+          sim.addSubpop("p1", 10000);
+      }
+      
+      block_3:50001 late() {
+          ;
       }
 
 ---

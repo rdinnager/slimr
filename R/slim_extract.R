@@ -64,7 +64,7 @@ slim_results_to_data <- function(dat, generations = NULL) {
     dplyr::group_modify(~slim_extract_to_data(.x, unlist(.y$type[1]))) %>%
     dplyr::ungroup() %>%
     dplyr::arrange(.data$ord) %>%
-    dplyr::select(-.data$ord)
+    dplyr::select(-"ord")
 
   return(res_dat)
 
@@ -255,7 +255,7 @@ slim_extract_full <- function(output_full, type = c("mutations", "individuals",
   get_one <- function(type, data, generation) {
     purrr::map2_dfr(data, generation,
                     ~slim_extract_full_one(.x, type, expand_mutations, generation = .y)) %>%
-      dplyr::select(.data$generation, dplyr::everything())
+      dplyr::select("generation", dplyr::everything())
   }
 
   dat <- purrr::map(type,
@@ -390,7 +390,7 @@ slim_extract_full_one <- function(string, type, expand_mutations, generation) {
                              values_to = "mut_id",
                              indices_include = FALSE) %>%
         dplyr::mutate("mut_id" := as.integer(.data$mut_id)) %>%
-        tidyr::drop_na(.data$mut_id)
+        tidyr::drop_na("mut_id")
     }
   } else {
     if(type == "genomes") {
@@ -447,7 +447,7 @@ slim_extract_genome <- function(output, type = c("mutations",
   get_one <- function(type, data, generation) {
     purrr::map2_dfr(data, generation,
                     ~slim_extract_genome_one(.x, type, expand_mutations, generation = .y)) %>%
-      dplyr::select(.data$generation, dplyr::everything())
+      dplyr::select("generation", dplyr::everything())
   }
 
   dat <- purrr::map(type,
@@ -589,13 +589,13 @@ slim_extract_individuals <- function(output_data, format = c("genlight", "tibble
 
   dat <- purrr::pmap_dfr(list(output_data$expression, output_data$data, output_data$generation),
                         ~slim_extract_individuals_one(..1, ..2, ..3)) %>%
-    dplyr::select(.data$generation, dplyr::everything())
+    dplyr::select("generation", dplyr::everything())
 
   if(format == "genlight") {
     assert_package("adegenet")
 
     alleles <- dat %>%
-      dplyr::select(.data$ind_id, .data$mut_id) %>%
+      dplyr::select(dplyr::all_of(c("ind_id", "mut_id"))) %>%
       dplyr::group_by(.data$ind_id, .data$mut_id)
 
     dat_gen <- methods::new("genlight", gen = dat %>%
@@ -605,7 +605,7 @@ slim_extract_individuals <- function(output_data, format = c("genlight", "tibble
                    position = dat$POS,
                    loc.names = dat$MID,
                    other = dat %>%
-                     dplyr::select(.data$generation, .data$S:.data$MULTIALLELIC))
+                     dplyr::select("generation", "S":"MULTIALLELIC"))
     adegenet::pop(dat_gen) <- dat$pop_id
     dat <- dat_gen
   }
@@ -747,16 +747,16 @@ slim_extract_genlight.slimr_output_data <- function(x, ...) {
   if(nrow(output_full) > 0) {
     c(alleles, mut_dat) %<-% slim_extract_genlight_tibble_full(output_full)
     dat_gen_full <- methods::new("genlight", gen = alleles %>%
-                                   dplyr::select(-.data$generation,
-                                                 -.data$pop_id,
-                                                 -.data$ind_id) %>%
+                                   dplyr::select(-dplyr::any_of(c("generation",
+                                                                  "pop_id",
+                                                                  "ind_id"))) %>%
                                    as.matrix(),
                                  position = mut_dat$chrome_pos,
                                  loc.names = mut_dat$unique_mut_id,
                                  ind.names = paste0("generation_", alleles$generation,
                                                     alleles$pop_id, ":", alleles$ind_id),
                                  other = mut_dat %>%
-                                   dplyr::select(.data$mut_type, .data$prevalence))
+                                   dplyr::select(dplyr::all_of(c("mut_type", "prevalence"))))
     adegenet::pop(dat_gen_full) <- alleles$pop_id
   } else {
     dat_gen_full <- NULL
@@ -781,13 +781,13 @@ slim_extract_genlight.slimr_output_data <- function(x, ...) {
   if(nrow(output_GS) > 0) {
     c(alleles, mut_dat) %<-% slim_extract_genlight_tibble_GS(output_GS)
     dat_gen_GS <- methods::new("genlight", gen = alleles %>%
-                                   dplyr::select(-.data$ind_id) %>%
+                                   dplyr::select(-"ind_id") %>%
                                    as.matrix(),
                                  position = mut_dat$chrome_pos,
                                  loc.names = mut_dat$unique_mut_id,
                                  ind.names = alleles$ind_id,
                                  other = mut_dat %>%
-                                   dplyr::select(.data$mut_type, .data$prevalence))
+                                   dplyr::select(dplyr::all_of(c("mut_type", "prevalence"))))
   } else {
     dat_gen_GS <- NULL
   }
@@ -841,12 +841,12 @@ slim_extract_genlight_tibble_full <- function(output_full) {
 
   suppressMessages(
     alleles <- inds %>%
-      dplyr::left_join(muts %>% dplyr::select(.data$mut_id, .data$unique_mut_id,
-                                              .data$generation)) %>%
-      dplyr::select(.data$generation,
-                    .data$pop_id,
-                    .data$ind_id,
-                    .data$unique_mut_id) %>%
+      dplyr::left_join(muts %>% dplyr::select(dplyr::all_of(c("mut_id", "unique_mut_id",
+                                                            "generation")))) %>%
+      dplyr::select(dplyr::all_of(c("generation",
+                                    "pop_id",
+                                    "ind_id",
+                                    "unique_mut_id"))) %>%
       dplyr::mutate("present" := 1) %>%
       dplyr::group_by(.data$generation,
                       .data$pop_id,
@@ -860,10 +860,11 @@ slim_extract_genlight_tibble_full <- function(output_full) {
     mut_dat <- alleles %>%
       dplyr::ungroup() %>%
       dplyr::left_join(muts %>%
-                         dplyr::select(.data$unique_mut_id,
-                                       .data$chrome_pos,
-                                       .data$mut_type,
-                                       .data$prevalence)) %>%
+                         dplyr::select(dplyr::all_of(c("unique_mut_id",
+                                                       "chrome_pos",
+                                                       "mut_type",
+                                                       "prevalence"))),
+                       relationship = "many-to-many") %>%
       dplyr::group_by(.data$unique_mut_id,
                       .data$chrome_pos,
                       .data$mut_type) %>%
@@ -901,8 +902,8 @@ slim_extract_genlight_tibble_GS <- function(output_GS) {
 
   suppressMessages(
     alleles <- inds %>%
-      dplyr::left_join(muts %>% dplyr::select(.data$mut_id, .data$unique_mut_id)) %>%
-      dplyr::select(.data$ind_id, .data$unique_mut_id) %>%
+      dplyr::left_join(muts %>% dplyr::select(dplyr::all_of(c("mut_id", "unique_mut_id")))) %>%
+      dplyr::select(dplyr::all_of(c("ind_id", "unique_mut_id"))) %>%
       dplyr::mutate("present" := 1) %>%
       dplyr::group_by(.data$ind_id, .data$unique_mut_id) %>%
       dplyr::summarise("count" := sum(.data$present), .groups = "drop") %>%
@@ -911,13 +912,13 @@ slim_extract_genlight_tibble_GS <- function(output_GS) {
 
   suppressMessages(
     mut_dat <- alleles %>%
-      dplyr::select(.data$unique_mut_id) %>%
+      dplyr::select("unique_mut_id") %>%
       dplyr::distinct() %>%
       dplyr::left_join(muts %>%
-                         dplyr::select(.data$unique_mut_id,
-                                       .data$chrome_pos,
-                                       .data$mut_type,
-                                       .data$prevalence))
+                         dplyr::select(dplyr::all_of(c("unique_mut_id",
+                                                       "chrome_pos",
+                                                       "mut_type",
+                                                       "prevalence"))))
   )
   mut_dat <- mut_dat %>%
     dplyr::filter(!is.na(unique_mut_id))

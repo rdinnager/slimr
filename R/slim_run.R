@@ -152,7 +152,7 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
 
     if(any(!is.na(output_info$file_name))) {
       save_to_file <- output_info %>%
-        dplyr::select(.data$output_name, .data$file_name, .data$format) %>%
+        dplyr::select(dplyr::all_of(c("output_name", "file_name", "format"))) %>%
         tidyr::drop_na(.data$file_name)
     } else {
       save_to_file <- NULL

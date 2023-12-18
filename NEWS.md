@@ -1,3 +1,7 @@
+# slimr 0.4.0
+
+* Updated `slimr` to be fully compatible with SLiM v4.1 updates
+
 # slimr 0.3.0
 
 * Added `slim_auto()` function to automatically insert `r_template()` and `r_inline()` statement in useful places in a `slimr_script`, based on computational graph analysis

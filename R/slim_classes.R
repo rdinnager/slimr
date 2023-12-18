@@ -17,6 +17,8 @@ Chromosome <- new.env()
 Ch <- Chromosome
 Community <- new.env()
 Co <- Community
+Eidos <- new.env()
+E <- Eidos
 Genome <- new.env()
 G <- Genome
 GenomicElement <- new.env()
@@ -37,6 +39,10 @@ SLiMBuiltin <- new.env()
 SB <- SLiMBuiltin
 SLiMEidosBlock <- new.env()
 SEB <- SLiMEidosBlock
+SLiMgui <- new.env()
+SG <- SLiMgui
+SpatialMap <- new.env()
+SM <- SpatialMap
 SLiMSim <- new.env()
 SS <- SLiMSim
 Species <- new.env()
@@ -58,6 +64,11 @@ NULL
 
 #'@name Co
 #'@rdname Community
+#'@export
+NULL
+
+#'@name E
+#'@rdname Eidos
 #'@export
 NULL
 
@@ -108,6 +119,16 @@ NULL
 
 #'@name SEB
 #'@rdname SLiMEidosBlock
+#'@export
+NULL
+
+#'@name SG
+#'@rdname SLiMgui
+#'@export
+NULL
+
+#'@name SM
+#'@rdname SpatialMap
 #'@export
 NULL
 

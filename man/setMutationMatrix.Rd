@@ -26,8 +26,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=648}{SLiM manual: page
-648}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=678}{SLiM manual: page
+678}.
 
 Sets a new nucleotide mutation matrix for the genomic
 element type. This replaces the mutation matrix originally set by

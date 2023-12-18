@@ -26,19 +26,19 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=698}{SLiM manual: page
-698}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=742}{SLiM manual: page
+742}.
 
-Returns a revised version of point that has been brought inside the
-spatial boundaries of the subpopulation by reﬂection. In brief, if a coordinate
-of point lies beyond a spatial boundary, that coordinate is reﬂected across
-the boundary, so that it lies inside the boundary by the same magnitude
-that it previously lay outside the boundary. This is done iteratively until
-all coordinates lie inside the subpopulation's boundaries. This method
-is useful for implementing reﬂecting boundary conditions. This may only
-be called in simulations for which continuous space has been enabled with
-initializeSLiMOptions(). The length of point must be an exact multiple of the
-dimensionality of the simulation; in other words, point may contain values
+Returns a revised version of point that has been brought inside
+the spatial boundaries of the subpopulation by reflection. In brief, if
+a coordinate of point lies beyond a spatial boundary, that coordinate is
+reflected across the boundary, so that it lies inside the boundary by the
+same magnitude that it previously lay outside the boundary. This is done
+iteratively until all coordinates lie inside the subpopulation's boundaries.
+This method is useful for implementing reflecting boundary conditions. This
+may only be called in simulations for which continuous space has been enabled
+with initializeSLiMOptions(). The length of point must be an exact multiple of
+the dimensionality of the simulation; in other words, point may contain values
 comprising more than one point. In this case, each point will be processed as
 described above and a new vector containing all of the processed points will be
 returned.
@@ -62,16 +62,19 @@ Other Subpopulation:
 \code{\link{addEmpty}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
+\code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
+\code{\link{pointDeviated}()},
 \code{\link{pointInBounds}()},
 \code{\link{pointPeriodic}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
 \code{\link{setCloningRate}()},

@@ -7,11 +7,13 @@ reciprocal => (logical$)
 The reciprocality of the interaction, as specified in initializeInteractionType(). This will be T
 for reciprocal interactions (those for which the interaction strength of B upon A is equal to the
 interaction strength of A upon B), and F otherwise.
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 690
 sexSegregation => (string$)
-The sex-segregation of the interaction, as specified in initializeInteractionType(). For non-
-sexual simulations, this will be "**". For sexual simulations, this string value indicates the sex of
-individuals feeling the interaction, and the sex of individuals exerting the interaction; see
-initializeInteractionType() for details.
+The sex-segregation of the interaction, as specified in initializeInteractionType() or with
+setConstraints(). For non-sexual simulations, this will be "**". For sexual simulations, this
+string value indicates the sex of individuals feeling the interaction, and the sex of individuals
+exerting the interaction; see initializeInteractionType() for details.
 spatiality => (string$)
 The spatial dimensions used by the interaction, as specified in initializeInteractionType(). This
 will be "" (the empty string) for non-spatial interactions, or "x", "y", "z", "xy", "xz", "yz", or

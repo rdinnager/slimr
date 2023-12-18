@@ -22,6 +22,8 @@ not been enabled by calling initializeGeneConversion(), this property will be un
 geneConversionMeanLength => (float$)
 The mean length of a gene conversion tract (in base positions). When gene conversion has not been
 enabled by calling initializeGeneConversion(), this property will be unavailable.
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 658
 geneConversionSimpleConversionFraction => (float$)
 The fraction of gene conversion tracts that are “simple” (i.e., not involving resolution of heteroduplex
 mismatches); the remainder will be “complex”. When gene conversion has not been enabled by
@@ -36,8 +38,6 @@ unavailable; see hotspotEndPositionsF and hotspotEndPositionsM.
 hotspotEndPositionsF => (integer)
 The end positions for hotspot map regions for females, when using sex-specific hotspot maps;
 unavailable otherwise. See hotspotEndPositions for further explanation.
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 629
 hotspotEndPositionsM => (integer)
 The end positions for hotspot map regions for males, when using sex-specific hotspot maps;
 unavailable otherwise. See hotspotEndPositions for further explanation.
@@ -68,6 +68,8 @@ This property is unavailable in nucleotide-based models.
 mutationEndPositionsM => (integer)
 The end positions for mutation rate regions for males, when using sex-specific mutation rate maps;
 unavailable otherwise. See mutationEndPositions for further explanation.
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 659
 This property is unavailable in nucleotide-based models.
 mutationRates => (float)
 The mutation rate for each of the mutation rate regions specified by mutationEndPositions. When
@@ -82,14 +84,12 @@ mutationRatesM => (float)
 The mutation rate for each of the mutation rate regions specified by mutationEndPositionsM, when
 using sex-specific mutation rate maps; unavailable otherwise.
 This property is unavailable in nucleotide-based models.
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 630
 overallMutationRate => (float$)
 The overall mutation rate across the whole chromosome determining the overall number of mutation
 events that will occur anywhere in the chromosome, as calculated from the individual mutation
 ranges and rates as well as the coverage of the chromosome by genomic elements (since mutations are
-only generated within genomic elements, regardless of the mutation rate map). When using sex-
-specific mutation rate maps, this property will unavailable; see overallMutationRateF and
+only generated within genomic elements, regardless of the mutation rate map). When using sexspecific
+mutation rate maps, this property will unavailable; see overallMutationRateF and
 overallMutationRateM.
 This property is unavailable in nucleotide-based models.
 overallMutationRateF => (float$)
@@ -114,6 +114,8 @@ otherwise. See overallRecombinationRate for further explanation.
 recombinationEndPositions => (integer)
 The end positions for recombination regions along the chromosome. Each recombination region is
 assumed to start at the position following the end of the previous recombination region; in other
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 660
 words, the regions are assumed to be contiguous. When using sex-specific recombination maps, this
 property will unavailable; see recombinationEndPositionsF and recombinationEndPositionsM.
 recombinationEndPositionsF => (integer)
@@ -126,8 +128,6 @@ recombinationRates => (float)
 The recombination rate for each of the recombination regions specified by
 recombinationEndPositions. When using sex-specific recombination maps, this property will
 unavailable; see recombinationRatesF and recombinationRatesM.
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 631
 recombinationRatesF => (float)
 The recombination rate for each of the recombination regions specified by
 recombinationEndPositionsF, when using sex-specific recombination maps; unavailable

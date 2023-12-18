@@ -35,8 +35,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=666}{SLiM manual: page
-666}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=701}{SLiM manual: page
+701}.
 
 Adds a new data column with its name provided by columnName. The value
 for the column, when a given row is generated, will be produced by the code

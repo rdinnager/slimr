@@ -80,14 +80,14 @@ The new SLiMEidosBlock will be defined as a global variable immediately by this
 method (see section 24.11), and will also be returned by this method.
 
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=685}{SLiM manual: page
-685}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=726}{SLiM manual: page
+726}.
 
 Register a block of Eidos source code, represented as the string
 singleton source, as an Eidos mutation() callback in the current simulation
 (specific to the target species), with an optional mutation type mutType
 (which may be an integer mutation type identifier, or NULL, the default,
-to indicate all mutation types - see section 25.9), optional subpopulation
+to indicate all mutation types - see section 26.9), optional subpopulation
 subpop (which may also be an integer identifier, or NULL, the default, to
 indicate all subpopulations), and optional start and end ticks all limiting its
 applicability. The script block will be given identifier id (specified as an
@@ -95,8 +95,8 @@ integer, or as a string symbolic name such as "s5"); this may be NULL if there
 is no need to be able to refer to the block later. The registered callback is
 added to the end of the list of registered SLiMEidosBlock objects, and is active
 immediately; it may be eligible to execute in the current tick (see section
-25.11 for details). The new SLiMEidosBlock will be defined as a global variable
-immediately by this method (see section 24.12), and will also be returned by
+26.11 for details). The new SLiMEidosBlock will be defined as a global variable
+immediately by this method (see section 25.12), and will also be returned by
 this method.
 }
 \section{Copyright}{
@@ -154,6 +154,7 @@ Other SLiMSim:
 
 Other Species: 
 \code{\link{Sp}},
+\code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{individualsWithPedigreeIDs}()},
@@ -170,7 +171,16 @@ Other Species:
 \code{\link{registerMateChoiceCallback}()},
 \code{\link{registerModifyChildCallback}()},
 \code{\link{registerMutationEffectCallback}()},
-\code{\link{registerRecombinationCallback}()}
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{registerSurvivalCallback}()},
+\code{\link{simulationFinished}()},
+\code{\link{skipTick}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqOutput}()},
+\code{\link{treeSeqRememberIndividuals}()},
+\code{\link{treeSeqSimplify}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

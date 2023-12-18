@@ -29,11 +29,11 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
-667}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
+702}.
 
 Adds a new data column that provides the population sex ratio M:(M+F)
-for species. In single- species models, species may be NULL to indicate that
+for species. In singlespecies models, species may be NULL to indicate that
 single species. The column will simply be named sex_ratio in single-species
 models; an underscore and the name of the species will be appended in
 multispecies models. If the species is hermaphroditic, NA will be written.

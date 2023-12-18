@@ -1,0 +1,250 @@
+– (object<SpatialMap>$)add(ifo<SpatialMap> x)
+Adds x to the spatial map. One possibility is that x is a singleton integer or float value; in this
+case, x is added to each grid value of the target spatial map. Another possibility is that x is an
+integer or float vector/matrix/array of the same dimensions as the target spatial map’s grid; in this
+case, each value of x is added to the corresponding grid value of the target spatial map. The third
+possibility is that x is itself a (singleton) spatial map; in this case, each grid value of x is added to the
+corresponding grid value of the target spatial map (and thus the two spatial maps must match in their
+spatiality, their spatial bounds, and their grid dimensions). The target spatial map is returned, to allow
+easy chaining of operations.
+– (object<SpatialMap>$)blend(ifo<SpatialMap> x, float$ xFraction)
+Blends x into the spatial map, giving x a weight of xFraction and the existing values in the target
+spatial map a weight of 1 - xFraction, such that the resulting values in the target spatial map are
+then given by x * xFraction + target * (1 - xFraction). The value of xFraction must be in
+[0.0, 1.0].
+One possibility is that x is a singleton integer or float value; in this case, x is blended with each
+grid value of the target spatial map. Another possibility is that x is an integer or float vector/
+matrix/array of the same dimensions as the target spatial map’s grid; in this case, each value of x is
+blended with the corresponding grid value of the target spatial map. The third possibility is that x is
+itself a (singleton) spatial map; in this case, each grid value of x is blended with the corresponding grid
+value of the target spatial map (and thus the two spatial maps must match in their spatiality, their
+spatial bounds, and their grid dimensions). The target spatial map is returned, to allow easy chaining
+of operations.
+– (void)changeColors([Nif valueRange = NULL], [Ns colors = NULL])
+Changes the color scheme for the target spatial map. The meaning of valueRange and colors are
+identical to their meaning in defineSpatialMap(), but are also described here.
+The valueRange and colors parameters travel together; either both are NULL, or both are specified.
+They control how map values will be transformed into colors, by SLiMgui and by the mapColor()
+method. The valueRange parameter establishes the color-mapped range of spatial map values, as a
+vector of length two specifying a minimum and maximum; this does not need to match the actual
+range of values in the map. The colors parameter then establishes the corresponding colors for
+values within the interval defined by valueRange: values less than or equal to valueRange[0] will
+map to colors[0], values greater than or equal to valueRange[1] will map to the last colors value,
+and intermediate values will shade continuously through the specified vector of colors, with
+interpolation between adjacent colors to produce a continuous spectrum. This is much simpler than it
+sounds in this description; see the recipes in chapter 16 for an illustration of its use.
+If valueRange and colors are both NULL, a default grayscale color scheme will be used in SLiMgui,
+but an error will result if mapColor() is called.
+– (void)changeValues(ifo<SpatialMap> x)
+Changes the grid values used for the target spatial map. The parameter x should be either a
+SpatialMap object from which values are taken directly, or a vector, matrix, or array of numeric
+values as described in the documentation for defineSpatialMap(). Other characteristics of the
+spatial map, such as its color mapping (if defined), its spatial bounds, and its spatiality, will remain
+unchanged. The grid resolution of the spatial map is allowed to change with this method. This
+method is useful for changing the values of a spatial map over time, such as to implement changes to
+the landscape’s characteristics due to seasonality, climate change, processes such as fire or
+urbanization, and so forth. As with the original map values provided to defineSpatialMap(), it is
+often useful to read map values from a PNG image file using the Eidos class Image.
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 713
+– (object<SpatialMap>$)divide(ifo<SpatialMap> x)
+Divides the spatial map by x. One possibility is that x is a singleton integer or float value; in this
+case, each grid value of the target spatial map is divided by x. Another possibility is that x is an
+integer or float vector/matrix/array of the same dimensions as the target spatial map’s grid; in this
+case, each grid value of the target spatial map is divided by the corresponding value of x. The third
+possibility is that x is itself a (singleton) spatial map; in this case, each grid value of the target spatial
+map is divided by the corresponding grid value of x (and thus the two spatial maps must match in
+their spatiality, their spatial bounds, and their grid dimensions). The target spatial map is returned, to
+allow easy chaining of operations.
+– (object<SpatialMap>$)exp(void)
+Exponentiates the values of the spatial map. More precisely, each grid value x of the target spatial
+map is exponentiated – replaced by the value ex. The target spatial map is returned, to allow easy
+chaining of operations.
+– (float)gridValues(void)
+Returns the values for the spatial map’s grid as a vector (for a 1D map), a matrix (for a 2D map), or an
+array (for a 3D map). The form and orientation of the returned values is such that it could be used to
+create a new spatial map, with defineSpatialMap(), which would be identical to the original.
+– (object<SpatialMap>$)interpolate(integer$ factor, [string$ method = "linear"])
+Increases the resolution of the spatial map by factor, changing the dimensions of the spatial map’s
+grid of values (while leaving its spatial bounds unchanged), by interpolating new values between the
+existing values. The parameter factor must be an integer in [2, 10001], somewhat arbitrarily. The
+target spatial map is returned, to allow easy chaining of operations.
+For a 1D spatial map, factor-1 new values will be inserted between every pair of values in the
+original value grid. A factor of 2 would therefore insert one new value between each pair of existing
+values, thereby increasing the map’s resolution by a factor of two. Note that if the spatial map’s
+original grid dimension was N, the new grid dimension with a factor of k would be k(N−1)+1, not
+kN, because new values are inserted only between existing values. For 2D and 3D spatial maps,
+essentially the same process is conducted along each axis of the map’s spatiality, increasing the
+resolution of the map by factor in every dimension.
+If method is "linear" (the default), linear (or bilinear or trilinear, for 2D/3D maps) interpolation will
+be used to interpolate the values for the new grid points. Alternatively, if method is "nearest", the
+nearest value in the old grid will be used for new grid points; with this method, it is recommended
+that factor be odd, not even, to avoid artifacts due to rounding of coordinates midway between the
+original grid positions. If method is "cubic", cubic (or bicubic, for 2D maps) will be used; this
+generally produces smoother interpolation with fewer artifacts than "linear", but it is not supported
+for 3D maps. The choice of interpolation method used here is independent of the map’s interpolate
+property. Note that while the "nearest" and "linear" interpolation methods will leave the range of
+values in the map unchanged, "cubic" interpolation may produce interpolated values that are outside
+the original range of values (by design). Periodic boundaries are currently supported only for
+"nearest", "linear", and 1D "cubic" interpolation.
+– (string)mapColor(numeric value)
+Uses the spatial map’s color-translation machinery (as defined by the valueRange and colors
+parameters to defineSpatialMap()) to translate each element of value into a corresponding color
+string. If the spatial map does not have color-translation capabilities, an error will result. See the
+documentation for defineSpatialMap() for information regarding the details of color translation.
+See the Eidos manual for further information on color strings.
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 714
+– (object<Image>$)mapImage([Ni$ width = NULL], [Ni$ height = NULL],
+[logical$ centers = F], [logical$ color = T])
+Returns an Image object sampled from the spatial map. The image will be width pixels wide and
+height pixels tall; the intrinsic size of the spatial map itself will be used if one of these parameters is
+NULL. The image will be oriented in the same way as it is displayed in SLiMgui (which conceptually
+entails a transformation from matrix coordinates, which store values by column, to standard image
+coordinates, which store values by row; see the Eidos manual’s documentation of Image for details).
+This method may only be called for 2D spatial maps at present.
+The sampling of the spatial map can be done in one of two ways, as controlled by the centers
+parameter. If centers is T, a (width+1) × (height+1) grid of lines that delineates width × height
+rectangular pixels will be overlaid on top of the spatial map, and values will be sampled from the
+spatial map at the center of each of these pixels. If centers is F (the default), a width × height grid
+of lines will be overlaid on top of the spatial map, and values will be sampled from the spatial map at
+the vertices of the grid. If interpolation is not enabled for the spatial map, these two options will both
+recover the original matrix of values used to define the spatial map (assuming, here and below, that
+width and height are NULL). If interpolation is enabled for the spatial map, however, centers == F
+will recover the original values, but will not capture the “typical” value of each pixel in the image;
+centers == T, on the other hand, will not recover the original values, but will capture the “typical”
+value of each pixel in the image (i.e., the value at the center of each pixel, as produced by
+interpolation). The figures in section 16.11 may be helpful for visualizing the difference between
+these options; the overlaid grids span the full extent of the spatial map, just as shown in that section.
+If color is T (the default), the valueRange and colors parameters supplied to defineSpatialMap()
+will be used to translate map values to RGB color values as described in the documentation of that
+method, providing the same appearance as in SLiMgui; of course those parameters must have been
+supplied, otherwise an error will result. If color is F, on the other hand, a grayscale image will be
+produced that directly reflects the map values without color translation. In this case, this method
+needs to translate map values, which can have any float value, into grayscale pixel values that are
+integers in [0, 255]. To do so, the map values are multiplied by 255.0, clamped to [0.0, 255.0], and
+then rounded to the nearest integer. This translation scheme essentially assumes that map values are
+in [0, 1]; for spatial maps that were defined using the floatK channel of a grayscale PNG image, this
+should recover the original image’s pixel values. (If a different translation scheme is desired, color=T
+with the desired valueRange and colors should be used.)
+– (float)mapValue(float point)
+Uses the spatial map’s mapping machinery (as defined by the gridSize, values, and interpolate
+parameters to defineSpatialMap()) to translate the coordinates of point into a corresponding map
+value. The length of point must be equal to the spatiality of the spatial map; in other words, for a
+spatial map with spatiality "xz", point must be of length 2, specifying the x and z coordinates of the
+point to be evaluated. Interpolation will automatically be used if it was enabled for the spatial map.
+Point coordinates are clamped into the range defined by the spatial boundaries, even if the spatial
+boundaries are periodic; use pointPeriodic() to wrap the point coordinates first if desired. See the
+documentation for defineSpatialMap() for information regarding the details of value mapping.
+Beginning in SLiM 3.3, point may contain more than one point to be looked up. In this case, the
+length of point must be an exact multiple of the spatiality of the spatial map; for a spatial map with
+spatiality "xz", for example, the length of point must be an exact multiple of 2, and successive pairs
+of elements from point (elements 0 and 1, then elements 2 and 3, etc.) will be taken as the x and z
+coordinates of the points to be evaluated. This allows spatialMapValue() to be used in a vectorized
+fashion.
+The spatialMapValue() method of Subpopulation provides the same functionality as this method;
+it may be more convenient to use, for some usage cases, and it checks that the spatial map is actually
+added to the subpopulation in question, providing an additional consistency check. However, either
+method may be used.
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 715
+– (object<SpatialMap>$)multiply(ifo<SpatialMap> x)
+Multiplies the spatial map by x. One possibility is that x is a singleton integer or float value; in
+this case, each grid value of the target spatial map is multiplied by x. Another possibility is that x is an
+integer or float vector/matrix/array of the same dimensions as the target spatial map’s grid; in this
+case, each grid value of the target spatial map is multiplied by the corresponding value of x. The third
+possibility is that x is itself a (singleton) spatial map; in this case, each grid value of the target spatial
+map is multiplied by the corresponding grid value of x (and thus the two spatial maps must match in
+their spatiality, their spatial bounds, and their grid dimensions). The target spatial map is returned, to
+allow easy chaining of operations.
+– (object<SpatialMap>$)power(ifo<SpatialMap> x)
+Raises the spatial map to the power x. One possibility is that x is a singleton integer or float value;
+in this case, each grid value of the target spatial map is raised to the power x. Another possibility is
+that x is an integer or float vector/matrix/array of the same dimensions as the target spatial map’s
+grid; in this case, each grid value of the target spatial map is raised to the power of the corresponding
+value of x. The third possibility is that x is itself a (singleton) spatial map; in this case, each grid value
+of the target spatial map is raised to power of the corresponding grid value of x (and thus the two
+spatial maps must match in their spatiality, their spatial bounds, and their grid dimensions). The target
+spatial map is returned, to allow easy chaining of operations.
+– (float)range(void)
+Returns the range of values contained in the spatial map. The result is a float vector of length 2; the
+first element is the minimum map value, and the second element is the maximum map value.
+– (object<SpatialMap>$)rescale([numeric$ min = 0.0], [numeric$ max = 1.0])
+Rescales the values of the spatial map to the range [min, max]. By default, the rescaling is to the range
+[0.0, 1.0]. It is required that min be less than max, and that both be finite. Note that the final range
+may not be exactly [min, max] due to numerical error. The target spatial map is returned, to allow easy
+chaining of operations.
+– (float)sampleImprovedNearbyPoint(float point, float$ maxDistance,
+string$ functionType, ...)
+This variant of sampleNearbyPoint() samples a Metropolis–Hastings move on the spatial map. See
+sampleNearbyPoint() for discussion of the basic idea. This method proposes a nearby point drawn
+from the given kernel. If the drawn point has a larger map value than the original point, the new point
+is returned. If the drawn point has a smaller map value than the original point, it is returned with a
+probability equal to the ratio between its map value and the original map value, otherwise the original
+point is returned. The distribution of individuals that move (or not) to new locations governed by this
+method will converge upon the map itself, in a similar manner to how MCMC converges upon the
+posterior distribution (assuming no other forces, such as birth or death, influence the distribution of
+individuals). Movement governed by this method is “improved” in the sense that individuals will tend
+to remain where they are unless the new sampled point is an improvement for them – a higher map
+value.
+Note that unlike sampleNearbyPoint(), this method requires that all map values are non-negative.
+– (float)sampleNearbyPoint(float point, float$ maxDistance,
+string$ functionType, ...)
+For a spatial point supplied in point, returns a nearby point sampled from a kernel weighted by the
+spatial map’s values. Only points within the maximum distance of the kernel, maxDistance, will be
+chosen, and the probability that a given point is chosen will be proportional to the density of the
+kernel at that point multiplied by the value of the map at that point (interpolated, if interpolation is
+enabled for the map). Negative values of the map will be treated as zero. The point returned will be
+within spatial bounds, respecting periodic boundaries if in effect (so there is no need to call
+pointPeriodic() on the result).
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 716
+The kernel is specified with a kernel shape, functionType, followed by zero or more ellipsis
+arguments; see smooth() for further information. For this method, at present only kernel types "f",
+"l", "e", "n", and "t" are supported, and type "t" is not presently supported for 3D kernels.
+This method can be used to find points in the vicinity of individuals that are favorable – possessing
+more resources, or better environmental conditions, etc. It can also be used to guide the dispersal or
+foraging behavior of individuals. See sampleImprovedNearbyPoint() for a variant that may be
+useful for directed movement across a landscape. Note that the algorithm for sampleNearbyPoint()
+works by rejection sampling, and so will be very inefficient if the maximum value of the map
+(anywhere, across the entire map) is much larger than the typical value of the map where individuals
+are. The algorithm for sampleImprovedNearbyPoint() is different, and does not exhibit this
+performance issue.
+– (object<SpatialMap>$)smooth(float$ maxDistance, string$ functionType, ...)
+Smooths (or blurs, one could say) the values of the spatial map by convolution with a kernel. The
+kernel is specified with a maximum distance maxDistance (beyond which the kernel cuts off to a
+value of zero), a kernel type functionType that should be "f", "l", "e", "n", "c", or "t", and
+additional parameters in the ellipsis ... that depend upon the kernel type and further specify its
+shape. The target spatial map is returned, to allow easy chaining of operations.
+The kernel specification is similar to that for the setInteractionType() method of
+InteractionType, but omits the maximum value of the kernel. Specifically, functionType may be
+"f", in which case no ellipsis arguments should be supplied; "l", similarly with no ellipsis
+arguments; "e", in which case the ellipsis should supply a numeric$ lambda (rate) parameter for a
+negative exponential function; "n", in which case the ellipsis should supply a numeric$ sigma
+(standard deviation) parameter for a Gaussian function; "c", in which case the ellipsis should supply a
+numeric$ scale parameter for a Cauchy distribution function; or "t", in which case the ellipsis should
+supply a numeric$ degrees of freedom and a numeric$ scale parameter for a t-distribution function.
+See the InteractionType class documentation for discussions of these kernel types.
+Distance metrics specified to this method, such as maxDistance and the additional kernel shape
+parameters, are measured in the distance scale of the spatial map – the same distance scale in which
+the spatial bounds of the map are specified. The operation is performed upon the grid values of the
+spatial map; distances are internally translated into the scale of the value grid. For non-periodic
+boundaries, clipping at the edge of the spatial map is done; in a 2D map with no periodic boundaries,
+for example, the weights of edge and corner grid values are adjusted for their partial (one-half and
+one-quarter) coverage. For periodic boundaries, the smoothing operation will automatically wrap
+around based upon the assumption that the grid values at the two connected edges of the periodic
+boundary have identical values (which they should, since by definition they represent the same
+position in space).
+The density scale of the kernel has no effect and will be normalized; this is the reason that smooth(),
+unlike InteractionType, does not require specification of the maximum value of the kernel. This
+normalization prevents the kernel from increasing or decreasing the average spatial map value (apart
+from possible edge effects).
+– (object<SpatialMap>$)subtract(ifo<SpatialMap> x)
+Subtracts x from the spatial map. One possibility is that x is a singleton integer or float value; in
+this case, x is subtracted from each grid value of the target spatial map. Another possibility is that x is
+an integer or float vector/matrix/array of the same dimensions as the target spatial map’s grid; in
+this case, each value of x is subtracted from the corresponding grid value of the target spatial map.
+The third possibility is that x is itself a (singleton) spatial map; in this case, each grid value of x is
+subtracted from the corresponding grid value of the target spatial map (and thus the two spatial maps
+must match in their spatiality, their spatial bounds, and their grid dimensions). The target spatial map
+is returned, to allow easy chaining of operations.

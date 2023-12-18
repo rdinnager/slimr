@@ -23,6 +23,7 @@ This class has the following methods (functions):
 \item{\code{\link{countOfMutationsOfType}}}
 \item{\code{\link{relatedness}}}
 \item{\code{\link{setSpatialPosition}}}
+\item{\code{\link{sharedParentCount}}}
 \item{\code{\link{sumOfMutationsOfType}}}
 \item{\code{\link{uniqueMutationsOfType}}}
 }
@@ -182,6 +183,51 @@ Individual has a float-type tagF property, because attaching model state to
 individuals seems to be particularly common and useful. If a tagF property would
 be helpful on another class, it would be easy to add. See the description of the
 tag property above for additional comments. }
+\item{tagL0}{A property of type logical. It is of length one (a singleton).
+This property is a variable, so it is modifiable. \strong{Property Description:}
+A user-defined logical value (see also tag and tagF). The value of tagL0 is
+initially undefined, and it is an error to try to read it; if you wish it to
+have a defined value, you must arrange that yourself by explicitly setting its
+value prior to using it elsewhere in your code. The value of tagL0 is not used
+by SLiM; it is free for you to use. See also the getValue() and setValue()
+methods (provided by the Dictionary class; see the Eidos manual), for another
+way of attaching state to individuals. }
+\item{tagL1}{A property of type logical. It is of length one (a singleton).
+This property is a variable, so it is modifiable. \strong{Property Description:}
+A user-defined logical value (see also tag and tagF). The value of tagL1 is
+initially undefined, and it is an error to try to read it; if you wish it to
+have a defined value, you must arrange that yourself by explicitly setting its
+value prior to using it elsewhere in your code. The value of tagL1 is not used
+by SLiM; it is free for you to use. See also the getValue() and setValue()
+methods (provided by the Dictionary class; see the Eidos manual), for another
+way of attaching state to individuals. }
+\item{tagL2}{A property of type logical. It is of length one (a singleton).
+This property is a variable, so it is modifiable. \strong{Property Description:}
+A user-defined logical value (see also tag and tagF). The value of tagL2 is
+initially undefined, and it is an error to try to read it; if you wish it to
+have a defined value, you must arrange that yourself by explicitly setting its
+value prior to using it elsewhere in your code. The value of tagL2 is not used
+by SLiM; it is free for you to use. See also the getValue() and setValue()
+methods (provided by the Dictionary class; see the Eidos manual), for another
+way of attaching state to individuals. }
+\item{tagL3}{A property of type logical. It is of length one (a singleton).
+This property is a variable, so it is modifiable. \strong{Property Description:}
+A user-defined logical value (see also tag and tagF). The value of tagL3 is
+initially undefined, and it is an error to try to read it; if you wish it to
+have a defined value, you must arrange that yourself by explicitly setting its
+value prior to using it elsewhere in your code. The value of tagL3 is not used
+by SLiM; it is free for you to use. See also the getValue() and setValue()
+methods (provided by the Dictionary class; see the Eidos manual), for another
+way of attaching state to individuals. }
+\item{tagL4}{A property of type logical. It is of length one (a singleton).
+This property is a variable, so it is modifiable. \strong{Property Description:}
+A user-defined logical value (see also tag and tagF). The value of tagL4 is
+initially undefined, and it is an error to try to read it; if you wish it to
+have a defined value, you must arrange that yourself by explicitly setting its
+value prior to using it elsewhere in your code. The value of tagL4 is not used
+by SLiM; it is free for you to use. See also the getValue() and setValue()
+methods (provided by the Dictionary class; see the Eidos manual), for another
+way of attaching state to individuals. }
 \item{uniqueMutations}{A property of type Mutation object. This property
 is a constant, so it is not modifiable. \strong{Property Description:}
 All of the Mutation objects present in this individual. Mutations present
@@ -200,36 +246,64 @@ property is a variable, so it is modifiable. \strong{Property Description:}
 A user-defined float value. The value of x is initially undefined (i.e., has
 an effectively random value that could be different every time you run your
 model); if you wish it to have a defined value, you must arrange that yourself
-by explicitly setting its value prior to using it elsewhere in your code,
-typically in a modifyChild() callback. The value of x is not used by SLiM unless
-the optional "continuous space" facility is enabled with the dimensionality
-parameter to initializeSLiMOptions(), in which case x will be understood to
-represent the x coordinate of the individual in space. If continuous space is
-not enabled, you may use x as an additional tag value of type float. }
+by explicitly setting its value prior to using it elsewhere in your code. The
+value of x is not used by SLiM unless the optional "continuous space" facility
+is enabled with the dimensionality parameter to initializeSLiMOptions(), in
+which case x will be understood to represent the x coordinate of the individual
+in space. If continuous space is not enabled, you may use x as an additional tag
+value of type float. }
+\item{xy}{A property of type float. This property is a constant, so it is
+not modifiable. \strong{Property Description:} This property provides joint
+read-only access to the x and y properties; they are returned as a twoelement
+float vector. This can be useful in complex spatial models in which the
+spatiality of interactions/maps differs from the overall dimensionality of the
+model. See the documentation for the separate properties x and y for further
+comments. }
+\item{xyz}{A property of type float. This property is a constant, so it
+is not modifiable. \strong{Property Description:} This property provides
+joint read-only access to the x, y, and z properties; they are returned as a
+threeelement float vector. This can be useful in complex spatial models in which
+the spatiality of interactions/maps differs from the overall dimensionality of
+the model. See the documentation for the separate properties x, y, and z for
+further comments. }
+\item{xz}{A property of type float. This property is a constant, so it is
+not modifiable. \strong{Property Description:} This property provides joint
+read-only access to the x and z properties; they are returned as a twoelement
+float vector. This can be useful in complex spatial models in which the
+spatiality of interactions/maps differs from the overall dimensionality of the
+model. See the documentation for the separate properties x and z for further
+comments. }
 \item{y}{A property of type float. It is of length one (a singleton). This
 property is a variable, so it is modifiable. \strong{Property Description:}
 A user-defined float value. The value of y is initially undefined (i.e., has
 an effectively random value that could be different every time you run your
 model); if you wish it to have a defined value, you must arrange that yourself
-by explicitly setting its value prior to using it elsewhere in your code,
-typically in a modifyChild() callback. The value of y is not used by SLiM unless
-the optional "continuous space" facility is enabled with the dimensionality
-parameter to initializeSLiMOptions(), in which case y will be understood to
-represent the y coordinate of the individual in space (if the dimensionality is
-"xy" or "xyz"). If continuous space is not enabled, or the dimensionality is not
-"xy" or "xyz", you may use y as an additional tag value of type float. }
+by explicitly setting its value prior to using it elsewhere in your code. The
+value of y is not used by SLiM unless the optional "continuous space" facility
+is enabled with the dimensionality parameter to initializeSLiMOptions(), in
+which case y will be understood to represent the y coordinate of the individual
+in space (if the dimensionality is "xy" or "xyz"). If continuous space is
+not enabled, or the dimensionality is not "xy" or "xyz", you may use y as an
+additional tag value of type float. }
+\item{yz}{A property of type float. This property is a constant, so it is
+not modifiable. \strong{Property Description:} This property provides joint
+read-only access to the y and z properties; they are returned as a twoelement
+float vector. This can be useful in complex spatial models in which the
+spatiality of interactions/maps differs from the overall dimensionality of the
+model. See the documentation for the separate properties y and z for further
+comments. }
 \item{z}{A property of type float. It is of length one (a singleton). This
 property is a variable, so it is modifiable. \strong{Property Description:}
 A user-defined float value. The value of z is initially undefined (i.e., has
 an effectively random value that could be different every time you run your
 model); if you wish it to have a defined value, you must arrange that yourself
-by explicitly setting its value prior to using it elsewhere in your code,
-typically in a modifyChild() callback. The value of z is not used by SLiM unless
-the optional "continuous space" facility is enabled with the dimensionality
-parameter to initializeSLiMOptions(), in which case z will be understood to
-represent the z coordinate of the individual in space (if the dimensionality is
-"xyz"). If continuous space is not enabled, or the dimensionality is not "xyz",
-you may use z as an additional tag value of type float.}
+by explicitly setting its value prior to using it elsewhere in your code. The
+value of z is not used by SLiM unless the optional "continuous space" facility
+is enabled with the dimensionality parameter to initializeSLiMOptions(), in
+which case z will be understood to represent the z coordinate of the individual
+in space (if the dimensionality is "xyz"). If continuous space is not enabled,
+or the dimensionality is not "xyz", you may use z as an additional tag value of
+type float.}
 
 }
 }
@@ -239,6 +313,7 @@ Other Individual:
 \code{\link{countOfMutationsOfType}()},
 \code{\link{relatedness}()},
 \code{\link{setSpatialPosition}()},
+\code{\link{sharedParentCount}()},
 \code{\link{sumOfMutationsOfType}()},
 \code{\link{uniqueMutationsOfType}()}
 }

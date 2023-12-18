@@ -22,17 +22,20 @@ This class has the following methods (functions):
 \item{\code{\link{addEmpty}}}
 \item{\code{\link{addRecombinant}}}
 \item{\code{\link{addSelfed}}}
+\item{\code{\link{addSpatialMap}}}
 \item{\code{\link{cachedFitness}}}
 \item{\code{\link{configureDisplay}}}
 \item{\code{\link{defineSpatialMap}}}
 \item{\code{\link{outputMSSample}}}
 \item{\code{\link{outputSample}}}
 \item{\code{\link{outputVCFSample}}}
+\item{\code{\link{pointDeviated}}}
 \item{\code{\link{pointInBounds}}}
 \item{\code{\link{pointPeriodic}}}
 \item{\code{\link{pointReflected}}}
 \item{\code{\link{pointStopped}}}
 \item{\code{\link{pointUniform}}}
+\item{\code{\link{removeSpatialMap}}}
 \item{\code{\link{removeSubpopulation}}}
 \item{\code{\link{sampleIndividuals}}}
 \item{\code{\link{setCloningRate}}}
@@ -184,6 +187,9 @@ spatialBounds property will contain values (x0, y0, x1, y1); bounds for the
 z coordinate will not be included in that case, since that coordinate is not
 used in the simulation's dimensionality. This property cannot be set, but the
 setSpatialBounds() method may be used to achieve the same thing. }
+\item{spatialMaps}{A property of type SpatialMap object. This property is a
+constant, so it is not modifiable. \strong{Property Description:} The spatial
+maps that are currently added to the subpopulation. }
 \item{species}{A property of type Species object. It is of length one
 (a singleton). This property is a constant, so it is not modifiable.
 \strong{Property Description:} The species to which the target object belongs. }
@@ -206,17 +212,20 @@ Other Subpopulation:
 \code{\link{addEmpty}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
+\code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
+\code{\link{pointDeviated}()},
 \code{\link{pointInBounds}()},
 \code{\link{pointPeriodic}()},
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
 \code{\link{setCloningRate}()},

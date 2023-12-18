@@ -78,8 +78,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=636}{SLiM manual: page
-636}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=665}{SLiM manual: page
+665}.
 
 Creates and returns a new LogFile object that logs data from the
 simulation (see the documentation for the LogFile class for details). Logged
@@ -117,7 +117,7 @@ any case, the log file will be created immediately, with its requested initial
 contents; the initial write is not buffered. When compression is not enabled,
 the flushInterval setting is ignored. The LogFile documentation discusses how to
 configure and use LogFile to write out the data you are interested in from your
-simulation; see section 24.10.
+simulation; see section 25.10.
 
 Documentation for this function can be found in the official
 \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
@@ -197,7 +197,8 @@ Other Community:
 \code{\link{scriptBlocksWithIDs}()},
 \code{\link{simulationFinished}()},
 \code{\link{speciesWithIDs}()},
-\code{\link{subpopulationsWithIDs}()}
+\code{\link{subpopulationsWithIDs}()},
+\code{\link{usage}()}
 
 Other SLiMSim: 
 \code{\link{SS}},

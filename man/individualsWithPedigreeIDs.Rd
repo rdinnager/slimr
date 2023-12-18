@@ -29,8 +29,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=679}{SLiM manual: page
-679}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=720}{SLiM manual: page
+720}.
 
 Looks up individuals by pedigree ID, optionally within
 specific subpopulations. Pedigree tracking must be turned on with
@@ -67,6 +67,7 @@ on the official website: \url{https://messerlab.org/slim/}
 \seealso{
 Other Species: 
 \code{\link{Sp}},
+\code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{killIndividuals}()},
@@ -83,7 +84,16 @@ Other Species:
 \code{\link{registerModifyChildCallback}()},
 \code{\link{registerMutationCallback}()},
 \code{\link{registerMutationEffectCallback}()},
-\code{\link{registerRecombinationCallback}()}
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{registerSurvivalCallback}()},
+\code{\link{simulationFinished}()},
+\code{\link{skipTick}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqOutput}()},
+\code{\link{treeSeqRememberIndividuals}()},
+\code{\link{treeSeqSimplify}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

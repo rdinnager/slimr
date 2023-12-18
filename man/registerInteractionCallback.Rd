@@ -60,8 +60,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=638}{SLiM manual: page
-638}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
+667}.
 
 Register a block of Eidos source code, represented as the string
 singleton source, as an Eidos interaction() callback in the current simulation
@@ -75,7 +75,7 @@ to refer to the block later. The registered callback is added to the end of the
 list of registered SLiMEidosBlock objects, and is active immediately; it will
 be eligible to execute the next time an InteractionType is evaluated. The new
 SLiMEidosBlock will be defined as a global variable immediately by this method
-(see section 24.12), and will also be returned by this method.
+(see section 25.12), and will also be returned by this method.
 
 Documentation for this function can be found in the official
 \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
@@ -130,7 +130,8 @@ Other Community:
 \code{\link{scriptBlocksWithIDs}()},
 \code{\link{simulationFinished}()},
 \code{\link{speciesWithIDs}()},
-\code{\link{subpopulationsWithIDs}()}
+\code{\link{subpopulationsWithIDs}()},
+\code{\link{usage}()}
 
 Other SLiMSim: 
 \code{\link{SS}},

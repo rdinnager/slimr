@@ -36,8 +36,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=623}{SLiM manual: page
-623}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=653}{SLiM manual: page
+653}.
 
 Add a nucleotide-based mutation type at initialization time. This
 function is identical to initializeMutationType() except that the new mutation

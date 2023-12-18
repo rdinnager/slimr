@@ -31,8 +31,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=663}{SLiM manual: page
-663}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=696}{SLiM manual: page
+696}.
 
 Returns the number of neighbors for each individual in receivers,
 within the maximum interaction distance according to the distance metric of the
@@ -44,14 +44,13 @@ to be the same. The evaluate() method must have been previously called for the
 receiver and exerter subpopulations, and positions saved at evaluation time will
 be used. This method is similar to nearestNeighbors() (when passed a large count
 so as to guarantee that all neighbors are returned), but this method returns
-only a count of the individuals, not a vector containing the individuals. This
-method may also be called in a vectorized fashion, with a non- singleton vector
-of individuals, unlike nearestNeighbors(). Note that this method does not use
-interaction eligibility as a criterion; it will count neighbors that cannot
-exert an interaction upon a receiver (due to sex-segregation, e.g.). (It still
-does not count a receiver as a neighbor of itself, however.) If a count of
-only interacting neighbors is desired, use interactingNeighborCount(). If the
-InteractionType is non-spatial, this method may not be called.
+only a count of the individuals, not a vector containing the individuals. Note
+that this method does not use interaction eligibility as a criterion; it will
+count neighbors that cannot exert an interaction upon a receiver (due to the
+configured receiver or exerter constraints). (It still does not count a receiver
+as a neighbor of itself, however.) If a count of only interacting neighbors is
+desired, use interactingNeighborCount(). If the InteractionType is non-spatial,
+this method may not be called.
 }
 \section{Copyright}{
 
@@ -79,8 +78,10 @@ Other InteractionType:
 \code{\link{nearestNeighborsOfPoint}()},
 \code{\link{nearestNeighbors}()},
 \code{\link{neighborCountOfPoint}()},
+\code{\link{setConstraints}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
+\code{\link{testConstraints}()},
 \code{\link{totalOfNeighborStrengths}()},
 \code{\link{unevaluate}()}
 }

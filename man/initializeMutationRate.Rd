@@ -32,8 +32,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=622}{SLiM manual: page
-622}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=651}{SLiM manual: page
+651}.
 
 Set the mutation rate per base position per gamete. To be precise, this
 mutation rate is the expected mean number of mutations that will occur per base

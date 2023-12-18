@@ -40,8 +40,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=627}{SLiM manual: page
-627}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=656}{SLiM manual: page
+656}.
 
 Configure options for the species being initialized. This
 initialization function may only be called in multispecies models (i.e.,
@@ -52,7 +52,7 @@ property of the species will be set to T (thus activating the species) every
 tickModulo ticks, beginning in tick tickPhase. (However, when the species
 is activated in a given tick, the skipTick() method may still be called in a
 first() event to deactivate it.) See the active property of Species (section
-24.14.1) for more details. The avatar parameter, if not "", sets a string value
+25.15.1) for more details. The avatar parameter, if not "", sets a string value
 used to represent the species graphically, particularly in SLiMgui but perhaps
 in other contexts also. The avatar should generally be a single character -
 usually an emoji corresponding to the species, such as "🦊 " for foxes or "🐭

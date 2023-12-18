@@ -1,0 +1,17 @@
+– (void)openDocument(string$ filePath)
+Open the document at filePath in SLiMgui, if possible. Supported document types include SLiM
+model files (typically with a .slim path extension), text files (typically with a .txt path extension,
+and opened as untitled model files), and PNG, JPG/JPEG, BMP, and GIF image file formats
+(typically .png / .jpg / .jpeg / .bmp / .gif, respectively). (Note that in SLiMguiLegacy, PDF files
+(.pdf) are supported but these other image file formats are not.) This method can be particularly
+useful for opening images created by the simulation itself, often by sublaunching a plotting process in
+R or another environment; see section 14.8 for an example.
+– (void)pauseExecution(string$ filePath)
+Pauses a model that is playing in SLiMgui. This is essentially equivalent to clicking the “Play” button
+to stop the execution of the model. Execution can be resumed by the user, by clicking the “Play”
+button again; unlike calling stop() or simulationFinished(), the simulation is not terminated.
+This method can be useful for debugging or exploratory purposes, to pause the model at a point of
+interest. Execution is paused at the end of the currently executing tick, not mid-tick.
+If the model is being profiled, or is executing forward to a tick number entered in the tick field,
+pauseExecution() will do nothing; by design, pauseExecution() only pauses execution when
+SLiMgui is doing a simple “Play” of the model.

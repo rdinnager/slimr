@@ -36,6 +36,7 @@ This class has the following methods (functions):
 \item{\code{\link{simulationFinished}}}
 \item{\code{\link{speciesWithIDs}}}
 \item{\code{\link{subpopulationsWithIDs}}}
+\item{\code{\link{usage}}}
 }
 This class has the following properties:
 \describe{
@@ -60,8 +61,8 @@ the Subpopulation objects defined in the simulation. }
 \item{cycleStage}{A property of type string. It is of length one (a singleton).
 This property is a constant, so it is not modifiable. \strong{Property
 Description:} The current cycle stage, as a string. The values of this property
-essentially mirror the cycle stages of WF and nonWF models (see chapters 22
-and 23). Common values include "first" (during execution of first() events),
+essentially mirror the cycle stages of WF and nonWF models (see chapters 23
+and 24). Common values include "first" (during execution of first() events),
 "early" (during execution of early() events), "reproduction" (during offspring
 generation), "fitness" (during fitness evaluation), "survival" (while applying
 selection and mortality in nonWF models), and "late" (during execution of late()
@@ -127,6 +128,7 @@ Other Community:
 \code{\link{scriptBlocksWithIDs}()},
 \code{\link{simulationFinished}()},
 \code{\link{speciesWithIDs}()},
-\code{\link{subpopulationsWithIDs}()}
+\code{\link{subpopulationsWithIDs}()},
+\code{\link{usage}()}
 }
 \concept{Community}

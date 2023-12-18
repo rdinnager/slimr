@@ -12,7 +12,7 @@ This class represents a type of interaction between individuals. This
 is an advanced feature, the
 use of which is optional. Once an interaction type is set up with
 initializeInteractionType()
-(see section 24.1), it can be evaluated and then queried to give information
+(see section 25.1), it can be evaluated and then queried to give information
 such as the nearest
 interacting neighbors of an individual, or the total strength of interactions
 felt by an individual,
@@ -31,27 +31,30 @@ directionality - from exerters, to receivers - throughout its design.
 Interactions therefore
 fundamentally define a one-to-many relationship, from one receiver to the
 (potentially) many
-exerters that act upon that receiver. In using InteractionType, you will
-generally start with a
-receiver, and ask an InteractionType object to handle a query about that
-receiver, such as "what
-are the ten nearest exerters to this receiver?". InteractionType is optimized to
-find and return the
-set of exerters influencing a given receiver; it is not optimized for the
-reverse, finding and returning
-the set of receivers influenced by a given exerter. (If that seems desirable,
-you might wish to flip
-your perspective and regard the interaction as actually working in the opposite
-direction!)
+exerters that act upon that receiver. Note that a receiver will never be an
+exerter of an interaction
+upon itself; a given individual is never both receiver and exerter in the same
+interaction. When
+using InteractionType, you will generally start with a receiver, and ask an
+InteractionType
+object to handle a query about that receiver, such as "what are the ten nearest
+exerters to this
+receiver?". InteractionType is optimized to find and return the set of exerters
+influencing a given
+receiver; it is not optimized for the reverse, finding and returning the set of
+receivers influenced by
+a given exerter. (If that seems desirable, you might wish to flip your
+perspective and regard the
+interaction as actually working in the opposite direction!)
 Interactions are usually spatial, depending upon the spatial dimensionality
 established with
-initializeSLiMOptions() (section 24.1), but they do not have to be spatial. For
+initializeSLiMOptions() (section 25.1), but they do not have to be spatial. For
 spatial
 interactions, the strength of the interaction from an exerter to a receiver
 often depends (partly, at
-least) upon the distance between the two; nearby exerters often wield a stronger
-influence upon a
-receiver than more distant exerters do. Non-spatial interactions, on the other
+least) upon the distance d between the two; nearby exerters often wield a
+stronger influence upon
+a receiver than more distant exerters do. Non-spatial interactions, on the other
 hand, are of course
 unrelated to distance, and the strength of interaction between two individuals
 depends entirely
@@ -91,7 +94,17 @@ particular way (males competing with other males, males competing to mate with
 females, etc.)
 can be declared to be sex-specific, which can also substantially reduce the
 overhead of querying
-them.
+them. This "sex-segregation" is just one facet of a larger feature, called
+"interaction constraints",
+that allows you to specify a variety of constraints upon which individuals can
+be exerters and
+which individuals can be receivers; these constraints can include not only sex,
+but also age,
+migrant status, and the values of Individual properties such as tag and tagL0 -
+tagL4. Setting up
+constraints allows you to model the interaction of just a subset of a
+subpopulation with a different
+subset of a (perhaps different) subpopulation.
 We will focus, in the remaining discussion, on spatial interactions since they
 are more
 common. The first step in InteractionType's evaluation of a spatial interaction
@@ -112,14 +125,27 @@ individuals of different species. Second, this distance is compared to the
 maximum distance for
 the interaction type; if it is beyond that limit, the interaction strength is
 always zero (and it is also
-always zero for the interaction of an individual with itself). Third (when the
-distance is less than
-the maximum), the distance is converted into an interaction strength by an
-interaction function (IF),
-which is a characteristic of the InteractionType. Finally, this interaction
-strength may be modified
-by the interaction() callbacks currently active in the simulation, if any (see
-section 25.7).
+always zero for the interaction of an individual with itself, since a given
+individual is never both
+receiver and exerter, as mentioned above). At this stage, the receiver and
+exerter are then
+considered "neighbors" - individuals that are within the maximum interaction
+distance. Some
+spatial queries stop at this stage, processing the neighbors of receivers.
+Third, receiver and exerter
+constraints are applied, potentially disqualifying some interactions;
+interacting pairs that remain
+after this cull are called "interacting neighbors". Some queries stop at this
+stage, processing the
+interacting neighbors of receivers. Fourth, for all interacting neighbors, the
+distance is converted
+into an interaction strength by an interaction function (IF), which is a
+characteristic of the
+InteractionType. Finally, this interaction strength may be modified by the
+interaction()
+callbacks currently active in the simulation, if any (see section 26.7). Some
+queries stop at this
+stage, processing the interaction strengths between interacting neighbors.
 InteractionType is actually a wrapper for three different spatial query engines
 that share some
 of their data but work very differently. The first engine is a brute-force
@@ -134,32 +160,32 @@ designed to
 optimize searches for spatially proximate points. This engine is usually used
 directly in response to
 queries involving "neighbors", such as nearestNeighbors() and
-nearestNeighborsOfPoint(). In
-SLiM, the term "neighbor" means an individual that is within the maximum
-interaction distance of
-a receiver (excluding the receiver itself) or a focal point; the neighbors of
-the receiver or point are
-therefore those that fall within the fixed radius defined by the maximum
-interaction distance. Calls
-with "neighbor" in their name explicitly use the k-d tree engine, and may
-therefore be called only
-for spatial interactions; in non-spatial interactions there is no concept of a
-"neighbor". In terms of
-computational complexity, finding the nearest neighbor of a given receiver by
-brute force would be
-an O(N) computation, whereas with the k-d tree it is typically an O(log N)
-computation - a very
-important difference, especially for large N. In general, to get the best
-performance from a spatial
-model, you should use neighbor-based calls to make minimal queries when
-possible. If all you
-really care about is the distance to the nearest neighbor of a receiver, for
-example, then use
-nearestNeighbors() to find the neighbor and then call distance() to get the
-distance to that
-neighbor, rather than getting the distances to all individuals with distance()
-and then using min()
-to select the smallest.
+nearestNeighborsOfPoint(). As
+mentioned above, the term "neighbor" means an individual that is within the
+maximum interaction
+distance of a receiver (excluding the receiver itself) or a focal point; the
+neighbors of the receiver
+or point are therefore those that fall within the fixed radius defined by the
+maximum interaction
+distance. Calls with "neighbor" in their name explicitly use the k-d tree
+engine, and may therefore
+be called only for spatial interactions; in non-spatial interactions there is no
+concept of a
+"neighbor". In terms of computational complexity, finding the nearest neighbor
+of a given receiver
+by brute force would be an O(N) computation, whereas with the k-d tree it is
+typically an O(log N)
+computation - a very important difference, especially for large N. In general,
+to get the best
+performance from a spatial model, you should use neighbor-based calls to make
+minimal queries
+when possible. If all you really care about is the distance to the nearest
+neighbor of a receiver, for
+example, then use nearestNeighbors() to find the neighbor and then call
+distance() to get the
+distance to that neighbor, rather than getting the distances to all individuals
+with distance() and
+then using min() to select the smallest.
 The third engine, introduced in SLiM 3.1 and radically modified in SLiM 4, is
 based upon a data
 structure called a "sparse array" that is designed to track sparse non-zero
@@ -167,8 +193,8 @@ values within a dataset
 that contains mostly zeros. It applies to spatial interactions because most
 pairs of individuals
 probably interact with a strength of zero (because typically N >> M, because few
-individuals fall
-within the maximum interaction radius from a given individual). In SLiM 4, the
+exerters fall
+within the maximum interaction radius from a given receiver). In SLiM 4, the
 full sparse array of
 interactions is no longer calculated (as it was in SLiM 3); instead, single rows
 of the sparse array
@@ -195,9 +221,11 @@ defined for spatial
 interactions.
 As mentioned above, once an interaction distance has been found it is translated
 into an
-interaction strength by an interaction function. There are currently five
-options for interaction
-functions (IFs) in SLiM, represented by single-character codes:
+interaction strength by an interaction function that depends upon the distance d
+between
+individuals. There are currently six options for interaction functions (IFs) in
+SLiM, represented by
+single-character codes:
 "f" - a fixed interaction strength. This IF type has a single parameter, the
 interaction strength to
 be used for all interactions of this type. By default, interaction types use a
@@ -213,15 +241,15 @@ maximum interaction strength fmax, the formula for this IF is f(d) = fmax(1 −
 d / dmax).
 "e" - A negative exponential interaction strength. This IF type is specified by
 two parameters, a
-maximum interaction strength and a shape parameter. The interaction strength
-falls off non-
-linearly from the maximum, and cuts off discontinuously at the maximum distance;
-typically a
+maximum interaction strength and a rate (inverse scale) parameter. The
+interaction strength falls off
+non-linearly from the maximum, and cuts off discontinuously at the maximum
+distance; typically a
 maximum distance is chosen such that the interaction strength at that distance
 is very small
 anyway. The IF for this type is f(d) = fmaxexp(−λd), where λ is the specified
-shape parameter. Note
-that this parameterization is not the same as for the Eidos function rexp().
+rate parameter. Note that
+this parameterization is not the same as for the Eidos function rexp().
 "n" - A normal interaction strength (i.e., Gaussian, but "g" is avoided to
 prevent confusion with
 the gamma-function option provided for, e.g., MutationType). The interaction
@@ -251,36 +279,95 @@ for this type is f(d) = fmax/(1+(d/λ)2), where λ is the scale parameter. Note
 that this parameterization
 is not the same as for the Eidos function rcauchy(). A Cauchy distribution can
 be used to model
+interactions with relatively fat tails, but for spatiality greater than 1D, the
+t-distribution (type "t")
+with degrees of freedom larger than one might be a better choice since the
+interaction function as
+we define it with the Cauchy distribution is not normalizable in more than one
+dimension.
+"t" - A t-distributed interaction strength. The interaction strength falls off
+non-linearly from the
+maximum, and cuts off discontinuously at the maximum distance; typically a
+maximum distance is
+chosen such that the interaction strength at that distance is very small anyway.
+This IF type is
+specified by three parameters: a maximum interaction strength, the "degrees of
+freedom" of the tdistribution
+ν (which must be greater than the spatial dimension minus one), and a scale
+parameter
+τ. The IF for this type is f(d) = fmax/(1+(d/τ)2/ν)−(ν+1)/2. The t-distribution
+can be used to model
 interactions with relatively fat tails.
 An InteractionType may be created using the initializeInteractionType() function
 (see
-section 24.1). It must then be evaluated, with the evaluate() method, for the
+section 25.1). It is often then configured with a specific interaction function,
+using
+setInteractionFunction(), and perhaps a set of interaction constraints for
+receivers and/or
+exerters, using setConstraints(). It must then be evaluated, with the evaluate()
+method, for the
+subpopulations containing exerters and receivers before it will respond to
+queries regarding
+individuals in those subpopulations; querying with exerters or receivers whose
 subpopulations
-containing exerters and receivers before it will respond to queries regarding
-individuals in those
-subpopulations; querying with exerters or receivers whose subpopulations have
-not been
-evaluated will result in an error. Calling evaluate() causes the positions of
-all receivers and
-exerters to be cached, thus defining a snapshot in time that the InteractionType
-will then use to
-respond to queries (allowing it to build its k-d tree based upon the snapshot
-positions). In WF
-models, this evaluated state will last until the current parental generation
-expires, at the end of the
-next offspring-generation stage. Before the InteractionType may be used with the
-new parental
-generation (the offspring of the old parental generation), the interaction must
-be evaluated again.
-In nonWF models, interactions are invalidated twice during the tick cycle: once
-after new offspring
-are produced (just before early() events), and once just before individuals die
-(just after fitness
-calculations); they are also invalidated any time takeMigrants() is called to
-move individuals
-between subpopulations. Note that interaction() callbacks are called when
-queries are served,
-not when evaluate() is called.
+have not been evaluated will result in an error. Calling evaluate() causes the
+positions of all
+receivers and exerters to be cached, thus defining a snapshot in time that the
+InteractionType will
+then use to respond to queries (allowing it to build its k-d tree based upon the
+snapshot positions).
+In WF models, this evaluated state will last until the current parental
+generation expires, at the end
+of the next offspring-generation stage. Before the InteractionType may be used
+with the new
+parental generation (the offspring of the old parental generation), the
+interaction must be evaluated
+again. In nonWF models, interactions are invalidated twice during the tick
+cycle: once after new
+offspring are produced (just before early() events), and once just before
+individuals die (just after
+fitness calculations); they are also invalidated any time takeMigrants() is
+called to move
+individuals between subpopulations. Note that interaction() callbacks are called
+when queries
+are served, not when evaluate() is called.
+As mentioned above, InteractionType supports eligibility constraints for both
+receivers and
+exerters, configured with setConstraints(). The snapshot taken by evaluate()
+also encompasses
+information about which individuals satisfy any configured exerter constraints;
+changing the state
+of individuals after evaluate() is called will not change whether those
+individuals are qualified to
+act as exerters in interactions. However - caveat lector - it does not encompass
+the corresponding
+constraint information about receivers! Changing the state of individuals (in
+particular, their tag /
+tagL0 / tagL1 / tagL2 / tagL3 / tagL4 values) after evaluate() is called may
+cause individuals to
+become qualified, or to become disqualified, to act as receivers, because
+receiver constraints are
+evaluated at query time, not at evaluate() time. This small discrepancy in
+InteractionType's
+conceptual model was chosen for performance reasons, but it can be regarded as a
+feature, not a
+bug, since it allows the receivers for each query to be tailored without
+re-evaluating the interaction
+type. In any case, if you need receiver constraints to be cached at evaluate()
+time you can
+evaluate those constraints yourself, in script, and cache the result in an
+Individual property such
+as tagL0, and then use that property as the receiver criterion for the
+interaction, thereby using the
+eligibility status that you precalculated and cached. This approach is also
+useful for enforcing
+complex eligibility constraints, for either receivers or exerters, that go
+beyond what
+InteractionType supports intrinsically; you can always calculate eligibility
+yourself, cache the
+result in a property such as tagL0, and use that property as the interaction
+type's receiver
+constraint.
 InteractionType will automatically account for any periodic spatial boundaries
 established
 with the periodicity parameter of initializeSLiMOptions(); interactions will
@@ -291,13 +378,14 @@ periodic spatial boundaries entail some additional overhead in both memory usage
 and processor
 time; in particular, setting up the k-d tree after the interaction is evaluated
 may take many times
-longer than in the non-periodic case (but this is rarely a bottleneck anyway).
-Once the k-d tree has
-been set up, responses to spatial queries involving it should then be nearly as
-fast as in the non-
-periodic case. Spatial queries that do not involve the k-d tree will generally
-be marginally slower
-than in the non-periodic case, but the difference should not be large.
+longer than in the non-periodic case (but this is rarely a bottleneck anyway
+since it is quite fast).
+Once the k-d tree has been set up, responses to spatial queries involving it
+should then be nearly
+as fast as in the non-periodic case. Spatial queries that do not involve the k-d
+tree will generally
+be marginally slower than in the non-periodic case, but the difference should
+not be large.
 InteractionType provides a fairly large and confusingly similar set of methods,
 designed to
 answer every common type of spatial query efficiently. To help find the right
@@ -305,29 +393,31 @@ method for the job,
 here is a summary of the methods that involve distances or interaction
 strengths, either between
 receivers and exerters, or between a focal point and exerters:
-Consider whether you want to query for neighbors (all individual near the
+Consider whether you want to query for neighbors (all individuals near the
 receiver), for
 interacting neighbors (nearby individuals that exert an interaction strength
 upon the receiver,
 regardless of what that strength is), or for something about the actual
 interaction strengths. In
-general, the simpler queries will be faster; finding neighbors is faster than
-finding interacting
-neighbors, which is in turn faster than actually evaluating strengths.
-Furthermore, counting
-individuals is faster than actually returning the individuals in question. The
-last three methods in
-the table have to evaluate the interaction strength between a receiver and every
-exerter that
-interacts with it, so they can be quite slow; if you can, for example, simply
-count the number of
-neighbors with neighborCount(), rather than using totalOfNeighborStrengths() to
-sum up their
-interaction strengths, the former will likely be significantly faster than the
-latter. As has been
-mentioned above, for best performance the maximum interaction distance should be
-set to as
-small a value as possible.
+general, the simpler queries will be faster; finding neighbors or interacting
+neighbors is going to be
+faster than actually evaluating strengths. Furthermore, counting individuals is
+faster than actually
+returning the individuals in question. The last three methods in the table have
+to evaluate the
+interaction strength between a receiver and every exerter that interacts with
+it, so they can be fairly
+slow; if you can, for example, simply count the number of neighbors with
+neighborCount(), or
+count the number of interacting neighbors with interactingNeighborCount(),
+rather than using
+totalOfNeighborStrengths() to sum up their interaction strengths, the former
+alternatives will
+likely be significantly faster than the latter. Finally, as has been mentioned
+above, for best
+performance the maximum interaction distance should be set to as small a value
+as possible; this
+point is crucial for performance.
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{clippedIntegral}}}
@@ -343,8 +433,10 @@ This class has the following methods (functions):
 \item{\code{\link{nearestNeighborsOfPoint}}}
 \item{\code{\link{neighborCount}}}
 \item{\code{\link{neighborCountOfPoint}}}
+\item{\code{\link{setConstraints}}}
 \item{\code{\link{setInteractionFunction}}}
 \item{\code{\link{strength}}}
+\item{\code{\link{testConstraints}}}
 \item{\code{\link{totalOfNeighborStrengths}}}
 \item{\code{\link{unevaluate}}}
 }
@@ -369,11 +461,11 @@ otherwise. }
 \item{sexSegregation}{A property of type integer or float or logical or
 string or string or integer. It is of length one (a singleton). This property
 is a constant, so it is not modifiable. \strong{Property Description:} The
-sex-segregation of the interaction, as specified in initializeInteractionType().
-For non- sexual simulations, this will be "**". For sexual simulations, this
-string value indicates the sex of individuals feeling the interaction, and the
-sex of individuals exerting the interaction; see initializeInteractionType() for
-details. }
+sex-segregation of the interaction, as specified in initializeInteractionType()
+or with setConstraints(). For non-sexual simulations, this will be "**". For
+sexual simulations, this string value indicates the sex of individuals feeling
+the interaction, and the sex of individuals exerting the interaction; see
+initializeInteractionType() for details. }
 \item{spatiality}{A property of type integer or float or logical or string
 or string or integer. It is of length one (a singleton). This property is a
 constant, so it is not modifiable. \strong{Property Description:} The spatial
@@ -410,8 +502,10 @@ Other InteractionType:
 \code{\link{nearestNeighbors}()},
 \code{\link{neighborCountOfPoint}()},
 \code{\link{neighborCount}()},
+\code{\link{setConstraints}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
+\code{\link{testConstraints}()},
 \code{\link{totalOfNeighborStrengths}()},
 \code{\link{unevaluate}()}
 }

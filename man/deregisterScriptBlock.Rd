@@ -42,18 +42,18 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=637}{SLiM manual: page
-637}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=666}{SLiM manual: page
+666}.
 
 All SLiMEidosBlock objects specified by scriptBlocks (either with
 SLiMEidosBlock objects or with integer identifiers) will be scheduled for
 deregistration. The deregistered blocks remain valid, and may even still be
-executed in the current stage of the current tick (see section 25.11); the
+executed in the current stage of the current tick (see section 26.11); the
 blocks are not actually deregistered and deallocated until sometime after the
 currently executing script block has completed. To immediately prevent a script
 block from executing, even when it is scheduled to execute in the current stage
 of the current tick, use the active property of the script block (see sections
-24.12.1 and 25.11).
+25.12.1 and 26.11).
 
 Documentation for this function can be found in the official
 \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
@@ -104,7 +104,8 @@ Other Community:
 \code{\link{scriptBlocksWithIDs}()},
 \code{\link{simulationFinished}()},
 \code{\link{speciesWithIDs}()},
-\code{\link{subpopulationsWithIDs}()}
+\code{\link{subpopulationsWithIDs}()},
+\code{\link{usage}()}
 
 Other SLiMSim: 
 \code{\link{SS}},

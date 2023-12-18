@@ -34,8 +34,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=642}{SLiM manual: page
-642}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=672}{SLiM manual: page
+672}.
 
 Returns T if the genome contains a mutation of type mutType at
 position, F otherwise (if returnMutation has its default value of F; see

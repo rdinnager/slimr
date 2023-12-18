@@ -26,13 +26,13 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=640}{SLiM manual: page
-640}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=670}{SLiM manual: page
+670}.
 
 Add the existing mutations in mutations to the genome, if they are
 not already present (if they are already present, they will be ignored), and
 if the addition is not prevented by the mutation stacking policy (see the
-mutationStackPolicy property of MutationType, section 24.11.1). Calling this
+mutationStackPolicy property of MutationType, section 25.11.1). Calling this
 will normally affect the fitness values calculated toward the end of the
 current tick; if you want current fitness values to be affected, you can call
 the Species method recalculateFitness() - but see the documentation of that

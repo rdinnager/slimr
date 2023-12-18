@@ -9,6 +9,8 @@ be used by all mutations of the mutation type.
 "g" – A gamma-distributed fitness effect. This DFE type is specified by two parameters, a mean
 value and a shape parameter. The gamma distribution from which mutations are drawn is given by
 the probability density function P(s | α,β) = [Γ(α)βα]−1sα−1exp(−s/β), where α is the shape parameter,
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 705
 and the specified mean for the distribution is equal to αβ. Note that this parameterization is the
 same as for the Eidos function rgamma(). A gamma distribution is often used to model deleterious
 mutations at functional sites.
@@ -23,6 +25,11 @@ by the probability density function P(s | μ,σ) = (2πσ2)−1/2exp(−(s−μ)
 is the standard deviation. This parameterization is the same as for the Eidos function rnorm(). A
 normal distribution is often used to model mutations that can be either beneficial or deleterious,
 since both tails of the distribution are unbounded.
+"p" – A Laplace-distributed fitness effect. This DFE type is specified by two parameters, a mean
+and a scale. The Laplace distribution from which mutations are drawn is given by the probability
+density function P(s | μ,b) = exp(−|s−μ|/b)/2b, where μ is the mean and b is the scale parameter. A
+Laplace distribution is sometimes used to model a mix of both deleterious and beneficial
+mutations.
 "w" – A Weibull-distributed fitness effect. This DFE type is specified by a scale parameter and a
 shape parameter. The Weibull distribution from which mutations are drawn is given by the
 probability density function P(s | λ,k) = (k/λk)sk−1exp(−(s/λ)k), where λ is the scale parameter and k is

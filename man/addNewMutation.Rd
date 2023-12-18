@@ -47,8 +47,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=641}{SLiM manual: page
-641}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=671}{SLiM manual: page
+671}.
 
 Add new mutations to the target genome(s) with the specified
 mutationType (specified by the MutationType object or by integer identifier),
@@ -59,7 +59,7 @@ originSubpop (specified by the Subpopulation object or by integer identifier,
 or by NULL, the default, to specify the subpopulation to which the first target
 genome belongs). If originSubpop is supplied as an integer, it is intentionally
 not checked for validity; you may use arbitrary values of originSubpop to "tag"
-the mutations that you create (see section 24.10.1). The addNewDrawnMutation()
+the mutations that you create (see section 25.10.1). The addNewDrawnMutation()
 method may be used instead if you wish selection coefficients to be drawn
 from the mutation types of the mutations. In non-nucleotide-based models,
 mutationType will always be a non-nucleotide-based mutation type, and so
@@ -70,17 +70,17 @@ must be supplied for nucleotide, specifying the nucleotide(s) to be associated
 with the new mutation(s). Nucleotides may be specified with string values ("A",
 "C", "G", or "T"), or with integer values (A=0, C=1, G=2, T=3). If a nucleotide
 mutation already exists at the mutating position, it is replaced automatically
-in accordance with the stacking policy for nucleotide- based mutation types. No
+in accordance with the stacking policy for nucleotidebased mutation types. No
 check is performed that a new mutation's nucleotide differs from the ancestral
 sequence, or that its selection coefficient is consistent with other mutations
 that may already exist at the given position with the same nucleotide; model
 consistency is the responsibility of the model. The new mutations created by
 this method are returned, even if their actual addition is prevented by the
 mutation stacking policy (see the mutationStackPolicy property of MutationType,
-section 24.11.1). However, the order of the mutations in the returned vector
+section 25.11.1). However, the order of the mutations in the returned vector
 is not guaranteed to be the same as the order in which the values are specified
 in parameter vectors, unless the position parameter is specified in ascending
-order. In other words, pre- sorting the parameters to this method into ascending
+order. In other words, presorting the parameters to this method into ascending
 order by position, using order() and subsetting, will guarantee that the order
 of the returned vector of mutations corresponds to the order of elements in
 the parameters to this method; otherwise, no such guarantee exists. Beginning

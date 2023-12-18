@@ -37,8 +37,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=706}{SLiM manual: page
-706}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=751}{SLiM manual: page
+751}.
 
 Calculates the FST between two Genome vectors - typically, but not
 necessarily, the genomes that constitute two different subpopulations (which
@@ -78,7 +78,7 @@ they were at different sites. One could regard these choices as embodying an
 infinite-sites interpretation of the segregating mutations. In most biologically
 realistic models, such genetic states will be quite rare, and so the impact of
 these choices will be negligible; however, in some models these distinctions may
-be important. FST = 1 − HS HT
+be important.
 }
 \section{Copyright}{
 

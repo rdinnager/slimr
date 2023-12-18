@@ -14,7 +14,7 @@ set up with an initial configuration. Simulation configuration in SLiM is done
 in initialize()
 callbacks that run prior to the beginning of simulation execution. Eidos
 callbacks are discussed
-more broadly in chapter 25, but for our present purposes, the idea is very
+more broadly in chapter 26, but for our present purposes, the idea is very
 simple. In your input
 file, you can write something like this:
 initialize()
@@ -102,19 +102,6 @@ the entire
 community. In single-species models, these functions may be called from an
 ordinary
 initialize() callback for simplicity and backward compatibility.
-Once all initialize() callbacks have executed, in the order in which they are
-specified in the
-SLiM input file, the simulation will begin. The tick number at which it starts
-is determined by the
-Eidos events you have defined (see section 25.1); the first tick in which an
-Eidos event is scheduled
-to execute is the tick at which the simulation starts. Similarly, the simulation
-will terminate after
-the last tick for which a script block (either an event or a callback) is
-registered to execute, unless
-the stop() function or the simulationFinished() method of Community or Species
-are called to
-end the simulation earlier.
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{initializeAncestralNucleotides}}}

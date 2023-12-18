@@ -26,8 +26,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=639}{SLiM manual: page
-639}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
+668}.
 
 Find and return the SLiMEidosBlock objects with id values matching the
 values in ids. If no matching SLiMEidosBlock object can be found with a given
@@ -60,7 +60,8 @@ Other Community:
 \code{\link{rescheduleScriptBlock}()},
 \code{\link{simulationFinished}()},
 \code{\link{speciesWithIDs}()},
-\code{\link{subpopulationsWithIDs}()}
+\code{\link{subpopulationsWithIDs}()},
+\code{\link{usage}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

@@ -27,8 +27,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=670}{SLiM manual: page
-670}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=705}{SLiM manual: page
+705}.
 
 Set the mutation type of the mutation to mutType (which may be
 specified as either an integer identifier or a MutationType object). This

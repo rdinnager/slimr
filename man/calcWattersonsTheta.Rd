@@ -35,8 +35,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=708}{SLiM manual: page
-708}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=753}{SLiM manual: page
+753}.
 
 Calculates Watterson's theta (a metric of genetic diversity comparable
 to heterozygosity) for a vector of genomes, based upon the mutations in the

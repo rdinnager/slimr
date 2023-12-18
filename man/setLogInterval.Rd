@@ -29,8 +29,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
-668}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=703}{SLiM manual: page
+703}.
 
 Sets the automatic logging interval. A logInterval of NULL stops
 automatic logging immediately. Other values request that a new row should be

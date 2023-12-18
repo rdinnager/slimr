@@ -191,7 +191,7 @@ slimr_code_from_text_whiles <- function(code) {
   ## add slimr_special__ keyword to while statements to make R parse it OK.
   stringr::str_replace_all(code,
                            "(while[:blank:]*\\((.*?)\\))[:blank:]*;",
-                           "\\1slimr_special__")
+                           "\n\\1slimr_special__")
 }
 
 slimr_code_from_text_primes <- function(code) {

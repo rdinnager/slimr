@@ -57,8 +57,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=643}{SLiM manual: page
-643}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=673}{SLiM manual: page
+673}.
 
 Returns an object vector of all the mutations that are of the type
 specified by mutType, out of all of the mutations in the genome. If you just
@@ -82,8 +82,8 @@ objects in SLiM. This method is provided for speed; it is much faster than the
 corresponding Eidos code.
 
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=680}{SLiM manual: page
-680}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=721}{SLiM manual: page
+721}.
 
 Returns an object vector of all the mutations that are of the type
 specified by mutType, out of all of the mutations that are currently active in
@@ -178,6 +178,7 @@ Other SLiMSim:
 
 Other Species: 
 \code{\link{Sp}},
+\code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{individualsWithPedigreeIDs}()},
@@ -194,7 +195,16 @@ Other Species:
 \code{\link{registerModifyChildCallback}()},
 \code{\link{registerMutationCallback}()},
 \code{\link{registerMutationEffectCallback}()},
-\code{\link{registerRecombinationCallback}()}
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{registerSurvivalCallback}()},
+\code{\link{simulationFinished}()},
+\code{\link{skipTick}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqOutput}()},
+\code{\link{treeSeqRememberIndividuals}()},
+\code{\link{treeSeqSimplify}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

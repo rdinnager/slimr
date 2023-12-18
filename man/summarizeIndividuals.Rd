@@ -52,8 +52,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=708}{SLiM manual: page
-708}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=753}{SLiM manual: page
+753}.
 
 Returns a vector, matrix, or array that summarizes spatial patterns
 of information related to the individuals in individuals. In essence, those
@@ -79,7 +79,7 @@ dims might be c(50,100) to request that the returned matrix have 50 rows and
 100 columns. The result vector/matrix/array is in the correct orientation to
 be directly usable as a spatial map, by passing it to the defineSpatialMap()
 method of Subpopulation. For further discussion of dimensionality and
-spatiality, see section 24.1 on initializeInteractionType(), and section 24.8
+spatiality, see section 25.1 on initializeInteractionType(), and section 25.8
 on InteractionType. The spatialBounds parameter defines the spatial boundaries
 within which the individuals are binned. Typically this is the spatial bounds of
 a particular subpopulation, within which the individuals reside; for individuals
@@ -96,7 +96,7 @@ the summary is being produced with spatiality "y". To produce the result, a
 grid with dimensions defined by dims is conceptually stretched out across the
 given spatial bounds, such that the centers of the edge and corner grid squares
 are aligned with the limits of the spatial bounds. This matches the way that
-defineSpatialMap() defines its maps; see section 15.11 for illustration. The
+defineSpatialMap() defines its maps; see section 16.11 for illustration. The
 particular summary produced depends upon the parameters operation and empty.
 Consider a single grid square represented by a single element in the result.
 That grid square contains zero or more of the individuals in individuals. If

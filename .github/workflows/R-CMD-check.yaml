@@ -3,10 +3,10 @@ on:
     branches:
       - master
       - develop
-      - revisions2
   pull_request:
     branches:
       - master
+      - develop
 
 name: R-CMD-check
 

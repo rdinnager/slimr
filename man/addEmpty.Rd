@@ -6,7 +6,7 @@
 \alias{.P$addEmpty}
 \title{SLiM method addEmpty}
 \usage{
-addEmpty(sex, genome1Null, genome2Null)
+addEmpty(sex, genome1Null, genome2Null, count)
 }
 \arguments{
 \item{sex}{An object of type null or float or string. Must be of length 1 (a
@@ -17,10 +17,12 @@ singleton). The default value is \code{NULL}. See details for description.}
 
 \item{genome2Null}{An object of type null or logical. Must be of length 1 (a
 singleton). The default value is \code{NULL}. See details for description.}
+
+\item{count}{An object of type integer. Must be of length 1 (a singleton). The
+default value is \code{1}. See details for description.}
 }
 \value{
-An object of type null or Individual object. Return will be of length 1
-(a singleton)
+An object of type Individual object.
 }
 \description{
 Documentation for SLiM function \code{addEmpty}, which is a method of the SLiM
@@ -34,8 +36,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=692}{SLiM manual: page
-692}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=734}{SLiM manual: page
+734}.
 
 Generates a new offspring individual with empty genomes (i.e.,
 containing no mutations), queues it for addition to the target subpopulation,
@@ -59,7 +61,14 @@ what SLiM would do anyway. In all other simulations there is little point in
 passing F (since that would be the default behavior anyway), but passing T can
 be used to make one or both genomes be null genomes, which can be useful for,
 e.g., modeling haploids (for which, by convention, the second genome is usually
-a null genome in SLiM). Note that this method is only for use in nonWF models.
+a null genome in SLiM). Beginning in SLiM 4.1, the count parameter dictates
+how many offspring will be generated (previously, exactly one offspring was
+generated). Each offspring is generated independently, based upon the given
+parameters. The returned vector contains all generated offspring, except those
+that were rejected by a modifyChild() callback. If all offspring are rejected,
+object<Individual>(0) is returned, which is a zero-length object vector of
+class Individual; note that this is a change in behavior from earlier versions,
+which would return NULL. Note that this method is only for use in nonWF models.
 See addCrossed() for further general notes on the addition of new offspring
 individuals.
 }
@@ -81,17 +90,20 @@ Other Subpopulation:
 \code{\link{addCrossed}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
+\code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
+\code{\link{pointDeviated}()},
 \code{\link{pointInBounds}()},
 \code{\link{pointPeriodic}()},
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
 \code{\link{setCloningRate}()},

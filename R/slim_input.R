@@ -93,7 +93,7 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
                      .groups = "drop")
   if(pops$sim_sex[1] == "H") {
     pops <- pops %>%
-      dplyr::select(-.data$sex_ratio)
+      dplyr::select(-"sex_ratio")
   }
   tmp <-tempfile()
   readr::write_delim(pops, tmp, " ", col_names = FALSE)
@@ -174,7 +174,7 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
     dplyr::mutate("pop_ind" := paste(.data$pop, .data$ind, sep = ":"),
                   "genome_1" := paste(.data$pop, .data$gen_1, sep = ":"),
                   "genome_2" := paste(.data$pop, .data$gen_2, sep = ":")) %>%
-    dplyr::select(.data$pop_ind, .data$sex, .data$genome_1, .data$genome_2)
+    dplyr::select(dplyr::all_of(c("pop_ind", "sex", "genome_1", "genome_2")))
   # if(!is.null(ind_coord)) {
   #   inds <- inds %>%
   #     dplyr::mutate("coords" := ind_coord)
@@ -209,7 +209,7 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
   gen_type <- matrix(rep("A", n_gen), nrow = n_inds, byrow = TRUE)
   #}
   gens_txt <- purrr::pmap_chr(list(purrr::array_branch(inds %>%
-                                                     dplyr::select(-.data$pop_ind, -.data$sex) %>%
+                                                     dplyr::select(-dplyr::any_of(c("pop_ind", "sex"))) %>%
                                                      as.matrix(), 1),
                                purrr::array_branch(gen_type, 1),
                                one_genome,

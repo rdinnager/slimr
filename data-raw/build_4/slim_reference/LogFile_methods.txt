@@ -5,8 +5,6 @@ either NULL (which will write out NA), or a singleton value of any non-object ty
 The context parameter will be set up as a pseudo-parameter, named context, when source is
 called, allowing the same source code to be used to generate values for multiple data columns; you
 might, for example, provide the particular Subpopulation object here that you wish source to use
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 666
 for its calculations. This is optional; if the default value of NULL is used, then context will be NULL
 when source is called.
 See addMeanSDColumns() for a useful variant.
@@ -20,6 +18,8 @@ Adds a new data column that provides the cycle stage, named cycle_stage. The sta
 a string, and will typically be "first", "early", "late", or "end" (the latter used for the point in
 time at which end-of-tick automatic logging occurs). Other possible values are discussed in the
 documentation for the cycleStage property of Community, which this column reflects.
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 701
 – (void)addKeysAndValuesFrom(object$ source)
 This Dictionary method has an override in LogFile to make it illegal to call, since LogFile
 manages its Dictionary entries.
@@ -32,8 +32,8 @@ by its mean and standard deviation respectively. If the result vector has exactl
 standard deviation will be written as NA. The context parameter is set up as a pseudo-parameter
 when source is called, as described in addCustomColumn().
 – (void)addPopulationSexRatio([No<Species>$ species = NULL])
-Adds a new data column that provides the population sex ratio M:(M+F) for species. In single-
-species models, species may be NULL to indicate that single species. The column will simply be
+Adds a new data column that provides the population sex ratio M:(M+F) for species. In singlespecies
+models, species may be NULL to indicate that single species. The column will simply be
 named sex_ratio in single-species models; an underscore and the name of the species will be
 appended in multispecies models. If the species is hermaphroditic, NA will be written.
 – (void)addPopulationSize([No<Species>$ species = NULL])
@@ -53,8 +53,6 @@ undefined, and will be written as NA. A different value may (optionally) be prov
 setSuppliedValue() with a value for columnName. That value will be used for the column the next
 time a row is generated (whether automatically or by a call to logRow()), and the column’s value will
 subsequently be undefined again. In other words, for any given logged row the default of NA may be
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 667
 kept, or a different value may be supplied. This allows the value for the column to be set at any point
 during the tick cycle, which can be convenient if the column’s value depends upon transient state that
 is no longer available at the time the row is logged.
@@ -68,6 +66,8 @@ Flushes all buffered data to the output file, synchronously. This will make the 
 disk be up-to-date with the running simulation. Flushing frequently may entail a small performance
 penalty. More importantly, if .gz compression has been requested with compress=T the size of the
 resulting file will be larger – potentially much larger – if flush() is called frequently. Note that
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 702
 automatic periodic flushing can be requested with the flushInterval parameter to
 createLogFile().
 – (void)logRow(void)
@@ -102,8 +102,6 @@ column will not be of one consistent type). See addSuppliedColumn() for further 
 – (void)setValue(string$ key, * value)
 This Dictionary method has an override in LogFile to make it illegal to call, since LogFile
 manages its Dictionary entries.
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 668
 – (logical$)willAutolog(void)
 Returns T if the log file is configured to log a new row automatically at the end of the current tick;
 otherwise, returns F. This is useful for calculating a value that will be logged only in ticks when the

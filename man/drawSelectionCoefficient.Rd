@@ -27,12 +27,12 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=674}{SLiM manual: page
-674}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=709}{SLiM manual: page
+709}.
 
 Draws and returns a vector of n selection coefficients using the
 currently defined distribution of fitness effects (DFE) for the target mutation
-type. See section 24.11 above for discussion of the supported distributions
+type. See section 25.11 above for discussion of the supported distributions
 and their uses. If the DFE is type "s", this method will result in synchronous
 execution of the DFE's script.
 }

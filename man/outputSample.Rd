@@ -39,25 +39,25 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=697}{SLiM manual: page
-697}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=740}{SLiM manual: page
+740}.
 
 Output a random sample from the subpopulation in SLiM's native format
-(see section 26.2.1 for output format details). A sample of genomes (not entire
+(see section 27.2.1 for output format details). A sample of genomes (not entire
 individuals, note) of size sampleSize from the subpopulation will be output. The
-sample may be done either with or without replacement, as speciﬁed by replace;
+sample may be done either with or without replacement, as specified by replace;
 the default is to sample with replacement. A particular sex of individuals may
 be requested for the sample, for simulations in which sex is enabled, by passing
 "M" or "F" for requestedSex; passing "*", the default, indicates that genomes
 from individuals should be selected randomly, without respect to sex. If the
 sampling options provided by this method are not adequate, see the output()
-method of Genome for a more ﬂexible low-level option. If the optional parameter
+method of Genome for a more flexible low-level option. If the optional parameter
 filePath is NULL (the default), output will be sent to Eidos's output stream
-(see section 4.2.1). Otherwise, output will be sent to the ﬁlesystem path
-speciﬁed by filePath, overwriting that ﬁle if append if F, or appending to the
+(see section 4.2.1). Otherwise, output will be sent to the filesystem path
+specified by filePath, overwriting that file if append if F, or appending to the
 end of it if append is T. See outputMSSample() and outputVCFSample() for other
 output formats. Output is generally done in a late() event, so that the output
-reﬂects the state of the simulation at the end of a tick.
+reflects the state of the simulation at the end of a tick.
 }
 \section{Copyright}{
 
@@ -78,16 +78,19 @@ Other Subpopulation:
 \code{\link{addEmpty}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
+\code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputVCFSample}()},
+\code{\link{pointDeviated}()},
 \code{\link{pointInBounds}()},
 \code{\link{pointPeriodic}()},
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
 \code{\link{setCloningRate}()},

@@ -27,8 +27,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=679}{SLiM manual: page
-679}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=720}{SLiM manual: page
+720}.
 
 Immediately kills the individuals in individuals. This removes them
 from their subpopulation and gives them an index value of -1. The Individual
@@ -45,7 +45,7 @@ the model script. In WF models, mortality is managed automatically by the SLiM
 core when the new offspring generation becomes the parental generation and the
 previous parental generation dies; mortality does not otherwise occur in WF
 models. In nonWF models, mortality normally occurs during the survival stage
-of the tick cycle (see section 23.4), based upon the fitness values calculated
+of the tick cycle (see section 24.4), based upon the fitness values calculated
 by SLiM, and survival() callbacks can influence the outcome of that survival
 stage. Calls to killIndividuals(), on the other hand, can be made at any time
 during first(), early(), or late() events, and the result cannot be modified by
@@ -67,6 +67,7 @@ on the official website: \url{https://messerlab.org/slim/}
 \seealso{
 Other Species: 
 \code{\link{Sp}},
+\code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{individualsWithPedigreeIDs}()},
@@ -83,7 +84,16 @@ Other Species:
 \code{\link{registerModifyChildCallback}()},
 \code{\link{registerMutationCallback}()},
 \code{\link{registerMutationEffectCallback}()},
-\code{\link{registerRecombinationCallback}()}
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{registerSurvivalCallback}()},
+\code{\link{simulationFinished}()},
+\code{\link{skipTick}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqOutput}()},
+\code{\link{treeSeqRememberIndividuals}()},
+\code{\link{treeSeqSimplify}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

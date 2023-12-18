@@ -28,8 +28,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=668}{SLiM manual: page
-668}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
+702}.
 
 Flushes all buffered data to the output file, synchronously. This will
 make the contents of the file on disk be up-to-date with the running simulation.

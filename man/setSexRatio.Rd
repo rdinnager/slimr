@@ -27,8 +27,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=700}{SLiM manual: page
-700}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=744}{SLiM manual: page
+744}.
 
 Set the sex ratio of this subpopulation to sexRatio. As defined
 in SLiM, this is actually the fraction of the subpopulation that is male;
@@ -36,7 +36,7 @@ in other words, the M:(M+F) ratio. This will take effect when children are
 next generated; it does not change the current subpopulation state. Unlike
 the selfing rate, the cloning rate, and migration rates, the sex ratio is
 deterministic: SLiM will generate offspring that exactly satisfy the requested
-sex ratio (within integer roundoff limits). See section 22.2.1 for further
+sex ratio (within integer roundoff limits). See section 23.2.1 for further
 details.
 }
 \section{Copyright}{
@@ -58,17 +58,20 @@ Other Subpopulation:
 \code{\link{addEmpty}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
+\code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
+\code{\link{pointDeviated}()},
 \code{\link{pointInBounds}()},
 \code{\link{pointPeriodic}()},
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
 \code{\link{setCloningRate}()},

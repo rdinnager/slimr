@@ -31,8 +31,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=710}{SLiM manual: page
-710}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=755}{SLiM manual: page
+755}.
 
 Returns a Dictionary containing top-level metadata from the .trees
 (tree-sequence) file at filePath. If userData is T (the default), the top-level
@@ -41,7 +41,7 @@ that can optionally be supplied to treeSeqOutput() in its metadata parameter, so
 it makes it easy to recover metadata that you attached to the tree sequence when
 it was saved. If userData is F, the entire top-level metadata Dictionary object
 is returned; this can be useful for examining the values of other keys under the
-SLiM key (see section 26.4), or values inside the top-level dictionary itself
+SLiM key (see section 27.4), or values inside the top-level dictionary itself
 that might have been placed there by msprime or other software. This function
 can be used to read in parameter values or other saved state (tag property
 values, for example), in order to resuscitate the complete state of a simulation

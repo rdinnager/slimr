@@ -44,8 +44,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=640}{SLiM manual: page
-640}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=670}{SLiM manual: page
+670}.
 
 Add new mutations to the target genome(s) with the specified
 mutationType (specified by the MutationType object or by integer identifier),
@@ -56,7 +56,7 @@ anyway, as other uses of this property have been deprecated), and originSubpop
 the default, to specify the subpopulation to which the first target genome
 belongs). If originSubpop is supplied as an integer, it is intentionally not
 checked for validity; you may use arbitrary values of originSubpop to "tag" the
-mutations that you create (see section 24.10.1). The selection coefficients of
+mutations that you create (see section 25.10.1). The selection coefficients of
 the mutations are drawn from their mutation types; addNewMutation() may be used
 instead if you wish to specify selection coefficients. In non-nucleotide-based
 models, mutationType will always be a non-nucleotide-based mutation type, and so
@@ -67,7 +67,7 @@ must be supplied for nucleotide, specifying the nucleotide(s) to be associated
 with the new mutation(s). Nucleotides may be specified with string values ("A",
 "C", "G", or "T"), or with integer values (A=0, C=1, G=2, T=3). If a nucleotide
 mutation already exists at the mutating position, it is replaced automatically
-in accordance with the stacking policy for nucleotide- based mutation types. No
+in accordance with the stacking policy for nucleotidebased mutation types. No
 check is performed that a new mutation's nucleotide differs from the ancestral
 sequence, or that its selection coefficient is consistent with other mutations
 that may already exist at the given position with the same nucleotide; model
@@ -75,14 +75,14 @@ consistency is the responsibility of the model. Beginning in SLiM 2.5 this
 method is vectorized, so all of these parameters may be singletons (in which
 case that single value is used for all mutations created by the call) or
 non-singleton vectors (in which case one element is used for each corresponding
-mutation created). Non- singleton parameters must match in length, since their
-elements need to be matched up one- to-one. The new mutations created by this
+mutation created). Nonsingleton parameters must match in length, since their
+elements need to be matched up oneto- one. The new mutations created by this
 method are returned, even if their actual addition is prevented by the mutation
 stacking policy (see the mutationStackPolicy property of MutationType, section
-24.11.1). However, the order of the mutations in the returned vector is not
+25.11.1). However, the order of the mutations in the returned vector is not
 guaranteed to be the same as the order in which the values are specified in
 parameter vectors, unless the position parameter is specified in ascending
-order. In other words, pre- sorting the parameters to this method into ascending
+order. In other words, presorting the parameters to this method into ascending
 order by position, using order() and subsetting, will guarantee that the order
 of the returned vector of mutations corresponds to the order of elements in the
 parameters to this method; otherwise, no such guarantee exists. Beginning in

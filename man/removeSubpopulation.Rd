@@ -26,12 +26,12 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=698}{SLiM manual: page
-698}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=743}{SLiM manual: page
+743}.
 
 Removes this subpopulation from the model. The subpopulation is
 immediately removed from the list of active subpopulations, and the symbol
-representing the subpopulation is undeﬁned. The subpopulation object itself
+representing the subpopulation is undefined. The subpopulation object itself
 remains unchanged until children are next generated (at which point it is
 deallocated), but it is no longer part of the simulation and should not be
 used. Note that this method is only for use in nonWF models, in which there
@@ -62,17 +62,20 @@ Other Subpopulation:
 \code{\link{addEmpty}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
+\code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
+\code{\link{pointDeviated}()},
 \code{\link{pointInBounds}()},
 \code{\link{pointPeriodic}()},
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{removeSpatialMap}()},
 \code{\link{sampleIndividuals}()},
 \code{\link{setCloningRate}()},
 \code{\link{setMigrationRates}()},

@@ -78,8 +78,8 @@ operation; you should think carefully about what side effects might result
 changes that might affect fitness values).
 
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=684}{SLiM manual: page
-684}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=725}{SLiM manual: page
+725}.
 
 Force an immediate recalculation of fitness values for all individuals
 in all subpopulations. Normally fitness values are calculated at a fixed
@@ -89,18 +89,18 @@ affects fitness calculations, and if you wish those changes to take effect
 immediately rather than taking effect at the next automatic recalculation, you
 may call recalculateFitness() to force an immediate recalculation and recache.
 The optional parameter tick provides the tick for which mutationEffect() and
-fitnessEffect() callbacks should be selected; if it is NULL (the default),
-the current tick value for the simulation, community.tick, is used. If you
-call recalculateFitness() in an early() event in a WF model, you may wish
-this to be community.tick - 1 in order to utilize the mutationEffect() and
-fitnessEffect() callbacks for the previous tick, as if the changes that you have
-made to fitness- influencing parameters were already in effect at the end of the
-previous tick when the new generation was first created and evaluated (usually
-it is simpler to just make such changes in a late() event instead, however, in
-which case calling recalculateFitness() is probably not necessary at all since
-fitness values will be recalculated immediately afterwards). Regardless of the
-value supplied for tick here, community.tick inside callbacks will report the
-true tick number, so if your callbacks consult that parameter in order to create
+fitnessEffect() callbacks should be selected; if it is NULL (the default), the
+current tick value for the simulation, community.tick, is used. If you call
+recalculateFitness() in an early() event in a WF model, you may wish this to be
+community.tick - 1 in order to utilize the mutationEffect() and fitnessEffect()
+callbacks for the previous tick, as if the changes that you have made to
+fitnessinfluencing parameters were already in effect at the end of the previous
+tick when the new generation was first created and evaluated (usually it is
+simpler to just make such changes in a late() event instead, however, in which
+case calling recalculateFitness() is probably not necessary at all since fitness
+values will be recalculated immediately afterwards). Regardless of the value
+supplied for tick here, community.tick inside callbacks will report the true
+tick number, so if your callbacks consult that parameter in order to create
 tick-specific fitness effects you will need to handle the discrepancy somehow.
 (Similar considerations apply for nonWF models that call recalculateFitness()
 in a late() event, which is also not advisable in general.) After this call,
@@ -166,6 +166,7 @@ Other SLiMSim:
 
 Other Species: 
 \code{\link{Sp}},
+\code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{individualsWithPedigreeIDs}()},
@@ -182,7 +183,16 @@ Other Species:
 \code{\link{registerModifyChildCallback}()},
 \code{\link{registerMutationCallback}()},
 \code{\link{registerMutationEffectCallback}()},
-\code{\link{registerRecombinationCallback}()}
+\code{\link{registerRecombinationCallback}()},
+\code{\link{registerReproductionCallback}()},
+\code{\link{registerSurvivalCallback}()},
+\code{\link{simulationFinished}()},
+\code{\link{skipTick}()},
+\code{\link{subsetMutations}()},
+\code{\link{treeSeqCoalesced}()},
+\code{\link{treeSeqOutput}()},
+\code{\link{treeSeqRememberIndividuals}()},
+\code{\link{treeSeqSimplify}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer

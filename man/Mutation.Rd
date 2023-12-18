@@ -35,14 +35,14 @@ This property is a constant, so it is not modifiable. \strong{Property
 Description:} T if the mutation has fixed (in the SLiM sense of having been
 converted to a Substitution object), F otherwise. Since fixed/substituted
 mutations are removed from the simulation, you will only see this flag be T if
-you have held onto a mutation beyond its usual lifetime (see section 27.2). }
+you have held onto a mutation beyond its usual lifetime (see section 28.2). }
 \item{isSegregating}{A property of type logical. It is of length one
 (a singleton). This property is a constant, so it is not modifiable.
 \strong{Property Description:} T if the mutation is segregating (in the SLiM
 sense of not having been either lost or converted to a Substitution object), F
 otherwise. Since both lost and fixed/substituted mutations are removed from the
 simulation, you will only see this flag be F if you have held onto a mutation
-beyond its usual lifetime (see section 27.2). Note that if isSegregating is F,
+beyond its usual lifetime (see section 28.2). Note that if isSegregating is F,
 isFixed will let you determine whether the mutation is no longer segregating
 because it was lost, or because it fixed. }
 \item{mutationType}{A property of type MutationType object. It is of length
@@ -71,7 +71,7 @@ Description:} The position in the chromosome of this mutation. }
 from the distribution of fitness effects of its MutationType. If a mutation
 has a selectionCoeff of s, the multiplicative fitness effect of the mutation
 in a homozygote is 1+s; in a heterozygote it is 1+hs, where h is the dominance
-coefficient kept by the mutation type (see section 24.11.1). Note that this
+coefficient kept by the mutation type (see section 25.11.1). Note that this
 property has a quirk: it is stored internally in SLiM using a single-precision
 float, not the double-precision float type normally used by Eidos. This means
 that if you set a mutation mut's selection coefficient to some number x,

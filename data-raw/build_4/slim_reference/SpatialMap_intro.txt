@@ -1,0 +1,23 @@
+This class represents a “spatial map”: a grid of values overlaid across a simulated spatial
+landscape, representing some variable that varies across space. This variable could be something
+environmental (elevation, temperature), something that affects local dynamics (local carryingcapacity
+density, local mean dispersal distance), or anything else needed for the model (years since
+the last wildfire in that location, for example). A new spatial map is created with the
+defineSpatialMap() method of Subpopulation, because spatial maps are tightly associated with
+subpopulations; in particular, they must share the spatial bounds of any subpopulation to which
+they have been added, because the spatial map’s grid of values is overlaid onto those spatial
+bounds.
+There is a constructor for SpatialMap, but it is only used to copy an existing spatial map:
+(object<SpatialMap>$)SpatialMap(string$ name, object<SpatialMap>$ map)
+Creates a new SpatialMap object that is a copy of map, named name.
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 711
+That can be useful if you wish to derive a new spatial map from an existing map, but it is not
+very commonly used. Usually a new map is created with defineSpatialMap(), often using spatial
+data from a PNG image file that has been loaded using the Eidos class Image. If you wish to add a
+spatial map to additional subpopulations, beyond the subpopulation for which the map was
+originally defined, the Subpopulation method addSpatialMap() can be used to do so, thereby
+sharing the map across more than one subpopulation.
+The SpatialMap class was added in SLiM 4.1; before that, spatial maps were a sub-component
+of Subpopulation. Splitting spatial maps out into their own class provides more flexibility to
+extend their capabilities in the future.

@@ -27,8 +27,8 @@ full SLiM script.
 }
 \details{
 Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=660}{SLiM manual: page
-660}.
+\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=693}{SLiM manual: page
+693}.
 
 Snapshots model state in preparation for the use of the interaction,
 for the receiver and exerter subpopulations specified by subpops. The
@@ -37,31 +37,35 @@ objects. This method will discard all previously cached data for the
 subpopulation(s), and will cache the current spatial positions of all
 individuals they contain (so that the spatial positions of those individuals
 may then change without disturbing the state of the interaction at the moment
-of evaluation). Particular interaction distances and strengths are not computed
-by evaluate(), and interaction() callbacks will not be called in response to
-this method; that work is deferred until required to satisfy a query (at which
-point the tick and cycle counters may have advanced, so be careful with the
-tick ranges used in defining interaction() callbacks). You must explicitly call
-evaluate() at an appropriate time in the tick cycle before the interaction is
-used, but after any relevant changes have been made to the population. SLiM
-will invalidate any existing interactions after any portion of the tick cycle
-in which new individuals have been born or existing individuals have died. In a
-WF model, this occurs just before late() events execute (see the WF tick cycle
-diagram in chapter 22), so late() events are often the appropriate place to put
-evaluate() calls, but first() or early() events can work too if the interaction
-is not needed until that point in the tick cycle anyway. In nonWF models, on
-the other hand, new offspring are produced just before early() events and then
-individuals die just before late() events (see the nonWF tick cycle diagram in
-chapter 23), so interactions will be invalidated twice during each tick cycle.
-This means that in a nonWF model, an interaction that influences reproduction
-should usually be evaluated in a first() event, while an interaction that
-influences fitness or mortality should usually be evaluated in an early() event
-(and an interaction that affects both may need to be evaluated at both times).
-If an interaction is never evaluated for a given subpopulation, it is guaranteed
-that there will be essentially no memory or computational overhead associated
-with the interaction for that subpopulation. Furthermore, attempting to query
-an interaction for a receiver or exerter in a subpopulation that has not been
-evaluated is guaranteed to raise an error.
+of evaluation). It will also cache which individuals in the subpopulation are
+eligible to act as exerters, according to the configured exerter constraints,
+but it will not cache such eligibility information for receiver constraints
+(which are applied at the time a spatial query is made). Particular interaction
+distances and strengths are not computed by evaluate(), and interaction()
+callbacks will not be called in response to this method; that work is deferred
+until required to satisfy a query (at which point the tick and cycle counters
+may have advanced, so be careful with the tick ranges used in defining
+interaction() callbacks). You must explicitly call evaluate() at an appropriate
+time in the tick cycle before the interaction is used, but after any relevant
+changes have been made to the population. SLiM will invalidate any existing
+interactions after any portion of the tick cycle in which new individuals have
+been born or existing individuals have died. In a WF model, this occurs just
+before late() events execute (see the WF tick cycle diagram in chapter 23),
+so late() events are often the appropriate place to put evaluate() calls, but
+first() or early() events can work too if the interaction is not needed until
+that point in the tick cycle anyway. In nonWF models, on the other hand, new
+offspring are produced just before early() events and then individuals die
+just before late() events (see the nonWF tick cycle diagram in chapter 24), so
+interactions will be invalidated twice during each tick cycle. This means that
+in a nonWF model, an interaction that influences reproduction should usually be
+evaluated in a first() event, while an interaction that influences fitness or
+mortality should usually be evaluated in an early() event (and an interaction
+that affects both may need to be evaluated at both times). If an interaction is
+never evaluated for a given subpopulation, it is guaranteed that there will be
+essentially no memory or computational overhead associated with the interaction
+for that subpopulation. Furthermore, attempting to query an interaction for a
+receiver or exerter in a subpopulation that has not been evaluated is guaranteed
+to raise an error.
 }
 \section{Copyright}{
 
@@ -89,8 +93,10 @@ Other InteractionType:
 \code{\link{nearestNeighbors}()},
 \code{\link{neighborCountOfPoint}()},
 \code{\link{neighborCount}()},
+\code{\link{setConstraints}()},
 \code{\link{setInteractionFunction}()},
 \code{\link{strength}()},
+\code{\link{testConstraints}()},
 \code{\link{totalOfNeighborStrengths}()},
 \code{\link{unevaluate}()}
 }

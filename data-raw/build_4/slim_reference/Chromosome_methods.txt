@@ -17,12 +17,14 @@ For purposes related to interpreting the nucleotide sequence as a coding sequenc
 "codon" is also supported. This format will return an integer vector with values from 0 to 63, based
 upon successive nucleotide triplets in the sequence (which, for this format, must have a length that is a
 multiple of three). The codon value for a given nucleotide triplet XYZ is 16X + 4Y + Z, where X, Y,
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 661
 and Z have the usual values A=0, C=1, G=2, T=3. For example, the triplet AAA has a codon value of
 0, AAC is 1, AAG is 2, AAT is 3, ACA is 4, and on upward to TTT which is 63. If the nucleotide
 sequence AACACATTT is requested in codon format, the codon vector 1 4 63 will therefore be
 returned. These codon values can be useful in themselves; they can also be passed to
 codonsToAminoAcids() to translate them into the corresponding amino acid sequence if desired (see
-section 24.17.1).
+section 25.18.1).
 – (integer)drawBreakpoints([No<Individual>$ parent = NULL], [Ni$ n = NULL])
 Draw recombination breakpoints, using the chromosome’s recombination rate map, the current gene
 conversion parameters, and (in some cases – see below) any active and applicable recombination()
@@ -30,8 +32,6 @@ callbacks. The number of breakpoints to generate, n, may be supplied; if it is N
 number of breakpoints will be drawn based upon the overall recombination rate and the chromosome
 length (following the standard procedure in SLiM). Note that if the double-stranded breaks model has
 been chosen, the number of breakpoints generated will probably not be equal to the number
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 632
 requested, because most breakpoints will entail gene conversion tracts, which entail additional
 crossover breakpoints.
 It is generally recommended that the parent individual be supplied to this method, but parent is NULL
@@ -52,7 +52,7 @@ strand (which is usually desirable), they should do that themselves.
 – (integer$)setAncestralNucleotides(is sequence)
 This method, which may be called only in nucleotide-based models (see section 1.8), replaces the
 ancestral nucleotide sequence for the model. The sequence parameter is interpreted exactly as it is in
-the initializeAncestralSequence() function; see that documentation for details (section 24.1).
+the initializeAncestralSequence() function; see that documentation for details (section 25.1).
 The length of the ancestral sequence is returned.
 It is unusual to replace the ancestral sequence in a running simulation, since the nucleotide states of
 segregating and fixed mutations will depend upon the original ancestral sequence. It can be useful
@@ -64,11 +64,13 @@ numeric$ simpleConversionFraction, [numeric$ bias = 0])
 This method switches the recombination model to the “double-stranded break (DSB)” model (if it is
 not already set to that), and configures the details of the gene conversion tracts that will therefore be
 modeled (see section 1.5.6 for discussion of the “DSB” recombination model). The meanings and
-effects of the parameters exactly mirror the initializeGeneConversion() function; see section 24.1
+effects of the parameters exactly mirror the initializeGeneConversion() function; see section 25.1
 for details.
 – (void)setHotspotMap(numeric multipliers, [Ni ends = NULL], [string$ sex = "*"])
 In nucleotide-based models, set the mutation rate multiplier along the chromosome. There are two
 ways to call this method. If the optional ends parameter is NULL (the default), then multipliers
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 662
 must be a singleton value that specifies a single multiplier to be used along the entire chromosome. If,
 on the other hand, ends is supplied, then multipliers and ends must be the same length, and the
 values in ends must be specified in ascending order. In that case, multipliers and ends taken
@@ -82,8 +84,6 @@ sexes (which is the only option for hermaphroditic simulations). In sexual simul
 "M" or "F" instead, in which case the supplied hotspot map is used only for that sex. Note that
 whether sex-specific hotspot maps will be used is set by the way that the simulation is initially
 configured with initializeHotspot(), and cannot be changed with this method; so if the
-TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
-events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 633
 simulation was set up to use sex-specific hotspot maps then sex must be "M" or "F" here, whereas if it
 was set up not to, then sex must be "*" or unsupplied here. If a simulation needs sex-specific hotspot
 maps only some of the time, the male and female maps can simply be set to be identical the rest of
@@ -105,8 +105,8 @@ be "M" or "F" instead, in which case the supplied mutation rate map is used only
 that whether sex-specific mutation rate maps will be used is set by the way that the simulation is
 initially configured with initializeMutationRate(), and cannot be changed with this method; so if
 the simulation was set up to use sex-specific mutation rate maps then sex must be "M" or "F" here,
-whereas if it was set up not to, then sex must be "*" or unsupplied here. If a simulation needs sex-
-specific mutation rate maps only some of the time, the male and female maps can simply be set to be
+whereas if it was set up not to, then sex must be "*" or unsupplied here. If a simulation needs sexspecific
+mutation rate maps only some of the time, the male and female maps can simply be set to be
 identical the rest of the time.
 The mutation rate intervals are normally a constant in simulations, so be sure you know what you are
 doing.
@@ -121,6 +121,8 @@ and the values in ends must be specified in ascending order. In that case, rates
 together specify the recombination rates to be used along successive contiguous stretches of the
 chromosome, from beginning to end; the last position specified in ends should extend to the end of
 the chromosome (as previously determined, during simulation initialization). See the
+TOC I TOC II WF nonWF initialize() Community Genome Individual LogFile Mutation Species Subpopulation
+events mutationEffect() interaction() mateChoice() modifyChild() mutation() recombination() reproduction() survival() 663
 initializeRecombinationRate() function for further discussion of precisely how these rates and
 positions are interpreted.
 If the optional sex parameter is "*" (the default), then the supplied recombination rate map will be

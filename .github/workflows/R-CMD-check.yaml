@@ -169,7 +169,7 @@ jobs:
           error-on: '"error"'
 
       - name: Upload test objects for covr
-        if: runner.os == 'Linux' && matrix.config.conda == 'no'
+        if: runner.os == 'Linux' && matrix.config.slim == 'yes'
         uses: actions/upload-artifact@master
         with:
           name: covr-test-objects

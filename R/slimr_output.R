@@ -9,7 +9,7 @@
 #'
 #' @param slimr_expr A SLiM expression to generate output. This can either be
 #' a SLiM expression designed to create output, such as \code{outputFull()},
-#' or an object created in the SLiM code, in which case \code{slimr_output}
+#' or an object created in the SLiM code, in which case \code{r_output}
 #' will automatically concatenate it to a string and output it
 #' @param name The name to use to identify this output.
 #' @param do_every How often should the output be produced? Expressed
@@ -233,6 +233,14 @@ process_output <- function(code, block_names) {
 #' @param ... Other arguments to be passed to \code{\link{r_output}}
 #' @export
 #' @examples
+#' test_sim <- slim_script(
+#'   slim_block_init_minimal(mutation_rate = 1e-6),
+#'   slim_block_add_subpops(1, 100),
+#'   slim_block(1, 20, late(), {
+#'     r_output(sim.outputFull(), "out", do_every = 10)
+#'   })
+#' )
+#' test_sim
 r_output_full <- function(name = "full_output", ...) {
   r_output(sim.outputFull(), name)
 }

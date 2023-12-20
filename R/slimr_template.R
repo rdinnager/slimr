@@ -198,7 +198,7 @@ replace_double_dots <- function(slimr_script, envir = parent.frame(), slimr_temp
 #'   slim_block_init_minimal(mutation_rate = r_template("mu", 1e-7)),
 #'   slim_block_add_subpops(1, 100),
 #'   slim_block(1, 20, late(), {
-#'     slimr_output(sim.outputFull(), "out", do_every = 10)
+#'     r_output(sim.outputFull(), "out", do_every = 10)
 #'   })
 #' )
 # slim_template_info(test_sim)

@@ -20,7 +20,7 @@ A \code{tibble} with four columns:
 }
 \description{
 This function takes output produced from a \code{slimr_script} which uses
-\code{\link{slimr_output}}, and converts it into a \code{tibble}
+\code{\link{r_output}}, and converts it into a \code{tibble}
 }
 \examples{
 if(slim_is_avail()) {
@@ -28,7 +28,7 @@ if(slim_is_avail()) {
     slim_block_init_minimal(),
     slim_block_add_subpops(1, 100),
     slim_block(1, 20, late(), {
-      slimr_output(p1$size(), "MS", do_every = 10)
+      r_output(p1$size(), "MS", do_every = 10)
     })
   ) \%>\%
     slim_run(simple = TRUE)

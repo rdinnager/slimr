@@ -36,7 +36,7 @@ if(slim_is_avail()) {
     slim_block_init_minimal(),
     slim_block_add_subpops(1, 100),
     slim_block(1, 20, late(), {
-      slimr_output(sim.outputFull(), "out", do_every = 10)
+      r_output(sim.outputFull(), "out", do_every = 10)
     })
   ) \%>\%
     slim_run()

@@ -11,9 +11,9 @@
 #' is \code{TRUE} and additionally sending all output to the R console if \code{show_output} is \code{TRUE}
 #' the script to the R console if show_output is TRUE
 #' @param capture_output If \code{TRUE}, output from the script will be captured and included in the returned object. Unless
-#' \code{keep_all_output} is \code{TRUE}, only non-data output will be kept (e.g. output not produced by a \code{slimr_output}
+#' \code{keep_all_output} is \code{TRUE}, only non-data output will be kept (e.g. output not produced by a \code{r_output}
 #' call)
-#' @param keep_all_output If there is data produced by \code{slimr_output} calls, should it be captured as well? Ignored if
+#' @param keep_all_output If there is data produced by \code{r_output} calls, should it be captured as well? Ignored if
 #' \code{capture_output} is not \code{TRUE}
 #' @param show_output Should output from the script be sent to the R console? Note that SLiM scripts can sometimes produce a
 #' large amount of output, which could overwhelm the console if you are not careful, potentially locking it up. Be careful
@@ -23,7 +23,7 @@
 #' it, typically by examining environmental variables.
 #' @param callbacks A list of functions to be called during the SLiM run. This can be used to
 #' dynamically transform or visualise output from the simulation while it is running. It should
-#' be of the form \code{function(data, ...) \{do something..\}}. If using \code{\link{slimr_output}}
+#' be of the form \code{function(data, ...) \{do something..\}}. If using \code{\link{r_output}}
 #' to get formatted data output from SLiM, data will be a four column \code{tibble}
 #' containing output from the current iteration of the simulation. Columns are:
 #' \describe{
@@ -56,7 +56,7 @@
 #' \describe{
 #' \item{output}{A character vector of raw output. Will be NULL if \code{capture_output} is \code{FALSE}}
 #' \item{exit_status}{The exit status code returned by the SLiM process. 0 means success.}
-#' \item{output_data}{A `tibble` containing output from \code{slimr_output} calls.}
+#' \item{output_data}{A `tibble` containing output from \code{r_output} calls.}
 #' \item{process}{A \code{processx} object containing information about the SLiM process used during the run.}
 #' \item{error}{If an error was encountered during the run, this will be a character vector containing the error message.}
 #' \item{output_file}{The path to the file containing captured output from SLiM during the run.}
@@ -69,7 +69,7 @@
 #'     slim_block_init_minimal(mutation_rate = 1e-6),
 #'     slim_block_add_subpops(1, 100),
 #'     slim_block(1, 20, late(), {
-#'       slimr_output(sim.outputFull(), "out", do_every = 10)
+#'       r_output(sim.outputFull(), "out", do_every = 10)
 #'     })
 #'   ) %>%
 #'     slim_run()

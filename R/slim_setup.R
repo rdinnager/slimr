@@ -144,8 +144,8 @@ slim_setup <- function(method = c("conda", "binary"),
     if(conda_env %in% l$name) {
       reticulate::conda_install(conda_env, packages = "slim", python_version = NULL)
       slimr_path <- l |>
-        dplyr::filter(name == conda_env) |>
-        dplyr::pull(path)
+        dplyr::filter(.data$name == conda_env) |>
+        dplyr::pull(.data$path)
       conda_path <- slim_conda_path(slimr_path)
     } else {
       slimr_path <- reticulate::conda_create(conda_env, packages = "slim", python_version = NULL)
@@ -224,14 +224,14 @@ get_slim_path <- function() {
   }
 }
 
-slim_get_executable <- function() {
-  slim_dir <- get_slim_dir()
-  slim_path <- slimr_which(file.path(slim_dir, "slim"))
-  if(slim_path == "" | !file.exists(slim_path)) {
-    slim_path <- slimr_which("slim")
-  }
-  slim_path
-}
+# slim_get_executable <- function() {
+#   slim_dir <- get_slim_dir()
+#   slim_path <- slimr_which(file.path(slim_dir, "slim"))
+#   if(slim_path == "" | !file.exists(slim_path)) {
+#     slim_path <- slimr_which("slim")
+#   }
+#   slim_path
+# }
 
 #' Check if SLiM is installed and \code{slimr} can find it
 #'

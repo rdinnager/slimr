@@ -4,21 +4,32 @@
 \alias{slim_setup}
 \title{Attempt to install and / or setup SLiM for use with slimr}
 \usage{
-slim_setup(verbose = TRUE, force = FALSE)
+slim_setup(
+  method = c("conda", "binary"),
+  verbose = TRUE,
+  force = FALSE,
+  install_path = default_install_path(),
+  conda_env = "slimr-conda"
+)
 }
 \arguments{
+\item{method}{The method to use to install SLiM. Currently, only "conda" and "binary" are supported.
+If "conda", then SLiM will be installed via conda using the \code{reticulate} package. If "binary",
+then SLiM will be downloaded as a precompiled executable, which is currently only available on Windows.}
+
 \item{verbose}{Whether to print out progress of the installation.}
 
 \item{force}{If \code{FALSE} (the default) \code{slim_setup} will not install SLiM if it is already
 installed and can be found. If you want to force an installation, even if SLiM is already installed
 (perhaps to install a newer version), then use \code{force=TRUE}.}
 
-\item{install_dir}{Directory to install SLiM to. If "default" `slim_setup()` will install in the default
-directory. Be careful to make sure you have write and execution permissions for the installation folder
-you specify. We recommend using the default directory "~/slim", in which case you will not have to set an
-environmental variable to tell slimr where to find your slim installation. Note that for Windows, this
-refers to a linux path from the perspective of your Windows Subsystem for Linux (WSL) distribution, not a
-Windows path.}
+\item{install_path}{If \code{method="binary"}, then this is the path to install the SLiM executable.
+If you do not use the default path, then you will need to set the \code{SLIM_PATH} environment variable
+so that slimr can find it.}
+
+\item{conda_env}{If \code{method="conda"}, then this is the name of the conda environment to install
+SLiM into. If you do not use the default name, then it may take lomger for slimr to find SLiM (which may
+increase loading times for the library).}
 }
 \description{
 `slim_setup()` will attempt to determine the user's OS and install SLiM automatically.

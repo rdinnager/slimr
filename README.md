@@ -222,7 +222,7 @@ slim_script(
   slim_block(1, 100, late(), 
     {
       #create an output 
-      slimr_output(p1.genomes.output(), "p1", do_every=10);
+      r_output(p1.genomes.output(), "p1", do_every=10);
     }),
   
     
@@ -272,14 +272,14 @@ is a tibble that holds all the information that was used during runs.
 ``` r
 str(sr)
 #> List of 6
-#>  $ output     : chr [1:42] "// Initial random seed:" "1451368211" "" "// RunInitializeCallbacks():" ...
+#>  $ output     : chr [1:42] "// Initial random seed:" "2144618663" "" "// RunInitializeCallbacks():" ...
 #>  $ exit_status: int 0
 #>  $ output_data: slmr_tp_ [10 × 5] (S3: slimr_output_data/spec_tbl_df/tbl_df/tbl/data.frame)
 #>   ..$ generation: int [1:10] 10 20 30 40 50 60 70 80 90 100
 #>   ..$ name      : chr [1:10] "p1" "p1" "p1" "p1" ...
 #>   ..$ expression: chr [1:10] "p1.genomes.output()" "p1.genomes.output()" "p1.genomes.output()" "p1.genomes.output()" ...
 #>   ..$ type      : chr [1:10] "slim_output" "slim_output" "slim_output" "slim_output" ...
-#>   ..$ data      : chr [1:10] "#OUT: 10 GS 66\nMutations:\n5 3 m1 34932 0 0.5 p1 1 7\n85 10 m1 59907 0 0.5 p1 1 11\n87 11 m1 73352 0 0.5 p1 1 "| __truncated__ "#OUT: 20 GS 66\nMutations:\n33 10 m1 59907 0 0.5 p1 1 9\n34 11 m1 73352 0 0.5 p1 1 9\n62 17 m1 92598 0 0.5 p1 1"| __truncated__ "#OUT: 30 GS 66\nMutations:\n259 10 m1 59907 0 0.5 p1 1 5\n262 11 m1 73352 0 0.5 p1 1 5\n363 38 m1 55142 0 0.5 p"| __truncated__ "#OUT: 40 GS 66\nMutations:\n145 10 m1 59907 0 0.5 p1 1 6\n152 11 m1 73352 0 0.5 p1 1 6\n25 47 m1 46832 0 0.5 p1"| __truncated__ ...
+#>   ..$ data      : chr [1:10] "#OUT: 10 GS 66\nMutations:\n55 0 m1 29518 0 0.5 p1 1 8\n57 1 m1 42672 0 0.5 p1 1 8\n62 2 m1 72096 0 0.5 p1 1 8\"| __truncated__ "#OUT: 20 GS 66\nMutations:\n177 0 m1 29518 0 0.5 p1 1 2\n181 1 m1 42672 0 0.5 p1 1 2\n190 2 m1 72096 0 0.5 p1 1"| __truncated__ "#OUT: 30 GS 66\nMutations:\n221 46 m1 27581 0 0.5 p1 1 3\n7 62 m1 29198 0 0.5 p1 1 44\n12 63 m1 47772 0 0.5 p1 "| __truncated__ "#OUT: 40 GS 66\nMutations:\n96 46 m1 27581 0 0.5 p1 1 18\n39 62 m1 29198 0 0.5 p1 1 23\n48 63 m1 47772 0 0.5 p1"| __truncated__ ...
 #>   ..- attr(*, "spec")=
 #>   .. .. cols(
 #>   .. ..   generation = col_integer(),
@@ -292,7 +292,7 @@ str(sr)
 #>  $ process    :Classes 'process', 'R6' PROCESS 'slim.exe', finished.
 #>  
 #>  $ error      : chr(0) 
-#>  $ output_file: chr "F:\\Rtemp\\RtmpG8bC0h\\file2d6c47b718ae.txt"
+#>  $ output_file: chr "F:\\Rtemp\\RtmpGMnulh\\filebf81f44115c.txt"
 #>  - attr(*, "class")= chr "slimr_results"
 
 sr$output_data
@@ -323,23 +323,23 @@ gls
 #> # A tibble: 10 × 2
 #>    generation genlight        
 #>         <int> <list>          
-#>  1         10 <genlight[,237]>
-#>  2         20 <genlight[,337]>
-#>  3         30 <genlight[,397]>
-#>  4         40 <genlight[,405]>
-#>  5         50 <genlight[,444]>
-#>  6         60 <genlight[,474]>
-#>  7         70 <genlight[,510]>
-#>  8         80 <genlight[,547]>
-#>  9         90 <genlight[,456]>
-#> 10        100 <genlight[,559]>
+#>  1         10 <genlight[,252]>
+#>  2         20 <genlight[,321]>
+#>  3         30 <genlight[,371]>
+#>  4         40 <genlight[,324]>
+#>  5         50 <genlight[,356]>
+#>  6         60 <genlight[,415]>
+#>  7         70 <genlight[,548]>
+#>  8         80 <genlight[,498]>
+#>  9         90 <genlight[,480]>
+#> 10        100 <genlight[,567]>
 
 
 #the genlight object for generation 10
 gls$genlight[[1]]
 #>  /// GENLIGHT OBJECT /////////
 #> 
-#>  // 33 genotypes,  237 binary SNPs, size: 70.3 Kb
+#>  // 33 genotypes,  252 binary SNPs, size: 72.1 Kb
 #>  0 (0 %) missing data
 #> 
 #>  // Basic content
@@ -347,13 +347,13 @@ gls$genlight[[1]]
 #> 
 #>  // Optional content
 #>    @ind.names:  33 individual labels
-#>    @loc.names:  237 locus labels
+#>    @loc.names:  252 locus labels
 #>    @position: integer storing positions of the SNPs
 #>    @other: a list containing: mut_type  prevalence
 
 #number of loci at generation 10
 nLoc(gls$genlight[[1]])
-#> [1] 237
+#> [1] 252
 ```
 
 And finally we can use a simply `lapply` to find the number of loci in

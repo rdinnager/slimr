@@ -159,7 +159,7 @@ slim_script(
   slim_block(1, 100, late(), 
     {
       #create an output 
-      slimr_output(p1.genomes.output(), "p1", do_every=10);
+      r_output(p1.genomes.output(), "p1", do_every=10);
     }),
   
     

@@ -2,14 +2,12 @@
 % Please edit documentation in R/slim_setup.R
 \name{slim_install_path}
 \alias{slim_install_path}
-\title{A simple exported version of install_path
-Returns the SLiM installation path.}
+\title{Find the SLiM executable path `slimr` is using}
 \usage{
 slim_install_path()
 }
 \description{
-A simple exported version of install_path
-Returns the SLiM installation path.
+Returns the SLiM installation path used by `slimr` to run simulations.
 }
 \examples{
 slim_install_path()

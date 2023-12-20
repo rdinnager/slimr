@@ -14,7 +14,7 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }}-${{ matrix.config.r }}-slim-${{ matrix.config.slim }}
+    name: ${{ matrix.config.os }}-${{ matrix.config.r }}-slim-${{ matrix.config.slim }}-conda-${{ matrix.config.conda }}
 
     strategy:
       fail-fast: false

@@ -180,5 +180,5 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@master
         with:
-          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
+          name: ${{ runner.os }}-${{ matrix.config.r }}-slim-${{ matrix.config.slim }}-conda-${{ matrix.config.conda }}-results
           path: check

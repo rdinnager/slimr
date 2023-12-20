@@ -87,7 +87,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
 
   ## automatically install SLiM from conda if env var SLIM_INSTALL is set to 1
   ## This used for github action testing
-  if(.slim_settings$slim_path == "" && Sys.getenv("SLIM_INSTALL", unset = 0) == 1) {
+  if(.slim_settings$slim_path == "" && Sys.getenv("SLIM_INSTALL", unset = 0) == 1 && rlang::is_installed("reticulate")) {
     slim_setup()
   }
 

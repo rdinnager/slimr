@@ -22,7 +22,7 @@ test_sim <- slim_script(
   slim_block_init_minimal(mutation_rate = 1e-6),
   slim_block_add_subpops(1, 100),
   slim_block(1, 20, late(), {
-    r_output(sim.outputFull(), "out", do_every = 10)
+    r_output_full("out", do_every = 10)
   })
 )
 test_sim

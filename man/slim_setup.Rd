@@ -28,7 +28,7 @@ If you do not use the default path, then you will need to set the \code{SLIM_PAT
 so that slimr can find it.}
 
 \item{conda_env}{If \code{method="conda"}, then this is the name of the conda environment to install
-SLiM into. If you do not use the default name, then it may take lomger for slimr to find SLiM (which may
+SLiM into. If you do not use the default name, then it may take longer for slimr to find SLiM (which may
 increase loading times for the library).}
 }
 \description{

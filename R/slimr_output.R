@@ -237,12 +237,12 @@ process_output <- function(code, block_names) {
 #'   slim_block_init_minimal(mutation_rate = 1e-6),
 #'   slim_block_add_subpops(1, 100),
 #'   slim_block(1, 20, late(), {
-#'     r_output(sim.outputFull(), "out", do_every = 10)
+#'     r_output_full("out", do_every = 10)
 #'   })
 #' )
 #' test_sim
 r_output_full <- function(name = "full_output", ...) {
-  r_output(sim.outputFull(), name)
+  r_output(sim.outputFull(), name = name, ...)
 }
 
 #' @rdname r_output_full
@@ -260,6 +260,25 @@ slimr_output_full <- r_output_full
 #' @return None
 #' @export
 #' @examples
+#' test_sim <- slim_script(
+#'   slim_block(initialize(), {
+#'
+#'     ## tell SLiM to simulate nucleotides
+#'     initializeSLiMOptions(nucleotideBased=T);
+#'     initializeAncestralNucleotides(randomNucleotides(1000));
+#'     initializeMutationTypeNuc("m1", 0.5, "f", 0.0);
+#'
+#'     initializeGenomicElementType("g1", m1, 1.0, mmJukesCantor(1e-5));
+#'     initializeGenomicElement(g1, 0, 1000 - 1);
+#'     initializeRecombinationRate(1e-8);
+#'
+#'   }),
+#'   slim_block_add_subpops(1, 100),
+#'   slim_block(1, 20, late(), {
+#'     r_output_nucleotides("out", do_every = 10)
+#'   })
+#' )
+#' test_sim
 r_output_nucleotides <- function(name = "seqs", subpops = FALSE, both_genomes = FALSE, inds = NULL, ...) {
 
   inds <- rlang::enexpr(inds)

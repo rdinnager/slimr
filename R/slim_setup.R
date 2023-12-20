@@ -27,15 +27,15 @@ find_slim_path <- function() {
   if (nzchar(path)) {
     return(normalizePath(path, mustWork = FALSE))
   }
-  ## look for slim executable in conda if reticulate is installed
-  if(rlang::is_installed("reticulate")) {
+  ## look for slim executable in conda if reticulate and conda is installed
+  if(rlang::is_installed("reticulate") && reticulate::condaenv_exists()) {
     path <- find_slim_conda()
     if (nzchar(path)) {
       return(normalizePath(path, mustWork = FALSE))
     }
   }
   ## look in default install location
-  path <- default_install_path()
+  path <- slimr_which(file.path(default_install_path(), "slim"))
   if (nzchar(path)) {
     return(normalizePath(path, mustWork = FALSE))
   }
@@ -86,7 +86,7 @@ slim_exists <- function(path) {
 #' If you do not use the default path, then you will need to set the \code{SLIM_PATH} environment variable
 #' so that slimr can find it.
 #' @param conda_env If \code{method="conda"}, then this is the name of the conda environment to install
-#' SLiM into. If you do not use the default name, then it may take lomger for slimr to find SLiM (which may
+#' SLiM into. If you do not use the default name, then it may take longer for slimr to find SLiM (which may
 #' increase loading times for the library).
 #'
 #' @export
@@ -129,7 +129,7 @@ slim_setup <- function(method = c("conda", "binary"),
 
     assert_package("reticulate")
 
-    if(is.null(reticulate::conda_binary())) {
+    if(!reticulate::condaenv_exists()) {
       if(verbose) {
         rlang::inform("Attempting to install miniconda...")
       }

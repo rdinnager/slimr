@@ -218,7 +218,7 @@ get_slim_path <- function() {
     if(Sys.getenv("SLIM_PATH") != "") {
       return(Sys.getenv("SLIM_PATH"))
     } else {
-      return(NULL)
+      return("")
     }
 
   }

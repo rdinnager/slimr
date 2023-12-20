@@ -80,7 +80,7 @@ via:
 Sys.setenv(SLIM_HOME='C:/Program Files/R/R-4.3.1/library/slimr')
 ```
 
-If you want to add this path permanently to your Rstudio installation
+If you want to add this path permanently to your RStudio installation
 (so no need to run `Sys.setenv()` every time) you can use the command
 `usethis::edit_r_environ()` and add a line like
 `SLIMR_HOME='C:/Program Files/R/R-4.3.1/library/slimr'` to this file.
@@ -272,14 +272,14 @@ is a tibble that holds all the information that was used during runs.
 ``` r
 str(sr)
 #> List of 6
-#>  $ output     : chr [1:42] "// Initial random seed:" "524845972" "" "// RunInitializeCallbacks():" ...
+#>  $ output     : chr [1:42] "// Initial random seed:" "16746825" "" "// RunInitializeCallbacks():" ...
 #>  $ exit_status: int 0
 #>  $ output_data: slmr_tp_ [10 × 5] (S3: slimr_output_data/spec_tbl_df/tbl_df/tbl/data.frame)
 #>   ..$ generation: int [1:10] 10 20 30 40 50 60 70 80 90 100
 #>   ..$ name      : chr [1:10] "p1" "p1" "p1" "p1" ...
 #>   ..$ expression: chr [1:10] "p1.genomes.output()" "p1.genomes.output()" "p1.genomes.output()" "p1.genomes.output()" ...
 #>   ..$ type      : chr [1:10] "slim_output" "slim_output" "slim_output" "slim_output" ...
-#>   ..$ data      : chr [1:10] "#OUT: 10 GS 66\nMutations:\n60 3 m1 91517 0 0.5 p1 1 3\n156 8 m1 42112 0 0.5 p1 1 6\n140 18 m1 58247 0 0.5 p1 1"| __truncated__ "#OUT: 20 GS 66\nMutations:\n43 8 m1 42112 0 0.5 p1 1 12\n219 18 m1 58247 0 0.5 p1 1 2\n13 32 m1 49150 0 0.5 p1 "| __truncated__ "#OUT: 30 GS 66\nMutations:\n171 8 m1 42112 0 0.5 p1 1 8\n19 32 m1 49150 0 0.5 p1 1 18\n21 33 m1 60590 0 0.5 p1 "| __truncated__ "#OUT: 40 GS 66\nMutations:\n171 8 m1 42112 0 0.5 p1 1 12\n60 32 m1 49150 0 0.5 p1 1 12\n63 33 m1 60590 0 0.5 p1"| __truncated__ ...
+#>   ..$ data      : chr [1:10] "#OUT: 10 GS 66\nMutations:\n69 0 m1 46350 0 0.5 p1 1 3\n71 1 m1 59468 0 0.5 p1 1 3\n75 2 m1 86813 0 0.5 p1 1 3\"| __truncated__ "#OUT: 20 GS 66\nMutations:\n23 45 m1 63426 0 0.5 p1 1 23\n28 46 m1 92926 0 0.5 p1 1 23\n3 48 m1 41410 0 0.5 p1 "| __truncated__ "#OUT: 30 GS 66\nMutations:\n53 45 m1 63426 0 0.5 p1 1 33\n62 46 m1 92926 0 0.5 p1 1 33\n250 61 m1 66086 0 0.5 p"| __truncated__ "#OUT: 40 GS 66\nMutations:\n33 45 m1 63426 0 0.5 p1 1 40\n45 46 m1 92926 0 0.5 p1 1 40\n319 61 m1 66086 0 0.5 p"| __truncated__ ...
 #>   ..- attr(*, "spec")=
 #>   .. .. cols(
 #>   .. ..   generation = col_integer(),
@@ -292,7 +292,7 @@ str(sr)
 #>  $ process    :Classes 'process', 'R6' PROCESS 'slim.exe', finished.
 #>  
 #>  $ error      : chr(0) 
-#>  $ output_file: chr "F:\\Rtemp\\RtmpgbqoPJ\\file5fc41a19ddf.txt"
+#>  $ output_file: chr "F:\\Rtemp\\RtmpaSsQ0w\\file8820721a6b8b.txt"
 #>  - attr(*, "class")= chr "slimr_results"
 
 sr$output_data
@@ -323,23 +323,23 @@ gls
 #> # A tibble: 10 × 2
 #>    generation genlight        
 #>         <int> <list>          
-#>  1         10 <genlight[,265]>
-#>  2         20 <genlight[,305]>
-#>  3         30 <genlight[,399]>
-#>  4         40 <genlight[,437]>
-#>  5         50 <genlight[,450]>
-#>  6         60 <genlight[,565]>
-#>  7         70 <genlight[,577]>
-#>  8         80 <genlight[,531]>
+#>  1         10 <genlight[,284]>
+#>  2         20 <genlight[,363]>
+#>  3         30 <genlight[,351]>
+#>  4         40 <genlight[,408]>
+#>  5         50 <genlight[,436]>
+#>  6         60 <genlight[,438]>
+#>  7         70 <genlight[,564]>
+#>  8         80 <genlight[,557]>
 #>  9         90 <genlight[,603]>
-#> 10        100 <genlight[,553]>
+#> 10        100 <genlight[,594]>
 
 
 #the genlight object for generation 10
 gls$genlight[[1]]
 #>  /// GENLIGHT OBJECT /////////
 #> 
-#>  // 33 genotypes,  265 binary SNPs, size: 73.3 Kb
+#>  // 33 genotypes,  284 binary SNPs, size: 74.7 Kb
 #>  0 (0 %) missing data
 #> 
 #>  // Basic content
@@ -347,13 +347,13 @@ gls$genlight[[1]]
 #> 
 #>  // Optional content
 #>    @ind.names:  33 individual labels
-#>    @loc.names:  265 locus labels
+#>    @loc.names:  284 locus labels
 #>    @position: integer storing positions of the SNPs
 #>    @other: a list containing: mut_type  prevalence
 
 #number of loci at generation 10
 nLoc(gls$genlight[[1]])
-#> [1] 265
+#> [1] 284
 ```
 
 And finally we can use a simply `lapply` to find the number of loci in

@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>setDistribution</code>, which is a method of the
-SLiM class <code><a href="MutationType.html">MutationType</a></code>.
+SLiM class <code><a href="MutationType_Class.html">MutationType</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -121,8 +121,8 @@ singleton). See details for description.</p></dd>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=674" class="external-link">SLiM manual: page
-674</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=709" class="external-link">SLiM manual: page
+709</a>.</p>
 <p>Set the distribution of fitness effects for a mutation type. The
 distributionType may be "f", in which case the ellipsis ... should supply a
 numeric$ fixed selection coefficient; "e", in which case the ellipsis should
@@ -131,9 +131,11 @@ supply a numeric$ mean selection coefficient for the exponential distribution;
 coefficient and a numeric$ alpha shape parameter for a gamma distribution; "n",
 in which case the ellipsis should supply a numeric$ mean selection coefficient
 and a numeric$ sigma (standard deviation) parameter for a normal distribution;
-"w", in which case the ellipsis should supply a numeric$ λ scale parameter and a
+"p", in which case the ellipsis should supply a numeric$ mean selection
+coefficient and a numeric$ scale parameter for a Laplace distribution; "w",
+in which case the ellipsis should supply a numeric$ λ scale parameter and a
 numeric$ k shape parameter for a Weibull distribution; or "s", in which case the
-ellipsis should supply a string$ Eidos script parameter. See section 24.11 above
+ellipsis should supply a string$ Eidos script parameter. See section 25.11 above
 for discussions of these distributions and their uses. The DFE for a mutation
 type is normally a constant in simulations, so be sure you know what you are
 doing.</p>
@@ -153,7 +155,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other MutationType: 
-<code><a href="MutationType.html">MT</a></code>,
+<code><a href="MutationType_Class.html">MutationType</a></code>,
 <code><a href="drawSelectionCoefficient.html">drawSelectionCoefficient</a>()</code></p></div>
     </div>
     <div id="author">

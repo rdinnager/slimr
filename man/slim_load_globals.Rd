@@ -31,9 +31,11 @@ globals but are only available inside certain callbacks.}
 None
 }
 \description{
-
-}
-\details{
+This function loads R objects to stand in for standard Globals used in SLiM.
+These will be available in the global environment and can be used to aid in
+autocompletion and help retrieval, saving typing of this pattern: \code{p1\%.\%Subpopulation$setSubpopulationSize(N)} --
+instead one can just type: \code{p1$setSubpopulationSize(N)}: this will be replaced by correct SLiM code:
+\code{p1.setSubpopulationSize(N)}
 By default this will load ten of each of the standard SLiM Globals (e.g. objects prefixed with "p",
 "m", "i", "g", and "s"), as well as the "sim" and "self" singular Globals. Note: be careful with
 this function. If you have any objects in your R session's global environment with these names

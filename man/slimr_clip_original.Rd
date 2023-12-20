@@ -16,3 +16,9 @@ The code as a string (invisibly)
 \description{
 Copy original slimrlang code used to create a slimr_script object to the clipboard
 }
+\examples{
+test <- minimal_slimr_script()
+if(rlang::is_installed("clipr") && interactive()) {
+    slimr_clip_original("test")
+}
+}

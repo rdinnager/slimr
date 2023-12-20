@@ -57,11 +57,14 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
                                                         "sim.subpopulations.individuals.x",
                                                         "sim.subpopulations.individuals.y",
                                                         "sim.subpopulations.individuals.z",
-                                                        "setSeed"
+                                                        "setSeed",
+                                                        "defineConstant",
+                                                        "sim.mutations",
+                                                        "sim.mutations.position",
+                                                        "sim.subpopulations.individuals",
+                                                        "sim.subpopulations.individuals.genomes.containsMutations",
+                                                        "size"
                                                         ))
-
-
-
 
 .onAttach <- function(libname, pkgname) {
 

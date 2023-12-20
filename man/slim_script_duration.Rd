@@ -17,3 +17,14 @@ A \code{slimr_script} object with new duration
 \description{
 Set the duration of a slimr_script
 }
+\examples{
+test_sim <- slim_script(
+  slim_block_init_minimal(mutation_rate = 1e-6),
+  slim_block_add_subpops(1, 100),
+  slim_block(1, 20, late(), {
+    slimr_output(sim.outputFull(), "out", do_every = 10)
+  })
+)
+
+slim_script_duration(test_sim, 100)
+}

@@ -37,8 +37,22 @@ the \code{furrr} package and will use the plan set by \code{future::\link[future
 the script to be modified in another program such as SLiMGUI, and then reimported into R, while maintaining
 `slimr` features. See details for more information on how this works.}
 }
+\value{
+A rendered `slimr_script_coll` object
+}
 \description{
 If your \code{slimr_script} object has made use of special \code{slimrlang}
 syntax \code{\link{slimr_template}}, this function will 'render' the \code{slimr_script}
 into valid SLiM syntax, ready to be run with SLiM or \code{\link{slim_run}}
+}
+\examples{
+test_sim <- slim_script(
+  slim_block_init_minimal(mutation_rate = r_template("mu", 1e-7)),
+  slim_block_add_subpops(1, 100),
+  slim_block(1, 20, late(), {
+    slimr_output(sim.outputFull(), "out", do_every = 10)
+  })
+) \%>\%
+  slim_script_render(data.frame(mu = c(1e-7, 1e-6, 1e-5)))
+test_sim
 }

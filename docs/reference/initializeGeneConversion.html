@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>initializeGeneConversion</code>, which is a
-method of the SLiM class <code><a href="Initialize.html">Initialize</a></code>.
+method of the SLiM class <code><a href="Initialize_Class.html">Initialize</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -102,31 +102,40 @@ full SLiM script.</p>
 <span>  <span class="va">nonCrossoverFraction</span>,</span>
 <span>  <span class="va">meanLength</span>,</span>
 <span>  <span class="va">simpleConversionFraction</span>,</span>
-<span>  <span class="va">bias</span></span>
+<span>  <span class="va">bias</span>,</span>
+<span>  <span class="va">redrawLengthsOnFailure</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>nonCrossoverFraction</dt>
-<dd><p>An object of type numeric or numeric or numeric or
-numeric. Must be of length 1 (a singleton). See details for description.</p></dd>
+<dd><p>An object of type numeric or numeric or numeric
+or numeric or logical. Must be of length 1 (a singleton). See details for
+description.</p></dd>
 
 
 <dt>meanLength</dt>
-<dd><p>An object of type numeric or numeric or numeric or numeric.
-Must be of length 1 (a singleton). See details for description.</p></dd>
+<dd><p>An object of type numeric or numeric or numeric or numeric or
+logical. Must be of length 1 (a singleton). See details for description.</p></dd>
 
 
 <dt>simpleConversionFraction</dt>
 <dd><p>An object of type numeric or numeric or numeric
-or numeric. Must be of length 1 (a singleton). See details for description.</p></dd>
+or numeric or logical. Must be of length 1 (a singleton). See details for
+description.</p></dd>
 
 
 <dt>bias</dt>
-<dd><p>An object of type numeric or numeric or numeric or numeric. Must
-be of length 1 (a singleton). The default value is <code>0</code>. See details for
-description.</p></dd>
+<dd><p>An object of type numeric or numeric or numeric or numeric or
+logical. Must be of length 1 (a singleton). The default value is <code>0</code>. See
+details for description.</p></dd>
+
+
+<dt>redrawLengthsOnFailure</dt>
+<dd><p>An object of type numeric or numeric or numeric
+or numeric or logical. Must be of length 1 (a singleton). The default value is
+<code>F</code>. See details for description.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -138,8 +147,8 @@ description.</p></dd>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=618" class="external-link">SLiM manual: page
-618</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=647" class="external-link">SLiM manual: page
+647</a>.</p>
 <p>Calling this function switches the recombination model from a "simple
 crossover" model to a "double-stranded break (DSB)" model, and configures
 the details of the gene conversion tracts that will therefore be modeled
@@ -157,7 +166,24 @@ G/C mutations over A/T mutations, and -1.0 indicating an absolute preference
 for A/T mutations over G/C mutations. A non-zero bias may only be set in
 nucleotide-based models (see section 1.8). This function, and the way that gene
 conversion is modeled, fundamentally changed in SLiM 3.3; see section 1.5.6 for
-discussion.</p>
+discussion. Beginning in SLiM 4.1, the redrawLengthsOnFailure parameter can be
+used to modify the internal mechanics of layout of gene conversion tracts. If it
+is F (the default, and the only behavior supported before SLiM 4.1), then if an
+attempt to lay out gene conversion tracts fails (because the tracts overlap each
+other, or overlap the start or end of the chromosome), SLiM will try again by
+drawing new positions for the tracts - essentially shuffling the tracts around
+to try to find positions for them that don't overlap. If redrawLengthsOnFailure
+is T, then if an attempt to lay out gene conversion tracts fails, SLiM will
+try again by drawing new lengths for the tracts, as well as new positions. This
+makes it more likely that layout will succeed, but risks biasing the realized
+mean tract length downward from the requested mean length (since layout of long
+tracts is more likely fail due to overlap). In either case, if SLiM attempts to
+lay out gene conversion tracts 100 times without success, an error will result.
+That error indicates that the specified constraints for gene conversion are
+difficult to satisfy - tracts may commonly be so long that it is difficult or
+impossible to find an acceptable layout for them within the specified chromosome
+length. Setting redrawLengthsOnFailure to T may mitigate this problem, at the
+price of biasing the mean tract length downward as discussed.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -174,7 +200,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Initialize: 
-<code><a href="Initialize.html">Init</a></code>,
+<code><a href="Initialize_Class.html">Initialize</a></code>,
 <code><a href="initializeAncestralNucleotides.html">initializeAncestralNucleotides</a>()</code>,
 <code><a href="initializeGenomicElementType.html">initializeGenomicElementType</a>()</code>,
 <code><a href="initializeGenomicElement.html">initializeGenomicElement</a>()</code>,

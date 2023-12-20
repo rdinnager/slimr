@@ -45,7 +45,6 @@ on the official website: \url{https://messerlab.org/slim/}
 }
 
 \examples{
-# From page 714 of the SLiM Manual
 slim_block(mutationEffect(), {
   if (homozygous) {
     return(1.0 + mut.selectionCoeff);

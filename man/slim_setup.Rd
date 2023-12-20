@@ -25,7 +25,7 @@ Windows path.}
 Note that on Windows, this will attempt to download a precompiled executable.
 }
 \examples{
-\dontrun{
-slim_setup()
+if(interactive()) {
+  slim_setup()
 }
 }

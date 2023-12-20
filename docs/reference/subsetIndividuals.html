@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>subsetIndividuals</code>, which is a method of
-the SLiM class <code><a href="Subpopulation.html">Subpopulation</a></code>.
+the SLiM class <code><a href="Subpopulation_Class.html">Subpopulation</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -98,7 +98,19 @@ full SLiM script.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">subsetIndividuals</span><span class="op">(</span><span class="va">exclude</span>, <span class="va">sex</span>, <span class="va">tag</span>, <span class="va">minAge</span>, <span class="va">maxAge</span>, <span class="va">migrant</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">subsetIndividuals</span><span class="op">(</span></span>
+<span>  <span class="va">exclude</span>,</span>
+<span>  <span class="va">sex</span>,</span>
+<span>  <span class="va">tag</span>,</span>
+<span>  <span class="va">minAge</span>,</span>
+<span>  <span class="va">maxAge</span>,</span>
+<span>  <span class="va">migrant</span>,</span>
+<span>  <span class="va">tagL0</span>,</span>
+<span>  <span class="va">tagL1</span>,</span>
+<span>  <span class="va">tagL2</span>,</span>
+<span>  <span class="va">tagL3</span>,</span>
+<span>  <span class="va">tagL4</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -132,6 +144,31 @@ singleton). The default value is <code>NULL</code>. See details for description.
 <dd><p>An object of type null or logical. Must be of length 1 (a
 singleton). The default value is <code>NULL</code>. See details for description.</p></dd>
 
+
+<dt>tagL0</dt>
+<dd><p>An object of type null or logical. Must be of length 1 (a
+singleton). The default value is <code>NULL</code>. See details for description.</p></dd>
+
+
+<dt>tagL1</dt>
+<dd><p>An object of type null or logical. Must be of length 1 (a
+singleton). The default value is <code>NULL</code>. See details for description.</p></dd>
+
+
+<dt>tagL2</dt>
+<dd><p>An object of type null or logical. Must be of length 1 (a
+singleton). The default value is <code>NULL</code>. See details for description.</p></dd>
+
+
+<dt>tagL3</dt>
+<dd><p>An object of type null or logical. Must be of length 1 (a
+singleton). The default value is <code>NULL</code>. See details for description.</p></dd>
+
+
+<dt>tagL4</dt>
+<dd><p>An object of type null or logical. Must be of length 1 (a
+singleton). The default value is <code>NULL</code>. See details for description.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -142,24 +179,31 @@ singleton). The default value is <code>NULL</code>. See details for description.
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=701" class="external-link">SLiM manual: page
-701</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=746" class="external-link">SLiM manual: page
+746</a>.</p>
 <p>Returns a vector of individuals subset from the individuals in the
 target subpopulation. The parameters specify constraints upon the subset
 of individuals that will be returned. Parameter exclude, if non- NULL, may
 specify a specific individual that should not be included (typically the focal
 individual in some operation). Parameter sex, if non-NULL, may specify a sex
 ("M" or "F") for the individuals to be returned, in sexual models. Parameter
-tag, if non-NULL, may specify a tag value for the individuals to be returned.
-Parameters minAge and maxAge, if non-NULL, may specify a minimum or maximum
-age for the individuals to be returned, in nonWF models. Parameter migrant,
-if non-NULL, may specify a required value for the migrant property of the
-individuals to be returned (so T will require that individuals be migrants,
-F will require that they not be). This method is shorthand for getting the
-individuals property of the subpopulation, and then using operator [] to select
-only individuals with the desired properties; besides being much simpler than
-the equivalent Eidos code, it is also much faster. See sampleIndividuals() for a
-similar method that returns a sample taken from a chosen subset of individuals.</p>
+tag, if non-NULL, may specify a tag property value for the individuals to be
+returned. Parameters minAge and maxAge, if non-NULL, may specify a minimum
+or maximum age for the individuals to be returned, in nonWF models. Parameter
+migrant, if non-NULL, may specify a required value for the migrant property
+of the individuals to be returned (so T will require that individuals be
+migrants, F will require that they not be). Finally, parameters tagL0, tagL1,
+tagL2, tagL3, and tagL4, if non-NULL, may specify a required value (T or F)
+for the corresponding properties (tagL0, tagL1, tagL2, tagL3, and tagL4) of the
+individuals to be returned. Note that if any tag/tagL parameter is specified as
+non-NULL, that tag/tagL property must have a defined value for every individual
+in the subpopulation, otherwise an error may result (although this requirement
+will not necessarily be checked comprehensively by this method in every
+invocation). This method is shorthand for getting the individuals property of
+the subpopulation, and then using operator [] to select only individuals with
+the desired properties; besides being much simpler than the equivalent Eidos
+code, it is also much faster. See sampleIndividuals() for a similar method that
+returns a sample taken from a chosen subset of individuals.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -176,23 +220,26 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Subpopulation: 
-<code><a href="Subpopulation.html">P</a></code>,
+<code><a href="Subpopulation_Class.html">Subpopulation</a></code>,
 <code><a href="addCloned.html">addCloned</a>()</code>,
 <code><a href="addCrossed.html">addCrossed</a>()</code>,
 <code><a href="addEmpty.html">addEmpty</a>()</code>,
 <code><a href="addRecombinant.html">addRecombinant</a>()</code>,
 <code><a href="addSelfed.html">addSelfed</a>()</code>,
+<code><a href="addSpatialMap.html">addSpatialMap</a>()</code>,
 <code><a href="cachedFitness.html">cachedFitness</a>()</code>,
 <code><a href="configureDisplay.html">configureDisplay</a>()</code>,
 <code><a href="defineSpatialMap.html">defineSpatialMap</a>()</code>,
 <code><a href="outputMSSample.html">outputMSSample</a>()</code>,
 <code><a href="outputSample.html">outputSample</a>()</code>,
 <code><a href="outputVCFSample.html">outputVCFSample</a>()</code>,
+<code><a href="pointDeviated.html">pointDeviated</a>()</code>,
 <code><a href="pointInBounds.html">pointInBounds</a>()</code>,
 <code><a href="pointPeriodic.html">pointPeriodic</a>()</code>,
 <code><a href="pointReflected.html">pointReflected</a>()</code>,
 <code><a href="pointStopped.html">pointStopped</a>()</code>,
 <code><a href="pointUniform.html">pointUniform</a>()</code>,
+<code><a href="removeSpatialMap.html">removeSpatialMap</a>()</code>,
 <code><a href="removeSubpopulation.html">removeSubpopulation</a>()</code>,
 <code><a href="sampleIndividuals.html">sampleIndividuals</a>()</code>,
 <code><a href="setCloningRate.html">setCloningRate</a>()</code>,

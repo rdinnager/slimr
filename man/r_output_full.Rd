@@ -2,9 +2,12 @@
 % Please edit documentation in R/slimr_output.R
 \name{r_output_full}
 \alias{r_output_full}
+\alias{slimr_output_full}
 \title{Utility function to tell SLiM to output its outputFull() output}
 \usage{
 r_output_full(name = "full_output", ...)
+
+slimr_output_full(name = "full_output", ...)
 }
 \arguments{
 \item{name}{Name of output to use to label it in \code{slimr_results object}. Default is \code{"full_output"}}

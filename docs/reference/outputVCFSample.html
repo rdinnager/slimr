@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>outputVCFSample</code>, which is a method of the
-SLiM class <code><a href="Subpopulation.html">Subpopulation</a></code>.
+SLiM class <code><a href="Subpopulation_Class.html">Subpopulation</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -161,27 +161,27 @@ singleton). The default value is <code>T</code>. See details for description.</p
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=697" class="external-link">SLiM manual: page
-697</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=741" class="external-link">SLiM manual: page
+741</a>.</p>
 <p>Output a random sample from the subpopulation in VCF format (see
-sections 26.2.3 and 26.2.4 for output format details). A sample of individuals
+sections 27.2.3 and 27.2.4 for output format details). A sample of individuals
 (not genomes, note - unlike the outputSample() and outputMSSample() methods) of
 size sampleSize from the subpopulation will be output. The sample may be done
-either with or without replacement, as speciﬁed by replace; the default is to
+either with or without replacement, as specified by replace; the default is to
 sample with replacement. A particular sex of individuals may be requested for
 the sample, for simulations in which sex is enabled, by passing "M" or "F" for
 requestedSex; passing "*", the default, indicates that genomes from individuals
 should be selected randomly, without respect to sex. If the sampling options
 provided by this method are not adequate, see the outputVCF() method of Genome
-for a more ﬂexible low-level option. If the optional parameter filePath is
+for a more flexible low-level option. If the optional parameter filePath is
 NULL (the default), output will be sent to Eidos's output stream (see section
-4.2.1). Otherwise, output will be sent to the ﬁlesystem path speciﬁed by
-filePath, overwriting that ﬁle if append if F, or appending to the end of
+4.2.1). Otherwise, output will be sent to the filesystem path specified by
+filePath, overwriting that file if append if F, or appending to the end of
 it if append is T. The parameters outputMultiallelics, simplifyNucleotides,
 and outputNonnucleotides affect the format of the output produced; see
-sections 26.2.3 and 26.2.4 for further discussion. See outputMSSample() and
+sections 27.2.3 and 27.2.4 for further discussion. See outputMSSample() and
 outputSample() for other output formats. Output is generally done in a late()
-event, so that the output reﬂects the state of the simulation at the end of a
+event, so that the output reflects the state of the simulation at the end of a
 tick.</p>
     </div>
     <div id="copyright">
@@ -199,22 +199,25 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Subpopulation: 
-<code><a href="Subpopulation.html">P</a></code>,
+<code><a href="Subpopulation_Class.html">Subpopulation</a></code>,
 <code><a href="addCloned.html">addCloned</a>()</code>,
 <code><a href="addCrossed.html">addCrossed</a>()</code>,
 <code><a href="addEmpty.html">addEmpty</a>()</code>,
 <code><a href="addRecombinant.html">addRecombinant</a>()</code>,
 <code><a href="addSelfed.html">addSelfed</a>()</code>,
+<code><a href="addSpatialMap.html">addSpatialMap</a>()</code>,
 <code><a href="cachedFitness.html">cachedFitness</a>()</code>,
 <code><a href="configureDisplay.html">configureDisplay</a>()</code>,
 <code><a href="defineSpatialMap.html">defineSpatialMap</a>()</code>,
 <code><a href="outputMSSample.html">outputMSSample</a>()</code>,
 <code><a href="outputSample.html">outputSample</a>()</code>,
+<code><a href="pointDeviated.html">pointDeviated</a>()</code>,
 <code><a href="pointInBounds.html">pointInBounds</a>()</code>,
 <code><a href="pointPeriodic.html">pointPeriodic</a>()</code>,
 <code><a href="pointReflected.html">pointReflected</a>()</code>,
 <code><a href="pointStopped.html">pointStopped</a>()</code>,
 <code><a href="pointUniform.html">pointUniform</a>()</code>,
+<code><a href="removeSpatialMap.html">removeSpatialMap</a>()</code>,
 <code><a href="removeSubpopulation.html">removeSubpopulation</a>()</code>,
 <code><a href="sampleIndividuals.html">sampleIndividuals</a>()</code>,
 <code><a href="setCloningRate.html">setCloningRate</a>()</code>,

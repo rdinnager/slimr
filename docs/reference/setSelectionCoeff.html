@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>setSelectionCoeff</code>, which is a method of
-the SLiM class <code><a href="Mutation.html">Mutation</a></code>.
+the SLiM class <code><a href="Mutation_Class.html">Mutation</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -117,14 +117,14 @@ singleton). See details for description.</p></dd>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=670" class="external-link">SLiM manual: page
-670</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=705" class="external-link">SLiM manual: page
+705</a>.</p>
 <p>Set the selection coefficient of the mutation to selectionCoeff. The
 selection coefficient will be changed for all individuals that possess the
 mutation, since they all share a single Mutation object (note that the dominance
 coefficient will remain unchanged, as it is determined by the mutation type).
 This is normally a constant in simulations, so be sure you know what you are
-doing; often setting up a mutationEffect() callback (see section 25.2) is
+doing; often setting up a mutationEffect() callback (see section 26.2) is
 preferable, in order to modify the selection coefficient in a more limited and
 controlled fashion (see section 10.5 for further discussion of this point).
 Changing this will normally affect the fitness values calculated toward the end
@@ -147,7 +147,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Mutation: 
-<code><a href="Mutation.html">M</a></code>,
+<code><a href="Mutation_Class.html">Mutation</a></code>,
 <code><a href="setMutationType.html">setMutationType</a>()</code></p></div>
     </div>
     <div id="author">

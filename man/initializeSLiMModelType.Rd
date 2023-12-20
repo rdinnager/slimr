@@ -51,6 +51,10 @@ about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\examples{
+## This just brings up the documentation:
+initializeSLiMModelType()
+}
 \seealso{
 Other Initialize: 
 \code{\link{Init}},

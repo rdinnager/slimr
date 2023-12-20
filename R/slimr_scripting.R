@@ -392,6 +392,7 @@ slim_block <- function(...) {
 #'
 #' @return A \code{slimr_block} object (only useful with the context of a \code{\link{slim_script}}) call.
 #' @export
+#' @examples
 slim_function <- function(..., name, return_type = "f$", body) {
   args <- list(...)
 
@@ -444,6 +445,7 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #'  Copyright © 2016–2020 Philipp Messer. All rights reserved. More information about SLiM can be found
 #'  on the official website: \\url{https://messerlab.org/slim/}
 #' @author Benjamin C Haller (\\email{bhaller@benhaller.com}) and Philipp W Messer (\\email{messer@cornell.edu})
+#' @examples
 `%.%` <- function(lhs, rhs) {
   print(paste0(lhs, ".", rhs))
   ?`%.%`
@@ -468,6 +470,7 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #'  Copyright © 2016–2020 Philipp Messer. All rights reserved. More information about SLiM can be found
 #'  on the official website: \\url{https://messerlab.org/slim/}
 #' @author Benjamin C Haller (\\email{bhaller@benhaller.com}) and Philipp W Messer (\\email{messer@cornell.edu})
+#' @examples
 `%?%` <- function(lhs, rhs) {
   print(paste0(lhs, " ? ", rhs))
   ?`%?%`
@@ -494,6 +497,7 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #'  Copyright © 2016–2020 Philipp Messer. All rights reserved. More information about SLiM can be found
 #'  on the official website: \\url{https://messerlab.org/slim/}
 #' @author Benjamin C Haller (\\email{bhaller@benhaller.com}) and Philipp W Messer (\\email{messer@cornell.edu})
+#' @examples
 `%else%` <- function(lhs, rhs) {
   print(paste0(lhs, " ? ", rhs))
   ?`%?%`
@@ -523,10 +527,19 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #' the script to be modified in another program such as SLiMGUI, and then reimported into R, while maintaining
 #' `slimr` features. See details for more information on how this works.
 #'
-#' @return
+#' @return A rendered `slimr_script_coll` object
 #' @export
 #'
 #' @examples
+#' test_sim <- slim_script(
+#'   slim_block_init_minimal(mutation_rate = r_template("mu", 1e-7)),
+#'   slim_block_add_subpops(1, 100),
+#'   slim_block(1, 20, late(), {
+#'     slimr_output(sim.outputFull(), "out", do_every = 10)
+#'   })
+#' ) %>%
+#'   slim_script_render(data.frame(mu = c(1e-7, 1e-6, 1e-5)))
+#' test_sim
 slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE,
                                 reps = 1, parallel = FALSE, portable = FALSE) {
 

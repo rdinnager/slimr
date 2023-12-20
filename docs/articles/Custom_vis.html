@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -273,20 +273,20 @@ generation. Let’s test it:</p>
 <code class="sourceCode R"><span><span class="va">mut_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/slim_extract_full.html">slim_extract_full</a></span><span class="op">(</span><span class="va">output_test</span><span class="op">$</span><span class="va">output_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">output_test</span><span class="op">$</span><span class="va">output_data</span><span class="op">)</span>, <span class="op">]</span>,</span>
 <span>                                   <span class="st">"mutations"</span><span class="op">)</span></span>
 <span><span class="va">mut_dat</span></span></code></pre></div>
-<pre class="fansi fansi-output"><code><span><span class="co">## # A tibble: 72 × 11</span></span>
+<pre class="fansi fansi-output"><code><span><span class="co">## # A tibble: 74 × 11</span></span>
 <span><span class="co">##    generation mut_id unique_mut_id mut_type chrome_pos selection dominance</span></span>
 <span><span class="co">##         &lt;int&gt;  &lt;int&gt;         &lt;int&gt; &lt;chr&gt;         &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span><span class="co">##  1       1000     32          1059 m1            51819         0       0.5</span></span>
-<span><span class="co">##  2       1000      2          1625 m1            38952         0       0.5</span></span>
-<span><span class="co">##  3       1000      7          1785 m1            70816         0       0.5</span></span>
-<span><span class="co">##  4       1000     34          1792 m1            65569         0       0.5</span></span>
-<span><span class="co">##  5       1000     33          1974 m1            55913         0       0.5</span></span>
-<span><span class="co">##  6       1000      1          1994 m1            38596         0       0.5</span></span>
-<span><span class="co">##  7       1000     27          2163 m1            11533         0       0.5</span></span>
-<span><span class="co">##  8       1000      3          2301 m1            58311         0       0.5</span></span>
-<span><span class="co">##  9       1000     35          2947 m1            71275         0       0.5</span></span>
-<span><span class="co">## 10       1000     31          2990 m1            46828         0       0.5</span></span>
-<span><span class="co">## # ℹ 62 more rows</span></span>
+<span><span class="co">##  1       1000     26          2224 m1           249993         0       0.5</span></span>
+<span><span class="co">##  2       1000     16          2227 m1           231334         0       0.5</span></span>
+<span><span class="co">##  3       1000     20          2329 m1           193444         0       0.5</span></span>
+<span><span class="co">##  4       1000     24          2393 m1           223502         0       0.5</span></span>
+<span><span class="co">##  5       1000      9          2577 m1           140559         0       0.5</span></span>
+<span><span class="co">##  6       1000      6          2634 m1            98828         0       0.5</span></span>
+<span><span class="co">##  7       1000     15          2694 m1           227379         0       0.5</span></span>
+<span><span class="co">##  8       1000     10          2804 m1           177402         0       0.5</span></span>
+<span><span class="co">##  9       1000     23          2825 m1           219505         0       0.5</span></span>
+<span><span class="co">## 10       1000     25          2862 m1           226389         0       0.5</span></span>
+<span><span class="co">## # ℹ 64 more rows</span></span>
 <span><span class="co">## # ℹ 4 more variables: subpop &lt;chr&gt;, first_gen &lt;int&gt;, prevalence &lt;int&gt;,</span></span>
 <span><span class="co">## #   nucleotide &lt;chr&gt;</span></span></code></pre>
 <p>Okay, so now we are ready to make our callback function. First we

@@ -54,12 +54,27 @@
 #'
 #' @return A \code{slimr_results} object which has the following components:
 #' \describe{
-#' \item{output}{A character vector of raw output. Will be NULL if \code{capture_output is \code{FALSE}}}
+#' \item{output}{A character vector of raw output. Will be NULL if \code{capture_output} is \code{FALSE}}
 #' \item{exit_status}{The exit status code returned by the SLiM process. 0 means success.}
+#' \item{output_data}{A `tibble` containing output from \code{slimr_output} calls.}
+#' \item{process}{A \code{processx} object containing information about the SLiM process used during the run.}
+#' \item{error}{If an error was encountered during the run, this will be a character vector containing the error message.}
+#' \item{output_file}{The path to the file containing captured output from SLiM during the run.}
 #' }
 #' @export
 #'
 #' @examples
+#' if(slim_is_avail()) {
+#'   test_sim <- slim_script(
+#'     slim_block_init_minimal(mutation_rate = 1e-6),
+#'     slim_block_add_subpops(1, 100),
+#'     slim_block(1, 20, late(), {
+#'       slimr_output(sim.outputFull(), "out", do_every = 10)
+#'     })
+#'   ) %>%
+#'     slim_run()
+#'   test_sim
+#' }
 slim_run <- function(x, slim_path = NULL,
                      script_file = NULL,
                      simple_run = FALSE,
@@ -792,6 +807,10 @@ slim_save_data_one <- function(df, file_name, format) {
 #' GUI (for debugging purposes)
 #'
 #' @export
+#' @examples
+#' if(interactive()) {
+#'   slim_open(minimal_slimr_script())
+#' }
 slim_open <- function(slimr_script,
                       slim_gui_path = Sys.getenv("slim_gui_path")) {
 
@@ -812,7 +831,7 @@ slim_open <- function(slimr_script,
 
 }
 
-read_out_lines <- function(conn, skip = curr_line) {
+read_out_lines <- function(conn, skip = 0) {
   out_lines <- try(readr::read_lines(conn, skip = skip, lazy = FALSE,
                                  progress = FALSE),
                    silent = TRUE)

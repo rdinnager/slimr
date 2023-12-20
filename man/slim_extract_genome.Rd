@@ -30,3 +30,16 @@ A tibble
 \description{
 Extract Elements from SLiM's output() for genomes
 }
+\examples{
+if(slim_is_avail()) {
+  test_sim <- slim_script(
+    slim_block_init_minimal(mutation_rate = 1e-6),
+    slim_block_add_subpops(1, 100),
+    slim_block(1, 20, late(), {
+      slimr_output(p1.genomes.output(), "out", do_every = 10)
+    })
+  ) \%>\%
+    slim_run()
+  slim_extract_genome(test_sim$output_data, type = "mutations")
+}
+}

@@ -73,7 +73,7 @@ For example if SLiM is installed at `C:/Program Files/R/R-4.3.1/library/slimr` t
 Sys.setenv(SLIM_HOME='C:/Program Files/R/R-4.3.1/library/slimr')
 ```
 
-If you want to add this path permanently to your Rstudio installation (so no need to run `Sys.setenv()` every time) you can use the command ``` usethis::edit_r_environ()``` and add a line like ```SLIMR_HOME='C:/Program Files/R/R-4.3.1/library/slimr'``` to this file.
+If you want to add this path permanently to your RStudio installation (so no need to run `Sys.setenv()` every time) you can use the command ``` usethis::edit_r_environ()``` and add a line like ```SLIMR_HOME='C:/Program Files/R/R-4.3.1/library/slimr'``` to this file.
 
 
 ## Run a first simple test

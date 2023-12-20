@@ -232,12 +232,13 @@ process_output <- function(code, block_names) {
 #' @param name Name of output to use to label it in \code{slimr_results object}. Default is \code{"full_output"}
 #' @param ... Other arguments to be passed to \code{\link{r_output}}
 #' @export
+#' @examples
 r_output_full <- function(name = "full_output", ...) {
   r_output(sim.outputFull(), name)
 }
 
 #' @rdname r_output_full
-#' export
+#' @export
 slimr_output_full <- r_output_full
 
 
@@ -250,6 +251,7 @@ slimr_output_full <- r_output_full
 #' @param ... Other arguments to be passed to \code{\link{r_output}}
 #' @return None
 #' @export
+#' @examples
 r_output_nucleotides <- function(name = "seqs", subpops = FALSE, both_genomes = FALSE, inds = NULL, ...) {
 
   inds <- rlang::enexpr(inds)
@@ -311,6 +313,7 @@ slimr_output_nucleotides <- r_output_nucleotides
 #' @return None
 #'
 #' @export
+#' @examples
 r_output_coords <- function(dimensionality = c("x", "xy", "xyz"),
                                 ...) {
 
@@ -346,6 +349,18 @@ slimr_output_coords <- r_output_coords
 #' @return None
 #'
 #' @export
+#' @examples
+#' if(slim_is_avail()) {
+#'   test_sim <- slim_script(
+#'     slim_block_init_minimal(mutation_rate = 1e-6),
+#'     slim_block_add_subpops(1, 100),
+#'     slim_block(1, 20, late(), {
+#'       r_output_sex("sex", do_every = 10)
+#'     })
+#'   ) %>%
+#'     slim_run()
+#'   slim_results_to_data(test_sim$output_data)
+#' }
 r_output_sex <- function(name = "sex", ...) {
 
   r_output(sim.subpopulations.individuals.sex,
@@ -369,6 +384,17 @@ slimr_output_sex <- r_output_sex
 #' @export
 #'
 #' @examples
+#' if(slim_is_avail()) {
+#'   test_sim <- slim_script(
+#'     slim_block_init_minimal(mutation_rate = 1e-6),
+#'     slim_block_add_subpops(1, 100),
+#'     slim_block(1, 20, late(), {
+#'       r_output_snp("snp", do_every = 10)
+#'     })
+#'   ) %>%
+#'     slim_run()
+#'   slim_results_to_data(test_sim)
+#' }
 r_output_snp <- function(name = "snp", subpops = FALSE, ...) {
   if(subpops) {
     snp_out <- slimr_output(paste(size(sim.subpopulations.individuals),

@@ -69,6 +69,16 @@ plot(in_logo)
 ggplot2::ggplot(in_logo) +
   ggplot2::geom_sf(ggplot2::aes(fill = exists, colour = exists))
 
+######### manuscript data ##########
 
+# dat <- readRDS("inst/extdata/herm.rdata")
+# splitter <- cut(1:167, seq(0, 168, by = 24), include.lowest = TRUE)
+# dats <- purrr::map(levels(splitter),
+#                    ~ dat[splitter == .x, ])
+#
+# purrr::iwalk(dats,
+#             ~ readr::write_rds(.x, paste0("inst/extdata/herm/herm_", .y, ".rds"),
+#                                compress = "bz2"),
+#             .progress = TRUE)
 
 

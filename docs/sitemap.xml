@@ -25,6 +25,9 @@
     <loc>https://rdinnager.github.io/slimr/articles/Main_manuscript_example_v2.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/articles/multispecies.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/articles/simple_example_using_migration_and_fst.html</loc>
   </url>
   <url>
@@ -53,6 +56,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/news/index.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/add.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/addCloned.html</loc>
@@ -100,6 +106,9 @@
     <loc>https://rdinnager.github.io/slimr/reference/addSelfed.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/addSpatialMap.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/addSubpop.html</loc>
   </url>
   <url>
@@ -121,6 +130,9 @@
     <loc>https://rdinnager.github.io/slimr/reference/ancestralNucleotides.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/as_slimr_code.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/as_slimr_script.html</loc>
   </url>
   <url>
@@ -128,6 +140,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/as_slim_text.slimr_script.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/blend.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/cachedFitness.html</loc>
@@ -154,7 +169,16 @@
     <loc>https://rdinnager.github.io/slimr/reference/callback_initialize.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/changeColors.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/changeValues.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/Chromosome.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/Chromosome_Class.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/clearKeysAndValues.html</loc>
@@ -170,6 +194,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/Community.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/Community_Class.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/configureDisplay.html</loc>
@@ -199,6 +226,9 @@
     <loc>https://rdinnager.github.io/slimr/reference/distanceFromPoint.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/divide.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/drawBreakpoints.html</loc>
   </url>
   <url>
@@ -211,10 +241,559 @@
     <loc>https://rdinnager.github.io/slimr/reference/early.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_abs.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_acos.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_all.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_any.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_apply.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_array.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_asFloat.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_asin.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_asInteger.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_asLogical.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_assert.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_asString.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_atan.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_atan2.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_beep.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_c.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_cat.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_catn.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_cbind.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_ceil.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_citation.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/Eidos_Class.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_clock.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_cmColors.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_color2rgb.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_colors.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_cor.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_cos.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_cov.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_createDirectory.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_cumProduct.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_cumSum.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_date.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_dbeta.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_debugIndent.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_defineConstant.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_defineGlobal.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_deleteFile.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_dexp.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_dgamma.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_diag.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_dim.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_dmvnorm.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_dnorm.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_drop.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_elementType.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_exists.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_exp.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_fileExists.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_filesAtPath.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_findInterval.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_float.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_floor.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_flushFile.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_format.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_functionSignature.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_functionSource.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_getSeed.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_getwd.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_heatColors.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_hsv2rgb.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_identical.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_ifelse.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_integer.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_integerDiv.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_integerMod.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_isFinite.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_isFloat.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_isInfinite.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_isInteger.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_isLogical.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_isNAN.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_isNULL.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_isObject.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_isString.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_length.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_license.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_log.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_log10.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_log2.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_logical.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_lowerTri.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_ls.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_match.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_matrix.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_matrixMult.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_max.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_mean.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_min.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_nchar.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_ncol.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_nrow.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_object.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_order.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_paste.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_paste0.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_pmax.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_pmin.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_pnorm.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_print.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_product.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_qnorm.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_quantile.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rainbow.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_range.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rank.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rbeta.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rbind.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rbinom.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rcauchy.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rdunif.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_readCSV.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_readFile.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rep.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_repEach.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rev.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rexp.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rf.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rgamma.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rgb2color.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rgb2hsv.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rgeom.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rlnorm.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rm.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rmvnorm.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rnbinom.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rnorm.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_round.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rpois.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_runif.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_rweibull.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_sample.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_sapply.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_sd.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_seq.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_seqAlong.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_seqLen.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_setDifference.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_setIntersection.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_setSeed.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_setSymmetricDifference.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_setUnion.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_setwd.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_sin.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_size.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_sort.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_sortBy.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_source.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_sqrt.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_stop.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_str.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_strcontains.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_strfind.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_string.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_strprefix.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_strsplit.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_strsuffix.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_substr.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_sum.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_sumExact.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_suppressWarnings.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_sysinfo.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_system.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_t.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_tabulate.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_tan.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_tempdir.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_terrainColors.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_time.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_trunc.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_ttest.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_type.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_unique.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_upperTri.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_usage.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_var.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_version.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_which.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_whichMax.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_whichMin.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_writeFile.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/eidos_writeTempFile.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/end_gen.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/evaluate.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/exp.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/first.html</loc>
@@ -232,6 +811,9 @@
     <loc>https://rdinnager.github.io/slimr/reference/Genome.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/Genome_Class.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/GenomicElement.html</loc>
   </url>
   <url>
@@ -239,6 +821,12 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/genomicElementTypesWithIDs.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/GenomicElementType_Class.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/GenomicElement_Class.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/get_block.html</loc>
@@ -256,6 +844,9 @@
     <loc>https://rdinnager.github.io/slimr/reference/grapes-help-grapes.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/gridValues.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/index.html</loc>
   </url>
   <url>
@@ -263,6 +854,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/individualsWithPedigreeIDs.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/Individual_Class.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/Initialize.html</loc>
@@ -313,6 +907,9 @@
     <loc>https://rdinnager.github.io/slimr/reference/initializeTreeSeq.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/Initialize_Class.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/interactingNeighborCount.html</loc>
   </url>
   <url>
@@ -328,6 +925,12 @@
     <loc>https://rdinnager.github.io/slimr/reference/interactionTypesWithIDs.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/InteractionType_Class.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/interpolate.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/killIndividuals.html</loc>
   </url>
   <url>
@@ -340,7 +943,19 @@
     <loc>https://rdinnager.github.io/slimr/reference/LogFile.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/LogFile_Class.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/logRow.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/mapColor.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/mapImage.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/mapValue.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/mateChoice.html</loc>
@@ -356,6 +971,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/modifyChild.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/multiply.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/Mutation.html</loc>
@@ -383,6 +1001,12 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/mutationTypesWithIDs.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/MutationType_Class.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/Mutation_Class.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/nearestInteractingNeighbors.html</loc>
@@ -415,6 +1039,9 @@
     <loc>https://rdinnager.github.io/slimr/reference/nucleotidesToCodons.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/openDocument.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/output.html</loc>
   </url>
   <url>
@@ -445,7 +1072,13 @@
     <loc>https://rdinnager.github.io/slimr/reference/outputVCFSample.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/pauseExecution.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/pointDeviated.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/pointInBounds.html</loc>
@@ -464,6 +1097,12 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/positionsOfMutationsOfType.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/power.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/range.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/readFromMS.html</loc>
@@ -523,16 +1162,25 @@
     <loc>https://rdinnager.github.io/slimr/reference/registerReproductionCallback.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/registerSurvivalCallback.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/relatedness.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/removeMutations.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/removeSpatialMap.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/removeSubpopulation.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/reproduction.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/rescale.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/rescheduleScriptBlock.html</loc>
@@ -562,7 +1210,16 @@
     <loc>https://rdinnager.github.io/slimr/reference/r_template.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/r_template_constant.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/sampleImprovedNearbyPoint.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/sampleIndividuals.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/sampleNearbyPoint.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/scriptBlocksWithIDs.html</loc>
@@ -572,6 +1229,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/setCloningRate.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/setConstraints.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/setDistribution.html</loc>
@@ -637,13 +1297,28 @@
     <loc>https://rdinnager.github.io/slimr/reference/setValue.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/sharedParentCount.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/simulationFinished.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/skipTick.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/SLiMBuiltin.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/SLiMBuiltin_Class.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/SLiMEidosBlock.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/SLiMEidosBlock_Class.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/SLiMgui_Class.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/slimrlang-vctrs.html</loc>
@@ -671,6 +1346,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/SLiMSim.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/SLiMSim_Class.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/slim_block.html</loc>
@@ -760,6 +1438,9 @@
     <loc>https://rdinnager.github.io/slimr/reference/slim_unload_globals.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/smooth.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/spatialMapColor.html</loc>
   </url>
   <url>
@@ -769,10 +1450,16 @@
     <loc>https://rdinnager.github.io/slimr/reference/spatialMapValue.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/SpatialMap_Class.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/Species.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/speciesWithIDs.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/Species_Class.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/strength.html</loc>
@@ -784,6 +1471,9 @@
     <loc>https://rdinnager.github.io/slimr/reference/subpopulationsWithIDs.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/Subpopulation_Class.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/subsetIndividuals.html</loc>
   </url>
   <url>
@@ -791,6 +1481,12 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/Substitution.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/Substitution_Class.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/subtract.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/summarizeIndividuals.html</loc>
@@ -803,6 +1499,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/takeMigrants.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/testConstraints.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/tidyeval.html</loc>
@@ -830,6 +1529,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/uniqueMutationsOfType.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/usage.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/willAutolog.html</loc>

@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>spatialMapValue</code>, which is a method of the
-SLiM class <code><a href="Subpopulation.html">Subpopulation</a></code>.
+SLiM class <code><a href="Subpopulation_Class.html">Subpopulation</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -98,18 +98,18 @@ full SLiM script.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">spatialMapValue</span><span class="op">(</span><span class="va">name</span>, <span class="va">point</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">spatialMapValue</span><span class="op">(</span><span class="va">map</span>, <span class="va">point</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>name</dt>
-<dd><p>An object of type string or float. Must be of length 1 (a
+    <dl><dt>map</dt>
+<dd><p>An object of type string or SpatialMap object. Must be of length 1 (a
 singleton). See details for description.</p></dd>
 
 
 <dt>point</dt>
-<dd><p>An object of type string or float. See details for description.</p></dd>
+<dd><p>An object of type float. See details for description.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -121,14 +121,16 @@ singleton). See details for description.</p></dd>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=701" class="external-link">SLiM manual: page
-701</a>.</p>
-<p>Looks up the spatial map indicated by name, and uses its mapping
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=745" class="external-link">SLiM manual: page
+745</a>.</p>
+<p>Looks up the spatial map specified by map, and uses its mapping
 machinery (as defined by the gridSize, values, and interpolate parameters to
 defineSpatialMap()) to translate the coordinates of point into a corresponding
-map value. The length of point must be equal to the spatiality of the spatial
-map; in other words, for a spatial map with spatiality "xz", point must be
-of length 2, specifying the x and z coordinates of the point to be evaluated.
+map value. The parameter map may specify the map either as a SpatialMap object,
+or by its string name; in either case, the map must have been added to the
+subpopulation. The length of point must be equal to the spatiality of the
+spatial map; in other words, for a spatial map with spatiality "xz", point must
+be of length 2, specifying the x and z coordinates of the point to be evaluated.
 Interpolation will automatically be used if it was enabled for the spatial map.
 Point coordinates are clamped into the range defined by the spatial boundaries,
 even if the spatial boundaries are periodic; use pointPeriodic() to wrap the
@@ -140,7 +142,10 @@ spatial map with spatiality "xz", for example, the length of point must be an
 exact multiple of 2, and successive pairs of elements from point (elements 0 and
 1, then elements 2 and 3, etc.) will be taken as the x and z coordinates of the
 points to be evaluated. This allows spatialMapValue() to be used in a vectorized
-fashion.</p>
+fashion. The mapValue() method of SpatialMap provides the same functionality
+directly on the SpatialMap class; spatialMapValue() is provided on Subpopulation
+partly for backward compatibility, but also for convenience for the most common
+usage case of spatial maps.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -157,23 +162,26 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Subpopulation: 
-<code><a href="Subpopulation.html">P</a></code>,
+<code><a href="Subpopulation_Class.html">Subpopulation</a></code>,
 <code><a href="addCloned.html">addCloned</a>()</code>,
 <code><a href="addCrossed.html">addCrossed</a>()</code>,
 <code><a href="addEmpty.html">addEmpty</a>()</code>,
 <code><a href="addRecombinant.html">addRecombinant</a>()</code>,
 <code><a href="addSelfed.html">addSelfed</a>()</code>,
+<code><a href="addSpatialMap.html">addSpatialMap</a>()</code>,
 <code><a href="cachedFitness.html">cachedFitness</a>()</code>,
 <code><a href="configureDisplay.html">configureDisplay</a>()</code>,
 <code><a href="defineSpatialMap.html">defineSpatialMap</a>()</code>,
 <code><a href="outputMSSample.html">outputMSSample</a>()</code>,
 <code><a href="outputSample.html">outputSample</a>()</code>,
 <code><a href="outputVCFSample.html">outputVCFSample</a>()</code>,
+<code><a href="pointDeviated.html">pointDeviated</a>()</code>,
 <code><a href="pointInBounds.html">pointInBounds</a>()</code>,
 <code><a href="pointPeriodic.html">pointPeriodic</a>()</code>,
 <code><a href="pointReflected.html">pointReflected</a>()</code>,
 <code><a href="pointStopped.html">pointStopped</a>()</code>,
 <code><a href="pointUniform.html">pointUniform</a>()</code>,
+<code><a href="removeSpatialMap.html">removeSpatialMap</a>()</code>,
 <code><a href="removeSubpopulation.html">removeSubpopulation</a>()</code>,
 <code><a href="sampleIndividuals.html">sampleIndividuals</a>()</code>,
 <code><a href="setCloningRate.html">setCloningRate</a>()</code>,

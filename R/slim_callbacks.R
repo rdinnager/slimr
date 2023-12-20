@@ -176,7 +176,6 @@ callbacks$late <- function() {
 #' @author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #' (\email{messer@cornell.edu})
 #' @examples
-#' # From page 182 of the SLiM Manual
 #' slim_block(fitness(m2), {
 #'   ## sets up frequency dependent selection for m2
 #'   return(1.5 - sim.mutationFrequencies(p1, mut))
@@ -234,7 +233,6 @@ callbacks$fitness <- function(mut_type_id, subpop_id) {
 #' @author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #' (\email{messer@cornell.edu})
 #' @examples
-#' # From page 715 of the SLiM Manual
 #' slim_block(fitnessEffect(p3), {
 #'   # multiplies all individual's fitness by 0.75
 #'   return(0.75)
@@ -295,7 +293,6 @@ callbacks$fitnessEffect <- function(subpop_id) {
 #' @author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #' (\email{messer@cornell.edu})
 #' @examples
-#' # From page 600 of the SLiM Manual
 #' slim_block(mateChoice(p2), {
 #'
 #'   ## in subpopulation 2, high fitness individuals are preferred
@@ -365,7 +362,6 @@ callbacks$mateChoice <- function(subpop_id) {
 #' @author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #' (\email{messer@cornell.edu})
 #' @examples
-#' # From page 217 of the SLiM Manual
 #' slim_block(modifyChild(), {
 #'
 #'   # prevent hermaphroditic selfing
@@ -431,7 +427,6 @@ callbacks$modifyChild <- function(subpop_id) {
 #' @author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #' (\email{messer@cornell.edu})
 #' @examples
-#' # From page 261 of the SLiM Manual
 #' slim_block(recombination(), {
 #'   if (genome1.containsMarkerMutation(m2, 25000) ==
 #'       genome2.containsMarkerMutation(m2, 25000)) {
@@ -504,7 +499,6 @@ callbacks$mutation <- function(mut_type_id, subpop_id) {
 #' @author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #' (\email{messer@cornell.edu})
 #' @examples
-#' # From page 714 of the SLiM Manual
 #' slim_block(mutationEffect(), {
 #'   if (homozygous) {
 #'     return(1.0 + mut.selectionCoeff);
@@ -567,7 +561,6 @@ callbacks$mutationEffect <- function(mut_type_id, subpop_id) {
 #' @author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #' (\email{messer@cornell.edu})
 #' @examples
-#' # From page 261 of the SLiM Manual
 #' slim_block(recombination(), {
 #'   if (genome1.containsMarkerMutation(m2, 25000) ==
 #'       genome2.containsMarkerMutation(m2, 25000)) {

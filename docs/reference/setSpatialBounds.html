@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>setSpatialBounds</code>, which is a method of
-the SLiM class <code><a href="Subpopulation.html">Subpopulation</a></code>.
+the SLiM class <code><a href="Subpopulation_Class.html">Subpopulation</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -116,8 +116,8 @@ full SLiM script.</p>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=700" class="external-link">SLiM manual: page
-700</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=745" class="external-link">SLiM manual: page
+745</a>.</p>
 <p>Set the spatial boundaries of the subpopulation to bounds. This
 method may be called only for simulations in which continuous space has been
 enabled with initializeSLiMOptions(). The length of bounds must be double the
@@ -132,8 +132,16 @@ default spatial boundaries for all subpopulations span the interval [0,1] in
 each dimension. Spatial dimensions that are periodic (as established with the
 periodicity parameter to initializeSLiMOptions()) must have a minimum coordinate
 value of 0.0 (a restriction that allows the handling of periodicity to be
-somewhat more efficient). The current spatial bounds for the subpopulation may
-be obtained through the spatialBounds property.</p>
+somewhat more efficient). The current spatial bounds for the subpopulation
+may be obtained through the spatialBounds property. The spatial bounds of a
+subpopulation are shared with any SpatialMap objects added to the subpopulation.
+For this reason, once a spatial map has been added to a subpopulation, the
+spatial bounds of the subpopulation can no longer be changed (because it
+would stretch or shrink the associated spatial map, which does not seem to
+make physical sense). The bounds for a subpopulation should therefore be
+configured before any spatial maps are added to it. If those bounds do need
+to change subsequently, any associated spatial maps must first be removed with
+removeSpatialMap(), to ensure model consistency.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -150,23 +158,26 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Subpopulation: 
-<code><a href="Subpopulation.html">P</a></code>,
+<code><a href="Subpopulation_Class.html">Subpopulation</a></code>,
 <code><a href="addCloned.html">addCloned</a>()</code>,
 <code><a href="addCrossed.html">addCrossed</a>()</code>,
 <code><a href="addEmpty.html">addEmpty</a>()</code>,
 <code><a href="addRecombinant.html">addRecombinant</a>()</code>,
 <code><a href="addSelfed.html">addSelfed</a>()</code>,
+<code><a href="addSpatialMap.html">addSpatialMap</a>()</code>,
 <code><a href="cachedFitness.html">cachedFitness</a>()</code>,
 <code><a href="configureDisplay.html">configureDisplay</a>()</code>,
 <code><a href="defineSpatialMap.html">defineSpatialMap</a>()</code>,
 <code><a href="outputMSSample.html">outputMSSample</a>()</code>,
 <code><a href="outputSample.html">outputSample</a>()</code>,
 <code><a href="outputVCFSample.html">outputVCFSample</a>()</code>,
+<code><a href="pointDeviated.html">pointDeviated</a>()</code>,
 <code><a href="pointInBounds.html">pointInBounds</a>()</code>,
 <code><a href="pointPeriodic.html">pointPeriodic</a>()</code>,
 <code><a href="pointReflected.html">pointReflected</a>()</code>,
 <code><a href="pointStopped.html">pointStopped</a>()</code>,
 <code><a href="pointUniform.html">pointUniform</a>()</code>,
+<code><a href="removeSpatialMap.html">removeSpatialMap</a>()</code>,
 <code><a href="removeSubpopulation.html">removeSubpopulation</a>()</code>,
 <code><a href="sampleIndividuals.html">sampleIndividuals</a>()</code>,
 <code><a href="setCloningRate.html">setCloningRate</a>()</code>,

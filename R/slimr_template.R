@@ -16,6 +16,7 @@
 #' @details Note that this function is only designed to be used inside a \code{\link{slim_block}} function call. If run in any other
 #' situation, it won't really do anything, just returning a reference to the placemarker that would have been inserted if run in
 #' its correct context.
+#' @examples
 r_template <- function(var_name, default = NULL, unquote_strings = FALSE) {
   .resources$temp_slimr_template$var_name <- c(.resources$temp_slimr_template$var_name,
                                                var_name)
@@ -193,7 +194,15 @@ replace_double_dots <- function(slimr_script, envir = parent.frame(), slimr_temp
 #' @export
 #'
 #' @examples
-slimr_template_info <- function(script_temp) {
+#' test_sim <- slim_script(
+#'   slim_block_init_minimal(mutation_rate = r_template("mu", 1e-7)),
+#'   slim_block_add_subpops(1, 100),
+#'   slim_block(1, 20, late(), {
+#'     slimr_output(sim.outputFull(), "out", do_every = 10)
+#'   })
+#' )
+# slim_template_info(test_sim)
+slim_template_info <- function(script_temp) {
   slimr_template_attr <- attr(script_temp, "slimr_template")
   if(any(!is.na(slimr_template_attr$var_names))) {
     info_group <- slimr_template_attr %>%
@@ -233,6 +242,7 @@ slimr_template_info <- function(script_temp) {
 #' @details Note that this function is only designed to be used inside a \code{\link{slim_block}} function call. If run in any other
 #' situation, it won't really do anything, just returning a reference to the placemarker that would have been inserted if run in
 #' its correct context.
+#' @examples
 r_template_constant <- function(var_name, default = NULL, unquote_strings = FALSE) {
   rlang::expr(defineConstant(!!var_name, !!r_template(var_name, default = default, unquote_strings = unquote_strings)))
 }

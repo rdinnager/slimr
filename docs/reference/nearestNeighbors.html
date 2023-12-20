@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>nearestNeighbors</code>, which is a method of
-the SLiM class <code><a href="InteractionType.html">InteractionType</a></code>.
+the SLiM class <code><a href="InteractionType_Class.html">InteractionType</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -98,14 +98,14 @@ full SLiM script.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">nearestNeighbors</span><span class="op">(</span><span class="va">receiver</span>, <span class="va">count</span>, <span class="va">exerterSubpop</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">nearestNeighbors</span><span class="op">(</span><span class="va">receiver</span>, <span class="va">count</span>, <span class="va">exerterSubpop</span>, <span class="va">returnDict</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>receiver</dt>
-<dd><p>An object of type Individual object. Must be of length 1 (a
-singleton). See details for description.</p></dd>
+<dd><p>An object of type Individual object. See details for
+description.</p></dd>
 
 
 <dt>count</dt>
@@ -118,35 +118,57 @@ default value is <code>1</code>. See details for description.</p></dd>
 of length 1 (a singleton). The default value is <code>NULL</code>. See details for
 description.</p></dd>
 
+
+<dt>returnDict</dt>
+<dd><p>An object of type logical. Must be of length 1 (a singleton).
+The default value is <code>F</code>. See details for description.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p>An object of type Individual object.</p>
+<p>An object of type .</p>
     </div>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=663" class="external-link">SLiM manual: page
-663</a>.</p>
-<p>Returns up to count individuals that are spatially closest to
-individual, according to the distance metric of the InteractionType, from
-among the exerters in exerterSubpop (or, if that is NULL, then from among all
-individuals in the receiver's subpopulation). To obtain all of the individuals
-within the maximum interaction distance of individual, simply pass a value for
-count that is greater than or equal to the size of individual's subpopulation.
-Note that if fewer than count individuals are within the maximum interaction
-distance, the vector returned may be shorter than count, or even zero- length;
-it is important to check for this possibility even when requesting a single
-neighbor. The evaluate() method must have been previously called for the
-receiver and exerter subpopulations, and positions saved at evaluation time will
-be used. If the InteractionType is non-spatial, this method may not be called.
-Note that this method does not use interaction eligibility as a criterion;
-it will return neighbors that could not interact with the receiver due to
-sex-segregation. (It will never return the receiver as a neighbor of itself,
-however.) To find only neighbors that are eligible to exert an interaction upon
-the receiver, use nearestInteractingNeighbors().</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=696" class="external-link">SLiM manual: page
+696</a>.</p>
+<p>Returns an object&lt;Individual&gt; vector containing up to count individuals
+that are spatially closest to receiver, according to the distance metric of
+the InteractionType, from among the exerters in exerterSubpop (or, if that
+is NULL, then from among all individuals in the receiver's subpopulation).
+In the default mode of operation, receiver must be singleton (but see below).
+To obtain all of the individuals within the maximum interaction distance of
+receiver, simply pass a value for count that is greater than or equal to the
+size of individual's subpopulation. Note that if fewer than count individuals
+are within the maximum interaction distance, the vector returned may be shorter
+than count, or even zero-length; it is important to check for this possibility
+even when requesting a single neighbor. The evaluate() method must have been
+previously called for the receiver and exerter subpopulations, and positions
+saved at evaluation time will be used. If the InteractionType is nonspatial,
+this method may not be called. Note that this method does not use interaction
+eligibility as a criterion; it will return neighbors that could not interact
+with the receiver due to the configured receiver or exerter constraints. (It
+will never return the receiver as a neighbor of itself, however.) To find
+only neighbors that are eligible to exert an interaction upon the receiver,
+use nearestInteractingNeighbors(). Beginning in SLiM 4.1, this method
+has a vectorized mode of operation in which the receiver parameter may be
+non-singleton. To switch the method to this mode, pass T for returnDict, rather
+than the default of F (the operation of which is described above). In this
+mode, the return value is a Dictionary object instead of a vector of Individual
+objects. This dictionary uses integer keys that range from 0 to N-1, where N
+is the number of individuals passed in receiver; these keys thus correspond
+directly to the indices of the individuals in receiver, and there is one entry
+in the dictionary for each receiver. The value in the dictionary, for a given
+integer key, is an object&lt;Individual&gt; vector with the neighbors found for
+the corresponding receiver, exactly as described above for the non-vectorized
+case. The results for each receiver can therefore be obtained from the returned
+dictionary with getValue(), passing the index of the receiver. The speed of this
+mode of operation will probably be similar to the speed of making N separate
+non-vectorized calls to nearestNeighbors(), but may have other advantages. In
+this mode of operation, all receivers must belong to the same subpopulation.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -163,7 +185,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other InteractionType: 
-<code><a href="InteractionType.html">InteractionType</a></code>,
+<code><a href="InteractionType_Class.html">InteractionType</a></code>,
 <code><a href="clippedIntegral.html">clippedIntegral</a>()</code>,
 <code><a href="distanceFromPoint.html">distanceFromPoint</a>()</code>,
 <code><a href="distance.html">distance</a>()</code>,
@@ -176,8 +198,10 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="nearestNeighborsOfPoint.html">nearestNeighborsOfPoint</a>()</code>,
 <code><a href="neighborCountOfPoint.html">neighborCountOfPoint</a>()</code>,
 <code><a href="neighborCount.html">neighborCount</a>()</code>,
+<code><a href="setConstraints.html">setConstraints</a>()</code>,
 <code><a href="setInteractionFunction.html">setInteractionFunction</a>()</code>,
 <code><a href="strength.html">strength</a>()</code>,
+<code><a href="testConstraints.html">testConstraints</a>()</code>,
 <code><a href="totalOfNeighborStrengths.html">totalOfNeighborStrengths</a>()</code>,
 <code><a href="unevaluate.html">unevaluate</a>()</code></p></div>
     </div>

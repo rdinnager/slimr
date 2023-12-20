@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>distance</code>, which is a method of the SLiM
-class <code><a href="InteractionType.html">InteractionType</a></code>.
+class <code><a href="InteractionType_Class.html">InteractionType</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -122,8 +122,8 @@ is <code>NULL</code>. See details for description.</p></dd>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=659" class="external-link">SLiM manual: page
-659</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=692" class="external-link">SLiM manual: page
+692</a>.</p>
 <p>Returns a vector containing distances between receiver and the
 individuals in exerters. If exerters is NULL (the default), then a vector of
 the distances from receiver to all individuals in its subpopulation (including
@@ -140,8 +140,9 @@ not the dimensionality of the model as a whole (as declared in
 initializeSLiMOptions()). The distances returned are therefore the distances
 that would be used to calculate interaction strengths. However, distance() will
 return finite distances for all pairs of individuals, even if the individuals
-are non-interacting; the distance() between an individual and itself will thus
-be 0. See interactionDistance() for an alternative distance definition.</p>
+are non-interacting due to the maximum interaction distance or the interaction
+constraints; the distance() between an individual and itself will thus be 0. See
+interactionDistance() for an alternative distance definition.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -158,7 +159,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other InteractionType: 
-<code><a href="InteractionType.html">InteractionType</a></code>,
+<code><a href="InteractionType_Class.html">InteractionType</a></code>,
 <code><a href="clippedIntegral.html">clippedIntegral</a>()</code>,
 <code><a href="distanceFromPoint.html">distanceFromPoint</a>()</code>,
 <code><a href="drawByStrength.html">drawByStrength</a>()</code>,
@@ -171,8 +172,10 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="nearestNeighbors.html">nearestNeighbors</a>()</code>,
 <code><a href="neighborCountOfPoint.html">neighborCountOfPoint</a>()</code>,
 <code><a href="neighborCount.html">neighborCount</a>()</code>,
+<code><a href="setConstraints.html">setConstraints</a>()</code>,
 <code><a href="setInteractionFunction.html">setInteractionFunction</a>()</code>,
 <code><a href="strength.html">strength</a>()</code>,
+<code><a href="testConstraints.html">testConstraints</a>()</code>,
 <code><a href="totalOfNeighborStrengths.html">totalOfNeighborStrengths</a>()</code>,
 <code><a href="unevaluate.html">unevaluate</a>()</code></p></div>
     </div>

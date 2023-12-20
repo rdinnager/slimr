@@ -11,3 +11,7 @@ slim_install_path()
 A simple exported version of install_path
 Returns the SLiM installation path.
 }
+\examples{
+slim_install_path()
+
+}

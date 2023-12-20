@@ -19,3 +19,4 @@
 ^slim_man$
 ^SLiM$
 ^SLiM_build$
+^cran-comments\.md$

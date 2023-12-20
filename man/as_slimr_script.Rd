@@ -17,3 +17,7 @@ A \code{slimr_script} object
 \description{
 Convert a character vector into a slim_script object
 }
+\examples{
+cat(slim_recipes[[1]])
+as_slimr_script(slim_recipes[[1]])
+}

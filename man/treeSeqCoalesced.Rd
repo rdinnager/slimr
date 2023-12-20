@@ -2,14 +2,10 @@
 % Please edit documentation in R/slim_lang.R
 \name{treeSeqCoalesced}
 \alias{treeSeqCoalesced}
-\alias{SLiMSim$treeSeqCoalesced}
-\alias{.SS$treeSeqCoalesced}
 \alias{Species$treeSeqCoalesced}
 \alias{.Sp$treeSeqCoalesced}
 \title{SLiM method treeSeqCoalesced}
 \usage{
-treeSeqCoalesced(void)
-
 treeSeqCoalesced(void)
 }
 \arguments{
@@ -17,19 +13,8 @@ treeSeqCoalesced(void)
 }
 \value{
 An object of type logical. Return will be of length 1 (a singleton)
-
-An object of type logical. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{treeSeqCoalesced}, which is a method of
-the SLiM class \code{\link{SLiMSim}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
-
 Documentation for SLiM function \code{treeSeqCoalesced}, which is a method of
 the SLiM class \code{\link{Species}}.
 Note that the R function is a stub, it does not do anything in R (except bring
@@ -40,37 +25,6 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-
-Returns the coalescence state for the recorded tree sequence at
-the last simplification. The returned value is a logical singleton flag,
-T to indicate that full coalescence was observed at the last treesequence
-simplification (meaning that there is a single ancestral individual that roots
-all ancestry trees at all sites along the chromosome - although not necessarily
-the same ancestor at all sites), or F if full coalescence was not observed. For
-simple models, reaching coalescence may indicate that the model has reached an
-equilibrium state, but this may not be true in models that modify the dynamics
-of the model during execution by changing migration rates, introducing new
-mutations programmatically, dictating non-random mating, etc., so be careful not
-to attach more meaning to coalescence than it is due; some models may require
-burn-in beyond coalescence to reach equilibrium, or may not have an equilibrium
-state at all. Also note that some actions by a model, such as adding a new
-subpopulation, may cause the coalescence state to revert from T back to F (at
-the next simplification), so a return value of T may not necessarily mean that
-the model is coalesced at the present moment - only that it was coalesced at the
-last simplification. This method may only be called if tree sequence recording
-has been turned on with initializeTreeSeq(); in addition, checkCoalescence=T
-must have been supplied to initializeTreeSeq(), so that the necessary work
-is done during each tree-sequence simplification. Since this method does not
-perform coalescence checking itself, but instead simply returns the coalescence
-state observed at the last simplification, it may be desirable to call
-treeSeqSimplify() immediately before treeSeqCoalesced() to obtain up-to-date
-information. However, the speed penalty of doing this in every generation would
-be large, and most models do not need this level of precision; usually it is
-sufficient to know that the model has coalesced, without knowing whether that
-happened in the current generation or in a recent preceding generation.
-
 Documentation for this function can be found in the official
 \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=728}{SLiM manual: page
 728}.
@@ -112,50 +66,9 @@ documentation is
 Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
-
-
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
-on the official website: \url{https://messerlab.org/slim/}
 }
 
 \seealso{
-Other SLiMSim: 
-\code{\link{SS}},
-\code{\link{addSubpopSplit}()},
-\code{\link{addSubpop}()},
-\code{\link{countOfMutationsOfType}()},
-\code{\link{createLogFile}()},
-\code{\link{deregisterScriptBlock}()},
-\code{\link{mutationCounts}()},
-\code{\link{mutationFrequencies}()},
-\code{\link{mutationsOfType}()},
-\code{\link{outputFixedMutations}()},
-\code{\link{outputFull}()},
-\code{\link{outputMutations}()},
-\code{\link{outputUsage}()},
-\code{\link{readFromPopulationFile}()},
-\code{\link{recalculateFitness}()},
-\code{\link{registerEarlyEvent}()},
-\code{\link{registerFitnessCallback}()},
-\code{\link{registerInteractionCallback}()},
-\code{\link{registerLateEvent}()},
-\code{\link{registerMateChoiceCallback}()},
-\code{\link{registerModifyChildCallback}()},
-\code{\link{registerMutationCallback}()},
-\code{\link{registerRecombinationCallback}()},
-\code{\link{registerReproductionCallback}()},
-\code{\link{rescheduleScriptBlock}()},
-\code{\link{simulationFinished}()},
-\code{\link{subsetMutations}()},
-\code{\link{treeSeqOutput}()},
-\code{\link{treeSeqRememberIndividuals}()},
-\code{\link{treeSeqSimplify}()}
-
 Other Species: 
 \code{\link{Sp}},
 \code{\link{addSubpopSplit}()},
@@ -190,5 +103,4 @@ Other Species:
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
-\concept{SLiMSim}
 \concept{Species}

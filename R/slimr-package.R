@@ -57,11 +57,14 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
                                                         "sim.subpopulations.individuals.x",
                                                         "sim.subpopulations.individuals.y",
                                                         "sim.subpopulations.individuals.z",
-                                                        "setSeed"
+                                                        "setSeed",
+                                                        "defineConstant",
+                                                        "sim.mutations",
+                                                        "sim.mutations.position",
+                                                        "sim.subpopulations.individuals",
+                                                        "sim.subpopulations.individuals.genomes.containsMutations",
+                                                        "size"
                                                         ))
-
-
-
 
 .onAttach <- function(libname, pkgname) {
 
@@ -80,17 +83,15 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
 
 .onLoad <- function(libname, pkgname) {
 
-  .slim_settings$slim_dir <- get_slim_dir()
+  .slim_settings$slim_path <- find_slim_path()
 
-  slim_avail <- try(get_slim_call(), silent = TRUE)
-  if(!is.null(slim_avail) || inherits(slim_avail, "try-error")) {
-    #packageStartupMessage("Welcome to the slimr package for forward population genetics simulation in SLiM. For more information on SLiM please visit https://messerlab.org/slim/ .")
-    .slim_settings$slim_call <- slim_avail
-    .slim_settings$slim_avail <- TRUE
-  } else {
-    #packageStartupMessage("Welcome to the slimr package. slimr requires SLiM population genetics forward simulation software. Run slim_setup() for slimr to attempt to download and install the package automatically. If that doesn't work, try installing manually by going to https://messerlab.org/slim/ and following the instructions.")
-    .slim_settings$slim_avail <- FALSE
+  ## automatically install SLiM from conda if env var SLIM_INSTALL is set to 1
+  ## This used for github action testing
+  if(.slim_settings$slim_path == "" && Sys.getenv("SLIM_INSTALL", unset = 0) == 1) {
+    slim_setup()
   }
+
+  .slim_settings$slim_call <- get_slim_call()
 
   .slim_assets$keywords <- list()
 

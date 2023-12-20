@@ -20,3 +20,16 @@ None
 \description{
 Utility function to tell SLim to output sexes of individuals
 }
+\examples{
+if(slim_is_avail()) {
+  test_sim <- slim_script(
+    slim_block_init_minimal(mutation_rate = 1e-6),
+    slim_block_add_subpops(1, 100),
+    slim_block(1, 20, late(), {
+      r_output_sex("sex", do_every = 10)
+    })
+  ) \%>\%
+    slim_run()
+  slim_results_to_data(test_sim$output_data)
+}
+}

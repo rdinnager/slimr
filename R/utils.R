@@ -99,7 +99,6 @@ convert_to_wsl_path <- function(windows_path) {
 #' @param file_name The name of the file to convert
 #'
 #' @return The converted filename that will ensure SLiM can access the file.
-#' @export
 slim_file <- function(file_name) {
   os <- get_os()
   if(os == "windows") {

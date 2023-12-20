@@ -6,6 +6,14 @@ up this documentation). It will only do
 anything useful when used inside a slim_block function further
 nested in a slim_script
 function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.
+Documentation for SLiM function treeSeqRememberIndividuals, which is a
+method of the SLiM class Species.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a slim_block function further
+nested in a slim_script
+function call, where it will be translated into valid SLiM code as part of a
 full SLiM script."><meta property="og:image" content="https://rdinnager.github.io/slimr/logo.png"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -24,7 +32,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +96,15 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>treeSeqRememberIndividuals</code>, which is a
-method of the SLiM class <code><a href="SLiMSim.html">SLiMSim</a></code>.
+method of the SLiM class <code><a href="SLiMSim_Class.html">SLiMSim</a></code>.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
+nested in a <code><a href="slim_script.html">slim_script</a></code>
+function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.</p>
+<p>Documentation for SLiM function <code>treeSeqRememberIndividuals</code>, which is a
+method of the SLiM class <code><a href="Species_Class.html">Species</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -98,7 +114,9 @@ full SLiM script.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">treeSeqRememberIndividuals</span><span class="op">(</span><span class="va">individuals</span>, <span class="va">permanent</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">treeSeqRememberIndividuals</span><span class="op">(</span><span class="va">individuals</span>, <span class="va">permanent</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">treeSeqRememberIndividuals</span><span class="op">(</span><span class="va">individuals</span>, <span class="va">permanent</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -116,6 +134,9 @@ The default value is <code>T</code>. See details for description.</p></dd>
     <div id="value">
     <h2>Value</h2>
     
+
+<p>An object of type void.</p>
+
 
 <p>An object of type void.</p>
     </div>
@@ -184,6 +205,70 @@ addSubpop() that are inherited by extant individuals, for easy recapitation and
 other analysis (see sections 17.2 and 17.10). However, the individuals of the
 first generation are not remembered automatically, only their needed genomic
 information.</p>
+<p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=729" class="external-link">SLiM manual: page
+729</a>.</p>
+<p>Mark the individuals specified by individuals to be kept across
+tree sequence table simplification. This method may only be called if tree
+sequence recording has been turned on with initializeTreeSeq(). All currently
+living individuals are always kept across simplification; this method does
+not need to be called, and indeed should not be called, for that purpose.
+Instead, treeSeqRememberIndividuals() allows any individual, including dead
+individuals, to be kept in the final tree sequence. Typically this would be
+used, for example, to keep particular individuals that you wanted to be able
+to trace ancestry back to in later analysis. However, this is not the typical
+usage pattern for tree sequence recording; most models will not need to call
+this method. There are two ways to keep individuals across simplification.
+If permanent is T (the default), then the specified individuals will be
+permanently remembered: their genomes will be added to the current sample,
+and they will always be present in the tree sequence. Permanently remembering
+a large number of individuals will, of course, markedly increase memory usage
+and runtime. Supplying F for permanent will instead mark the individuals only
+for (temporary) retention: their genomes will not be added to the sample, and
+they will appear in the final tree sequence only if one of their genomes is
+retained across simplification. In other words, the rule of thumb for retained
+individuals is simple: if a genome is kept by simplification, the genome's
+corresponding individual is kept also, if it is retained. Note that permanent
+remembering takes priority; calling this function with permanent=F on an
+individual that has previously been permanently remembered will not remove
+it from the sample. The behavior of simplification for individuals retained
+with permanent=F depends upon the value of the retainCoalescentOnly flag
+passed to initializeTreeSeq(); here we will discuss the behavior of that flag
+in detail. First of all, genomes are always removed by simplification unless
+they are (a) part of the final generation (i.e., in a living individual when
+simplification occurs), (b) ancestral to the final generation, (c) a genome
+of a permanently remembered individual, or (d) ancestral to a permanently
+remembered individual. If retainCoalescentOnly is T (the default), they are
+also always removed if they are not a branch point (i.e., a coalescent node
+or most recent common ancestor) in the tree sequence. In some cases it may
+be useful to retain a genome and its associated individual when it is simply
+an intermediate node in the ancestry (i.e., in the middle of a branch).
+This can be enabled by setting retainCoalescentOnly to F in your call to
+initializeTreeSeq(). In this case, ancestral genomes that are intermediate
+("unary nodes", in tskit parlance) and are within an individual that has been
+retained using the permanent=F flag here are kept, along with the retained
+individual itself. Since setting retainCoalescentOnly to F will prevent the
+unary nodes for retained individuals from being pruned, simplification may
+often be unable to prune very much at all from the tree sequence, and memory
+usage and runtime may increase rapidly. If you are retaining many individuals,
+this setting should therefore be used only with caution; it is not necessary if
+you are purely interested in the most recent common ancestors. See the pyslim
+documentation for further discussion of retaining and remembering individuals
+and the effects of the retainCoalescentOnly flag. The metadata (age, location,
+etc) that are stored in the resulting tree sequence are those values present
+at either (a) the final generation, if the individual is alive when the tree
+sequence is output, or (b) the last time that the individual was remembered,
+if not. Calling treeSeqRememberIndividuals() on an individual that is already
+remembered will cause the archived information about the remembered individual
+to be updated to reflect the individual's current state; care should be taken
+to remember individuals at a point in time when their state is valid. A case
+where this is particularly important is for the spatial location of individuals
+in continuous-space models. SLiM automatically retains the portions of the
+genomes that comprise the first generation of any new subpopulation created with
+addSubpop() that are inherited by extant individuals, for easy recapitation and
+other analysis (see sections 17.2 and 17.10). However, the individuals of the
+first generation are not remembered automatically, only their needed genomic
+information.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -196,11 +281,19 @@ documentation is
 Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href="https://messerlab.org/slim/" class="external-link">https://messerlab.org/slim/</a></p>
+
+<p>This is documentation for a function in the SLiM software, and has been
+reproduced from the official manual,
+which can be found here: <a href="http://benhaller.com/slim/SLiM_Manual.pdf" class="external-link">http://benhaller.com/slim/SLiM_Manual.pdf</a>. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: <a href="https://messerlab.org/slim/" class="external-link">https://messerlab.org/slim/</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other SLiMSim: 
-<code><a href="SLiMSim.html">SS</a></code>,
+<code><a href="SLiMSim_Class.html">SLiMSim</a></code>,
 <code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="addSubpop.html">addSubpop</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
@@ -226,6 +319,35 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="registerReproductionCallback.html">registerReproductionCallback</a>()</code>,
 <code><a href="rescheduleScriptBlock.html">rescheduleScriptBlock</a>()</code>,
 <code><a href="simulationFinished.html">simulationFinished</a>()</code>,
+<code><a href="subsetMutations.html">subsetMutations</a>()</code>,
+<code><a href="treeSeqCoalesced.html">treeSeqCoalesced</a>()</code>,
+<code><a href="treeSeqOutput.html">treeSeqOutput</a>()</code>,
+<code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p>
+<p>Other Species: 
+<code><a href="Species_Class.html">Species</a></code>,
+<code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
+<code><a href="addSubpop.html">addSubpop</a>()</code>,
+<code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
+<code><a href="individualsWithPedigreeIDs.html">individualsWithPedigreeIDs</a>()</code>,
+<code><a href="killIndividuals.html">killIndividuals</a>()</code>,
+<code><a href="mutationCounts.html">mutationCounts</a>()</code>,
+<code><a href="mutationFrequencies.html">mutationFrequencies</a>()</code>,
+<code><a href="mutationsOfType.html">mutationsOfType</a>()</code>,
+<code><a href="outputFixedMutations.html">outputFixedMutations</a>()</code>,
+<code><a href="outputFull.html">outputFull</a>()</code>,
+<code><a href="outputMutations.html">outputMutations</a>()</code>,
+<code><a href="readFromPopulationFile.html">readFromPopulationFile</a>()</code>,
+<code><a href="recalculateFitness.html">recalculateFitness</a>()</code>,
+<code><a href="registerFitnessEffectCallback.html">registerFitnessEffectCallback</a>()</code>,
+<code><a href="registerMateChoiceCallback.html">registerMateChoiceCallback</a>()</code>,
+<code><a href="registerModifyChildCallback.html">registerModifyChildCallback</a>()</code>,
+<code><a href="registerMutationCallback.html">registerMutationCallback</a>()</code>,
+<code><a href="registerMutationEffectCallback.html">registerMutationEffectCallback</a>()</code>,
+<code><a href="registerRecombinationCallback.html">registerRecombinationCallback</a>()</code>,
+<code><a href="registerReproductionCallback.html">registerReproductionCallback</a>()</code>,
+<code><a href="registerSurvivalCallback.html">registerSurvivalCallback</a>()</code>,
+<code><a href="simulationFinished.html">simulationFinished</a>()</code>,
+<code><a href="skipTick.html">skipTick</a>()</code>,
 <code><a href="subsetMutations.html">subsetMutations</a>()</code>,
 <code><a href="treeSeqCoalesced.html">treeSeqCoalesced</a>()</code>,
 <code><a href="treeSeqOutput.html">treeSeqOutput</a>()</code>,

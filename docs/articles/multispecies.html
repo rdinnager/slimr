@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -580,7 +580,7 @@ model:</p>
 <span>        <span class="va">parasitoid_density_byhost</span> <span class="op">=</span> <span class="fu">i1.localPopulationDensity</span><span class="op">(</span><span class="va">hosts</span>, <span class="va">parasitoid_pop</span><span class="op">)</span></span>
 <span>        <span class="va">parasitoids.tag</span> <span class="op">=</span> <span class="fl">0</span></span>
 <span>        <span class="fu">parasitoids.setValue</span><span class="op">(</span><span class="st">"PREY_POS"</span>, <span class="cn">NULL</span><span class="op">)</span></span>
-<span>        <span class="va">P_parasitized_byhost</span> <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">A</span> <span class="op">*</span> <span class="va">parasitoid_density_byhost</span><span class="op">)</span></span>
+<span>        <span class="va">P_parasitized_byhost</span> <span class="op">=</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="../reference/exp.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">A</span> <span class="op">*</span> <span class="va">parasitoid_density_byhost</span><span class="op">)</span></span>
 <span>        <span class="va">killed</span> <span class="op">=</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu">hosts.size</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">&lt;</span> <span class="va">P_parasitized_byhost</span><span class="op">)</span></span>
 <span>        <span class="va">hosts.tag</span> <span class="op">=</span> <span class="fu">asInteger</span><span class="op">(</span><span class="va">killed</span><span class="op">)</span></span>
 <span>        <span class="va">preys</span> <span class="op">=</span> <span class="va">hosts</span><span class="op">[</span><span class="va">killed</span><span class="op">]</span></span>
@@ -593,7 +593,7 @@ model:</p>
 <span>        <span class="op">}</span></span>
 <span>        <span class="va">unhunted</span> <span class="op">=</span> <span class="va">hosts</span><span class="op">[</span><span class="op">!</span><span class="va">killed</span><span class="op">]</span></span>
 <span>        <span class="va">host_density_by_unhunted</span> <span class="op">=</span> <span class="fu">i2.localPopulationDensity</span><span class="op">(</span><span class="va">unhunted</span>, <span class="va">host_pop</span><span class="op">)</span></span>
-<span>        <span class="va">P_survives_by_unhunted</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">host_density_by_unhunted</span><span class="op">/</span><span class="va">K</span><span class="op">)</span></span>
+<span>        <span class="va">P_survives_by_unhunted</span> <span class="op">=</span> <span class="fu"><a href="../reference/exp.html">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">host_density_by_unhunted</span><span class="op">/</span><span class="va">K</span><span class="op">)</span></span>
 <span>        <span class="va">survived</span> <span class="op">=</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu">unhunted.size</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">&lt;</span> <span class="va">P_survives_by_unhunted</span><span class="op">)</span></span>
 <span>        <span class="va">dead</span> <span class="op">=</span> <span class="va">unhunted</span><span class="op">[</span><span class="op">!</span><span class="va">survived</span><span class="op">]</span></span>
 <span>        <span class="va">dead.tag</span> <span class="op">=</span> <span class="fl">1</span></span>
@@ -605,7 +605,7 @@ model:</p>
 <span>        <span class="kw">if</span> <span class="op">(</span><span class="va">individual.tag</span> <span class="op">!=</span> <span class="fl">0</span><span class="op">)</span> <span class="va">return</span></span>
 <span>        <span class="va">mate</span> <span class="op">=</span> <span class="fu">i2.drawByStrength</span><span class="op">(</span><span class="va">individual</span><span class="op">)</span></span>
 <span>        <span class="kw">if</span> <span class="op">(</span><span class="fu">mate.size</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>            <span class="va">litterSize</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">rpois</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span><span class="op">)</span></span>
+<span>            <span class="va">litterSize</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">rpois</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="../reference/exp.html">exp</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span><span class="op">)</span></span>
 <span>            <span class="kw">if</span> <span class="op">(</span><span class="va">litterSize</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
 <span>                <span class="va">offspring</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fu">seqLen</span><span class="op">(</span><span class="va">litterSize</span><span class="op">)</span>, <span class="va">CROSS_SCRIPT</span><span class="op">)</span></span>
 <span>                <span class="va">positions</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">individual.spatialPosition</span>, <span class="va">litterSize</span><span class="op">)</span></span>

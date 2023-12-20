@@ -32,7 +32,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>recalculateFitness</code>, which is a method of
-the SLiM class <code><a href="SLiMSim.html">SLiMSim</a></code>.
+the SLiM class <code><a href="SLiMSim_Class.html">SLiMSim</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -104,7 +104,7 @@ nested in a <code><a href="slim_script.html">slim_script</a></code>
 function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.</p>
 <p>Documentation for SLiM function <code>recalculateFitness</code>, which is a method of
-the SLiM class <code><a href="Species.html">Species</a></code>.
+the SLiM class <code><a href="Species_Class.html">Species</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -174,8 +174,8 @@ operation; you should think carefully about what side effects might result
 (which is why fitness recalculation does not just occur automatically after
 changes that might affect fitness values).</p>
 <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=684" class="external-link">SLiM manual: page
-684</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=725" class="external-link">SLiM manual: page
+725</a>.</p>
 <p>Force an immediate recalculation of fitness values for all individuals
 in all subpopulations. Normally fitness values are calculated at a fixed
 point in each tick, and those values are cached and used until the next
@@ -184,18 +184,18 @@ affects fitness calculations, and if you wish those changes to take effect
 immediately rather than taking effect at the next automatic recalculation, you
 may call recalculateFitness() to force an immediate recalculation and recache.
 The optional parameter tick provides the tick for which mutationEffect() and
-fitnessEffect() callbacks should be selected; if it is NULL (the default),
-the current tick value for the simulation, community.tick, is used. If you
-call recalculateFitness() in an early() event in a WF model, you may wish
-this to be community.tick - 1 in order to utilize the mutationEffect() and
-fitnessEffect() callbacks for the previous tick, as if the changes that you have
-made to fitness- influencing parameters were already in effect at the end of the
-previous tick when the new generation was first created and evaluated (usually
-it is simpler to just make such changes in a late() event instead, however, in
-which case calling recalculateFitness() is probably not necessary at all since
-fitness values will be recalculated immediately afterwards). Regardless of the
-value supplied for tick here, community.tick inside callbacks will report the
-true tick number, so if your callbacks consult that parameter in order to create
+fitnessEffect() callbacks should be selected; if it is NULL (the default), the
+current tick value for the simulation, community.tick, is used. If you call
+recalculateFitness() in an early() event in a WF model, you may wish this to be
+community.tick - 1 in order to utilize the mutationEffect() and fitnessEffect()
+callbacks for the previous tick, as if the changes that you have made to
+fitnessinfluencing parameters were already in effect at the end of the previous
+tick when the new generation was first created and evaluated (usually it is
+simpler to just make such changes in a late() event instead, however, in which
+case calling recalculateFitness() is probably not necessary at all since fitness
+values will be recalculated immediately afterwards). Regardless of the value
+supplied for tick here, community.tick inside callbacks will report the true
+tick number, so if your callbacks consult that parameter in order to create
 tick-specific fitness effects you will need to handle the discrepancy somehow.
 (Similar considerations apply for nonWF models that call recalculateFitness()
 in a late() event, which is also not advisable in general.) After this call,
@@ -229,7 +229,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other SLiMSim: 
-<code><a href="SLiMSim.html">SS</a></code>,
+<code><a href="SLiMSim_Class.html">SLiMSim</a></code>,
 <code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="addSubpop.html">addSubpop</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
@@ -260,7 +260,8 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="treeSeqRememberIndividuals.html">treeSeqRememberIndividuals</a>()</code>,
 <code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p>
 <p>Other Species: 
-<code><a href="Species.html">Sp</a></code>,
+<code><a href="Species_Class.html">Species</a></code>,
+<code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="addSubpop.html">addSubpop</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
 <code><a href="individualsWithPedigreeIDs.html">individualsWithPedigreeIDs</a>()</code>,
@@ -277,7 +278,16 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="registerModifyChildCallback.html">registerModifyChildCallback</a>()</code>,
 <code><a href="registerMutationCallback.html">registerMutationCallback</a>()</code>,
 <code><a href="registerMutationEffectCallback.html">registerMutationEffectCallback</a>()</code>,
-<code><a href="registerRecombinationCallback.html">registerRecombinationCallback</a>()</code></p></div>
+<code><a href="registerRecombinationCallback.html">registerRecombinationCallback</a>()</code>,
+<code><a href="registerReproductionCallback.html">registerReproductionCallback</a>()</code>,
+<code><a href="registerSurvivalCallback.html">registerSurvivalCallback</a>()</code>,
+<code><a href="simulationFinished.html">simulationFinished</a>()</code>,
+<code><a href="skipTick.html">skipTick</a>()</code>,
+<code><a href="subsetMutations.html">subsetMutations</a>()</code>,
+<code><a href="treeSeqCoalesced.html">treeSeqCoalesced</a>()</code>,
+<code><a href="treeSeqOutput.html">treeSeqOutput</a>()</code>,
+<code><a href="treeSeqRememberIndividuals.html">treeSeqRememberIndividuals</a>()</code>,
+<code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>

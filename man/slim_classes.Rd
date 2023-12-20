@@ -8,8 +8,9 @@
 A data frame with 15 rows and 2 variables:
 \describe{
   \item{class_name}{The name of SLiM class}
-  \item{class_abbr}{An abbreviation of the class name that can be used to save typing. They
-  always begin with '.' to reduce the chance of name collisions with short variable names}
+  \item{class_internal}{The name used internally by `slimr` for the class.
+  Generally not useful for users.}
+  \item{class_abbr}{An abbreviation of the class name that can be used to save typing.}
 }
 }
 \usage{

@@ -32,7 +32,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>mutationFrequencies</code>, which is a method of
-the SLiM class <code><a href="SLiMSim.html">SLiMSim</a></code>.
+the SLiM class <code><a href="SLiMSim_Class.html">SLiMSim</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -104,7 +104,7 @@ nested in a <code><a href="slim_script.html">slim_script</a></code>
 function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.</p>
 <p>Documentation for SLiM function <code>mutationFrequencies</code>, which is a method of
-the SLiM class <code><a href="Species.html">Species</a></code>.
+the SLiM class <code><a href="Species_Class.html">Species</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -156,8 +156,8 @@ of float frequencies. See also the Genome methods mutationCountsInGenomes()
 and mutationFrequenciesInGenomes(). Eidos events fitness() mateChoice()
 modifyChild() recombination() interaction() reproduction() 567</p>
 <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=680" class="external-link">SLiM manual: page
-680</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=721" class="external-link">SLiM manual: page
+721</a>.</p>
 <p>Return a float vector with the frequencies of all of the Mutation
 objects passed in mutations, within the Subpopulation objects in subpops. The
 subpops argument is required, but you may pass NULL to get population-wide
@@ -192,7 +192,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other SLiMSim: 
-<code><a href="SLiMSim.html">SS</a></code>,
+<code><a href="SLiMSim_Class.html">SLiMSim</a></code>,
 <code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="addSubpop.html">addSubpop</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
@@ -223,7 +223,8 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="treeSeqRememberIndividuals.html">treeSeqRememberIndividuals</a>()</code>,
 <code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p>
 <p>Other Species: 
-<code><a href="Species.html">Sp</a></code>,
+<code><a href="Species_Class.html">Species</a></code>,
+<code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="addSubpop.html">addSubpop</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
 <code><a href="individualsWithPedigreeIDs.html">individualsWithPedigreeIDs</a>()</code>,
@@ -240,7 +241,16 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="registerModifyChildCallback.html">registerModifyChildCallback</a>()</code>,
 <code><a href="registerMutationCallback.html">registerMutationCallback</a>()</code>,
 <code><a href="registerMutationEffectCallback.html">registerMutationEffectCallback</a>()</code>,
-<code><a href="registerRecombinationCallback.html">registerRecombinationCallback</a>()</code></p></div>
+<code><a href="registerRecombinationCallback.html">registerRecombinationCallback</a>()</code>,
+<code><a href="registerReproductionCallback.html">registerReproductionCallback</a>()</code>,
+<code><a href="registerSurvivalCallback.html">registerSurvivalCallback</a>()</code>,
+<code><a href="simulationFinished.html">simulationFinished</a>()</code>,
+<code><a href="skipTick.html">skipTick</a>()</code>,
+<code><a href="subsetMutations.html">subsetMutations</a>()</code>,
+<code><a href="treeSeqCoalesced.html">treeSeqCoalesced</a>()</code>,
+<code><a href="treeSeqOutput.html">treeSeqOutput</a>()</code>,
+<code><a href="treeSeqRememberIndividuals.html">treeSeqRememberIndividuals</a>()</code>,
+<code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>

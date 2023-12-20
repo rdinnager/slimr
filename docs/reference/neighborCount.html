@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>neighborCount</code>, which is a method of the
-SLiM class <code><a href="InteractionType.html">InteractionType</a></code>.
+SLiM class <code><a href="InteractionType_Class.html">InteractionType</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -123,8 +123,8 @@ description.</p></dd>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=663" class="external-link">SLiM manual: page
-663</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=696" class="external-link">SLiM manual: page
+696</a>.</p>
 <p>Returns the number of neighbors for each individual in receivers,
 within the maximum interaction distance according to the distance metric of the
 InteractionType, from among the individuals in exerterSubpop (or, if that is
@@ -135,14 +135,13 @@ to be the same. The evaluate() method must have been previously called for the
 receiver and exerter subpopulations, and positions saved at evaluation time will
 be used. This method is similar to nearestNeighbors() (when passed a large count
 so as to guarantee that all neighbors are returned), but this method returns
-only a count of the individuals, not a vector containing the individuals. This
-method may also be called in a vectorized fashion, with a non- singleton vector
-of individuals, unlike nearestNeighbors(). Note that this method does not use
-interaction eligibility as a criterion; it will count neighbors that cannot
-exert an interaction upon a receiver (due to sex-segregation, e.g.). (It still
-does not count a receiver as a neighbor of itself, however.) If a count of
-only interacting neighbors is desired, use interactingNeighborCount(). If the
-InteractionType is non-spatial, this method may not be called.</p>
+only a count of the individuals, not a vector containing the individuals. Note
+that this method does not use interaction eligibility as a criterion; it will
+count neighbors that cannot exert an interaction upon a receiver (due to the
+configured receiver or exerter constraints). (It still does not count a receiver
+as a neighbor of itself, however.) If a count of only interacting neighbors is
+desired, use interactingNeighborCount(). If the InteractionType is non-spatial,
+this method may not be called.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -159,7 +158,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other InteractionType: 
-<code><a href="InteractionType.html">InteractionType</a></code>,
+<code><a href="InteractionType_Class.html">InteractionType</a></code>,
 <code><a href="clippedIntegral.html">clippedIntegral</a>()</code>,
 <code><a href="distanceFromPoint.html">distanceFromPoint</a>()</code>,
 <code><a href="distance.html">distance</a>()</code>,
@@ -172,8 +171,10 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="nearestNeighborsOfPoint.html">nearestNeighborsOfPoint</a>()</code>,
 <code><a href="nearestNeighbors.html">nearestNeighbors</a>()</code>,
 <code><a href="neighborCountOfPoint.html">neighborCountOfPoint</a>()</code>,
+<code><a href="setConstraints.html">setConstraints</a>()</code>,
 <code><a href="setInteractionFunction.html">setInteractionFunction</a>()</code>,
 <code><a href="strength.html">strength</a>()</code>,
+<code><a href="testConstraints.html">testConstraints</a>()</code>,
 <code><a href="totalOfNeighborStrengths.html">totalOfNeighborStrengths</a>()</code>,
 <code><a href="unevaluate.html">unevaluate</a>()</code></p></div>
     </div>

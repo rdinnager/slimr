@@ -32,7 +32,7 @@ slimr_output(
 \arguments{
 \item{slimr_expr}{A SLiM expression to generate output. This can either be
 a SLiM expression designed to create output, such as \code{outputFull()},
-or an object created in the SLiM code, in which case \code{slimr_output}
+or an object created in the SLiM code, in which case \code{r_output}
 will automatically concatenate it to a string and output it}
 
 \item{name}{The name to use to identify this output.}

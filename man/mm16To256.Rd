@@ -51,6 +51,10 @@ about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\examples{
+## This just brings up the documentation:
+mm16To256()
+}
 \seealso{
 Other SLiMBuiltin: 
 \code{\link{SB}},

@@ -6,8 +6,9 @@
 #' @format A data frame with 15 rows and 2 variables:
 #' \describe{
 #'   \item{class_name}{The name of SLiM class}
-#'   \item{class_abbr}{An abbreviation of the class name that can be used to save typing. They
-#'   always begin with '.' to reduce the chance of name collisions with short variable names}
+#'   \item{class_internal}{The name used internally by `slimr` for the class.
+#'   Generally not useful for users.}
+#'   \item{class_abbr}{An abbreviation of the class name that can be used to save typing.}
 #' }
 "slim_classes"
 
@@ -53,101 +54,103 @@ Substitution <- new.env()
 S <- Substitution
 
 #'@name Init
-#'@rdname Initialize
+#'@rdname Initialize_Class
 #'@export
 NULL
 
 #'@name Ch
-#'@rdname Chromosome
+#'@rdname Chromosome_Class
 #'@export
 NULL
 
 #'@name Co
-#'@rdname Community
+#'@rdname Community_Class
 #'@export
 NULL
 
 #'@name E
-#'@rdname Eidos
+#'@rdname Eidos_Class
 #'@export
 NULL
 
 #'@name G
-#'@rdname Genome
+#'@rdname Genome_Class
 #'@export
 NULL
 
 #'@name GE
-#'@rdname GenomicElement
+#'@rdname GenomicElement_Class
 #'@export
 NULL
 
 #'@name GET
-#'@rdname GenomicElementType
+#'@rdname GenomicElementType_Class
 #'@export
 NULL
 
 #'@name In
-#'@rdname Individual
+#'@rdname Individual_Class
 #'@export
 NULL
 
 #'@name IT
-#'@rdname Interactiontype
+#'@rdname InteractionType_Class
 #'@export
 NULL
 
 #'@name LF
-#'@rdname LogFile
+#'@rdname LogFile_Class
 #'@export
 NULL
 
 #'@name M
-#'@rdname Mutation
+#'@rdname Mutation_Class
 #'@export
 NULL
 
 #'@name MT
-#'@rdname MutationType
+#'@rdname MutationType_Class
 #'@export
 NULL
 
 #'@name SB
-#'@rdname SLiMBuiltin
+#'@rdname SLiMBuiltin_Class
 #'@export
 NULL
 
 #'@name SEB
-#'@rdname SLiMEidosBlock
+#'@rdname SLiMEidosBlock_Class
 #'@export
 NULL
 
 #'@name SG
-#'@rdname SLiMgui
+#'@rdname SLiMgui_Class
 #'@export
 NULL
 
 #'@name SM
-#'@rdname SpatialMap
+#'@rdname SpatialMap_Class
 #'@export
 NULL
 
+#' SLiMSim was a class used prior to v4.0 in SLiM. It remains in `slimr`
+#' for backwards compatibility but its use is now deprecated.
 #'@name SS
-#'@rdname SLiMSim
+#'@rdname SLiMSim_Class
 #'@export
 NULL
 
 #'@name Sp
-#'@rdname Species
+#'@rdname Species_Class
 #'@export
 NULL
 
 #'@name P
-#'@rdname Subpopulation
+#'@rdname Subpopulation_Class
 #'@export
 NULL
 
 #'@name S
-#'@rdname Substitution
+#'@rdname Substitution_Class
 #'@export
 NULL

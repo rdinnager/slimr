@@ -22,7 +22,7 @@ test_that("templating works", {
 
   expect_snapshot(print(script_temp))
 
-  info <- slimr_template_info(script_temp)
+  info <- slim_template_info(script_temp)
 
   expect_equal(info$block_init$mut_rate, 1e-07)
   expect_equal(info$block_init$genome_size, 99999)

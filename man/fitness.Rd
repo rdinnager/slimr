@@ -49,7 +49,6 @@ on the official website: \url{https://messerlab.org/slim/}
 }
 
 \examples{
-# From page 182 of the SLiM Manual
 slim_block(fitness(m2), {
   ## sets up frequency dependent selection for m2
   return(1.5 - sim.mutationFrequencies(p1, mut))

@@ -46,6 +46,9 @@
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'initializeAncestralNucleotides()
 initializeAncestralNucleotides <- function(sequence) {
  .Init$initializeAncestralNucleotides(sequence)
 }
@@ -129,6 +132,9 @@ initializeAncestralNucleotides <- function(sequence) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'initializeGeneConversion()
 initializeGeneConversion <- function(nonCrossoverFraction, meanLength,
 simpleConversionFraction, bias, redrawLengthsOnFailure) {
  .Init$initializeGeneConversion(nonCrossoverFraction, meanLength,
@@ -186,6 +192,9 @@ simpleConversionFraction, bias, redrawLengthsOnFailure)
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'initializeGenomicElement()
 initializeGenomicElement <- function(genomicElementType, start, end) {
  .Init$initializeGenomicElement(genomicElementType, start, end)
 }
@@ -273,6 +282,9 @@ initializeGenomicElement <- function(genomicElementType, start, end) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'initializeGenomicElementType()
 initializeGenomicElementType <- function(id, mutationTypes, proportions,
 mutationMatrix) {
  .Init$initializeGenomicElementType(id, mutationTypes, proportions,
@@ -356,6 +368,9 @@ mutationMatrix)
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'initializeHotspotMap()
 initializeHotspotMap <- function(multipliers, ends, sex) {
  .Init$initializeHotspotMap(multipliers, ends, sex)
 }
@@ -465,6 +480,9 @@ initializeHotspotMap <- function(multipliers, ends, sex) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'initializeInteractionType()
 initializeInteractionType <- function(id, spatiality, reciprocal,
 maxDistance, sexSegregation) {
  .Init$initializeInteractionType(id, spatiality, reciprocal, maxDistance,
@@ -550,6 +568,9 @@ sexSegregation)
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'initializeMutationRate()
 initializeMutationRate <- function(rates, ends, sex) {
  .Init$initializeMutationRate(rates, ends, sex)
 }
@@ -623,6 +644,9 @@ initializeMutationRate <- function(rates, ends, sex) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'initializeMutationType()
 initializeMutationType <- function(id, dominanceCoeff, distributionType, ...)
 {
  .Init$initializeMutationType(id, dominanceCoeff, distributionType, ...)
@@ -678,6 +702,9 @@ initializeMutationType <- function(id, dominanceCoeff, distributionType, ...)
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'initializeMutationTypeNuc()
 initializeMutationTypeNuc <- function(id, dominanceCoeff,
 distributionType, ...) {
  .Init$initializeMutationTypeNuc(id, dominanceCoeff, distributionType, ...)
@@ -763,6 +790,9 @@ distributionType, ...) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'initializeRecombinationRate()
 initializeRecombinationRate <- function(rates, ends, sex) {
  .Init$initializeRecombinationRate(rates, ends, sex)
 }
@@ -811,6 +841,9 @@ initializeRecombinationRate <- function(rates, ends, sex) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'initializeSex()
 initializeSex <- function(chromosomeType) {
  .Init$initializeSex(chromosomeType)
 }
@@ -856,6 +889,9 @@ initializeSex <- function(chromosomeType) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'initializeSLiMModelType()
 initializeSLiMModelType <- function(modelType) {
  .Init$initializeSLiMModelType(modelType)
 }
@@ -1041,6 +1077,9 @@ initializeSLiMModelType <- function(modelType) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'initializeSLiMOptions()
 initializeSLiMOptions <- function(keepPedigrees, dimensionality, periodicity,
 mutationRuns, preventIncidentalSelfing, nucleotideBased, randomizeCallbacks) {
  .Init$initializeSLiMOptions(keepPedigrees, dimensionality, periodicity,
@@ -1107,6 +1146,9 @@ mutationRuns, preventIncidentalSelfing, nucleotideBased, randomizeCallbacks)
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'initializeSpecies()
 initializeSpecies <- function(tickModulo, tickPhase, avatar, color) {
  .Init$initializeSpecies(tickModulo, tickPhase, avatar, color)
 }
@@ -1238,6 +1280,9 @@ initializeSpecies <- function(tickModulo, tickPhase, avatar, color) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'initializeTreeSeq()
 initializeTreeSeq <- function(recordMutations, simplificationRatio,
 simplificationInterval, checkCoalescence, runCrosschecks, retainCoalescentOnly,
 timeUnit) {
@@ -9402,6 +9447,9 @@ eidos_version <- function(print) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 ancestralNucleotides <- function(start, end, format = "string") {
  .Ch$ancestralNucleotides(start, end, format = "string")
 }
@@ -9468,6 +9516,9 @@ ancestralNucleotides <- function(start, end, format = "string") {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 drawBreakpoints <- function(parent, n) {
  .Ch$drawBreakpoints(parent, n)
 }
@@ -9514,6 +9565,9 @@ drawBreakpoints <- function(parent, n) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 setAncestralNucleotides <- function(sequence) {
  .Ch$setAncestralNucleotides(sequence)
@@ -9563,6 +9617,9 @@ setAncestralNucleotides <- function(sequence) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 setGeneConversion <- function(nonCrossoverFraction, meanLength,
 simpleConversionFraction, bias) {
@@ -9627,6 +9684,9 @@ simpleConversionFraction, bias)
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 setHotspotMap <- function(multipliers, ends, sex) {
  .Ch$setHotspotMap(multipliers, ends, sex)
@@ -9693,6 +9753,9 @@ setHotspotMap <- function(multipliers, ends, sex) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 setMutationRate <- function(rates, ends, sex) {
  .Ch$setMutationRate(rates, ends, sex)
 }
@@ -9756,6 +9819,9 @@ setMutationRate <- function(rates, ends, sex) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 setRecombinationRate <- function(rates, ends, sex) {
  .Ch$setRecombinationRate(rates, ends, sex)
@@ -9845,6 +9911,9 @@ setRecombinationRate <- function(rates, ends, sex) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 createLogFile <- function(filePath, initialContents, append, compress, sep,
 logInterval, flushInterval) {
  .Co$createLogFile(filePath, initialContents, append, compress, sep,
@@ -9892,6 +9961,9 @@ logInterval, flushInterval)
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 deregisterScriptBlock <- function(scriptBlocks) {
  .Co$deregisterScriptBlock(scriptBlocks)
 }
@@ -9929,6 +10001,9 @@ deregisterScriptBlock <- function(scriptBlocks) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 genomicElementTypesWithIDs <- function(ids) {
  .Co$genomicElementTypesWithIDs(ids)
@@ -9968,6 +10043,9 @@ genomicElementTypesWithIDs <- function(ids) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 interactionTypesWithIDs <- function(ids) {
  .Co$interactionTypesWithIDs(ids)
 }
@@ -10005,6 +10083,9 @@ interactionTypesWithIDs <- function(ids) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 mutationTypesWithIDs <- function(ids) {
  .Co$mutationTypesWithIDs(ids)
@@ -10050,6 +10131,9 @@ mutationTypesWithIDs <- function(ids) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 outputUsage <- function(void) {
  .Co$outputUsage(void)
@@ -10107,6 +10191,9 @@ outputUsage <- function(void) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 registerEarlyEvent <- function(id, source, start, end, ticksSpec) {
  .Co$registerEarlyEvent(id, source, start, end, ticksSpec)
 }
@@ -10162,6 +10249,9 @@ registerEarlyEvent <- function(id, source, start, end, ticksSpec) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 registerFirstEvent <- function(id, source, start, end, ticksSpec) {
  .Co$registerFirstEvent(id, source, start, end, ticksSpec)
@@ -10224,6 +10314,9 @@ registerFirstEvent <- function(id, source, start, end, ticksSpec) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 registerInteractionCallback <- function(id, source, intType, subpop, start,
 end) {
  .Co$registerInteractionCallback(id, source, intType, subpop, start, end)
@@ -10280,6 +10373,9 @@ end) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 registerLateEvent <- function(id, source, start, end, ticksSpec) {
  .Co$registerLateEvent(id, source, start, end, ticksSpec)
@@ -10375,6 +10471,9 @@ registerLateEvent <- function(id, source, start, end, ticksSpec) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 rescheduleScriptBlock <- function(block, start, end, ticks) {
  .Co$rescheduleScriptBlock(block, start, end, ticks)
 }
@@ -10412,6 +10511,9 @@ rescheduleScriptBlock <- function(block, start, end, ticks) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 scriptBlocksWithIDs <- function(ids) {
  .Co$scriptBlocksWithIDs(ids)
@@ -10457,6 +10559,9 @@ scriptBlocksWithIDs <- function(ids) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 simulationFinished <- function(void) {
  .Co$simulationFinished(void)
 }
@@ -10495,6 +10600,9 @@ simulationFinished <- function(void) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 speciesWithIDs <- function(ids) {
  .Co$speciesWithIDs(ids)
 }
@@ -10532,6 +10640,9 @@ speciesWithIDs <- function(ids) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 subpopulationsWithIDs <- function(ids) {
  .Co$subpopulationsWithIDs(ids)
@@ -10576,6 +10687,9 @@ subpopulationsWithIDs <- function(ids) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 usage <- function(void) {
  .Co$usage(void)
@@ -10624,6 +10738,9 @@ usage <- function(void) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 addMutations <- function(mutations) {
  .G$addMutations(mutations)
@@ -10728,6 +10845,9 @@ addMutations <- function(mutations) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 addNewDrawnMutation <- function(mutationType, position, originTick,
 originSubpop, nucleotide) {
  .G$addNewDrawnMutation(mutationType, position, originTick, originSubpop,
@@ -10829,6 +10949,9 @@ nucleotide)
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 addNewMutation <- function(mutationType, selectionCoeff, position,
 originTick, originSubpop, nucleotide) {
  .G$addNewMutation(mutationType, selectionCoeff, position, originTick,
@@ -10891,6 +11014,9 @@ originSubpop, nucleotide)
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 containsMarkerMutation <- function(mutType, position, returnMutation) {
  .G$containsMarkerMutation(mutType, position, returnMutation)
 }
@@ -10930,6 +11056,9 @@ containsMarkerMutation <- function(mutType, position, returnMutation) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 containsMutations <- function(mutations) {
  .G$containsMutations(mutations)
@@ -10971,6 +11100,9 @@ containsMutations <- function(mutations) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 countOfMutationsOfType <- function(mutType) {
  .G$countOfMutationsOfType(mutType)
@@ -11018,6 +11150,9 @@ countOfMutationsOfType <- function(mutType) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 mutationCountsInGenomes <- function(mutations) {
  .G$mutationCountsInGenomes(mutations)
 }
@@ -11063,6 +11198,9 @@ mutationCountsInGenomes <- function(mutations) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 mutationFrequenciesInGenomes <- function(mutations) {
  .G$mutationFrequenciesInGenomes(mutations)
 }
@@ -11106,6 +11244,9 @@ mutationFrequenciesInGenomes <- function(mutations) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 mutationsOfType <- function(mutType) {
  .G$mutationsOfType(mutType)
@@ -11170,6 +11311,9 @@ mutationsOfType <- function(mutType) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 nucleotides <- function(start, end, format) {
  .G$nucleotides(start, end, format)
 }
@@ -11218,6 +11362,9 @@ nucleotides <- function(start, end, format) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 output <- function(filePath, append) {
  .G$output(filePath, append)
@@ -11277,6 +11424,9 @@ output <- function(filePath, append) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 outputMS <- function(filePath, append, filterMonomorphic) {
  .G$outputMS(filePath, append, filterMonomorphic)
@@ -11338,6 +11488,9 @@ outputMS <- function(filePath, append, filterMonomorphic) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 outputVCF <- function(filePath, outputMultiallelics, append,
 simplifyNucleotides, outputNonnucleotides) {
  .G$outputVCF(filePath, outputMultiallelics, append, simplifyNucleotides,
@@ -11380,6 +11533,9 @@ outputNonnucleotides)
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 positionsOfMutationsOfType <- function(mutType) {
  .G$positionsOfMutationsOfType(mutType)
@@ -11437,6 +11593,9 @@ positionsOfMutationsOfType <- function(mutType) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 readFromMS <- function(filePath, mutationType) {
  .G$readFromMS(filePath, mutationType)
@@ -11534,6 +11693,9 @@ readFromMS <- function(filePath, mutationType) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 readFromVCF <- function(filePath, mutationType) {
  .G$readFromVCF(filePath, mutationType)
 }
@@ -11597,6 +11759,9 @@ readFromVCF <- function(filePath, mutationType) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 removeMutations <- function(mutations, substitute) {
  .G$removeMutations(mutations, substitute)
 }
@@ -11641,6 +11806,9 @@ removeMutations <- function(mutations, substitute) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 sumOfMutationsOfType <- function(mutType) {
  .G$sumOfMutationsOfType(mutType)
 }
@@ -11683,6 +11851,9 @@ sumOfMutationsOfType <- function(mutType) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 setGenomicElementType <- function(genomicElementType) {
  .GE$setGenomicElementType(genomicElementType)
@@ -11730,6 +11901,9 @@ setGenomicElementType <- function(genomicElementType) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 setMutationFractions <- function(mutationTypes, proportions) {
  .GET$setMutationFractions(mutationTypes, proportions)
 }
@@ -11768,6 +11942,9 @@ setMutationFractions <- function(mutationTypes, proportions) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 setMutationMatrix <- function(mutationMatrix) {
  .GET$setMutationMatrix(mutationMatrix)
@@ -11811,6 +11988,9 @@ setMutationMatrix <- function(mutationMatrix) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 containsMutations <- function(mutations) {
  .I$containsMutations(mutations)
 }
@@ -11852,6 +12032,9 @@ containsMutations <- function(mutations) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 countOfMutationsOfType <- function(mutType) {
  .I$countOfMutationsOfType(mutType)
@@ -11941,6 +12124,9 @@ countOfMutationsOfType <- function(mutType) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 relatedness <- function(individuals) {
  .I$relatedness(individuals)
 }
@@ -11999,6 +12185,9 @@ relatedness <- function(individuals) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 setSpatialPosition <- function(position) {
  .I$setSpatialPosition(position)
@@ -12063,6 +12252,9 @@ setSpatialPosition <- function(position) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 sharedParentCount <- function(individuals) {
  .I$sharedParentCount(individuals)
 }
@@ -12106,6 +12298,9 @@ sharedParentCount <- function(individuals) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 sumOfMutationsOfType <- function(mutType) {
  .I$sumOfMutationsOfType(mutType)
@@ -12156,6 +12351,9 @@ sumOfMutationsOfType <- function(mutType) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 uniqueMutationsOfType <- function(mutType) {
  .I$uniqueMutationsOfType(mutType)
@@ -12234,6 +12432,9 @@ uniqueMutationsOfType <- function(mutType) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 clippedIntegral <- function(receivers) {
  .IT$clippedIntegral(receivers)
 }
@@ -12290,6 +12491,9 @@ clippedIntegral <- function(receivers) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 distance <- function(receiver, exerters) {
  .IT$distance(receiver, exerters)
@@ -12351,6 +12555,9 @@ distance <- function(receiver, exerters) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 distanceFromPoint <- function(point, exerters) {
  .IT$distanceFromPoint(point, exerters)
@@ -12428,6 +12635,9 @@ distanceFromPoint <- function(point, exerters) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 drawByStrength <- function(receiver, count, exerterSubpop, returnDict) {
  .IT$drawByStrength(receiver, count, exerterSubpop, returnDict)
 }
@@ -12500,6 +12710,9 @@ drawByStrength <- function(receiver, count, exerterSubpop, returnDict) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 evaluate <- function(subpops) {
  .IT$evaluate(subpops)
 }
@@ -12559,6 +12772,9 @@ evaluate <- function(subpops) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 interactingNeighborCount <- function(receivers, exerterSubpop) {
  .IT$interactingNeighborCount(receivers, exerterSubpop)
 }
@@ -12617,6 +12833,9 @@ interactingNeighborCount <- function(receivers, exerterSubpop) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 interactionDistance <- function(receiver, exerters) {
  .IT$interactionDistance(receiver, exerters)
@@ -12710,6 +12929,9 @@ interactionDistance <- function(receiver, exerters) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 localPopulationDensity <- function(receivers, exerterSubpop) {
  .IT$localPopulationDensity(receivers, exerterSubpop)
 }
@@ -12792,6 +13014,9 @@ localPopulationDensity <- function(receivers, exerterSubpop) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 nearestInteractingNeighbors <- function(receiver, count, exerterSubpop,
 returnDict) {
  .IT$nearestInteractingNeighbors(receiver, count, exerterSubpop, returnDict)
@@ -12870,6 +13095,9 @@ returnDict) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 nearestNeighbors <- function(receiver, count, exerterSubpop, returnDict) {
  .IT$nearestNeighbors(receiver, count, exerterSubpop, returnDict)
 }
@@ -12919,6 +13147,9 @@ nearestNeighbors <- function(receiver, count, exerterSubpop, returnDict) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 nearestNeighborsOfPoint <- function(point, exerterSubpop, count) {
  .IT$nearestNeighborsOfPoint(point, exerterSubpop, count)
@@ -12976,6 +13207,9 @@ nearestNeighborsOfPoint <- function(point, exerterSubpop, count) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 neighborCount <- function(receivers, exerterSubpop) {
  .IT$neighborCount(receivers, exerterSubpop)
 }
@@ -13021,6 +13255,9 @@ neighborCount <- function(receivers, exerterSubpop) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 neighborCountOfPoint <- function(point, exerterSubpop) {
  .IT$neighborCountOfPoint(point, exerterSubpop)
@@ -13123,6 +13360,9 @@ neighborCountOfPoint <- function(point, exerterSubpop) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 setConstraints <- function(who, sex, tag, minAge, maxAge, migrant, tagL0,
 tagL1, tagL2, tagL3, tagL4) {
  .IT$setConstraints(who, sex, tag, minAge, maxAge, migrant, tagL0, tagL1,
@@ -13179,6 +13419,9 @@ tagL2, tagL3, tagL4)
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 setInteractionFunction <- function(functionType, ...) {
  .IT$setInteractionFunction(functionType, ...)
@@ -13237,6 +13480,9 @@ setInteractionFunction <- function(functionType, ...) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 strength <- function(receiver, exerters) {
  .IT$strength(receiver, exerters)
@@ -13301,6 +13547,9 @@ strength <- function(receiver, exerters) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 testConstraints <- function(individuals, constraints, returnIndividuals) {
  .IT$testConstraints(individuals, constraints, returnIndividuals)
@@ -13370,6 +13619,9 @@ testConstraints <- function(individuals, constraints, returnIndividuals) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 totalOfNeighborStrengths <- function(receivers, exerterSubpop) {
  .IT$totalOfNeighborStrengths(receivers, exerterSubpop)
 }
@@ -13421,6 +13673,9 @@ totalOfNeighborStrengths <- function(receivers, exerterSubpop) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 unevaluate <- function(void) {
  .IT$unevaluate(void)
@@ -13476,6 +13731,9 @@ unevaluate <- function(void) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 addCustomColumn <- function(columnName, source, context) {
  .LF$addCustomColumn(columnName, source, context)
 }
@@ -13518,6 +13776,9 @@ addCustomColumn <- function(columnName, source, context) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 addCycle <- function(species) {
  .LF$addCycle(species)
@@ -13562,6 +13823,9 @@ addCycle <- function(species) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 addCycleStage <- function(void) {
  .LF$addCycleStage(void)
 }
@@ -13601,6 +13865,9 @@ addCycleStage <- function(void) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 addKeysAndValuesFrom <- function(source) {
  .LF$addKeysAndValuesFrom(source)
@@ -13653,6 +13920,9 @@ addKeysAndValuesFrom <- function(source) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 addMeanSDColumns <- function(columnName, source, context) {
  .LF$addMeanSDColumns(columnName, source, context)
 }
@@ -13695,6 +13965,9 @@ addMeanSDColumns <- function(columnName, source, context) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 addPopulationSexRatio <- function(species) {
  .LF$addPopulationSexRatio(species)
@@ -13739,6 +14012,9 @@ addPopulationSexRatio <- function(species) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 addPopulationSize <- function(species) {
  .LF$addPopulationSize(species)
 }
@@ -13780,6 +14056,9 @@ addPopulationSize <- function(species) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 addSubpopulationSexRatio <- function(subpop) {
  .LF$addSubpopulationSexRatio(subpop)
 }
@@ -13820,6 +14099,9 @@ addSubpopulationSexRatio <- function(subpop) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 addSubpopulationSize <- function(subpop) {
  .LF$addSubpopulationSize(subpop)
@@ -13869,6 +14151,9 @@ addSubpopulationSize <- function(subpop) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 addSuppliedColumn <- function(columnName) {
  .LF$addSuppliedColumn(columnName)
 }
@@ -13908,6 +14193,9 @@ addSuppliedColumn <- function(columnName) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 addTick <- function(void) {
  .LF$addTick(void)
 }
@@ -13946,6 +14234,9 @@ addTick <- function(void) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 clearKeysAndValues <- function(void) {
  .LF$clearKeysAndValues(void)
@@ -13991,6 +14282,9 @@ clearKeysAndValues <- function(void) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 flush <- function(void) {
  .LF$flush(void)
 }
@@ -14034,6 +14328,9 @@ flush <- function(void) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 logRow <- function(void) {
  .LF$logRow(void)
 }
@@ -14076,6 +14373,9 @@ logRow <- function(void) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 setLogInterval <- function(logInterval) {
  .LF$setLogInterval(logInterval)
@@ -14134,6 +14434,9 @@ setLogInterval <- function(logInterval) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 setFilePath <- function(filePath, initialContents, append, compress, sep) {
  .LF$setFilePath(filePath, initialContents, append, compress, sep)
 }
@@ -14182,6 +14485,9 @@ setFilePath <- function(filePath, initialContents, append, compress, sep) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 setSuppliedValue <- function(columnName, value) {
  .LF$setSuppliedValue(columnName, value)
 }
@@ -14223,6 +14529,9 @@ setSuppliedValue <- function(columnName, value) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 setValue <- function(key, value) {
  .LF$setValue(key, value)
 }
@@ -14262,6 +14571,9 @@ setValue <- function(key, value) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 willAutolog <- function(void) {
  .LF$willAutolog(void)
@@ -14316,6 +14628,9 @@ willAutolog <- function(void) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 setMutationType <- function(mutType) {
  .M$setMutationType(mutType)
 }
@@ -14364,6 +14679,9 @@ setMutationType <- function(mutType) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 setSelectionCoeff <- function(selectionCoeff) {
  .M$setSelectionCoeff(selectionCoeff)
 }
@@ -14406,6 +14724,9 @@ setSelectionCoeff <- function(selectionCoeff) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 drawSelectionCoefficient <- function(n) {
  .MT$drawSelectionCoefficient(n)
@@ -14460,6 +14781,9 @@ drawSelectionCoefficient <- function(n) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 setDistribution <- function(distributionType, ...) {
  .MT$setDistribution(distributionType, ...)
 }
@@ -14507,6 +14831,9 @@ setDistribution <- function(distributionType, ...) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 openDocument <- function(filePath) {
  .SG$openDocument(filePath)
 }
@@ -14553,1851 +14880,11 @@ openDocument <- function(filePath) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 pauseExecution <- function(filePath) {
  .SG$pauseExecution(filePath)
-}
-
-
-
-#'SLiM method addSubpop
-#'
-#'Documentation for SLiM function \code{addSubpop}, which is a method of the SLiM
-#'class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param subpopID An object of type integer or string. Must be of length 1 (a
-#'singleton). See details for description.
-#'@param size An object of type integer. Must be of length 1 (a singleton). See
-#'details for description.
-#'@param sexRatio An object of type float. Must be of length 1 (a singleton). The
-#'default value is \code{0.5}. See details for description.
-#'
-#'@aliases SLiMSim$addSubpop .SS$addSubpop
-#'@family SLiMSim
-#'@return An object of type Subpopulation object. Return will be of length 1 (a
-#'singleton)
-#'@details Add a new subpopulation with id subpopID and size individuals.
-#'The subpopID parameter may be either an integer giving the ID of the new
-#'subpopulation, or a string giving the name of the new subpopulation (such as
-#'"p5" to specify an ID of 5). Only if sex is enabled in the simulation, the
-#'initial sex ratio may optionally be specified as sexRatio (as the male fraction,
-#'M:M+F); if it is not specified, a default of 0.5 is used. The new subpopulation
-#'will be defined as a global variable immediately by this method (see section
-#'24.14), and will also be returned by this method. Subpopulations added by this
-#'method will initially consist of individuals with empty genomes. In order to
-#'model subpopulations that split from an already existing subpopulation, use
-#'addSubpopSplit().
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-addSubpop <- function(subpopID, size, sexRatio) {
- .SS$addSubpop(subpopID, size, sexRatio)
-}
-
-#'SLiM method addSubpopSplit
-#'
-#'Documentation for SLiM function \code{addSubpopSplit}, which is a method of the
-#'SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param subpopID An object of type integer or string. Must be of length 1 (a
-#'singleton). See details for description.
-#'@param size An object of type integer. Must be of length 1 (a singleton). See
-#'details for description.
-#'@param sourceSubpop An object of type integer or Subpopulation object. Must be
-#'of length 1 (a singleton). See details for description.
-#'@param sexRatio An object of type float. Must be of length 1 (a singleton). The
-#'default value is \code{0.5}. See details for description.
-#'
-#'@aliases SLiMSim$addSubpopSplit .SS$addSubpopSplit
-#'@family SLiMSim
-#'@return An object of type Subpopulation object. Return will be of length 1 (a
-#'singleton)
-#'@details Split off a new subpopulation with id subpopID and size individuals
-#'derived from subpopulation sourceSubpop. The subpopID parameter may be either
-#'an integer giving the ID of the new subpopulation, or a string giving the name
-#'of the new subpopulation (such as "p5" to specify an ID of 5). The sourceSubpop
-#'parameter may specify the source subpopulation either as a Subpopulation object
-#'or by integer identifier. Only if sex is enabled in the simulation, the initial
-#'sex ratio may optionally be specified as sexRatio (as the male fraction, M:M+F);
-#'if it is not specified, a default of 0.5 is used. The new subpopulation will be
-#'defined as a global variable immediately by this method (see section 24.14), and
-#'will also be returned by this method. Subpopulations added by this method will
-#'consist of individuals that are clonal copies of individuals from the source
-#'subpopulation, randomly chosen with probabilities proportional to fitness. The
-#'fitness of all of these initial individuals is considered to be 1.0, to avoid a
-#'doubled round of selection in the initial generation, given that fitness values
-#'were already used to choose the individuals to clone. Once this initial set of
-#'individuals has mated to produce offspring, the model is effectively of parental
-#'individuals in the source subpopulation mating randomly according to fitness,
-#'as usual in SLiM, with juveniles migrating to the newly added subpopulation.
-#'Effectively, then, then new subpopulation is created empty, and is filled by
-#'migrating juveniles from the source subpopulation, in accordance with SLiM's
-#'usual model of juvenile migration.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-addSubpopSplit <- function(subpopID, size, sourceSubpop, sexRatio) {
- .SS$addSubpopSplit(subpopID, size, sourceSubpop, sexRatio)
-}
-
-#'SLiM method countOfMutationsOfType
-#'
-#'Documentation for SLiM function \code{countOfMutationsOfType}, which is a method
-#'of the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param mutType An object of type integer or MutationType object. Must be of
-#'length 1 (a singleton). See details for description.
-#'
-#'@aliases SLiMSim$countOfMutationsOfType .SS$countOfMutationsOfType
-#'@family SLiMSim
-#'@return An object of type integer. Return will be of length 1 (a singleton)
-#'@details Returns the number of mutations that are of the type specified
-#'by mutType, out of all of the mutations that are currently active in the
-#'simulation. If you need a vector of the matching Mutation objects, rather than
-#'just a count, use -mutationsOfType(). This method is often used to determine
-#'whether an introduced mutation is still active (as opposed to being either
-#'lost or fixed). This method is provided for speed; it is much faster than the
-#'corresponding Eidos code.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-countOfMutationsOfType <- function(mutType) {
- .SS$countOfMutationsOfType(mutType)
-}
-
-#'SLiM method createLogFile
-#'
-#'Documentation for SLiM function \code{createLogFile}, which is a method of the
-#'SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param filePath An object of type string. Must be of length 1 (a singleton). See
-#'details for description.
-#'@param initialContents An object of type null or string. The default value is
-#'\code{NULL}. See details for description.
-#'@param append An object of type logical. Must be of length 1 (a singleton). The
-#'default value is \code{F}. See details for description.
-#'@param compress An object of type logical. Must be of length 1 (a singleton).
-#'The default value is \code{F}. See details for description.
-#'@param sep An object of type string. Must be of length 1 (a singleton). The
-#'default value is \code{","}. See details for description.
-#'@param logInterval An object of type null or integer. Must be of length 1 (a
-#'singleton). The default value is \code{NULL}. See details for description.
-#'@param flushInterval An object of type null or integer. Must be of length 1 (a
-#'singleton). The default value is \code{NULL}. See details for description.
-#'
-#'@aliases SLiMSim$createLogFile .SS$createLogFile
-#'@family SLiMSim
-#'@return An object of type LogFile object. Return will be of length 1 (a
-#'singleton)
-#'@details Creates and returns a new LogFile object that logs data from the
-#'simulation (see the documentation for the LogFile class for details). Logged
-#'data will be written to the file at filePath, overwriting any existing file at
-#'that path by default, or appending to it instead if append is T (successive rows
-#'of the log table will always be appended to the previously written content, of
-#'course). Before the header line for the log is written out, any string elements
-#'in initialContents will be written first, separated by newlines, allowing for a
-#'user-defined file header. If compress is T, the contents will be compressed with
-#'zlib as they are written, and the standard .gz extension for gzip-compressed
-#'files will be appended to the filename in filePath if it is not already present.
-#'The sep parameter specifies the separator between data values within a row.
-#'The default of "," will generate a "comma-separated value" (CSV) file, while
-#'passing sep="\\t" will use a tab separator Eidos events fitness() mateChoice()
-#'modifyChild() recombination() interaction() reproduction() 566 instead to
-#'generate a "tab-separated value" (TSV) file. Other values for sep may also be
-#'used, but are less standard. LogTable supports periodic automatic logging of a
-#'new row of data, enabled by supplying a non-NULL value for logInterval. In this
-#'case, a new row will be logged (as if logRow() were called on the LogFile) at
-#'the end of every logInterval generations (just before the generation counter
-#'increments, in both WF and nonWF models), starting at the end of the generation
-#'in which the LogFile was created. A logInterval of 1 will cause automatic
-#'logging at the end of every generation, whereas a logInterval of NULL disables
-#'automatic logging. Automatic logging can always be disabled or reconfigured
-#'later with the LogFile method setLogInterval(), or logging can be triggered
-#'manually by calling logRow(). When compression is enabled, LogFile flushes new
-#'data lazily by default, for performance reasons, buffering data for multiple
-#'rows before writing to disk. Passing a non-NULL value for flushInterval requests
-#'a flush every flushInterval rows (with a value of 1 providing unbuffered
-#'operation). Note that flushing very frequently will likely result in both
-#'lower performance and a larger final file size (in one simple test, 48943 bytes
-#'instead of 4280 bytes, or more than a 10× increase in size). Alternatively,
-#'passing a very large value for flushInterval will effectively disable automatic
-#'flushing, except at the end of the simulation (but be aware that this may use
-#'a large amount of memory for large log files). In any case, the log file will
-#'be created immediately, with its requested initial contents; the initial write
-#'is not buffered. When compression is not enabled, the flushInterval setting is
-#'ignored. The LogFile documentation discusses how to configure and use LogFile to
-#'write out the data you are interested in from your simulation; see section 24.9.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-createLogFile <- function(filePath, initialContents, append, compress, sep,
-logInterval, flushInterval) {
- .SS$createLogFile(filePath, initialContents, append, compress, sep,
-logInterval, flushInterval)
-}
-
-#'SLiM method deregisterScriptBlock
-#'
-#'Documentation for SLiM function \code{deregisterScriptBlock}, which is a method
-#'of the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param scriptBlocks An object of type integer or SLiMEidosBlock object. See
-#'details for description.
-#'
-#'@aliases SLiMSim$deregisterScriptBlock .SS$deregisterScriptBlock
-#'@family SLiMSim
-#'@return An object of type void.
-#'@details All SLiMEidosBlock objects specified by scriptBlocks (either with
-#'SLiMEidosBlock objects or with integer identifiers) will be scheduled for
-#'deregistration. The deregistered blocks remain valid, and may even still be
-#'executed in the current stage of the current generation (see section 25.9); the
-#'blocks are not actually deregistered and deallocated until sometime after the
-#'currently executing script block has completed. To immediately prevent a script
-#'block from executing, even when it is scheduled to execute in the current stage
-#'of the current generation, use the active property of the script block (see
-#'sections 24.11.1 and 25.9).
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-deregisterScriptBlock <- function(scriptBlocks) {
- .SS$deregisterScriptBlock(scriptBlocks)
-}
-
-#'SLiM method mutationCounts
-#'
-#'Documentation for SLiM function \code{mutationCounts}, which is a method of the
-#'SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param subpops An object of type null or Subpopulation object. See details for
-#'description.
-#'@param mutations An object of type null or Mutation object. The default value is
-#'\code{NULL}. See details for description.
-#'
-#'@aliases SLiMSim$mutationCounts .SS$mutationCounts
-#'@family SLiMSim
-#'@return An object of type integer.
-#'@details Return an integer vector with the frequency counts of all of the
-#'Mutation objects passed in mutations, within the Subpopulation objects in
-#'subpops. The subpops argument is required, but you may pass NULL to get
-#'population-wide frequency counts. If the optional mutations argument is NULL
-#'(the default), frequency counts will be returned for all of the active Mutation
-#'objects in the simulation - the same Mutation objects, and in the same order,
-#'as would be returned by the mutations property of sim, in other words. See
-#'the -mutationFrequencies() method to obtain float frequencies instead of
-#'integer counts. See also the Genome methods mutationCountsInGenomes() and
-#'mutationFrequenciesInGenomes().
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-mutationCounts <- function(subpops, mutations) {
- .SS$mutationCounts(subpops, mutations)
-}
-
-#'SLiM method mutationFrequencies
-#'
-#'Documentation for SLiM function \code{mutationFrequencies}, which is a method of
-#'the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param subpops An object of type null or Subpopulation object. See details for
-#'description.
-#'@param mutations An object of type null or Mutation object. The default value is
-#'\code{NULL}. See details for description.
-#'
-#'@aliases SLiMSim$mutationFrequencies .SS$mutationFrequencies
-#'@family SLiMSim
-#'@return An object of type float.
-#'@details Return a float vector with the frequencies of all of the
-#'Mutation objects passed in mutations, within the Subpopulation objects in
-#'subpops. The subpops argument is required, but you may pass NULL to get
-#'population-wide frequencies. If the optional mutations argument is NULL
-#'(the default), frequencies will be returned for all of the active Mutation
-#'objects in the simulation - the same Mutation objects, and in the same
-#'order, as would be returned by the mutations property of sim, in other
-#'words. See the -mutationCounts() method to obtain integer counts instead
-#'of float frequencies. See also the Genome methods mutationCountsInGenomes()
-#'and mutationFrequenciesInGenomes(). Eidos events fitness() mateChoice()
-#'modifyChild() recombination() interaction() reproduction() 567
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-mutationFrequencies <- function(subpops, mutations) {
- .SS$mutationFrequencies(subpops, mutations)
-}
-
-#'SLiM method mutationsOfType
-#'
-#'Documentation for SLiM function \code{mutationsOfType}, which is a method of the
-#'SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param mutType An object of type integer or MutationType object. Must be of
-#'length 1 (a singleton). See details for description.
-#'
-#'@aliases SLiMSim$mutationsOfType .SS$mutationsOfType
-#'@family SLiMSim
-#'@return An object of type Mutation object.
-#'@details Returns an object vector of all the mutations that are of the type
-#'specified by mutType, out of all of the mutations that are currently active
-#'in the simulation. If you just need a count of the matching Mutation objects,
-#'rather than a vector of the matches, use -countOfMutationsOfType(). This
-#'method is often used to look up an introduced mutation at a later point
-#'in the simulation, since there is no way to keep persistent references to
-#'objects in SLiM. This method is provided for speed; it is much faster than the
-#'corresponding Eidos code.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-mutationsOfType <- function(mutType) {
- .SS$mutationsOfType(mutType)
-}
-
-#'SLiM method outputFixedMutations
-#'
-#'Documentation for SLiM function \code{outputFixedMutations}, which is a method
-#'of the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param filePath An object of type null or string. Must be of length 1 (a
-#'singleton). The default value is \code{NULL}. See details for description.
-#'@param append An object of type logical. Must be of length 1 (a singleton). The
-#'default value is \code{F}. See details for description.
-#'
-#'@aliases SLiMSim$outputFixedMutations .SS$outputFixedMutations
-#'@family SLiMSim
-#'@return An object of type void.
-#'@details Output all fixed mutations - all Substitution objects, in other words
-#'(see section 1.5.2) - in a SLiM native format (see section 26.1.2 for output
-#'format details). If the optional parameter filePath is NULL (the default),
-#'output will be sent to Eidos's output stream (see section 4.2.1). Otherwise,
-#'output will be sent to the filesystem path specified by filePath, overwriting
-#'that file if append if F, or appending to the end of it if append is T.
-#'Mutations which have fixed but have not been turned into Substitution objects
-#'- typically because convertToSubstitution has been set to F for their mutation
-#'type (see section 24.10.1) - are not output; they are still considered to be
-#'segregating mutations by SLiM. In SLiM 3.3 and later, the output format includes
-#'the nucleotides associated with any nucleotide-based mutations; see section
-#'26.1.2. Output is generally done in a late() event, so that the output reflects
-#'the state of the simulation at the end of a generation.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-outputFixedMutations <- function(filePath, append) {
- .SS$outputFixedMutations(filePath, append)
-}
-
-#'SLiM method outputFull
-#'
-#'Documentation for SLiM function \code{outputFull}, which is a method of the SLiM
-#'class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param filePath An object of type null or string. Must be of length 1 (a
-#'singleton). The default value is \code{NULL}. See details for description.
-#'@param binary An object of type logical. Must be of length 1 (a singleton). The
-#'default value is \code{F}. See details for description.
-#'@param append An object of type logical. Must be of length 1 (a singleton). The
-#'default value is \code{F}. See details for description.
-#'@param spatialPositions An object of type logical. Must be of length 1 (a
-#'singleton). The default value is \code{T}. See details for description.
-#'@param ages An object of type logical. Must be of length 1 (a singleton). The
-#'default value is \code{T}. See details for description.
-#'@param ancestralNucleotides An object of type logical. Must be of length 1 (a
-#'singleton). The default value is \code{T}. See details for description.
-#'@param pedigreeIDs An object of type logical. Must be of length 1 (a singleton).
-#'The default value is \code{F}. See details for description.
-#'
-#'@aliases SLiMSim$outputFull .SS$outputFull
-#'@family SLiMSim
-#'@return An object of type void.
-#'@details Output the state of the entire population (see section 26.1.1 for
-#'output format details). If the optional parameter filePath is NULL (the
-#'default), output will be sent to Eidos's output stream (see section 4.2.1).
-#'Otherwise, output will be sent to the filesystem path specified by filePath,
-#'overwriting that file if append if F, or appending to the end of it if append
-#'is T. When writing to a file, a logical flag, binary, may be supplied as well.
-#'If binary is T, the population state will be written as a binary file instead
-#'of a text file (binary data cannot be written to the standard output stream).
-#'The binary file is usually smaller, and in any case will be read much faster
-#'than the corresponding text file would be read. Binary files are not guaranteed
-#'to be portable between platforms; in other words, a binary file written on
-#'one machine may not be readable on a different machine (but in practice it
-#'usually will be, unless the platforms being used are fairly unusual). If
-#'binary is F (the default), a text file will be written. Beginning with SLiM
-#'2.3, the spatialPositions parameter may be used to control the output of the
-#'spatial positions of individuals in simulations for which continuous space
-#'has been enabled using the dimensionality option of initializeSLiMOptions().
-#'If spatialPositions is F, the output will not contain spatial positions,
-#'and will be identical to the output generated by SLiM 2.1 and later. If
-#'spatialPositions is T, spatial position information will be output if it is
-#'available (see section 26.1.1 for format details). If the simulation does not
-#'have continuous space enabled, the spatialPositions parameter will be ignored.
-#'Positional information may be output for all output destinations - the Eidos
-#'output stream, a text file, or a binary file. Beginning with SLiM 3.0, the ages
-#'parameter may be used to control the output of the ages of individuals in nonWF
-#'simulations. If ages is F, the output will not contain ages, preserving backward
-#'compatibility with the output format of SLiM 2.1 and later. If ages is T, ages
-#'will be output for nonWF models (see section 26.1.1 for format details). In
-#'WF simulations, the ages parameter will be ignored. Beginning with SLiM 3.3,
-#'the ancestralNucleotides parameter may be used to control the output of the
-#'ancestral nucleotide sequence in nucleotide-based models (see section 26.1.1
-#'for format details). If ancestralNucleotides is F, the output will not contain
-#'ancestral nucleotide information, and so the ancestral sequence will not be
-#'restored correctly if the saved file is loaded with readPopulationFile(). This
-#'option is provided because the ancestral sequence may be quite large, Eidos
-#'events fitness() mateChoice() modifyChild() recombination() interaction()
-#'reproduction() 568 for models with a long chromosome (e.g., 1 GB if the
-#'chromosome is 109 bases long, when saved in text format, or 0.25 GB when saved
-#'in binary format). If the model is not nucleotide-based (as enabled with the
-#'nucleotideBased parameter to initializeSLiMOptions()), the ancestralNucleotides
-#'parameter will be ignored. Note that in nucleotide-based models the output
-#'format will always include the nucleotides associated with any nucleotide-based
-#'mutations; the ancestralNucleotides flag governs only the ancestral sequence.
-#'Beginning with SLiM 3.5, the pedigreeIDs parameter may be used to request
-#'that pedigree IDs be written out (and read in by readFromPopulationFile(),
-#'subsequently). This option is turned off (F) by default, to preserve backward
-#'compatibility; if it is turned on (T), different file version values will be
-#'used, and backward compatibility with previous versions of SLiM will be lost
-#'(see section 26.1.1). This option may only be used if SLiM's optional pedigree
-#'tracking has been turned on with initializeSLiMOptions(keepPedigrees=T). Output
-#'is generally done in a late() event, so that the output reflects the state of
-#'the simulation at the end of a generation.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-outputFull <- function(filePath, binary, append, spatialPositions, ages,
-ancestralNucleotides, pedigreeIDs) {
- .SS$outputFull(filePath, binary, append, spatialPositions, ages,
-ancestralNucleotides, pedigreeIDs)
-}
-
-#'SLiM method outputMutations
-#'
-#'Documentation for SLiM function \code{outputMutations}, which is a method of the
-#'SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param mutations An object of type Mutation object. See details for description.
-#'@param filePath An object of type null or string. Must be of length 1 (a
-#'singleton). The default value is \code{NULL}. See details for description.
-#'@param append An object of type logical. Must be of length 1 (a singleton). The
-#'default value is \code{F}. See details for description.
-#'
-#'@aliases SLiMSim$outputMutations .SS$outputMutations
-#'@family SLiMSim
-#'@return An object of type void.
-#'@details Output all of the given mutations (see section 26.1.3 for output
-#'format details). This can be used to output all mutations of a given mutation
-#'type, for example. If the optional parameter filePath is NULL (the default),
-#'output will be sent to Eidos's output stream (see section 4.2.1). Otherwise,
-#'output will be sent to the filesystem path specified by filePath, overwriting
-#'that file if append if F, or appending to the end of it if append is T. In SLiM
-#'3.3 and later, the output format includes the nucleotides associated with any
-#'nucleotide-based mutations; see section 26.1.3. Output is generally done in a
-#'late() event, so that the output reflects the state of the simulation at the end
-#'of a generation.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-outputMutations <- function(mutations, filePath, append) {
- .SS$outputMutations(mutations, filePath, append)
-}
-
-#'SLiM method outputUsage
-#'
-#'Documentation for SLiM function \code{outputUsage}, which is a method of the
-#'SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param void An object of type . See details for description.
-#'
-#'@aliases SLiMSim$outputUsage .SS$outputUsage
-#'@family SLiMSim
-#'@return An object of type void.
-#'@details Output the current memory usage of the simulation to Eidos's output
-#'stream. The specifics of what is printed, and in what format, should not be
-#'relied upon as they may change from version to version of SLiM. This method
-#'is primarily useful for understanding where the memory usage of a simulation
-#'predominantly resides, for debugging or optimization. Note that it does not
-#'capture all memory usage by the process; rather, it summarizes the memory usage
-#'by SLiM and Eidos in directly allocated objects and buffers. To get the total
-#'memory usage of the running process (either current or peak), use the Eidos
-#'function usage().
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-outputUsage <- function(void) {
- .SS$outputUsage(void)
-}
-
-#'SLiM method readFromPopulationFile
-#'
-#'Documentation for SLiM function \code{readFromPopulationFile}, which is a method
-#'of the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param filePath An object of type string. Must be of length 1 (a singleton). See
-#'details for description.
-#'
-#'@aliases SLiMSim$readFromPopulationFile .SS$readFromPopulationFile
-#'@family SLiMSim
-#'@return An object of type integer. Return will be of length 1 (a singleton)
-#'@details Read from a population initialization file, whether in text or binary
-#'format as previously specified to outputFull(), and return the generation
-#'counter value represented by the file's contents (i.e., the generation at which
-#'the file was generated). Although this is most commonly used to set up initial
-#'populations (often in an Eidos event set to run in generation 1, immediately
-#'after simulation initialization), it may be called in any Eidos event; the
-#'current state of all populations will be wiped and replaced by the state in
-#'the file at filePath. All Eidos variables that are of type object and have
-#'element type Subpopulation, Genome, Mutation, Individual, or Substitution will
-#'be removed as a side effect of this method, since all such variables would
-#'refer to objects that no longer exist in the SLiM simulation; if you want to
-#'preserve any of that state, you should output it or save it to a file prior to
-#'this call. New symbols will be defined to refer to the new Subpopulation objects
-#'loaded from the file. If the file being read was written by a version of SLiM
-#'prior to 2.3, then for backward compatibility fitness values will be calculated
-#'immediately for any new subpopulations created by this call, which will trigger
-#'the calling of any activated and applicable fitness() callbacks. When reading
-#'files written by SLiM 2.3 or later, fitness values are not calculated as a
-#'side effect of this call (because the simulation will often need to evaluate
-#'interactions or modify other state prior to doing so). Eidos events fitness()
-#'mateChoice() modifyChild() recombination() interaction() reproduction() 569 In
-#'SLiM 2.3 and later when using the WF model, calling readFromPopulationFile()
-#'from any context other than a late() event causes a warning; calling from a
-#'late() event is almost always correct in WF models, so that fitness values can
-#'be automatically recalculated by SLiM at the usual time in the generation cycle
-#'without the need to force their recalculation (see chapter 22, and comments on
-#'recalculateFitness() below). In SLiM 3.0 when using the nonWF model, calling
-#'readFromPopulationFile() from any context other than an early() event causes a
-#'warning; calling from an early() event is almost always correct in nonWF models,
-#'so that fitness values can be automatically recalculated by SLiM at the usual
-#'time in the generation cycle without the need to force their recalculation (see
-#'chapter 23, and comments on recalculateFitness() below). As of SLiM 2.1, this
-#'method changes the generation counter to the generation read from the file.
-#'If you do not want the generation counter to be changed, you can change it
-#'back after reading, by setting sim.generation to whatever value you wish. Note
-#'that restoring a saved past state and running forward again will not yield the
-#'same simulation results, because the random number generator's state will not
-#'be the same; to ensure reproducibility from a given time point, setSeed() can
-#'be used to establish a new seed value. Any changes made to the simulation's
-#'structure (mutation types, genomic element types, etc.) will not be wiped
-#'and re-established by readFromPopulationFile(); this method loads only the
-#'population's state, not the simulation configuration, so care should be taken
-#'to ensure that the simulation structure meshes coherently with the loaded data.
-#'Indeed, state such as the selfing and cloning rates of subpopulations, values
-#'set into tag properties, and values set onto objects with setValue() will also
-#'be lost, since it is not saved out by outputFull(). Only information saved by
-#'outputFull() will be restored; all other state associated with the simulation's
-#'subpopulations, individuals, genomes, mutations, and substitutions will be lost,
-#'and should be re-established by the model if it is still needed. As of SLiM
-#'2.3, this method will read and restore the spatial positions of individuals if
-#'that information is present in the output file and the simulation has enabled
-#'continuous space (see outputFull() for details). If spatial positions are
-#'present in the output file but the simulation has not enabled continuous space
-#'(or the number of spatial dimensions does not match), an error will result.
-#'If the simulation has enabled continuous space but spatial positions are not
-#'present in the output file, the spatial positions of the individuals read will
-#'be undefined, but an error is not raised. As of SLiM 3.0, this method will read
-#'and restore the ages of individuals if that information is present in the output
-#'file and the simulation is based upon the nonWF model. If ages are present but
-#'the simulation uses a WF model, an error will result; the WF model does not use
-#'age information. If ages are not present but the simulation uses a nonWF model,
-#'an error will also result; the nonWF model requires age information. As of SLiM
-#'3.3, this method will restore the nucleotides of nucleotide-based mutations,
-#'and will restore the ancestral nucleotide sequence, if that information is
-#'present in the output file. Loading an output file that contains nucleotide
-#'information in a non-nucleotide-based model, and vice versa, will produce
-#'an error. As of SLiM 3.5, this method will read and restore the pedigree IDs
-#'of individuals and genomes if that information is present in the output file
-#'(as requested with outputFull(pedigreeIDs=T)) and if SLiM's optional pedigree
-#'tracking has been turned on with initializeSLiMOptions(keepPedigrees=T).
-#'This method can also be used to read tree-sequence (.trees) files saved by
-#'treeSeqOutput() or generated by the Python pyslim package. When loading a tree
-#'sequence, a crosscheck of the loaded data will be performed to ensure that the
-#'tree sequence was well-formed and was loaded correctly. When running a Release
-#'build of SLiM, however, this crosscheck will only occur the first time that
-#'readFromPopulationFile() is called to load a tree sequence; subsequent calls
-#'will not perform this crosscheck, for greater speed when running models that
-#'load saved population state many times (such as models that are conditional on
-#'fixation). If you suspect that a tree sequence file might be corrupted or read
-#'incorrectly, running a Debug build of SLiM enables crosschecks after every load.
-#'Eidos events fitness() mateChoice() modifyChild() recombination() interaction()
-#'reproduction() 570
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-readFromPopulationFile <- function(filePath) {
- .SS$readFromPopulationFile(filePath)
-}
-
-#'SLiM method recalculateFitness
-#'
-#'Documentation for SLiM function \code{recalculateFitness}, which is a method of
-#'the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param generation An object of type null or integer. Must be of length 1 (a
-#'singleton). The default value is \code{NULL}. See details for description.
-#'
-#'@aliases SLiMSim$recalculateFitness .SS$recalculateFitness
-#'@family SLiMSim
-#'@return An object of type void.
-#'@details Force an immediate recalculation of fitness values for all individuals
-#'in all subpopulations. Normally fitness values are calculated at a fixed
-#'point in each generation, and those values are cached and used throughout the
-#'following generation. If simulation parameters are changed in script in a way
-#'that affects fitness calculations, and if you wish those changes to take effect
-#'immediately rather than taking effect at the end of the current generation,
-#'you may call recalculateFitness() to force an immediate recalculation and
-#'recache. The optional parameter generation provides the generation for which
-#'fitness() callbacks should be selected; if it is NULL (the default), the
-#'simulation's current generation value, sim.generation, is used. If you call
-#'recalculateFitness() in an early() event in a WF model, you may wish this
-#'to be sim.generation - 1 in order to utilize the fitness() callbacks for the
-#'previous generation, as if the changes that you have made to fitness-influencing
-#'parameters were already in effect at the end of the previous generation when
-#'the new generation was first created and evaluated (usually it is simpler
-#'to just make such changes in a late() event instead, however, in which case
-#'calling recalculateFitness() is probably not necessary at all since fitness
-#'values will be recalculated immediately afterwards). Regardless of the value
-#'supplied for generation here, sim.generation inside fitness() callbacks will
-#'report the true generation number, so if your callbacks consult that parameter
-#'in order to create generation-specific fitness effects you will need to handle
-#'the discrepancy somehow. (Similar considerations apply for nonWF models that
-#'call recalculateFitness() in a late() event, which is also not advisable in
-#'general.) After this call, the fitness values used for all purposes in SLiM will
-#'be the newly calculated values. Calling this method will trigger the calling of
-#'any enabled and applicable fitness() callbacks, so this is quite a heavyweight
-#'operation; you should think carefully about what side effects might result
-#'(which is why fitness recalculation does not just occur automatically after
-#'changes that might affect fitness values).
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-recalculateFitness <- function(generation) {
- .SS$recalculateFitness(generation)
-}
-
-#'SLiM method registerEarlyEvent
-#'
-#'Documentation for SLiM function \code{registerEarlyEvent}, which is a method of
-#'the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param id An object of type null or integer or string. Must be of length 1 (a
-#'singleton). See details for description.
-#'@param source An object of type string. Must be of length 1 (a singleton). See
-#'details for description.
-#'@param start An object of type null or integer. Must be of length 1 (a
-#'singleton). The default value is \code{NULL}. See details for description.
-#'@param end An object of type null or integer. Must be of length 1 (a singleton).
-#'The default value is \code{NULL}. See details for description.
-#'
-#'@aliases SLiMSim$registerEarlyEvent .SS$registerEarlyEvent
-#'@family SLiMSim
-#'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
-#'singleton)
-#'@details Register a block of Eidos source code, represented as the string
-#'singleton source, as an Eidos early() event in the current simulation, with
-#'optional start and end generations limiting its applicability. The script block
-#'will be given identifier id (specified as an integer, or as a string symbolic
-#'name such as "s5"); this may be NULL if there is no need to be able to refer
-#'to the block later. The registered event is added to the end of the list of
-#'registered SLiMEidosBlock objects, and is active immediately; it may be eligible
-#'to execute in the current generation (see section 25.9 for details). The new
-#'SLiMEidosBlock will be defined as a global variable immediately by this method
-#'(see section 24.11), and will also be returned by this method.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-registerEarlyEvent <- function(id, source, start, end) {
- .SS$registerEarlyEvent(id, source, start, end)
-}
-
-#'SLiM method registerFitnessCallback
-#'
-#'Documentation for SLiM function \code{registerFitnessCallback}, which is a
-#'method of the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param id An object of type null or integer or string. Must be of length 1 (a
-#'singleton). See details for description.
-#'@param source An object of type string. Must be of length 1 (a singleton). See
-#'details for description.
-#'@param mutType An object of type null or integer or MutationType object. Must be
-#'of length 1 (a singleton). See details for description.
-#'@param subpop An object of type null or integer or Subpopulation object. Must
-#'be of length 1 (a singleton). The default value is \code{NULL}. See details for
-#'description.
-#'@param start An object of type null or integer. Must be of length 1 (a
-#'singleton). The default value is \code{NULL}. See details for description.
-#'@param end An object of type null or integer. Must be of length 1 (a singleton).
-#'The default value is \code{NULL}. See details for description.
-#'
-#'@aliases SLiMSim$registerFitnessCallback .SS$registerFitnessCallback
-#'@family SLiMSim
-#'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
-#'singleton)
-#'@details Register a block of Eidos source code, represented as the string
-#'singleton source, as an Eidos fitness() callback in the current simulation,
-#'with a required mutation type mutType (which may be an integer mutation type
-#'identifier, or NULL to indicate a global fitness() callback - see section
-#'25.2), optional subpopulation subpop (which may also be an integer identifier,
-#'or NULL, the default, to indicate all subpopulations), and optional start and
-#'end generations all limiting its applicability. The script block will be given
-#'identifier id (specified as an integer, or as a string symbolic name such as
-#'"s5"); this may be NULL if there is no need to be able to refer to the block
-#'later. The registered callback is added to the end of the list of registered
-#'SLiMEidosBlock objects, and is active immediately; it may be eligible to execute
-#'in the current generation (see section 25.9 for details). The new SLiMEidosBlock
-#'will be defined as a global variable immediately by this method (see section
-#'24.11), and will also be returned by this method. Eidos events fitness()
-#'mateChoice() modifyChild() recombination() interaction() reproduction() 571
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-registerFitnessCallback <- function(id, source, mutType, subpop, start, end)
-{
- .SS$registerFitnessCallback(id, source, mutType, subpop, start, end)
-}
-
-#'SLiM method registerInteractionCallback
-#'
-#'Documentation for SLiM function \code{registerInteractionCallback}, which is a
-#'method of the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param id An object of type null or integer or string. Must be of length 1 (a
-#'singleton). See details for description.
-#'@param source An object of type string. Must be of length 1 (a singleton). See
-#'details for description.
-#'@param intType An object of type integer or InteractionType object. Must be of
-#'length 1 (a singleton). See details for description.
-#'@param subpop An object of type null or integer or Subpopulation object. Must
-#'be of length 1 (a singleton). The default value is \code{NULL}. See details for
-#'description.
-#'@param start An object of type null or integer. Must be of length 1 (a
-#'singleton). The default value is \code{NULL}. See details for description.
-#'@param end An object of type null or integer. Must be of length 1 (a singleton).
-#'The default value is \code{NULL}. See details for description.
-#'
-#'@aliases SLiMSim$registerInteractionCallback .SS$registerInteractionCallback
-#'@family SLiMSim
-#'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
-#'singleton)
-#'@details Register a block of Eidos source code, represented as the string
-#'singleton source, as an Eidos interaction() callback in the current simulation,
-#'with a required interaction type intType (which may be an integer identifier),
-#'optional subpopulation subpop (which may also be an integer identifier, or
-#'NULL, the default, to indicate all subpopulations), and optional start and
-#'end generations all limiting its applicability. The script block will be given
-#'identifier id (specified as an integer, or as a string symbolic name such as
-#'"s5"); this may be NULL if there is no need to be able to refer to the block
-#'later. The registered callback is added to the end of the list of registered
-#'SLiMEidosBlock objects, and is active immediately; it will be eligible to
-#'execute the next time an InteractionType is evaluated. The new SLiMEidosBlock
-#'will be defined as a global variable immediately by this method (see section
-#'24.11), and will also be returned by this method.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-registerInteractionCallback <- function(id, source, intType, subpop, start,
-end) {
- .SS$registerInteractionCallback(id, source, intType, subpop, start, end)
-}
-
-#'SLiM method registerLateEvent
-#'
-#'Documentation for SLiM function \code{registerLateEvent}, which is a method of
-#'the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param id An object of type null or integer or string. Must be of length 1 (a
-#'singleton). See details for description.
-#'@param source An object of type string. Must be of length 1 (a singleton). See
-#'details for description.
-#'@param start An object of type null or integer. Must be of length 1 (a
-#'singleton). The default value is \code{NULL}. See details for description.
-#'@param end An object of type null or integer. Must be of length 1 (a singleton).
-#'The default value is \code{NULL}. See details for description.
-#'
-#'@aliases SLiMSim$registerLateEvent .SS$registerLateEvent
-#'@family SLiMSim
-#'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
-#'singleton)
-#'@details Register a block of Eidos source code, represented as the string
-#'singleton source, as an Eidos late() event in the current simulation, with
-#'optional start and end generations limiting its applicability. The script block
-#'will be given identifier id (specified as an integer, or as a string symbolic
-#'name such as "s5"); this may be NULL if there is no need to be able to refer
-#'to the block later. The registered event is added to the end of the list of
-#'registered SLiMEidosBlock objects, and is active immediately; it may be eligible
-#'to execute in the current generation (see section 25.9 for details). The new
-#'SLiMEidosBlock will be defined as a global variable immediately by this method
-#'(see section 24.11), and will also be returned by this method.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-registerLateEvent <- function(id, source, start, end) {
- .SS$registerLateEvent(id, source, start, end)
-}
-
-#'SLiM method registerMateChoiceCallback
-#'
-#'Documentation for SLiM function \code{registerMateChoiceCallback}, which is a
-#'method of the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param id An object of type null or integer or string. Must be of length 1 (a
-#'singleton). See details for description.
-#'@param source An object of type string. Must be of length 1 (a singleton). See
-#'details for description.
-#'@param subpop An object of type null or integer or Subpopulation object. Must
-#'be of length 1 (a singleton). The default value is \code{NULL}. See details for
-#'description.
-#'@param start An object of type null or integer. Must be of length 1 (a
-#'singleton). The default value is \code{NULL}. See details for description.
-#'@param end An object of type null or integer. Must be of length 1 (a singleton).
-#'The default value is \code{NULL}. See details for description.
-#'
-#'@aliases SLiMSim$registerMateChoiceCallback .SS$registerMateChoiceCallback
-#'@family SLiMSim
-#'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
-#'singleton)
-#'@details Register a block of Eidos source code, represented as the string
-#'singleton source, as an Eidos mateChoice() callback in the current simulation,
-#'with optional subpopulation subpop (which may be an integer identifier, or
-#'NULL, the default, to indicate all subpopulations) and optional start and end
-#'generations all limiting its applicability. The script block will be given
-#'identifier id (specified as an integer, or as a string symbolic name such as
-#'"s5"); this may be NULL if there is no need to be able to refer to the block
-#'later. The registered callback is added to the end of the list of registered
-#'SLiMEidosBlock objects, and is active immediately; it may be eligible to execute
-#'in the current generation (see section 25.9 for details). The new SLiMEidosBlock
-#'will be defined as a global variable immediately by this method (see section
-#'24.11), and will also be returned by this method.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-registerMateChoiceCallback <- function(id, source, subpop, start, end) {
- .SS$registerMateChoiceCallback(id, source, subpop, start, end)
-}
-
-#'SLiM method registerModifyChildCallback
-#'
-#'Documentation for SLiM function \code{registerModifyChildCallback}, which is a
-#'method of the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param id An object of type null or integer or string. Must be of length 1 (a
-#'singleton). See details for description.
-#'@param source An object of type string. Must be of length 1 (a singleton). See
-#'details for description.
-#'@param subpop An object of type null or integer or Subpopulation object. Must
-#'be of length 1 (a singleton). The default value is \code{NULL}. See details for
-#'description.
-#'@param start An object of type null or integer. Must be of length 1 (a
-#'singleton). The default value is \code{NULL}. See details for description.
-#'@param end An object of type null or integer. Must be of length 1 (a singleton).
-#'The default value is \code{NULL}. See details for description.
-#'
-#'@aliases SLiMSim$registerModifyChildCallback .SS$registerModifyChildCallback
-#'@family SLiMSim
-#'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
-#'singleton)
-#'@details Register a block of Eidos source code, represented as the string
-#'singleton source, as an Eidos modifyChild() callback in the current simulation,
-#'with optional subpopulation subpop (which may be an integer identifier, or
-#'NULL, the default, to indicate all subpopulations) and optional start and end
-#'generations all limiting its applicability. The script block will be given
-#'identifier id (specified as an integer, or as a string symbolic name such as
-#'"s5"); this may be NULL if there is no need to be able to refer to the block
-#'later. The registered callback is added to the end of the list of registered
-#'SLiMEidosBlock objects, and is active immediately; it may be eligible to execute
-#'in the current generation (see section 25.9 for details). The new SLiMEidosBlock
-#'will be defined as a global variable immediately by this method (see section
-#'24.11), and will also be returned by this method.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-registerModifyChildCallback <- function(id, source, subpop, start, end) {
- .SS$registerModifyChildCallback(id, source, subpop, start, end)
-}
-
-#'SLiM method registerMutationCallback
-#'
-#'Documentation for SLiM function \code{registerMutationCallback}, which is a
-#'method of the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param id An object of type null or integer or string. Must be of length 1 (a
-#'singleton). See details for description.
-#'@param source An object of type string. Must be of length 1 (a singleton). See
-#'details for description.
-#'@param mutType An object of type null or integer or MutationType object. Must
-#'be of length 1 (a singleton). The default value is \code{NULL}. See details for
-#'description.
-#'@param subpop An object of type null or integer or Subpopulation object. Must
-#'be of length 1 (a singleton). The default value is \code{NULL}. See details for
-#'description.
-#'@param start An object of type null or integer. Must be of length 1 (a
-#'singleton). The default value is \code{NULL}. See details for description.
-#'@param end An object of type null or integer. Must be of length 1 (a singleton).
-#'The default value is \code{NULL}. See details for description.
-#'
-#'@aliases SLiMSim$registerMutationCallback .SS$registerMutationCallback
-#'@family SLiMSim
-#'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
-#'singleton)
-#'@details Register a block of Eidos source code, represented as the string
-#'singleton source, as an Eidos mutation() callback in the current simulation,
-#'with an optional mutation type mutType (which may be an integer mutation type
-#'identifier, or NULL, the default, to indicate all mutation types - see Eidos
-#'events fitness() mateChoice() modifyChild() recombination() interaction()
-#'reproduction() 572 section 25.8), optional subpopulation subpop (which may also
-#'be an integer identifier, or NULL, the default, to indicate all subpopulations),
-#'and optional start and end generations all limiting its applicability. The
-#'script block will be given identifier id (specified as an integer, or as a
-#'string symbolic name such as "s5"); this may be NULL if there is no need to be
-#'able to refer to the block later. The registered callback is added to the end of
-#'the list of registered SLiMEidosBlock objects, and is active immediately; it may
-#'be eligible to execute in the current generation (see section 25.9 for details).
-#'The new SLiMEidosBlock will be defined as a global variable immediately by this
-#'method (see section 24.11), and will also be returned by this method.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-registerMutationCallback <- function(id, source, mutType, subpop, start, end)
-{
- .SS$registerMutationCallback(id, source, mutType, subpop, start, end)
-}
-
-#'SLiM method registerRecombinationCallback
-#'
-#'Documentation for SLiM function \code{registerRecombinationCallback}, which is a
-#'method of the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param id An object of type null or integer or string. Must be of length 1 (a
-#'singleton). See details for description.
-#'@param source An object of type string. Must be of length 1 (a singleton). See
-#'details for description.
-#'@param subpop An object of type null or integer or Subpopulation object. Must
-#'be of length 1 (a singleton). The default value is \code{NULL}. See details for
-#'description.
-#'@param start An object of type null or integer. Must be of length 1 (a
-#'singleton). The default value is \code{NULL}. See details for description.
-#'@param end An object of type null or integer. Must be of length 1 (a singleton).
-#'The default value is \code{NULL}. See details for description.
-#'
-#'@aliases SLiMSim$registerRecombinationCallback .SS$registerRecombinationCallback
-#'@family SLiMSim
-#'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
-#'singleton)
-#'@details Register a block of Eidos source code, represented as the string
-#'singleton source, as an Eidos recombination() callback in the current
-#'simulation, with optional subpopulation subpop (which may be an integer
-#'identifier, or NULL, the default, to indicate all subpopulations) and optional
-#'start and end generations all limiting its applicability. The script block
-#'will be given identifier id (specified as an integer, or as a string symbolic
-#'name such as "s5"); this may be NULL if there is no need to be able to refer
-#'to the block later. The registered callback is added to the end of the list of
-#'registered SLiMEidosBlock objects, and is active immediately; it may be eligible
-#'to execute in the current generation (see section 25.9 for details). The new
-#'SLiMEidosBlock will be defined as a global variable immediately by this method
-#'(see section 24.11), and will also be returned by this method.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-registerRecombinationCallback <- function(id, source, subpop, start, end) {
- .SS$registerRecombinationCallback(id, source, subpop, start, end)
-}
-
-#'SLiM method registerReproductionCallback
-#'
-#'Documentation for SLiM function \code{registerReproductionCallback}, which is a
-#'method of the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param id An object of type null or integer or string. Must be of length 1 (a
-#'singleton). See details for description.
-#'@param source An object of type string. Must be of length 1 (a singleton). See
-#'details for description.
-#'@param subpop An object of type null or integer or Subpopulation object. Must
-#'be of length 1 (a singleton). The default value is \code{NULL}. See details for
-#'description.
-#'@param sex An object of type null or string. Must be of length 1 (a singleton).
-#'The default value is \code{NULL}. See details for description.
-#'@param start An object of type null or integer. Must be of length 1 (a
-#'singleton). The default value is \code{NULL}. See details for description.
-#'@param end An object of type null or integer. Must be of length 1 (a singleton).
-#'The default value is \code{NULL}. See details for description.
-#'
-#'@aliases SLiMSim$registerReproductionCallback .SS$registerReproductionCallback
-#'@family SLiMSim
-#'@return An object of type SLiMEidosBlock object. Return will be of length 1 (a
-#'singleton)
-#'@details Register a block of Eidos source code, represented as the string
-#'singleton source, as an Eidos reproduction() callback in the current simulation,
-#'with optional subpopulation subpop (which may be an integer identifier, or
-#'NULL, the default, to indicate all subpopulations), optional sex-specificity
-#'sex (which may be "M" or "F" in sexual simulations to make the callback specific
-#'to males or females respectively, or NULL for no sex-specificity), and optional
-#'start and end generations all limiting its applicability. The script block
-#'will be given identifier id (specified as an integer, or as a string symbolic
-#'name such as "s5"); this may be NULL if there is no need to be able to refer
-#'to the block later. The registered callback is added to the end of the list of
-#'registered SLiMEidosBlock objects, and is active immediately; it may be eligible
-#'to execute in the current generation (see section 25.9 for details). The new
-#'SLiMEidosBlock will be defined as a global variable immediately by this method
-#'(see section 24.11), and will also be returned by this method.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-registerReproductionCallback <- function(id, source, subpop, sex, start, end)
-{
- .SS$registerReproductionCallback(id, source, subpop, sex, start, end)
-}
-
-#'SLiM method rescheduleScriptBlock
-#'
-#'Documentation for SLiM function \code{rescheduleScriptBlock}, which is a method
-#'of the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param block An object of type SLiMEidosBlock object. Must be of length 1 (a
-#'singleton). See details for description.
-#'@param start An object of type null or integer. Must be of length 1 (a
-#'singleton). The default value is \code{NULL}. See details for description.
-#'@param end An object of type null or integer. Must be of length 1 (a singleton).
-#'The default value is \code{NULL}. See details for description.
-#'@param generations An object of type null or integer. The default value is
-#'\code{NULL}. See details for description.
-#'
-#'@aliases SLiMSim$rescheduleScriptBlock .SS$rescheduleScriptBlock
-#'@family SLiMSim
-#'@return An object of type SLiMEidosBlock object.
-#'@details Reschedule the target script block given by block to execute in a
-#'specified set of generations. The first way to specify the generation set is
-#'with start and end parameter values; block will then execute from start to
-#'end, inclusive. In this case, block is returned. The second way to specify
-#'the generation set is using the generations parameter; this is more flexible
-#'but more complicated. Since script blocks execute across a contiguous span of
-#'generations defined by their start and end properties, this may result in the
-#'duplication of block; one script block will be used for each contiguous span
-#'of generations in generations. The block object itself will be rescheduled
-#'to cover the first such span, whereas duplicates of block will be created to
-#'cover subsequent contiguous spans. A vector containing all of the script blocks
-#'scheduled by this method, including block, will be returned; this vector is
-#'guaranteed to be sorted by the (ascending) scheduled execution order of the
-#'blocks. Any duplicates of block created will be given values for the active,
-#'source, tag, and type properties equal to the current values for block, but
-#'will be given an id of -1 since script block identifiers must be unique; if
-#'it is necessary to find the duplicated blocks again later, their tag property
-#'should be used. The vector supplied for generations does not need to be in
-#'sorted order, but it must not contain any duplicates. Eidos events fitness()
-#'mateChoice() modifyChild() recombination() interaction() reproduction() 573
-#'Because this method can create a large number of duplicate script blocks,
-#'it can sometimes be better to handle script block scheduling in other ways.
-#'If an early() event needs to execute every tenth generation over the whole
-#'duration of a long model run, for example, it would not be advisable to use a
-#'call like sim.rescheduleScriptBlock(s1, generations=seq(10, 100000, 10)) for
-#'that purpose, since that would result in thousands of duplicate script blocks.
-#'Instead, it would be preferable to add a test such as if (sim.generation % 10 !=
-#'0) return; at the beginning of the event. It is legal to reschedule a script
-#'block while the block is executing; a call like sim.rescheduleScriptBlock(self,
-#'sim.generation + 10, sim.generation + 10); made inside a given block would
-#'therefore also cause the block to execute every tenth generation, although
-#'this sort of self-rescheduling code is probably harder to read, maintain, and
-#'debug. Whichever way of specifying the generation set is used, the discussion in
-#'section 25.9 applies: block may continue to be executed during the current life
-#'cycle stage even after it has been rescheduled, unless it is made inactive using
-#'its active property, and similarly, the block may not execute during the current
-#'life cycle stage if it was not already scheduled to do so. Rescheduling script
-#'blocks during the generation and life cycle stage in which they are executing,
-#'or in which they are intended to execute, should be avoided. Also, as mentioned
-#'in section 22.7, script blocks which are open-ended (i.e., with no specified end
-#'generation), are not used in determining whether the end of the simulation has
-#'been reached (because then the simulation would run forever); if you reschedule
-#'a block to be open-ended, and to start after the end of the last closed-ended
-#'block, the rescheduled block will therefore not run at all (just as such a block
-#'would not run at all in other circumstances, too). Note that new script blocks
-#'can also be created and scheduled using the register...() methods of SLiMSim; by
-#'using the same source as a template script block, the template can be duplicated
-#'and scheduled for different generations. In fact, rescheduleScriptBlock() does
-#'essentially that internally.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-rescheduleScriptBlock <- function(block, start, end, generations) {
- .SS$rescheduleScriptBlock(block, start, end, generations)
-}
-
-#'SLiM method simulationFinished
-#'
-#'Documentation for SLiM function \code{simulationFinished}, which is a method of
-#'the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param void An object of type . See details for description.
-#'
-#'@aliases SLiMSim$simulationFinished .SS$simulationFinished
-#'@family SLiMSim
-#'@return An object of type void.
-#'@details Declare the current simulation finished. Normally SLiM ends a
-#'simulation when, at the end of a generation, there are no script events or
-#'callbacks registered for any future generation (excluding scripts with no
-#'declared end generation). If you wish to end a simulation before this condition
-#'is met, a call to simulationFinished() will cause the current simulation to
-#'end at the end of the current generation. For example, a simulation might
-#'self-terminate if a test for a dynamic equilibrium condition is satisfied. Note
-#'that the current generation will finish executing; if you want the simulation
-#'to stop immediately, you can use the Eidos method stop(), which raises an error
-#'condition.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-simulationFinished <- function(void) {
- .SS$simulationFinished(void)
-}
-
-#'SLiM method subsetMutations
-#'
-#'Documentation for SLiM function \code{subsetMutations}, which is a method of the
-#'SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param exclude An object of type null or Mutation object. Must be of length 1 (a
-#'singleton). The default value is \code{NULL}. See details for description.
-#'@param mutType An object of type null or integer or MutationType object. Must
-#'be of length 1 (a singleton). The default value is \code{NULL}. See details for
-#'description.
-#'@param position An object of type null or integer. Must be of length 1 (a
-#'singleton). The default value is \code{NULL}. See details for description.
-#'@param nucleotide An object of type null or integer or string. Must be of length
-#'1 (a singleton). The default value is \code{NULL}. See details for description.
-#'@param tag An object of type null or integer. Must be of length 1 (a singleton).
-#'The default value is \code{NULL}. See details for description.
-#'@param id An object of type null or integer. Must be of length 1 (a singleton).
-#'The default value is \code{NULL}. See details for description.
-#'
-#'@aliases SLiMSim$subsetMutations .SS$subsetMutations
-#'@family SLiMSim
-#'@return An object of type Mutation object.
-#'@details Returns a vector of mutations subset from the list of all active
-#'mutations in the simulation (as would be provided by the mutations property).
-#'The parameters specify constraints upon the subset of mutations that will
-#'be returned. Parameter exclude, if non-NULL, may specify a specific mutation
-#'that should not be included (typically the focal mutation in some operation).
-#'Parameter mutType, if non- NULL, may specify a mutation type for the mutations
-#'to be returned (as either a MutationType object or an integer identifier).
-#'Parameter position, if non-NULL, may specify a base position for the mutations
-#'to be returned. Parameter nucleotide, if non-NULL, may specify a nucleotide
-#'for the mutations to be returned (either as a string, "A" / "C" / "G" / "T",
-#'or as an integer, 0 / 1 / 2 / 3 respectively). Parameter tag, if non-NULL,
-#'may specify a tag value for the mutations to be returned. Parameter id, if
-#'non-NULL, may specify a required value for the id property of the mutations
-#'to be returned. This method is shorthand for getting the mutations property
-#'of the subpopulation, and then using operator [] to select only mutations with
-#'the desired properties; besides being much simpler than the equivalent Eidos
-#'code, it is also much faster. Note that if you only need to select on mutation
-#'type, the mutationsOfType() method will be even faster. Eidos events fitness()
-#'mateChoice() modifyChild() recombination() interaction() reproduction() 574
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-subsetMutations <- function(exclude, mutType, position, nucleotide, tag, id)
-{
- .SS$subsetMutations(exclude, mutType, position, nucleotide, tag, id)
-}
-
-#'SLiM method treeSeqCoalesced
-#'
-#'Documentation for SLiM function \code{treeSeqCoalesced}, which is a method of
-#'the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param void An object of type . See details for description.
-#'
-#'@aliases SLiMSim$treeSeqCoalesced .SS$treeSeqCoalesced
-#'@family SLiMSim
-#'@return An object of type logical. Return will be of length 1 (a singleton)
-#'@details Returns the coalescence state for the recorded tree sequence at
-#'the last simplification. The returned value is a logical singleton flag,
-#'T to indicate that full coalescence was observed at the last treesequence
-#'simplification (meaning that there is a single ancestral individual that roots
-#'all ancestry trees at all sites along the chromosome - although not necessarily
-#'the same ancestor at all sites), or F if full coalescence was not observed. For
-#'simple models, reaching coalescence may indicate that the model has reached an
-#'equilibrium state, but this may not be true in models that modify the dynamics
-#'of the model during execution by changing migration rates, introducing new
-#'mutations programmatically, dictating non-random mating, etc., so be careful not
-#'to attach more meaning to coalescence than it is due; some models may require
-#'burn-in beyond coalescence to reach equilibrium, or may not have an equilibrium
-#'state at all. Also note that some actions by a model, such as adding a new
-#'subpopulation, may cause the coalescence state to revert from T back to F (at
-#'the next simplification), so a return value of T may not necessarily mean that
-#'the model is coalesced at the present moment - only that it was coalesced at the
-#'last simplification. This method may only be called if tree sequence recording
-#'has been turned on with initializeTreeSeq(); in addition, checkCoalescence=T
-#'must have been supplied to initializeTreeSeq(), so that the necessary work
-#'is done during each tree-sequence simplification. Since this method does not
-#'perform coalescence checking itself, but instead simply returns the coalescence
-#'state observed at the last simplification, it may be desirable to call
-#'treeSeqSimplify() immediately before treeSeqCoalesced() to obtain up-to-date
-#'information. However, the speed penalty of doing this in every generation would
-#'be large, and most models do not need this level of precision; usually it is
-#'sufficient to know that the model has coalesced, without knowing whether that
-#'happened in the current generation or in a recent preceding generation.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-treeSeqCoalesced <- function(void) {
- .SS$treeSeqCoalesced(void)
-}
-
-#'SLiM method treeSeqOutput
-#'
-#'Documentation for SLiM function \code{treeSeqOutput}, which is a method of the
-#'SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param path An object of type string. Must be of length 1 (a singleton). See
-#'details for description.
-#'@param simplify An object of type logical. Must be of length 1 (a singleton).
-#'The default value is \code{T}. See details for description.
-#'@param includeModel An object of type logical. Must be of length 1 (a
-#'singleton). The default value is \code{T}. See details for description.
-#'@param metadata An object of type null. Must be of length 1 (a singleton). The
-#'default value is \code{NULL}. See details for description.
-#'
-#'@aliases SLiMSim$treeSeqOutput .SS$treeSeqOutput
-#'@family SLiMSim
-#'@return An object of type void.
-#'@details Outputs the current tree sequence recording tables to the path
-#'specified by path. This method may only be called if tree sequence recording
-#'has been turned on with initializeTreeSeq(). If simplify is T (the default),
-#'simplification will be done immediately prior to output; this is almost always
-#'desirable, unless a model wishes to avoid simplification entirely. (Note that if
-#'simplification is not done, then all genomes since the last simplification will
-#'be marked as samples in the resulting tree sequence.) A binary tree sequence
-#'file will be written to the specified path; a filename extension of .trees
-#'is suggested for this type of file. Normally, the full SLiM script used to
-#'generate the tree sequence is written out to the provenance entry of the tree
-#'sequence file, to the model subkey of the parameters top-level key. Supplying
-#'F for includeModel suppresses output of the full script; see section 26.4.6
-#'for further discussion. A Dictionary object containing user-generated metadata
-#'may be supplied with the metadata parameter. If present, this dictionary will
-#'be serialized as JSON and attached to the saved tree sequence under a key
-#'named user_metadata, within the SLiM key (see section 26.4.5). If pyslim is
-#'used to read the tree sequence in Python, this metadata will automatically be
-#'deserialized and made available at ts.metadata["SLiM"]["user_metadata"]. This
-#'metadata dictionary is not used by SLiM, or by pyslim, tskit, or msprime; you
-#'may use it for any purpose you wish. Note that metadata may actually be any
-#'subclass of Dictionary, such as the SLiMSim simulation object sim, or a LogFile
-#'instance. However, only the keys and values contained by the object's Dictionary
-#'superclass state will be serialized into the metadata; properties of the
-#'subclass will be ignored.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-treeSeqOutput <- function(path, simplify, includeModel, metadata) {
- .SS$treeSeqOutput(path, simplify, includeModel, metadata)
-}
-
-#'SLiM method treeSeqRememberIndividuals
-#'
-#'Documentation for SLiM function \code{treeSeqRememberIndividuals}, which is a
-#'method of the SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param individuals An object of type Individual object. See details for
-#'description.
-#'@param permanent An object of type logical. Must be of length 1 (a singleton).
-#'The default value is \code{T}. See details for description.
-#'
-#'@aliases SLiMSim$treeSeqRememberIndividuals .SS$treeSeqRememberIndividuals
-#'@family SLiMSim
-#'@return An object of type void.
-#'@details Mark the individuals specified by individuals to be kept across tree
-#'sequence table simplification. This method may only be called if tree sequence
-#'recording has been turned on with initializeTreeSeq(). All currently living
-#'individuals are always kept across simplification; this method does not need
-#'to be called, and indeed should not be called, for that purpose. Instead,
-#'treeSeqRememberIndividuals() allows any individual, including dead individuals,
-#'to be kept in Eidos events fitness() mateChoice() modifyChild() recombination()
-#'interaction() reproduction() 575 the final tree sequence. Typically this would
-#'be used, for example, to keep particular individuals that you wanted to be able
-#'to trace ancestry back to in later analysis. However, this is not the typical
-#'usage pattern for tree sequence recording; most models will not need to call
-#'this method. There are two ways to keep individuals across simplification.
-#'If permanent is T (the default), then the specified individuals will be
-#'permanently remembered: their genomes will be added to the current sample,
-#'and they will always be present in the tree sequence. Permanently remembering
-#'a large number of individuals will, of course, markedly increase memory usage
-#'and runtime. Supplying F for permanent will instead mark the individuals only
-#'for (temporary) retention: their genomes will not be added to the sample, and
-#'they will appear in the final tree sequence only if one of their genomes is
-#'retained across simplification. In other words, the rule of thumb for retained
-#'individuals is simple: if a genome is kept by simplification, the genome's
-#'corresponding individual is kept also, if it is retained. Note that permanent
-#'remembering takes priority; calling this function with permanent=F on an
-#'individual that has previously been permanently remembered will not remove it
-#'from the sample. The behavior of simplification for individuals retained with
-#'permanent=F depends upon the value of the retainCoalescentOnly flag passed
-#'to initializeTreeSeq(); here we will discuss the behavior of that flag in
-#'detail. First of all, genomes are always removed by simplification unless they
-#'are (a) part of the final generation, (b) ancestral to the final generation,
-#'(c) a genome of a permanently remembered individual, or (d) ancestral to a
-#'permanently remembered individual. If retainCoalescentOnly is T (the default),
-#'they are also always removed if they are not a branch point (i.e., a coalescent
-#'node or most recent common ancestor) in the tree sequence. In some cases it
-#'may be useful to retain a genome and its associated individual when it is
-#'simply an intermediate node in the ancestry (i.e., in the middle of a branch).
-#'This can be enabled by setting retainCoalescentOnly to F in your call to
-#'initializeTreeSeq(). In this case, ancestral genomes that are intermediate
-#'("unary nodes", in tskit parlance) and are within an individual that has been
-#'retained using the permanent=F flag here are kept, along with the retained
-#'individual itself. Since setting retainCoalescentOnly to F will prevent the
-#'unary nodes for retained individuals from being pruned, simplification may
-#'often be unable to prune very much at all from the tree sequence, and memory
-#'usage and runtime may increase rapidly. If you are retaining many individuals,
-#'this setting should therefore be used only with caution; it is not necessary if
-#'you are purely interested in the most recent common ancestors. See the pyslim
-#'documentation for further discussion of retaining and remembering individuals
-#'and the effects of the retainCoalescentOnly flag. The metadata (age, location,
-#'etc) that are stored in the resulting tree sequence are those values present
-#'at either (a) the final generation, if the individual is alive at the end of
-#'the simulation, or (b) the last time that the individual was remembered, if
-#'not. Calling treeSeqRememberIndividuals() on an individual that is already
-#'remembered will cause the archived information about the remembered individual
-#'to be updated to reflect the individual's current state; care should be taken
-#'to remember individuals at a point in time when their state is valid. A case
-#'where this is particularly important is for the spatial location of individuals
-#'in continuous-space models. SLiM automatically retains the portions of the
-#'genomes that comprise the first generation of any new subpopulation created with
-#'addSubpop() that are inherited by extant individuals, for easy recapitation and
-#'other analysis (see sections 17.2 and 17.10). However, the individuals of the
-#'first generation are not remembered automatically, only their needed genomic
-#'information.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-treeSeqRememberIndividuals <- function(individuals, permanent) {
- .SS$treeSeqRememberIndividuals(individuals, permanent)
-}
-
-#'SLiM method treeSeqSimplify
-#'
-#'Documentation for SLiM function \code{treeSeqSimplify}, which is a method of the
-#'SLiM class \code{\link{SLiMSim}}.
-#'Note that the R function is a stub, it does not do anything in R (except bring
-#'up this documentation). It will only do
-#'anything useful when used inside a \code{\link{slim_block}} function further
-#'nested in a \code{\link{slim_script}}
-#'function call, where it will be translated into valid SLiM code as part of a
-#'full SLiM script.
-#'
-#'Documentation for this function can be found in the official
-#'\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-#'
-#'@param void An object of type . See details for description.
-#'
-#'@aliases SLiMSim$treeSeqSimplify .SS$treeSeqSimplify
-#'@family SLiMSim
-#'@return An object of type void.
-#'@details Triggers an immediate simplification of the tree sequence recording
-#'tables. This method may only be called if tree sequence recording has been
-#'turned on with initializeTreeSeq(). A call to this method will free up memory
-#'being used by entries that are no longer in the ancestral path of any individual
-#'within the current sample (currently living individuals, in other words, plus
-#'those explicitly added to the sample with treeSeqRememberIndividuals()), but it
-#'can also take a significant amount of time. Typically calling this method is not
-#'necessary; the automatic simplification performed occasionally by SLiM should be
-#'sufficient for most models.
-#'@section Copyright:
-#'This is documentation for a function in the SLiM software, and has been
-#'reproduced from the official manual,
-#'which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-#'documentation is
-#'Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-#'about SLiM can be found
-#'on the official website: \url{https://messerlab.org/slim/}
-#'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-#'(\email{messer@cornell.edu})
-#'
-treeSeqSimplify <- function(void) {
- .SS$treeSeqSimplify(void)
 }
 
 
@@ -16444,6 +14931,9 @@ treeSeqSimplify <- function(void) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 add <- function(x) {
  .SM$add(x)
@@ -16497,6 +14987,9 @@ add <- function(x) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 blend <- function(x, xFraction) {
  .SM$blend(x, xFraction)
@@ -16553,6 +15046,9 @@ blend <- function(x, xFraction) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 changeColors <- function(valueRange, colors) {
  .SM$changeColors(valueRange, colors)
 }
@@ -16600,6 +15096,9 @@ changeColors <- function(valueRange, colors) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 changeValues <- function(x) {
  .SM$changeValues(x)
@@ -16649,6 +15148,9 @@ changeValues <- function(x) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 divide <- function(x) {
  .SM$divide(x)
 }
@@ -16688,6 +15190,9 @@ divide <- function(x) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 exp <- function(void) {
  .SM$exp(void)
 }
@@ -16726,6 +15231,9 @@ exp <- function(void) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 gridValues <- function(void) {
  .SM$gridValues(void)
@@ -16793,6 +15301,9 @@ gridValues <- function(void) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 interpolate <- function(factor, method) {
  .SM$interpolate(factor, method)
 }
@@ -16833,6 +15344,9 @@ interpolate <- function(factor, method) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 mapColor <- function(value) {
  .SM$mapColor(value)
@@ -16914,6 +15428,9 @@ mapColor <- function(value) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 mapImage <- function(width, height, centers, color) {
  .SM$mapImage(width, height, centers, color)
 }
@@ -16970,6 +15487,9 @@ mapImage <- function(width, height, centers, color) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 mapValue <- function(point) {
  .SM$mapValue(point)
 }
@@ -17017,6 +15537,9 @@ mapValue <- function(point) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 multiply <- function(x) {
  .SM$multiply(x)
@@ -17066,6 +15589,9 @@ multiply <- function(x) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 power <- function(x) {
  .SM$power(x)
 }
@@ -17103,6 +15629,9 @@ power <- function(x) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 range <- function(void) {
  .SM$range(void)
@@ -17147,6 +15676,9 @@ range <- function(void) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 rescale <- function(min, max) {
  .SM$rescale(min, max)
@@ -17202,6 +15734,9 @@ rescale <- function(min, max) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 sampleImprovedNearbyPoint <- function(point, maxDistance, functionType, ...)
 {
@@ -17265,6 +15800,9 @@ sampleImprovedNearbyPoint <- function(point, maxDistance, functionType, ...)
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 sampleNearbyPoint <- function(point, maxDistance, functionType, ...) {
  .SM$sampleNearbyPoint(point, maxDistance, functionType, ...)
@@ -17339,6 +15877,9 @@ sampleNearbyPoint <- function(point, maxDistance, functionType, ...) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 smooth <- function(maxDistance, functionType, ...) {
  .SM$smooth(maxDistance, functionType, ...)
 }
@@ -17386,6 +15927,9 @@ smooth <- function(maxDistance, functionType, ...) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 subtract <- function(x) {
  .SM$subtract(x)
@@ -17446,6 +15990,9 @@ subtract <- function(x) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 addSubpop <- function(subpopID, size, sexRatio, haploid) {
  .Sp$addSubpop(subpopID, size, sexRatio, haploid)
@@ -17511,6 +16058,9 @@ addSubpop <- function(subpopID, size, sexRatio, haploid) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 addSubpopSplit <- function(subpopID, size, sourceSubpop, sexRatio) {
  .Sp$addSubpopSplit(subpopID, size, sourceSubpop, sexRatio)
 }
@@ -17553,6 +16103,9 @@ addSubpopSplit <- function(subpopID, size, sourceSubpop, sexRatio) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 countOfMutationsOfType <- function(mutType) {
  .Sp$countOfMutationsOfType(mutType)
@@ -17610,6 +16163,9 @@ countOfMutationsOfType <- function(mutType) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 individualsWithPedigreeIDs <- function(pedigreeIDs, subpops) {
  .Sp$individualsWithPedigreeIDs(pedigreeIDs, subpops)
@@ -17669,6 +16225,9 @@ individualsWithPedigreeIDs <- function(pedigreeIDs, subpops) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 killIndividuals <- function(individuals) {
  .Sp$killIndividuals(individuals)
 }
@@ -17718,6 +16277,9 @@ killIndividuals <- function(individuals) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 mutationCounts <- function(subpops, mutations) {
  .Sp$mutationCounts(subpops, mutations)
 }
@@ -17766,6 +16328,9 @@ mutationCounts <- function(subpops, mutations) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 mutationFrequencies <- function(subpops, mutations) {
  .Sp$mutationFrequencies(subpops, mutations)
 }
@@ -17809,6 +16374,9 @@ mutationFrequencies <- function(subpops, mutations) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 mutationsOfType <- function(mutType) {
  .Sp$mutationsOfType(mutType)
@@ -17860,6 +16428,9 @@ mutationsOfType <- function(mutType) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 outputFixedMutations <- function(filePath, append) {
  .Sp$outputFixedMutations(filePath, append)
@@ -17960,6 +16531,9 @@ outputFixedMutations <- function(filePath, append) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 outputFull <- function(filePath, binary, append, spatialPositions, ages,
 ancestralNucleotides, pedigreeIDs) {
  .Sp$outputFull(filePath, binary, append, spatialPositions, ages,
@@ -18010,6 +16584,9 @@ ancestralNucleotides, pedigreeIDs)
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 outputMutations <- function(mutations, filePath, append) {
  .Sp$outputMutations(mutations, filePath, append)
@@ -18160,6 +16737,9 @@ outputMutations <- function(mutations, filePath, append) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 readFromPopulationFile <- function(filePath, subpopMap) {
  .Sp$readFromPopulationFile(filePath, subpopMap)
 }
@@ -18225,6 +16805,9 @@ readFromPopulationFile <- function(filePath, subpopMap) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 recalculateFitness <- function(tick) {
  .Sp$recalculateFitness(tick)
 }
@@ -18284,6 +16867,9 @@ recalculateFitness <- function(tick) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 registerFitnessEffectCallback <- function(id, source, subpop, start, end) {
  .Sp$registerFitnessEffectCallback(id, source, subpop, start, end)
 }
@@ -18342,6 +16928,9 @@ registerFitnessEffectCallback <- function(id, source, subpop, start, end) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 registerMateChoiceCallback <- function(id, source, subpop, start, end) {
  .Sp$registerMateChoiceCallback(id, source, subpop, start, end)
 }
@@ -18399,6 +16988,9 @@ registerMateChoiceCallback <- function(id, source, subpop, start, end) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 registerModifyChildCallback <- function(id, source, subpop, start, end) {
  .Sp$registerModifyChildCallback(id, source, subpop, start, end)
@@ -18464,6 +17056,9 @@ registerModifyChildCallback <- function(id, source, subpop, start, end) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 registerMutationCallback <- function(id, source, mutType, subpop, start, end)
 {
  .Sp$registerMutationCallback(id, source, mutType, subpop, start, end)
@@ -18528,6 +17123,9 @@ registerMutationCallback <- function(id, source, mutType, subpop, start, end)
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 registerMutationEffectCallback <- function(id, source, mutType, subpop,
 start, end) {
  .Sp$registerMutationEffectCallback(id, source, mutType, subpop, start, end)
@@ -18586,6 +17184,9 @@ start, end) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 registerRecombinationCallback <- function(id, source, subpop, start, end) {
  .Sp$registerRecombinationCallback(id, source, subpop, start, end)
@@ -18650,6 +17251,9 @@ registerRecombinationCallback <- function(id, source, subpop, start, end) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 registerReproductionCallback <- function(id, source, subpop, sex, start, end)
 {
  .Sp$registerReproductionCallback(id, source, subpop, sex, start, end)
@@ -18709,6 +17313,9 @@ registerReproductionCallback <- function(id, source, subpop, sex, start, end)
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 registerSurvivalCallback <- function(id, source, subpop, start, end) {
  .Sp$registerSurvivalCallback(id, source, subpop, start, end)
 }
@@ -18748,6 +17355,9 @@ registerSurvivalCallback <- function(id, source, subpop, start, end) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 simulationFinished <- function(void) {
  .Sp$simulationFinished(void)
@@ -18791,6 +17401,9 @@ simulationFinished <- function(void) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 skipTick <- function(void) {
  .Sp$skipTick(void)
@@ -18857,6 +17470,9 @@ skipTick <- function(void) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 subsetMutations <- function(exclude, mutType, position, nucleotide, tag, id)
 {
  .Sp$subsetMutations(exclude, mutType, position, nucleotide, tag, id)
@@ -18919,6 +17535,9 @@ subsetMutations <- function(exclude, mutType, position, nucleotide, tag, id)
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 treeSeqCoalesced <- function(void) {
  .Sp$treeSeqCoalesced(void)
@@ -18986,6 +17605,9 @@ treeSeqCoalesced <- function(void) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 treeSeqOutput <- function(path, simplify, includeModel, metadata) {
  .Sp$treeSeqOutput(path, simplify, includeModel, metadata)
@@ -19086,6 +17708,9 @@ treeSeqOutput <- function(path, simplify, includeModel, metadata) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 treeSeqRememberIndividuals <- function(individuals, permanent) {
  .Sp$treeSeqRememberIndividuals(individuals, permanent)
 }
@@ -19129,6 +17754,9 @@ treeSeqRememberIndividuals <- function(individuals, permanent) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 treeSeqSimplify <- function(void) {
  .Sp$treeSeqSimplify(void)
@@ -19203,6 +17831,9 @@ treeSeqSimplify <- function(void) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 addCloned <- function(parent, count, defer) {
  .P$addCloned(parent, count, defer)
@@ -19326,6 +17957,9 @@ addCloned <- function(parent, count, defer) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 addCrossed <- function(parent1, parent2, sex, count, defer) {
  .P$addCrossed(parent1, parent2, sex, count, defer)
 }
@@ -19399,6 +18033,9 @@ addCrossed <- function(parent1, parent2, sex, count, defer) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 addEmpty <- function(sex, genome1Null, genome2Null, count) {
  .P$addEmpty(sex, genome1Null, genome2Null, count)
@@ -19574,6 +18211,9 @@ addEmpty <- function(sex, genome1Null, genome2Null, count) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 addRecombinant <- function(strand1, strand2, breaks1, strand3, strand4,
 breaks2, sex, parent1, parent2, randomizeStrands, count, defer) {
  .P$addRecombinant(strand1, strand2, breaks1, strand3, strand4, breaks2, sex,
@@ -19653,6 +18293,9 @@ parent1, parent2, randomizeStrands, count, defer)
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 addSelfed <- function(parent, count, defer) {
  .P$addSelfed(parent, count, defer)
 }
@@ -19710,6 +18353,9 @@ addSelfed <- function(parent, count, defer) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 addSpatialMap <- function(map) {
  .P$addSpatialMap(map)
 }
@@ -19758,6 +18404,9 @@ addSpatialMap <- function(map) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 cachedFitness <- function(indices) {
  .P$cachedFitness(indices)
@@ -19821,6 +18470,9 @@ cachedFitness <- function(indices) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 configureDisplay <- function(center, scale, color) {
  .P$configureDisplay(center, scale, color)
@@ -19948,6 +18600,9 @@ configureDisplay <- function(center, scale, color) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 defineSpatialMap <- function(name, spatiality, values, interpolate,
 valueRange, colors) {
  .P$defineSpatialMap(name, spatiality, values, interpolate, valueRange,
@@ -20020,6 +18675,9 @@ colors)
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 outputMSSample <- function(sampleSize, replace, requestedSex, filePath,
 append, filterMonomorphic) {
  .P$outputMSSample(sampleSize, replace, requestedSex, filePath, append,
@@ -20081,6 +18739,9 @@ filterMonomorphic)
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 outputSample <- function(sampleSize, replace, requestedSex, filePath, append)
 {
@@ -20152,6 +18813,9 @@ outputSample <- function(sampleSize, replace, requestedSex, filePath, append)
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 outputVCFSample <- function(sampleSize, replace, requestedSex,
 outputMultiallelics, filePath, append, simplifyNucleotides,
@@ -20256,6 +18920,9 @@ filePath, append, simplifyNucleotides, outputNonnucleotides)
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 pointDeviated <- function(n, point, boundary, maxDistance, functionType, ...)
 {
  .P$pointDeviated(n, point, boundary, maxDistance, functionType, ...)
@@ -20303,6 +18970,9 @@ pointDeviated <- function(n, point, boundary, maxDistance, functionType, ...)
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 pointInBounds <- function(point) {
  .P$pointInBounds(point)
@@ -20360,6 +19030,9 @@ pointInBounds <- function(point) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 pointPeriodic <- function(point) {
  .P$pointPeriodic(point)
 }
@@ -20408,6 +19081,9 @@ pointPeriodic <- function(point) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 pointReflected <- function(point) {
  .P$pointReflected(point)
 }
@@ -20454,6 +19130,9 @@ pointReflected <- function(point) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 pointStopped <- function(point) {
  .P$pointStopped(point)
 }
@@ -20495,6 +19174,9 @@ pointStopped <- function(point) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 pointUniform <- function(n) {
  .P$pointUniform(n)
@@ -20538,6 +19220,9 @@ pointUniform <- function(n) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 removeSpatialMap <- function(map) {
  .P$removeSpatialMap(map)
@@ -20586,6 +19271,9 @@ removeSpatialMap <- function(map) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 removeSubpopulation <- function(void) {
  .P$removeSubpopulation(void)
@@ -20675,6 +19363,9 @@ removeSubpopulation <- function(void) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 sampleIndividuals <- function(size, replace, exclude, sex, minAge, maxAge,
 migrant, tagL0, tagL1, tagL2, tagL3, tagL4) {
  .P$sampleIndividuals(size, replace, exclude, sex, minAge, maxAge, migrant,
@@ -20724,6 +19415,9 @@ tagL0, tagL1, tagL2, tagL3, tagL4)
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 setCloningRate <- function(rate) {
  .P$setCloningRate(rate)
 }
@@ -20770,6 +19464,9 @@ setCloningRate <- function(rate) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 setMigrationRates <- function(sourceSubpops, rates) {
  .P$setMigrationRates(sourceSubpops, rates)
 }
@@ -20812,6 +19509,9 @@ setMigrationRates <- function(sourceSubpops, rates) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 setSelfingRate <- function(rate) {
  .P$setSelfingRate(rate)
@@ -20856,6 +19556,9 @@ setSelfingRate <- function(rate) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 setSexRatio <- function(sexRatio) {
  .P$setSexRatio(sexRatio)
@@ -20916,6 +19619,9 @@ setSexRatio <- function(sexRatio) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 setSpatialBounds <- function(bounds) {
  .P$setSpatialBounds(bounds)
 }
@@ -20962,6 +19668,9 @@ setSpatialBounds <- function(bounds) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 setSubpopulationSize <- function(size) {
  .P$setSubpopulationSize(size)
 }
@@ -21003,6 +19712,9 @@ setSubpopulationSize <- function(size) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 spatialMapColor <- function(name, value) {
  .P$spatialMapColor(name, value)
@@ -21052,6 +19764,9 @@ spatialMapColor <- function(name, value) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 spatialMapImage <- function(name, width, height, centers, color) {
  .P$spatialMapImage(name, width, height, centers, color)
@@ -21112,6 +19827,9 @@ spatialMapImage <- function(name, width, height, centers, color) {
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 spatialMapValue <- function(map, point) {
  .P$spatialMapValue(map, point)
@@ -21192,6 +19910,9 @@ spatialMapValue <- function(map, point) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'
+#'
+#'
+#'
 subsetIndividuals <- function(exclude, sex, tag, minAge, maxAge, migrant,
 tagL0, tagL1, tagL2, tagL3, tagL4) {
  .P$subsetIndividuals(exclude, sex, tag, minAge, maxAge, migrant, tagL0,
@@ -21238,6 +19959,9 @@ tagL1, tagL2, tagL3, tagL4)
 #'on the official website: \url{https://messerlab.org/slim/}
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
+#'
+#'
+#'
 #'
 takeMigrants <- function(migrants) {
  .P$takeMigrants(migrants)
@@ -21317,6 +20041,9 @@ takeMigrants <- function(migrants) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'codonsToAminoAcids()
 codonsToAminoAcids <- function(codons, long, paste) {
  .SB$codonsToAminoAcids(codons, long, paste)
 }
@@ -21362,6 +20089,9 @@ codonsToAminoAcids <- function(codons, long, paste) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'mm16To256()
 mm16To256 <- function(mutationMatrix16) {
  .SB$mm16To256(mutationMatrix16)
 }
@@ -21402,6 +20132,9 @@ mm16To256 <- function(mutationMatrix16) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'mmJukesCantor()
 mmJukesCantor <- function(alpha) {
  .SB$mmJukesCantor(alpha)
 }
@@ -21444,6 +20177,9 @@ mmJukesCantor <- function(alpha) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'mmKimura()
 mmKimura <- function(alpha, beta) {
  .SB$mmKimura(alpha, beta)
 }
@@ -21486,6 +20222,9 @@ mmKimura <- function(alpha, beta) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'nucleotideCounts()
 nucleotideCounts <- function(sequence) {
  .SB$nucleotideCounts(sequence)
 }
@@ -21529,6 +20268,9 @@ nucleotideCounts <- function(sequence) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'nucleotideFrequencies()
 nucleotideFrequencies <- function(sequence) {
  .SB$nucleotideFrequencies(sequence)
 }
@@ -21604,6 +20346,9 @@ nucleotideFrequencies <- function(sequence) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'nucleotidesToCodons()
 nucleotidesToCodons <- function(sequence) {
  .SB$nucleotidesToCodons(sequence)
 }
@@ -21685,6 +20430,9 @@ nucleotidesToCodons <- function(sequence) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'calcFST()
 calcFST <- function(genomes1, genomes2, muts, start, end) {
  .SB$calcFST(genomes1, genomes2, muts, start, end)
 }
@@ -21748,6 +20496,9 @@ calcFST <- function(genomes1, genomes2, muts, start, end) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'calcHeterozygosity()
 calcHeterozygosity <- function(genomes, muts, start, end) {
  .SB$calcHeterozygosity(genomes, muts, start, end)
 }
@@ -21806,6 +20557,9 @@ calcHeterozygosity <- function(genomes, muts, start, end) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'calcInbreedingLoad()
 calcInbreedingLoad <- function(genomes, mutType) {
  .SB$calcInbreedingLoad(genomes, mutType)
 }
@@ -21873,6 +20627,9 @@ calcInbreedingLoad <- function(genomes, mutType) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'calcPairHeterozygosity()
 calcPairHeterozygosity <- function(genome1, genome2, start, end,
 infiniteSites) {
  .SB$calcPairHeterozygosity(genome1, genome2, start, end, infiniteSites)
@@ -21923,6 +20680,9 @@ infiniteSites) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'calcVA()
 calcVA <- function(individuals, mutType) {
  .SB$calcVA(individuals, mutType)
 }
@@ -21984,6 +20744,9 @@ calcVA <- function(individuals, mutType) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'calcWattersonsTheta()
 calcWattersonsTheta <- function(genomes, muts, start, end) {
  .SB$calcWattersonsTheta(genomes, muts, start, end)
 }
@@ -22130,6 +20893,9 @@ calcWattersonsTheta <- function(genomes, muts, start, end) {
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'summarizeIndividuals()
 summarizeIndividuals <- function(individuals, dim, spatialBounds, operation,
 empty, perUnitArea, spatiality) {
  .SB$summarizeIndividuals(individuals, dim, spatialBounds, operation, empty,
@@ -22186,6 +20952,9 @@ perUnitArea, spatiality)
 #'@author Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 #'(\email{messer@cornell.edu})
 #'@export
+#'@examples
+#'## This just brings up the documentation:
+#'treeSeqMetadata()
 treeSeqMetadata <- function(filePath, userData) {
  .SB$treeSeqMetadata(filePath, userData)
 }
@@ -22201,6 +20970,7 @@ treeSeqMetadata <- function(filePath, userData) {
 #'Documentation for Initialize class from SLiM
 #'
 #'@name Initialize
+#'@rdname Initialize_Class
 #'@export
 #'@aliases Init
 #'@family Initialize
@@ -22326,6 +21096,7 @@ NULL
 #'Documentation for Chromosome class from SLiM
 #'
 #'@name Chromosome
+#'@rdname Chromosome_Class
 #'@export
 #'@aliases Ch
 #'@family Chromosome
@@ -22550,6 +21321,7 @@ NULL
 #'Documentation for Community class from SLiM
 #'
 #'@name Community
+#'@rdname Community_Class
 #'@export
 #'@aliases Co
 #'@family Community
@@ -22662,193 +21434,194 @@ NULL
 #'Documentation for Eidos class from SLiM
 #'
 #'@name Eidos
+#'@rdname Eidos_Class
 #'@export
 #'@aliases E
 #'@family Eidos
 #'@details NA
 #'This class has the following methods (functions):
 #'\itemize{
-#'\item{\code{\link{abs}}}
-#'\item{\code{\link{acos}}}
-#'\item{\code{\link{asin}}}
-#'\item{\code{\link{atan}}}
-#'\item{\code{\link{atan2}}}
-#'\item{\code{\link{ceil}}}
-#'\item{\code{\link{cos}}}
-#'\item{\code{\link{cumProduct}}}
-#'\item{\code{\link{cumSum}}}
-#'\item{\code{\link{exp}}}
-#'\item{\code{\link{floor}}}
-#'\item{\code{\link{integerDiv}}}
-#'\item{\code{\link{integerMod}}}
-#'\item{\code{\link{isFinite}}}
-#'\item{\code{\link{isInfinite}}}
-#'\item{\code{\link{isNAN}}}
-#'\item{\code{\link{log}}}
-#'\item{\code{\link{log10}}}
-#'\item{\code{\link{log2}}}
-#'\item{\code{\link{product}}}
-#'\item{\code{\link{round}}}
-#'\item{\code{\link{setDifference}}}
-#'\item{\code{\link{setIntersection}}}
-#'\item{\code{\link{setSymmetricDifference}}}
-#'\item{\code{\link{setUnion}}}
-#'\item{\code{\link{sin}}}
-#'\item{\code{\link{sqrt}}}
-#'\item{\code{\link{sum}}}
-#'\item{\code{\link{sumExact}}}
-#'\item{\code{\link{tan}}}
-#'\item{\code{\link{trunc}}}
-#'\item{\code{\link{cor}}}
-#'\item{\code{\link{cov}}}
-#'\item{\code{\link{max}}}
-#'\item{\code{\link{mean}}}
-#'\item{\code{\link{min}}}
-#'\item{\code{\link{pmax}}}
-#'\item{\code{\link{pmin}}}
-#'\item{\code{\link{quantile}}}
-#'\item{\code{\link{range}}}
-#'\item{\code{\link{rank}}}
-#'\item{\code{\link{sd}}}
-#'\item{\code{\link{ttest}}}
-#'\item{\code{\link{var}}}
-#'\item{\code{\link{dmvnorm}}}
-#'\item{\code{\link{dbeta}}}
-#'\item{\code{\link{dexp}}}
-#'\item{\code{\link{dgamma}}}
-#'\item{\code{\link{dnorm}}}
-#'\item{\code{\link{findInterval}}}
-#'\item{\code{\link{pnorm}}}
-#'\item{\code{\link{qnorm}}}
-#'\item{\code{\link{rbeta}}}
-#'\item{\code{\link{rbinom}}}
-#'\item{\code{\link{rcauchy}}}
-#'\item{\code{\link{rdunif}}}
-#'\item{\code{\link{rexp}}}
-#'\item{\code{\link{rf}}}
-#'\item{\code{\link{rgamma}}}
-#'\item{\code{\link{rgeom}}}
-#'\item{\code{\link{rlnorm}}}
-#'\item{\code{\link{rmvnorm}}}
-#'\item{\code{\link{rnbinom}}}
-#'\item{\code{\link{rnorm}}}
-#'\item{\code{\link{rpois}}}
-#'\item{\code{\link{runif}}}
-#'\item{\code{\link{rweibull}}}
-#'\item{\code{\link{c}}}
-#'\item{\code{\link{float}}}
-#'\item{\code{\link{integer}}}
-#'\item{\code{\link{logical}}}
-#'\item{\code{\link{object}}}
-#'\item{\code{\link{rep}}}
-#'\item{\code{\link{repEach}}}
-#'\item{\code{\link{sample}}}
-#'\item{\code{\link{seq}}}
-#'\item{\code{\link{seqAlong}}}
-#'\item{\code{\link{seqLen}}}
-#'\item{\code{\link{string}}}
-#'\item{\code{\link{all}}}
-#'\item{\code{\link{any}}}
-#'\item{\code{\link{cat}}}
-#'\item{\code{\link{catn}}}
-#'\item{\code{\link{format}}}
-#'\item{\code{\link{identical}}}
-#'\item{\code{\link{ifelse}}}
-#'\item{\code{\link{length}}}
-#'\item{\code{\link{match}}}
-#'\item{\code{\link{order}}}
-#'\item{\code{\link{paste}}}
-#'\item{\code{\link{paste0}}}
-#'\item{\code{\link{print}}}
-#'\item{\code{\link{rev}}}
-#'\item{\code{\link{size}}}
-#'\item{\code{\link{sort}}}
-#'\item{\code{\link{sortBy}}}
-#'\item{\code{\link{str}}}
-#'\item{\code{\link{tabulate}}}
-#'\item{\code{\link{unique}}}
-#'\item{\code{\link{which}}}
-#'\item{\code{\link{whichMax}}}
-#'\item{\code{\link{whichMin}}}
-#'\item{\code{\link{asFloat}}}
-#'\item{\code{\link{asInteger}}}
-#'\item{\code{\link{asLogical}}}
-#'\item{\code{\link{asString}}}
-#'\item{\code{\link{elementType}}}
-#'\item{\code{\link{isFloat}}}
-#'\item{\code{\link{isInteger}}}
-#'\item{\code{\link{isLogical}}}
-#'\item{\code{\link{isNULL}}}
-#'\item{\code{\link{isObject}}}
-#'\item{\code{\link{isString}}}
-#'\item{\code{\link{type}}}
-#'\item{\code{\link{nchar}}}
-#'\item{\code{\link{strcontains}}}
-#'\item{\code{\link{strfind}}}
-#'\item{\code{\link{strprefix}}}
-#'\item{\code{\link{strsplit}}}
-#'\item{\code{\link{strsuffix}}}
-#'\item{\code{\link{substr}}}
-#'\item{\code{\link{apply}}}
-#'\item{\code{\link{array}}}
-#'\item{\code{\link{cbind}}}
-#'\item{\code{\link{diag}}}
-#'\item{\code{\link{dim}}}
-#'\item{\code{\link{drop}}}
-#'\item{\code{\link{lowerTri}}}
-#'\item{\code{\link{matrix}}}
-#'\item{\code{\link{matrixMult}}}
-#'\item{\code{\link{ncol}}}
-#'\item{\code{\link{nrow}}}
-#'\item{\code{\link{rbind}}}
-#'\item{\code{\link{t}}}
-#'\item{\code{\link{upperTri}}}
-#'\item{\code{\link{createDirectory}}}
-#'\item{\code{\link{deleteFile}}}
-#'\item{\code{\link{fileExists}}}
-#'\item{\code{\link{filesAtPath}}}
-#'\item{\code{\link{flushFile}}}
-#'\item{\code{\link{getwd}}}
-#'\item{\code{\link{readCSV}}}
-#'\item{\code{\link{readFile}}}
-#'\item{\code{\link{setwd}}}
-#'\item{\code{\link{tempdir}}}
-#'\item{\code{\link{writeFile}}}
-#'\item{\code{\link{writeTempFile}}}
-#'\item{\code{\link{cmColors}}}
-#'\item{\code{\link{colors}}}
-#'\item{\code{\link{color2rgb}}}
-#'\item{\code{\link{heatColors}}}
-#'\item{\code{\link{hsv2rgb}}}
-#'\item{\code{\link{rainbow}}}
-#'\item{\code{\link{rgb2color}}}
-#'\item{\code{\link{rgb2hsv}}}
-#'\item{\code{\link{terrainColors}}}
-#'\item{\code{\link{assert}}}
-#'\item{\code{\link{beep}}}
-#'\item{\code{\link{citation}}}
-#'\item{\code{\link{clock}}}
-#'\item{\code{\link{date}}}
-#'\item{\code{\link{debugIndent}}}
-#'\item{\code{\link{defineConstant}}}
-#'\item{\code{\link{defineGlobal}}}
-#'\item{\code{\link{exists}}}
-#'\item{\code{\link{functionSignature}}}
-#'\item{\code{\link{functionSource}}}
-#'\item{\code{\link{getSeed}}}
-#'\item{\code{\link{license}}}
-#'\item{\code{\link{ls}}}
-#'\item{\code{\link{rm}}}
-#'\item{\code{\link{sapply}}}
-#'\item{\code{\link{setSeed}}}
-#'\item{\code{\link{source}}}
-#'\item{\code{\link{stop}}}
-#'\item{\code{\link{suppressWarnings}}}
-#'\item{\code{\link{sysinfo}}}
-#'\item{\code{\link{system}}}
-#'\item{\code{\link{time}}}
-#'\item{\code{\link{usage}}}
-#'\item{\code{\link{version}}}
+#'\item{\code{\link{eidos_abs}}}
+#'\item{\code{\link{eidos_acos}}}
+#'\item{\code{\link{eidos_asin}}}
+#'\item{\code{\link{eidos_atan}}}
+#'\item{\code{\link{eidos_atan2}}}
+#'\item{\code{\link{eidos_ceil}}}
+#'\item{\code{\link{eidos_cos}}}
+#'\item{\code{\link{eidos_cumProduct}}}
+#'\item{\code{\link{eidos_cumSum}}}
+#'\item{\code{\link{eidos_exp}}}
+#'\item{\code{\link{eidos_floor}}}
+#'\item{\code{\link{eidos_integerDiv}}}
+#'\item{\code{\link{eidos_integerMod}}}
+#'\item{\code{\link{eidos_isFinite}}}
+#'\item{\code{\link{eidos_isInfinite}}}
+#'\item{\code{\link{eidos_isNAN}}}
+#'\item{\code{\link{eidos_log}}}
+#'\item{\code{\link{eidos_log10}}}
+#'\item{\code{\link{eidos_log2}}}
+#'\item{\code{\link{eidos_product}}}
+#'\item{\code{\link{eidos_round}}}
+#'\item{\code{\link{eidos_setDifference}}}
+#'\item{\code{\link{eidos_setIntersection}}}
+#'\item{\code{\link{eidos_setSymmetricDifference}}}
+#'\item{\code{\link{eidos_setUnion}}}
+#'\item{\code{\link{eidos_sin}}}
+#'\item{\code{\link{eidos_sqrt}}}
+#'\item{\code{\link{eidos_sum}}}
+#'\item{\code{\link{eidos_sumExact}}}
+#'\item{\code{\link{eidos_tan}}}
+#'\item{\code{\link{eidos_trunc}}}
+#'\item{\code{\link{eidos_cor}}}
+#'\item{\code{\link{eidos_cov}}}
+#'\item{\code{\link{eidos_max}}}
+#'\item{\code{\link{eidos_mean}}}
+#'\item{\code{\link{eidos_min}}}
+#'\item{\code{\link{eidos_pmax}}}
+#'\item{\code{\link{eidos_pmin}}}
+#'\item{\code{\link{eidos_quantile}}}
+#'\item{\code{\link{eidos_range}}}
+#'\item{\code{\link{eidos_rank}}}
+#'\item{\code{\link{eidos_sd}}}
+#'\item{\code{\link{eidos_ttest}}}
+#'\item{\code{\link{eidos_var}}}
+#'\item{\code{\link{eidos_dmvnorm}}}
+#'\item{\code{\link{eidos_dbeta}}}
+#'\item{\code{\link{eidos_dexp}}}
+#'\item{\code{\link{eidos_dgamma}}}
+#'\item{\code{\link{eidos_dnorm}}}
+#'\item{\code{\link{eidos_findInterval}}}
+#'\item{\code{\link{eidos_pnorm}}}
+#'\item{\code{\link{eidos_qnorm}}}
+#'\item{\code{\link{eidos_rbeta}}}
+#'\item{\code{\link{eidos_rbinom}}}
+#'\item{\code{\link{eidos_rcauchy}}}
+#'\item{\code{\link{eidos_rdunif}}}
+#'\item{\code{\link{eidos_rexp}}}
+#'\item{\code{\link{eidos_rf}}}
+#'\item{\code{\link{eidos_rgamma}}}
+#'\item{\code{\link{eidos_rgeom}}}
+#'\item{\code{\link{eidos_rlnorm}}}
+#'\item{\code{\link{eidos_rmvnorm}}}
+#'\item{\code{\link{eidos_rnbinom}}}
+#'\item{\code{\link{eidos_rnorm}}}
+#'\item{\code{\link{eidos_rpois}}}
+#'\item{\code{\link{eidos_runif}}}
+#'\item{\code{\link{eidos_rweibull}}}
+#'\item{\code{\link{eidos_c}}}
+#'\item{\code{\link{eidos_float}}}
+#'\item{\code{\link{eidos_integer}}}
+#'\item{\code{\link{eidos_logical}}}
+#'\item{\code{\link{eidos_object}}}
+#'\item{\code{\link{eidos_rep}}}
+#'\item{\code{\link{eidos_repEach}}}
+#'\item{\code{\link{eidos_sample}}}
+#'\item{\code{\link{eidos_seq}}}
+#'\item{\code{\link{eidos_seqAlong}}}
+#'\item{\code{\link{eidos_seqLen}}}
+#'\item{\code{\link{eidos_string}}}
+#'\item{\code{\link{eidos_all}}}
+#'\item{\code{\link{eidos_any}}}
+#'\item{\code{\link{eidos_cat}}}
+#'\item{\code{\link{eidos_catn}}}
+#'\item{\code{\link{eidos_format}}}
+#'\item{\code{\link{eidos_identical}}}
+#'\item{\code{\link{eidos_ifelse}}}
+#'\item{\code{\link{eidos_length}}}
+#'\item{\code{\link{eidos_match}}}
+#'\item{\code{\link{eidos_order}}}
+#'\item{\code{\link{eidos_paste}}}
+#'\item{\code{\link{eidos_paste0}}}
+#'\item{\code{\link{eidos_print}}}
+#'\item{\code{\link{eidos_rev}}}
+#'\item{\code{\link{eidos_size}}}
+#'\item{\code{\link{eidos_sort}}}
+#'\item{\code{\link{eidos_sortBy}}}
+#'\item{\code{\link{eidos_str}}}
+#'\item{\code{\link{eidos_tabulate}}}
+#'\item{\code{\link{eidos_unique}}}
+#'\item{\code{\link{eidos_which}}}
+#'\item{\code{\link{eidos_whichMax}}}
+#'\item{\code{\link{eidos_whichMin}}}
+#'\item{\code{\link{eidos_asFloat}}}
+#'\item{\code{\link{eidos_asInteger}}}
+#'\item{\code{\link{eidos_asLogical}}}
+#'\item{\code{\link{eidos_asString}}}
+#'\item{\code{\link{eidos_elementType}}}
+#'\item{\code{\link{eidos_isFloat}}}
+#'\item{\code{\link{eidos_isInteger}}}
+#'\item{\code{\link{eidos_isLogical}}}
+#'\item{\code{\link{eidos_isNULL}}}
+#'\item{\code{\link{eidos_isObject}}}
+#'\item{\code{\link{eidos_isString}}}
+#'\item{\code{\link{eidos_type}}}
+#'\item{\code{\link{eidos_nchar}}}
+#'\item{\code{\link{eidos_strcontains}}}
+#'\item{\code{\link{eidos_strfind}}}
+#'\item{\code{\link{eidos_strprefix}}}
+#'\item{\code{\link{eidos_strsplit}}}
+#'\item{\code{\link{eidos_strsuffix}}}
+#'\item{\code{\link{eidos_substr}}}
+#'\item{\code{\link{eidos_apply}}}
+#'\item{\code{\link{eidos_array}}}
+#'\item{\code{\link{eidos_cbind}}}
+#'\item{\code{\link{eidos_diag}}}
+#'\item{\code{\link{eidos_dim}}}
+#'\item{\code{\link{eidos_drop}}}
+#'\item{\code{\link{eidos_lowerTri}}}
+#'\item{\code{\link{eidos_matrix}}}
+#'\item{\code{\link{eidos_matrixMult}}}
+#'\item{\code{\link{eidos_ncol}}}
+#'\item{\code{\link{eidos_nrow}}}
+#'\item{\code{\link{eidos_rbind}}}
+#'\item{\code{\link{eidos_t}}}
+#'\item{\code{\link{eidos_upperTri}}}
+#'\item{\code{\link{eidos_createDirectory}}}
+#'\item{\code{\link{eidos_deleteFile}}}
+#'\item{\code{\link{eidos_fileExists}}}
+#'\item{\code{\link{eidos_filesAtPath}}}
+#'\item{\code{\link{eidos_flushFile}}}
+#'\item{\code{\link{eidos_getwd}}}
+#'\item{\code{\link{eidos_readCSV}}}
+#'\item{\code{\link{eidos_readFile}}}
+#'\item{\code{\link{eidos_setwd}}}
+#'\item{\code{\link{eidos_tempdir}}}
+#'\item{\code{\link{eidos_writeFile}}}
+#'\item{\code{\link{eidos_writeTempFile}}}
+#'\item{\code{\link{eidos_cmColors}}}
+#'\item{\code{\link{eidos_colors}}}
+#'\item{\code{\link{eidos_color2rgb}}}
+#'\item{\code{\link{eidos_heatColors}}}
+#'\item{\code{\link{eidos_hsv2rgb}}}
+#'\item{\code{\link{eidos_rainbow}}}
+#'\item{\code{\link{eidos_rgb2color}}}
+#'\item{\code{\link{eidos_rgb2hsv}}}
+#'\item{\code{\link{eidos_terrainColors}}}
+#'\item{\code{\link{eidos_assert}}}
+#'\item{\code{\link{eidos_beep}}}
+#'\item{\code{\link{eidos_citation}}}
+#'\item{\code{\link{eidos_clock}}}
+#'\item{\code{\link{eidos_date}}}
+#'\item{\code{\link{eidos_debugIndent}}}
+#'\item{\code{\link{eidos_defineConstant}}}
+#'\item{\code{\link{eidos_defineGlobal}}}
+#'\item{\code{\link{eidos_exists}}}
+#'\item{\code{\link{eidos_functionSignature}}}
+#'\item{\code{\link{eidos_functionSource}}}
+#'\item{\code{\link{eidos_getSeed}}}
+#'\item{\code{\link{eidos_license}}}
+#'\item{\code{\link{eidos_ls}}}
+#'\item{\code{\link{eidos_rm}}}
+#'\item{\code{\link{eidos_sapply}}}
+#'\item{\code{\link{eidos_setSeed}}}
+#'\item{\code{\link{eidos_source}}}
+#'\item{\code{\link{eidos_stop}}}
+#'\item{\code{\link{eidos_suppressWarnings}}}
+#'\item{\code{\link{eidos_sysinfo}}}
+#'\item{\code{\link{eidos_system}}}
+#'\item{\code{\link{eidos_time}}}
+#'\item{\code{\link{eidos_usage}}}
+#'\item{\code{\link{eidos_version}}}
 #'}
 #'This class has the following properties:
 #'\describe{
@@ -22860,6 +21633,7 @@ NULL
 #'Documentation for Genome class from SLiM
 #'
 #'@name Genome
+#'@rdname Genome_Class
 #'@export
 #'@aliases G
 #'@family Genome
@@ -22939,6 +21713,7 @@ NULL
 #'Documentation for GenomicElement class from SLiM
 #'
 #'@name GenomicElement
+#'@rdname GenomicElement_Class
 #'@export
 #'@aliases GE
 #'@family GenomicElement
@@ -22980,6 +21755,7 @@ NULL
 #'Documentation for GenomicElementType class from SLiM
 #'
 #'@name GenomicElementType
+#'@rdname GenomicElementType_Class
 #'@export
 #'@aliases GET
 #'@family GenomicElementType
@@ -23040,6 +21816,7 @@ NULL
 #'Documentation for Individual class from SLiM
 #'
 #'@name Individual
+#'@rdname Individual_Class
 #'@export
 #'@aliases In
 #'@family Individual
@@ -23347,6 +22124,7 @@ NULL
 #'Documentation for InteractionType class from SLiM
 #'
 #'@name InteractionType
+#'@rdname InteractionType_Class
 #'@export
 #'@aliases IT
 #'@family InteractionType
@@ -23834,6 +22612,7 @@ NULL
 #'Documentation for LogFile class from SLiM
 #'
 #'@name LogFile
+#'@rdname LogFile_Class
 #'@export
 #'@aliases LF
 #'@family LogFile
@@ -23974,6 +22753,7 @@ NULL
 #'Documentation for Mutation class from SLiM
 #'
 #'@name Mutation
+#'@rdname Mutation_Class
 #'@export
 #'@aliases M
 #'@family Mutation
@@ -24074,6 +22854,7 @@ NULL
 #'Documentation for MutationType class from SLiM
 #'
 #'@name MutationType
+#'@rdname MutationType_Class
 #'@export
 #'@aliases MT
 #'@family MutationType
@@ -24330,6 +23111,7 @@ NULL
 #'Documentation for SLiMBuiltin class from SLiM
 #'
 #'@name SLiMBuiltin
+#'@rdname SLiMBuiltin_Class
 #'@export
 #'@aliases SB
 #'@family SLiMBuiltin
@@ -24366,6 +23148,7 @@ NULL
 #'Documentation for SLiMEidosBlock class from SLiM
 #'
 #'@name SLiMEidosBlock
+#'@rdname SLiMEidosBlock_Class
 #'@export
 #'@aliases SEB
 #'@family SLiMEidosBlock
@@ -24454,6 +23237,7 @@ NULL
 #'Documentation for SLiMgui class from SLiM
 #'
 #'@name SLiMgui
+#'@rdname SLiMgui_Class
 #'@export
 #'@aliases SG
 #'@family SLiMgui
@@ -24485,180 +23269,12 @@ NULL
 #'
 #'}
 NULL
-#'SLiMSim
-#'
-#'Documentation for SLiMSim class from SLiM
-#'
-#'@name SLiMSim
-#'@export
-#'@aliases SS
-#'@family SLiMSim
-#'@details This class represents a SLiM simulation. The current SLiMSim instance
-#'is defined as a global
-#'constant named sim.
-#'This class has the following methods (functions):
-#'\itemize{
-#'\item{\code{\link{addSubpop}}}
-#'\item{\code{\link{addSubpopSplit}}}
-#'\item{\code{\link{countOfMutationsOfType}}}
-#'\item{\code{\link{createLogFile}}}
-#'\item{\code{\link{deregisterScriptBlock}}}
-#'\item{\code{\link{mutationCounts}}}
-#'\item{\code{\link{mutationFrequencies}}}
-#'\item{\code{\link{mutationsOfType}}}
-#'\item{\code{\link{outputFixedMutations}}}
-#'\item{\code{\link{outputFull}}}
-#'\item{\code{\link{outputMutations}}}
-#'\item{\code{\link{outputUsage}}}
-#'\item{\code{\link{readFromPopulationFile}}}
-#'\item{\code{\link{recalculateFitness}}}
-#'\item{\code{\link{registerEarlyEvent}}}
-#'\item{\code{\link{registerFitnessCallback}}}
-#'\item{\code{\link{registerInteractionCallback}}}
-#'\item{\code{\link{registerLateEvent}}}
-#'\item{\code{\link{registerMateChoiceCallback}}}
-#'\item{\code{\link{registerModifyChildCallback}}}
-#'\item{\code{\link{registerMutationCallback}}}
-#'\item{\code{\link{registerRecombinationCallback}}}
-#'\item{\code{\link{registerReproductionCallback}}}
-#'\item{\code{\link{rescheduleScriptBlock}}}
-#'\item{\code{\link{simulationFinished}}}
-#'\item{\code{\link{subsetMutations}}}
-#'\item{\code{\link{treeSeqCoalesced}}}
-#'\item{\code{\link{treeSeqOutput}}}
-#'\item{\code{\link{treeSeqRememberIndividuals}}}
-#'\item{\code{\link{treeSeqSimplify}}}
-#'}
-#'This class has the following properties:
-#'\describe{
-#'\item{chromosome}{A property of type Chromosome object. It is of length
-#'one (a singleton). This property is a constant, so it is not modifiable.
-#'\strong{Property Description:} The Chromosome object used by the simulation. }
-#'\item{chromosomeType}{A property of type string. It is of length one
-#'(a singleton). This property is a constant, so it is not modifiable.
-#'\strong{Property Description:} The type of chromosome being simulated; this will
-#'be one of "A", "X", or "Y". }
-#'\item{dimensionality}{A property of type string. It is of length one
-#'(a singleton). This property is a constant, so it is not modifiable.
-#'\strong{Property Description:} The spatial dimensionality of the simulation,
-#'as specified in initializeSLiMOptions(). This will be "" (the empty string) for
-#'non-spatial simulations (the default), or "x", "xy", or "xyz", for simulations
-#'using those spatial dimensions respectively. }
-#'\item{dominanceCoeffX}{A property of type float. It is of length one (a
-#'singleton). This property is a variable, so it is modifiable. \strong{Property
-#'Description:} The dominance coefficient value used to modify the selection
-#'coefficients of mutations present on the single X chromosome of an XY male (see
-#'the SLiM documentation for details). Used only when simulating an X chromosome;
-#'setting a value for this property in other circumstances is an error. Changing
-#'this will normally affect the fitness values calculated at the end of the
-#'current generation; if you want current fitness values to be affected, you can
-#'call SLiMSim's method recalculateFitness() - but see the documentation of that
-#'method for caveats. }
-#'\item{generation}{A property of type integer. It is of length one (a singleton).
-#'This property is a variable, so it is modifiable. \strong{Property Description:}
-#'The current generation number. }
-#'\item{generationStage}{A property of type string. It is of length one
-#'(a singleton). This property is a constant, so it is not modifiable.
-#'\strong{Property Description:} The current generation stage, as a string. The
-#'values of this property essentially mirror the generation stages of WF and
-#'nonWF models (see chapters 22 and 23). Common values include "early" (during
-#'execution of early() events), "reproduction" (during offspring generation),
-#'"fitness" (during fitness evaluation), and "late" (during execution of late()
-#'events). Other possible values include "begin" (during internal setup before
-#'each generation), "selection" (while applying selection and mortality in nonWF
-#'models), "tally" (while tallying mutation reference counts and removing fixed
-#'mutations), "swap" (while swapping the offspring generation into the parental
-#'generation in WF models), "end" (during internal bookkeeping after each
-#'generation), and "console" (during the in-between-generations state in which
-#'commands in SLiMgui's Eidos console are executed). It would probably be a good
-#'idea not to use this latter set of values; they are probably not user-visible
-#'during ordinary model execution anyway. During execution of initialize()
-#'callbacks, no SLiMSim object yet exists and so this property cannot be accessed.
-#'To detect this state, use exists("sim"); if that is F, sim does not exist, and
-#'therefore your code is executing during initialize() callbacks (or outside of
-#'SLiM entirely, in some other Eidos-based context). }
-#'\item{genomicElementTypes}{A property of type GenomicElementType object. This
-#'property is a constant, so it is not modifiable. \strong{Property Description:}
-#'The GenomicElementType objects being used in the simulation. }
-#'\item{inSLiMgui}{A property of type logical. It is of length one (a singleton).
-#'This property is a constant, so it is not modifiable. \strong{Property
-#'Description:} This property has been deprecated, and may be removed in a future
-#'release of SLiM. In SLiM 3.2.1 and later, use exists("slimgui") instead. Eidos
-#'events fitness() mateChoice() modifyChild() recombination() interaction()
-#'reproduction() 564 If T, the simulation is presently running inside SLiMgui;
-#'if F, it is running at the command line. In general simulations should not
-#'care where they are running, but in special circumstances such as opening plot
-#'windows it may be necessary to know the runtime environment. }
-#'\item{interactionTypes}{A property of type InteractionType object. This property
-#'is a constant, so it is not modifiable. \strong{Property Description:} The
-#'InteractionType objects being used in the simulation. }
-#'\item{logFiles}{A property of type LogFile object. This property is a constant,
-#'so it is not modifiable. \strong{Property Description:} The LogFile objects
-#'being used in the simulation. }
-#'\item{modelType}{A property of type string. It is of length one (a singleton).
-#'This property is a constant, so it is not modifiable. \strong{Property
-#'Description:} The type of model being simulated, as specified in
-#'initializeSLiMModelType(). This will be "WF" for WF models (Wright-Fisher
-#'models, the default), or "nonWF" for nonWF models (non-Wright-Fisher models; see
-#'section 1.6 for discussion). }
-#'\item{mutationTypes}{A property of type MutationType object. This property
-#'is a constant, so it is not modifiable. \strong{Property Description:} The
-#'MutationType objects being used in the simulation. }
-#'\item{mutations}{A property of type Mutation object. This property is a
-#'constant, so it is not modifiable. \strong{Property Description:} The Mutation
-#'objects that are currently active in the simulation. }
-#'\item{nucleotideBased}{A property of type logical. It is of length one
-#'(a singleton). This property is a constant, so it is not modifiable.
-#'\strong{Property Description:} If T, the model is nucleotide-based; if
-#'F, it is not. See the discussion of the nucleotideBased parameter to
-#'initializeSLiMOptions() for discussion. }
-#'\item{periodicity}{A property of type string. It is of length one
-#'(a singleton). This property is a constant, so it is not modifiable.
-#'\strong{Property Description:} The spatial periodicity of the simulation, as
-#'specified in initializeSLiMOptions(). This will be "" (the empty string) for
-#'non-spatial simulations and simulations with no periodic spatial dimensions
-#'(the default). Otherwise, it will be a string representing the subset of
-#'spatial dimensions that have been declared to be periodic, as specified to
-#'initializeSLiMOptions(). }
-#'\item{scriptBlocks}{A property of type SLiMEidosBlock object. This property is a
-#'constant, so it is not modifiable. \strong{Property Description:} All registered
-#'SLiMEidosBlock objects in the simulation. }
-#'\item{sexEnabled}{A property of type logical. It is of length one (a singleton).
-#'This property is a constant, so it is not modifiable. \strong{Property
-#'Description:} If T, sex is enabled in the simulation; if F, individuals are
-#'hermaphroditic. }
-#'\item{subpopulations}{A property of type Subpopulation object. This property
-#'is a constant, so it is not modifiable. \strong{Property Description:} The
-#'Subpopulation instances currently defined in the simulation. }
-#'\item{substitutions}{A property of type Substitution object. This property is
-#'a constant, so it is not modifiable. \strong{Property Description:} A vector of
-#'Substitution objects, representing all mutations that have been fixed. }
-#'\item{tag}{A property of type integer. It is of length one (a singleton). This
-#'property is a variable, so it is modifiable. \strong{Property Description:}
-#'A user-defined integer value. The value of tag is initially undefined, and
-#'it is an error to try to read it; if you wish it to have a defined value, you
-#'must arrange that yourself by explicitly setting its value prior to using it
-#'elsewhere in your code. The value of tag is not used by SLiM; it is free for
-#'you to use. See also the getValue() and setValue() methods (provided by the
-#'Dictionary class; see the Eidos manual), for another way of attaching state to
-#'the simulation. }
-#'\item{verbosity}{A property of type integer. It is of length one (a singleton).
-#'This property is a variable, so it is modifiable. \strong{Property Description:}
-#'The verbosity level, for SLiM's logging of information about the simulation.
-#'This is 1 by default, but can be changed at the command line with the -l[ong]
-#'option. It is provided here so that scripts can consult it to govern the level
-#'of verbosity of their own output, or set the verbosity level for particular
-#'sections of their code. A verbosity level of 0 suppresses most of SLiM's
-#'optional output; 2 adds some extra output beyond SLiM's standard output. See
-#'sections 19.3 and 20.4 for more information.}
-#'
-#'}
-NULL
 #'SpatialMap
 #'
 #'Documentation for SpatialMap class from SLiM
 #'
 #'@name SpatialMap
+#'@rdname SpatialMap_Class
 #'@export
 #'@aliases SM
 #'@family SpatialMap
@@ -24781,6 +23397,7 @@ NULL
 #'Documentation for Species class from SLiM
 #'
 #'@name Species
+#'@rdname Species_Class
 #'@export
 #'@aliases Sp
 #'@family Species
@@ -24928,6 +23545,7 @@ NULL
 #'Documentation for Subpopulation class from SLiM
 #'
 #'@name Subpopulation
+#'@rdname Subpopulation_Class
 #'@export
 #'@aliases P
 #'@family Subpopulation
@@ -25133,6 +23751,7 @@ NULL
 #'Documentation for Substitution class from SLiM
 #'
 #'@name Substitution
+#'@rdname Substitution_Class
 #'@export
 #'@aliases S
 #'@family Substitution

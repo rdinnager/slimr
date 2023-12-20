@@ -197,7 +197,7 @@ slimr_code_from_text_whiles <- function(code) {
 slimr_code_from_text_primes <- function(code) {
   ## add slimr_special__ keyword to while statements to make R parse it OK.
   stringr::str_replace_all(code,
-                           "′",
+                           "\\u2032",
                            "_prime")
 }
 
@@ -217,7 +217,7 @@ slimr_code_from_text_style_all <- function(code) {
 #'
 #' Utility code to convert SLiM code into a form that can be parsed by R
 #' (e.g. in \code{styler} or \code{prettycode}). Don't forget to re-SLiMify
-#' afterwards (via \code{\link(slim_code_SLiMify))!
+#' afterwards (via \code{\link{slim_code_SLiMify}})!
 #'
 #' @param code_snippet SLiM code to Rify as a character vector
 #'

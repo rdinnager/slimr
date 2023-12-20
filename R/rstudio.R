@@ -19,7 +19,19 @@ slim_run_snippet <- function(x) {
 
 }
 
-minimal_slim_sim <- function(command) {
+#' Generate a minimal SLiM simulation script
+#'
+#' This function is mainly used to quickly create a script which does
+#' not does not do much, but can be used to test other code.
+#'
+#' @param command
+#'
+#' @return An R `expression`.
+#' @export
+#'
+#' @examples
+#' minimal_slim_sim()
+minimal_slim_sim <- function(command = print("Hello world!")) {
 
   rlang::expr(slim_script(
     slim_block(initialize(), {
@@ -38,6 +50,25 @@ minimal_slim_sim <- function(command) {
 
 }
 
+#' Generate a minimal slimr_script object
+#'
+#' This function is mainly used to quickly create a script which does
+#' not does not do much, but can be used to test other code that work
+#' on `slimr_script` objects. Mainly used for documentation examples.
+#'
+#' @param command
+#'
+#' @return A `slimr_script` object
+#' @export
+#'
+#' @examples
+#' minimal_slimr_script()
+minimal_slimr_script <- function(command = print("Hello world!")) {
+
+  rlang::eval_tidy(minimal_slim_sim(!!rlang::enexpr(command)))
+
+}
+
 #' Copy original slimrlang code used to create a slimr_script object to the clipboard
 #'
 #' @param slimr_script_name Name of slimr_script to copy its original code
@@ -47,6 +78,10 @@ minimal_slim_sim <- function(command) {
 #' @export
 #'
 #' @examples
+#' test <- minimal_slimr_script()
+#' if(rlang::is_installed("clipr") && interactive()) {
+#'     slimr_clip_original("test")
+#' }
 slimr_clip_original <- function(slimr_script_name = NULL) {
   assert_package("clipr")
 
@@ -74,6 +109,10 @@ slimr_clip_original <- function(slimr_script_name = NULL) {
 #' @export
 #'
 #' @examples
+#' test <- minimal_slimr_script()
+#' if(rlang::is_installed("rstudioapi") && interactive()) {
+#'     slimr_open_original("test")
+#' }
 slimr_open_original <- function(slimr_script_name = NULL) {
   assert_package("rstudioapi")
 

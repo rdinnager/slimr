@@ -32,7 +32,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>outputFixedMutations</code>, which is a method
-of the SLiM class <code><a href="SLiMSim.html">SLiMSim</a></code>.
+of the SLiM class <code><a href="SLiMSim_Class.html">SLiMSim</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -104,7 +104,7 @@ nested in a <code><a href="slim_script.html">slim_script</a></code>
 function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.</p>
 <p>Documentation for SLiM function <code>outputFixedMutations</code>, which is a method
-of the SLiM class <code><a href="Species.html">Species</a></code>.
+of the SLiM class <code><a href="Species_Class.html">Species</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -158,20 +158,20 @@ the nucleotides associated with any nucleotide-based mutations; see section
 26.1.2. Output is generally done in a late() event, so that the output reflects
 the state of the simulation at the end of a generation.</p>
 <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=680" class="external-link">SLiM manual: page
-680</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=721" class="external-link">SLiM manual: page
+721</a>.</p>
 <p>Output all fixed mutations - all Substitution objects, in other words
-(see section 1.5.2) - in a SLiM native format (see section 26.1.2 for output
+(see section 1.5.2) - in a SLiM native format (see section 27.1.2 for output
 format details). If the optional parameter filePath is NULL (the default),
 output will be sent to Eidos's output stream (see section 4.2.1). Otherwise,
 output will be sent to the filesystem path specified by filePath, overwriting
 that file if append if F, or appending to the end of it if append is T.
 Mutations which have fixed but have not been turned into Substitution objects
 - typically because convertToSubstitution has been set to F for their mutation
-type (see section 24.11.1) - are not output; they are still considered to be
+type (see section 25.11.1) - are not output; they are still considered to be
 segregating mutations by SLiM. In SLiM 3.3 and later, the output format includes
 the nucleotides associated with any nucleotide-based mutations; see section
-26.1.2. Output is generally done in a late() event, so that the output reflects
+27.1.2. Output is generally done in a late() event, so that the output reflects
 the state of the simulation at the end of a tick.</p>
     </div>
     <div id="copyright">
@@ -197,7 +197,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other SLiMSim: 
-<code><a href="SLiMSim.html">SS</a></code>,
+<code><a href="SLiMSim_Class.html">SLiMSim</a></code>,
 <code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="addSubpop.html">addSubpop</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
@@ -228,7 +228,8 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="treeSeqRememberIndividuals.html">treeSeqRememberIndividuals</a>()</code>,
 <code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p>
 <p>Other Species: 
-<code><a href="Species.html">Sp</a></code>,
+<code><a href="Species_Class.html">Species</a></code>,
+<code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="addSubpop.html">addSubpop</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
 <code><a href="individualsWithPedigreeIDs.html">individualsWithPedigreeIDs</a>()</code>,
@@ -245,7 +246,16 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="registerModifyChildCallback.html">registerModifyChildCallback</a>()</code>,
 <code><a href="registerMutationCallback.html">registerMutationCallback</a>()</code>,
 <code><a href="registerMutationEffectCallback.html">registerMutationEffectCallback</a>()</code>,
-<code><a href="registerRecombinationCallback.html">registerRecombinationCallback</a>()</code></p></div>
+<code><a href="registerRecombinationCallback.html">registerRecombinationCallback</a>()</code>,
+<code><a href="registerReproductionCallback.html">registerReproductionCallback</a>()</code>,
+<code><a href="registerSurvivalCallback.html">registerSurvivalCallback</a>()</code>,
+<code><a href="simulationFinished.html">simulationFinished</a>()</code>,
+<code><a href="skipTick.html">skipTick</a>()</code>,
+<code><a href="subsetMutations.html">subsetMutations</a>()</code>,
+<code><a href="treeSeqCoalesced.html">treeSeqCoalesced</a>()</code>,
+<code><a href="treeSeqOutput.html">treeSeqOutput</a>()</code>,
+<code><a href="treeSeqRememberIndividuals.html">treeSeqRememberIndividuals</a>()</code>,
+<code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>

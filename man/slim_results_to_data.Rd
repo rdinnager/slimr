@@ -30,3 +30,16 @@ form of a \code{tibble}. If this process fails you will
 end up with the data as a character string, and you will
 have to manually convert this into something you can use.
 }
+\examples{
+if(slim_is_avail()) {
+  test_sim <- slim_script(
+    slim_block_init_minimal(),
+    slim_block_add_subpops(1, 100),
+    slim_block(1, 20, late(), {
+      r_output(sim.outputFull(), "out", do_every = 10)
+    })
+  ) \%>\%
+    slim_run()
+  slim_results_to_data(test_sim)
+}
+}

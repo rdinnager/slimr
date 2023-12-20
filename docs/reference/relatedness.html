@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>relatedness</code>, which is a method of the
-SLiM class <code><a href="Individual.html">Individual</a></code>.
+SLiM class <code><a href="Individual_Class.html">Individual</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -117,15 +117,15 @@ description.</p></dd>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=652" class="external-link">SLiM manual: page
-652</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=683" class="external-link">SLiM manual: page
+683</a>.</p>
 <p>Returns a vector containing the degrees of relatedness between the
 receiver and each of the individuals in individuals. The relatedness between A
 and B is always 1.0 if A and B are actually the same individual; this facility
 works even if SLiM's optional pedigree tracking is not enabled (in which case
 all other relatedness values will be 0.0). Otherwise, if pedigree tracking is
 turned on with initializeSLiMOptions(keepPedigrees=T), this method will use
-the pedigree information described in section 24.7.1 to construct a relatedness
+the pedigree information described in section 25.7.1 to construct a relatedness
 estimate. More specifically, this method uses all available pedigree information
 from the grandparental and parental pedigree records of A and B to compute
 an estimate of the degree of consanguinity between A and B. Siblings have a
@@ -151,30 +151,26 @@ relatedness, and does not necessarily correspond to genetic relatedness, because
 of the effects of factors like assortment and recombination. If a metric of
 actual genetic relatedness is desired, tree-sequence recording can be used
 after simulation is complete, to compute the exact genetic relatedness between
-individuals based upon the complete ancestry tree (a topic which is beyond the
-scope of this manual). Actual genetic relatedness cannot presently be calculated
-during a simulation run; the information is implicitly contained in the recorded
-tree-sequence tables, but calculating it is too computationally expensive to be
-reasonable. This method makes a couple of assumptions. One assumption is that
-the grandparents (or the parents, if grandparental information is not available)
-are themselves unrelated and that they are not inbred; this assumption is
-necessary because we have no information about their parentage, since SLiM's
-pedigree tracking information only goes back two generations. Be aware that
-in a model where inbreeding or selfing occurs at all (including "incidental
-selfing", where a hermaphroditic individual happens to choose itself as a mate),
-some level of "background relatedness" will be present and this assumption
-will be violated. In such circumstances, relatedness() will therefore tend to
-underestimate the degree of relatedness between individuals, and the greater
-the degree of inbreeding, the greater the underestimation will be. If inbreeding
-is allowed in a model - and particularly if it is common - the results
-of relatedness() should therefore not be taken as an estimate of absolute
-relatedness, but can still be useful as an estimate of relative relatedness
-(indicating that, say, A appears from the information available to be more
-closely related to B than it is to C). A second assumption is that, in nonWF
-models, addRecombinant() is not being used, since the pedigree relationships
-involved are then too complex to trace. Indeed, addRecombinant() does not
-record pedigree information at all, for this reason, and so the relatedness of
-individuals produced by addRecombinant() will be 0.0.</p>
+individuals based upon the complete ancestry tree (a topic which is beyond
+the scope of this manual). Actual genetic relatedness cannot presently be
+calculated during a simulation run; the information is implicitly contained in
+the recorded tree-sequence tables, but calculating it is too computationally
+expensive to be reasonable. This method assumes that the grandparents (or the
+parents, if grandparental information is not available) are themselves unrelated
+and that they are not inbred; this assumption is necessary because we have no
+information about their parentage, since SLiM's pedigree tracking information
+only goes back two generations. Be aware that in a model where inbreeding or
+selfing occurs at all (including "incidental selfing", where a hermaphroditic
+individual happens to choose itself as a mate), some level of "background
+relatedness" will be present and this assumption will be violated. In such
+circumstances, relatedness() will therefore tend to underestimate the degree of
+relatedness between individuals, and the greater the degree of inbreeding, the
+greater the underestimation will be. If inbreeding is allowed in a model - and
+particularly if it is common - the results of relatedness() should therefore
+not be taken as an estimate of absolute relatedness, but can still be useful as
+an estimate of relative relatedness (indicating that, say, A appears from the
+information available to be more closely related to B than it is to C). See also
+sharedParentCount() for a different metric of relatedness.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -191,10 +187,11 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Individual: 
-<code><a href="Individual.html">In</a></code>,
+<code><a href="Individual_Class.html">Individual</a></code>,
 <code><a href="containsMutations.html">containsMutations</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
 <code><a href="setSpatialPosition.html">setSpatialPosition</a>()</code>,
+<code><a href="sharedParentCount.html">sharedParentCount</a>()</code>,
 <code><a href="sumOfMutationsOfType.html">sumOfMutationsOfType</a>()</code>,
 <code><a href="uniqueMutationsOfType.html">uniqueMutationsOfType</a>()</code></p></div>
     </div>

@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>addCloned</code>, which is a method of the SLiM
-class <code><a href="Subpopulation.html">Subpopulation</a></code>.
+class <code><a href="Subpopulation_Class.html">Subpopulation</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -98,7 +98,7 @@ full SLiM script.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">addCloned</span><span class="op">(</span><span class="va">parent</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">addCloned</span><span class="op">(</span><span class="va">parent</span>, <span class="va">count</span>, <span class="va">defer</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -107,27 +107,60 @@ full SLiM script.</p>
 <dd><p>An object of type Individual object. Must be of length 1 (a
 singleton). See details for description.</p></dd>
 
+
+<dt>count</dt>
+<dd><p>An object of type integer. Must be of length 1 (a singleton). The
+default value is <code>1</code>. See details for description.</p></dd>
+
+
+<dt>defer</dt>
+<dd><p>An object of type logical. Must be of length 1 (a singleton). The
+default value is <code>F</code>. See details for description.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p>An object of type null or Individual object. Return will be of length 1
-(a singleton)</p>
+<p>An object of type Individual object.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=691" class="external-link">SLiM manual: page
-691</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=732" class="external-link">SLiM manual: page
+732</a>.</p>
 <p>Generates a new offspring individual from the given parent by
 clonal reproduction, queues it for addition to the target subpopulation, and
 returns it. The new offspring will not be visible as a member of the target
 subpopulation until the end of the offspring generation tick cycle stage.
 The subpopulation of parent will be used to locate applicable mutation() and
 modifyChild() callbacks governing the generation of the offspring individual.
-Note that this method is only for use in nonWF models. See addCrossed() for
-further general notes on the addition of new offspring individuals.</p>
+Beginning in SLiM 4.1, the count parameter dictates how many offspring will
+be generated (previously, exactly one offspring was generated). Each offspring
+is generated independently, based upon the given parameters. The returned
+vector contains all generated offspring, except those that were rejected by a
+modifyChild() callback. If all offspring are rejected, object&lt;Individual&gt;(0)
+is returned, which is a zero-length object vector of class Individual; note
+that this is a change in behavior from earlier versions, which would return
+NULL. Beginning in SLiM 4.1, passing T for defer will defer the generation
+of the genomes of the produced offspring until the end of the reproduction
+phase. Genome generation can only be deferred if there are no active mutation()
+callbacks; otherwise, an error will result. Furthermore, when genome generation
+is deferred the mutations of the genomes of the generated offspring may not be
+accessed until reproduction is complete (whether from a modifyChild() callback
+or otherwise). There is little or no advantage to deferring genome generation
+at this time (it is in place for future expansion); the default of F for defer
+is generally preferable since it has fewer restrictions. Also beginning in SLiM
+4.1, in spatial models the spatial position of the offspring will be inherited
+(i.e., copied) from parent; more specifically, the x property will be inherited
+in all spatial models (1D/ 2D/3D), the y property in 2D/3D models, and the z
+property in 3D models. Properties not inherited will be left uninitialized,
+as they were prior to SLiM 4.1. The parent's spatial position is probably not
+desirable in itself; the intention here is to make it easy to model the natal
+dispersal of all the new offspring for a given tick with a single vectorized
+call to pointDeviated(). Note that this method is only for use in nonWF models.
+See addCrossed() for further general notes on the addition of new offspring
+individuals.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -144,22 +177,25 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Subpopulation: 
-<code><a href="Subpopulation.html">P</a></code>,
+<code><a href="Subpopulation_Class.html">Subpopulation</a></code>,
 <code><a href="addCrossed.html">addCrossed</a>()</code>,
 <code><a href="addEmpty.html">addEmpty</a>()</code>,
 <code><a href="addRecombinant.html">addRecombinant</a>()</code>,
 <code><a href="addSelfed.html">addSelfed</a>()</code>,
+<code><a href="addSpatialMap.html">addSpatialMap</a>()</code>,
 <code><a href="cachedFitness.html">cachedFitness</a>()</code>,
 <code><a href="configureDisplay.html">configureDisplay</a>()</code>,
 <code><a href="defineSpatialMap.html">defineSpatialMap</a>()</code>,
 <code><a href="outputMSSample.html">outputMSSample</a>()</code>,
 <code><a href="outputSample.html">outputSample</a>()</code>,
 <code><a href="outputVCFSample.html">outputVCFSample</a>()</code>,
+<code><a href="pointDeviated.html">pointDeviated</a>()</code>,
 <code><a href="pointInBounds.html">pointInBounds</a>()</code>,
 <code><a href="pointPeriodic.html">pointPeriodic</a>()</code>,
 <code><a href="pointReflected.html">pointReflected</a>()</code>,
 <code><a href="pointStopped.html">pointStopped</a>()</code>,
 <code><a href="pointUniform.html">pointUniform</a>()</code>,
+<code><a href="removeSpatialMap.html">removeSpatialMap</a>()</code>,
 <code><a href="removeSubpopulation.html">removeSubpopulation</a>()</code>,
 <code><a href="sampleIndividuals.html">sampleIndividuals</a>()</code>,
 <code><a href="setCloningRate.html">setCloningRate</a>()</code>,

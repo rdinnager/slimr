@@ -77,6 +77,10 @@ about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
+\examples{
+## This just brings up the documentation:
+calcPairHeterozygosity()
+}
 \seealso{
 Other SLiMBuiltin: 
 \code{\link{SB}},

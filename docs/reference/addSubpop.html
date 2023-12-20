@@ -32,7 +32,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>addSubpop</code>, which is a method of the SLiM
-class <code><a href="SLiMSim.html">SLiMSim</a></code>.
+class <code><a href="SLiMSim_Class.html">SLiMSim</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -104,7 +104,7 @@ nested in a <code><a href="slim_script.html">slim_script</a></code>
 function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.</p>
 <p>Documentation for SLiM function <code>addSubpop</code>, which is a method of the SLiM
-class <code><a href="Species.html">Species</a></code>.
+class <code><a href="Species_Class.html">Species</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -168,8 +168,8 @@ method will initially consist of individuals with empty genomes. In order to
 model subpopulations that split from an already existing subpopulation, use
 addSubpopSplit().</p>
 <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=678" class="external-link">SLiM manual: page
-678</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=719" class="external-link">SLiM manual: page
+719</a>.</p>
 <p>Add a new subpopulation with id subpopID and size individuals.
 The subpopID parameter may be either an integer giving the ID of the new
 subpopulation, or a string giving the name of the new subpopulation (such
@@ -177,37 +177,14 @@ as "p5" to specify an ID of 5). Only if sex is enabled for the species, the
 initial sex ratio may optionally be specified as sexRatio (as the male fraction,
 M:M+F); if it is not specified, a default of 0.5 is used. The new subpopulation
 will be defined as a global variable immediately by this method (see section
-24.15), and will also be returned by this method. Subpopulations added by this
+25.16), and will also be returned by this method. Subpopulations added by this
 method will initially consist of individuals with empty genomes. In order to
 model subpopulations that split from an already existing subpopulation, use
-addSubpopSplit(). Only in nonWF models, the haploid parameter may be T; in
-this case, the second genome of each new individual will be a null genome,
-rather than an empty genome. For even greater control in nonWF models, you can
-call addSubpop() with an initial size of 0 and then stock the population with
-new individuals created however you wish in the next tick's reproduction()
-callback. ject&lt;Subpopulation&gt;$)addSubpopSplit(is$ subpopID, integer$ size,
-io&lt;Subpopulation&gt;$ sourceSubpop, [float$ sexRatio = 0.5]) Split off a new
-subpopulation with id subpopID and size individuals derived from subpopulation
-sourceSubpop. The subpopID parameter may be either an integer giving the ID
-of the new subpopulation, or a string giving the name of the new subpopulation
-(such as "p5" to specify an ID of 5). The sourceSubpop parameter may specify the
-source subpopulation either as a Subpopulation object or by integer identifier.
-Only if sex is enabled for the species, the initial sex ratio may optionally
-be specified as sexRatio (as the male fraction, M:M+F); if it is not specified,
-a default of 0.5 is used. The new subpopulation will be defined as a global
-variable immediately by this method (see section 24.15), and will also be
-returned by this method. Subpopulations added by this method will consist of
-individuals that are clonal copies of individuals from the source subpopulation,
-randomly chosen with probabilities proportional to fitness. The fitness of all
-of these initial individuals is considered to be 1.0, to avoid a doubled round
-of selection in the initial tick, given that fitness values were already used
-to choose the individuals to clone. Once this initial set of individuals has
-mated to produce offspring, the model is effectively of parental individuals in
-the source subpopulation mating randomly according to fitness, as usual in SLiM,
-with juveniles migrating to the newly added subpopulation. Effectively, then,
-then new subpopulation is created empty, and is filled by migrating juveniles
-from the source subpopulation, in accordance with SLiM's usual model of juvenile
-migration.</p>
+addSubpopSplit(). Only in nonWF models, the haploid parameter may be T; in this
+case, the second genome of each new individual will be a null genome, rather
+than an empty genome. For even greater control in nonWF models, you can call
+addSubpop() with an initial size of 0 and then stock the population with new
+individuals created however you wish in the next tick's reproduction() callback.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -232,7 +209,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other SLiMSim: 
-<code><a href="SLiMSim.html">SS</a></code>,
+<code><a href="SLiMSim_Class.html">SLiMSim</a></code>,
 <code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
 <code><a href="createLogFile.html">createLogFile</a>()</code>,
@@ -263,7 +240,8 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="treeSeqRememberIndividuals.html">treeSeqRememberIndividuals</a>()</code>,
 <code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p>
 <p>Other Species: 
-<code><a href="Species.html">Sp</a></code>,
+<code><a href="Species_Class.html">Species</a></code>,
+<code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
 <code><a href="individualsWithPedigreeIDs.html">individualsWithPedigreeIDs</a>()</code>,
 <code><a href="killIndividuals.html">killIndividuals</a>()</code>,
@@ -280,7 +258,16 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="registerModifyChildCallback.html">registerModifyChildCallback</a>()</code>,
 <code><a href="registerMutationCallback.html">registerMutationCallback</a>()</code>,
 <code><a href="registerMutationEffectCallback.html">registerMutationEffectCallback</a>()</code>,
-<code><a href="registerRecombinationCallback.html">registerRecombinationCallback</a>()</code></p></div>
+<code><a href="registerRecombinationCallback.html">registerRecombinationCallback</a>()</code>,
+<code><a href="registerReproductionCallback.html">registerReproductionCallback</a>()</code>,
+<code><a href="registerSurvivalCallback.html">registerSurvivalCallback</a>()</code>,
+<code><a href="simulationFinished.html">simulationFinished</a>()</code>,
+<code><a href="skipTick.html">skipTick</a>()</code>,
+<code><a href="subsetMutations.html">subsetMutations</a>()</code>,
+<code><a href="treeSeqCoalesced.html">treeSeqCoalesced</a>()</code>,
+<code><a href="treeSeqOutput.html">treeSeqOutput</a>()</code>,
+<code><a href="treeSeqRememberIndividuals.html">treeSeqRememberIndividuals</a>()</code>,
+<code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>

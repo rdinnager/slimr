@@ -45,7 +45,6 @@ on the official website: \url{https://messerlab.org/slim/}
 }
 
 \examples{
-# From page 600 of the SLiM Manual
 slim_block(mateChoice(p2), {
 
   ## in subpopulation 2, high fitness individuals are preferred

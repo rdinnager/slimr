@@ -4,12 +4,8 @@
 \alias{deregisterScriptBlock}
 \alias{Community$deregisterScriptBlock}
 \alias{.Co$deregisterScriptBlock}
-\alias{SLiMSim$deregisterScriptBlock}
-\alias{.SS$deregisterScriptBlock}
 \title{SLiM method deregisterScriptBlock}
 \usage{
-deregisterScriptBlock(scriptBlocks)
-
 deregisterScriptBlock(scriptBlocks)
 }
 \arguments{
@@ -18,21 +14,10 @@ details for description.}
 }
 \value{
 An object of type void.
-
-An object of type void.
 }
 \description{
 Documentation for SLiM function \code{deregisterScriptBlock}, which is a method
 of the SLiM class \code{\link{Community}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
-
-Documentation for SLiM function \code{deregisterScriptBlock}, which is a method
-of the SLiM class \code{\link{SLiMSim}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -54,30 +39,8 @@ currently executing script block has completed. To immediately prevent a script
 block from executing, even when it is scheduled to execute in the current stage
 of the current tick, use the active property of the script block (see sections
 25.12.1 and 26.11).
-
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-
-All SLiMEidosBlock objects specified by scriptBlocks (either with
-SLiMEidosBlock objects or with integer identifiers) will be scheduled for
-deregistration. The deregistered blocks remain valid, and may even still be
-executed in the current stage of the current generation (see section 25.9); the
-blocks are not actually deregistered and deallocated until sometime after the
-currently executing script block has completed. To immediately prevent a script
-block from executing, even when it is scheduled to execute in the current stage
-of the current generation, use the active property of the script block (see
-sections 24.11.1 and 25.9).
 }
 \section{Copyright}{
-
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
-on the official website: \url{https://messerlab.org/slim/}
-
 
 This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
@@ -106,42 +69,9 @@ Other Community:
 \code{\link{speciesWithIDs}()},
 \code{\link{subpopulationsWithIDs}()},
 \code{\link{usage}()}
-
-Other SLiMSim: 
-\code{\link{SS}},
-\code{\link{addSubpopSplit}()},
-\code{\link{addSubpop}()},
-\code{\link{countOfMutationsOfType}()},
-\code{\link{createLogFile}()},
-\code{\link{mutationCounts}()},
-\code{\link{mutationFrequencies}()},
-\code{\link{mutationsOfType}()},
-\code{\link{outputFixedMutations}()},
-\code{\link{outputFull}()},
-\code{\link{outputMutations}()},
-\code{\link{outputUsage}()},
-\code{\link{readFromPopulationFile}()},
-\code{\link{recalculateFitness}()},
-\code{\link{registerEarlyEvent}()},
-\code{\link{registerFitnessCallback}()},
-\code{\link{registerInteractionCallback}()},
-\code{\link{registerLateEvent}()},
-\code{\link{registerMateChoiceCallback}()},
-\code{\link{registerModifyChildCallback}()},
-\code{\link{registerMutationCallback}()},
-\code{\link{registerRecombinationCallback}()},
-\code{\link{registerReproductionCallback}()},
-\code{\link{rescheduleScriptBlock}()},
-\code{\link{simulationFinished}()},
-\code{\link{subsetMutations}()},
-\code{\link{treeSeqCoalesced}()},
-\code{\link{treeSeqOutput}()},
-\code{\link{treeSeqRememberIndividuals}()},
-\code{\link{treeSeqSimplify}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
 \concept{Community}
-\concept{SLiMSim}

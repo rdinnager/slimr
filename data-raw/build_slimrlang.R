@@ -338,6 +338,9 @@ Copyright © 2016–2020 Philipp Messer. All rights reserved. More information a
 on the official website: \\url{https://messerlab.org/slim/}
 @author Benjamin C Haller (\\email{bhaller@benhaller.com}) and Philipp W Messer (\\email{messer@cornell.edu})
 <<ifelse(class_name %in% c('Initialize', 'SLiMBuiltin'), '@export', '')>>
+<<ifelse(class_name %in% c('Initialize', 'SLiMBuiltin'), '@examples', '')>>
+<<ifelse(class_name %in% c('Initialize', 'SLiMBuiltin'), '## This just brings up the documentation:', '')>>
+<<ifelse(class_name %in% c('Initialize', 'SLiMBuiltin'), paste0(function_name, '()'), '')>>
 #..<<function_name>> <- function(<<paste(arg_data[[1]]$arg_name, collapse = ', ')>>) {
 #..  <<class_abbr>>$<<function_name>>(<<paste(arg_data[[1]]$arg_name, collapse = ', ')>>)
 #..}"
@@ -472,30 +475,44 @@ make_class_funcs <- function(method_table, class_name, class_abbr, template) {
   paste(methods_txt, collapse = "\n\n")
 }
 
-all_methods_txt <- purrr::pmap_chr(list(all_methods_data,
-                                   method_make_df$class_name,
-                                   method_make_df$class_internal,
-                                   method_make_df$func_template),
+method_make_df2 <- method_make_df |>
+  filter(class_name != "SLiMSim")
+all_methods_txt <- purrr::pmap_chr(list(all_methods_data[-which(names(all_methods_data) == "SLiMSim")],
+                                   method_make_df2$class_name,
+                                   method_make_df2$class_internal,
+                                   method_make_df2$func_template),
                                    ~make_class_funcs(..1, ..2, ..3,
                                                      ..4)) %>%
   paste(collapse = "\n\n\n\n")
 
-all_methods_code <- purrr::pmap_chr(list(all_methods_data,
-                                         method_make_df$class_name,
-                                         method_make_df$class_internal,
-                                         method_make_df$method_code),
-                                    ~make_class_funcs(..1, ..2, ..3,
-                                                      ..4)) %>%
-  paste(collapse = "\n\n\n\n")
+make_all_methods_code <- function(all_methods_data, method_make_df) {
 
-## fix issue with assignment operator wrapping
-all_methods_code <- stringr::str_replace_all(all_methods_code,
-                                             "\n\\<\\-",
-                                             " <-")
+  all_methods_code <- purrr::pmap_chr(list(all_methods_data,
+                                           method_make_df$class_name,
+                                           method_make_df$class_internal,
+                                           method_make_df$method_code),
+                                      ~make_class_funcs(..1, ..2, ..3,
+                                                        ..4)) %>%
+    paste(collapse = "\n\n\n\n")
 
-all_methods_code <- stringr::str_replace_all(all_methods_code,
-                                             "\n\\$",
-                                             "$")
+  ## fix issue with assignment operator wrapping
+  all_methods_code <- stringr::str_replace_all(all_methods_code,
+                                               "\n\\<\\-",
+                                               " <-")
+
+  all_methods_code <- stringr::str_replace_all(all_methods_code,
+                                               "\n\\$",
+                                               "$")
+
+  all_methods_code <- all_methods_code %>%
+    stringr::str_replace_all("genomicElem entType",
+                             "genomicElementType")
+
+  all_methods_code
+
+}
+
+all_methods_code <- make_all_methods_code(all_methods_data, method_make_df)
 
 ######### deal with properties ##############
 
@@ -551,11 +568,20 @@ create_properties <- function(property_table, class_name, class_abbr) {
     paste(collapse = "\n")
 }
 
-property_txt <- purrr::pmap_chr(list(all_properties_data,
-                                property_make_df$class_name,
-                                property_make_df$class_internal),
-                                ~create_properties(..1, ..2, ..3)) %>%
-  paste(collapse = "\n")
+make_properties <- function(all_properties_data,
+                            property_make_df) {
+
+  property_txt <- purrr::pmap_chr(list(all_properties_data,
+                                  property_make_df$class_name,
+                                  property_make_df$class_internal),
+                                  ~create_properties(..1, ..2, ..3)) %>%
+    paste(collapse = "\n")
+
+  property_txt
+}
+
+property_txt <- make_properties(all_properties_data,
+                                property_make_df)
 
 ############ make documentation for all SLiM classes ##########
 
@@ -599,6 +625,7 @@ class_roxy <- "
 Documentation for <<class_name>> class from SLiM
 
 @name <<class_name>>
+@rdname <<class_name>>_Class
 @export
 @aliases <<class_abbr>>
 @family <<class_name>>
@@ -606,6 +633,27 @@ Documentation for <<class_name>> class from SLiM
 This class has the following methods (functions):
 \\itemize{
 <<ifelse(function_name[[1]][1] != 'None', paste0('\\\\item{\\\\code{\\\\link{', function_name[[1]], '}}}') %>% paste(collapse = '\n'), '\\\\item{None. This class has no methods.}')>>
+}
+This class has the following properties:
+\\describe{
+<<property_list>>
+}
+#..NULL"
+
+class_roxy_eidos <- "
+<<class_name>>
+
+Documentation for <<class_name>> class from SLiM
+
+@name <<class_name>>
+@rdname <<class_name>>_Class
+@export
+@aliases <<class_abbr>>
+@family <<class_name>>
+@details <<intro_text>>
+This class has the following methods (functions):
+\\itemize{
+<<ifelse(function_name[[1]][1] != 'None', paste0('\\\\item{\\\\code{\\\\link{eidos_', function_name[[1]], '}}}') %>% paste(collapse = '\n'), '\\\\item{None. This class has no methods.}')>>
 }
 This class has the following properties:
 \\describe{
@@ -626,7 +674,7 @@ make_class_roxy <- function(class_table) {
   if(is.null(class_table$function_name[[1]])) {
     class_table$function_name <- list("None")
   }
-  class_txt <- glue::glue_data(class_table, class_roxy,
+  class_txt <- glue::glue_data(class_table, if(class_table$class_name == "Eidos") class_roxy_eidos else class_roxy,
                   .open = "<<",
                   .close = ">>") %>%
     stringr::str_split("\n") %>%
@@ -640,7 +688,10 @@ make_class_roxy <- function(class_table) {
   class_txt
 }
 
-class_roxies <- purrr::map(seq_len(nrow(all_class_data)),
+inds <- seq_len(nrow(all_class_data))
+inds <- inds[-which(all_class_data$class_name == "SLiMSim")]
+
+class_roxies <- purrr::map(inds,
                            ~all_class_data[.x, ]) %>%
   purrr::map_chr(~make_class_roxy(.x)) %>%
   paste(collapse = "\n") %>%
@@ -659,10 +710,6 @@ cat(class_make_code)
 ######## put it all together ###########
 
 ######## fix a couple broken things #########
-
-all_methods_code <- all_methods_code %>%
-  stringr::str_replace_all("genomicElem entType",
-                           "genomicElementType")
 
 temp_source <- tempfile(fileext = ".R")
 readr::write_lines(class_make_code, temp_source)

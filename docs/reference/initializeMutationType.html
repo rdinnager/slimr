@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>initializeMutationType</code>, which is a method
-of the SLiM class <code><a href="Initialize.html">Initialize</a></code>.
+of the SLiM class <code><a href="Initialize_Class.html">Initialize</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -132,8 +132,8 @@ singleton)</p>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=623" class="external-link">SLiM manual: page
-623</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=652" class="external-link">SLiM manual: page
+652</a>.</p>
 <p>Add a mutation type at initialization time. The id must not already
 be used for any mutation type in the simulation. The id parameter may be
 either an integer giving the ID of the new mutation type, or a string giving
@@ -147,22 +147,24 @@ for an exponential distribution; "g", in which case the ellipsis should supply
 a numeric$ mean selection coefficient and a numeric$ alpha shape parameter for
 a gamma distribution; "n", in which case the ellipsis should supply a numeric$
 mean selection coefficient and a numeric$ sigma (standard deviation) parameter
-for a normal distribution; "w", in which case the ellipsis should supply a
-numeric$ λ scale parameter and a numeric$ k shape parameter for a Weibull
-distribution; or "s", in which case the ellipsis should supply a string$ Eidos
-script parameter. See section 24.11 for discussion of the various DFEs and their
-uses. The global symbol for the new mutation type is immediately available; the
-return value also provides the new object. Note that by default in WF models,
-all mutations of a given mutation type will be converted into Substitution
-objects when they reach fixation, for efficiency reasons. If you need to disable
-this conversion, to keep mutations of a given type active in the simulation
-even after they have fixed, you can do so by setting the convertToSubstitution
+for a normal distribution; "p", in which case the ellipsis should supply a
+numeric$ mean selection coefficient and a numeric$ scale parameter for a Laplace
+distribution; "w", in which case the ellipsis should supply a numeric$ λ scale
+parameter and a numeric$ k shape parameter for a Weibull distribution; or "s",
+in which case the ellipsis should supply a string$ Eidos script parameter.
+See section 25.11 for discussion of the various DFEs and their uses. The
+global symbol for the new mutation type is immediately available; the return
+value also provides the new object. Note that by default in WF models, all
+mutations of a given mutation type will be converted into Substitution objects
+when they reach fixation, for efficiency reasons. If you need to disable this
+conversion, to keep mutations of a given type active in the simulation even
+after they have fixed, you can do so by setting the convertToSubstitution
 property of MutationType to F. In contrast, by default in nonWF models mutations
 will not be converted into Substitution objects when they reach fixation;
 convertToSubstitution is F by default in nonWF models. To enable conversion in
 nonWF models for neutral mutation types with no indirect fitness effects, you
-should therefore set convertToSubstitution to T. See sections 22.3, 23.5, and
-24.11.1 for further discussion regarding the convertToSubstitution property.</p>
+should therefore set convertToSubstitution to T. See sections 23.3, 24.5, and
+25.11.1 for further discussion regarding the convertToSubstitution property.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -179,7 +181,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Initialize: 
-<code><a href="Initialize.html">Init</a></code>,
+<code><a href="Initialize_Class.html">Initialize</a></code>,
 <code><a href="initializeAncestralNucleotides.html">initializeAncestralNucleotides</a>()</code>,
 <code><a href="initializeGeneConversion.html">initializeGeneConversion</a>()</code>,
 <code><a href="initializeGenomicElementType.html">initializeGenomicElementType</a>()</code>,

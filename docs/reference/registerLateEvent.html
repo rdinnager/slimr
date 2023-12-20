@@ -32,7 +32,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>registerLateEvent</code>, which is a method of
-the SLiM class <code><a href="Community.html">Community</a></code>.
+the SLiM class <code><a href="Community_Class.html">Community</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -104,7 +104,7 @@ nested in a <code><a href="slim_script.html">slim_script</a></code>
 function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.</p>
 <p>Documentation for SLiM function <code>registerLateEvent</code>, which is a method of
-the SLiM class <code><a href="SLiMSim.html">SLiMSim</a></code>.
+the SLiM class <code><a href="SLiMSim_Class.html">SLiMSim</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -160,8 +160,8 @@ singleton)</p>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=638" class="external-link">SLiM manual: page
-638</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=667" class="external-link">SLiM manual: page
+667</a>.</p>
 <p>Register a block of Eidos source code, represented as the string
 singleton source, as an Eidos late() event in the current simulation, with
 optional start and end ticks (and, for multispecies models, optional ticks
@@ -170,8 +170,8 @@ identifier id (specified as an integer, or as a string symbolic name such as
 "s5"); this may be NULL if there is no need to be able to refer to the block
 later. The registered event is added to the end of the list of registered
 SLiMEidosBlock objects, and is active immediately; it may be eligible to execute
-in the current tick (see section 25.11 for details). The new SLiMEidosBlock will
-be defined as a global variable immediately by this method (see section 24.12),
+in the current tick (see section 26.11 for details). The new SLiMEidosBlock will
+be defined as a global variable immediately by this method (see section 25.12),
 and will also be returned by this method.</p>
 <p>Documentation for this function can be found in the official
 <a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=NA" class="external-link">SLiM manual: page NA</a>.</p>
@@ -209,7 +209,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Community: 
-<code><a href="Community.html">Co</a></code>,
+<code><a href="Community_Class.html">Community</a></code>,
 <code><a href="createLogFile.html">createLogFile</a>()</code>,
 <code><a href="deregisterScriptBlock.html">deregisterScriptBlock</a>()</code>,
 <code><a href="genomicElementTypesWithIDs.html">genomicElementTypesWithIDs</a>()</code>,
@@ -223,9 +223,10 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="scriptBlocksWithIDs.html">scriptBlocksWithIDs</a>()</code>,
 <code><a href="simulationFinished.html">simulationFinished</a>()</code>,
 <code><a href="speciesWithIDs.html">speciesWithIDs</a>()</code>,
-<code><a href="subpopulationsWithIDs.html">subpopulationsWithIDs</a>()</code></p>
+<code><a href="subpopulationsWithIDs.html">subpopulationsWithIDs</a>()</code>,
+<code><a href="usage.html">usage</a>()</code></p>
 <p>Other SLiMSim: 
-<code><a href="SLiMSim.html">SS</a></code>,
+<code><a href="SLiMSim_Class.html">SLiMSim</a></code>,
 <code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="addSubpop.html">addSubpop</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,

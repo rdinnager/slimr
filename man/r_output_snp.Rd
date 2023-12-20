@@ -22,3 +22,16 @@ None
 \description{
 Use \code{\link{slim_results_to_data}} on the \code{\link{slim_run}} results to get this in a nice SNP matrix form.
 }
+\examples{
+if(slim_is_avail()) {
+  test_sim <- slim_script(
+    slim_block_init_minimal(mutation_rate = 1e-6),
+    slim_block_add_subpops(1, 100),
+    slim_block(1, 20, late(), {
+      r_output_snp("snp", do_every = 10)
+    })
+  ) \%>\%
+    slim_run()
+  slim_results_to_data(test_sim)
+}
+}

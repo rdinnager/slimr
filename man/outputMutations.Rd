@@ -2,14 +2,10 @@
 % Please edit documentation in R/slim_lang.R
 \name{outputMutations}
 \alias{outputMutations}
-\alias{SLiMSim$outputMutations}
-\alias{.SS$outputMutations}
 \alias{Species$outputMutations}
 \alias{.Sp$outputMutations}
 \title{SLiM method outputMutations}
 \usage{
-outputMutations(mutations, filePath, append)
-
 outputMutations(mutations, filePath, append)
 }
 \arguments{
@@ -23,19 +19,8 @@ default value is \code{F}. See details for description.}
 }
 \value{
 An object of type void.
-
-An object of type void.
 }
 \description{
-Documentation for SLiM function \code{outputMutations}, which is a method of the
-SLiM class \code{\link{SLiMSim}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
-
 Documentation for SLiM function \code{outputMutations}, which is a method of the
 SLiM class \code{\link{Species}}.
 Note that the R function is a stub, it does not do anything in R (except bring
@@ -46,20 +31,6 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-
-Output all of the given mutations (see section 26.1.3 for output
-format details). This can be used to output all mutations of a given mutation
-type, for example. If the optional parameter filePath is NULL (the default),
-output will be sent to Eidos's output stream (see section 4.2.1). Otherwise,
-output will be sent to the filesystem path specified by filePath, overwriting
-that file if append if F, or appending to the end of it if append is T. In SLiM
-3.3 and later, the output format includes the nucleotides associated with any
-nucleotide-based mutations; see section 26.1.3. Output is generally done in a
-late() event, so that the output reflects the state of the simulation at the end
-of a generation.
-
 Documentation for this function can be found in the official
 \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=723}{SLiM manual: page
 723}.
@@ -84,50 +55,9 @@ documentation is
 Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
-
-
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
-on the official website: \url{https://messerlab.org/slim/}
 }
 
 \seealso{
-Other SLiMSim: 
-\code{\link{SS}},
-\code{\link{addSubpopSplit}()},
-\code{\link{addSubpop}()},
-\code{\link{countOfMutationsOfType}()},
-\code{\link{createLogFile}()},
-\code{\link{deregisterScriptBlock}()},
-\code{\link{mutationCounts}()},
-\code{\link{mutationFrequencies}()},
-\code{\link{mutationsOfType}()},
-\code{\link{outputFixedMutations}()},
-\code{\link{outputFull}()},
-\code{\link{outputUsage}()},
-\code{\link{readFromPopulationFile}()},
-\code{\link{recalculateFitness}()},
-\code{\link{registerEarlyEvent}()},
-\code{\link{registerFitnessCallback}()},
-\code{\link{registerInteractionCallback}()},
-\code{\link{registerLateEvent}()},
-\code{\link{registerMateChoiceCallback}()},
-\code{\link{registerModifyChildCallback}()},
-\code{\link{registerMutationCallback}()},
-\code{\link{registerRecombinationCallback}()},
-\code{\link{registerReproductionCallback}()},
-\code{\link{rescheduleScriptBlock}()},
-\code{\link{simulationFinished}()},
-\code{\link{subsetMutations}()},
-\code{\link{treeSeqCoalesced}()},
-\code{\link{treeSeqOutput}()},
-\code{\link{treeSeqRememberIndividuals}()},
-\code{\link{treeSeqSimplify}()}
-
 Other Species: 
 \code{\link{Sp}},
 \code{\link{addSubpopSplit}()},
@@ -162,5 +92,4 @@ Other Species:
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
-\concept{SLiMSim}
 \concept{Species}

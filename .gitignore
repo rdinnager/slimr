@@ -8,3 +8,5 @@ Meta
 slim_man
 *.Rproj
 data-raw/SLiM_Recipes
+/doc/
+/Meta/

@@ -44,7 +44,6 @@ on the official website: \url{https://messerlab.org/slim/}
 }
 
 \examples{
-# From page 261 of the SLiM Manual
 slim_block(recombination(), {
   if (genome1.containsMarkerMutation(m2, 25000) ==
       genome2.containsMarkerMutation(m2, 25000)) {

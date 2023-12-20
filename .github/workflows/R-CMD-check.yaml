@@ -149,7 +149,7 @@ jobs:
       - uses: r-lib/actions/check-r-package@v2
         if: runner.os == 'Windows'
         env:
-          SLIM_PATH: 'C:/Program Files (x86)/SLiM/bin'
+          SLIM_PATH: 'C:/Program Files (x86)/SLiM/bin/slim.exe'
         with:
           args: 'c("--no-manual", "--as-cran")'
           error-on: '"error"'
@@ -169,7 +169,7 @@ jobs:
           error-on: '"error"'
 
       - name: Upload test objects for covr
-        if: runner.os == 'Linux'
+        if: runner.os == 'Linux' && matrix.config.conda == 'no'
         uses: actions/upload-artifact@master
         with:
           name: covr-test-objects

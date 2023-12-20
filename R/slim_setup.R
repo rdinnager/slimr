@@ -1,22 +1,72 @@
-install_path <- function() {
-  path <- Sys.getenv("SLIM_HOME")
+default_install_path <- function() {
+  path <- Sys.getenv("SLIM_PATH")
   if (nzchar(path)) {
-    path <- normalizePath(path, mustWork = FALSE)
+    path <- normalizePath(dirname(path), mustWork = FALSE)
   } else {
     path <- normalizePath(file.path(system.file("", package = "slimr")), mustWork = FALSE)
   }
   path
 }
 
-#' A simple exported version of install_path
-#' Returns the SLiM installation path.
+
+#' Find the SLiM executable path `slimr` is using
+#'
+#' Returns the SLiM installation path used by `slimr` to run simulations.
+#'
 #' @export
 #' @examples
 #' slim_install_path()
 #'
 slim_install_path <- function() {
-  install_path()
+  find_slim_path()
 }
+
+find_slim_path <- function() {
+  ## look in SLIM_PATH env variable
+  path <- Sys.getenv("SLIM_PATH")
+  if (nzchar(path)) {
+    return(normalizePath(path, mustWork = FALSE))
+  }
+  ## look for slim executable in conda if reticulate is installed
+  if(rlang::is_installed("reticulate")) {
+    path <- find_slim_conda()
+    if (nzchar(path)) {
+      return(normalizePath(path, mustWork = FALSE))
+    }
+  }
+  ## look in default install location
+  path <- default_install_path()
+  if (nzchar(path)) {
+    return(normalizePath(path, mustWork = FALSE))
+  }
+  ## see if Sys.which can find it
+  path <- slimr_which("slim")
+  if (nzchar(path)) {
+    return(normalizePath(path, mustWork = FALSE))
+  }
+  path
+}
+
+find_slim_conda <- function() {
+  assert_package("reticulate")
+  envs <- reticulate::conda_list()
+  if ("slimr-conda" %in% envs$name) {
+    return(slim_conda_path(envs$python[envs$name == "slimr-conda"]))
+  }
+  conda_path <- ""
+  n_envs <- nrow(envs)
+  i <- 0
+  while(!slim_exists(conda_path) && i < n_envs) {
+    i <- i + 1
+    conda_path <- slim_conda_path(envs$python[i])
+  }
+  conda_path
+}
+
+slim_exists <- function(path) {
+  slimr_which(path) != ""
+}
+
 
 #' Attempt to install and / or setup SLiM for use with slimr
 #'
@@ -32,6 +82,12 @@ slim_install_path <- function() {
 #' @param force If \code{FALSE} (the default) \code{slim_setup} will not install SLiM if it is already
 #' installed and can be found. If you want to force an installation, even if SLiM is already installed
 #' (perhaps to install a newer version), then use \code{force=TRUE}.
+#' @param install_path If \code{method="binary"}, then this is the path to install the SLiM executable.
+#' If you do not use the default path, then you will need to set the \code{SLIM_PATH} environment variable
+#' so that slimr can find it.
+#' @param conda_env If \code{method="conda"}, then this is the name of the conda environment to install
+#' SLiM into. If you do not use the default name, then it may take lomger for slimr to find SLiM (which may
+#' increase loading times for the library).
 #'
 #' @export
 #'
@@ -41,7 +97,9 @@ slim_install_path <- function() {
 #' }
 slim_setup <- function(method = c("conda", "binary"),
                        verbose = TRUE,
-                       force = FALSE) {
+                       force = FALSE,
+                       install_path = default_install_path(),
+                       conda_env = "slimr-conda") {
 
   if(slim_is_avail() && !force) {
     rlang::inform("Looks like SLiM is already installed. If you want to reinstall use force=TRUE")
@@ -58,15 +116,13 @@ slim_setup <- function(method = c("conda", "binary"),
       rlang::inform("Attempting to download SLiM binary...")
     }
     download.file("https://github.com/rdinnager/slimr/releases/download/slim-windows-executable/slim.exe",
-                  file.path(install_path(), "slim.exe"),
+                  file.path(install_path, "slim.exe"),
                   mode = "wb")
 
-    .slim_settings$slim_dir <- install_path()
+    .slim_settings$slim_path <- file.path(install_path, "slim.exe")
 
     .slim_settings$slim_call <- get_slim_call()
-    .slim_settings$slim_avail <- TRUE
 
-    Sys.setenv(SLIM_HOME = install_path())
   }
 
   if(method == "conda") {
@@ -85,48 +141,45 @@ slim_setup <- function(method = c("conda", "binary"),
     }
 
     l <- reticulate::conda_list()
-    if("slimr-conda" %in% l$name) {
-      slimr_path <- reticulate::conda_install("slimr-conda", packages = "slim", python_version = NULL)
+    if(conda_env %in% l$name) {
+      reticulate::conda_install(conda_env, packages = "slim", python_version = NULL)
+      slimr_path <- l |>
+        dplyr::filter(name == conda_env) |>
+        dplyr::pull(path)
+      conda_path <- slim_conda_path(slimr_path)
     } else {
-
-      slimr_path <- reticulate::conda_create("slimr-conda", packages = "slim", python_version = NULL)
-
+      slimr_path <- reticulate::conda_create(conda_env, packages = "slim", python_version = NULL)
+      conda_path <- slim_conda_path(slimr_path)
     }
 
-
-    conda_path <- slim_conda_path()
-
-    .slim_settings$slim_dir <- conda_path
+    .slim_settings$slim_path <- conda_path
 
     .slim_settings$slim_call <- get_slim_call()
-    .slim_settings$slim_avail <- TRUE
-
-    Sys.setenv(SLIM_HOME = conda_path)
 
     if(verbose) {
-      rlang::inform(glue::glue("SLiM installed successfully. SLiM executable can be found in {conda_path}. `slimr` should be able to find it automatically."))
+      rlang::inform(glue::glue("SLiM installed successfully. SLiM executable can be found in {conda_path}. `slimr` should be able to find it automatically if you used default settings. Otherwise, you can add this path to the SLIM_PATH environmental variable."))
     }
   }
 
   if(!slim_is_avail()) {
-    message("We are sorry, but it appears the installation failed. Please visit https://rdinnager.github.io/slimr/ and follow the manual installation instructions instead.")
+    message("We are sorry, but it appears the installation failed. Please visit https://rdinnager.github.io/slimr/ and follow the manual installation instructions instead. Then you can help slimr find the SLiM executable by adding its path to the SLIM_PATH environment variable.")
   }
 
 
 }
 
-slim_conda_path <- function() {
-  assert_package("reticulate")
-  l <- reticulate::conda_list() |>
-    dplyr::filter(name == "slimr-conda")
-  if(nrow(l) == 0) {
-    return(NULL)
-  }
+slim_conda_path <- function(conda_python) {
+  # assert_package("reticulate")
+  # l <- reticulate::conda_list() |>
+  #   dplyr::filter(name == "slimr-conda")
+  # if(nrow(l) == 0) {
+  #   return(NULL)
+  # }
   os <- get_os()
   if(os == "windows") {
-    return(file.path(dirname(l$python[1]), "Library", "bin"))
+    return(file.path(dirname(conda_python), "Library", "bin", "slim.exe"))
   } else {
-    return(dirname(l$python[1]))
+    return(file.path(dirname(conda_python), "slim"))
   }
 }
 
@@ -143,9 +196,9 @@ get_slim_call <- function() {
 
   } else {
 
-    slim_path <- slim_get_executable()
+    slim_path <- get_slim_path()
 
-    if(slim_path == "") {
+    if(is.null(slim_path)) {
       slim_call <- NULL
     } else {
       slim_call <- list(call = slim_path,
@@ -156,16 +209,16 @@ get_slim_call <- function() {
   }
 }
 
-get_slim_dir <- function() {
+get_slim_path <- function() {
 
-  if(!is.null(.slim_settings$slim_dir)) {
-    return(.slim_settings$slim_dir)
+  if(!is.null(.slim_settings$slim_path)) {
+    return(.slim_settings$slim_path)
   } else {
 
-    if(Sys.getenv("SLIM_HOME") != "") {
-      return(Sys.getenv("SLIM_HOME"))
+    if(Sys.getenv("SLIM_PATH") != "") {
+      return(Sys.getenv("SLIM_PATH"))
     } else {
-      return(install_path())
+      return(NULL)
     }
 
   }
@@ -189,7 +242,7 @@ slim_get_executable <- function() {
 #' slim_is_avail()
 slim_is_avail <- function() {
 
-  slim_path <- slim_get_executable()
+  slim_path <- get_slim_path()
   if(slim_path != "" & file.exists(slim_path)) {
     return(TRUE)
   } else {
@@ -206,6 +259,6 @@ slim_test <- function() {
 
 assert_slim_installed <- function() {
   if(!slim_is_avail()) {
-    rlang::abort("SLiM is not installed or can't be found. Please install using slim_setup() or manually by following the instruction at https://messerlab.org/slim/ . If you are sure SLiM is already installed, you can let slimr know where it is by setting the environmental variable SLIM_HOME, e.g. Sys.setenv(SLIM_HOME = 'install_dir'), where install_dir is the directory that contains your SLiM executable (usually slim or slim.exe)")
+    rlang::abort("SLiM is not installed or can't be found. Please install using slim_setup() or manually by following the instruction at https://messerlab.org/slim/ . If you are sure SLiM is already installed, you can let slimr know where it is by setting the environmental variable SLIM_PATH, e.g. Sys.setenv(SLIM_PATH = 'slim_path'), where slim_path is the path to your SLiM executable (usually slim or slim.exe)")
   }
 }

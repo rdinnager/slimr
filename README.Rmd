@@ -65,15 +65,15 @@ The next step is to make sure `slimr` is "linked" to slim (by knowing the locati
 slimr::slim_is_avail()
 ```
 
-And if true is returned you are ready to go and run the test example below. In the case the test was not successful we need to find the folder where the slim executable has been installed and set this path in the R environment accordingly. 
+And if true is returned you are ready to go and run the test example below. In the case the test was not successful we need to find the path where the slim executable has been installed and set this path in the R environment accordingly. 
 
 For example if SLiM is installed at `C:/Program Files/R/R-4.3.1/library/slimr` then you need to specify this via:
 
 ```{r, eval=FALSE}
-Sys.setenv(SLIM_HOME='C:/Program Files/R/R-4.3.1/library/slimr')
+Sys.setenv(SLIM_PATH='C:/Program Files/R/R-4.3.1/library/slimr/slim.exe')
 ```
 
-If you want to add this path permanently to your RStudio installation (so no need to run `Sys.setenv()` every time) you can use the command ``` usethis::edit_r_environ()``` and add a line like ```SLIMR_HOME='C:/Program Files/R/R-4.3.1/library/slimr'``` to this file.
+If you want to add this path permanently to your RStudio installation (so no need to run `Sys.setenv()` every time) you can use the command ``` usethis::edit_r_environ()``` and add a line like ```SLIMR_PATH='C:/Program Files/R/R-4.3.1/library/slimr'``` to this file.
 
 
 ## Run a first simple test

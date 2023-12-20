@@ -68,22 +68,22 @@ slimr::slim_is_avail()
 ```
 
 And if true is returned you are ready to go and run the test example
-below. In the case the test was not successful we need to find the
-folder where the slim executable has been installed and set this path in
-the R environment accordingly.
+below. In the case the test was not successful we need to find the path
+where the slim executable has been installed and set this path in the R
+environment accordingly.
 
 For example if SLiM is installed at
 `C:/Program Files/R/R-4.3.1/library/slimr` then you need to specify this
 via:
 
 ``` r
-Sys.setenv(SLIM_HOME='C:/Program Files/R/R-4.3.1/library/slimr')
+Sys.setenv(SLIM_PATH='C:/Program Files/R/R-4.3.1/library/slimr/slim.exe')
 ```
 
 If you want to add this path permanently to your RStudio installation
 (so no need to run `Sys.setenv()` every time) you can use the command
 `usethis::edit_r_environ()` and add a line like
-`SLIMR_HOME='C:/Program Files/R/R-4.3.1/library/slimr'` to this file.
+`SLIMR_PATH='C:/Program Files/R/R-4.3.1/library/slimr'` to this file.
 
 ## Run a first simple test
 
@@ -272,14 +272,14 @@ is a tibble that holds all the information that was used during runs.
 ``` r
 str(sr)
 #> List of 6
-#>  $ output     : chr [1:42] "// Initial random seed:" "16746825" "" "// RunInitializeCallbacks():" ...
+#>  $ output     : chr [1:42] "// Initial random seed:" "1451368211" "" "// RunInitializeCallbacks():" ...
 #>  $ exit_status: int 0
 #>  $ output_data: slmr_tp_ [10 × 5] (S3: slimr_output_data/spec_tbl_df/tbl_df/tbl/data.frame)
 #>   ..$ generation: int [1:10] 10 20 30 40 50 60 70 80 90 100
 #>   ..$ name      : chr [1:10] "p1" "p1" "p1" "p1" ...
 #>   ..$ expression: chr [1:10] "p1.genomes.output()" "p1.genomes.output()" "p1.genomes.output()" "p1.genomes.output()" ...
 #>   ..$ type      : chr [1:10] "slim_output" "slim_output" "slim_output" "slim_output" ...
-#>   ..$ data      : chr [1:10] "#OUT: 10 GS 66\nMutations:\n69 0 m1 46350 0 0.5 p1 1 3\n71 1 m1 59468 0 0.5 p1 1 3\n75 2 m1 86813 0 0.5 p1 1 3\"| __truncated__ "#OUT: 20 GS 66\nMutations:\n23 45 m1 63426 0 0.5 p1 1 23\n28 46 m1 92926 0 0.5 p1 1 23\n3 48 m1 41410 0 0.5 p1 "| __truncated__ "#OUT: 30 GS 66\nMutations:\n53 45 m1 63426 0 0.5 p1 1 33\n62 46 m1 92926 0 0.5 p1 1 33\n250 61 m1 66086 0 0.5 p"| __truncated__ "#OUT: 40 GS 66\nMutations:\n33 45 m1 63426 0 0.5 p1 1 40\n45 46 m1 92926 0 0.5 p1 1 40\n319 61 m1 66086 0 0.5 p"| __truncated__ ...
+#>   ..$ data      : chr [1:10] "#OUT: 10 GS 66\nMutations:\n5 3 m1 34932 0 0.5 p1 1 7\n85 10 m1 59907 0 0.5 p1 1 11\n87 11 m1 73352 0 0.5 p1 1 "| __truncated__ "#OUT: 20 GS 66\nMutations:\n33 10 m1 59907 0 0.5 p1 1 9\n34 11 m1 73352 0 0.5 p1 1 9\n62 17 m1 92598 0 0.5 p1 1"| __truncated__ "#OUT: 30 GS 66\nMutations:\n259 10 m1 59907 0 0.5 p1 1 5\n262 11 m1 73352 0 0.5 p1 1 5\n363 38 m1 55142 0 0.5 p"| __truncated__ "#OUT: 40 GS 66\nMutations:\n145 10 m1 59907 0 0.5 p1 1 6\n152 11 m1 73352 0 0.5 p1 1 6\n25 47 m1 46832 0 0.5 p1"| __truncated__ ...
 #>   ..- attr(*, "spec")=
 #>   .. .. cols(
 #>   .. ..   generation = col_integer(),
@@ -292,7 +292,7 @@ str(sr)
 #>  $ process    :Classes 'process', 'R6' PROCESS 'slim.exe', finished.
 #>  
 #>  $ error      : chr(0) 
-#>  $ output_file: chr "F:\\Rtemp\\RtmpaSsQ0w\\file8820721a6b8b.txt"
+#>  $ output_file: chr "F:\\Rtemp\\RtmpG8bC0h\\file2d6c47b718ae.txt"
 #>  - attr(*, "class")= chr "slimr_results"
 
 sr$output_data
@@ -323,23 +323,23 @@ gls
 #> # A tibble: 10 × 2
 #>    generation genlight        
 #>         <int> <list>          
-#>  1         10 <genlight[,284]>
-#>  2         20 <genlight[,363]>
-#>  3         30 <genlight[,351]>
-#>  4         40 <genlight[,408]>
-#>  5         50 <genlight[,436]>
-#>  6         60 <genlight[,438]>
-#>  7         70 <genlight[,564]>
-#>  8         80 <genlight[,557]>
-#>  9         90 <genlight[,603]>
-#> 10        100 <genlight[,594]>
+#>  1         10 <genlight[,237]>
+#>  2         20 <genlight[,337]>
+#>  3         30 <genlight[,397]>
+#>  4         40 <genlight[,405]>
+#>  5         50 <genlight[,444]>
+#>  6         60 <genlight[,474]>
+#>  7         70 <genlight[,510]>
+#>  8         80 <genlight[,547]>
+#>  9         90 <genlight[,456]>
+#> 10        100 <genlight[,559]>
 
 
 #the genlight object for generation 10
 gls$genlight[[1]]
 #>  /// GENLIGHT OBJECT /////////
 #> 
-#>  // 33 genotypes,  284 binary SNPs, size: 74.7 Kb
+#>  // 33 genotypes,  237 binary SNPs, size: 70.3 Kb
 #>  0 (0 %) missing data
 #> 
 #>  // Basic content
@@ -347,13 +347,13 @@ gls$genlight[[1]]
 #> 
 #>  // Optional content
 #>    @ind.names:  33 individual labels
-#>    @loc.names:  284 locus labels
+#>    @loc.names:  237 locus labels
 #>    @position: integer storing positions of the SNPs
 #>    @other: a list containing: mut_type  prevalence
 
 #number of loci at generation 10
 nLoc(gls$genlight[[1]])
-#> [1] 284
+#> [1] 237
 ```
 
 And finally we can use a simply `lapply` to find the number of loci in

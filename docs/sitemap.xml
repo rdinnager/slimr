@@ -10,6 +10,9 @@
     <loc>https://rdinnager.github.io/slimr/articles/articles/Main_manuscript_example_v2.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/articles/articles/multispecies.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/articles/articles/simple_example_using_migration_and_fst.html</loc>
   </url>
   <url>
@@ -961,6 +964,12 @@
     <loc>https://rdinnager.github.io/slimr/reference/mateChoice.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/minimal_slimr_script.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/minimal_slim_sim.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/mm16To256.html</loc>
   </url>
   <url>
@@ -1417,6 +1426,9 @@
     <loc>https://rdinnager.github.io/slimr/reference/slim_open.html</loc>
   </url>
   <url>
+    <loc>https://rdinnager.github.io/slimr/reference/slim_recipes.html</loc>
+  </url>
+  <url>
     <loc>https://rdinnager.github.io/slimr/reference/slim_results_to_data.html</loc>
   </url>
   <url>
@@ -1433,6 +1445,9 @@
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/slim_setup.html</loc>
+  </url>
+  <url>
+    <loc>https://rdinnager.github.io/slimr/reference/slim_template_info.html</loc>
   </url>
   <url>
     <loc>https://rdinnager.github.io/slimr/reference/slim_unload_globals.html</loc>

@@ -6,14 +6,6 @@ up this documentation). It will only do
 anything useful when used inside a slim_block function further
 nested in a slim_script
 function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
-Documentation for SLiM function createLogFile, which is a method of the
-SLiM class SLiMSim.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a slim_block function further
-nested in a slim_script
-function call, where it will be translated into valid SLiM code as part of a
 full SLiM script."><meta property="og:image" content="https://rdinnager.github.io/slimr/logo.png"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -32,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0.9000</span>
       </span>
     </div>
 
@@ -103,28 +95,10 @@ anything useful when used inside a <code><a href="slim_block.html">slim_block</a
 nested in a <code><a href="slim_script.html">slim_script</a></code>
 function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.</p>
-<p>Documentation for SLiM function <code>createLogFile</code>, which is a method of the
-SLiM class <code><a href="SLiMSim_Class.html">SLiMSim</a></code>.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
-nested in a <code><a href="slim_script.html">slim_script</a></code>
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.</p>
     </div>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">createLogFile</span><span class="op">(</span></span>
-<span>  <span class="va">filePath</span>,</span>
-<span>  <span class="va">initialContents</span>,</span>
-<span>  <span class="va">append</span>,</span>
-<span>  <span class="va">compress</span>,</span>
-<span>  <span class="va">sep</span>,</span>
-<span>  <span class="va">logInterval</span>,</span>
-<span>  <span class="va">flushInterval</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">createLogFile</span><span class="op">(</span></span>
 <span>  <span class="va">filePath</span>,</span>
 <span>  <span class="va">initialContents</span>,</span>
 <span>  <span class="va">append</span>,</span>
@@ -178,10 +152,6 @@ singleton). The default value is <code>NULL</code>. See details for description.
 
 <p>An object of type LogFile object. Return will be of length 1 (a
 singleton)</p>
-
-
-<p>An object of type LogFile object. Return will be of length 1 (a
-singleton)</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -225,46 +195,6 @@ contents; the initial write is not buffered. When compression is not enabled,
 the flushInterval setting is ignored. The LogFile documentation discusses how to
 configure and use LogFile to write out the data you are interested in from your
 simulation; see section 25.10.</p>
-<p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=NA" class="external-link">SLiM manual: page NA</a>.</p>
-<p>Creates and returns a new LogFile object that logs data from the
-simulation (see the documentation for the LogFile class for details). Logged
-data will be written to the file at filePath, overwriting any existing file at
-that path by default, or appending to it instead if append is T (successive rows
-of the log table will always be appended to the previously written content, of
-course). Before the header line for the log is written out, any string elements
-in initialContents will be written first, separated by newlines, allowing for a
-user-defined file header. If compress is T, the contents will be compressed with
-zlib as they are written, and the standard .gz extension for gzip-compressed
-files will be appended to the filename in filePath if it is not already present.
-The sep parameter specifies the separator between data values within a row.
-The default of "," will generate a "comma-separated value" (CSV) file, while
-passing sep="\t" will use a tab separator Eidos events fitness() mateChoice()
-modifyChild() recombination() interaction() reproduction() 566 instead to
-generate a "tab-separated value" (TSV) file. Other values for sep may also be
-used, but are less standard. LogTable supports periodic automatic logging of a
-new row of data, enabled by supplying a non-NULL value for logInterval. In this
-case, a new row will be logged (as if logRow() were called on the LogFile) at
-the end of every logInterval generations (just before the generation counter
-increments, in both WF and nonWF models), starting at the end of the generation
-in which the LogFile was created. A logInterval of 1 will cause automatic
-logging at the end of every generation, whereas a logInterval of NULL disables
-automatic logging. Automatic logging can always be disabled or reconfigured
-later with the LogFile method setLogInterval(), or logging can be triggered
-manually by calling logRow(). When compression is enabled, LogFile flushes new
-data lazily by default, for performance reasons, buffering data for multiple
-rows before writing to disk. Passing a non-NULL value for flushInterval requests
-a flush every flushInterval rows (with a value of 1 providing unbuffered
-operation). Note that flushing very frequently will likely result in both
-lower performance and a larger final file size (in one simple test, 48943 bytes
-instead of 4280 bytes, or more than a 10× increase in size). Alternatively,
-passing a very large value for flushInterval will effectively disable automatic
-flushing, except at the end of the simulation (but be aware that this may use
-a large amount of memory for large log files). In any case, the log file will
-be created immediately, with its requested initial contents; the initial write
-is not buffered. When compression is not enabled, the flushInterval setting is
-ignored. The LogFile documentation discusses how to configure and use LogFile to
-write out the data you are interested in from your simulation; see section 24.9.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -277,19 +207,11 @@ documentation is
 Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href="https://messerlab.org/slim/" class="external-link">https://messerlab.org/slim/</a></p>
-
-<p>This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: <a href="http://benhaller.com/slim/SLiM_Manual.pdf" class="external-link">http://benhaller.com/slim/SLiM_Manual.pdf</a>. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
-on the official website: <a href="https://messerlab.org/slim/" class="external-link">https://messerlab.org/slim/</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Community: 
-<code><a href="Community_Class.html">Community</a></code>,
+<code><a href="Community_Class.html">Co</a></code>,
 <code><a href="deregisterScriptBlock.html">deregisterScriptBlock</a>()</code>,
 <code><a href="genomicElementTypesWithIDs.html">genomicElementTypesWithIDs</a>()</code>,
 <code><a href="interactionTypesWithIDs.html">interactionTypesWithIDs</a>()</code>,
@@ -304,38 +226,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="simulationFinished.html">simulationFinished</a>()</code>,
 <code><a href="speciesWithIDs.html">speciesWithIDs</a>()</code>,
 <code><a href="subpopulationsWithIDs.html">subpopulationsWithIDs</a>()</code>,
-<code><a href="usage.html">usage</a>()</code></p>
-<p>Other SLiMSim: 
-<code><a href="SLiMSim_Class.html">SLiMSim</a></code>,
-<code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
-<code><a href="addSubpop.html">addSubpop</a>()</code>,
-<code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
-<code><a href="deregisterScriptBlock.html">deregisterScriptBlock</a>()</code>,
-<code><a href="mutationCounts.html">mutationCounts</a>()</code>,
-<code><a href="mutationFrequencies.html">mutationFrequencies</a>()</code>,
-<code><a href="mutationsOfType.html">mutationsOfType</a>()</code>,
-<code><a href="outputFixedMutations.html">outputFixedMutations</a>()</code>,
-<code><a href="outputFull.html">outputFull</a>()</code>,
-<code><a href="outputMutations.html">outputMutations</a>()</code>,
-<code><a href="outputUsage.html">outputUsage</a>()</code>,
-<code><a href="readFromPopulationFile.html">readFromPopulationFile</a>()</code>,
-<code><a href="recalculateFitness.html">recalculateFitness</a>()</code>,
-<code><a href="registerEarlyEvent.html">registerEarlyEvent</a>()</code>,
-<code><a href="registerFitnessCallback.html">registerFitnessCallback</a>()</code>,
-<code><a href="registerInteractionCallback.html">registerInteractionCallback</a>()</code>,
-<code><a href="registerLateEvent.html">registerLateEvent</a>()</code>,
-<code><a href="registerMateChoiceCallback.html">registerMateChoiceCallback</a>()</code>,
-<code><a href="registerModifyChildCallback.html">registerModifyChildCallback</a>()</code>,
-<code><a href="registerMutationCallback.html">registerMutationCallback</a>()</code>,
-<code><a href="registerRecombinationCallback.html">registerRecombinationCallback</a>()</code>,
-<code><a href="registerReproductionCallback.html">registerReproductionCallback</a>()</code>,
-<code><a href="rescheduleScriptBlock.html">rescheduleScriptBlock</a>()</code>,
-<code><a href="simulationFinished.html">simulationFinished</a>()</code>,
-<code><a href="subsetMutations.html">subsetMutations</a>()</code>,
-<code><a href="treeSeqCoalesced.html">treeSeqCoalesced</a>()</code>,
-<code><a href="treeSeqOutput.html">treeSeqOutput</a>()</code>,
-<code><a href="treeSeqRememberIndividuals.html">treeSeqRememberIndividuals</a>()</code>,
-<code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p></div>
+<code><a href="usage.html">usage</a>()</code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>

@@ -44,7 +44,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0.9000</span>
       </span>
     </div>
 
@@ -149,11 +149,11 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">slimr</span><span class="fu">::</span><span class="fu"><a href="reference/slim_is_avail.html">slim_is_avail</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
-<p>And if true is returned you are ready to go and run the test example below. In the case the test was not successful we need to find the folder where the slim executable has been installed and set this path in the R environment accordingly.</p>
+<p>And if true is returned you are ready to go and run the test example below. In the case the test was not successful we need to find the path where the slim executable has been installed and set this path in the R environment accordingly.</p>
 <p>For example if SLiM is installed at <code>C:/Program Files/R/R-4.3.1/library/slimr</code> then you need to specify this via:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>SLIM_HOME<span class="op">=</span><span class="st">'C:/Program Files/R/R-4.3.1/library/slimr'</span><span class="op">)</span></span></code></pre></div>
-<p>If you want to add this path permanently to your Rstudio installation (so no need to run <code><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv()</a></code> every time) you can use the command <code><a href="https://usethis.r-lib.org/reference/edit.html" class="external-link">usethis::edit_r_environ()</a></code> and add a line like <code>SLIMR_HOME='C:/Program Files/R/R-4.3.1/library/slimr'</code> to this file.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>SLIM_PATH<span class="op">=</span><span class="st">'C:/Program Files/R/R-4.3.1/library/slimr/slim.exe'</span><span class="op">)</span></span></code></pre></div>
+<p>If you want to add this path permanently to your RStudio installation (so no need to run <code><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv()</a></code> every time) you can use the command <code><a href="https://usethis.r-lib.org/reference/edit.html" class="external-link">usethis::edit_r_environ()</a></code> and add a line like <code>SLIMR_PATH='C:/Program Files/R/R-4.3.1/library/slimr'</code> to this file.</p>
 </div>
 <div class="section level2">
 <h2 id="run-a-first-simple-test">Run a first simple test<a class="anchor" aria-label="anchor" href="#run-a-first-simple-test"></a>
@@ -266,7 +266,7 @@
 <span>  <span class="fu"><a href="reference/slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span>, <span class="fu"><a href="reference/late.html">late</a></span><span class="op">(</span><span class="op">)</span>, </span>
 <span>    <span class="op">{</span></span>
 <span>      <span class="co">#create an output </span></span>
-<span>      <span class="fu"><a href="reference/r_output.html">slimr_output</a></span><span class="op">(</span><span class="fu">p1.genomes.output</span><span class="op">(</span><span class="op">)</span>, <span class="st">"p1"</span>, do_every<span class="op">=</span><span class="fl">10</span><span class="op">)</span>;</span>
+<span>      <span class="fu"><a href="reference/r_output.html">r_output</a></span><span class="op">(</span><span class="fu">p1.genomes.output</span><span class="op">(</span><span class="op">)</span>, <span class="st">"p1"</span>, do_every<span class="op">=</span><span class="fl">10</span><span class="op">)</span>;</span>
 <span>    <span class="op">}</span><span class="op">)</span>,</span>
 <span>  </span>
 <span>    </span>
@@ -297,14 +297,14 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">sr</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 6</span></span>
-<span><span class="co">#&gt;  $ output     : chr [1:42] "// Initial random seed:" "524845972" "" "// RunInitializeCallbacks():" ...</span></span>
+<span><span class="co">#&gt;  $ output     : chr [1:42] "// Initial random seed:" "2144618663" "" "// RunInitializeCallbacks():" ...</span></span>
 <span><span class="co">#&gt;  $ exit_status: int 0</span></span>
 <span><span class="co">#&gt;  $ output_data: slmr_tp_ [10 × 5] (S3: slimr_output_data/spec_tbl_df/tbl_df/tbl/data.frame)</span></span>
 <span><span class="co">#&gt;   ..$ generation: int [1:10] 10 20 30 40 50 60 70 80 90 100</span></span>
 <span><span class="co">#&gt;   ..$ name      : chr [1:10] "p1" "p1" "p1" "p1" ...</span></span>
 <span><span class="co">#&gt;   ..$ expression: chr [1:10] "p1.genomes.output()" "p1.genomes.output()" "p1.genomes.output()" "p1.genomes.output()" ...</span></span>
 <span><span class="co">#&gt;   ..$ type      : chr [1:10] "slim_output" "slim_output" "slim_output" "slim_output" ...</span></span>
-<span><span class="co">#&gt;   ..$ data      : chr [1:10] "#OUT: 10 GS 66\nMutations:\n60 3 m1 91517 0 0.5 p1 1 3\n156 8 m1 42112 0 0.5 p1 1 6\n140 18 m1 58247 0 0.5 p1 1"| __truncated__ "#OUT: 20 GS 66\nMutations:\n43 8 m1 42112 0 0.5 p1 1 12\n219 18 m1 58247 0 0.5 p1 1 2\n13 32 m1 49150 0 0.5 p1 "| __truncated__ "#OUT: 30 GS 66\nMutations:\n171 8 m1 42112 0 0.5 p1 1 8\n19 32 m1 49150 0 0.5 p1 1 18\n21 33 m1 60590 0 0.5 p1 "| __truncated__ "#OUT: 40 GS 66\nMutations:\n171 8 m1 42112 0 0.5 p1 1 12\n60 32 m1 49150 0 0.5 p1 1 12\n63 33 m1 60590 0 0.5 p1"| __truncated__ ...</span></span>
+<span><span class="co">#&gt;   ..$ data      : chr [1:10] "#OUT: 10 GS 66\nMutations:\n55 0 m1 29518 0 0.5 p1 1 8\n57 1 m1 42672 0 0.5 p1 1 8\n62 2 m1 72096 0 0.5 p1 1 8\"| __truncated__ "#OUT: 20 GS 66\nMutations:\n177 0 m1 29518 0 0.5 p1 1 2\n181 1 m1 42672 0 0.5 p1 1 2\n190 2 m1 72096 0 0.5 p1 1"| __truncated__ "#OUT: 30 GS 66\nMutations:\n221 46 m1 27581 0 0.5 p1 1 3\n7 62 m1 29198 0 0.5 p1 1 44\n12 63 m1 47772 0 0.5 p1 "| __truncated__ "#OUT: 40 GS 66\nMutations:\n96 46 m1 27581 0 0.5 p1 1 18\n39 62 m1 29198 0 0.5 p1 1 23\n48 63 m1 47772 0 0.5 p1"| __truncated__ ...</span></span>
 <span><span class="co">#&gt;   ..- attr(*, "spec")=</span></span>
 <span><span class="co">#&gt;   .. .. cols(</span></span>
 <span><span class="co">#&gt;   .. ..   generation = col_integer(),</span></span>
@@ -317,7 +317,7 @@
 <span><span class="co">#&gt;  $ process    :Classes 'process', 'R6' PROCESS 'slim.exe', finished.</span></span>
 <span><span class="co">#&gt;  </span></span>
 <span><span class="co">#&gt;  $ error      : chr(0) </span></span>
-<span><span class="co">#&gt;  $ output_file: chr "F:\\Rtemp\\RtmpgbqoPJ\\file5fc41a19ddf.txt"</span></span>
+<span><span class="co">#&gt;  $ output_file: chr "F:\\Rtemp\\RtmpGMnulh\\filebf81f44115c.txt"</span></span>
 <span><span class="co">#&gt;  - attr(*, "class")= chr "slimr_results"</span></span>
 <span></span>
 <span><span class="va">sr</span><span class="op">$</span><span class="va">output_data</span></span>
@@ -343,23 +343,23 @@
 <span><span class="co">#&gt; # A tibble: 10 × 2</span></span>
 <span><span class="co">#&gt;    generation genlight        </span></span>
 <span><span class="co">#&gt;         &lt;int&gt; &lt;list&gt;          </span></span>
-<span><span class="co">#&gt;  1         10 &lt;genlight[,265]&gt;</span></span>
-<span><span class="co">#&gt;  2         20 &lt;genlight[,305]&gt;</span></span>
-<span><span class="co">#&gt;  3         30 &lt;genlight[,399]&gt;</span></span>
-<span><span class="co">#&gt;  4         40 &lt;genlight[,437]&gt;</span></span>
-<span><span class="co">#&gt;  5         50 &lt;genlight[,450]&gt;</span></span>
-<span><span class="co">#&gt;  6         60 &lt;genlight[,565]&gt;</span></span>
-<span><span class="co">#&gt;  7         70 &lt;genlight[,577]&gt;</span></span>
-<span><span class="co">#&gt;  8         80 &lt;genlight[,531]&gt;</span></span>
-<span><span class="co">#&gt;  9         90 &lt;genlight[,603]&gt;</span></span>
-<span><span class="co">#&gt; 10        100 &lt;genlight[,553]&gt;</span></span>
+<span><span class="co">#&gt;  1         10 &lt;genlight[,252]&gt;</span></span>
+<span><span class="co">#&gt;  2         20 &lt;genlight[,321]&gt;</span></span>
+<span><span class="co">#&gt;  3         30 &lt;genlight[,371]&gt;</span></span>
+<span><span class="co">#&gt;  4         40 &lt;genlight[,324]&gt;</span></span>
+<span><span class="co">#&gt;  5         50 &lt;genlight[,356]&gt;</span></span>
+<span><span class="co">#&gt;  6         60 &lt;genlight[,415]&gt;</span></span>
+<span><span class="co">#&gt;  7         70 &lt;genlight[,548]&gt;</span></span>
+<span><span class="co">#&gt;  8         80 &lt;genlight[,498]&gt;</span></span>
+<span><span class="co">#&gt;  9         90 &lt;genlight[,480]&gt;</span></span>
+<span><span class="co">#&gt; 10        100 &lt;genlight[,567]&gt;</span></span>
 <span></span>
 <span></span>
 <span><span class="co">#the genlight object for generation 10</span></span>
 <span><span class="va">gls</span><span class="op">$</span><span class="va">genlight</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="co">#&gt;  /// GENLIGHT OBJECT /////////</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  // 33 genotypes,  265 binary SNPs, size: 73.3 Kb</span></span>
+<span><span class="co">#&gt;  // 33 genotypes,  252 binary SNPs, size: 72.1 Kb</span></span>
 <span><span class="co">#&gt;  0 (0 %) missing data</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  // Basic content</span></span>
@@ -367,13 +367,13 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  // Optional content</span></span>
 <span><span class="co">#&gt;    @ind.names:  33 individual labels</span></span>
-<span><span class="co">#&gt;    @loc.names:  265 locus labels</span></span>
+<span><span class="co">#&gt;    @loc.names:  252 locus labels</span></span>
 <span><span class="co">#&gt;    @position: integer storing positions of the SNPs</span></span>
 <span><span class="co">#&gt;    @other: a list containing: mut_type  prevalence</span></span>
 <span></span>
 <span><span class="co">#number of loci at generation 10</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/adegenet/man/accessors.html" class="external-link">nLoc</a></span><span class="op">(</span><span class="va">gls</span><span class="op">$</span><span class="va">genlight</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 265</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 252</span></span></code></pre></div>
 <p>And finally we can use a simply <code>lapply</code> to find the number of loci in the genlight for each generation (e.g. the number of loci that are polymorphic).</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>

@@ -72,9 +72,6 @@ split_isolate_sim <- slim_script(
 
 results <- slim_run(split_isolate_sim, throw_error = TRUE)
 
-## temporary for bug fixing
-stop(capture.output(str(results)))
-
 res_data <- slim_results_to_data(results)
 
 res_data

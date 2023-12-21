@@ -201,7 +201,7 @@ get_slim_call <- function() {
     if(is.null(slim_path)) {
       slim_call <- NULL
     } else {
-      slim_call <- list(call = slim_path,
+      slim_call <- list(call = slimr_which(slim_path),
                         args = "{script_file}")
     }
 

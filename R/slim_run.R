@@ -567,9 +567,9 @@ setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(
   } else {
     if(platform == "windows") {
       #slim_call <- list(call = "wsl", args = c(slim_path, "{script_file}"))
-      slim_call <- list(call = slim_path, args = "{script_file}")
+      slim_call <- list(call = slimr_which(slim_path), args = "{script_file}")
     } else {
-      slim_call <- list(call = slim_path, args = "{script_file}")
+      slim_call <- list(call = slimr_which(slim_path), args = "{script_file}")
     }
   }
 

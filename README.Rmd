@@ -26,6 +26,10 @@ knitr::opts_chunk$set(
 
 The goal of `slimr` is to run SLiM population genetics forward simulations from R. It also has utilities for monitoring the simulations, and bringing the resulting data into R for post-processing and visualization.
 
+The package is described in detail in the following manuscript:
+
+Dinnage, R., Sarre, S. D., Duncan, R. P., Dickman, C. R., Edwards, S. V., Greenville, A. C., Wardle, G. M., & Gruber, B. (2023). slimr: An R package for tailor-made integrations of data in population genomic simulations over space and time. Molecular Ecology Resources, 00, e13916. [https://doi.org/10.1111/1755-0998.13916](https://onlinelibrary.wiley.com/doi/10.1111/1755-0998.13916)
+
 ## Setup
 
 To be able to use `slimr` productively it is important to have a working version of [SLiM](https://messerlab.org/slim/) and `slimr`.
@@ -39,9 +43,6 @@ As a first step you need to install the package `slimr` from github.
 if (!require("devtools")) install.packages(devtools)
 devtools::install_github("rdinnager/slimr")  #downloads the latest version
 
-#for other branches you may want to try
-devtools::install_github("rdinnager/slimr", re = "v0.2.1")  #version accompanied with the manuscript
-
 ```
 
 `slimr` is also on R-Universe, and can be installed alternatively using the following code:
@@ -50,7 +51,9 @@ devtools::install_github("rdinnager/slimr", re = "v0.2.1")  #version accompanied
 install.packages('slimr', repos = c('https://rdinnager.r-universe.dev', 'https://cloud.r-project.org'))
 ```
 
-To facilitate the installation of slim We provide provide a function  ```slim_setup()```. This functions aims to download a precompiled binary of SLiM and automatically links slimr to SLiM. Unfortunately due to the variety of systems and installs this might not work. If that is is the case please follow the excellent documentation how to install SLiM on their websites.
+We are working to make `slimr` available on CRAN soon, but for now it is only available on github and R-Universe.
+
+To facilitate the installation of slim We provide a function  ```slim_setup()```. This functions aims to install SLiM and automatically link slimr to it. Note that the default and recommended method of installation requires the package [`reticulate`](https://rstudio.github.io/reticulate/), so make sure you install that first of you want the smoothest possible installation. `slimr` takes advantage of `reticulate`'s interface to 'conda' to install SLiM, which should work on all platforms. Alternatively, if you are a Windows user, `slim_setup(method = 'binary')` will attempt to download a precompiled binary that we have provided via github. If this does not work, or you'd prefer to install SLiM yourself (perhaps to optimize performance by compiling with your own system's efficient libraries), please follow the excellent documentation on how to install SLiM in the SLiM manual, available on the SLiM website.
 
 * [Windows](http://benhaller.com/slim/SLiM_Manual.pdf#page=64)
 * [Linux](http://benhaller.com/slim/SLiM_Manual.pdf#page=59)
@@ -73,7 +76,7 @@ For example if SLiM is installed at `C:/Program Files/R/R-4.3.1/library/slimr` t
 Sys.setenv(SLIM_PATH='C:/Program Files/R/R-4.3.1/library/slimr/slim.exe')
 ```
 
-If you want to add this path permanently to your RStudio installation (so no need to run `Sys.setenv()` every time) you can use the command ``` usethis::edit_r_environ()``` and add a line like ```SLIMR_PATH='C:/Program Files/R/R-4.3.1/library/slimr'``` to this file.
+If you want to add this path permanently to your RStudio installation (so no need to run `Sys.setenv()` every time) you can use the command ``` usethis::edit_r_environ()``` and add a line like ```SLIM_PATH='C:/Program Files/R/R-4.3.1/library/slimr'``` to this file.
 
 
 ## Run a first simple test
@@ -122,10 +125,11 @@ See the vignettes for details of these features and how to use them.
 ## A complete workflow
 
 Below is a simple "complete" workflow. 
-* Creating a script in R
-* Run SLiM
-* Load the results into R
-* Analyse and visualise the results.
+
+- Creating a script in R
+- Run SLiM
+- Load the results into R
+- Analyse and visualise the results.
 
 As an example we simply will run a single population of 33 individuals for 100 generations, with a single chromosome of (length=100000 bases), and high mutation rate (1e-5) [to shorten run-time]. Every 10 generation we will save the genetic status of each individual for 100 generations. Once completed we read back in the genotypes (as a genlight object) and count the number of loci every of the 10 generations (the number of loci increases due to the mutations, that occurs during the simulation. 
 

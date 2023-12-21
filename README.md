@@ -20,6 +20,15 @@ simulations from R. It also has utilities for monitoring the
 simulations, and bringing the resulting data into R for post-processing
 and visualization.
 
+The package is described in detail in the following manuscript:
+
+Dinnage, R., Sarre, S. D., Duncan, R. P., Dickman, C. R., Edwards, S.
+V., Greenville, A. C., Wardle, G. M., & Gruber, B. (2023). slimr: An R
+package for tailor-made integrations of data in population genomic
+simulations over space and time. Molecular Ecology Resources, 00,
+e13916.
+[https://doi.org/10.1111/1755-0998.13916](https://onlinelibrary.wiley.com/doi/10.1111/1755-0998.13916)
+
 ## Setup
 
 To be able to use `slimr` productively it is important to have a working
@@ -33,9 +42,6 @@ As a first step you need to install the package `slimr` from github.
 
 if (!require("devtools")) install.packages(devtools)
 devtools::install_github("rdinnager/slimr")  #downloads the latest version
-
-#for other branches you may want to try
-devtools::install_github("rdinnager/slimr", re = "v0.2.1")  #version accompanied with the manuscript
 ```
 
 `slimr` is also on R-Universe, and can be installed alternatively using
@@ -45,12 +51,23 @@ the following code:
 install.packages('slimr', repos = c('https://rdinnager.r-universe.dev', 'https://cloud.r-project.org'))
 ```
 
-To facilitate the installation of slim We provide provide a function
-`slim_setup()`. This functions aims to download a precompiled binary of
-SLiM and automatically links slimr to SLiM. Unfortunately due to the
-variety of systems and installs this might not work. If that is is the
-case please follow the excellent documentation how to install SLiM on
-their websites.
+We are working to make `slimr` available on CRAN soon, but for now it is
+only available on github and R-Universe.
+
+To facilitate the installation of slim We provide a function
+`slim_setup()`. This functions aims to install SLiM and automatically
+link slimr to it. Note that the default and recommended method of
+installation requires the package
+[`reticulate`](https://rstudio.github.io/reticulate/), so make sure you
+install that first of you want the smoothest possible installation.
+`slimr` takes advantage of `reticulate`‘s interface to ’conda’ to
+install SLiM, which should work on all platforms. Alternatively, if you
+are a Windows user, `slim_setup(method = 'binary')` will attempt to
+download a precompiled binary that we have provided via github. If this
+does not work, or you’d prefer to install SLiM yourself (perhaps to
+optimize performance by compiling with your own system’s efficient
+libraries), please follow the excellent documentation on how to install
+SLiM in the SLiM manual, available on the SLiM website.
 
 - [Windows](http://benhaller.com/slim/SLiM_Manual.pdf#page=64)
 - [Linux](http://benhaller.com/slim/SLiM_Manual.pdf#page=59)
@@ -83,7 +100,7 @@ Sys.setenv(SLIM_PATH='C:/Program Files/R/R-4.3.1/library/slimr/slim.exe')
 If you want to add this path permanently to your RStudio installation
 (so no need to run `Sys.setenv()` every time) you can use the command
 `usethis::edit_r_environ()` and add a line like
-`SLIMR_PATH='C:/Program Files/R/R-4.3.1/library/slimr'` to this file.
+`SLIM_PATH='C:/Program Files/R/R-4.3.1/library/slimr'` to this file.
 
 ## Run a first simple test
 
@@ -173,8 +190,12 @@ See the vignettes for details of these features and how to use them.
 
 ## A complete workflow
 
-Below is a simple “complete” workflow. \* Creating a script in R \* Run
-SLiM \* Load the results into R \* Analyse and visualise the results.
+Below is a simple “complete” workflow.
+
+- Creating a script in R
+- Run SLiM
+- Load the results into R
+- Analyse and visualise the results.
 
 As an example we simply will run a single population of 33 individuals
 for 100 generations, with a single chromosome of (length=100000 bases),
@@ -272,14 +293,14 @@ is a tibble that holds all the information that was used during runs.
 ``` r
 str(sr)
 #> List of 6
-#>  $ output     : chr [1:42] "// Initial random seed:" "2144618663" "" "// RunInitializeCallbacks():" ...
+#>  $ output     : chr [1:42] "// Initial random seed:" "86031283" "" "// RunInitializeCallbacks():" ...
 #>  $ exit_status: int 0
 #>  $ output_data: slmr_tp_ [10 × 5] (S3: slimr_output_data/spec_tbl_df/tbl_df/tbl/data.frame)
 #>   ..$ generation: int [1:10] 10 20 30 40 50 60 70 80 90 100
 #>   ..$ name      : chr [1:10] "p1" "p1" "p1" "p1" ...
 #>   ..$ expression: chr [1:10] "p1.genomes.output()" "p1.genomes.output()" "p1.genomes.output()" "p1.genomes.output()" ...
 #>   ..$ type      : chr [1:10] "slim_output" "slim_output" "slim_output" "slim_output" ...
-#>   ..$ data      : chr [1:10] "#OUT: 10 GS 66\nMutations:\n55 0 m1 29518 0 0.5 p1 1 8\n57 1 m1 42672 0 0.5 p1 1 8\n62 2 m1 72096 0 0.5 p1 1 8\"| __truncated__ "#OUT: 20 GS 66\nMutations:\n177 0 m1 29518 0 0.5 p1 1 2\n181 1 m1 42672 0 0.5 p1 1 2\n190 2 m1 72096 0 0.5 p1 1"| __truncated__ "#OUT: 30 GS 66\nMutations:\n221 46 m1 27581 0 0.5 p1 1 3\n7 62 m1 29198 0 0.5 p1 1 44\n12 63 m1 47772 0 0.5 p1 "| __truncated__ "#OUT: 40 GS 66\nMutations:\n96 46 m1 27581 0 0.5 p1 1 18\n39 62 m1 29198 0 0.5 p1 1 23\n48 63 m1 47772 0 0.5 p1"| __truncated__ ...
+#>   ..$ data      : chr [1:10] "#OUT: 10 GS 66\nMutations:\n68 7 m1 533 0 0.5 p1 1 8\n70 8 m1 14881 0 0.5 p1 1 8\n13 9 m1 7396 0 0.5 p1 1 14\n1"| __truncated__ "#OUT: 20 GS 66\nMutations:\n2 9 m1 7396 0 0.5 p1 1 28\n9 10 m1 38660 0 0.5 p1 1 28\n83 20 m1 27269 0 0.5 p1 1 1"| __truncated__ "#OUT: 30 GS 66\nMutations:\n3 9 m1 7396 0 0.5 p1 1 40\n13 10 m1 38660 0 0.5 p1 1 40\n109 20 m1 27269 0 0.5 p1 1"| __truncated__ "#OUT: 40 GS 66\nMutations:\n58 9 m1 7396 0 0.5 p1 1 37\n70 10 m1 38660 0 0.5 p1 1 37\n173 20 m1 27269 0 0.5 p1 "| __truncated__ ...
 #>   ..- attr(*, "spec")=
 #>   .. .. cols(
 #>   .. ..   generation = col_integer(),
@@ -292,7 +313,7 @@ str(sr)
 #>  $ process    :Classes 'process', 'R6' PROCESS 'slim.exe', finished.
 #>  
 #>  $ error      : chr(0) 
-#>  $ output_file: chr "F:\\Rtemp\\RtmpGMnulh\\filebf81f44115c.txt"
+#>  $ output_file: chr "F:\\Rtemp\\RtmpYlRp8x\\file663061a8581c.txt"
 #>  - attr(*, "class")= chr "slimr_results"
 
 sr$output_data
@@ -323,23 +344,23 @@ gls
 #> # A tibble: 10 × 2
 #>    generation genlight        
 #>         <int> <list>          
-#>  1         10 <genlight[,252]>
-#>  2         20 <genlight[,321]>
-#>  3         30 <genlight[,371]>
-#>  4         40 <genlight[,324]>
-#>  5         50 <genlight[,356]>
-#>  6         60 <genlight[,415]>
-#>  7         70 <genlight[,548]>
-#>  8         80 <genlight[,498]>
-#>  9         90 <genlight[,480]>
-#> 10        100 <genlight[,567]>
+#>  1         10 <genlight[,274]>
+#>  2         20 <genlight[,346]>
+#>  3         30 <genlight[,427]>
+#>  4         40 <genlight[,438]>
+#>  5         50 <genlight[,511]>
+#>  6         60 <genlight[,489]>
+#>  7         70 <genlight[,573]>
+#>  8         80 <genlight[,640]>
+#>  9         90 <genlight[,653]>
+#> 10        100 <genlight[,626]>
 
 
 #the genlight object for generation 10
 gls$genlight[[1]]
 #>  /// GENLIGHT OBJECT /////////
 #> 
-#>  // 33 genotypes,  252 binary SNPs, size: 72.1 Kb
+#>  // 33 genotypes,  274 binary SNPs, size: 74 Kb
 #>  0 (0 %) missing data
 #> 
 #>  // Basic content
@@ -347,13 +368,13 @@ gls$genlight[[1]]
 #> 
 #>  // Optional content
 #>    @ind.names:  33 individual labels
-#>    @loc.names:  252 locus labels
+#>    @loc.names:  274 locus labels
 #>    @position: integer storing positions of the SNPs
 #>    @other: a list containing: mut_type  prevalence
 
 #number of loci at generation 10
 nLoc(gls$genlight[[1]])
-#> [1] 252
+#> [1] 274
 ```
 
 And finally we can use a simply `lapply` to find the number of loci in

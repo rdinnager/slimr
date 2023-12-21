@@ -95,12 +95,11 @@ reference:
     - SB
     - SLiMEidosBlock
     - SEB
-    - SLiMSim
-    - SS
     - SLiMgui
     - SG
     - SpatialMap
     - SM
+    - SS
     - Subpopulation
     - P
     - Substitution
@@ -176,17 +175,22 @@ reference:
   - contents:
     - slim_code_Rify
     - slim_code_SLiMify
-  - title: Uncategorized
-  - contents:
     - as_slimr_script
     - as_slimr_code
     - as_slim_text
     - as_slim_text.slimr_script
+  - title: Datasets
+  - contents:
+    - slim_recipes
+  - title: Uncategorized
+  - contents:
     - code
     - end_gen
     - first
     - get_block
     - get_slim_call
+    - minimal_slim_sim
+    - minimal_slimr_script
     - new_slimr_script_coll
     - reconstruct
     - reconstruct.slimr_script

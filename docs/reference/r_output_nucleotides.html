@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0.9000</span>
       </span>
     </div>
 
@@ -127,6 +127,46 @@ individuals are returned.</p></dd>
 <p>None</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">test_sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="slim_script.html">slim_script</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="callback_initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="co">## tell SLiM to simulate nucleotides</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="initializeSLiMOptions.html">initializeSLiMOptions</a></span><span class="op">(</span>nucleotideBased<span class="op">=</span><span class="cn">T</span><span class="op">)</span>;</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="initializeAncestralNucleotides.html">initializeAncestralNucleotides</a></span><span class="op">(</span><span class="fu">randomNucleotides</span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span><span class="op">)</span>;</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="initializeMutationTypeNuc.html">initializeMutationTypeNuc</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fl">0.0</span><span class="op">)</span>;</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="initializeGenomicElementType.html">initializeGenomicElementType</a></span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fl">1.0</span>, <span class="fu"><a href="mmJukesCantor.html">mmJukesCantor</a></span><span class="op">(</span><span class="fl">1e-5</span><span class="op">)</span><span class="op">)</span>;</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="initializeGenomicElement.html">initializeGenomicElement</a></span><span class="op">(</span><span class="va">g1</span>, <span class="fl">0</span>, <span class="fl">1000</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>;</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="initializeRecombinationRate.html">initializeRecombinationRate</a></span><span class="op">(</span><span class="fl">1e-8</span><span class="op">)</span>;</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>  <span class="op">}</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="slim_block_add_subpops.html">slim_block_add_subpops</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  <span class="fu"><a href="slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">20</span>, <span class="fu"><a href="late.html">late</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="fu">r_output_nucleotides</span><span class="op">(</span><span class="st">"out"</span>, do_every <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">test_sim</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;slimr_script[3]&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="background-color: #00BBBB; font-weight: bold;">block_init:</span>initialize() <span style="color: #BBBB00;">{</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     <span style="color: #00BBBB;">initializeSLiMOptions</span><span style="color: #0000BB;">(</span>nucleotideBased = T<span style="color: #0000BB;">)</span>;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     <span style="color: #00BBBB;">initializeAncestralNucleotides</span><span style="color: #0000BB;">(</span><span style="color: #00BBBB;">randomNucleotides(</span><span style="color: #0000BB;">1000</span><span style="color: #00BBBB;">)</span><span style="color: #0000BB;">)</span>;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     <span style="color: #00BBBB;">initializeMutationTypeNuc</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"m1"</span>, <span style="color: #0000BB;">0.5</span>, <span style="color: #BBBB00;">"f"</span>, <span style="color: #0000BB;">0)</span>;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     <span style="color: #00BBBB;">initializeGenomicElementType</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"g1"</span>, m1, <span style="color: #0000BB;">1</span>, <span style="color: #00BBBB;">mmJukesCantor(</span><span style="color: #0000BB;">1e-05</span><span style="color: #00BBBB;">)</span><span style="color: #0000BB;">)</span>;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     <span style="color: #00BBBB;">initializeGenomicElement</span><span style="color: #0000BB;">(</span>g1, <span style="color: #0000BB;">0</span>, <span style="color: #0000BB;">1000</span> <span style="color: #00BB00;">-</span> <span style="color: #0000BB;">1)</span>;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     <span style="color: #00BBBB;">initializeRecombinationRate</span><span style="color: #0000BB;">(1e-08)</span>;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">}</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="background-color: #00BBBB; font-weight: bold;">block_2:</span>1 early() <span style="color: #BBBB00;">{</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     <span style="color: #00BBBB;">sim.addSubpop</span><span style="color: #0000BB;">(</span><span style="color: #BBBB00;">"p1"</span>, <span style="color: #0000BB;">100)</span>;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">}</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="background-color: #00BBBB; font-weight: bold;">block_3:</span>1:20 late() <span style="color: #BBBB00;">{</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     <span style="color: #0000BB;">{</span><span style="color: #00BBBB;">paste(sim.subpopulations.individuals.genome1.nucleotides</span><span style="color: #BBBB00;">()</span><span style="color: #00BBBB;">)</span> <span style="color: #00BB00;">-&gt;</span> out<span style="color: #0000BB;">}</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">}</span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

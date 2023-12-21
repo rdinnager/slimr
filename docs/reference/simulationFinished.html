@@ -8,14 +8,6 @@ nested in a slim_script
 function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 Documentation for SLiM function simulationFinished, which is a method of
-the SLiM class SLiMSim.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a slim_block function further
-nested in a slim_script
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
-Documentation for SLiM function simulationFinished, which is a method of
 the SLiM class Species.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
@@ -40,7 +32,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0.9000</span>
       </span>
     </div>
 
@@ -112,14 +104,6 @@ nested in a <code><a href="slim_script.html">slim_script</a></code>
 function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.</p>
 <p>Documentation for SLiM function <code>simulationFinished</code>, which is a method of
-the SLiM class <code><a href="SLiMSim_Class.html">SLiMSim</a></code>.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
-nested in a <code><a href="slim_script.html">slim_script</a></code>
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.</p>
-<p>Documentation for SLiM function <code>simulationFinished</code>, which is a method of
 the SLiM class <code><a href="Species_Class.html">Species</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
@@ -131,8 +115,6 @@ full SLiM script.</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">simulationFinished</span><span class="op">(</span><span class="va">void</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">simulationFinished</span><span class="op">(</span><span class="va">void</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">simulationFinished</span><span class="op">(</span><span class="va">void</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -146,9 +128,6 @@ full SLiM script.</p>
     <div id="value">
     <h2>Value</h2>
     
-
-<p>An object of type void.</p>
-
 
 <p>An object of type void.</p>
 
@@ -169,18 +148,6 @@ the current tick. For example, a simulation might self-terminate if a test for
 a dynamic equilibrium condition is satisfied. Note that the current tick will
 finish executing; if you want the simulation to stop immediately, you can use
 the Eidos method stop(), which raises an error condition.</p>
-<p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=NA" class="external-link">SLiM manual: page NA</a>.</p>
-<p>Declare the current simulation finished. Normally SLiM ends a
-simulation when, at the end of a generation, there are no script events or
-callbacks registered for any future generation (excluding scripts with no
-declared end generation). If you wish to end a simulation before this condition
-is met, a call to simulationFinished() will cause the current simulation to
-end at the end of the current generation. For example, a simulation might
-self-terminate if a test for a dynamic equilibrium condition is satisfied. Note
-that the current generation will finish executing; if you want the simulation
-to stop immediately, you can use the Eidos method stop(), which raises an error
-condition.</p>
 <p>Documentation for this function can be found in the official
 <a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=727" class="external-link">SLiM manual: page
 727</a>.</p>
@@ -209,19 +176,11 @@ documentation is
 Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href="https://messerlab.org/slim/" class="external-link">https://messerlab.org/slim/</a></p>
-
-<p>This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: <a href="http://benhaller.com/slim/SLiM_Manual.pdf" class="external-link">http://benhaller.com/slim/SLiM_Manual.pdf</a>. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
-on the official website: <a href="https://messerlab.org/slim/" class="external-link">https://messerlab.org/slim/</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Community: 
-<code><a href="Community_Class.html">Community</a></code>,
+<code><a href="Community_Class.html">Co</a></code>,
 <code><a href="createLogFile.html">createLogFile</a>()</code>,
 <code><a href="deregisterScriptBlock.html">deregisterScriptBlock</a>()</code>,
 <code><a href="genomicElementTypesWithIDs.html">genomicElementTypesWithIDs</a>()</code>,
@@ -237,39 +196,8 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="speciesWithIDs.html">speciesWithIDs</a>()</code>,
 <code><a href="subpopulationsWithIDs.html">subpopulationsWithIDs</a>()</code>,
 <code><a href="usage.html">usage</a>()</code></p>
-<p>Other SLiMSim: 
-<code><a href="SLiMSim_Class.html">SLiMSim</a></code>,
-<code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
-<code><a href="addSubpop.html">addSubpop</a>()</code>,
-<code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
-<code><a href="createLogFile.html">createLogFile</a>()</code>,
-<code><a href="deregisterScriptBlock.html">deregisterScriptBlock</a>()</code>,
-<code><a href="mutationCounts.html">mutationCounts</a>()</code>,
-<code><a href="mutationFrequencies.html">mutationFrequencies</a>()</code>,
-<code><a href="mutationsOfType.html">mutationsOfType</a>()</code>,
-<code><a href="outputFixedMutations.html">outputFixedMutations</a>()</code>,
-<code><a href="outputFull.html">outputFull</a>()</code>,
-<code><a href="outputMutations.html">outputMutations</a>()</code>,
-<code><a href="outputUsage.html">outputUsage</a>()</code>,
-<code><a href="readFromPopulationFile.html">readFromPopulationFile</a>()</code>,
-<code><a href="recalculateFitness.html">recalculateFitness</a>()</code>,
-<code><a href="registerEarlyEvent.html">registerEarlyEvent</a>()</code>,
-<code><a href="registerFitnessCallback.html">registerFitnessCallback</a>()</code>,
-<code><a href="registerInteractionCallback.html">registerInteractionCallback</a>()</code>,
-<code><a href="registerLateEvent.html">registerLateEvent</a>()</code>,
-<code><a href="registerMateChoiceCallback.html">registerMateChoiceCallback</a>()</code>,
-<code><a href="registerModifyChildCallback.html">registerModifyChildCallback</a>()</code>,
-<code><a href="registerMutationCallback.html">registerMutationCallback</a>()</code>,
-<code><a href="registerRecombinationCallback.html">registerRecombinationCallback</a>()</code>,
-<code><a href="registerReproductionCallback.html">registerReproductionCallback</a>()</code>,
-<code><a href="rescheduleScriptBlock.html">rescheduleScriptBlock</a>()</code>,
-<code><a href="subsetMutations.html">subsetMutations</a>()</code>,
-<code><a href="treeSeqCoalesced.html">treeSeqCoalesced</a>()</code>,
-<code><a href="treeSeqOutput.html">treeSeqOutput</a>()</code>,
-<code><a href="treeSeqRememberIndividuals.html">treeSeqRememberIndividuals</a>()</code>,
-<code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p>
 <p>Other Species: 
-<code><a href="Species_Class.html">Species</a></code>,
+<code><a href="Species_Class.html">Sp</a></code>,
 <code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="addSubpop.html">addSubpop</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,

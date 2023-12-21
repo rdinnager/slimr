@@ -22,7 +22,7 @@ used within a slim_block call"><meta property="og:image" content="https://rdinna
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0.9000</span>
       </span>
     </div>
 
@@ -124,7 +124,7 @@ used within a <code><a href="slim_block.html">slim_block</a></code> call</p>
     <dl><dt>slimr_expr</dt>
 <dd><p>A SLiM expression to generate output. This can either be
 a SLiM expression designed to create output, such as <code><a href="outputFull.html">outputFull()</a></code>,
-or an object created in the SLiM code, in which case <code>slimr_output</code>
+or an object created in the SLiM code, in which case <code>r_output</code>
 will automatically concatenate it to a string and output it</p></dd>
 
 
@@ -210,7 +210,7 @@ use `sim.generation` instead (this parameter is for backwards compatability with
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Success!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #OUT: 100 100 SV p1 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ##fileformat=VCFv4.2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ##fileDate=20231218</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ##fileDate=20231221</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ##source=SLiM</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ##INFO=&lt;ID=MID,Number=.,Type=Integer,Description="Mutation ID in SLiM"&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ##INFO=&lt;ID=S,Number=.,Type=Float,Description="Selection Coefficient"&gt;</span>
@@ -223,17 +223,7 @@ use `sim.generation` instead (this parameter is for backwards compatability with
 <span class="r-out co"><span class="r-pr">#&gt;</span> ##INFO=&lt;ID=MULTIALLELIC,Number=0,Type=Flag,Description="Multiallelic"&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ##FORMAT=&lt;ID=GT,Number=1,Type=String,Description="Genotype"&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	i0	i1	i2	i3	i4	i5	i6	i7	i8	i9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	2096	.	A	T	1000	PASS	MID=164;S=0;DOM=0.5;PO=1;TO=92;MT=1;AC=1;DP=1000	GT	0|0	1|0	0|0	0|0	0|0	0|0	0|0	0|0	0|0	0|0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	20560	.	A	T	1000	PASS	MID=114;S=0;DOM=0.5;PO=1;TO=64;MT=1;AC=6;DP=1000	GT	0|0	0|1	1|1	0|0	1|0	0|0	1|0	1|0	0|0	0|0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	44032	.	A	T	1000	PASS	MID=180;S=0;DOM=0.5;PO=1;TO=98;MT=1;AC=1;DP=1000	GT	0|0	0|0	0|1	0|0	0|0	0|0	0|0	0|0	0|0	0|0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	48272	.	A	T	1000	PASS	MID=2;S=0;DOM=0.5;PO=1;TO=2;MT=1;AC=18;DP=1000	GT	1|1	0|1	1|1	1|1	1|1	1|1	1|1	1|1	0|1	1|1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	59357	.	A	T	1000	PASS	MID=11;S=0;DOM=0.5;PO=1;TO=7;MT=1;AC=18;DP=1000	GT	1|1	0|1	1|1	1|1	1|1	1|1	1|1	1|1	0|1	1|1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	63631	.	A	T	1000	PASS	MID=157;S=0;DOM=0.5;PO=1;TO=88;MT=1;AC=2;DP=1000	GT	0|0	0|0	0|0	1|0	0|0	0|0	0|0	0|1	0|0	0|0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	76709	.	A	T	1000	PASS	MID=177;S=0;DOM=0.5;PO=1;TO=97;MT=1;AC=1;DP=1000	GT	0|0	0|0	0|0	0|0	0|0	1|0	0|0	0|0	0|0	0|0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	80807	.	A	T	1000	PASS	MID=79;S=0;DOM=0.5;PO=1;TO=44;MT=1;AC=1;DP=1000	GT	0|0	0|0	0|0	0|0	0|0	0|0	0|1	0|0	0|0	0|0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	87781	.	A	T	1000	PASS	MID=77;S=0;DOM=0.5;PO=1;TO=42;MT=1;AC=13;DP=1000	GT	1|0	0|1	1|1	1|1	1|0	1|0	1|0	1|1	0|1	1|0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	96084	.	A	T	1000	PASS	MID=165;S=0;DOM=0.5;PO=1;TO=93;MT=1;AC=1;DP=1000	GT	0|0	0|0	0|0	0|0	0|0	0|1	0|0	0|0	0|0	0|0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1	97364	.	A	T	1000	PASS	MID=101;S=0;DOM=0.5;PO=1;TO=55;MT=1;AC=4;DP=1000	GT	0|1	0|0	0|0	0|0	0|1	0|1	0|0	0|0	0|0	0|1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1	61727	.	A	T	1000	PASS	MID=187;S=0;DOM=0.5;PO=1;TO=97;MT=1;AC=2;DP=1000	GT	0|0	0|0	0|0	0|0	0|0	1|0	0|0	1|0	0|0	0|0</span>
 </code></pre></div>
     </div>
   </div>

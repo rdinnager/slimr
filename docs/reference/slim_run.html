@@ -18,7 +18,7 @@ a character vector, or a text file."><meta property="og:image" content="https://
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0.9000</span>
       </span>
     </div>
 
@@ -190,12 +190,12 @@ the script to the R console if show_output is TRUE</p></dd>
 
 <dt>capture_output</dt>
 <dd><p>If <code>TRUE</code>, output from the script will be captured and included in the returned object. Unless
-<code>keep_all_output</code> is <code>TRUE</code>, only non-data output will be kept (e.g. output not produced by a <code>slimr_output</code>
+<code>keep_all_output</code> is <code>TRUE</code>, only non-data output will be kept (e.g. output not produced by a <code>r_output</code>
 call)</p></dd>
 
 
 <dt>keep_all_output</dt>
-<dd><p>If there is data produced by <code>slimr_output</code> calls, should it be captured as well? Ignored if
+<dd><p>If there is data produced by <code>r_output</code> calls, should it be captured as well? Ignored if
 <code>capture_output</code> is not <code>TRUE</code></p></dd>
 
 
@@ -209,7 +209,7 @@ for simply status print outs..</p></dd>
 <dt>callbacks</dt>
 <dd><p>A list of functions to be called during the SLiM run. This can be used to
 dynamically transform or visualise output from the simulation while it is running. It should
-be of the form <code>function(data, ...) {do something..}</code>. If using <code><a href="r_output.html">slimr_output</a></code>
+be of the form <code>function(data, ...) {do something..}</code>. If using <code><a href="r_output.html">r_output</a></code>
 to get formatted data output from SLiM, data will be a four column <code>tibble</code>
 containing output from the current iteration of the simulation. Columns are:</p><dl><dt>generation</dt>
 <dd><p>A vector of generations processed in the current iteration</p></dd>
@@ -275,10 +275,22 @@ in a script if subsequent code assumes that the simulation finished successfully
     
 
 <p>A <code>slimr_results</code> object which has the following components:</p><dl><dt>output</dt>
-<dd><p>A character vector of raw output. Will be NULL if <code>capture_output is <code>FALSE</code></code></p></dd>
+<dd><p>A character vector of raw output. Will be NULL if <code>capture_output</code> is <code>FALSE</code></p></dd>
 
 <dt>exit_status</dt>
 <dd><p>The exit status code returned by the SLiM process. 0 means success.</p></dd>
+
+<dt>output_data</dt>
+<dd><p>A `tibble` containing output from <code>r_output</code> calls.</p></dd>
+
+<dt>process</dt>
+<dd><p>A <code>processx</code> object containing information about the SLiM process used during the run.</p></dd>
+
+<dt>error</dt>
+<dd><p>If an error was encountered during the run, this will be a character vector containing the error message.</p></dd>
+
+<dt>output_file</dt>
+<dd><p>The path to the file containing captured output from SLiM during the run.</p></dd>
 
 
 </dl></div>
@@ -290,6 +302,67 @@ in a script if subsequent code assumes that the simulation finished successfully
 <li><p><code>slim_run(slimr_script_coll)</code>: Run a SLiM script from slimr_script object</p></li>
 </ul></div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="slim_is_avail.html">slim_is_avail</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">test_sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="slim_script.html">slim_script</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="slim_block_init_minimal.html">slim_block_init_minimal</a></span><span class="op">(</span>mutation_rate <span class="op">=</span> <span class="fl">1e-6</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="slim_block_add_subpops.html">slim_block_add_subpops</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">20</span>, <span class="fu"><a href="late.html">late</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span></span></span>
+<span class="r-in"><span>      <span class="fu"><a href="r_output.html">r_output</a></span><span class="op">(</span><span class="fu">sim.outputFull</span><span class="op">(</span><span class="op">)</span>, <span class="st">"out"</span>, do_every <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">slim_run</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">test_sim</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Simulation finished with exit status: 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Success!</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $output</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "// Initial random seed:"                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2] "400679808"                                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] ""                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "// RunInitializeCallbacks():"             </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "initializeMutationRate(1e-06);"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] "initializeMutationType(1, 0.5, \"f\", 0);"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "initializeGenomicElementType(1, m1, 1);"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "initializeGenomicElement(g1, 0, 99999);"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "initializeRecombinationRate(1e-08);"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10] ""                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "// Starting run at tick &lt;start&gt;:"         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [12] "1 "                                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] ""                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [14] ""                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "&lt;slimr_out:start&gt;"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "&lt;slimr_out:end&gt;"                          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] ""                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [18] "&lt;slimr_out:start&gt;"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $exit_status</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $output_data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   generation name  expression       type        data                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>         10 out   sim.outputFull() slim_output <span style="color: #949494;">"</span>#OUT: 10 10 A\nVersion: 3\nPop…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>         20 out   sim.outputFull() slim_output <span style="color: #949494;">"</span>#OUT: 20 20 A\nVersion: 3\nPop…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $process</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PROCESS 'slim.exe', finished.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $error</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> character(0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $output_file</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "F:\\Rtemp\\Rtmpklnlag\\file52904b0e1257.txt"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "slimr_results"</span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

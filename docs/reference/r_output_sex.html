@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0.9000</span>
       </span>
     </div>
 
@@ -106,6 +106,31 @@
 <p>None</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="slim_is_avail.html">slim_is_avail</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">test_sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="slim_script.html">slim_script</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="slim_block_init_minimal.html">slim_block_init_minimal</a></span><span class="op">(</span>mutation_rate <span class="op">=</span> <span class="fl">1e-6</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="slim_block_add_subpops.html">slim_block_add_subpops</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">20</span>, <span class="fu"><a href="late.html">late</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span></span></span>
+<span class="r-in"><span>      <span class="fu">r_output_sex</span><span class="op">(</span><span class="st">"sex"</span>, do_every <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="slim_run.html">slim_run</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="slim_results_to_data.html">slim_results_to_data</a></span><span class="op">(</span><span class="va">test_sim</span><span class="op">$</span><span class="va">output_data</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Simulation finished with exit status: 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Success!</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   type                              expression            generation name  data </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lis&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="color: #949494;">"</span>string [0:99] \"H\" \"H\" ...\n<span style="color: #949494;">"</span> sim.subpopulations.i…         10 sex   <span style="color: #949494;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="color: #949494;">"</span>string [0:99] \"H\" \"H\" ...\n<span style="color: #949494;">"</span> sim.subpopulations.i…         20 sex   <span style="color: #949494;">&lt;chr&gt;</span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

@@ -146,7 +146,8 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - uses: r-lib/actions/check-r-package@v2
+      - name: Check on Windows
+        uses: r-lib/actions/check-r-package@v2
         if: runner.os == 'Windows'
         env:
           SLIM_PATH: 'C:/Program Files (x86)/SLiM/bin/slim.exe'
@@ -154,7 +155,8 @@ jobs:
           args: 'c("--no-manual", "--as-cran")'
           error-on: '"error"'
 
-      - uses: r-lib/actions/check-r-package@v2
+      - name: Check on non-Windows with Conda
+        uses: r-lib/actions/check-r-package@v2
         if: runner.os != 'Windows' && matrix.config.conda == 'yes'
         env:
           SLIM_INSTALL: 1
@@ -162,7 +164,8 @@ jobs:
           args: 'c("--no-manual", "--as-cran")'
           error-on: '"error"'
 
-      - uses: r-lib/actions/check-r-package@v2
+      - name: Check on non-Windows without Conda
+        uses: r-lib/actions/check-r-package@v2
         if: runner.os != 'Windows' && matrix.config.conda == 'no'
         with:
           args: 'c("--no-manual", "--as-cran")'
@@ -175,10 +178,3 @@ jobs:
           name: covr-test-objects
           path: ~/covr_test_objects
           retention-days: 1
-
-      - name: Upload check results
-        if: failure()
-        uses: actions/upload-artifact@master
-        with:
-          name: ${{ runner.os }}-${{ matrix.config.r }}-slim-${{ matrix.config.slim }}-conda-${{ matrix.config.conda }}-results
-          path: check

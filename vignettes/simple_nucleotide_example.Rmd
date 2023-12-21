@@ -70,7 +70,7 @@ split_isolate_sim <- slim_script(
   
 )
 
-results <- slim_run(split_isolate_sim)
+results <- slim_run(split_isolate_sim, throw_error = TRUE)
 
 res_data <- slim_results_to_data(results)
 

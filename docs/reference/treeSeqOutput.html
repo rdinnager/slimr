@@ -6,6 +6,14 @@ up this documentation). It will only do
 anything useful when used inside a slim_block function further
 nested in a slim_script
 function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.
+Documentation for SLiM function treeSeqOutput, which is a method of the
+SLiM class Species.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a slim_block function further
+nested in a slim_script
+function call, where it will be translated into valid SLiM code as part of a
 full SLiM script."><meta property="og:image" content="https://rdinnager.github.io/slimr/logo.png"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -24,7 +32,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +96,15 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>treeSeqOutput</code>, which is a method of the
-SLiM class <code><a href="SLiMSim.html">SLiMSim</a></code>.
+SLiM class <code><a href="SLiMSim_Class.html">SLiMSim</a></code>.
+Note that the R function is a stub, it does not do anything in R (except bring
+up this documentation). It will only do
+anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
+nested in a <code><a href="slim_script.html">slim_script</a></code>
+function call, where it will be translated into valid SLiM code as part of a
+full SLiM script.</p>
+<p>Documentation for SLiM function <code>treeSeqOutput</code>, which is a method of the
+SLiM class <code><a href="Species_Class.html">Species</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -98,7 +114,9 @@ full SLiM script.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">treeSeqOutput</span><span class="op">(</span><span class="va">path</span>, <span class="va">simplify</span>, <span class="va">includeModel</span>, <span class="va">metadata</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">treeSeqOutput</span><span class="op">(</span><span class="va">path</span>, <span class="va">simplify</span>, <span class="va">includeModel</span>, <span class="va">metadata</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">treeSeqOutput</span><span class="op">(</span><span class="va">path</span>, <span class="va">simplify</span>, <span class="va">includeModel</span>, <span class="va">metadata</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -126,6 +144,9 @@ default value is <code>NULL</code>. See details for description.</p></dd>
     <div id="value">
     <h2>Value</h2>
     
+
+<p>An object of type void.</p>
+
 
 <p>An object of type void.</p>
     </div>
@@ -157,6 +178,34 @@ subclass of Dictionary, such as the SLiMSim simulation object sim, or a LogFile
 instance. However, only the keys and values contained by the object's Dictionary
 superclass state will be serialized into the metadata; properties of the
 subclass will be ignored.</p>
+<p>Documentation for this function can be found in the official
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=728" class="external-link">SLiM manual: page
+728</a>.</p>
+<p>Outputs the current tree sequence recording tables to the path
+specified by path. This method may only be called if tree sequence recording
+has been turned on with initializeTreeSeq(). If simplify is T (the default),
+simplification will be done immediately prior to output; this is almost always
+desirable, unless a model wishes to avoid simplification entirely. (Note that if
+simplification is not done, then all genomes since the last simplification will
+be marked as samples in the resulting tree sequence.) A binary tree sequence
+file will be written to the specified path; a filename extension of .trees
+is suggested for this type of file. Normally, the full SLiM script used to
+generate the tree sequence is written out to the provenance entry of the tree
+sequence file, to the model subkey of the parameters top-level key. Supplying
+F for includeModel suppresses output of the full script; see section 27.4.6
+for further discussion. A Dictionary object containing user-generated metadata
+may be supplied with the metadata parameter. If present, this dictionary will
+be serialized as JSON and attached to the saved tree sequence under a key
+named user_metadata, within the SLiM key (see section 27.4.5). If tskit is
+used to read the tree sequence in Python, this metadata will automatically be
+deserialized and made available at ts.metadata["SLiM"]["user_metadata"]. This
+metadata dictionary is not used by SLiM, or by pyslim, tskit, or msprime; you
+may use it for any purpose you wish. Note that metadata may actually be any
+subclass of Dictionary, such as a DataFrame. It can even be a Species object
+such as sim, or a LogFile instance; however, only the keys and values contained
+by the object's Dictionary superclass state will be serialized into the metadata
+(properties of the subclass will be ignored). This metadata dictionary can be
+recovered from the saved file using the treeSeqMetadata() function.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -169,11 +218,19 @@ documentation is
 Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: <a href="https://messerlab.org/slim/" class="external-link">https://messerlab.org/slim/</a></p>
+
+<p>This is documentation for a function in the SLiM software, and has been
+reproduced from the official manual,
+which can be found here: <a href="http://benhaller.com/slim/SLiM_Manual.pdf" class="external-link">http://benhaller.com/slim/SLiM_Manual.pdf</a>. This
+documentation is
+Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
+about SLiM can be found
+on the official website: <a href="https://messerlab.org/slim/" class="external-link">https://messerlab.org/slim/</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other SLiMSim: 
-<code><a href="SLiMSim.html">SS</a></code>,
+<code><a href="SLiMSim_Class.html">SLiMSim</a></code>,
 <code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="addSubpop.html">addSubpop</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
@@ -199,6 +256,35 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="registerReproductionCallback.html">registerReproductionCallback</a>()</code>,
 <code><a href="rescheduleScriptBlock.html">rescheduleScriptBlock</a>()</code>,
 <code><a href="simulationFinished.html">simulationFinished</a>()</code>,
+<code><a href="subsetMutations.html">subsetMutations</a>()</code>,
+<code><a href="treeSeqCoalesced.html">treeSeqCoalesced</a>()</code>,
+<code><a href="treeSeqRememberIndividuals.html">treeSeqRememberIndividuals</a>()</code>,
+<code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p>
+<p>Other Species: 
+<code><a href="Species_Class.html">Species</a></code>,
+<code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
+<code><a href="addSubpop.html">addSubpop</a>()</code>,
+<code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
+<code><a href="individualsWithPedigreeIDs.html">individualsWithPedigreeIDs</a>()</code>,
+<code><a href="killIndividuals.html">killIndividuals</a>()</code>,
+<code><a href="mutationCounts.html">mutationCounts</a>()</code>,
+<code><a href="mutationFrequencies.html">mutationFrequencies</a>()</code>,
+<code><a href="mutationsOfType.html">mutationsOfType</a>()</code>,
+<code><a href="outputFixedMutations.html">outputFixedMutations</a>()</code>,
+<code><a href="outputFull.html">outputFull</a>()</code>,
+<code><a href="outputMutations.html">outputMutations</a>()</code>,
+<code><a href="readFromPopulationFile.html">readFromPopulationFile</a>()</code>,
+<code><a href="recalculateFitness.html">recalculateFitness</a>()</code>,
+<code><a href="registerFitnessEffectCallback.html">registerFitnessEffectCallback</a>()</code>,
+<code><a href="registerMateChoiceCallback.html">registerMateChoiceCallback</a>()</code>,
+<code><a href="registerModifyChildCallback.html">registerModifyChildCallback</a>()</code>,
+<code><a href="registerMutationCallback.html">registerMutationCallback</a>()</code>,
+<code><a href="registerMutationEffectCallback.html">registerMutationEffectCallback</a>()</code>,
+<code><a href="registerRecombinationCallback.html">registerRecombinationCallback</a>()</code>,
+<code><a href="registerReproductionCallback.html">registerReproductionCallback</a>()</code>,
+<code><a href="registerSurvivalCallback.html">registerSurvivalCallback</a>()</code>,
+<code><a href="simulationFinished.html">simulationFinished</a>()</code>,
+<code><a href="skipTick.html">skipTick</a>()</code>,
 <code><a href="subsetMutations.html">subsetMutations</a>()</code>,
 <code><a href="treeSeqCoalesced.html">treeSeqCoalesced</a>()</code>,
 <code><a href="treeSeqRememberIndividuals.html">treeSeqRememberIndividuals</a>()</code>,

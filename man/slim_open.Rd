@@ -19,3 +19,8 @@ GUI (for debugging purposes)
 \description{
 Title
 }
+\examples{
+if(interactive()) {
+  slim_open(minimal_slimr_script())
+}
+}

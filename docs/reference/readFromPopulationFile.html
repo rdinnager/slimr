@@ -32,7 +32,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>readFromPopulationFile</code>, which is a method
-of the SLiM class <code><a href="SLiMSim.html">SLiMSim</a></code>.
+of the SLiM class <code><a href="SLiMSim_Class.html">SLiMSim</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -104,7 +104,7 @@ nested in a <code><a href="slim_script.html">slim_script</a></code>
 function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.</p>
 <p>Documentation for SLiM function <code>readFromPopulationFile</code>, which is a method
-of the SLiM class <code><a href="Species.html">Species</a></code>.
+of the SLiM class <code><a href="Species_Class.html">Species</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -227,8 +227,8 @@ incorrectly, running a Debug build of SLiM enables crosschecks after every load.
 Eidos events fitness() mateChoice() modifyChild() recombination() interaction()
 reproduction() 570</p>
 <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=682" class="external-link">SLiM manual: page
-682</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=723" class="external-link">SLiM manual: page
+723</a>.</p>
 <p>Read from a population initialization file, whether in text or binary
 format as previously specified to outputFull(), and return the tick counter
 value represented by the file's contents (i.e., the tick at which the file was
@@ -254,12 +254,12 @@ when using the WF model, calling readFromPopulationFile() from any context
 other than a late() event causes a warning; calling from a late() event is
 almost always correct in WF models, so that fitness values can be automatically
 recalculated by SLiM at the usual time in the tick cycle without the need to
-force their recalculation (see chapter 22, and comments on recalculateFitness()
+force their recalculation (see chapter 23, and comments on recalculateFitness()
 below). In SLiM 3.0 when using the nonWF model, calling readFromPopulationFile()
 from any context other than an early() event causes a warning; calling from an
 early() event is almost always correct in nonWF models, so that fitness values
 can be automatically recalculated by SLiM at the usual time in the tick cycle
-without the need to force their recalculation (see chapter 23, and comments
+without the need to force their recalculation (see chapter 24, and comments
 on recalculateFitness() below). As of SLiM 2.1, this method changes the tick
 and cycle counters to the tick and cycle read from the file. If you do not
 want these counters to be changed, you can change them back after reading,
@@ -295,30 +295,32 @@ an error will also result; the nonWF model requires age information. As of SLiM
 will restore the ancestral nucleotide sequence, if that information is present
 in the output file. Loading an output file that contains nucleotide information
 in a non-nucleotide-based model, and vice versa, will produce an error. As of
-SLiM 3.5, this method will read and restore the pedigree IDs of individuals and
-genomes if that information is present in the output file (as requested with
-outputFull(pedigreeIDs=T)) and if SLiM's optional pedigree tracking has been
-enabled with initializeSLiMOptions(keepPedigrees=T). This method can also be
-used to read tree-sequence (.trees) files saved by treeSeqOutput() or generated
-by the Python pyslim package. Beginning with SLiM 4, the subpopMap parameter may
-be supplied to re-order the populations of the input tree sequence when it is
-loaded in to SLiM. This parameter must have a value that is a Dictionary; the
-keys of this dictionary should be SLiM population identifiers as string values
-(e.g., "p2"), and the values should be indexes of populations in the input
-tree sequence; a key/value pair of "p2", 4 would mean that the fifth population
-in the input (the one at zero-based index 4) should become p2 on loading into
-SLiM. If subpopMap is non- NULL, all populations in the tree sequence must be
-explicitly mapped, even if their index will not change and even if they will not
-be used by SLiM; the only exception is for unused slots in the population table,
-which can be explicitly remapped but do not have to be. For instance, suppose
-we have a tree sequence in which population 0 is unused, population 1 is not a
-SLiM population (for example, an ancestral population produced by msprime), and
-population 2 is a SLiM population, and we want to load this in with population 2
-as p0 in SLiM. To do this, we could supply a value of Dictionary("p0", 2, "p1",
-1, "p2", 0) for subpopMap, or we could leave out slot 0 since it is unused,
-with Dictionary("p0", 2, "p1", 1). Although this facility cannot be used to
-remove populations in the tree sequence, note that it may add populations that
-will be visible when treeSeqOutput() is called (although these will not be SLiM
+SLiM 3.5, this method will read and restore the pedigree IDs of individuals
+and genomes if that information is present in the output file (as requested
+with outputFull(pedigreeIDs=T)) and if SLiM's optional pedigree tracking has
+been enabled with initializeSLiMOptions(keepPedigrees=T). This method can
+also be used to read tree-sequence (.trees) files saved by treeSeqOutput()
+or generated by the Python pyslim package. Note that the user metadata for a
+tree-sequence file can be read separately with the treeSeqMetadata() function.
+Beginning with SLiM 4, the subpopMap parameter may be supplied to re-order
+the populations of the input tree sequence when it is loaded in to SLiM. This
+parameter must have a value that is a Dictionary; the keys of this dictionary
+should be SLiM population identifiers as string values (e.g., "p2"), and the
+values should be indexes of populations in the input tree sequence; a key/value
+pair of "p2", 4 would mean that the fifth population in the input (the one
+at zero-based index 4) should become p2 on loading into SLiM. If subpopMap
+is non-NULL, all populations in the tree sequence must be explicitly mapped,
+even if their index will not change and even if they will not be used by SLiM;
+the only exception is for unused slots in the population table, which can be
+explicitly remapped but do not have to be. For instance, suppose we have a tree
+sequence in which population 0 is unused, population 1 is not a SLiM population
+(for example, an ancestral population produced by msprime), and population
+2 is a SLiM population, and we want to load this in with population 2 as p0
+in SLiM. To do this, we could supply a value of Dictionary("p0", 2, "p1", 1,
+"p2", 0) for subpopMap, or we could leave out slot 0 since it is unused, with
+Dictionary("p0", 2, "p1", 1). Although this facility cannot be used to remove
+populations in the tree sequence, note that it may add populations that will
+be visible when treeSeqOutput() is called (although these will not be SLiM
 populations); if, in this example, we had used Dictionary("p0", 0, "p1", 1,
 "p5", 2) and then we wrote the result out with treeSeqOutput(), the resulting
 tree sequence would have six populations, although three of them would be empty
@@ -362,7 +364,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other SLiMSim: 
-<code><a href="SLiMSim.html">SS</a></code>,
+<code><a href="SLiMSim_Class.html">SLiMSim</a></code>,
 <code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="addSubpop.html">addSubpop</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
@@ -393,7 +395,8 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="treeSeqRememberIndividuals.html">treeSeqRememberIndividuals</a>()</code>,
 <code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p>
 <p>Other Species: 
-<code><a href="Species.html">Sp</a></code>,
+<code><a href="Species_Class.html">Species</a></code>,
+<code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="addSubpop.html">addSubpop</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
 <code><a href="individualsWithPedigreeIDs.html">individualsWithPedigreeIDs</a>()</code>,
@@ -410,7 +413,16 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="registerModifyChildCallback.html">registerModifyChildCallback</a>()</code>,
 <code><a href="registerMutationCallback.html">registerMutationCallback</a>()</code>,
 <code><a href="registerMutationEffectCallback.html">registerMutationEffectCallback</a>()</code>,
-<code><a href="registerRecombinationCallback.html">registerRecombinationCallback</a>()</code></p></div>
+<code><a href="registerRecombinationCallback.html">registerRecombinationCallback</a>()</code>,
+<code><a href="registerReproductionCallback.html">registerReproductionCallback</a>()</code>,
+<code><a href="registerSurvivalCallback.html">registerSurvivalCallback</a>()</code>,
+<code><a href="simulationFinished.html">simulationFinished</a>()</code>,
+<code><a href="skipTick.html">skipTick</a>()</code>,
+<code><a href="subsetMutations.html">subsetMutations</a>()</code>,
+<code><a href="treeSeqCoalesced.html">treeSeqCoalesced</a>()</code>,
+<code><a href="treeSeqOutput.html">treeSeqOutput</a>()</code>,
+<code><a href="treeSeqRememberIndividuals.html">treeSeqRememberIndividuals</a>()</code>,
+<code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>

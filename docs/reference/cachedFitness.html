@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>cachedFitness</code>, which is a method of the
-SLiM class <code><a href="Subpopulation.html">Subpopulation</a></code>.
+SLiM class <code><a href="Subpopulation_Class.html">Subpopulation</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -116,22 +116,22 @@ full SLiM script.</p>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=694" class="external-link">SLiM manual: page
-694</a>.</p>
-<p>The ﬁtness values calculated for the individuals at the indices
-given are returned. If NULL is passed, ﬁtness values for all individuals in
-the subpopulation are returned. The ﬁtness values returned are cached values;
-mutationEffect() and fitnessEffect() callbacks are therefore not called as a
-side effect of this method. It is always an error to call cachedFitness() from
-inside a mutationEffect() or fitnessEffect() callback, since ﬁtness values
-are in the middle of being set up. In WF models, it is also an error to call
-cachedFitness() from a late() event, because ﬁtness values for the new offspring
-generation have not yet been calculated and are undeﬁned. In nonWF models,
-the population may be a mixture of new and old individuals, so instead, NAN
-will be returned as the ﬁtness of any new individuals whose ﬁtness has not
-yet been calculated. When new subpopulations are ﬁrst created with addSubpop()
-or addSubpopSplit(), the ﬁtness of all of the newly created individuals is
-considered to be 1.0 until ﬁtness values are recalculated.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=738" class="external-link">SLiM manual: page
+738</a>.</p>
+<p>The fitness values calculated for the individuals at the indices
+given are returned. If NULL is passed, fitness values for all individuals in
+the subpopulation are returned. The fitness values returned are cached values;
+mutationEffect() and fitnessEffect() callbacks are therefore not called as
+a side effect of this method. It is always an error to call cachedFitness()
+from inside a mutationEffect() or fitnessEffect() callback, since fitness
+values are in the middle of being set up. In WF models, it is also an error to
+call cachedFitness() from a late() event, because fitness values for the new
+offspring generation have not yet been calculated and are undefined. In nonWF
+models, the population may be a mixture of new and old individuals, so instead,
+NAN will be returned as the fitness of any new individuals whose fitness has not
+yet been calculated. When new subpopulations are first created with addSubpop()
+or addSubpopSplit(), the fitness of all of the newly created individuals is
+considered to be 1.0 until fitness values are recalculated.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -148,22 +148,25 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Subpopulation: 
-<code><a href="Subpopulation.html">P</a></code>,
+<code><a href="Subpopulation_Class.html">Subpopulation</a></code>,
 <code><a href="addCloned.html">addCloned</a>()</code>,
 <code><a href="addCrossed.html">addCrossed</a>()</code>,
 <code><a href="addEmpty.html">addEmpty</a>()</code>,
 <code><a href="addRecombinant.html">addRecombinant</a>()</code>,
 <code><a href="addSelfed.html">addSelfed</a>()</code>,
+<code><a href="addSpatialMap.html">addSpatialMap</a>()</code>,
 <code><a href="configureDisplay.html">configureDisplay</a>()</code>,
 <code><a href="defineSpatialMap.html">defineSpatialMap</a>()</code>,
 <code><a href="outputMSSample.html">outputMSSample</a>()</code>,
 <code><a href="outputSample.html">outputSample</a>()</code>,
 <code><a href="outputVCFSample.html">outputVCFSample</a>()</code>,
+<code><a href="pointDeviated.html">pointDeviated</a>()</code>,
 <code><a href="pointInBounds.html">pointInBounds</a>()</code>,
 <code><a href="pointPeriodic.html">pointPeriodic</a>()</code>,
 <code><a href="pointReflected.html">pointReflected</a>()</code>,
 <code><a href="pointStopped.html">pointStopped</a>()</code>,
 <code><a href="pointUniform.html">pointUniform</a>()</code>,
+<code><a href="removeSpatialMap.html">removeSpatialMap</a>()</code>,
 <code><a href="removeSubpopulation.html">removeSubpopulation</a>()</code>,
 <code><a href="sampleIndividuals.html">sampleIndividuals</a>()</code>,
 <code><a href="setCloningRate.html">setCloningRate</a>()</code>,

@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>configureDisplay</code>, which is a method of
-the SLiM class <code><a href="Subpopulation.html">Subpopulation</a></code>.
+the SLiM class <code><a href="Subpopulation_Class.html">Subpopulation</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -127,14 +127,14 @@ singleton). The default value is <code>NULL</code>. See details for description.
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=695" class="external-link">SLiM manual: page
-695</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=738" class="external-link">SLiM manual: page
+738</a>.</p>
 <p>This method customizes the display of the subpopulation in SLiMgui's
 Population Visualization graph. When this method is called by a model running
-outside SLiMgui, it will do nothing except type- checking and bounds-checking
+outside SLiMgui, it will do nothing except typechecking and bounds-checking
 its arguments. When called by a model running in SLiMgui, the position,
 size, and color of the subpopulation's displayed circle can be controlled
-as speciﬁed below. The center parameter sets the coordinates of the center
+as specified below. The center parameter sets the coordinates of the center
 of the subpopulation's displayed circle; it must be a float vector of length
 two, such that center[0] provides the x-coordinate and center[1] provides the
 y-coordinate. The square central area of the Population Visualization occupies
@@ -149,9 +149,9 @@ will be used; this is equivalent to supplying a scale of 1.0. Typically the
 same scale value should be used by all subpopulations, to scale all of their
 circles up or down uniformly, but that is not required. The color parameter
 sets the color to be used for the displayed subpopulation's circle. Colors may
-be speciﬁed by name, or with hexadecimal RGB values of the form "#RRGGBB" (see
+be specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see
 the Eidos manual). If color is NULL or the empty string, "", SLiMgui's default
-(ﬁtness-based) color will be used.</p>
+(fitness-based) color will be used.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -168,22 +168,25 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Subpopulation: 
-<code><a href="Subpopulation.html">P</a></code>,
+<code><a href="Subpopulation_Class.html">Subpopulation</a></code>,
 <code><a href="addCloned.html">addCloned</a>()</code>,
 <code><a href="addCrossed.html">addCrossed</a>()</code>,
 <code><a href="addEmpty.html">addEmpty</a>()</code>,
 <code><a href="addRecombinant.html">addRecombinant</a>()</code>,
 <code><a href="addSelfed.html">addSelfed</a>()</code>,
+<code><a href="addSpatialMap.html">addSpatialMap</a>()</code>,
 <code><a href="cachedFitness.html">cachedFitness</a>()</code>,
 <code><a href="defineSpatialMap.html">defineSpatialMap</a>()</code>,
 <code><a href="outputMSSample.html">outputMSSample</a>()</code>,
 <code><a href="outputSample.html">outputSample</a>()</code>,
 <code><a href="outputVCFSample.html">outputVCFSample</a>()</code>,
+<code><a href="pointDeviated.html">pointDeviated</a>()</code>,
 <code><a href="pointInBounds.html">pointInBounds</a>()</code>,
 <code><a href="pointPeriodic.html">pointPeriodic</a>()</code>,
 <code><a href="pointReflected.html">pointReflected</a>()</code>,
 <code><a href="pointStopped.html">pointStopped</a>()</code>,
 <code><a href="pointUniform.html">pointUniform</a>()</code>,
+<code><a href="removeSpatialMap.html">removeSpatialMap</a>()</code>,
 <code><a href="removeSubpopulation.html">removeSubpopulation</a>()</code>,
 <code><a href="sampleIndividuals.html">sampleIndividuals</a>()</code>,
 <code><a href="setCloningRate.html">setCloningRate</a>()</code>,

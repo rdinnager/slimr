@@ -2,14 +2,10 @@
 % Please edit documentation in R/slim_lang.R
 \name{readFromPopulationFile}
 \alias{readFromPopulationFile}
-\alias{SLiMSim$readFromPopulationFile}
-\alias{.SS$readFromPopulationFile}
 \alias{Species$readFromPopulationFile}
 \alias{.Sp$readFromPopulationFile}
 \title{SLiM method readFromPopulationFile}
 \usage{
-readFromPopulationFile(filePath, subpopMap)
-
 readFromPopulationFile(filePath, subpopMap)
 }
 \arguments{
@@ -21,19 +17,8 @@ default value is \code{NULL}. See details for description.}
 }
 \value{
 An object of type integer. Return will be of length 1 (a singleton)
-
-An object of type integer. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{readFromPopulationFile}, which is a method
-of the SLiM class \code{\link{SLiMSim}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
-
 Documentation for SLiM function \code{readFromPopulationFile}, which is a method
 of the SLiM class \code{\link{Species}}.
 Note that the R function is a stub, it does not do anything in R (except bring
@@ -44,92 +29,6 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-
-Read from a population initialization file, whether in text or binary
-format as previously specified to outputFull(), and return the generation
-counter value represented by the file's contents (i.e., the generation at which
-the file was generated). Although this is most commonly used to set up initial
-populations (often in an Eidos event set to run in generation 1, immediately
-after simulation initialization), it may be called in any Eidos event; the
-current state of all populations will be wiped and replaced by the state in
-the file at filePath. All Eidos variables that are of type object and have
-element type Subpopulation, Genome, Mutation, Individual, or Substitution will
-be removed as a side effect of this method, since all such variables would
-refer to objects that no longer exist in the SLiM simulation; if you want to
-preserve any of that state, you should output it or save it to a file prior to
-this call. New symbols will be defined to refer to the new Subpopulation objects
-loaded from the file. If the file being read was written by a version of SLiM
-prior to 2.3, then for backward compatibility fitness values will be calculated
-immediately for any new subpopulations created by this call, which will trigger
-the calling of any activated and applicable fitness() callbacks. When reading
-files written by SLiM 2.3 or later, fitness values are not calculated as a
-side effect of this call (because the simulation will often need to evaluate
-interactions or modify other state prior to doing so). Eidos events fitness()
-mateChoice() modifyChild() recombination() interaction() reproduction() 569 In
-SLiM 2.3 and later when using the WF model, calling readFromPopulationFile()
-from any context other than a late() event causes a warning; calling from a
-late() event is almost always correct in WF models, so that fitness values can
-be automatically recalculated by SLiM at the usual time in the generation cycle
-without the need to force their recalculation (see chapter 22, and comments on
-recalculateFitness() below). In SLiM 3.0 when using the nonWF model, calling
-readFromPopulationFile() from any context other than an early() event causes a
-warning; calling from an early() event is almost always correct in nonWF models,
-so that fitness values can be automatically recalculated by SLiM at the usual
-time in the generation cycle without the need to force their recalculation (see
-chapter 23, and comments on recalculateFitness() below). As of SLiM 2.1, this
-method changes the generation counter to the generation read from the file.
-If you do not want the generation counter to be changed, you can change it
-back after reading, by setting sim.generation to whatever value you wish. Note
-that restoring a saved past state and running forward again will not yield the
-same simulation results, because the random number generator's state will not
-be the same; to ensure reproducibility from a given time point, setSeed() can
-be used to establish a new seed value. Any changes made to the simulation's
-structure (mutation types, genomic element types, etc.) will not be wiped
-and re-established by readFromPopulationFile(); this method loads only the
-population's state, not the simulation configuration, so care should be taken
-to ensure that the simulation structure meshes coherently with the loaded data.
-Indeed, state such as the selfing and cloning rates of subpopulations, values
-set into tag properties, and values set onto objects with setValue() will also
-be lost, since it is not saved out by outputFull(). Only information saved by
-outputFull() will be restored; all other state associated with the simulation's
-subpopulations, individuals, genomes, mutations, and substitutions will be lost,
-and should be re-established by the model if it is still needed. As of SLiM
-2.3, this method will read and restore the spatial positions of individuals if
-that information is present in the output file and the simulation has enabled
-continuous space (see outputFull() for details). If spatial positions are
-present in the output file but the simulation has not enabled continuous space
-(or the number of spatial dimensions does not match), an error will result.
-If the simulation has enabled continuous space but spatial positions are not
-present in the output file, the spatial positions of the individuals read will
-be undefined, but an error is not raised. As of SLiM 3.0, this method will read
-and restore the ages of individuals if that information is present in the output
-file and the simulation is based upon the nonWF model. If ages are present but
-the simulation uses a WF model, an error will result; the WF model does not use
-age information. If ages are not present but the simulation uses a nonWF model,
-an error will also result; the nonWF model requires age information. As of SLiM
-3.3, this method will restore the nucleotides of nucleotide-based mutations,
-and will restore the ancestral nucleotide sequence, if that information is
-present in the output file. Loading an output file that contains nucleotide
-information in a non-nucleotide-based model, and vice versa, will produce
-an error. As of SLiM 3.5, this method will read and restore the pedigree IDs
-of individuals and genomes if that information is present in the output file
-(as requested with outputFull(pedigreeIDs=T)) and if SLiM's optional pedigree
-tracking has been turned on with initializeSLiMOptions(keepPedigrees=T).
-This method can also be used to read tree-sequence (.trees) files saved by
-treeSeqOutput() or generated by the Python pyslim package. When loading a tree
-sequence, a crosscheck of the loaded data will be performed to ensure that the
-tree sequence was well-formed and was loaded correctly. When running a Release
-build of SLiM, however, this crosscheck will only occur the first time that
-readFromPopulationFile() is called to load a tree sequence; subsequent calls
-will not perform this crosscheck, for greater speed when running models that
-load saved population state many times (such as models that are conditional on
-fixation). If you suspect that a tree sequence file might be corrupted or read
-incorrectly, running a Debug build of SLiM enables crosschecks after every load.
-Eidos events fitness() mateChoice() modifyChild() recombination() interaction()
-reproduction() 570
-
 Documentation for this function can be found in the official
 \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=723}{SLiM manual: page
 723}.
@@ -255,50 +154,9 @@ documentation is
 Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
-
-
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
-on the official website: \url{https://messerlab.org/slim/}
 }
 
 \seealso{
-Other SLiMSim: 
-\code{\link{SS}},
-\code{\link{addSubpopSplit}()},
-\code{\link{addSubpop}()},
-\code{\link{countOfMutationsOfType}()},
-\code{\link{createLogFile}()},
-\code{\link{deregisterScriptBlock}()},
-\code{\link{mutationCounts}()},
-\code{\link{mutationFrequencies}()},
-\code{\link{mutationsOfType}()},
-\code{\link{outputFixedMutations}()},
-\code{\link{outputFull}()},
-\code{\link{outputMutations}()},
-\code{\link{outputUsage}()},
-\code{\link{recalculateFitness}()},
-\code{\link{registerEarlyEvent}()},
-\code{\link{registerFitnessCallback}()},
-\code{\link{registerInteractionCallback}()},
-\code{\link{registerLateEvent}()},
-\code{\link{registerMateChoiceCallback}()},
-\code{\link{registerModifyChildCallback}()},
-\code{\link{registerMutationCallback}()},
-\code{\link{registerRecombinationCallback}()},
-\code{\link{registerReproductionCallback}()},
-\code{\link{rescheduleScriptBlock}()},
-\code{\link{simulationFinished}()},
-\code{\link{subsetMutations}()},
-\code{\link{treeSeqCoalesced}()},
-\code{\link{treeSeqOutput}()},
-\code{\link{treeSeqRememberIndividuals}()},
-\code{\link{treeSeqSimplify}()}
-
 Other Species: 
 \code{\link{Sp}},
 \code{\link{addSubpopSplit}()},
@@ -333,5 +191,4 @@ Other Species:
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
-\concept{SLiMSim}
 \concept{Species}

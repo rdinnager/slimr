@@ -2,14 +2,10 @@
 % Please edit documentation in R/slim_lang.R
 \name{registerMateChoiceCallback}
 \alias{registerMateChoiceCallback}
-\alias{SLiMSim$registerMateChoiceCallback}
-\alias{.SS$registerMateChoiceCallback}
 \alias{Species$registerMateChoiceCallback}
 \alias{.Sp$registerMateChoiceCallback}
 \title{SLiM method registerMateChoiceCallback}
 \usage{
-registerMateChoiceCallback(id, source, subpop, start, end)
-
 registerMateChoiceCallback(id, source, subpop, start, end)
 }
 \arguments{
@@ -32,20 +28,8 @@ The default value is \code{NULL}. See details for description.}
 \value{
 An object of type SLiMEidosBlock object. Return will be of length 1 (a
 singleton)
-
-An object of type SLiMEidosBlock object. Return will be of length 1 (a
-singleton)
 }
 \description{
-Documentation for SLiM function \code{registerMateChoiceCallback}, which is a
-method of the SLiM class \code{\link{SLiMSim}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
-
 Documentation for SLiM function \code{registerMateChoiceCallback}, which is a
 method of the SLiM class \code{\link{Species}}.
 Note that the R function is a stub, it does not do anything in R (except bring
@@ -56,22 +40,6 @@ function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-
-Register a block of Eidos source code, represented as the string
-singleton source, as an Eidos mateChoice() callback in the current simulation,
-with optional subpopulation subpop (which may be an integer identifier, or
-NULL, the default, to indicate all subpopulations) and optional start and end
-generations all limiting its applicability. The script block will be given
-identifier id (specified as an integer, or as a string symbolic name such as
-"s5"); this may be NULL if there is no need to be able to refer to the block
-later. The registered callback is added to the end of the list of registered
-SLiMEidosBlock objects, and is active immediately; it may be eligible to execute
-in the current generation (see section 25.9 for details). The new SLiMEidosBlock
-will be defined as a global variable immediately by this method (see section
-24.11), and will also be returned by this method.
-
 Documentation for this function can be found in the official
 \href{http://benhaller.com/slim/SLiM_Manual.pdf#page=725}{SLiM manual: page
 725}.
@@ -98,50 +66,9 @@ documentation is
 Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
 about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
-
-
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
-on the official website: \url{https://messerlab.org/slim/}
 }
 
 \seealso{
-Other SLiMSim: 
-\code{\link{SS}},
-\code{\link{addSubpopSplit}()},
-\code{\link{addSubpop}()},
-\code{\link{countOfMutationsOfType}()},
-\code{\link{createLogFile}()},
-\code{\link{deregisterScriptBlock}()},
-\code{\link{mutationCounts}()},
-\code{\link{mutationFrequencies}()},
-\code{\link{mutationsOfType}()},
-\code{\link{outputFixedMutations}()},
-\code{\link{outputFull}()},
-\code{\link{outputMutations}()},
-\code{\link{outputUsage}()},
-\code{\link{readFromPopulationFile}()},
-\code{\link{recalculateFitness}()},
-\code{\link{registerEarlyEvent}()},
-\code{\link{registerFitnessCallback}()},
-\code{\link{registerInteractionCallback}()},
-\code{\link{registerLateEvent}()},
-\code{\link{registerModifyChildCallback}()},
-\code{\link{registerMutationCallback}()},
-\code{\link{registerRecombinationCallback}()},
-\code{\link{registerReproductionCallback}()},
-\code{\link{rescheduleScriptBlock}()},
-\code{\link{simulationFinished}()},
-\code{\link{subsetMutations}()},
-\code{\link{treeSeqCoalesced}()},
-\code{\link{treeSeqOutput}()},
-\code{\link{treeSeqRememberIndividuals}()},
-\code{\link{treeSeqSimplify}()}
-
 Other Species: 
 \code{\link{Sp}},
 \code{\link{addSubpopSplit}()},
@@ -176,5 +103,4 @@ Other Species:
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
-\concept{SLiMSim}
 \concept{Species}

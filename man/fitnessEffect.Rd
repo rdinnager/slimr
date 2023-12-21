@@ -42,7 +42,6 @@ on the official website: \url{https://messerlab.org/slim/}
 }
 
 \examples{
-# From page 715 of the SLiM Manual
 slim_block(fitnessEffect(p3), {
   # multiplies all individual's fitness by 0.75
   return(0.75)

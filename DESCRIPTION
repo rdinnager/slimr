@@ -1,6 +1,6 @@
 Package: slimr
-Title: Create, Run and Post-Process SLiM Population Genetics Forward Simulations
-Version: 0.4.0
+Title: Create, Run and Post-Process 'SLiM' Population Genetics Forward Simulations
+Version: 0.4.0.9000
 Authors@R: 
     c(person(given = "Russell",
              family = "Dinnage",
@@ -22,15 +22,15 @@ Authors@R:
       person(given = "Philip",
              family = "Messer",
              role = "ctb"))
-Description: An R package that lets you write SLiM scripts using your 
+Description: Lets you write 'SLiM' scripts (population genomics simulation) using your 
     favourite R IDE, using a syntax as close as possible to the original 
-    SLiM language. It offer many tools to manipulate those scripts, as well 
-    as run them in the SLiM software from R, as well as capture and post-process
+    'SLiM' language. It offer many tools to manipulate those scripts, as well 
+    as run them in the 'SLiM' software from R, as well as capture and post-process
     their output, after or even during a simulation.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-URL: https://rdinnager.github.io/slimr, https://rdinnager.github.io/slimr/index.html
+URL: https://rdinnager.github.io/slimr, https://rdinnager.github.io/slimr/index.html, https://github.com/rdinnager/slimr
 BugReports: https://github.com/rdinnager/slimr/issues
 RoxygenNote: 7.2.3
 Language: en-GB
@@ -54,6 +54,7 @@ Imports:
     stats,
     codetools
 Suggests: 
+    ape,
     covr,
     testthat (>= 2.1.0),
     spelling,
@@ -75,6 +76,7 @@ Suggests:
     Biostrings,
     raster,
     withr,
-    paletteer
+    paletteer,
+    reticulate
 VignetteBuilder: knitr
 Config/testthat/edition: 3

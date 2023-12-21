@@ -55,7 +55,7 @@ on the official website: \url{https://messerlab.org/slim/}
 
 \seealso{
 Other InteractionType: 
-\code{\link{InteractionType}},
+\code{\link{IT}},
 \code{\link{clippedIntegral}()},
 \code{\link{distanceFromPoint}()},
 \code{\link{distance}()},

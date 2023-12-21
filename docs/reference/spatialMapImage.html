@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>spatialMapImage</code>, which is a method of the
-SLiM class <code><a href="Subpopulation.html">Subpopulation</a></code>.
+SLiM class <code><a href="Subpopulation_Class.html">Subpopulation</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -137,46 +137,13 @@ default value is <code>T</code>. See details for description.</p></dd>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=700" class="external-link">SLiM manual: page
-700</a>.</p>
-<p>Looks up the spatial map indicated by name, and returns an Image object
-sampled from it. The image will be width pixels wide and height pixels tall; the
-intrinsic size of the spatial map itself will be used if one of these parameters
-is NULL. The image will be oriented in the same way as it is displayed in
-SLiMgui (which conceptually entails a transformation from matrix coordinates,
-which store values by column, to standard image coordinates, which store values
-by row; see the Eidos manual's documentation of Image for details). This method
-may only be called for 2D spatial maps at present. The sampling of the spatial
-map can be done in one of two ways, as controlled by the centers parameter. If
-centers is T, a (width+1) × (height+1) grid of lines that delineates width ×
-height rectangular pixels will be overlaid on top of the spatial map, and values
-will be sampled from the spatial map at the center of each of these pixels.
-If centers is F (the default), a width × height grid of lines will be overlaid
-on top of the spatial map, and values will be sampled from the spatial map
-at the vertices of the grid. If interpolation is not enabled for the spatial
-map, these two options will both recover the original matrix of values used
-to define the spatial map (assuming, here and below, that width and height are
-NULL). If interpolation is enabled for the spatial map, however, centers == F
-will recover the original values, but will not capture the "typical" value of
-each pixel in the image; centers == T, on the other hand, will not recover the
-original values, but will capture the "typical" value of each pixel in the image
-(i.e., the value at the center of each pixel, as produced by interpolation). The
-figures in section 15.11 may be helpful for visualizing the difference between
-these options; the overlaid grids span the full extent of the spatial map,
-just as shown in that section. If color is T (the default), the valueRange and
-colors parameters supplied to defineSpatialMap() will be used to translate map
-values to RGB color values as described in the documentation of that method,
-providing the same appearance as in SLiMgui; of course those parameters must
-have been supplied, otherwise an error will result. If color is F, on the other
-hand, a grayscale image will be produced that directly reflects the map values
-without color translation. In this case, this method needs to translate map
-values, which can have any float value, into grayscale pixel values that are
-integers in [0, 255]. To do so, the map values are multiplied by 255.0, clamped
-to [0.0, 255.0], and then rounded to the nearest integer. This translation
-scheme essentially assumes that map values are in [0, 1]; for spatial maps that
-were defined using the floatK channel of a grayscale PNG image, this should
-recover the original image's pixel values. (If a different translation scheme is
-desired, color=T with the desired valueRange and colors should be used.)</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=745" class="external-link">SLiM manual: page
+745</a>.</p>
+<p>This method has been deprecated, and may be removed in a future release
+of SLiM. In SLiM 4.1 and later, use the SpatialMap method mapImage() instead,
+and see that method's documentation. (This method differs only in taking a name
+parameter, which is used to look up the spatial map from those that have been
+added to the subpopulation.)</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -193,23 +160,26 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Subpopulation: 
-<code><a href="Subpopulation.html">P</a></code>,
+<code><a href="Subpopulation_Class.html">Subpopulation</a></code>,
 <code><a href="addCloned.html">addCloned</a>()</code>,
 <code><a href="addCrossed.html">addCrossed</a>()</code>,
 <code><a href="addEmpty.html">addEmpty</a>()</code>,
 <code><a href="addRecombinant.html">addRecombinant</a>()</code>,
 <code><a href="addSelfed.html">addSelfed</a>()</code>,
+<code><a href="addSpatialMap.html">addSpatialMap</a>()</code>,
 <code><a href="cachedFitness.html">cachedFitness</a>()</code>,
 <code><a href="configureDisplay.html">configureDisplay</a>()</code>,
 <code><a href="defineSpatialMap.html">defineSpatialMap</a>()</code>,
 <code><a href="outputMSSample.html">outputMSSample</a>()</code>,
 <code><a href="outputSample.html">outputSample</a>()</code>,
 <code><a href="outputVCFSample.html">outputVCFSample</a>()</code>,
+<code><a href="pointDeviated.html">pointDeviated</a>()</code>,
 <code><a href="pointInBounds.html">pointInBounds</a>()</code>,
 <code><a href="pointPeriodic.html">pointPeriodic</a>()</code>,
 <code><a href="pointReflected.html">pointReflected</a>()</code>,
 <code><a href="pointStopped.html">pointStopped</a>()</code>,
 <code><a href="pointUniform.html">pointUniform</a>()</code>,
+<code><a href="removeSpatialMap.html">removeSpatialMap</a>()</code>,
 <code><a href="removeSubpopulation.html">removeSubpopulation</a>()</code>,
 <code><a href="sampleIndividuals.html">sampleIndividuals</a>()</code>,
 <code><a href="setCloningRate.html">setCloningRate</a>()</code>,

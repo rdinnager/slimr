@@ -58,6 +58,7 @@ reference:
       - fitnessEffect
       - mateChoice
       - modifyChild
+      - mutation
       - mutationEffect
       - recombination
       - interaction
@@ -70,6 +71,8 @@ reference:
   - contents:
     - Chromosome
     - Ch
+    - Eidos
+    - E
     - Genome
     - G
     - GenomicElement
@@ -94,6 +97,10 @@ reference:
     - SEB
     - SLiMSim
     - SS
+    - SLiMgui
+    - SG
+    - SpatialMap
+    - SM
     - Subpopulation
     - P
     - Substitution
@@ -111,6 +118,9 @@ reference:
   - subtitle: Community
   - contents:
     - has_concept("Community")
+  - subtitle: Eidos
+  - contents:
+    - has_concept("Eidos")
   - subtitle: Genome
   - contents:
     - has_concept("Genome")
@@ -147,6 +157,12 @@ reference:
   - subtitle: SLiMSim
   - contents:
     - has_concept("SLiMSim")
+  - subtitle: SLiMgui
+  - contents:
+    - has_concept("SLiMgui")
+  - subtitle: SpatialMap
+  - contents:
+    - has_concept("SpatialMap")
   - subtitle: Species
   - contents:
     - has_concept("Species")
@@ -179,7 +195,7 @@ reference:
     - slimr_name
     - slimr_open_original
     - slimr_script_coll
-    - slimr_template_info
+    - slim_template_info
     - slimr_write
     - slim_file
     - slim_install_path

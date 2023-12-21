@@ -283,10 +283,10 @@ Now all values have been replaced, either by their values in the `data.frame` or
 script_temp_df2[3:4]
 ```
 
-If you want to check what the template settings for a `slimr_script` are, use `slimr_template_info()`.
+If you want to check what the template settings for a `slimr_script` are, use `slim_template_info()`.
 
 ```{r template_info}
-slimr_template_info(script_temp)
+slim_template_info(script_temp)
 ```
 
 There is one additional argument to `slimr_template` that we haven't talked about yet, which is called `unquote_strings`. This option allows you to insert unquoted string values in a template. The default value, which is `FALSE`, means that `slimr_template` assumes that any variables of class "character" to be inserted are meant to be quoted in the SLiM script, so they will be treated as literal strings by SLiM. However, in some cases you may wish to use character values to insert references to SLiM objects themselves, in which case, they must be unquoted. As an example, perhaps you want to refer to different Subpopulations in a SLiM script dynamically using templating. To do this we can set `unquote_strings = TRUE`. As an example if we want to refer to a Subpopulation dynamically, and we don't use `unquote_strings = TRUE`:

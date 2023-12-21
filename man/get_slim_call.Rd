@@ -7,5 +7,6 @@
 get_slim_call()
 }
 \description{
-Function to test if SLiM is available on user's system.
+Function to test if SLiM is available on user's system and return the correct system call
+to execute it.
 }

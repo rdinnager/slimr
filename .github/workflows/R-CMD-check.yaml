@@ -14,17 +14,19 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }}-${{ matrix.config.r }}-slim-${{ matrix.config.slim }}
+    name: ${{ matrix.config.os }}-${{ matrix.config.r }}-slim-${{ matrix.config.slim }}-conda-${{ matrix.config.conda }}
 
     strategy:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest, r: 'release', slim: 'yes'}
-          - {os: windows-latest, r: 'release', slim: 'no'}
-          - {os: macOS-latest, r: 'release', slim: 'yes'}
-          - {os: macOS-latest, r: 'devel', slim: 'yes'}
-          - {os: ubuntu-20.04, r: 'release', slim: 'yes', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
+          - {os: windows-latest, r: 'release', slim: 'yes', conda: 'no'}
+          - {os: windows-latest, r: 'release', slim: 'no', conda: 'no'}
+          - {os: macOS-latest, r: 'release', slim: 'yes', conda: 'no'}
+          - {os: macOS-latest, r: 'devel', slim: 'yes', conda: 'no'}
+          - {os: macOS-latest, r: 'release', slim: 'no', conda: 'yes'}
+          - {os: ubuntu-20.04, r: 'release', slim: 'yes', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", conda: 'no'}
+          - {os: ubuntu-20.04, r: 'release', slim: 'no', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", conda: 'yes'}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -144,31 +146,35 @@ jobs:
           extra-packages: any::rcmdcheck
           needs: check
 
-      - uses: r-lib/actions/check-r-package@v2
+      - name: Check on Windows
+        uses: r-lib/actions/check-r-package@v2
         if: runner.os == 'Windows'
         env:
-          SLIM_HOME: 'C:/Program Files (x86)/SLiM/bin'
+          SLIM_PATH: 'C:/Program Files (x86)/SLiM/bin/slim.exe'
         with:
           args: 'c("--no-manual", "--as-cran")'
           error-on: '"error"'
 
-      - uses: r-lib/actions/check-r-package@v2
-        if: runner.os != 'Windows'
+      - name: Check on non-Windows with Conda
+        uses: r-lib/actions/check-r-package@v2
+        if: runner.os != 'Windows' && matrix.config.conda == 'yes'
+        env:
+          SLIM_INSTALL: 1
+        with:
+          args: 'c("--no-manual", "--as-cran")'
+          error-on: '"error"'
+
+      - name: Check on non-Windows without Conda
+        uses: r-lib/actions/check-r-package@v2
+        if: runner.os != 'Windows' && matrix.config.conda == 'no'
         with:
           args: 'c("--no-manual", "--as-cran")'
           error-on: '"error"'
 
       - name: Upload test objects for covr
-        if: runner.os == 'Linux'
+        if: runner.os == 'Linux' && matrix.config.slim == 'yes'
         uses: actions/upload-artifact@master
         with:
           name: covr-test-objects
           path: ~/covr_test_objects
           retention-days: 1
-
-      - name: Upload check results
-        if: failure()
-        uses: actions/upload-artifact@master
-        with:
-          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
-          path: check

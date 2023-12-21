@@ -4,12 +4,8 @@
 \alias{registerInteractionCallback}
 \alias{Community$registerInteractionCallback}
 \alias{.Co$registerInteractionCallback}
-\alias{SLiMSim$registerInteractionCallback}
-\alias{.SS$registerInteractionCallback}
 \title{SLiM method registerInteractionCallback}
 \usage{
-registerInteractionCallback(id, source, intType, subpop, start, end)
-
 registerInteractionCallback(id, source, intType, subpop, start, end)
 }
 \arguments{
@@ -35,22 +31,10 @@ The default value is \code{NULL}. See details for description.}
 \value{
 An object of type SLiMEidosBlock object. Return will be of length 1 (a
 singleton)
-
-An object of type SLiMEidosBlock object. Return will be of length 1 (a
-singleton)
 }
 \description{
 Documentation for SLiM function \code{registerInteractionCallback}, which is a
 method of the SLiM class \code{\link{Community}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
-
-Documentation for SLiM function \code{registerInteractionCallback}, which is a
-method of the SLiM class \code{\link{SLiMSim}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -76,34 +60,8 @@ list of registered SLiMEidosBlock objects, and is active immediately; it will
 be eligible to execute the next time an InteractionType is evaluated. The new
 SLiMEidosBlock will be defined as a global variable immediately by this method
 (see section 25.12), and will also be returned by this method.
-
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-
-Register a block of Eidos source code, represented as the string
-singleton source, as an Eidos interaction() callback in the current simulation,
-with a required interaction type intType (which may be an integer identifier),
-optional subpopulation subpop (which may also be an integer identifier, or
-NULL, the default, to indicate all subpopulations), and optional start and
-end generations all limiting its applicability. The script block will be given
-identifier id (specified as an integer, or as a string symbolic name such as
-"s5"); this may be NULL if there is no need to be able to refer to the block
-later. The registered callback is added to the end of the list of registered
-SLiMEidosBlock objects, and is active immediately; it will be eligible to
-execute the next time an InteractionType is evaluated. The new SLiMEidosBlock
-will be defined as a global variable immediately by this method (see section
-24.11), and will also be returned by this method.
 }
 \section{Copyright}{
-
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
-on the official website: \url{https://messerlab.org/slim/}
-
 
 This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
@@ -132,42 +90,9 @@ Other Community:
 \code{\link{speciesWithIDs}()},
 \code{\link{subpopulationsWithIDs}()},
 \code{\link{usage}()}
-
-Other SLiMSim: 
-\code{\link{SS}},
-\code{\link{addSubpopSplit}()},
-\code{\link{addSubpop}()},
-\code{\link{countOfMutationsOfType}()},
-\code{\link{createLogFile}()},
-\code{\link{deregisterScriptBlock}()},
-\code{\link{mutationCounts}()},
-\code{\link{mutationFrequencies}()},
-\code{\link{mutationsOfType}()},
-\code{\link{outputFixedMutations}()},
-\code{\link{outputFull}()},
-\code{\link{outputMutations}()},
-\code{\link{outputUsage}()},
-\code{\link{readFromPopulationFile}()},
-\code{\link{recalculateFitness}()},
-\code{\link{registerEarlyEvent}()},
-\code{\link{registerFitnessCallback}()},
-\code{\link{registerLateEvent}()},
-\code{\link{registerMateChoiceCallback}()},
-\code{\link{registerModifyChildCallback}()},
-\code{\link{registerMutationCallback}()},
-\code{\link{registerRecombinationCallback}()},
-\code{\link{registerReproductionCallback}()},
-\code{\link{rescheduleScriptBlock}()},
-\code{\link{simulationFinished}()},
-\code{\link{subsetMutations}()},
-\code{\link{treeSeqCoalesced}()},
-\code{\link{treeSeqOutput}()},
-\code{\link{treeSeqRememberIndividuals}()},
-\code{\link{treeSeqSimplify}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
 \concept{Community}
-\concept{SLiMSim}

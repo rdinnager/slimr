@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>unevaluate</code>, which is a method of the SLiM
-class <code><a href="InteractionType.html">InteractionType</a></code>.
+class <code><a href="InteractionType_Class.html">InteractionType</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -116,24 +116,25 @@ full SLiM script.</p>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=665" class="external-link">SLiM manual: page
-665</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=699" class="external-link">SLiM manual: page
+699</a>.</p>
 <p>Discards all evaluation of this interaction, for all subpopulations.
 The state of the InteractionType is reset to a state prior to evaluation. This
 can be useful if the model state has changed in such a way that the evaluation
-already conducted is no longer valid. For example, if the maximum distance
-or the interaction function of the InteractionType need to be changed with
-immediate effect, or if the data used by an interaction() callback has changed
-in such a way that previously calculated interaction strengths are no longer
-correct, unevaluate() allows the interaction to begin again from scratch. In WF
-models, all interactions are automatically reset to an unevaluated state at the
-moment when the new offspring generation becomes the parental generation (at
-step 4 in the tick cycle; see section 22.4). In nonWF models, all interactions
-are automatically reset to an unevaluated state twice per tick: immediately
-after reproduction() callbacks have completed (after step 1 in the tick cycle;
-see section 23.1), and immediately before viability/survival selection (before
-step 4 in the tick cycle; see section 23.4). Given this automatic invalidation,
-most simulations have no reason to call unevaluate().</p>
+already conducted is no longer valid. For example, if the maximum distance,
+the interaction function, or the receiver or exerter constraints of the
+InteractionType need to be changed with immediate effect, or if the data used by
+an interaction() callback has changed in such a way that previously calculated
+interaction strengths are no longer correct, unevaluate() allows the interaction
+to begin again from scratch. In WF models, all interactions are automatically
+reset to an unevaluated state at the moment when the new offspring generation
+becomes the parental generation (at step 4 in the tick cycle; see section 23.4).
+In nonWF models, all interactions are automatically reset to an unevaluated
+state twice per tick: immediately after reproduction() callbacks have completed
+(after step 1 in the tick cycle; see section 24.1), and immediately before
+viability/survival selection (before step 4 in the tick cycle; see section
+24.4). Given this automatic invalidation, most simulations have no reason to
+call unevaluate().</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -150,7 +151,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other InteractionType: 
-<code><a href="InteractionType.html">InteractionType</a></code>,
+<code><a href="InteractionType_Class.html">InteractionType</a></code>,
 <code><a href="clippedIntegral.html">clippedIntegral</a>()</code>,
 <code><a href="distanceFromPoint.html">distanceFromPoint</a>()</code>,
 <code><a href="distance.html">distance</a>()</code>,
@@ -164,8 +165,10 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="nearestNeighbors.html">nearestNeighbors</a>()</code>,
 <code><a href="neighborCountOfPoint.html">neighborCountOfPoint</a>()</code>,
 <code><a href="neighborCount.html">neighborCount</a>()</code>,
+<code><a href="setConstraints.html">setConstraints</a>()</code>,
 <code><a href="setInteractionFunction.html">setInteractionFunction</a>()</code>,
 <code><a href="strength.html">strength</a>()</code>,
+<code><a href="testConstraints.html">testConstraints</a>()</code>,
 <code><a href="totalOfNeighborStrengths.html">totalOfNeighborStrengths</a>()</code></p></div>
     </div>
     <div id="author">

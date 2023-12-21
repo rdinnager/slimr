@@ -2,9 +2,12 @@
 % Please edit documentation in R/slimr_output.R
 \name{r_output_full}
 \alias{r_output_full}
+\alias{slimr_output_full}
 \title{Utility function to tell SLiM to output its outputFull() output}
 \usage{
 r_output_full(name = "full_output", ...)
+
+slimr_output_full(name = "full_output", ...)
 }
 \arguments{
 \item{name}{Name of output to use to label it in \code{slimr_results object}. Default is \code{"full_output"}}
@@ -13,4 +16,14 @@ r_output_full(name = "full_output", ...)
 }
 \description{
 Utility function to tell SLiM to output its outputFull() output
+}
+\examples{
+test_sim <- slim_script(
+  slim_block_init_minimal(mutation_rate = 1e-6),
+  slim_block_add_subpops(1, 100),
+  slim_block(1, 20, late(), {
+    r_output_full("out", do_every = 10)
+  })
+)
+test_sim
 }

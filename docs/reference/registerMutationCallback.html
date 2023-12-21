@@ -32,7 +32,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>registerMutationCallback</code>, which is a
-method of the SLiM class <code><a href="SLiMSim.html">SLiMSim</a></code>.
+method of the SLiM class <code><a href="SLiMSim_Class.html">SLiMSim</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -104,7 +104,7 @@ nested in a <code><a href="slim_script.html">slim_script</a></code>
 function call, where it will be translated into valid SLiM code as part of a
 full SLiM script.</p>
 <p>Documentation for SLiM function <code>registerMutationCallback</code>, which is a
-method of the SLiM class <code><a href="Species.html">Species</a></code>.
+method of the SLiM class <code><a href="Species_Class.html">Species</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -184,13 +184,13 @@ be eligible to execute in the current generation (see section 25.9 for details).
 The new SLiMEidosBlock will be defined as a global variable immediately by this
 method (see section 24.11), and will also be returned by this method.</p>
 <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=685" class="external-link">SLiM manual: page
-685</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=726" class="external-link">SLiM manual: page
+726</a>.</p>
 <p>Register a block of Eidos source code, represented as the string
 singleton source, as an Eidos mutation() callback in the current simulation
 (specific to the target species), with an optional mutation type mutType
 (which may be an integer mutation type identifier, or NULL, the default,
-to indicate all mutation types - see section 25.9), optional subpopulation
+to indicate all mutation types - see section 26.9), optional subpopulation
 subpop (which may also be an integer identifier, or NULL, the default, to
 indicate all subpopulations), and optional start and end ticks all limiting its
 applicability. The script block will be given identifier id (specified as an
@@ -198,8 +198,8 @@ integer, or as a string symbolic name such as "s5"); this may be NULL if there
 is no need to be able to refer to the block later. The registered callback is
 added to the end of the list of registered SLiMEidosBlock objects, and is active
 immediately; it may be eligible to execute in the current tick (see section
-25.11 for details). The new SLiMEidosBlock will be defined as a global variable
-immediately by this method (see section 24.12), and will also be returned by
+26.11 for details). The new SLiMEidosBlock will be defined as a global variable
+immediately by this method (see section 25.12), and will also be returned by
 this method.</p>
     </div>
     <div id="copyright">
@@ -225,7 +225,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other SLiMSim: 
-<code><a href="SLiMSim.html">SS</a></code>,
+<code><a href="SLiMSim_Class.html">SLiMSim</a></code>,
 <code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="addSubpop.html">addSubpop</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
@@ -256,7 +256,8 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="treeSeqRememberIndividuals.html">treeSeqRememberIndividuals</a>()</code>,
 <code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p>
 <p>Other Species: 
-<code><a href="Species.html">Sp</a></code>,
+<code><a href="Species_Class.html">Species</a></code>,
+<code><a href="addSubpopSplit.html">addSubpopSplit</a>()</code>,
 <code><a href="addSubpop.html">addSubpop</a>()</code>,
 <code><a href="countOfMutationsOfType.html">countOfMutationsOfType</a>()</code>,
 <code><a href="individualsWithPedigreeIDs.html">individualsWithPedigreeIDs</a>()</code>,
@@ -273,7 +274,16 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="registerMateChoiceCallback.html">registerMateChoiceCallback</a>()</code>,
 <code><a href="registerModifyChildCallback.html">registerModifyChildCallback</a>()</code>,
 <code><a href="registerMutationEffectCallback.html">registerMutationEffectCallback</a>()</code>,
-<code><a href="registerRecombinationCallback.html">registerRecombinationCallback</a>()</code></p></div>
+<code><a href="registerRecombinationCallback.html">registerRecombinationCallback</a>()</code>,
+<code><a href="registerReproductionCallback.html">registerReproductionCallback</a>()</code>,
+<code><a href="registerSurvivalCallback.html">registerSurvivalCallback</a>()</code>,
+<code><a href="simulationFinished.html">simulationFinished</a>()</code>,
+<code><a href="skipTick.html">skipTick</a>()</code>,
+<code><a href="subsetMutations.html">subsetMutations</a>()</code>,
+<code><a href="treeSeqCoalesced.html">treeSeqCoalesced</a>()</code>,
+<code><a href="treeSeqOutput.html">treeSeqOutput</a>()</code>,
+<code><a href="treeSeqRememberIndividuals.html">treeSeqRememberIndividuals</a>()</code>,
+<code><a href="treeSeqSimplify.html">treeSeqSimplify</a>()</code></p></div>
     </div>
     <div id="author">
     <h2>Author</h2>

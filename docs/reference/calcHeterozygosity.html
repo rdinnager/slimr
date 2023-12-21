@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>calcHeterozygosity</code>, which is a method of
-the SLiM class <code><a href="SLiMBuiltin.html">SLiMBuiltin</a></code>.
+the SLiM class <code><a href="SLiMBuiltin_Class.html">SLiMBuiltin</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -131,19 +131,19 @@ The default value is <code>NULL</code>. See details for description.</p></dd>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=707" class="external-link">SLiM manual: page
-707</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=751" class="external-link">SLiM manual: page
+751</a>.</p>
 <p>Calculates the heterozygosity for a vector of genomes, based upon
 the frequencies of mutations in the genomes. The result is the expected
 heterozygosity, for the individuals to which the genomes belong, assuming that
 they are under Hardy-Weinberg equilibrium; this can be compared to the observed
 heterozygosity of an individual, as calculated by calcPairHeterozygosity().
 Often genomes will be all of the genomes in a subpopulation, or in the entire
-population, but any genome vector may be used. By default, with muts=NULL,
-the calculation is based upon all mutations in the simulation; the calculation
-can instead be based upon a subset of mutations, such as mutations of a
-specific mutation type, by passing the desired vector of mutations for muts.
-The calculation can be narrowed to apply to only a window - a subrange of the
+population, but any genome vector may be used. By default, with muts=NULL, the
+calculation is based upon all mutations in the simulation; the calculation can
+instead be based upon a subset of mutations, such as mutations of a specific
+mutation type, by passing the desired vector of mutations for muts. FST = 1 − HS
+HT The calculation can be narrowed to apply to only a window - a subrange of the
 full chromosome - by passing the interval bounds [start, end] for the desired
 window. In this case, the vector of mutations used for the calculation will
 be subset to include only mutations within the specified window. The default
@@ -171,7 +171,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other SLiMBuiltin: 
-<code><a href="SLiMBuiltin.html">SB</a></code>,
+<code><a href="SLiMBuiltin_Class.html">SLiMBuiltin</a></code>,
 <code><a href="calcFST.html">calcFST</a>()</code>,
 <code><a href="calcInbreedingLoad.html">calcInbreedingLoad</a>()</code>,
 <code><a href="calcPairHeterozygosity.html">calcPairHeterozygosity</a>()</code>,

@@ -35,3 +35,27 @@ Currently supported R objects include all atomic vectors, matrices and arrays an
 Non-atomic vectors like factors are currently not supported and neither are any other special object types, though we
 plan to support some in the future.
 }
+\examples{
+popsizes <- c(100, 200, 300)
+slim_script(
+ slim_block(initialize(),
+        {
+          initializeMutationRate(1e-7);
+          initializeMutationType("m1", 0.5, "f", 0.0);
+          initializeGenomicElementType("g1", m1, 1.0);
+          initializeGenomicElement(g1, 0, 99999);
+          initializeRecombinationRate(1e-8);
+        }),
+ slim_block(1,
+        {
+          popsizes <- r_inline(popsizes)
+          sim.addSubpop("p1", popsizes[1]);
+          sim.addSubpop("p2", popsizes[2]);
+          sim.addSubpop("p3", popsizes[3]);
+        }),
+ slim_block(10000,
+        {
+          sim.simulationFinished();
+        })
+)
+}

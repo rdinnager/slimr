@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>setInteractionFunction</code>, which is a method
-of the SLiM class <code><a href="InteractionType.html">InteractionType</a></code>.
+of the SLiM class <code><a href="InteractionType_Class.html">InteractionType</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -121,24 +121,26 @@ See details for description.</p></dd>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=664" class="external-link">SLiM manual: page
-664</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=698" class="external-link">SLiM manual: page
+698</a>.</p>
 <p>Set the function used to translate spatial distances into interaction
 strengths for an interaction type. The functionType may be "f", in which case
 the ellipsis ... should supply a numeric$ fixed interaction strength; "l", in
 which case the ellipsis should supply a numeric$ maximum strength for a linear
 function; "e", in which case the ellipsis should supply a numeric$ maximum
-strength and a numeric$ lambda (shape) parameter for a negative exponential
+strength and a numeric$ lambda (rate) parameter for a negative exponential
 function; "n", in which case the ellipsis should supply a numeric$ maximum
 strength and a numeric$ sigma (standard deviation) parameter for a Gaussian
-function; or "c", in which case the ellipsis should supply a numeric$ maximum
-strength and a numeric$ scale parameter for a Cauchy distribution function. See
-section 24.8 above for discussions of these interaction functions. Non-spatial
-interactions must use function type "f", since no distance values are available
-in that case. The interaction function for an interaction type is normally a
-constant in simulations; in any case, it cannot be changed when an interaction
-has already been evaluated, so either it should be set prior to evaluation, or
-unevaluate() should be called first.</p>
+function; "c", in which case the ellipsis should supply a numeric$ maximum
+strength and a numeric$ scale parameter for a Cauchy distribution function; or
+"t", in which case the ellipsis should supply a numeric$ maximum strength, a
+numeric$ degrees of freedom, and a numeric$ scale parameter for a t-distribution
+function. See section 25.8 above for discussions of these interaction functions.
+Non-spatial interactions must use function type "f", since no distance values
+are available in that case. The interaction function for an interaction type
+is normally a constant in simulations; in any case, it cannot be changed when
+an interaction has already been evaluated, so either it should be set prior to
+evaluation, or unevaluate() should be called first.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -155,7 +157,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other InteractionType: 
-<code><a href="InteractionType.html">InteractionType</a></code>,
+<code><a href="InteractionType_Class.html">InteractionType</a></code>,
 <code><a href="clippedIntegral.html">clippedIntegral</a>()</code>,
 <code><a href="distanceFromPoint.html">distanceFromPoint</a>()</code>,
 <code><a href="distance.html">distance</a>()</code>,
@@ -169,7 +171,9 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
 <code><a href="nearestNeighbors.html">nearestNeighbors</a>()</code>,
 <code><a href="neighborCountOfPoint.html">neighborCountOfPoint</a>()</code>,
 <code><a href="neighborCount.html">neighborCount</a>()</code>,
+<code><a href="setConstraints.html">setConstraints</a>()</code>,
 <code><a href="strength.html">strength</a>()</code>,
+<code><a href="testConstraints.html">testConstraints</a>()</code>,
 <code><a href="totalOfNeighborStrengths.html">totalOfNeighborStrengths</a>()</code>,
 <code><a href="unevaluate.html">unevaluate</a>()</code></p></div>
     </div>

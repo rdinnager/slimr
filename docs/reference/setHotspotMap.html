@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>setHotspotMap</code>, which is a method of the
-SLiM class <code><a href="Chromosome.html">Chromosome</a></code>.
+SLiM class <code><a href="Chromosome_Class.html">Chromosome</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -126,8 +126,8 @@ default value is <code>"*"</code>. See details for description.</p></dd>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=633" class="external-link">SLiM manual: page
-633</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=662" class="external-link">SLiM manual: page
+662</a>.</p>
 <p>In nucleotide-based models, set the mutation rate multiplier along
 the chromosome. There are two ways to call this method. If the optional ends
 parameter is NULL (the default), then multipliers must be a singleton value
@@ -137,21 +137,20 @@ same length, and the values in ends must be specified in ascending order. In
 that case, multipliers and ends taken together specify the multipliers to be
 used along successive contiguous stretches of the chromosome, from beginning
 to end; the last position specified in ends should extend to the end of the
-chromosome (as previously determined, during simulation initialization). See
-the initializeHotspotMap() function for further discussion of precisely how
-these multipliers and positions are interpreted. If the optional sex parameter
-is "*" (the default), then the supplied hotspot map will be used for both
-sexes (which is the only option for hermaphroditic simulations). In sexual
-simulations sex may be "M" or "F" instead, in which case the supplied hotspot
-map is used only for that sex. Note that whether sex-specific hotspot maps
-will be used is set by the way that the simulation is initially configured
-with initializeHotspot(), and cannot be changed with this method; so if the
-simulation was set up to use sex-specific hotspot maps then sex must be "M" or
-"F" here, whereas if it was set up not to, then sex must be "*" or unsupplied
-here. If a simulation needs sex-specific hotspot maps only some of the time, the
-male and female maps can simply be set to be identical the rest of the time. The
-hotspot map is normally constant in simulations, so be sure you know what you
-are doing.</p>
+chromosome (as previously determined, during simulation initialization). See the
+initializeHotspotMap() function for further discussion of precisely how these
+multipliers and positions are interpreted. If the optional sex parameter is "*"
+(the default), then the supplied hotspot map will be used for both sexes (which
+is the only option for hermaphroditic simulations). In sexual simulations sex
+may be "M" or "F" instead, in which case the supplied hotspot map is used only
+for that sex. Note that whether sex-specific hotspot maps will be used is set
+by the way that the simulation is initially configured with initializeHotspot(),
+and cannot be changed with this method; so if the simulation was set up to use
+sex-specific hotspot maps then sex must be "M" or "F" here, whereas if it was
+set up not to, then sex must be "*" or unsupplied here. If a simulation needs
+sex-specific hotspot maps only some of the time, the male and female maps can
+simply be set to be identical the rest of the time. The hotspot map is normally
+constant in simulations, so be sure you know what you are doing.</p>
     </div>
     <div id="copyright">
     <h2>Copyright</h2>
@@ -168,7 +167,7 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Chromosome: 
-<code><a href="Chromosome.html">Ch</a></code>,
+<code><a href="Chromosome_Class.html">Chromosome</a></code>,
 <code><a href="ancestralNucleotides.html">ancestralNucleotides</a>()</code>,
 <code><a href="drawBreakpoints.html">drawBreakpoints</a>()</code>,
 <code><a href="setAncestralNucleotides.html">setAncestralNucleotides</a>()</code>,

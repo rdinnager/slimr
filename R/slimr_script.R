@@ -49,7 +49,7 @@ obj_print_data.slimr_code <- function(x, ...) {
 }
 
 #' @export
-vec_ptype2.slimr_code.slimr_code <- function(x, to, ...) x
+vec_ptype2.slimr_code.slimr_code <- function(x, y, ...) x
 
 
 #' @export
@@ -476,6 +476,8 @@ process_code_blocks <- function(slim_script_text) {
 #' @export
 #'
 #' @examples
+#' cat(slim_recipes[[1]])
+#' as_slimr_script(slim_recipes[[1]])
 as_slimr_script <- function(slim_script_text) {
 
   block_names <- block_ids <- start_nums <- end_nums <- callbacks <- blocks <- max_num <- NULL
@@ -567,6 +569,7 @@ code <- function(x) {
 #' @rdname code
 #'
 #' @export
+#' @examples
 `code<-` <- function(x, value) {
   field(x, "code") <- value
   x
@@ -598,6 +601,7 @@ end_gen <- function(x) {
 #' @rdname end_gen
 #'
 #' @export
+#' @examples
 `end_gen<-` <- function(x, value) {
   field(x, "end_gen") <- as.character(value)
   x
@@ -632,11 +636,21 @@ end_gen <- function(x) {
 #' @export
 #'
 #' @examples
+#' test_sim <- slim_script(
+#'   slim_block_init_minimal(mutation_rate = 1e-6),
+#'   slim_block_add_subpops(1, 100),
+#'   slim_block(1, 20, late(), {
+#'     slimr_output(sim.outputFull(), "out", do_every = 10)
+#'   })
+#' )
+#'
+#' slim_script_duration(test_sim, 100)
 slim_script_duration <- function(x, duration) {
+
   start_gens <- as.numeric(vctrs::field(x, "start_gen"))
   end_gens <- as.numeric(end_gen(x))
   start_gens[start_gens > duration] <- duration
-  end_gens[end_gens > duration] <- duration
+  end_gens[end_gens < duration] <- duration
   vctrs::field(x, "start_gen") <- as.character(start_gens)
   vctrs::field(x, "end_gen") <- as.character(end_gens)
   x
@@ -764,10 +778,10 @@ slimr_write.character <- function(x, file, ...) {
 
 #' Reconstruct slimrlang code to make this slimr_script
 #'
-#' This reconstructs a \code{slimrlang} input sequence to regenerate the given \script(slimr_script)
+#' This reconstructs a \code{slimrlang} input sequence to regenerate the given \code{slimr_script}
 #' object. This is useful if you want to edit the SLiM script to add additional functionality,
 #' for example, where you want to incorporate the results of \code{slimrlang}'s internal edits, e.g.
-#' such as removing \code{\link{%.%}} special operators, etc. It is also useful when the
+#' such as removing \code{\link{\%.\%}} special operators, etc. It is also useful when the
 #' \code{slimr_script} object has been created from converting a text-based SLiM script, such as when
 #' using \code{\link[slimr]{as.slimr_script}} from the \code{slimr} package on a character variable.
 #'
@@ -803,10 +817,10 @@ reconstruct <- function(x, ...) {
 
 #' Reconstruct slimrlang code to make this slimr_script
 #'
-#' This reconstructs a \code{slimrlang} input sequence to regenerate the given \script(slimr_script)
+#' This reconstructs a \code{slimrlang} input sequence to regenerate the given \code{slimr_script}
 #' object. This is useful if you want to edit the SLiM script to add additional functionality,
 #' for example, where you want to incorporate the results of \code{slimrlang}'s internal edits, e.g.
-#' such as removing \code{\link{%.%}} special operators, etc. It is also useful when the
+#' such as removing \code{\link{\%.\%}} special operators, etc. It is also useful when the
 #' \code{slimr_script} object has been created from converting a text-based SLiM script, such as when
 #' using \code{\link[slimr]{as.slimr_script}} from the \code{slimr} package on a character variable.
 #'

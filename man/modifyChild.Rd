@@ -52,7 +52,6 @@ on the official website: \url{https://messerlab.org/slim/}
 }
 
 \examples{
-# From page 217 of the SLiM Manual
 slim_block(modifyChild(), {
 
   # prevent hermaphroditic selfing

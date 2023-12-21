@@ -15,3 +15,9 @@ The code as a string (invisibly)
 \description{
 Open the original code used to create a slimr_script in a new document. Requires RStudio.
 }
+\examples{
+test <- minimal_slimr_script()
+if(rlang::is_installed("rstudioapi") && interactive()) {
+    slimr_open_original("test")
+}
+}

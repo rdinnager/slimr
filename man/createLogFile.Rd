@@ -4,20 +4,8 @@
 \alias{createLogFile}
 \alias{Community$createLogFile}
 \alias{.Co$createLogFile}
-\alias{SLiMSim$createLogFile}
-\alias{.SS$createLogFile}
 \title{SLiM method createLogFile}
 \usage{
-createLogFile(
-  filePath,
-  initialContents,
-  append,
-  compress,
-  sep,
-  logInterval,
-  flushInterval
-)
-
 createLogFile(
   filePath,
   initialContents,
@@ -53,22 +41,10 @@ singleton). The default value is \code{NULL}. See details for description.}
 \value{
 An object of type LogFile object. Return will be of length 1 (a
 singleton)
-
-An object of type LogFile object. Return will be of length 1 (a
-singleton)
 }
 \description{
 Documentation for SLiM function \code{createLogFile}, which is a method of the
 SLiM class \code{\link{Community}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
-
-Documentation for SLiM function \code{createLogFile}, which is a method of the
-SLiM class \code{\link{SLiMSim}}.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further
@@ -118,59 +94,8 @@ contents; the initial write is not buffered. When compression is not enabled,
 the flushInterval setting is ignored. The LogFile documentation discusses how to
 configure and use LogFile to write out the data you are interested in from your
 simulation; see section 25.10.
-
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
-
-Creates and returns a new LogFile object that logs data from the
-simulation (see the documentation for the LogFile class for details). Logged
-data will be written to the file at filePath, overwriting any existing file at
-that path by default, or appending to it instead if append is T (successive rows
-of the log table will always be appended to the previously written content, of
-course). Before the header line for the log is written out, any string elements
-in initialContents will be written first, separated by newlines, allowing for a
-user-defined file header. If compress is T, the contents will be compressed with
-zlib as they are written, and the standard .gz extension for gzip-compressed
-files will be appended to the filename in filePath if it is not already present.
-The sep parameter specifies the separator between data values within a row.
-The default of "," will generate a "comma-separated value" (CSV) file, while
-passing sep="\\t" will use a tab separator Eidos events fitness() mateChoice()
-modifyChild() recombination() interaction() reproduction() 566 instead to
-generate a "tab-separated value" (TSV) file. Other values for sep may also be
-used, but are less standard. LogTable supports periodic automatic logging of a
-new row of data, enabled by supplying a non-NULL value for logInterval. In this
-case, a new row will be logged (as if logRow() were called on the LogFile) at
-the end of every logInterval generations (just before the generation counter
-increments, in both WF and nonWF models), starting at the end of the generation
-in which the LogFile was created. A logInterval of 1 will cause automatic
-logging at the end of every generation, whereas a logInterval of NULL disables
-automatic logging. Automatic logging can always be disabled or reconfigured
-later with the LogFile method setLogInterval(), or logging can be triggered
-manually by calling logRow(). When compression is enabled, LogFile flushes new
-data lazily by default, for performance reasons, buffering data for multiple
-rows before writing to disk. Passing a non-NULL value for flushInterval requests
-a flush every flushInterval rows (with a value of 1 providing unbuffered
-operation). Note that flushing very frequently will likely result in both
-lower performance and a larger final file size (in one simple test, 48943 bytes
-instead of 4280 bytes, or more than a 10× increase in size). Alternatively,
-passing a very large value for flushInterval will effectively disable automatic
-flushing, except at the end of the simulation (but be aware that this may use
-a large amount of memory for large log files). In any case, the log file will
-be created immediately, with its requested initial contents; the initial write
-is not buffered. When compression is not enabled, the flushInterval setting is
-ignored. The LogFile documentation discusses how to configure and use LogFile to
-write out the data you are interested in from your simulation; see section 24.9.
 }
 \section{Copyright}{
-
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
-on the official website: \url{https://messerlab.org/slim/}
-
 
 This is documentation for a function in the SLiM software, and has been
 reproduced from the official manual,
@@ -199,42 +124,9 @@ Other Community:
 \code{\link{speciesWithIDs}()},
 \code{\link{subpopulationsWithIDs}()},
 \code{\link{usage}()}
-
-Other SLiMSim: 
-\code{\link{SS}},
-\code{\link{addSubpopSplit}()},
-\code{\link{addSubpop}()},
-\code{\link{countOfMutationsOfType}()},
-\code{\link{deregisterScriptBlock}()},
-\code{\link{mutationCounts}()},
-\code{\link{mutationFrequencies}()},
-\code{\link{mutationsOfType}()},
-\code{\link{outputFixedMutations}()},
-\code{\link{outputFull}()},
-\code{\link{outputMutations}()},
-\code{\link{outputUsage}()},
-\code{\link{readFromPopulationFile}()},
-\code{\link{recalculateFitness}()},
-\code{\link{registerEarlyEvent}()},
-\code{\link{registerFitnessCallback}()},
-\code{\link{registerInteractionCallback}()},
-\code{\link{registerLateEvent}()},
-\code{\link{registerMateChoiceCallback}()},
-\code{\link{registerModifyChildCallback}()},
-\code{\link{registerMutationCallback}()},
-\code{\link{registerRecombinationCallback}()},
-\code{\link{registerReproductionCallback}()},
-\code{\link{rescheduleScriptBlock}()},
-\code{\link{simulationFinished}()},
-\code{\link{subsetMutations}()},
-\code{\link{treeSeqCoalesced}()},
-\code{\link{treeSeqOutput}()},
-\code{\link{treeSeqRememberIndividuals}()},
-\code{\link{treeSeqSimplify}()}
 }
 \author{
 Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
 (\email{messer@cornell.edu})
 }
 \concept{Community}
-\concept{SLiMSim}

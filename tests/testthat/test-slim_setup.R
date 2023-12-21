@@ -4,9 +4,9 @@ test_that("SLiM executable can be found (if SLiM is available on system)", {
 
   skip_if_not(slim_is_avail())
 
-  slim_dir <- get_slim_dir()
+  slim_path <- get_slim_path()
 
-  expect_type(slim_dir, "character")
+  expect_type(slim_path, "character")
 
   slim_call <- get_slim_call()
 

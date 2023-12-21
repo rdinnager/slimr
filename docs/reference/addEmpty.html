@@ -24,7 +24,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ full SLiM script."><meta property="og:image" content="https://rdinnager.github.i
 
     <div class="ref-description">
     <p>Documentation for SLiM function <code>addEmpty</code>, which is a method of the SLiM
-class <code><a href="Subpopulation.html">Subpopulation</a></code>.
+class <code><a href="Subpopulation_Class.html">Subpopulation</a></code>.
 Note that the R function is a stub, it does not do anything in R (except bring
 up this documentation). It will only do
 anything useful when used inside a <code><a href="slim_block.html">slim_block</a></code> function further
@@ -98,7 +98,7 @@ full SLiM script.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">addEmpty</span><span class="op">(</span><span class="va">sex</span>, <span class="va">genome1Null</span>, <span class="va">genome2Null</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">addEmpty</span><span class="op">(</span><span class="va">sex</span>, <span class="va">genome1Null</span>, <span class="va">genome2Null</span>, <span class="va">count</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -117,19 +117,23 @@ singleton). The default value is <code>NULL</code>. See details for description.
 <dd><p>An object of type null or logical. Must be of length 1 (a
 singleton). The default value is <code>NULL</code>. See details for description.</p></dd>
 
+
+<dt>count</dt>
+<dd><p>An object of type integer. Must be of length 1 (a singleton). The
+default value is <code>1</code>. See details for description.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p>An object of type null or Individual object. Return will be of length 1
-(a singleton)</p>
+<p>An object of type Individual object.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
     <p>Documentation for this function can be found in the official
-<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=692" class="external-link">SLiM manual: page
-692</a>.</p>
+<a href="http://benhaller.com/slim/SLiM_Manual.pdf#page=734" class="external-link">SLiM manual: page
+734</a>.</p>
 <p>Generates a new offspring individual with empty genomes (i.e.,
 containing no mutations), queues it for addition to the target subpopulation,
 and returns it. The new offspring will not be visible as a member of the
@@ -152,7 +156,14 @@ what SLiM would do anyway. In all other simulations there is little point in
 passing F (since that would be the default behavior anyway), but passing T can
 be used to make one or both genomes be null genomes, which can be useful for,
 e.g., modeling haploids (for which, by convention, the second genome is usually
-a null genome in SLiM). Note that this method is only for use in nonWF models.
+a null genome in SLiM). Beginning in SLiM 4.1, the count parameter dictates
+how many offspring will be generated (previously, exactly one offspring was
+generated). Each offspring is generated independently, based upon the given
+parameters. The returned vector contains all generated offspring, except those
+that were rejected by a modifyChild() callback. If all offspring are rejected,
+object&lt;Individual&gt;(0) is returned, which is a zero-length object vector of
+class Individual; note that this is a change in behavior from earlier versions,
+which would return NULL. Note that this method is only for use in nonWF models.
 See addCrossed() for further general notes on the addition of new offspring
 individuals.</p>
     </div>
@@ -171,22 +182,25 @@ on the official website: <a href="https://messerlab.org/slim/" class="external-l
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p>Other Subpopulation: 
-<code><a href="Subpopulation.html">P</a></code>,
+<code><a href="Subpopulation_Class.html">Subpopulation</a></code>,
 <code><a href="addCloned.html">addCloned</a>()</code>,
 <code><a href="addCrossed.html">addCrossed</a>()</code>,
 <code><a href="addRecombinant.html">addRecombinant</a>()</code>,
 <code><a href="addSelfed.html">addSelfed</a>()</code>,
+<code><a href="addSpatialMap.html">addSpatialMap</a>()</code>,
 <code><a href="cachedFitness.html">cachedFitness</a>()</code>,
 <code><a href="configureDisplay.html">configureDisplay</a>()</code>,
 <code><a href="defineSpatialMap.html">defineSpatialMap</a>()</code>,
 <code><a href="outputMSSample.html">outputMSSample</a>()</code>,
 <code><a href="outputSample.html">outputSample</a>()</code>,
 <code><a href="outputVCFSample.html">outputVCFSample</a>()</code>,
+<code><a href="pointDeviated.html">pointDeviated</a>()</code>,
 <code><a href="pointInBounds.html">pointInBounds</a>()</code>,
 <code><a href="pointPeriodic.html">pointPeriodic</a>()</code>,
 <code><a href="pointReflected.html">pointReflected</a>()</code>,
 <code><a href="pointStopped.html">pointStopped</a>()</code>,
 <code><a href="pointUniform.html">pointUniform</a>()</code>,
+<code><a href="removeSpatialMap.html">removeSpatialMap</a>()</code>,
 <code><a href="removeSubpopulation.html">removeSubpopulation</a>()</code>,
 <code><a href="sampleIndividuals.html">sampleIndividuals</a>()</code>,
 <code><a href="setCloningRate.html">setCloningRate</a>()</code>,

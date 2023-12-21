@@ -2,7 +2,7 @@
 #'
 #' Utility code to convert SLiM code into a form that can be parsed by R
 #' (e.g. in \code{styler} or \code{prettycode}). Don't forget to re-SLiMify
-#' afterwards (via \code{\link(slim_code_SLiMify))!
+#' afterwards (via \code{\link{slim_code_SLiMify}})!
 #'
 #' @param code_snippet SLiM code to Rify as a character vector
 #'
@@ -113,10 +113,9 @@ slim_code_SLiMify <- function(code_snippet) {
 #'
 #' This function loads R objects to stand in for standard Globals used in SLiM.
 #' These will be available in the global environment and can be used to aid in
-#' autocompletion and help retrieval, saving typing of this pattern: \code{p1%.%Subpopulation$setSubpopulationSize(N)} --
+#' autocompletion and help retrieval, saving typing of this pattern: \code{p1\%.\%Subpopulation$setSubpopulationSize(N)} --
 #' instead one can just type: \code{p1$setSubpopulationSize(N)}: this will be replaced by correct SLiM code:
 #' \code{p1.setSubpopulationSize(N)}
-#'
 #' By default this will load ten of each of the standard SLiM Globals (e.g. objects prefixed with "p",
 #' "m", "i", "g", and "s"), as well as the "sim" and "self" singular Globals. Note: be careful with
 #' this function. If you have any objects in your R session's global environment with these names
@@ -138,7 +137,7 @@ slim_load_globals <- function(max = 10, sim = TRUE, community = TRUE, self = TRU
 
   if(sim) {
     rlang::env_bind_lazy(rlang::global_env(),
-                         sim = SLiMSim)
+                         sim = Species)
   }
 
   if(community) {
@@ -312,7 +311,7 @@ slim_load_globals <- function(max = 10, sim = TRUE, community = TRUE, self = TRU
 #' This will remove any objects added to the global environment by
 #' \code{\link{slim_load_globals}}
 #'
-#' @return
+#' @return None
 #' @export
 #'
 #' @examples

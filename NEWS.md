@@ -1,3 +1,5 @@
+# slimr (development version)
+
 # slimr 0.4.0
 
 * Updated `slimr` to be fully compatible with SLiM v4.1 updates

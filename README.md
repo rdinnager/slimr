@@ -8,9 +8,7 @@
 <!-- badges: start -->
 
 [![R build
-status](https://github.com/rdinnager/slimr/workflows/R-CMD-check/badge.svg)](https://github.com/rdinnager/slimr/actions)
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+status](https://github.com/rdinnager/slimr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rdinnager/slimr/actions)
 [![slimr status
 badge](https://rdinnager.r-universe.dev/badges/slimr)](https://rdinnager.r-universe.dev/slimr)
 <!-- badges: end -->
@@ -293,14 +291,14 @@ is a tibble that holds all the information that was used during runs.
 ``` r
 str(sr)
 #> List of 6
-#>  $ output     : chr [1:42] "// Initial random seed:" "86031283" "" "// RunInitializeCallbacks():" ...
+#>  $ output     : chr [1:42] "// Initial random seed:" "1842785913" "" "// RunInitializeCallbacks():" ...
 #>  $ exit_status: int 0
 #>  $ output_data: slmr_tp_ [10 × 5] (S3: slimr_output_data/spec_tbl_df/tbl_df/tbl/data.frame)
 #>   ..$ generation: int [1:10] 10 20 30 40 50 60 70 80 90 100
 #>   ..$ name      : chr [1:10] "p1" "p1" "p1" "p1" ...
 #>   ..$ expression: chr [1:10] "p1.genomes.output()" "p1.genomes.output()" "p1.genomes.output()" "p1.genomes.output()" ...
 #>   ..$ type      : chr [1:10] "slim_output" "slim_output" "slim_output" "slim_output" ...
-#>   ..$ data      : chr [1:10] "#OUT: 10 GS 66\nMutations:\n68 7 m1 533 0 0.5 p1 1 8\n70 8 m1 14881 0 0.5 p1 1 8\n13 9 m1 7396 0 0.5 p1 1 14\n1"| __truncated__ "#OUT: 20 GS 66\nMutations:\n2 9 m1 7396 0 0.5 p1 1 28\n9 10 m1 38660 0 0.5 p1 1 28\n83 20 m1 27269 0 0.5 p1 1 1"| __truncated__ "#OUT: 30 GS 66\nMutations:\n3 9 m1 7396 0 0.5 p1 1 40\n13 10 m1 38660 0 0.5 p1 1 40\n109 20 m1 27269 0 0.5 p1 1"| __truncated__ "#OUT: 40 GS 66\nMutations:\n58 9 m1 7396 0 0.5 p1 1 37\n70 10 m1 38660 0 0.5 p1 1 37\n173 20 m1 27269 0 0.5 p1 "| __truncated__ ...
+#>   ..$ data      : chr [1:10] "#OUT: 10 GS 66\nMutations:\n22 10 m1 34405 0 0.5 p1 1 1\n25 11 m1 67634 0 0.5 p1 1 1\n27 12 m1 85849 0 0.5 p1 1"| __truncated__ "#OUT: 20 GS 66\nMutations:\n221 28 m1 47462 0 0.5 p1 1 2\n153 53 m1 34565 0 0.5 p1 1 3\n163 54 m1 78569 0 0.5 p"| __truncated__ "#OUT: 30 GS 66\nMutations:\n35 53 m1 34565 0 0.5 p1 1 10\n48 54 m1 78569 0 0.5 p1 1 10\n65 58 m1 63562 0 0.5 p1"| __truncated__ "#OUT: 40 GS 66\nMutations:\n283 53 m1 34565 0 0.5 p1 1 2\n303 54 m1 78569 0 0.5 p1 1 2\n359 58 m1 63562 0 0.5 p"| __truncated__ ...
 #>   ..- attr(*, "spec")=
 #>   .. .. cols(
 #>   .. ..   generation = col_integer(),
@@ -313,7 +311,7 @@ str(sr)
 #>  $ process    :Classes 'process', 'R6' PROCESS 'slim.exe', finished.
 #>  
 #>  $ error      : chr(0) 
-#>  $ output_file: chr "F:\\Rtemp\\RtmpYlRp8x\\file663061a8581c.txt"
+#>  $ output_file: chr "F:\\Rtemp\\Rtmp0uwj9d\\file3f4c5ab63905.txt"
 #>  - attr(*, "class")= chr "slimr_results"
 
 sr$output_data
@@ -344,23 +342,23 @@ gls
 #> # A tibble: 10 × 2
 #>    generation genlight        
 #>         <int> <list>          
-#>  1         10 <genlight[,274]>
-#>  2         20 <genlight[,346]>
-#>  3         30 <genlight[,427]>
-#>  4         40 <genlight[,438]>
-#>  5         50 <genlight[,511]>
-#>  6         60 <genlight[,489]>
-#>  7         70 <genlight[,573]>
-#>  8         80 <genlight[,640]>
-#>  9         90 <genlight[,653]>
-#> 10        100 <genlight[,626]>
+#>  1         10 <genlight[,261]>
+#>  2         20 <genlight[,302]>
+#>  3         30 <genlight[,351]>
+#>  4         40 <genlight[,402]>
+#>  5         50 <genlight[,380]>
+#>  6         60 <genlight[,408]>
+#>  7         70 <genlight[,467]>
+#>  8         80 <genlight[,498]>
+#>  9         90 <genlight[,579]>
+#> 10        100 <genlight[,547]>
 
 
 #the genlight object for generation 10
 gls$genlight[[1]]
 #>  /// GENLIGHT OBJECT /////////
 #> 
-#>  // 33 genotypes,  274 binary SNPs, size: 74 Kb
+#>  // 33 genotypes,  261 binary SNPs, size: 72.9 Kb
 #>  0 (0 %) missing data
 #> 
 #>  // Basic content
@@ -368,13 +366,13 @@ gls$genlight[[1]]
 #> 
 #>  // Optional content
 #>    @ind.names:  33 individual labels
-#>    @loc.names:  274 locus labels
+#>    @loc.names:  261 locus labels
 #>    @position: integer storing positions of the SNPs
 #>    @other: a list containing: mut_type  prevalence
 
 #number of loci at generation 10
 nLoc(gls$genlight[[1]])
-#> [1] 274
+#> [1] 261
 ```
 
 And finally we can use a simply `lapply` to find the number of loci in

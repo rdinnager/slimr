@@ -9,7 +9,7 @@ test_that("slim_run can run a SLiM script", {
   expect_s3_class(res, "slimr_results")
   expect_identical(res$exit_status, 0L)
   expect_length(res$error, 0L)
-  expect_length(res$output, 0L)
+  expect_length(res$output, 10L)
 
 })
 

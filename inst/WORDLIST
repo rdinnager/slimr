@@ -55,7 +55,6 @@ Kimura
 Kyriazis
 LYATI
 Leu
-Lifecycle
 LogFile
 LogFile's
 MULTIALLELIC
@@ -350,6 +349,7 @@ gz
 haploidDominanceCoeff
 heatColors
 hemizygous
+herm
 hermannsburgensis
 heteroduplex
 heterozygosity
@@ -574,6 +574,8 @@ randomizeStrands
 rbeta
 rbinom
 rcauchy
+rdata
+rdinnager
 rdunif
 readCSV
 readFile
@@ -837,3 +839,4 @@ zlib
 σ
 τ
 φ
+’conda’

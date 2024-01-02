@@ -24,8 +24,8 @@ test_that("templating works", {
 
   info <- slim_template_info(script_temp)
 
-  expect_equal(info$block_init$mut_rate, 1e-07)
-  expect_equal(info$block_init$genome_size, 99999)
+  expect_equal(info$block_1$mut_rate, 1e-07)
+  expect_equal(info$block_1$genome_size, 99999)
 
   expect_warning(script_partial <- slim_script_render(script_temp,
                                         template = list(

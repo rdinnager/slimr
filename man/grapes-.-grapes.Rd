@@ -26,6 +26,14 @@ function call, where it will be translated into valid SLiM code as part of a ful
  on the official website: \\url{https://messerlab.org/slim/}
 }
 
+\examples{
+slim_script(
+  slim_block_init_minimal(mutation_rate = 1e-6),
+  slim_block(1, early(), {
+    sim\%.\%Sp$addSubpop("p1", 100);
+  })
+)
+}
 \author{
 Benjamin C Haller (\\email{bhaller@benhaller.com}) and Philipp W Messer (\\email{messer@cornell.edu})
 }

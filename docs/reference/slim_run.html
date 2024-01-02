@@ -97,8 +97,6 @@ a character vector, or a text file.</p>
 <span>  callbacks <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cb_args <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  new_grdev <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  record_graphics <span class="op">=</span> <span class="st">""</span>,</span>
-<span>  rec_args <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  parallel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  progress <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  throw_error <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -117,8 +115,6 @@ a character vector, or a text file.</p>
 <span>  callbacks <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cb_args <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  new_grdev <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  record_graphics <span class="op">=</span> <span class="st">""</span>,</span>
-<span>  rec_args <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  parallel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  progress <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  throw_error <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -137,8 +133,6 @@ a character vector, or a text file.</p>
 <span>  callbacks <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cb_args <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  new_grdev <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  record_graphics <span class="op">=</span> <span class="st">""</span>,</span>
-<span>  rec_args <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  parallel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  progress <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  throw_error <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -157,8 +151,6 @@ a character vector, or a text file.</p>
 <span>  callbacks <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cb_args <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  new_grdev <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  record_graphics <span class="op">=</span> <span class="st">""</span>,</span>
-<span>  rec_args <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  parallel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  progress <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  throw_error <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -238,18 +230,6 @@ custom callbacks that generate live figures, and want a faster plotting experien
 default plot viewer in RStudio can be quite slow. Setting this to <code>TRUE</code> also allows <code>record_graphics</code> to work.</p></dd>
 
 
-<dt>record_graphics</dt>
-<dd><p>An optional character string specifying a file to record video output from the graphics device.
-If you have custom graphics output for the simulation this lets you record that output live, saving the trouble of producing
-separate animations after the simulation is complete (also allowing you to save memory because you don't need to keep the
-entire simulation output to make a post-hoc animation).</p></dd>
-
-
-<dt>rec_args</dt>
-<dd><p>An optional list containing named arguments to be passed to <code><a href="https://docs.ropensci.org/av/reference/capturing.html" class="external-link">av_capture_graphics</a></code> for graphics recording.
-Ignored if <code>record_graphics</code> is not <code>TRUE</code>.</p></dd>
-
-
 <dt>parallel</dt>
 <dd><p>If <code>x</code> is a <code>slimr_script_coll</code>, should the elements in <code>x</code>
 be run in parallel. For this to work, you must have setup a parallel plan using <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></code></p></dd>
@@ -322,7 +302,7 @@ in a script if subsequent code assumes that the simulation finished successfully
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Success!</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $output</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "// Initial random seed:"                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  [2] "400679808"                                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2] "1530461718"                               </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [3] ""                                         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "// RunInitializeCallbacks():"             </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "initializeMutationRate(1e-06);"           </span>
@@ -357,7 +337,7 @@ in a script if subsequent code assumes that the simulation finished successfully
 <span class="r-out co"><span class="r-pr">#&gt;</span> character(0)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $output_file</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "F:\\Rtemp\\Rtmpklnlag\\file52904b0e1257.txt"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "F:\\Rtemp\\RtmpG056mn\\file5a2c5f14277f.txt"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "slimr_results"</span>

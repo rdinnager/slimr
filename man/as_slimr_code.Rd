@@ -7,7 +7,7 @@
 as_slimr_code(code_txt)
 }
 \arguments{
-\item{code_txt}{}
+\item{code_txt}{SLiM code as a character vector.}
 }
 \value{
 `slimr` code as a character vector, invisibly

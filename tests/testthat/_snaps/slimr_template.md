@@ -4,7 +4,7 @@
       print(script_temp)
     Output
       <slimr_script[3]>
-      block_init:initialize() {
+      block_1:initialize() {
           initializeMutationRate(..mut_rate..);
           initializeMutationType("m1", 0.5, "f", 0);
           initializeGenomicElementType("g1", m1, 1);
@@ -19,8 +19,8 @@
       block_3:10000 early() {
           sim.simulationFinished();
       }
-      This slimr_script has templating in block(s) block_init for variables mut_rate
-      and genome_size.
+      This slimr_script has templating in block(s) block_1 for variables mut_rate and
+      genome_size.
 
 ---
 
@@ -30,7 +30,7 @@
       <slimr_script_coll[2]>
       <1>
       
-      block_init:initialize() {
+      block_1:initialize() {
           initializeMutationRate(1e-05);
           initializeMutationType("m1", 0.5, "f", 0);
           initializeGenomicElementType("g1", m1, 1);
@@ -48,7 +48,7 @@
       
       <2>
       
-      block_init:initialize() {
+      block_1:initialize() {
           initializeMutationRate(1e-07);
           initializeMutationType("m1", 0.5, "f", 0);
           initializeGenomicElementType("g1", m1, 1);

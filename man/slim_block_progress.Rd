@@ -9,17 +9,13 @@ slim_block_progress(update_every = 1, time_counter = community.tick)
 \arguments{
 \item{update_every}{How often to update progress, expressed as the number
 of generations after which an update should be tracked.}
+
+\item{time_counter}{A SLiM expression that returns the current time. Default is `community.tick`,
+which is the best option for SLiM version >4.0. If you are using SLiM version < v4.0, `sim.generation` should work.}
 }
 \value{
 A \code{slimr_block} object
 }
 \description{
-Insert slim_block to track progress when using slim_run
-}
-\examples{
-slim_script(
-  slim_block_init_minimal(),
-  slim_block_progress(10),
-  slim_block_finish(100)
-)
+Deprecated due to new progress tracking system.
 }

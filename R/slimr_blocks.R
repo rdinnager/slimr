@@ -1,16 +1,20 @@
 #' Insert slim_block to track progress when using slim_run
 #'
+#' Deprecated due to new progress tracking system.
+#'
 #' @param update_every How often to update progress, expressed as the number
 #' of generations after which an update should be tracked.
+#' @param time_counter A SLiM expression that returns the current time. Default is `community.tick`,
+#' which is the best option for SLiM version >4.0. If you are using SLiM version < v4.0, `sim.generation` should work.
 #'
 #' @return A \code{slimr_block} object
-#' @export
-#' @examples
-#' slim_script(
-#'   slim_block_init_minimal(),
-#'   slim_block_progress(10),
-#'   slim_block_finish(100)
-#' )
+# @export
+# @examples
+# slim_script(
+#   slim_block_init_minimal(),
+#   slim_block_progress(10),
+#   slim_block_finish(100)
+# )
 slim_block_progress <- function(update_every = 1, time_counter = community.tick) {
   slim_block(late(), {
     r_output(!!rlang::enexpr(time_counter), "progress", do_every = !!update_every)

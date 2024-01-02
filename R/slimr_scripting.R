@@ -55,15 +55,15 @@ slim_script <- function(...) {
                                                  nchar(trunc(n_row)),
                                                  pad = "0"))
 
-  block_names = ifelse(script$callback == "initialize()",
-                       "block_init",
-                       block_names)
-
-  if(!"block_init" %in% block_names) {
-    rlang::warn("The arguments do not include an initialize block (use an initialize()
-            callback to create one) and so the resulting script will not be a valid SLiM
-            script. You can add an initialize block later through concatenation (using c())")
-  }
+  # block_names = ifelse(script$callback == "initialize()",
+  #                      "block_init",
+  #                      block_names)
+  #
+  # if(!"block_init" %in% block_names) {
+  #   rlang::warn("The arguments do not include an initialize block (use an initialize()
+  #           callback to create one) and so the resulting script will not be a valid SLiM
+  #           script. You can add an initialize block later through concatenation (using c())")
+  # }
 
 
   suppressWarnings(end_gen <- max(as.numeric(c(script$start_gen, script$end_gen)), na.rm = TRUE))
@@ -393,6 +393,26 @@ slim_block <- function(...) {
 #' @return A \code{slimr_block} object (only useful with the context of a \code{\link{slim_script}}) call.
 #' @export
 #' @examples
+#' test_sim <- slim_script(
+#'   slim_function("o<Subpopulation>$ subpop1", "o<Subpopulation>$ subpop2",
+#'                name = "calculateFST",
+#'                return_type = "f$", body = function(subpop1, subpop2) {
+#'                  p1_p = sim.mutationFrequencies(subpop1);
+#'                  p2_p = sim.mutationFrequencies(subpop2);
+#'                  mean_p = (p1_p + p2_p) / 2.0;
+#'                  H_t = 2.0 * mean_p * (1.0 - mean_p);
+#'                  H_s = p1_p * (1.0 - p1_p) + p2_p * (1.0 - p2_p);
+#'                  fst = 1.0 - H_s/H_t;
+#'                  fst = fst[isFinite(fst)]; ## exclude muts where mean_p is 0.0 or 1.0
+#'                  return(mean(fst));
+#'                }),
+#'   slim_block_init_minimal(mutation_rate = 1e-6),
+#'   slim_block_add_subpops(2, 100),
+#'   slim_block(1, 20, late(), {
+#'     r_output(calculateFST(p1, p2), "out", do_every = 10)
+#'   })
+#' )
+#' test_sim
 slim_function <- function(..., name, return_type = "f$", body) {
   args <- list(...)
 
@@ -446,6 +466,12 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #'  on the official website: \\url{https://messerlab.org/slim/}
 #' @author Benjamin C Haller (\\email{bhaller@benhaller.com}) and Philipp W Messer (\\email{messer@cornell.edu})
 #' @examples
+#' slim_script(
+#'   slim_block_init_minimal(mutation_rate = 1e-6),
+#'   slim_block(1, early(), {
+#'     sim%.%Sp$addSubpop("p1", 100);
+#'   })
+#' )
 `%.%` <- function(lhs, rhs) {
   print(paste0(lhs, ".", rhs))
   ?`%.%`
@@ -471,6 +497,10 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #'  on the official website: \\url{https://messerlab.org/slim/}
 #' @author Benjamin C Haller (\\email{bhaller@benhaller.com}) and Philipp W Messer (\\email{messer@cornell.edu})
 #' @examples
+#' slim_script(slim_block_init_minimal(),
+#'             slim_block(cat(fixed %?% "FIXED\\n" %else% "LOST\\n"))) |>
+#'   as_slim_text() |>
+#'   cat()
 `%?%` <- function(lhs, rhs) {
   print(paste0(lhs, " ? ", rhs))
   ?`%?%`
@@ -497,7 +527,7 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #'  Copyright © 2016–2020 Philipp Messer. All rights reserved. More information about SLiM can be found
 #'  on the official website: \\url{https://messerlab.org/slim/}
 #' @author Benjamin C Haller (\\email{bhaller@benhaller.com}) and Philipp W Messer (\\email{messer@cornell.edu})
-#' @examples
+#' @inherit %?% examples
 `%else%` <- function(lhs, rhs) {
   print(paste0(lhs, " ? ", rhs))
   ?`%?%`

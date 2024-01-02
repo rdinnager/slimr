@@ -21,7 +21,7 @@ function call, where it will be translated into valid SLiM code as part of a ful
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0.9000</span>
       </span>
     </div>
 
@@ -119,6 +119,25 @@ function call, where it will be translated into valid SLiM code as part of a ful
     <p>Benjamin C Haller (\emailbhaller@benhaller.com) and Philipp W Messer (\emailmesser@cornell.edu)</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="slim_script.html">slim_script</a></span><span class="op">(</span><span class="fu"><a href="slim_block_init_minimal.html">slim_block_init_minimal</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>            <span class="fu"><a href="slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">fixed</span> <span class="op">%?%</span> <span class="st">"FIXED\\n"</span> <span class="op"><a href="grapes-else-grapes.html">%else%</a></span> <span class="st">"LOST\\n"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="as_slim_text.html">as_slim_text</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> initialize() {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     initializeMutationRate(1e-07);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     initializeMutationType("m1", 0.5, "f", 0);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     initializeGenomicElementType("g1", m1, 1);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     initializeGenomicElement(g1, 0, 1e+05 - 1);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     initializeRecombinationRate(1e-08);</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:1 early() {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     cat(fixed ? "FIXED\\n" else "LOST\\n");</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

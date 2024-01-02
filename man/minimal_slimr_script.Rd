@@ -7,7 +7,7 @@
 minimal_slimr_script(command = print("Hello world!"))
 }
 \arguments{
-\item{command}{}
+\item{command}{An R expression to be inserted in the `slimr` script}
 }
 \value{
 A `slimr_script` object

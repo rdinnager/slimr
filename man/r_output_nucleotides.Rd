@@ -26,6 +26,8 @@ slimr_output_nucleotides(
 
 \item{subpops}{Should the subpopulation of each sequence be outputted as well?}
 
+\item{both_genomes}{Should both genomes be outputted? If `FALSE` only nucleotides from genome1 are outputted}
+
 \item{inds}{SLiM expression that returns the individuals to get nucleotides from. By default all
 individuals are returned.}
 

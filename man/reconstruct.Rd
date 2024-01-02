@@ -20,7 +20,7 @@ object. This is useful if you want to edit the SLiM script to add additional fun
 for example, where you want to incorporate the results of \code{slimrlang}'s internal edits, e.g.
 such as removing \code{\link{\%.\%}} special operators, etc. It is also useful when the
 \code{slimr_script} object has been created from converting a text-based SLiM script, such as when
-using \code{\link[slimr]{as.slimr_script}} from the \code{slimr} package on a character variable.
+using \code{\link[slimr]{as_slimr_script}} from the \code{slimr} package on a character variable.
 }
 \examples{
 slim_script(

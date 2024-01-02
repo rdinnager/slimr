@@ -31,3 +31,14 @@ Note that this function is only designed to be used inside a \code{\link{slim_bl
 situation, it won't really do anything, just returning a reference to the placemarker that would have been inserted if run in
 its correct context.
 }
+\examples{
+test_sim <- slim_script(
+ slim_block_init_minimal(mutation_rate = r_template("mut_rate", 1e-7)),
+ slim_block(1, early(), {
+   sim.addSubpop("p1", r_template("p1", 100));
+ })
+)
+test_sim
+slim_script_render(test_sim, data.frame(p1 = c(100, 200),
+                                        mut_rate = c(1e-7, 1e-8)))
+}

@@ -12,9 +12,11 @@ test_that("slim_script and slim_block produce correct objects", {
   expect_s3_class(test_block_1, "slimr_block")
   expect_s3_class(test_block_2, "slimr_block")
 
-  expect_warning(test_script <- slim_script(test_block_1, test_block_2),
-                 "The arguments do not include an initialize block",
-                 fixed = TRUE)
+  test_script <- slim_script(test_block_1, test_block_2)
+
+  # expect_warning(test_script <- slim_script(test_block_1, test_block_2),
+  #                "The arguments do not include an initialize block",
+  #                fixed = TRUE)
   expect_s3_class(test_script, "slimr_script")
   expect_length(test_script, 2L)
 

@@ -254,6 +254,7 @@ slimr_output_full <- r_output_full
 #'
 #' @param name Name of output to use to label it in \code{slimr_results object}. Default is \code{"seqs"}.
 #' @param subpops Should the subpopulation of each sequence be outputted as well?
+#' @param both_genomes Should both genomes be outputted? If `FALSE` only nucleotides from genome1 are outputted
 #' @param inds SLiM expression that returns the individuals to get nucleotides from. By default all
 #' individuals are returned.
 #' @param ... Other arguments to be passed to \code{\link{r_output}}
@@ -341,6 +342,47 @@ slimr_output_nucleotides <- r_output_nucleotides
 #'
 #' @export
 #' @examples
+#' if(slim_is_avail()) {
+#'   test_sim <- slim_script(
+#'
+#'     slim_block(initialize(),  {
+#'         initializeSLiMOptions(dimensionality = "xy")
+#'         initializeMutationRate(1e-07)
+#'         initializeMutationType("m1", 0.5, "f", asFloat(0))
+#'         initializeGenomicElementType("g1", m1, asFloat(1))
+#'         initializeGenomicElement(g1, 0, 99999)
+#'         initializeRecombinationRate(1e-08)
+#'     }),
+#'
+#'     slim_block(1, late(),  {
+#'         sim.addSubpop("p1", 500)
+#'         p1.individuals.x = runif(p1.individualCount)
+#'         p1.individuals.y = runif(p1.individualCount)
+#'     }),
+#'
+#'     slim_block(1, 2000, late(), {
+#'       r_output_coords(dimensionality = "xy", do_every = 10);
+#'     }),
+#'
+#'     slim_block(modifyChild(),  {
+#'       child.x = parent1.x + rnorm(1, 0, 0.02)
+#'       while((child.x < asFloat(0)) | (child.x > asFloat(1))) {
+#'         child.x = parent1.x + rnorm(1, 0, 0.02)
+#'       }
+#'       child.y = parent1.y + rnorm(1, 0, 0.02)
+#'       while((child.y < asFloat(0)) | (child.y > asFloat(1))) {
+#'         child.y = parent1.y + rnorm(1, 0, 0.02)
+#'       }
+#'       return(T)
+#'     }),
+#'
+#'     slim_block(2000, late(),  {
+#'         sim.outputFixedMutations()
+#'     })
+#'   ) |>
+#'     slim_run()
+#'   slim_results_to_data(test_sim)
+#' }
 r_output_coords <- function(dimensionality = c("x", "xy", "xyz"),
                                 ...) {
 

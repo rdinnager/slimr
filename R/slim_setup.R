@@ -18,7 +18,7 @@ default_install_path <- function() {
 #' slim_install_path()
 #'
 slim_install_path <- function() {
-  find_slim_path()
+  get_slim_path()
 }
 
 find_slim_path <- function() {
@@ -261,4 +261,22 @@ assert_slim_installed <- function() {
   if(!slim_is_avail()) {
     rlang::abort("SLiM is not installed or can't be found. Please install using slim_setup() or manually by following the instruction at https://messerlab.org/slim/ . If you are sure SLiM is already installed, you can let slimr know where it is by setting the environmental variable SLIM_PATH, e.g. Sys.setenv(SLIM_PATH = 'slim_path'), where slim_path is the path to your SLiM executable (usually slim or slim.exe)")
   }
+}
+
+#' Find out what version of SLiM is being used by \code{slimr}
+#'
+#' @return A character string with the version number
+#' @export
+#'
+#' @examples
+#' if(slim_is_avail()) {
+#'   slim_version()
+#' }
+slim_version <- function() {
+  assert_slim_installed()
+  path <- get_slim_path()
+  system2(path, "--version", stdout = TRUE)[[1]] |>
+    stringr::str_extract("SLiM version [0-9.]+") |>
+    stringr::str_remove("SLiM version ") |>
+    stringr::str_trim()
 }

@@ -24,7 +24,7 @@ slim_run_snippet <- function(x) {
 #' This function is mainly used to quickly create a script which does
 #' not does not do much, but can be used to test other code.
 #'
-#' @param command
+#' @param command An R expression to be inserted in the `slimr` script
 #'
 #' @return An R `expression`.
 #' @export
@@ -56,7 +56,7 @@ minimal_slim_sim <- function(command = print("Hello world!")) {
 #' not does not do much, but can be used to test other code that work
 #' on `slimr_script` objects. Mainly used for documentation examples.
 #'
-#' @param command
+#' @param command An R expression to be inserted in the `slimr` script
 #'
 #' @return A `slimr_script` object
 #' @export

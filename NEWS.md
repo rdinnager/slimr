@@ -5,7 +5,7 @@
 * Updated `slimr` to be fully compatible with SLiM v4.1 updates
 * Changed `SLIM_HOME` environmental variable to `SLIMR_PATH`, which now should be
 set with the full path to the SLiM executable, not just the directory containing it
-* Updated `slim_setup()` function which now provides cross-platform automatic installation using conda via the `reticulate` package. Now it should not be necessary for users to manually install SLiM anymore
+* Updated `slim_setup()` function which now provides cross-platform automatic installation using conda via the `reticulate` package. Now it should not be necessary for users to manually install SLiM any more
 
 # slimr 0.3.0
 

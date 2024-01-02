@@ -32,3 +32,17 @@ Note that this function is only designed to be used inside a \code{\link{slim_bl
 situation, it won't really do anything, just returning a reference to the placemarker that would have been inserted if run in
 its correct context.
 }
+\examples{
+test_sim <- slim_script(
+  slim_block(initialize(), {
+    r_template_constant("pop1", 100)
+    r_template_constant("pop2", 100)
+  }),
+  slim_block(1, early(), {
+    sim.addSubpop("p1", pop1);
+    sim.addSubpop("p2", pop2);
+  })
+)
+test_sim
+slim_script_render(test_sim, data.frame(pop1 = c(200, 200), pop2 = c(100, 300)))
+}

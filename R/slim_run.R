@@ -5,45 +5,23 @@
 #' a character vector, or a text file.
 #'
 #' @param x Object containing script to run (e.g. a character vector or a slimr_script object)
-#' @param script_file If the script you want to run is in a text file, you can add the pather here. If this is
+#' @param script_file If the script you want to run is in a text file, you can add the path here. If this is
 #' argument is not \code{NULL} argument \code{x} will be ignored
 #' @param simple_run Whether to do a "simple run", which just runs the script, capturing all output is \code{capture_output}
 #' is \code{TRUE} and additionally sending all output to the R console if \code{show_output} is \code{TRUE}
 #' the script to the R console if show_output is TRUE
-#' @param capture_output If \code{TRUE}, output from the script will be captured and included in the returned object. Unless
-#' \code{keep_all_output} is \code{TRUE}, only non-data output will be kept (e.g. output not produced by a \code{r_output}
-#' call)
-#' @param keep_all_output If there is data produced by \code{r_output} calls, should it be captured as well? Ignored if
-#' \code{capture_output} is not \code{TRUE}
+#' @param capture_output If \code{TRUE}, output from the script will be captured and included in the returned object. Only
+#' affects non-data output (e.g. output not produced by a \code{r_output}, which is always captured)
 #' @param show_output Should output from the script be sent to the R console? Note that SLiM scripts can sometimes produce a
 #' large amount of output, which could overwhelm the console if you are not careful, potentially locking it up. Be careful
 #' with this option if you are using any of SLiM's output functions that output genomic data. This can be handy though
-#' for simply status print outs..
+#' for simply status print outs.. Note that only output that is not part of the data output by \code{r_output} calls will be
+#' printed to the console.
 #' @param slim_path Path to the SLiM executable. If left \code{NULL} \code{slimr} will attempt to automatically determine
 #' it, typically by examining environmental variables.
-#' @param callbacks A list of functions to be called during the SLiM run. This can be used to
-#' dynamically transform or visualise output from the simulation while it is running. It should
-#' be of the form \code{function(data, ...) \{do something..\}}. If using \code{\link{r_output}}
-#' to get formatted data output from SLiM, data will be a four column \code{tibble}
-#' containing output from the current iteration of the simulation. Columns are:
-#' \describe{
-#' \item{generation}{A vector of generations processed in the current iteration}
-#' \item{name}{Names of the output data.}
-#' \item{expression}{The SLiM expression used to generate the output}
-#' \item{data}{The raw data output from SLiM as a character vector}
-#' }
-#' @param new_grdev Should a new graphics device window be opened on RStudio? This is mainly useful if you are using
+#' @param new_grdev \strong{*deprecated*} Should a new graphics device window be opened on RStudio? This is mainly useful if you are using
 #' custom callbacks that generate live figures, and want a faster plotting experience. This is because the
 #' default plot viewer in RStudio can be quite slow. Setting this to \code{TRUE} also allows \code{record_graphics} to work.
-#' @param record_graphics An optional character string specifying a file to record video output from the graphics device.
-#' If you have custom graphics output for the simulation this lets you record that output live, saving the trouble of producing
-#' separate animations after the simulation is complete (also allowing you to save memory because you don't need to keep the
-#' entire simulation output to make a post-hoc animation).
-#' @param rec_args An optional list containing named arguments to be passed to \code{\link[av]{av_capture_graphics}} for graphics recording.
-#' Ignored if \code{record_graphics} is not \code{TRUE}.
-#' @param ... Additional arguments to be passed to or from other methods.
-#' @param cb_args Additional arguments to be passed to any callback functions. Should be a named
-#' list where the names refer to the callback's arguments.
 #' @param parallel If \code{x} is a \code{slimr_script_coll}, should the elements in \code{x}
 #' be run in parallel. For this to work, you must have setup a parallel plan using \code{\link[future]{plan}}
 #' @param progress Should a progress bar be displayed?
@@ -51,6 +29,7 @@
 #' If \code{FALSE}, the error message from SLiM is stored in the object returned
 #' by \code{slim_run}, but execution continues in R. Setting this to \code{TRUE} is useful
 #' in a script if subsequent code assumes that the simulation finished successfully.
+#' @param ... Additional arguments to be passed to or from other methods.
 #'
 #' @return A \code{slimr_results} object which has the following components:
 #' \describe{
@@ -78,14 +57,9 @@
 slim_run <- function(x, slim_path = NULL,
                      script_file = NULL,
                      simple_run = FALSE,
-                     capture_output = "file",
-                     keep_all_output = FALSE,
+                     capture_output = FALSE,
                      show_output = FALSE,
-                     callbacks = NULL,
-                     cb_args = NULL,
                      new_grdev = FALSE,
-                     record_graphics = "",
-                     rec_args = NULL,
                      parallel = FALSE,
                      progress = FALSE,
                      throw_error = FALSE,
@@ -98,14 +72,9 @@ slim_run <- function(x, slim_path = NULL,
 slim_run.character <- function(x, slim_path = NULL,
                                script_file = NULL,
                                simple_run = FALSE,
-                               capture_output = "file",
-                               keep_all_output = FALSE,
+                               capture_output = FALSE,
                                show_output = FALSE,
-                               callbacks = NULL,
-                               cb_args = NULL,
                                new_grdev = FALSE,
-                               record_graphics = "",
-                               rec_args = NULL,
                                parallel = FALSE,
                                progress = FALSE,
                                throw_error = FALSE,
@@ -122,13 +91,8 @@ slim_run.character <- function(x, slim_path = NULL,
                   script_file = script_file,
                   simple_run = simple_run,
                   capture_output = capture_output,
-                  keep_all_output = keep_all_output,
                   show_output = show_output,
-                  callbacks = callbacks,
-                  cb_args = cb_args,
                   new_grdev = new_grdev,
-                  record_graphics = record_graphics,
-                  rec_args = rec_args,
                   parallel = parallel,
                   progress = progress,
                   throw_error = throw_error,
@@ -141,14 +105,9 @@ slim_run.character <- function(x, slim_path = NULL,
 slim_run.slimr_script <- function(x, slim_path = NULL,
                                   script_file = NULL,
                                   simple_run = FALSE,
-                                  capture_output = "file",
-                                  keep_all_output = FALSE,
+                                  capture_output = FALSE,
                                   show_output = FALSE,
-                                  callbacks = NULL,
-                                  cb_args = NULL,
                                   new_grdev = FALSE,
-                                  record_graphics = "",
-                                  rec_args = NULL,
                                   parallel = FALSE,
                                   progress = FALSE,
                                   throw_error = FALSE,
@@ -161,32 +120,57 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
       x <- slim_script_render(x)
     }
 
-    script <- as_slim_text(x)
     end_gen <- attr(x, "script_info")$end_gen
-    output_info <- attr(x, "slimr_output")
 
-    if(any(!is.na(output_info$file_name))) {
-      save_to_file <- output_info %>%
-        dplyr::select(dplyr::all_of(c("output_name", "file_name", "format"))) %>%
-        tidyr::drop_na(.data$file_name)
+    progress_interval <- floor(end_gen / 100)
+
+    if(progress) {
+      slim_vers <- slim_version()
+      if(slim_vers < 3.5) {
+        rlang::warn("Progress bar not supported in SLiM < 3.5. Ignoring...")
+        progress <- FALSE
+        f <- NULL
+      } else {
+        f <- tempfile(fileext = ".txt")
+        if(slim_vers < 4.0) {
+          x <- c(x, slim_script(slim_block(1, early(), {
+            cyc = sim.createLogFile(!!f, append = F, logInterval = !!progress_interval);
+            cyc.addGeneration();
+            })))
+        } else {
+          x <- c(x, slim_script(slim_block(1, early(), {
+            cyc = community.createLogFile(!!f, append = F, logInterval = !!progress_interval);
+            cyc.addCycle();
+            })))
+        }
+      }
+
     } else {
-      save_to_file <- NULL
+      f <- NULL
     }
+
+    script <- as_slim_text(x)
+
+    #output_info <- attr(x, "slimr_output")
+
+    # if(any(!is.na(output_info$file_name))) {
+    #   save_to_file <- output_info %>%
+    #     dplyr::select(dplyr::all_of(c("output_name", "file_name", "format"))) %>%
+    #     tidyr::drop_na(.data$file_name)
+    # } else {
+    #   save_to_file <- NULL
+    # }
 
     slim_run_script(script, end_gen = end_gen,
                     slim_path = slim_path,
                     script_file = script_file,
                     simple_run = simple_run,
                     capture_output = capture_output,
-                    keep_all_output = keep_all_output,
                     show_output = show_output,
-                    callbacks = callbacks,
-                    cb_args = cb_args,
                     new_grdev = new_grdev,
-                    record_graphics = record_graphics,
-                    rec_args = rec_args,
                     parallel = parallel,
                     progress = progress,
+                    progress_file = f,
                     save_to_file = save_to_file,
                     throw_error = throw_error,
                     ...)
@@ -198,14 +182,9 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
 slim_run.slimr_script_coll <- function(x, slim_path = NULL,
                                        script_file = NULL,
                                        simple_run = FALSE,
-                                       capture_output = "file",
-                                       keep_all_output = FALSE,
+                                       capture_output = FALSE,
                                        show_output = FALSE,
-                                       callbacks = NULL,
-                                       cb_args = NULL,
                                        new_grdev = FALSE,
-                                       record_graphics = "",
-                                       rec_args = NULL,
                                        parallel = FALSE,
                                        progress = FALSE,
                                        throw_error = FALSE,
@@ -241,13 +220,8 @@ slim_run.slimr_script_coll <- function(x, slim_path = NULL,
                                                script_file = script_file,
                                                simple_run = simple_run,
                                                capture_output = capture_output,
-                                               keep_all_output = keep_all_output,
                                                show_output = show_output,
-                                               callbacks = callbacks,
-                                               cb_args = cb_args,
                                                new_grdev = new_grdev,
-                                               record_graphics = record_graphics,
-                                               rec_args = rec_args,
                                                parallel = parallel,
                                                progress = FALSE,
                                                throw_error = throw_error,
@@ -262,13 +236,8 @@ slim_run.slimr_script_coll <- function(x, slim_path = NULL,
                                          script_file = script_file,
                                          simple_run = simple_run,
                                          capture_output = capture_output,
-                                         keep_all_output = keep_all_output,
                                          show_output = show_output,
-                                         callbacks = callbacks,
-                                         cb_args = cb_args,
                                          new_grdev = new_grdev,
-                                         record_graphics = record_graphics,
-                                         rec_args = rec_args,
                                          parallel = parallel,
                                          progress = progress,
                                          throw_error = throw_error,
@@ -284,17 +253,13 @@ slim_run_script <- function(script_txt,
                             slim_path = NULL,
                             script_file = NULL,
                             simple_run = FALSE,
-                            capture_output = "file",
-                            keep_all_output = FALSE,
+                            capture_output = FALSE,
                             show_output = FALSE,
                             end_gen = NULL,
-                            callbacks = NULL,
-                            cb_args = NULL,
                             new_grdev = FALSE,
-                            record_graphics = "",
-                            rec_args = NULL,
                             parallel = FALSE,
                             progress = !parallel,
+                            progress_file = NULL,
                             save_to_file = NULL,
                             throw_error = FALSE,
                             ...) {
@@ -302,34 +267,40 @@ slim_run_script <- function(script_txt,
 
   platform <- get_os()
 
-  process_during <- progress || !is.null(callbacks) || !is.null(save_to_file) || simple_run
+  #process_during <- progress || !is.null(callbacks) || !is.null(save_to_file) || simple_run
 
   if(new_grdev) {
     assert_package("grDevices")
     grDevices::dev.new(noRStudioGD = TRUE)
   }
 
-  file_out <- FALSE
-  if(is.character(capture_output)) {
-    conn <- capture_output
-    capture_output <- TRUE
-    if(conn != "|") {
-      file_out <- TRUE
-      if(conn == "file") {
-        conn <- tempfile(fileext = ".txt")
-      }
-    }
+  #file_out <- FALSE
+  # if(is.character(capture_output)) {
+  #   conn <- capture_output
+  #   capture_output <- TRUE
+  #   if(conn != "|") {
+  #     file_out <- TRUE
+  #     if(conn == "file") {
+  #       conn <- tempfile(fileext = ".txt")
+  #     }
+  #   }
+  # } else {
+  #   if(capture_output) {
+  #     conn <- "|"
+  #   }
+  # }
+
+  if(simple_run) {
+    conn <- "|"
   } else {
-    if(capture_output) {
-      conn <- "|"
-    }
+    conn <- tempfile(fileext = ".txt")
   }
+
 
   if(is.null(script_file)) {
     script_file <- tempfile(fileext = ".txt")
+    slimr_write(script_txt, script_file)
   }
-
-  slimr_write(script_txt, script_file)
 
   # if(platform == "windows") {
   #   script_file <- convert_to_wsl_path(script_file)
@@ -342,179 +313,101 @@ slim_run_script <- function(script_txt,
   }, add = TRUE)
 
   if(progress) {
-    pb <- progress::progress_bar$new(format = ":spin SLiM running.. Time Elapsed: :elapsedfull",
-                                     clear = FALSE,
-                                     total = NA,
-                                     width = 60,
-                                     show_after = 0)
-  }
-
-  simple_pb <- TRUE
-
-  all_output <- list()
-  output_data <- list()
-  leftovers <- NULL
-  out_i <- 0L
-  data_i <- 0L
-  not_finished <- TRUE
-  data_bound <- dplyr::tibble(NULL)
-  cb_every <- 1L
-  last_bound <- 0L
-  gens_past <- 0
-
-  if(file_out) {
-    curr_line <- 0L
-  }
-
-  while(slim_p$is_alive() || not_finished) {
-
-    if(slim_p$is_alive()) {
-
-      if(file_out) {
-        # out_lines <- readr::read_lines(conn, skip = curr_line, lazy = FALSE,
-        #                                progress = FALSE)
-        if(process_during) {
-          out_lines <- read_out_lines(conn, skip = curr_line)
-        }
-      } else {
-        slim_p$poll_io(10000)
-        out_lines <- c(leftovers, slim_p$read_output_lines())
-      }
-
-    } else {
-
-      not_finished <- FALSE
-      if(file_out) {
-        # out_lines <- readr::read_lines(conn, skip = curr_line, lazy = FALSE,
-        #                                progress = FALSE)
-        if(process_during) {
-          out_lines <- read_out_lines(conn, skip = curr_line)
-        }
-      } else {
-        out_lines <- c(leftovers, slim_p$read_all_output_lines())
-      }
-
-    }
-
-    leftovers <- NULL
-
     if(simple_run) {
-      if(progress) {
-        pb$tick(0)
-      }
-      if(length(out_lines) > 0) {
-
-        curr_line <- curr_line + length(out_lines)
-
-
-        if(show_output) {
-          cat("\r                                               \r")
-          cat(out_lines, sep = "\n")
-        }
-
-        if(capture_output) {
-          out_i <- out_i + 1L
-          all_output[[out_i]] <- out_lines
-        }
-        out_lines <- NULL
-      }
-      if(progress) {
-        pb$tick()
-      }
+      pb <- progress::progress_bar$new(format = ":spin SLiM running.. Time Elapsed: :elapsedfull",
+                                       clear = FALSE,
+                                       total = NA,
+                                       width = 60,
+                                       show_after = 0)
+      simple_pb <- TRUE
     } else {
+      pb <- progress::progress_bar$new("[:bar] :spin Cycle::current/:total(:percent) Time: past::elapsedfull|left::eta",
+                                     total = end_gen,
+                                     clear = FALSE,
+                                     show_after = 0)
+      simple_pb <- FALSE
+    }
+  }
 
-      if(process_during) {
-        if(length(out_lines) > 0) {
+  #simple_pb <- TRUE
 
-          output_list <- slim_process_output(out_lines)
+  # all_output <- list()
+  # output_data <- list()
+  # leftovers <- NULL
+  # out_i <- 0L
+  # data_i <- 0L
+  # not_finished <- TRUE
+  # data_bound <- dplyr::tibble(NULL)
+  # cb_every <- 1L
+  # last_bound <- 0L
+  # gens_past <- 0
 
-          if(!is.null(output_list$last_line)) {
-            curr_line <- curr_line + output_list$last_line
+  # if(file_out) {
+  #   curr_line <- 0L
+  # }
+
+  progress_appear <- FALSE
+  messages <- character(0)
+  if(simple_run) {
+    out <- character(0)
+  }
+
+  while(slim_p$is_alive()) {
+
+    if(progress) {
+      if(!simple_run) {
+          if(progress_appear) {
+            current_cycle <- tail(readr::read_csv(progress_file, col_types = "i",
+                                                  lazy = FALSE, progress = FALSE) |>
+              dplyr::pull(1), 1)
+          } else {
+            current_cycle <- 0L
+            progress_appear <- file.exists(progress_file)
           }
-
-          ## save results so far to file
-          if(nrow(output_list$data) > 0 & !is.null(save_to_file)) {
-            dat_to_save <- output_list$data %>%
-              dplyr::filter(.data$name %in% save_to_file$output_name)
-            output_list$data <- output_list$data %>%
-              dplyr::filter(!.data$name %in% save_to_file$output_name)
-            slim_save_data(dat_to_save, save_to_file)
-            if(nrow(output_list$data) == 0) {
-              output_list$data <- NULL
-            }
-          }
-
-          if(nrow(output_list$data) > 0) {
-            data_i <- data_i + 1L
-
-            output_data[[data_i]] <- output_list$data
-
-            gen_curr <- max(output_data[[data_i]]$generation)
-            gens_past <- gen_curr - gens_past
-            if(!is.null(callbacks) && !is.na(gens_past) && !is.null(gens_past) && gens_past > cb_every) {
-              data_bound <- dplyr::bind_rows(output_data[(last_bound + 1L):data_i])
-              last_bound <- data_i
-              gen_past <- gen_curr
-              if(!is.null(callbacks)) {
-                purrr::walk(callbacks,
-                            ~do.call(.x, c(list(data = data_bound),
-                                           cb_args)))
-              }
-            }
-
-            if(progress) {
-              pb <- slim_update_progress(output_list, pb, show_output, simple_pb, end_gen)
-            }
-            if(simple_pb) {
-              simple_pb <- FALSE
-            }
-          }
-
-          if(capture_output) {
-
-            if(keep_all_output) {
-              out_i <- out_i + 1L
-              all_output[[out_i]] <- out_lines
-            } else {
-              if(length(output_list$extra_out) > 0) {
-                out_i <- out_i + 1L
-                all_output[[out_i]] <- output_list$extra_out
-              }
-            }
-          }
-
-          leftovers <- output_list$leftovers
-          out_lines <- NULL
-
+      } else {
+        current_cycle <- NULL
+        slim_p$poll_io(10000)
+        messages <- slim_p$read_output_lines()
+        out <- c(out, messages)
+      }
+      pb <- slim_update_progress(current_cycle, messages, pb, show_output, simple_pb,
+                                 end_gen)
+    } else {
+      if(simple_run && show_output) {
+        slim_p$poll_io(10000)
+        messages <- slim_p$read_output_lines()
+        out <- c(out, messages)
+        if(length(messages) > 0) {
+          cat(messages, sep = "\n")
         }
       }
     }
+
   }
 
   if(!simple_run) {
-    if(process_during) {
-      final_output <- slim_process_output(leftovers)
-      output_data[[data_i + 1L]] <- final_output$data
-      if(capture_output) {
-        all_output[[out_i + 1L]] <- final_output$extra_out
-      }
-    } else {
-      out <- read_out_lines(conn, skip = 0)
-      final_output <- slim_process_output(out)
-      output_data[[1]] <- final_output$data
-      if(capture_output) {
-        if(keep_all_output) {
-          all_output[[1]] <- out
-        } else {
-          all_output[[1]] <- final_output$extra_out
-          if(!is.null(final_output$leftovers)) {
-            all_output[[2]] <- final_output$leftovers
-          }
-        }
-      }
-    }
-  }
+    out <- read_out_lines(conn, skip = 0)
+    final_output <- slim_process_output(out)
+    output_data <- final_output$data
 
+    if(capture_output) {
+      all_output <- final_output$extra_out
+    } else {
+      all_output <- character(0)
+    }
+
+    all_output <- stringr::str_remove_all(all_output, stringr::fixed("<slimr_out:start>"))
+    all_output <- stringr::str_remove_all(all_output, stringr::fixed("<slimr_out:end>"))
+    all_output <- all_output[nzchar(all_output)]
+
+  } else {
+    if(capture_output) {
+      all_output <- c(out, slim_p$read_output_lines())
+    } else {
+      all_output <- character(0)
+    }
+    output_data <- dplyr::tibble(NULL)
+  }
 
   exit <- slim_p$get_exit_status()
   if(!simple_run) {
@@ -539,22 +432,213 @@ slim_run_script <- function(script_txt,
   }
 
   res <- list()
-  res$output <- do.call(c, all_output)
+  res$output <- all_output
   res$exit_status <- exit
-  res$output_data <- dplyr::bind_rows(output_data)
+  res$output_data <- output_data
   res$process <- slim_p
   res$error <- error
 
-  if(file_out) {
-    res$output_file <- conn
-  }
+  res$output_file <- conn
 
   class(res$output_data) <- c("slimr_output_data",
                               class(res$output_data))
 
   class(res) <- "slimr_results"
 
-  invisible(res)
+  return(invisible(res))
+
+  # while(slim_p$is_alive() || not_finished) {
+  #
+  #   if(slim_p$is_alive()) {
+  #
+  #     if(file_out) {
+  #       # out_lines <- readr::read_lines(conn, skip = curr_line, lazy = FALSE,
+  #       #                                progress = FALSE)
+  #       if(process_during) {
+  #         out_lines <- read_out_lines(conn, skip = curr_line)
+  #       }
+  #     } else {
+  #       slim_p$poll_io(10000)
+  #       out_lines <- c(leftovers, slim_p$read_output_lines())
+  #     }
+  #
+  #   } else {
+  #
+  #     not_finished <- FALSE
+  #     if(file_out) {
+  #       # out_lines <- readr::read_lines(conn, skip = curr_line, lazy = FALSE,
+  #       #                                progress = FALSE)
+  #       if(process_during) {
+  #         out_lines <- read_out_lines(conn, skip = curr_line)
+  #       }
+  #     } else {
+  #       out_lines <- c(leftovers, slim_p$read_all_output_lines())
+  #     }
+  #
+  #   }
+  #
+  #
+  #
+  #
+  #   leftovers <- NULL
+  #
+  #   if(simple_run) {
+  #     if(progress) {
+  #       pb$tick(0)
+  #     }
+  #     if(length(out_lines) > 0) {
+  #
+  #       curr_line <- curr_line + length(out_lines)
+  #
+  #
+  #       if(show_output) {
+  #         cat("\r                                               \r")
+  #         cat(out_lines, sep = "\n")
+  #       }
+  #
+  #       if(capture_output) {
+  #         out_i <- out_i + 1L
+  #         all_output[[out_i]] <- out_lines
+  #       }
+  #       out_lines <- NULL
+  #     }
+  #     if(progress) {
+  #       pb$tick()
+  #     }
+  #   } else {
+  #
+  #     if(process_during) {
+  #       if(length(out_lines) > 0) {
+  #
+  #         output_list <- slim_process_output(out_lines)
+  #
+  #         if(!is.null(output_list$last_line)) {
+  #           curr_line <- curr_line + output_list$last_line
+  #         }
+  #
+  #         ## save results so far to file
+  #         if(nrow(output_list$data) > 0 & !is.null(save_to_file)) {
+  #           dat_to_save <- output_list$data %>%
+  #             dplyr::filter(.data$name %in% save_to_file$output_name)
+  #           output_list$data <- output_list$data %>%
+  #             dplyr::filter(!.data$name %in% save_to_file$output_name)
+  #           slim_save_data(dat_to_save, save_to_file)
+  #           if(nrow(output_list$data) == 0) {
+  #             output_list$data <- NULL
+  #           }
+  #         }
+  #
+  #         if(nrow(output_list$data) > 0) {
+  #           data_i <- data_i + 1L
+  #
+  #           output_data[[data_i]] <- output_list$data
+  #
+  #           gen_curr <- max(output_data[[data_i]]$generation)
+  #           gens_past <- gen_curr - gens_past
+  #           if(!is.null(callbacks) && !is.na(gens_past) && !is.null(gens_past) && gens_past > cb_every) {
+  #             data_bound <- dplyr::bind_rows(output_data[(last_bound + 1L):data_i])
+  #             last_bound <- data_i
+  #             gen_past <- gen_curr
+  #             if(!is.null(callbacks)) {
+  #               purrr::walk(callbacks,
+  #                           ~do.call(.x, c(list(data = data_bound),
+  #                                          cb_args)))
+  #             }
+  #           }
+  #
+  #           if(progress) {
+  #             pb <- slim_update_progress(output_list, pb, show_output, simple_pb, end_gen)
+  #           }
+  #           if(simple_pb) {
+  #             simple_pb <- FALSE
+  #           }
+  #         }
+  #
+  #         if(capture_output) {
+  #
+  #           if(keep_all_output) {
+  #             out_i <- out_i + 1L
+  #             all_output[[out_i]] <- out_lines
+  #           } else {
+  #             if(length(output_list$extra_out) > 0) {
+  #               out_i <- out_i + 1L
+  #               all_output[[out_i]] <- output_list$extra_out
+  #             }
+  #           }
+  #         }
+  #
+  #         leftovers <- output_list$leftovers
+  #         out_lines <- NULL
+  #
+  #       }
+  #     }
+  #   }
+  # }
+  #
+  # if(!simple_run) {
+  #   if(process_during) {
+  #     final_output <- slim_process_output(leftovers)
+  #     output_data[[data_i + 1L]] <- final_output$data
+  #     if(capture_output) {
+  #       all_output[[out_i + 1L]] <- final_output$extra_out
+  #     }
+  #   } else {
+  #     out <- read_out_lines(conn, skip = 0)
+  #     final_output <- slim_process_output(out)
+  #     output_data[[1]] <- final_output$data
+  #     if(capture_output) {
+  #       if(keep_all_output) {
+  #         all_output[[1]] <- out
+  #       } else {
+  #         all_output[[1]] <- final_output$extra_out
+  #         if(!is.null(final_output$leftovers)) {
+  #           all_output[[2]] <- final_output$leftovers
+  #         }
+  #       }
+  #     }
+  #   }
+  # }
+  #
+  #
+  # exit <- slim_p$get_exit_status()
+  # if(!simple_run) {
+  #   error <- slim_p$read_all_error_lines()
+  # } else {
+  #   error <- NULL
+  # }
+  #
+  # slim_cleanup(slim_p, pb = pb, simple_pb, progress)
+  #
+  # rlang::inform(paste0("\n\nSimulation finished with exit status: ", exit))
+  #
+  # if(exit == 0) {
+  #   rlang::inform("\nSuccess!")
+  # } else {
+  #   if(throw_error) {
+  #     stop(paste(error, collapse = "\n"))
+  #   } else {
+  #     rlang::warn("\nFailed! Error:\n")
+  #     cat(error, sep = "\n")
+  #   }
+  # }
+  #
+  # res <- list()
+  # res$output <- do.call(c, all_output)
+  # res$exit_status <- exit
+  # res$output_data <- dplyr::bind_rows(output_data)
+  # res$process <- slim_p
+  # res$error <- error
+  #
+  # if(file_out) {
+  #   res$output_file <- conn
+  # }
+  #
+  # class(res$output_data) <- c("slimr_output_data",
+  #                             class(res$output_data))
+  #
+  # class(res) <- "slimr_results"
+  #
+  # invisible(res)
 
 }
 
@@ -726,7 +810,7 @@ slim_process_output <- function(out, data_only = FALSE) {
 
   } else {
     df <- dplyr::tibble()
-    extra_out <- character(0)
+    extra_out <- out
     leftovers <- character(0)
     last_line <- NULL
   }
@@ -739,25 +823,29 @@ slim_process_output <- function(out, data_only = FALSE) {
 
 
 
-slim_update_progress <- function(output_list, pb, show_output, simple_pb, end_gen) {
-  if(simple_pb) {
-    pb <- progress::progress_bar$new("[:bar] :spin Gen::current/:total(:percent) Time: past::elapsedfull|left::eta",
-                                     total = end_gen,
-                                     clear = FALSE,
-                                     show_after = 0)
-    pb$tick(0)
+slim_update_progress <- function(current_cycle, messages, pb, show_output, simple_pb, end_gen) {
+  # if(simple_pb) {
+  #   pb <- progress::progress_bar$new("[:bar] :spin Gen::current/:total(:percent) Time: past::elapsedfull|left::eta",
+  #                                    total = end_gen,
+  #                                    clear = FALSE,
+  #                                    show_after = 0)
+  #   pb$tick(0)
+  #
+  # }
 
-  }
-
-  current_gen <- max(output_list$data$generation)
+  # current_gen <- max(output_list$data$generation)
 
   if(!pb$finished) {
-    pb$update(current_gen / end_gen)
+    if(simple_pb) {
+      pb$tick()
+    } else {
+      pb$update(current_cycle / end_gen)
+    }
   }
 
 
-  if(show_output) {
-    pb$message(paste(output_list$extra_out, collapse = "\n"))
+  if(show_output && length(messages) > 0) {
+    pb$message(paste(messages, collapse = "\n"))
   }
 
   invisible(pb)

@@ -16,21 +16,14 @@
 #' as an integer saying how many generations to run before producing output.
 #' e.g. \code{do_every = 10} means to output every 10 generations of the
 #' simulation.
-#' @param send_to \strong{*deprecated*} Where to send the output? This could be used
-#' to send the output to be stored in the results object ("data"), or to an external file ("file").
-#' This will no longer be available in future versions in favour of an option to have the results
-#' stored as a pointer to an external file (to save memory).
-#' @param file_name \strong{*deprecated*} The file name to save output to if \code{send_to = "file"}
-#' @param format \strong{*deprecated*} The file format to save data if \code{send_to = "file"}, Only "csv" is implemented
-#' but there are plans to support "fst" and "disk.frame".
 #' @param type Provide a custom type to the output. Used mostly for internal purposes.
 #' @param expression Provide a custom expression to be included with the output.
 #' Used mostly for internal purposes.
 #' @param time_counter Expression used to extract the simulation time from SLiM. By default this
 #' uses the global timing mechanism in SLiM version >4.0: `community.tick`. For versions <4.0,
-#' use `sim.generation` instead (this parameter is for backwards compatability with old SLiM versions)
+#' use `sim.generation` instead (this parameter is for backwards compatibility with old SLiM versions)
 #'
-#' @return An expression with the code to be run in SLiM.
+#' @return A placemarker expression that is used by `slimr`internally.
 #'
 #' @export
 #'
@@ -60,19 +53,9 @@
 #' cat(run_w_out$output_data$data[[1]])
 #' }
 r_output <- function(slimr_expr, name, do_every = 1,
-                         send_to = c("data", "file"),
-                         file_name = tempfile(fileext = ".txt"),
-                         format = c("csv", "fst"),
                          type = NULL,
                          expression = NULL,
                          time_counter = community.tick) {
-
-  send_to = match.arg(send_to)
-  format = match.arg(format)
-
-  if(send_to == "file" & format == "fst") {
-    assert_package("fst")
-  }
 
   slimr_expr <- rlang::enexpr(slimr_expr)
 
@@ -85,14 +68,23 @@ r_output <- function(slimr_expr, name, do_every = 1,
 
   if(!is.null(type)) {
 
-    new_code <- rlang::expr(
-      if(!!rlang::enexpr(time_counter) %% !!do_every == 0) {
-        cat("\n<slimr_out:start>\n" + paste(!!rlang::enexpr(time_counter)) + ",'" +
-              !!name + "','" + !!expr_txt + "','" + !!type + "','")
-        cat(!!slimr_expr)
-        cat("'\n<slimr_out:end>\n")
-      }
-    )
+    if(type == "slimr_message") {
+      new_code <- rlang::expr(
+        if(!!rlang::enexpr(time_counter) %% !!do_every == 0) {
+          writeFile("..message_file..", paste(!!slimr_expr), append = T)
+        }
+      )
+    } else {
+      new_code <- rlang::expr(
+        if(!!rlang::enexpr(time_counter) %% !!do_every == 0) {
+          cat("\n<slimr_out:start>\n" + paste(!!rlang::enexpr(time_counter)) + ",'" +
+                !!name + "','" + !!expr_txt + "','" + !!type + "','")
+          cat(!!slimr_expr)
+          cat("'\n<slimr_out:end>\n")
+        }
+      )
+
+    }
 
   } else {
 
@@ -129,18 +121,18 @@ r_output <- function(slimr_expr, name, do_every = 1,
                                                      code_for_display)
   .resources$temp_slimr_output$output_name <- c(.resources$temp_slimr_output$output_name,
                                                 name)
-
-  if(send_to == "file") {
-    .resources$temp_slimr_output$file_name <- c(.resources$temp_slimr_output$file_name,
-                                                file_name)
-    .resources$temp_slimr_output$format <- c(.resources$temp_slimr_output$format,
-                                                format)
+  if(!is.null(type)) {
+    if(type == "slimr_message") {
+      .resources$temp_slimr_output$message <- c(.resources$temp_slimr_output$message,
+                                         TRUE)
+    } else {
+      .resources$temp_slimr_output$message <- c(.resources$temp_slimr_output$message,
+                                                FALSE)
+    }
   } else {
-    .resources$temp_slimr_output$file_name <- c(.resources$temp_slimr_output$file_name,
-                                                NA)
-    .resources$temp_slimr_output$format <- c(.resources$temp_slimr_output$format,
-                                                NA)
-  }
+   .resources$temp_slimr_output$message <- c(.resources$temp_slimr_output$message,
+                                              FALSE)
+ }
 
   rlang::sym(paste0(".__slmr_output_object_",
                     length(.resources$temp_slimr_output$code_for_slim),
@@ -166,6 +158,9 @@ out_replace <- function(code) {
   code <- stringr::str_replace_all(code, "([^m])r_output", "\\1!!r_output")
   code <- stringr::str_replace_all(code, "^r_output", "!!r_output")
   code <- stringr::str_replace_all(code, "sout", "!!sout")
+  code <- stringr::str_replace_all(code, "slimr_message", "!!slimr_message")
+  code <- stringr::str_replace_all(code, "([^m])r_message", "\\1!!r_message")
+  code <- stringr::str_replace_all(code, "^r_message", "!!r_message")
   code_expr <- rlang::parse_exprs(paste(code, collapse = "\n"))
   code <- purrr::map(code_expr, ~rlang::expr_interp(.x)) %>%
     unlist()
@@ -183,15 +178,13 @@ gather_out_one <- function(code_one) {
   .resources$temp_slimr_output$code_for_slim <- list()
   .resources$temp_slimr_output$output_name <- list()
   .resources$temp_slimr_output$code_for_display <- list()
-  .resources$temp_slimr_output$file_name <- list()
-  .resources$temp_slimr_output$format <- list()
+  .resources$temp_slimr_output$message <- list()
 
   code_one <- out_replace(code_one)
   output_info <- list(code_for_slim = .resources$temp_slimr_output$code_for_slim,
                       code_for_display = .resources$temp_slimr_output$code_for_display,
                       output_name = .resources$temp_slimr_output$output_name,
-                      file_name = .resources$temp_slimr_output$file_name,
-                      format = .resources$temp_slimr_output$format)
+                      message = .resources$temp_slimr_output$message)
   list(new_code = code_one, output_info = output_info)
 }
 
@@ -209,14 +202,14 @@ process_output <- function(code, block_names) {
     dplyr::as_tibble() %>%
     dplyr::mutate("block_name" := block_names) %>%
     tidyr::unnest(c("code_for_slim", "code_for_display", "output_name",
-                    "file_name", "format"),
+                    "message"),
                   keep_empty = TRUE) %>%
     dplyr::mutate_at(c("code_for_slim", "code_for_display", "output_name",
-                       "file_name", "format"),
+                       "message"),
                      ~purrr::map(.,
                                  ~ purrr::`%||%`(.x, NA))) %>%
     dplyr::mutate_at(c("code_for_slim", "code_for_display", "output_name",
-                       "file_name", "format"),
+                       "message"),
                      ~list_unchop(.))
 
   #new_code <- SLiMify_all(output_processed$new_code)
@@ -226,6 +219,48 @@ process_output <- function(code, block_names) {
 
   list(new_code, slimr_output_attr)
 }
+
+#' Send SLiM output to the R console as a message while a simulation is running
+#'
+#' @inheritParams r_output
+#'
+#' @return A placemarker expression that is used by `slimr`internally.
+#' @export
+#'
+#' @examples
+#' slim_script(
+#'   slim_block(initialize(),
+#'              {
+#'                initializeMutationRate(1e-7);
+#'                initializeMutationType("m1", 0.5, "f", 0.0);
+#'                initializeGenomicElementType("g1", m1, 1.0);
+#'                initializeGenomicElement(g1, 0, 99999);
+#'                initializeRecombinationRate(1e-8);
+#'              }),
+#'   slim_block(1,
+#'              {
+#'                sim.addSubpop("p1", 100);
+#'              }),
+#'   slim_block(1, 10000, {
+#'     r_message(c("This is generation", community.tick), do_every = 100);
+#'   }),
+#'   slim_block(10000,
+#'              {
+#'                sim.simulationFinished();
+#'              })
+#' ) -> test_sim
+#' test_sim
+r_message <- function(slimr_expr, do_every = 1,
+                      time_counter = community.tick) {
+
+  r_output(!!rlang::enexpr(slimr_expr), name = "r_message", type = "slimr_message", do_every = do_every,
+           time_counter = !!rlang::enexpr(time_counter))
+
+}
+
+#' @rdname r_message
+#' @export
+slimr_message <- r_message
 
 #' Utility function to tell SLiM to output its outputFull() output
 #'

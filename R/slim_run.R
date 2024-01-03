@@ -101,6 +101,7 @@ slim_run.character <- function(x, slim_path = NULL,
 }
 
 #' @describeIn slim_run Run a SLiM script from slimr_script object
+#' @importFrom stats na.omit
 #' @export
 slim_run.slimr_script <- function(x, slim_path = NULL,
                                   script_file = NULL,
@@ -151,6 +152,18 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
 
     script <- as_slim_text(x)
 
+    routput <- attr(x, "slimr_output")
+    m <- NULL
+    if(any(!is.na(routput$message))) {
+      if(any(na.omit(routput$message))) {
+        m <- normalizePath(tempfile(fileext = ".txt"), mustWork = FALSE, winslash = "/")
+        script <- glue::glue_data(.x = list(message_file = m), script,
+                                  .open = "..", .close = "..")
+      }
+    }
+
+
+
     #output_info <- attr(x, "slimr_output")
 
     # if(any(!is.na(output_info$file_name))) {
@@ -171,7 +184,7 @@ slim_run.slimr_script <- function(x, slim_path = NULL,
                     parallel = parallel,
                     progress = progress,
                     progress_file = f,
-                    save_to_file = save_to_file,
+                    message_file = m,
                     throw_error = throw_error,
                     ...)
 
@@ -249,6 +262,7 @@ slim_run.slimr_script_coll <- function(x, slim_path = NULL,
 
 }
 
+#' @importFrom utils tail
 slim_run_script <- function(script_txt,
                             slim_path = NULL,
                             script_file = NULL,
@@ -260,6 +274,7 @@ slim_run_script <- function(script_txt,
                             parallel = FALSE,
                             progress = !parallel,
                             progress_file = NULL,
+                            message_file = NULL,
                             save_to_file = NULL,
                             throw_error = FALSE,
                             ...) {
@@ -306,6 +321,12 @@ slim_run_script <- function(script_txt,
   #   script_file <- convert_to_wsl_path(script_file)
   # }
 
+  if(!is.null(message_file)) {
+    has_messages <- TRUE
+  } else {
+    has_messages <- FALSE
+  }
+
   slim_p <- setup_slim_process(script_file, slim_path, platform, simple_run, conn = conn)
 
   on.exit({
@@ -348,11 +369,20 @@ slim_run_script <- function(script_txt,
 
   progress_appear <- FALSE
   messages <- character(0)
+  old_messages <- messages
   if(simple_run) {
     out <- character(0)
   }
 
   while(slim_p$is_alive()) {
+
+    if(has_messages) {
+      if(file.exists(message_file)) {
+        messages <- readr::read_lines(message_file, lazy = FALSE, progress = FALSE)
+        messages <- setdiff(messages, old_messages)
+        readr::write_lines(character(0), message_file)
+      }
+    }
 
     if(progress) {
       if(!simple_run) {
@@ -367,22 +397,49 @@ slim_run_script <- function(script_txt,
       } else {
         current_cycle <- NULL
         slim_p$poll_io(10000)
-        messages <- slim_p$read_output_lines()
+        messages <- c(messages, slim_p$read_output_lines())
         out <- c(out, messages)
       }
       pb <- slim_update_progress(current_cycle, messages, pb, show_output, simple_pb,
                                  end_gen)
     } else {
-      if(simple_run && show_output) {
+      if(simple_run) {
         slim_p$poll_io(10000)
-        messages <- slim_p$read_output_lines()
+        messages <- c(messages, slim_p$read_output_lines())
         out <- c(out, messages)
+        if(length(messages) > 0) {
+          cat(messages, sep = "\n")
+        }
+      } else {
         if(length(messages) > 0) {
           cat(messages, sep = "\n")
         }
       }
     }
 
+    old_messages <- c(old_messages, messages)
+    messages <- character(0)
+
+
+  }
+
+  if(progress) {
+
+    if(has_messages) {
+      if(file.exists(message_file)) {
+        messages <- readr::read_lines(message_file, lazy = FALSE, progress = FALSE)
+        messages <- setdiff(messages, old_messages)
+        #readr::write_lines(character(0), message_file)
+      }
+    }
+    pb <- slim_update_progress(current_cycle, messages, pb, show_output, simple_pb,
+                               end_gen)
+
+  } else {
+
+    if(length(messages) > 0) {
+      cat(messages, sep = "\n")
+    }
   }
 
   if(!simple_run) {
@@ -844,7 +901,7 @@ slim_update_progress <- function(current_cycle, messages, pb, show_output, simpl
   }
 
 
-  if(show_output && length(messages) > 0) {
+  if(length(messages) > 0) {
     pb$message(paste(messages, collapse = "\n"))
   }
 

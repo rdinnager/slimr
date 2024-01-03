@@ -555,7 +555,7 @@ slim_function <- function(..., name, return_type = "f$", body) {
 #' the \code{furrr} package and will use the plan set by \code{future::\link[future]{plan}}
 #' @param portable If `TRUE`, the the script will be rendered in a 'portable' format, which allows
 #' the script to be modified in another program such as SLiMGUI, and then reimported into R, while maintaining
-#' `slimr` features. See details for more information on how this works.
+#' `slimr` features. This has not been implemented yet and so this is currently not used.
 #'
 #' @return A rendered `slimr_script_coll` object
 #' @export
@@ -590,11 +590,11 @@ slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE
   list_length_1 <- FALSE
   slimr_template_attr <- attr(slimr_script, "slimr_template")
   slimr_output_attr <- attr(slimr_script, "slimr_output")
-  if(any(!is.na(slimr_output_attr$file_name))) {
-    output_templating <- any(stringr::str_detect(slimr_output_attr$file_name, "..(.*?).."))
-  } else {
+  # if(any(!is.na(slimr_output_attr$file_name))) {
+  #   output_templating <- any(stringr::str_detect(slimr_output_attr$file_name, "..(.*?).."))
+  # } else {
     output_templating <- FALSE
-  }
+  #}
   if(any(!is.na(slimr_template_attr$var_names)) | output_templating) {
     if(is.null(template)) {
       not_all_defaults <- any(is.na(unlist(slimr_template_attr$defaults)[!is.na(slimr_template_attr$var_names)]))
@@ -677,6 +677,39 @@ slim_script_render <- function(slimr_script, template = NULL, replace_NAs = TRUE
   attr(new_scripts, "script_info")$rendered <- TRUE
 
   new_scripts
+
+}
+
+#' Version of `slim_script_render()` that takes dots (named arguments) instead of a
+#' template list
+#'
+#' @inheritParams slim_script_render
+#' @param ... Named arguments that will be used to replace templated variables in
+#' the script. The names of the arguments must match the names of the templated
+#' variables.
+#'
+#' @return A rendered `slimr_script_coll` object
+#'
+#' @export
+#'
+#' @examples
+#' test_sim <- slim_script(
+#'   slim_block_init_minimal(mutation_rate = r_template("mu", 1e-7)),
+#'   slim_block_add_subpops(1, 100),
+#'   slim_block(1, 20, late(), {
+#'     r_output(sim.outputFull(), "out", do_every = 10)
+#'   })
+#' ) %>%
+#'   slim_script_render_dots(mu = c(1e-7, 1e-6, 1e-5))
+#' test_sim
+slim_script_render_dots <- function(slimr_script, ..., replace_NAs = TRUE,
+                                    reps = 1, parallel = FALSE, portable = FALSE) {
+
+  dots <- rlang::list2(...)
+
+  slim_script_render(slimr_script, template = purrr::transpose(dots),
+                     replace_NAs = replace_NAs,
+                     reps = reps, parallel = parallel, portable = portable)
 
 }
 

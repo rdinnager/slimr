@@ -540,7 +540,7 @@ as_slimr_script <- function(slim_script_text) {
 #'   slim_block_init_minimal(),
 #'   slim_block_finish(100)
 #' )
-#' get_block(script, "block_init")
+#' get_block(script, "block_1")
 #' get_block(script, 2)
 get_block <- function(x, i) {
   #vec_assert(x, new_slimr_script())

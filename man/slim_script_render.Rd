@@ -35,7 +35,7 @@ the \code{furrr} package and will use the plan set by \code{future::\link[future
 
 \item{portable}{If `TRUE`, the the script will be rendered in a 'portable' format, which allows
 the script to be modified in another program such as SLiMGUI, and then reimported into R, while maintaining
-`slimr` features. See details for more information on how this works.}
+`slimr` features. This has not been implemented yet and so this is currently not used.}
 }
 \value{
 A rendered `slimr_script_coll` object

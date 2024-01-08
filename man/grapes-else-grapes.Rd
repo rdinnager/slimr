@@ -28,6 +28,12 @@ function call, where it will be translated into valid SLiM code as part of a ful
  on the official website: \\url{https://messerlab.org/slim/}
 }
 
+\examples{
+slim_script(slim_block_init_minimal(),
+            slim_block(cat(fixed \%?\% "FIXED\\\\n" \%else\% "LOST\\\\n"))) |>
+  as_slim_text() |>
+  cat()
+}
 \author{
 Benjamin C Haller (\\email{bhaller@benhaller.com}) and Philipp W Messer (\\email{messer@cornell.edu})
 }

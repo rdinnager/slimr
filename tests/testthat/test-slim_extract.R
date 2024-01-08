@@ -24,7 +24,7 @@ test_that("slim_extract_output_data works", {
         slimr_output(p1$outputMSSample(10), "MS", do_every = 10)
       })
     ) %>%
-      slim_run(simple_run = TRUE)
+      slim_run(simple_run = TRUE, capture_output = TRUE, show_output = FALSE)
 
     if(on_ci()) {
       readr::write_rds(test_sim, file.path(covr_test_folder, "slim_extract_test_1.rds"))

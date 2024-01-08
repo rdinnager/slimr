@@ -4,7 +4,7 @@
       print(script_1)
     Output
       <slimr_script[3]>
-      block_init:initialize() {
+      block_1:initialize() {
           initializeMutationRate(1e-07);
           initializeMutationType("m1", 0.5, "f", 0);
           initializeGenomicElementType("g1", m1, 1);

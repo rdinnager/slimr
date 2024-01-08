@@ -23,3 +23,25 @@ A \code{slimr_block} object (only useful with the context of a \code{\link{slim_
 \description{
 Specify an Eidos function to be included in the SLiM script
 }
+\examples{
+test_sim <- slim_script(
+  slim_function("o<Subpopulation>$ subpop1", "o<Subpopulation>$ subpop2",
+               name = "calculateFST",
+               return_type = "f$", body = function(subpop1, subpop2) {
+                 p1_p = sim.mutationFrequencies(subpop1);
+                 p2_p = sim.mutationFrequencies(subpop2);
+                 mean_p = (p1_p + p2_p) / 2.0;
+                 H_t = 2.0 * mean_p * (1.0 - mean_p);
+                 H_s = p1_p * (1.0 - p1_p) + p2_p * (1.0 - p2_p);
+                 fst = 1.0 - H_s/H_t;
+                 fst = fst[isFinite(fst)]; ## exclude muts where mean_p is 0.0 or 1.0
+                 return(mean(fst));
+               }),
+  slim_block_init_minimal(mutation_rate = 1e-6),
+  slim_block_add_subpops(2, 100),
+  slim_block(1, 20, late(), {
+    r_output(calculateFST(p1, p2), "out", do_every = 10)
+  })
+)
+test_sim
+}

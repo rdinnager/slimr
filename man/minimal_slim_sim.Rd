@@ -7,7 +7,7 @@
 minimal_slim_sim(command = print("Hello world!"))
 }
 \arguments{
-\item{command}{}
+\item{command}{An R expression to be inserted in the `slimr` script}
 }
 \value{
 An R `expression`.

@@ -182,6 +182,7 @@ reference:
   - title: Datasets
   - contents:
     - slim_recipes
+    - load_herm
   - title: Uncategorized
   - contents:
     - code

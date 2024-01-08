@@ -63,7 +63,12 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
                                                         "sim.mutations.position",
                                                         "sim.subpopulations.individuals",
                                                         "sim.subpopulations.individuals.genomes.containsMutations",
-                                                        "size"
+                                                        "size",
+                                                        "community.createLogFile",
+                                                        "cyc.addCycle",
+                                                        "cyc.addGeneration",
+                                                        "sim.createLogFile",
+                                                        "writeFile"
                                                         ))
 
 .onAttach <- function(libname, pkgname) {
@@ -145,8 +150,8 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
   .resources$temp_slimr_output$code_for_slim <- list()
   .resources$temp_slimr_output$output_name <- list()
   .resources$temp_slimr_output$code_for_display <- list()
-  .resources$temp_slimr_output$file_name <- list()
-  .resources$temp_slimr_output$format <- list()
+  .resources$temp_slimr_output$message <- list()
+  #.resources$temp_slimr_output$format <- list()
   .resources$loaded_globals <- NULL
 
 

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0.9000</span>
       </span>
     </div>
 
@@ -92,6 +92,11 @@
     <dl><dt>update_every</dt>
 <dd><p>How often to update progress, expressed as the number
 of generations after which an update should be tracked.</p></dd>
+
+
+<dt>time_counter</dt>
+<dd><p>A SLiM expression that returns the current time. Default is `community.tick`,
+which is the best option for SLiM version &gt;4.0. If you are using SLiM version &lt; v4.0, `sim.generation` should work.</p></dd>
 
 </dl></div>
     <div id="value">

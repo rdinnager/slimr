@@ -84,8 +84,8 @@ conflict_prefer("filter", "dplyr")
 conflict_prefer("select", "dplyr")
 conflict_prefer("initialize", "slimr")
 
-## load data
-gen <- read_rds(system.file("extdata/herm.rdata", package = "slimr"))
+## load snp data using function load_herm() from slimr package
+gen <- load_herm()
 
 gen
 
@@ -529,9 +529,8 @@ So, that is out `pop_abunds`. For initial population states we are going to base
 gen_2008 <- gen[gen@other$ind.metrics$year == 2008, ]
 ## count number of individuals in genetic sample per subpopulation
 init_popsize <- c(table(pop(gen_2008)))
-## set filename to be used for starting pop data (using slim_file to make sure SLiM can find it)
-starting_pop = tempfile(fileext = ".txt") %>%
-  slim_file()
+## set filename to be used for starting pop data
+starting_pop = tempfile(fileext = ".txt") 
 ## setup generations to sample
 ## we will just sample the three years corresponding to the data, but do it during the last 6 cycles, as "technical" replicates
 sample_these <- purrr::map(c(14:19),

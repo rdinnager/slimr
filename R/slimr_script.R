@@ -540,7 +540,7 @@ as_slimr_script <- function(slim_script_text) {
 #'   slim_block_init_minimal(),
 #'   slim_block_finish(100)
 #' )
-#' get_block(script, "block_init")
+#' get_block(script, "block_1")
 #' get_block(script, 2)
 get_block <- function(x, i) {
   #vec_assert(x, new_slimr_script())
@@ -570,6 +570,7 @@ code <- function(x) {
 #'
 #' @export
 #' @examples
+#' code(minimal_slimr_script())
 `code<-` <- function(x, value) {
   field(x, "code") <- value
   x
@@ -601,7 +602,6 @@ end_gen <- function(x) {
 #' @rdname end_gen
 #'
 #' @export
-#' @examples
 `end_gen<-` <- function(x, value) {
   field(x, "end_gen") <- as.character(value)
   x
@@ -783,7 +783,7 @@ slimr_write.character <- function(x, file, ...) {
 #' for example, where you want to incorporate the results of \code{slimrlang}'s internal edits, e.g.
 #' such as removing \code{\link{\%.\%}} special operators, etc. It is also useful when the
 #' \code{slimr_script} object has been created from converting a text-based SLiM script, such as when
-#' using \code{\link[slimr]{as.slimr_script}} from the \code{slimr} package on a character variable.
+#' using \code{\link[slimr]{as_slimr_script}} from the \code{slimr} package on a character variable.
 #'
 #' @param x slimr_script object to reconstruct
 #' @param ... Further arguments, passed to or from other methods.
@@ -822,7 +822,7 @@ reconstruct <- function(x, ...) {
 #' for example, where you want to incorporate the results of \code{slimrlang}'s internal edits, e.g.
 #' such as removing \code{\link{\%.\%}} special operators, etc. It is also useful when the
 #' \code{slimr_script} object has been created from converting a text-based SLiM script, such as when
-#' using \code{\link[slimr]{as.slimr_script}} from the \code{slimr} package on a character variable.
+#' using \code{\link[slimr]{as_slimr_script}} from the \code{slimr} package on a character variable.
 #'
 #' @param x slimr_script object to reconstruct
 #' @param ... Further arguments, passed to or from other methods.

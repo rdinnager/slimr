@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">slimr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.4.0.9000</span>
       </span>
     </div>
 
@@ -112,6 +112,70 @@
 with names "x", "y", and "z".</p>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="slim_is_avail.html">slim_is_avail</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">test_sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="slim_script.html">slim_script</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="callback_initialize.html">initialize</a></span><span class="op">(</span><span class="op">)</span>,  <span class="op">{</span></span></span>
+<span class="r-in"><span>        <span class="fu"><a href="initializeSLiMOptions.html">initializeSLiMOptions</a></span><span class="op">(</span>dimensionality <span class="op">=</span> <span class="st">"xy"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="fu"><a href="initializeMutationRate.html">initializeMutationRate</a></span><span class="op">(</span><span class="fl">1e-07</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="fu"><a href="initializeMutationType.html">initializeMutationType</a></span><span class="op">(</span><span class="st">"m1"</span>, <span class="fl">0.5</span>, <span class="st">"f"</span>, <span class="fu">asFloat</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="fu"><a href="initializeGenomicElementType.html">initializeGenomicElementType</a></span><span class="op">(</span><span class="st">"g1"</span>, <span class="va">m1</span>, <span class="fu">asFloat</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="fu"><a href="initializeGenomicElement.html">initializeGenomicElement</a></span><span class="op">(</span><span class="va">g1</span>, <span class="fl">0</span>, <span class="fl">99999</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="fu"><a href="initializeRecombinationRate.html">initializeRecombinationRate</a></span><span class="op">(</span><span class="fl">1e-08</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">}</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="late.html">late</a></span><span class="op">(</span><span class="op">)</span>,  <span class="op">{</span></span></span>
+<span class="r-in"><span>        <span class="fu">sim.addSubpop</span><span class="op">(</span><span class="st">"p1"</span>, <span class="fl">500</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="va">p1.individuals.x</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">p1.individualCount</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        <span class="va">p1.individuals.y</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">p1.individualCount</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">}</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2000</span>, <span class="fu"><a href="late.html">late</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">{</span></span></span>
+<span class="r-in"><span>      <span class="fu">r_output_coords</span><span class="op">(</span>dimensionality <span class="op">=</span> <span class="st">"xy"</span>, do_every <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>;</span></span>
+<span class="r-in"><span>    <span class="op">}</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="slim_block.html">slim_block</a></span><span class="op">(</span><span class="fu"><a href="modifyChild.html">modifyChild</a></span><span class="op">(</span><span class="op">)</span>,  <span class="op">{</span></span></span>
+<span class="r-in"><span>      <span class="va">child.x</span> <span class="op">=</span> <span class="va">parent1.x</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0.02</span><span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="kw">while</span><span class="op">(</span><span class="op">(</span><span class="va">child.x</span> <span class="op">&lt;</span> <span class="fu">asFloat</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">|</span> <span class="op">(</span><span class="va">child.x</span> <span class="op">&gt;</span> <span class="fu">asFloat</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>        <span class="va">child.x</span> <span class="op">=</span> <span class="va">parent1.x</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0.02</span><span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">}</span></span></span>
+<span class="r-in"><span>      <span class="va">child.y</span> <span class="op">=</span> <span class="va">parent1.y</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0.02</span><span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="kw">while</span><span class="op">(</span><span class="op">(</span><span class="va">child.y</span> <span class="op">&lt;</span> <span class="fu">asFloat</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">|</span> <span class="op">(</span><span class="va">child.y</span> <span class="op">&gt;</span> <span class="fu">asFloat</span><span class="op">(</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>        <span class="va">child.y</span> <span class="op">=</span> <span class="va">parent1.y</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0.02</span><span class="op">)</span></span></span>
+<span class="r-in"><span>      <span class="op">}</span></span></span>
+<span class="r-in"><span>      <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="cn">T</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">}</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="slim_block.html">slim_block</a></span><span class="op">(</span><span class="fl">2000</span>, <span class="fu"><a href="late.html">late</a></span><span class="op">(</span><span class="op">)</span>,  <span class="op">{</span></span></span>
+<span class="r-in"><span>        <span class="fu">sim.outputFixedMutations</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="slim_run.html">slim_run</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="slim_results_to_data.html">slim_results_to_data</a></span><span class="op">(</span><span class="va">test_sim</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Simulation finished with exit status: 0</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Success!</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 400 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    type                                    expression     generation name  data </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lis&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;">"</span>float [0:499] 0.403293 0.732211 ...\n<span style="color: #949494;">"</span> sim.subpopula…         10 x     <span style="color: #949494;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;">"</span>float [0:499] 0.734469 0.902523 ...\n<span style="color: #949494;">"</span> sim.subpopula…         10 y     <span style="color: #949494;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> <span style="color: #949494;">"</span>float [0:499] 0.598237 0.553393 ...\n<span style="color: #949494;">"</span> sim.subpopula…         20 x     <span style="color: #949494;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> <span style="color: #949494;">"</span>float [0:499] 0.578933 0.771491 ...\n<span style="color: #949494;">"</span> sim.subpopula…         20 y     <span style="color: #949494;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> <span style="color: #949494;">"</span>float [0:499] 0.501153 0.272912 ...\n<span style="color: #949494;">"</span> sim.subpopula…         30 x     <span style="color: #949494;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> <span style="color: #949494;">"</span>float [0:499] 0.440514 0.52441 ...\n<span style="color: #949494;">"</span>  sim.subpopula…         30 y     <span style="color: #949494;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> <span style="color: #949494;">"</span>float [0:499] 0.972029 0.845825 ...\n<span style="color: #949494;">"</span> sim.subpopula…         40 x     <span style="color: #949494;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> <span style="color: #949494;">"</span>float [0:499] 0.571773 0.70612 ...\n<span style="color: #949494;">"</span>  sim.subpopula…         40 y     <span style="color: #949494;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> <span style="color: #949494;">"</span>float [0:499] 0.193929 0.600441 ...\n<span style="color: #949494;">"</span> sim.subpopula…         50 x     <span style="color: #949494;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> <span style="color: #949494;">"</span>float [0:499] 0.844084 0.34089 ...\n<span style="color: #949494;">"</span>  sim.subpopula…         50 y     <span style="color: #949494;">&lt;chr&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 390 more rows</span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

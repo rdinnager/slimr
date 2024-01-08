@@ -23,4 +23,5 @@ script <- slim_script(
   slim_block_finish(100)
 )
 code(script)
+code(minimal_slimr_script())
 }

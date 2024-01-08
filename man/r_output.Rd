@@ -9,9 +9,6 @@ r_output(
   slimr_expr,
   name,
   do_every = 1,
-  send_to = c("data", "file"),
-  file_name = tempfile(fileext = ".txt"),
-  format = c("csv", "fst"),
   type = NULL,
   expression = NULL,
   time_counter = community.tick
@@ -21,9 +18,6 @@ slimr_output(
   slimr_expr,
   name,
   do_every = 1,
-  send_to = c("data", "file"),
-  file_name = tempfile(fileext = ".txt"),
-  format = c("csv", "fst"),
   type = NULL,
   expression = NULL,
   time_counter = community.tick
@@ -42,16 +36,6 @@ as an integer saying how many generations to run before producing output.
 e.g. \code{do_every = 10} means to output every 10 generations of the
 simulation.}
 
-\item{send_to}{\strong{*deprecated*} Where to send the output? This could be used
-to send the output to be stored in the results object ("data"), or to an external file ("file").
-This will no longer be available in future versions in favour of an option to have the results
-stored as a pointer to an external file (to save memory).}
-
-\item{file_name}{\strong{*deprecated*} The file name to save output to if \code{send_to = "file"}}
-
-\item{format}{\strong{*deprecated*} The file format to save data if \code{send_to = "file"}, Only "csv" is implemented
-but there are plans to support "fst" and "disk.frame".}
-
 \item{type}{Provide a custom type to the output. Used mostly for internal purposes.}
 
 \item{expression}{Provide a custom expression to be included with the output.
@@ -59,10 +43,10 @@ Used mostly for internal purposes.}
 
 \item{time_counter}{Expression used to extract the simulation time from SLiM. By default this
 uses the global timing mechanism in SLiM version >4.0: `community.tick`. For versions <4.0,
-use `sim.generation` instead (this parameter is for backwards compatability with old SLiM versions)}
+use `sim.generation` instead (this parameter is for backwards compatibility with old SLiM versions)}
 }
 \value{
-An expression with the code to be run in SLiM.
+A placemarker expression that is used by `slimr`internally.
 }
 \description{
 Use this function in a \code{\link{slim_block}} call and it will be

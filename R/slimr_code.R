@@ -271,7 +271,7 @@ slimr_code_detect_nucleotides <- function(code) {
 #' This function print the equivalent `slimr` code to the console where it can easily
 #' be copied and pasted into an R script.
 #'
-#' @param code_txt
+#' @param code_txt SLiM code as a character vector.
 #'
 #' @return `slimr` code as a character vector, invisibly
 #' @export

@@ -715,7 +715,7 @@ setup_slim_process <- function(script_file, slim_path = NULL, platform = get_os(
   }
 
   slim_call$args <- purrr::map_chr(slim_call$args,
-                                   ~glue::glue(.x, .envir = list(script_file = script_file)))
+                                   ~glue::glue_data(.x = list(script_file = script_file), .x))
 
   slim_call$args <- c("-s", seed, slim_call$args)
 

@@ -37,19 +37,20 @@ split_isolate_sim <- slim_script(
     
   }),
   
-  slim_block(1, {
+  slim_block(1, early(), {
     
     defineGlobal("curr_subpop", 1);
     sim.addSubpop(curr_subpop, 100)
     
   }),
   
-  slim_block(1, 10000, late(), {
+  slim_block(2, 10000, late(), {
     
     if(rbinom(1, 1, !!split_prob) == 1) {
       ## split a subpop
       subpop_choose = sample(sim.subpopulations, 1)
-      curr_subpop = curr_subpop + 1
+      defineGlobal("curr_subpop", curr_subpop + 1)
+      
       sim.addSubpopSplit(subpopID = curr_subpop, 
                          size = 100, 
                          sourceSubpop = subpop_choose)

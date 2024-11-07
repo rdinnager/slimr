@@ -715,11 +715,11 @@ slim_script_render_dots <- function(slimr_script, ..., replace_NAs = TRUE,
 
 slimr_replace_file_names <- function(template, file_name) {
   purrr::map_chr(file_name,
-             ~glue::glue(.x,
-                         .envir = template,
-                         .open = "..",
-                         .close = "..",
-                         .na = NA_character_))
+             ~glue::glue_data(.x = template,
+                              .x,
+                              .open = "..",
+                              .close = "..",
+                              .na = NA_character_))
 }
 
 reprocess_script <- function(script) {

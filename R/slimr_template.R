@@ -152,10 +152,10 @@ replace_double_dots <- function(slimr_script, envir = parent.frame(), slimr_temp
 
   code_text <- as.character.slimr_code(code(slimr_script))
   new_code <- purrr::map(code_text,
-                         ~glue::glue(.x,
-                                     .envir = envir,
-                                     .open = "..",
-                                     .close = "..") %>%
+                         ~glue::glue_data(.x = envir,
+                                          .x,
+                                          .open = "..",
+                                          .close = "..") %>%
                            stringr::str_split("\n") %>%
                            unlist())
 

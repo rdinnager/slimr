@@ -67,6 +67,73 @@ slim_exists <- function(path) {
   slimr_which(path) != ""
 }
 
+# Configuration for SLiM binary sources
+.slim_binary_sources <- list(
+  windows = list(
+    primary = "https://github.com/rdinnager/slimr/releases/download/slim-windows-executable/slim.exe"
+  )
+)
+
+# Helper function to accept conda Terms of Service
+accept_conda_tos <- function() {
+  tryCatch({
+    conda_exe <- reticulate::conda_binary()
+
+    channels <- c(
+      "https://repo.anaconda.com/pkgs/main",
+      "https://repo.anaconda.com/pkgs/r",
+      "https://repo.anaconda.com/pkgs/msys2"
+    )
+
+    for (channel in channels) {
+      system2(conda_exe, c("tos", "accept", "--override-channels", "--channel", channel),
+              stdout = FALSE, stderr = FALSE)
+    }
+    TRUE
+  }, error = function(e) {
+    FALSE
+  })
+}
+
+# Helper function to get conda package specification for SLiM version
+get_slim_conda_spec <- function(slim_version) {
+  slim_version <- match.arg(slim_version, c("stable", "latest"))
+
+  if (slim_version == "stable") {
+    # Pin to 4.x for stability and compatibility
+    return("slim<5")
+  } else {
+    # Install latest version
+    return("slim")
+  }
+}
+
+# Helper function to download file with retry logic
+download_with_retry <- function(url, destfile, mode = "wb", max_retries = 3, verbose = TRUE) {
+  for (attempt in 1:max_retries) {
+    result <- tryCatch({
+      if(verbose && attempt > 1) {
+        rlang::inform(paste0("Retry attempt ", attempt, " of ", max_retries, "..."))
+      }
+      download.file(url, destfile, mode = mode, quiet = !verbose)
+      TRUE
+    }, error = function(e) {
+      if (attempt == max_retries) {
+        return(e)
+      }
+      Sys.sleep(2^(attempt - 1)) # Exponential backoff
+      FALSE
+    })
+
+    if (isTRUE(result)) {
+      return(TRUE)
+    } else if (inherits(result, "error")) {
+      stop(result)
+    }
+  }
+  FALSE
+}
+
 
 #' Attempt to install and / or setup SLiM for use with slimr
 #'
@@ -88,6 +155,9 @@ slim_exists <- function(path) {
 #' @param conda_env If \code{method="conda"}, then this is the name of the conda environment to install
 #' SLiM into. If you do not use the default name, then it may take longer for slimr to find SLiM (which may
 #' increase loading times for the library).
+#' @param slim_version The version of SLiM to install. Can be "stable" (SLiM 4.x, recommended for compatibility),
+#' "latest" (newest available version, may have compatibility issues), or a specific version string like "4.1" or "5.1".
+#' Only applies to conda installation method. Binary method installs a fixed version.
 #'
 #' @export
 #'
@@ -99,7 +169,8 @@ slim_setup <- function(method = c("conda", "binary"),
                        verbose = TRUE,
                        force = FALSE,
                        install_path = default_install_path(),
-                       conda_env = "slimr-conda") {
+                       conda_env = "slimr-conda",
+                       slim_version = c("stable", "latest")) {
 
   if(slim_is_avail() && !force) {
     rlang::inform("Looks like SLiM is already installed. If you want to reinstall use force=TRUE")
@@ -107,20 +178,50 @@ slim_setup <- function(method = c("conda", "binary"),
   }
 
   method <- match.arg(method)
+  slim_version <- match.arg(slim_version)
 
   if(method == "binary") {
-    if(get_os() != "windows") {
-      rlang::abort("Sorry, the binary installation method is currently only available for Windows.")
+    os <- get_os()
+    if(os != "windows") {
+      # Provide helpful guidance for other platforms
+      if(os == "mac") {
+        rlang::abort(c(
+          "Binary installation is currently only available for Windows.",
+          "i" = "For macOS, try: brew install messerlab/slim/slim",
+          "i" = "Or use: slim_setup(method = 'conda')",
+          "i" = "Manual installation: https://messerlab.org/slim/"
+        ))
+      } else {
+        rlang::abort(c(
+          "Binary installation is currently only available for Windows.",
+          "i" = "For Linux, install via your package manager or use: slim_setup(method = 'conda')",
+          "i" = "Manual installation: https://messerlab.org/slim/"
+        ))
+      }
     }
+
     if(verbose) {
-      rlang::inform("Attempting to download SLiM binary...")
+      rlang::inform("Attempting to download SLiM binary (version 4.1)...")
     }
-    download.file("https://github.com/rdinnager/slimr/releases/download/slim-windows-executable/slim.exe",
-                  file.path(install_path, "slim.exe"),
-                  mode = "wb")
 
-    .slim_settings$slim_path <- file.path(install_path, "slim.exe")
+    # Use download with retry logic
+    binary_url <- .slim_binary_sources$windows$primary
+    dest_file <- file.path(install_path, "slim.exe")
 
+    tryCatch({
+      download_with_retry(binary_url, dest_file, mode = "wb", verbose = verbose)
+    }, error = function(e) {
+      rlang::abort(c(
+        "Failed to download SLiM binary.",
+        "x" = as.character(e$message),
+        "i" = "Check your internet connection",
+        "i" = "Try method = 'conda' as an alternative",
+        "i" = "Manual installation: https://messerlab.org/slim/",
+        "i" = "Report issues: https://github.com/rdinnager/slimr/issues"
+      ))
+    })
+
+    .slim_settings$slim_path <- dest_file
     .slim_settings$slim_call <- get_slim_call()
 
   }
@@ -129,41 +230,161 @@ slim_setup <- function(method = c("conda", "binary"),
 
     assert_package("reticulate")
 
-    if(!reticulate::condaenv_exists()) {
-      if(verbose) {
-        rlang::inform("Attempting to install miniconda...")
+    # Check if conda exists and handle TOS issues
+    conda_exists <- tryCatch({
+      reticulate::condaenv_exists()
+      TRUE
+    }, error = function(e) {
+      # Check if error is about miniconda already existing
+      if(stringr::str_detect(as.character(e$message), "already installed")) {
+        return(TRUE)
       }
-      reticulate::install_miniconda()
+      FALSE
+    })
+
+    if(!conda_exists) {
+      if(verbose) {
+        rlang::inform("Attempting to install miniconda (this may take a few minutes)...")
+      }
+      tryCatch({
+        reticulate::install_miniconda()
+
+        # Accept conda Terms of Service after fresh install
+        if(verbose) {
+          rlang::inform("Accepting conda Terms of Service...")
+        }
+        accept_conda_tos()
+      }, error = function(e) {
+        # Check if it's just that miniconda is already there
+        if(!stringr::str_detect(as.character(e$message), "already installed")) {
+          rlang::abort(c(
+            "Failed to install miniconda.",
+            "x" = as.character(e$message),
+            "i" = "Try manual installation: https://docs.conda.io/en/latest/miniconda.html",
+            "i" = "Then use slim_setup(method = 'conda') again"
+          ))
+        }
+      })
     }
+
+    # Handle conda TOS issues for existing installations
+    tryCatch({
+      reticulate::conda_list()
+    }, error = function(e) {
+      if(stringr::str_detect(as.character(e$message), "Terms of Service")) {
+        if(verbose) {
+          rlang::inform("Accepting conda Terms of Service...")
+        }
+        if(!accept_conda_tos()) {
+          rlang::warn("Could not automatically accept conda Terms of Service. Installation may fail.")
+        }
+      }
+    })
 
     if(verbose) {
-      rlang::inform("Attempting to install SLiM via conda...")
+      version_msg <- if(slim_version == "stable") {
+        "Installing SLiM 4.x (stable, recommended for compatibility)..."
+      } else {
+        "Installing latest SLiM version (may have compatibility issues with slimr)..."
+      }
+      rlang::inform(version_msg)
+      rlang::inform("This may take 2-3 minutes...")
     }
 
-    l <- reticulate::conda_list()
-    if(conda_env %in% l$name) {
-      reticulate::conda_install(conda_env, packages = "slim", python_version = NULL)
-      slimr_path <- l |>
-        dplyr::filter(.data$name == conda_env) |>
-        dplyr::pull(.data$path)
-      conda_path <- slim_conda_path(slimr_path)
-    } else {
-      slimr_path <- reticulate::conda_create(conda_env, packages = "slim", python_version = NULL)
-      conda_path <- slim_conda_path(slimr_path)
-    }
+    slim_package <- get_slim_conda_spec(slim_version)
+
+    tryCatch({
+      l <- reticulate::conda_list()
+      if(conda_env %in% l$name) {
+        # Environment exists, install/update SLiM in it
+        reticulate::conda_install(conda_env, packages = slim_package,
+                                   channel = "conda-forge", python_version = NULL)
+        # Get path from conda list after installation
+        l_updated <- reticulate::conda_list()
+        slimr_path <- l_updated |>
+          dplyr::filter(.data$name == conda_env) |>
+          dplyr::pull(.data$python)
+        conda_path <- slim_conda_path(slimr_path)
+      } else {
+        # Create new environment with SLiM
+        slimr_path <- reticulate::conda_create(conda_env, packages = slim_package,
+                                                channel = "conda-forge", python_version = NULL)
+        conda_path <- slim_conda_path(slimr_path)
+      }
+    }, error = function(e) {
+      rlang::abort(c(
+        "Failed to install SLiM via conda.",
+        "x" = as.character(e$message),
+        "i" = "Try method = 'binary' if on Windows",
+        "i" = "Check conda installation: reticulate::conda_list()",
+        "i" = "Manual installation: https://messerlab.org/slim/"
+      ))
+    })
 
     .slim_settings$slim_path <- conda_path
-
     .slim_settings$slim_call <- get_slim_call()
 
     if(verbose) {
-      rlang::inform(glue::glue("SLiM installed successfully. SLiM executable can be found in {conda_path}. `slimr` should be able to find it automatically if you used default settings. Otherwise, you can add this path to the SLIM_PATH environmental variable."))
+      rlang::inform(glue::glue("SLiM installed successfully to: {conda_path}"))
     }
   }
 
+  # Verify installation
   if(!slim_is_avail()) {
-    message("We are sorry, but it appears the installation failed. Please visit https://rdinnager.github.io/slimr/ and follow the manual installation instructions instead. Then you can help slimr find the SLiM executable by adding its path to the SLIM_PATH environment variable.")
+    rlang::abort(c(
+      "Installation completed but SLiM cannot be found.",
+      "i" = "Check installation path permissions",
+      "i" = "Set SLIM_PATH environment variable manually if needed",
+      "i" = "Visit: https://rdinnager.github.io/slimr/",
+      "i" = "Report issues: https://github.com/rdinnager/slimr/issues"
+    ))
   }
+
+  # Run post-installation checks
+  installed_version <- NULL
+  tryCatch({
+    installed_version <- slim_version()
+    if(verbose) {
+      rlang::inform(paste0("SLiM version ", installed_version, " installed successfully!"))
+    }
+
+    # Check compatibility and warn if needed
+    if(!is.null(installed_version) && package_version(installed_version) >= "5.0") {
+      rlang::warn(c(
+        paste0("SLiM version ", installed_version, " was installed, but slimr is currently only fully compatible with SLiM 4.x."),
+        "!" = "Some functions may not work correctly with SLiM 5.x",
+        "i" = "For full compatibility, use: slim_setup(method = 'binary') or slim_setup(slim_version = 'stable')",
+        "i" = "Track SLiM 5.x support: https://github.com/rdinnager/slimr/issues"
+      ))
+    }
+
+    # Run verification test
+    if(verbose) {
+      rlang::inform("Running verification test...")
+    }
+    test_result <- tryCatch({
+      slim_test()
+      TRUE
+    }, error = function(e) {
+      FALSE
+    })
+
+    if(!test_result) {
+      rlang::warn(c(
+        "SLiM installed but failed verification test.",
+        "i" = "Check file permissions",
+        "i" = "Try running a simple SLiM script manually"
+      ))
+    } else if(verbose) {
+      rlang::inform("Verification test passed!")
+    }
+
+  }, error = function(e) {
+    rlang::warn(c(
+      "Could not verify SLiM installation.",
+      "i" = "SLiM may still work - try running a script to confirm"
+    ))
+  })
 
 
 }

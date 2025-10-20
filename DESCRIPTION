@@ -1,6 +1,6 @@
 Package: slimr
 Title: Create, Run and Post-Process 'SLiM' Population Genetics Forward Simulations
-Version: 0.4.0.9000
+Version: 0.4.1
 Authors@R: 
     c(person(given = "Russell",
              family = "Dinnage",

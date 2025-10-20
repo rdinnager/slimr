@@ -50,8 +50,8 @@ on the official website: \url{https://messerlab.org/slim/}
 Other LogFile: 
 \code{\link{LF}},
 \code{\link{addCustomColumn}()},
-\code{\link{addCycleStage}()},
 \code{\link{addCycle}()},
+\code{\link{addCycleStage}()},
 \code{\link{addMeanSDColumns}()},
 \code{\link{addPopulationSexRatio}()},
 \code{\link{addPopulationSize}()},

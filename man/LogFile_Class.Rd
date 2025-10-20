@@ -143,8 +143,8 @@ of tag is not used by SLiM; it is free for you to use.}
 \seealso{
 Other LogFile: 
 \code{\link{addCustomColumn}()},
-\code{\link{addCycleStage}()},
 \code{\link{addCycle}()},
+\code{\link{addCycleStage}()},
 \code{\link{addKeysAndValuesFrom}()},
 \code{\link{addMeanSDColumns}()},
 \code{\link{addPopulationSexRatio}()},

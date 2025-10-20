@@ -122,8 +122,8 @@ on the official website: \url{https://messerlab.org/slim/}
 \seealso{
 Other Species: 
 \code{\link{Sp}},
-\code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
+\code{\link{addSubpopSplit}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{individualsWithPedigreeIDs}()},
 \code{\link{killIndividuals}()},

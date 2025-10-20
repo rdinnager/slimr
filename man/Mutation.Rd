@@ -68,8 +68,8 @@ slim_block(recombination(), {
 Other callbacks: 
 \code{\link{early}()},
 \code{\link{first}()},
-\code{\link{fitnessEffect}()},
 \code{\link{fitness}()},
+\code{\link{fitnessEffect}()},
 \code{\link{initialize}()},
 \code{\link{interaction}()},
 \code{\link{late}()},

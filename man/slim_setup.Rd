@@ -9,7 +9,8 @@ slim_setup(
   verbose = TRUE,
   force = FALSE,
   install_path = default_install_path(),
-  conda_env = "slimr-conda"
+  conda_env = "slimr-conda",
+  slim_version = "stable"
 )
 }
 \arguments{
@@ -30,6 +31,10 @@ so that slimr can find it.}
 \item{conda_env}{If \code{method="conda"}, then this is the name of the conda environment to install
 SLiM into. If you do not use the default name, then it may take longer for slimr to find SLiM (which may
 increase loading times for the library).}
+
+\item{slim_version}{The version of SLiM to install. Can be "stable" (default, installs last known stable version
+compatible with slimr) or a specific version string like "4.2.2", "5.1", etc.
+Only applies to conda installation method. Binary method installs a fixed version.}
 }
 \description{
 `slim_setup()` will attempt to determine the user's OS and install SLiM automatically.

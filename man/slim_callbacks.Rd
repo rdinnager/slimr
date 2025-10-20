@@ -36,15 +36,15 @@ Available callbacks are:
 Other callbacks: 
 \code{\link{early}()},
 \code{\link{first}()},
-\code{\link{fitnessEffect}()},
 \code{\link{fitness}()},
+\code{\link{fitnessEffect}()},
 \code{\link{initialize}()},
 \code{\link{interaction}()},
 \code{\link{late}()},
 \code{\link{mateChoice}()},
 \code{\link{modifyChild}()},
-\code{\link{mutationEffect}()},
 \code{\link{mutation}()},
+\code{\link{mutationEffect}()},
 \code{\link{recombination}()},
 \code{\link{reproduction}()},
 \code{\link{survival}()}

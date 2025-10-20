@@ -105,8 +105,8 @@ Other Community:
 
 Other Species: 
 \code{\link{Sp}},
-\code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
+\code{\link{addSubpopSplit}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{individualsWithPedigreeIDs}()},
 \code{\link{killIndividuals}()},

@@ -99,7 +99,7 @@ jobs:
           cd ../../..
           mkdir SLiM_build
           cd SLiM_build
-          cmake -G"MSYS Makefiles" -DCMAKE_BUILD_TYPE=Release ../SLiM
+          cmake -G"MSYS Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ../SLiM
           make -j 2
 
       - name: Install SLiM on Windows Part 2
@@ -120,7 +120,7 @@ jobs:
           unzip -o SLiM.zip
           mkdir SLiM_build
           cd SLiM_build
-          cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ../SLiM
           make
 
       - name: Install SLiM on non-Windows Part 2

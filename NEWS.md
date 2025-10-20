@@ -1,5 +1,16 @@
 # slimr (development version)
 
+# slimr 0.4.1
+
+* Enhanced `slim_setup()` function with improved reliability and user experience:
+  - Added automatic conda Terms of Service acceptance to prevent installation failures
+  - Implemented download retry logic with exponential backoff for more reliable binary downloads
+  - Added structured error messages with platform-specific guidance and troubleshooting steps
+  - Added post-installation verification that automatically tests the SLiM installation
+  - Added informative progress messages throughout the installation process
+  - `slim_version` parameter now accepts specific version numbers (e.g., "4.2.2", "5.1") in addition to "stable" (default: SLiM 4.2.2)
+  - Warns users about potential compatibility issues when installing SLiM 5.x
+
 # slimr 0.4.0
 
 * Updated `slimr` to be fully compatible with SLiM v4.1 updates

@@ -22,8 +22,8 @@ jobs:
         config:
           - {os: windows-latest, r: 'release', slim: 'yes', conda: 'no'}
           - {os: windows-latest, r: 'release', slim: 'no', conda: 'no'}
-          - {os: macOS-latest, r: 'release', slim: 'yes', conda: 'no'}
-          - {os: macOS-latest, r: 'devel', slim: 'yes', conda: 'no'}
+          - {os: macos-13, r: 'release', slim: 'yes', conda: 'no'}
+          - {os: macos-13, r: 'devel', slim: 'yes', conda: 'no'}
           - {os: macOS-latest, r: 'release', slim: 'no', conda: 'yes'}
           - {os: ubuntu-20.04, r: 'release', slim: 'yes', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", conda: 'no'}
           - {os: ubuntu-20.04, r: 'release', slim: 'no', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", conda: 'yes'}

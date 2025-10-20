@@ -51,18 +51,19 @@ jobs:
            mingw-w64-x86_64-toolchain
            mingw-w64-x86_64-cmake
 
+      # Download SLiM 4.2.2 (last version compatible with current slimr)
       - name: Download SLiM on Windows
         if: runner.os == 'Windows' && matrix.config.slim == 'yes'
         shell: msys2 {0}
         run: |
           cd /d/a
-          wget http://benhaller.com/slim/SLiM.zip
+          wget https://github.com/MesserLab/SLiM/releases/download/v4.2.2/SLiM.zip
 
       - name: Download SLiM on non-Windows
         if: runner.os != 'Windows' && matrix.config.slim == 'yes'
         run: |
           cd ${{ github.workspace }}
-          wget http://benhaller.com/slim/SLiM.zip
+          wget https://github.com/MesserLab/SLiM/releases/download/v4.2.2/SLiM.zip
 
       # - name: Cache SLiM on Windows
       #   id: cache-slim-win

@@ -97,14 +97,12 @@ accept_conda_tos <- function() {
 
 # Helper function to get conda package specification for SLiM version
 get_slim_conda_spec <- function(slim_version) {
-  slim_version <- match.arg(slim_version, c("stable", "latest"))
-
   if (slim_version == "stable") {
-    # Pin to 4.x for stability and compatibility
-    return("slim<5")
+    # Pin to 4.x for stability and compatibility (last known stable version)
+    return("slim=4.2.2")
   } else {
-    # Install latest version
-    return("slim")
+    # Install specific version requested
+    return(paste0("slim=", slim_version))
   }
 }
 
@@ -155,8 +153,8 @@ download_with_retry <- function(url, destfile, mode = "wb", max_retries = 3, ver
 #' @param conda_env If \code{method="conda"}, then this is the name of the conda environment to install
 #' SLiM into. If you do not use the default name, then it may take longer for slimr to find SLiM (which may
 #' increase loading times for the library).
-#' @param slim_version The version of SLiM to install. Can be "stable" (SLiM 4.x, recommended for compatibility),
-#' "latest" (newest available version, may have compatibility issues), or a specific version string like "4.1" or "5.1".
+#' @param slim_version The version of SLiM to install. Can be "stable" (default, installs last known stable version
+#' compatible with slimr) or a specific version string like "4.2.2", "5.1", etc.
 #' Only applies to conda installation method. Binary method installs a fixed version.
 #'
 #' @export
@@ -170,7 +168,7 @@ slim_setup <- function(method = c("conda", "binary"),
                        force = FALSE,
                        install_path = default_install_path(),
                        conda_env = "slimr-conda",
-                       slim_version = c("stable", "latest")) {
+                       slim_version = "stable") {
 
   if(slim_is_avail() && !force) {
     rlang::inform("Looks like SLiM is already installed. If you want to reinstall use force=TRUE")
@@ -178,7 +176,11 @@ slim_setup <- function(method = c("conda", "binary"),
   }
 
   method <- match.arg(method)
-  slim_version <- match.arg(slim_version)
+
+  # Validate slim_version parameter
+  if (!is.character(slim_version) || length(slim_version) != 1) {
+    rlang::abort("slim_version must be a single character string (e.g., 'stable', '4.2.2', '5.1')")
+  }
 
   if(method == "binary") {
     os <- get_os()
@@ -283,9 +285,9 @@ slim_setup <- function(method = c("conda", "binary"),
 
     if(verbose) {
       version_msg <- if(slim_version == "stable") {
-        "Installing SLiM 4.x (stable, recommended for compatibility)..."
+        "Installing SLiM 4.2.2 (stable, recommended for compatibility)..."
       } else {
-        "Installing latest SLiM version (may have compatibility issues with slimr)..."
+        paste0("Installing SLiM version ", slim_version, "...")
       }
       rlang::inform(version_msg)
       rlang::inform("This may take 2-3 minutes...")

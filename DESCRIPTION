@@ -1,6 +1,6 @@
 Package: slimr
 Title: Create, Run and Post-Process 'SLiM' Population Genetics Forward Simulations
-Version: 0.4.0.9000
+Version: 0.4.1
 Authors@R: 
     c(person(given = "Russell",
              family = "Dinnage",
@@ -32,11 +32,11 @@ Encoding: UTF-8
 LazyData: true
 URL: https://rdinnager.github.io/slimr, https://rdinnager.github.io/slimr/index.html, https://github.com/rdinnager/slimr
 BugReports: https://github.com/rdinnager/slimr/issues
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.3
 Language: en-GB
 Depends: 
     R (>= 2.10)
-Imports: 
+Imports:
     stringr,
     processx,
     readr,
@@ -51,8 +51,7 @@ Imports:
     tidyr,
     zeallot,
     utils,
-    stats,
-    codetools
+    stats
 Suggests: 
     ape,
     covr,

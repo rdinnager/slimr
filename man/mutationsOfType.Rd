@@ -99,9 +99,9 @@ Other Genome:
 \code{\link{mutationCountsInGenomes}()},
 \code{\link{mutationFrequenciesInGenomes}()},
 \code{\link{nucleotides}()},
+\code{\link{output}()},
 \code{\link{outputMS}()},
 \code{\link{outputVCF}()},
-\code{\link{output}()},
 \code{\link{positionsOfMutationsOfType}()},
 \code{\link{readFromMS}()},
 \code{\link{readFromVCF}()},
@@ -110,8 +110,8 @@ Other Genome:
 
 Other Species: 
 \code{\link{Sp}},
-\code{\link{addSubpopSplit}()},
 \code{\link{addSubpop}()},
+\code{\link{addSubpopSplit}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{individualsWithPedigreeIDs}()},
 \code{\link{killIndividuals}()},

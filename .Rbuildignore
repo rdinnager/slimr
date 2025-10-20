@@ -20,3 +20,8 @@
 ^SLiM$
 ^SLiM_build$
 ^cran-comments\.md$
+^\.claude$
+^FORK_AND_PR_INSTRUCTIONS\.md$
+^IMPROVEMENTS_SUMMARY\.md$
+^PR_DESCRIPTION\.md$
+^\.\.Rcheck$

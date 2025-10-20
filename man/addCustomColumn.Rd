@@ -63,8 +63,8 @@ on the official website: \url{https://messerlab.org/slim/}
 \seealso{
 Other LogFile: 
 \code{\link{LF}},
-\code{\link{addCycleStage}()},
 \code{\link{addCycle}()},
+\code{\link{addCycleStage}()},
 \code{\link{addKeysAndValuesFrom}()},
 \code{\link{addMeanSDColumns}()},
 \code{\link{addPopulationSexRatio}()},

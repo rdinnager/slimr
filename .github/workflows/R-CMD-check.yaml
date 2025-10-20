@@ -22,11 +22,11 @@ jobs:
         config:
           - {os: windows-latest, r: 'release', slim: 'yes', conda: 'no'}
           - {os: windows-latest, r: 'release', slim: 'no', conda: 'no'}
-          - {os: macOS-latest, r: 'release', slim: 'yes', conda: 'no'}
-          - {os: macOS-latest, r: 'devel', slim: 'yes', conda: 'no'}
+          - {os: macos-14, r: 'release', slim: 'yes', conda: 'no'}
+          - {os: macos-14, r: 'devel', slim: 'yes', conda: 'no'}
           - {os: macOS-latest, r: 'release', slim: 'no', conda: 'yes'}
-          - {os: ubuntu-20.04, r: 'release', slim: 'yes', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", conda: 'no'}
-          - {os: ubuntu-20.04, r: 'release', slim: 'no', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", conda: 'yes'}
+          - {os: ubuntu-latest, r: 'release', slim: 'yes', conda: 'no'}
+          - {os: ubuntu-latest, r: 'release', slim: 'no', conda: 'yes'}
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -51,18 +51,19 @@ jobs:
            mingw-w64-x86_64-toolchain
            mingw-w64-x86_64-cmake
 
+      # Download SLiM 4.2.2 (last version compatible with current slimr)
       - name: Download SLiM on Windows
         if: runner.os == 'Windows' && matrix.config.slim == 'yes'
         shell: msys2 {0}
         run: |
           cd /d/a
-          wget http://benhaller.com/slim/SLiM.zip
+          wget https://github.com/MesserLab/SLiM/releases/download/v4.2.2/SLiM.zip
 
       - name: Download SLiM on non-Windows
         if: runner.os != 'Windows' && matrix.config.slim == 'yes'
         run: |
           cd ${{ github.workspace }}
-          wget http://benhaller.com/slim/SLiM.zip
+          wget https://github.com/MesserLab/SLiM/releases/download/v4.2.2/SLiM.zip
 
       # - name: Cache SLiM on Windows
       #   id: cache-slim-win
@@ -98,7 +99,7 @@ jobs:
           cd ../../..
           mkdir SLiM_build
           cd SLiM_build
-          cmake -G"MSYS Makefiles" -DCMAKE_BUILD_TYPE=Release ../SLiM
+          cmake -G"MSYS Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ../SLiM
           make -j 2
 
       - name: Install SLiM on Windows Part 2
@@ -119,7 +120,7 @@ jobs:
           unzip -o SLiM.zip
           mkdir SLiM_build
           cd SLiM_build
-          cmake -DCMAKE_BUILD_TYPE=Release ../SLiM
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ../SLiM
           make
 
       - name: Install SLiM on non-Windows Part 2
@@ -140,6 +141,13 @@ jobs:
           r-version: ${{ matrix.config.r }}
 
       - uses: r-lib/actions/setup-pandoc@v2
+
+      - name: Setup Miniconda for conda-based tests
+        if: matrix.config.conda == 'yes'
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          python-version: "3.10"
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:

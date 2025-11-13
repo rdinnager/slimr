@@ -3,65 +3,35 @@
 \name{calcInbreedingLoad}
 \alias{calcInbreedingLoad}
 \alias{SLiMBuiltin$calcInbreedingLoad}
-\alias{.SB$calcInbreedingLoad}
+\alias{SB$calcInbreedingLoad}
 \title{SLiM method calcInbreedingLoad}
 \usage{
-calcInbreedingLoad(genomes, mutType)
+calcInbreedingLoad(haplosomes, mutType = NULL)
 }
 \arguments{
-\item{genomes}{An object of type Genome object. See details for description.}
+\item{haplosomes}{An object of type Haplosome object.}
 
-\item{mutType}{An object of type null or MutationType object. Must be of length
-1 (a singleton). The default value is \code{NULL}. See details for description.}
+\item{mutType}{An object of type null or integer or MutationType object (singleton).}
 }
 \value{
 An object of type float. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{calcInbreedingLoad}, which is a method of
-the SLiM class \code{\link{SLiMBuiltin}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{calcInbreedingLoad}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=752}{SLiM manual: page
-752}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Calculates inbreeding load (the haploid number of lethal equivalents,
-or B) for a vector of genomes passed in genomes. The calculation can be limited
-to a focal mutation type passed in mutType; if mutType is NULL (the default),
-all of the mutations for the focal species will be considered. In any case,
-only deleterious mutations (those with a negative selection coefficient)
-will be included in the final calculation. The inbreeding load is a measure
-of the quantity of recessive deleterious variation that is heterozygous in
-a population and can contribute to fitness declines under inbreeding. This
-function implements the following equation from Morton et al. (1956), which
-assumes no epistasis and random mating: B = sum(qs) − sum(q2s) − 2sum(q(1−q)sh)
-where q is the frequency of a given deleterious allele, s is the absolute
-value of the selection coefficient, and h is its dominance coefficient. Note
-that the implementation sets a maximum |s| of 1.0 (i.e., a lethal allele); |s|
-can sometimes be greater than 1.0 when s is drawn from a distribution, but in
-practice an allele with s < -1.0 has the same lethal effect as when s = -1.0.
-Also note that this implementation will not work when the model changes the
-dominance coefficients of mutations using mutationEffect() callbacks, since it
-relies on the dominanceCoeff property of MutationType. Finally, note that, to
-estimate the diploid number of lethal equivalents (2B), the result from this
-function can simply be multiplied by two. This function was contributed by Chris
-Kyriazis; thanks, Chris!
+Calculates inbreeding load (the haploid number of lethal equivalents, or B) for a vector of haplosomes (containing at least one element) passed in haplosomes. The calculation can be limited to a focal mutation type passed in mutType (which may be either an integer representing the ID of the desired mutation type, or a MutationType object specified directly); if mutType is NULL (the default), all of the mutations for the focal species will be considered. In any case, only deleterious mutations (those with a negative selection coefficient) will be included in the final calculation. The inbreeding load is a measure of the quantity of recessive deleterious variation that is heterozygous in a population and can contribute to fitness declines under inbreeding. This function implements the following equation from Morton et al. (1956), which assumes no epistasis and random mating: B = sum(qs)  sum(q2s)  2sum(q(1q)sh) where q is the frequency of a given deleterious allele, s is the absolute value of the selection coefficient, and h is its dominance coefficient. Note that the implementation, viewable with functionSource(), sets a maximum |s| of 1.0 (i.e., a lethal allele); |s| can sometimes be greater than 1.0 when s is drawn from a distribution, but in practice an allele with s < -1.0 has the same lethal effect as when s = -1.0. Also note that this implementation will not work when the model changes the dominance coefficients of mutations using mutationEffect() callbacks, since it relies on the dominanceCoeff property of MutationType. Finally, note that, to estimate the diploid number of lethal equivalents (2B), the result from this function can simply be multiplied by two. This function was contributed by Chris Kyriazis; thanks, Chris!
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -72,23 +42,31 @@ calcInbreedingLoad()
 \seealso{
 Other SLiMBuiltin: 
 \code{\link{SB}},
+\code{\link{calcDxy}()},
 \code{\link{calcFST}()},
 \code{\link{calcHeterozygosity}()},
+\code{\link{calcLD_D}()},
+\code{\link{calcLD_Rsquared}()},
+\code{\link{calcMeanFroh}()},
 \code{\link{calcPairHeterozygosity}()},
+\code{\link{calcPi}()},
+\code{\link{calcSFS}()},
+\code{\link{calcTajimasD}()},
 \code{\link{calcVA}()},
 \code{\link{calcWattersonsTheta}()},
 \code{\link{codonsToAminoAcids}()},
+\code{\link{codonsToNucleotides}()},
 \code{\link{mm16To256}()},
 \code{\link{mmJukesCantor}()},
 \code{\link{mmKimura}()},
 \code{\link{nucleotideCounts}()},
 \code{\link{nucleotideFrequencies}()},
 \code{\link{nucleotidesToCodons}()},
+\code{\link{randomNucleotides}()},
 \code{\link{summarizeIndividuals}()},
 \code{\link{treeSeqMetadata}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{SLiMBuiltin}

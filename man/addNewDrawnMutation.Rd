@@ -2,146 +2,70 @@
 % Please edit documentation in R/slim_lang.R
 \name{addNewDrawnMutation}
 \alias{addNewDrawnMutation}
-\alias{Genome$addNewDrawnMutation}
-\alias{.G$addNewDrawnMutation}
+\alias{Haplosome$addNewDrawnMutation}
+\alias{Ha$addNewDrawnMutation}
 \title{SLiM method addNewDrawnMutation}
 \usage{
 addNewDrawnMutation(
   mutationType,
   position,
-  originTick,
-  originSubpop,
-  nucleotide
+  originSubpop = NULL,
+  nucleotide = NULL
 )
 }
 \arguments{
-\item{mutationType}{An object of type integer or MutationType object. See
-details for description.}
+\item{mutationType}{An object of type integer or MutationType object.}
 
-\item{position}{An object of type integer. See details for description.}
+\item{position}{An object of type integer.}
 
-\item{originTick}{An object of type null or integer. The default value is
-\code{NULL}. See details for description.}
+\item{originSubpop}{An object of type null or integer or Subpopulation object.}
 
-\item{originSubpop}{An object of type null or integer or Subpopulation object.
-The default value is \code{NULL}. See details for description.}
-
-\item{nucleotide}{An object of type null or integer or string. The default value
-is \code{NULL}. See details for description.}
+\item{nucleotide}{An object of type null or integer or string.}
 }
 \value{
 An object of type Mutation object.
 }
 \description{
-Documentation for SLiM function \code{addNewDrawnMutation}, which is a method of
-the SLiM class \code{\link{Genome}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{addNewDrawnMutation}, which is a method of the SLiM class \code{\link{Haplosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=670}{SLiM manual: page
-670}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Add new mutations to the target genome(s) with the specified
-mutationType (specified by the MutationType object or by integer identifier),
-position, originTick (which may be NULL, the default, to specify the current
-tick; otherwise, beginning in SLiM 3.5, it must be equal to the current tick
-anyway, as other uses of this property have been deprecated), and originSubpop
-(specified by the Subpopulation object or by integer identifier, or by NULL,
-the default, to specify the subpopulation to which the first target genome
-belongs). If originSubpop is supplied as an integer, it is intentionally not
-checked for validity; you may use arbitrary values of originSubpop to "tag" the
-mutations that you create (see section 25.10.1). The selection coefficients of
-the mutations are drawn from their mutation types; addNewMutation() may be used
-instead if you wish to specify selection coefficients. In non-nucleotide-based
-models, mutationType will always be a non-nucleotide-based mutation type, and so
-nucleotide must be NULL (the default). In a nucleotide-based model, mutationType
-might still be non-nucleotide-based (in which case nucleotide must still be
-NULL), or mutationType might be nucleotide-based, in which case a non-NULL value
-must be supplied for nucleotide, specifying the nucleotide(s) to be associated
-with the new mutation(s). Nucleotides may be specified with string values ("A",
-"C", "G", or "T"), or with integer values (A=0, C=1, G=2, T=3). If a nucleotide
-mutation already exists at the mutating position, it is replaced automatically
-in accordance with the stacking policy for nucleotidebased mutation types. No
-check is performed that a new mutation's nucleotide differs from the ancestral
-sequence, or that its selection coefficient is consistent with other mutations
-that may already exist at the given position with the same nucleotide; model
-consistency is the responsibility of the model. Beginning in SLiM 2.5 this
-method is vectorized, so all of these parameters may be singletons (in which
-case that single value is used for all mutations created by the call) or
-non-singleton vectors (in which case one element is used for each corresponding
-mutation created). Nonsingleton parameters must match in length, since their
-elements need to be matched up oneto- one. The new mutations created by this
-method are returned, even if their actual addition is prevented by the mutation
-stacking policy (see the mutationStackPolicy property of MutationType, section
-25.11.1). However, the order of the mutations in the returned vector is not
-guaranteed to be the same as the order in which the values are specified in
-parameter vectors, unless the position parameter is specified in ascending
-order. In other words, presorting the parameters to this method into ascending
-order by position, using order() and subsetting, will guarantee that the order
-of the returned vector of mutations corresponds to the order of elements in the
-parameters to this method; otherwise, no such guarantee exists. Beginning in
-SLiM 2.1, this is a class method, not an instance method. This means that it
-does not get multiplexed out to all of the elements of the receiver (which would
-add a different new mutation to each element); instead, it is performed as a
-single operation, adding the same new mutation objects to all of the elements of
-the receiver. Before SLiM 2.1, to add the same mutations to multiple genomes, it
-was necessary to call addNewDrawnMutation() on one of the genomes, and then add
-the returned Mutation object to all of the other genomes using addMutations().
-That is not necessary in SLiM 2.1 and later, because of this change (although
-doing it the old way does no harm and produces identical behavior). Pre-2.1
-code that actually relied upon the old multiplexing behavior will no longer
-work correctly (but this is expected to be an extremely rare pattern of usage).
-Before SLiM 4, this method also took an originGeneration parameter. This was
-deprecated (the origin generation was then required to be equal to the current
-generation, for internal consistency), and was removed in SLiM 4. Calling this
-will normally affect the fitness values calculated at the end of the current
-tick (but not sooner); if you want current fitness values to be affected, you
-can call the Species method recalculateFitness() - but see the documentation
-of that method for caveats. Note that in nonWF models that use tree-sequence
-recording, mutations cannot be added to an individual after the tick in which
-the individual is created (i.e., when the age of the individual is greater than
-0), to prevent the possibility of inconsistencies in the recorded tree sequence.
+io<MutationType> mutationType, integer position, [Nio<Subpopulation> originSubpop = NULL], [Nis nucleotide = NULL]) Add new mutations to the target haplosomes with the specified mutationType (specified by the MutationType object or by integer identifier), position, originTick (which may be NULL, the default, to specify the current tick; otherwise, beginning in SLiM 3.5, it must be equal to the current tick anyway, as other uses of this property have been deprecated), and originSubpop (specified by the Subpopulation object or by integer identifier, or by NULL, the default, to specify the subpopulation to which the first target haplosome belongs). If originSubpop is supplied as an integer, it is intentionally not checked for validity; you may use arbitrary values of originSubpop to "tag" the mutations that you create. The selection coefficients of the mutations are drawn from their mutation types; addNewMutation() may be used instead if you wish to specify selection coefficients. All of the target haplosomes must be associated with the same Chromosome object, since each new mutation is added to all of the target haplosomes. In non-nucleotide-based models, mutationType will always be a non-nucleotide-based mutation type, and so nucleotide must be NULL (the default). In a nucleotide-based model, mutationType might still be non-nucleotide-based (in which case nucleotide must still be NULL), or mutationType might be nucleotide-based, in which case a non-NULL value must be supplied for nucleotide, specifying the nucleotide(s) to be associated with the new mutation(s). Nucleotides may be specified with string values ("A", "C", "G", or "T"), or with integer values (A=0, C=1, G=2, T=3). If a nucleotide mutation already exists at the mutating position, it is replaced automatically in accordance with the stacking policy for nucleotide-based mutation types. No check is performed that a new mutation's nucleotide differs from the ancestral sequence, or that its selection coefficient is consistent with other mutations that may already exist at the given position with the same nucleotide; model consistency is the responsibility of the model. Beginning in SLiM 2.5 this method is vectorized, so all of these parameters may be singletons (in which case that single value is used for all mutations created by the call) or non-singleton vectors (in which case one element is used for each corresponding mutation created). Non-singleton parameters must match in length, since their elements need to be matched up one-to-one. The new mutations created by this method are returned, even if their actual addition is prevented by the mutation stacking policy (see the mutationStackPolicy property of MutationType). However, the order of the mutations in the returned vector is not guaranteed to be the same as the order in which the values are specified in parameter vectors, unless the position parameter is specified in ascending order. In other words, pre-sorting the parameters to this method into ascending order by position, using order() and subsetting, will guarantee that the order of the returned vector of mutations corresponds to the order of elements in the parameters to this method; otherwise, no such guarantee exists. Beginning in SLiM 2.1, this is a class method, not an instance method. This means that it does not get multiplexed out to all of the elements of the receiver (which would add a different new mutation to each element); instead, it is performed as a single operation, adding the same new mutation objects to all of the elements of the receiver. Before SLiM 2.1, to add the same mutations to multiple haplosomes, it was necessary to call addNewDrawnMutation() on one of the haplosomes, and then add the returned Mutation object to all of the other haplosomes using addMutations(). That is not necessary in SLiM 2.1 and later, because of this change (although doing it the old way does no harm and produces identical behavior). Pre-2.1 code that actually relied upon the old multiplexing behavior will no longer work correctly (but this is expected to be an extremely rare pattern of usage). Before SLiM 4, this method also took a originGeneration parameter. This was deprecated (the origin generation was then required to be equal to the current generation, for internal consistency), and was removed in SLiM 4. Calling this will normally affect the fitness values calculated at the end of the current tick (but not sooner); if you want current fitness values to be affected, you can call the Species method recalculateFitness() - but see the documentation of that method for caveats. Note that in nonWF models that use tree-sequence recording, mutations cannot be added to an individual after the tick in which the individual is created (i.e., when the age of the individual is greater than 0), to prevent the possibility of inconsistencies in the recorded tree sequence.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
 \seealso{
-Other Genome: 
-\code{\link{G}},
+Other Haplosome: 
+\code{\link{Ha}},
 \code{\link{addMutations}()},
 \code{\link{addNewMutation}()},
 \code{\link{containsMarkerMutation}()},
 \code{\link{containsMutations}()},
 \code{\link{countOfMutationsOfType}()},
-\code{\link{mutationCountsInGenomes}()},
-\code{\link{mutationFrequenciesInGenomes}()},
+\code{\link{mutationCountsInHaplosomes}()},
+\code{\link{mutationFrequenciesInHaplosomes}()},
 \code{\link{mutationsOfType}()},
 \code{\link{nucleotides}()},
-\code{\link{output}()},
-\code{\link{outputMS}()},
-\code{\link{outputVCF}()},
+\code{\link{outputHaplosomes}()},
+\code{\link{outputHaplosomesToMS}()},
+\code{\link{outputHaplosomesToVCF}()},
 \code{\link{positionsOfMutationsOfType}()},
-\code{\link{readFromMS}()},
-\code{\link{readFromVCF}()},
+\code{\link{readHaplosomesFromMS}()},
+\code{\link{readHaplosomesFromVCF}()},
 \code{\link{removeMutations}()},
 \code{\link{sumOfMutationsOfType}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
-\concept{Genome}
+\concept{Haplosome}

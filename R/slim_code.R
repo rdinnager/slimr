@@ -152,21 +152,21 @@ slim_load_globals <- function(max = 10, sim = TRUE, community = TRUE, self = TRU
 
   if(pseudo) {
     rlang::env_bind_lazy(rlang::global_env(),
-                         genome1 = Genome)
+                         genome1 = Haplosome)
     rlang::env_bind_lazy(rlang::global_env(),
-                         genome2 = Genome)
+                         genome2 = Haplosome)
     rlang::env_bind_lazy(rlang::global_env(),
-                         childGenome1 = Genome)
+                         childGenome1 = Haplosome)
     rlang::env_bind_lazy(rlang::global_env(),
-                         childGenome2 = Genome)
+                         childGenome2 = Haplosome)
     rlang::env_bind_lazy(rlang::global_env(),
-                         parent1Genome1 = Genome)
+                         parent1Genome1 = Haplosome)
     rlang::env_bind_lazy(rlang::global_env(),
-                         parent1Genome2 = Genome)
+                         parent1Genome2 = Haplosome)
     rlang::env_bind_lazy(rlang::global_env(),
-                         parent2Genome1 = Genome)
+                         parent2Genome1 = Haplosome)
     rlang::env_bind_lazy(rlang::global_env(),
-                         parent2Genome2 = Genome)
+                         parent2Genome2 = Haplosome)
     rlang::env_bind_lazy(rlang::global_env(),
                          subpop = Subpopulation)
     rlang::env_bind_lazy(rlang::global_env(),

@@ -1,0 +1,6727 @@
+SLiM method initializeAncestralNucleotides
+
+Documentation for SLiM function \code{initializeAncestralNucleotides}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param sequence An object of type integer or string.
+
+@aliases Initialize$initializeAncestralNucleotides Init$initializeAncestralNucleotides
+@family Initialize
+@return An object of type integer. Return will be of length 1 (a singleton)
+@details This function, which may be called only in nucleotide-based models, supplies an ancestral nucleotide sequence for the model. The sequence parameter may be an integer vector providing nucleotide values (A=0, C=1, G=2, T=3), or a string vector providing single-character nucleotides ("A", "C", "G", "T"), or a singleton string providing the sequence as one string ("ACGT..."), or a singleton string providing the filesystem path of a FASTA file which will be read in to provide the sequence (if the file contains than one sequence, the first sequence will be used). Only A/C/G/T nucleotide values may be provided; other symbols, such as those for amino acids, gaps, or nucleotides of uncertain identity, are not allowed. The two semantic meanings of sequence that involve a singleton string value are distinguished heuristically; a singleton string that contains only the letters ACGT will be assumed to be a nucleotide sequence rather than a filename. The length of the ancestral sequence is returned. A utility function, randomNucleotides(), is provided by SLiM to assist in generating simple random nucleotide sequences.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method initializeChromosome
+
+Documentation for SLiM function \code{initializeChromosome}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param id An object of type integer (singleton).
+@param length An object of type null or integer (singleton).
+@param type An object of type string (singleton).
+@param symbol An object of type null or string (singleton).
+@param name An object of type null or string (singleton).
+@param mutationRuns An object of type integer (singleton).
+
+@aliases Initialize$initializeChromosome Init$initializeChromosome
+@family Initialize
+@return An object of type Chromosome object. Return will be of length 1 (a singleton)
+@details Calling this function, added in SLiM 5, initiates the configuration of a chromosome in the species being initialized. The new Chromosome object is returned, but it is still under construction and will error if used; see below for details. That chromosome is then the "focal chromosome" for subsequent genetic initialization functions - specifically, for initializeAncestralNucleotides(), initializeGeneConversion(), initializeGenomicElement(), initializeHotspotMap(), initializeMutationRate(), and initializeRecombinationRate(). If you wish to call initializeChromosome() at all (which is not required), you must call it before calling any of those genetic initialization functions, so that the focal chromosome is created before being configured further; otherwise, SLiM will assume that you want a default single-chromosome model, and when initializeChromosome() is called later (contradicting that assumption), an error will result. Furthermore, there are some other initialization functions must be called before initializeChromosome() if they are called at all - specifically, initializeSex(), initializeTreeSeq(), initializeSpecies(), and initializeSLiMOptions(). This is so that initializeChromosome() knows the context within which the new chromosome is to be created; if these methods have not been called when initializeChromosome() is called, the default context is assumed (non-sexual, no tree-sequence recording, single-species, non-nucleotide-based), and an error will result downstream if one of those functions is later called (indicating that those assumptions might be incorrect). The parameters to initializeChromosome() configure the chromosome created. They will be discussed out of order here, because that order of presentation will, I hope, be clearer. There are three parameters that in some way identify the chromosome. First, the required id parameter provides an integer identifier for the chromosome, which can be used to look up the chromosome later in the simulation; it can be any non-negative integer value, but must be unique within the species (two chromosomes in the same species cannot have the same id). Often it is an empirical chromosome number, for convenience and clarity; if modeling human chromosome 7, for example, you might provide 7. Second, the symbol parameter provides a string identifier for the chromosome, which can also be used to look up the chromosome later in the simulation. If NULL (the default) is passed for symbol, the chromosome's default symbol value will be the string version of its id ("7" for an id of 7, for example). The chromosome's symbol value will be used to identify the chromosome in output - in VCF output, for example, and in SLiMgui. It must be non-empty (not ""), no more than five characters long, and unique within the species. Third, the name parameter can be any string value; if NULL (the default) is passed, the name value will be "". The name is not used by SLiM, and can be used in any way you wish. The length parameter sets the length, in base positions, of the chromosome, and must either be NULL, or an integer greater than or equal to 1. If length is NULL, the length of the chromosome will be calculated after all initialize() callbacks have been called, as the maximum position referenced by the chromosome's genomic elements, recombination map, mutation rate map, and (in nucleotide-based models) hotspot map; in other words, the chromosome will be sized to encompass all of the things it contains (which is also the behavior of the implicitly defined chromosome if initializeChromosome() is not called). Otherwise - if length is specified with an integer value - the chromosome's length will be fixed at that value, and the last valid base position in the chromosome will be length-1. Attempting to add a genomic element or a mutation after the last position will raise an error. Similarly, the last position of the chromosome must match the last position specified for recombination, mutation, and hotspot maps for that chromosome, but not all positions on a chromosome have to actually be used in the model (i.e., not all positions must be covered by a genomic element). The type parameter specifies the type of chromosome to be created. There are numerous options, and they are somewhat complex. They are discussed in more detail in the documentation for class Chromosome, particularly their specific patterns of inheritance; but they are briefly summarized here for quick reference. Note that "-" below indicates a null haplosome. First of all, in hermaphroditic models type will generally be one of: "A" (autosome), the default, specifying a diploid autosomal chromosome. "H" (haploid), specifying a haploid autosomal chromosome that recombines in biparental crosses. "HF" (haploid female-inherited), specifying a haploid autosomal chromosome that is inherited by both sexes from the first (female) parent in biparental crosses (also allowed in hermaphroditic models for inheritance that is always from the first parent). "HM" (haploid male-inherited), specifying a haploid autosomal chromosome that is inherited by both sexes from the second (male) parent in biparental crosses (also allowed in hermaphroditic models for inheritance that is always from the second parent). Some sex-chromosome types are supported only in sexual models: "X" (X), specifying an X chromosome that is diploid (XX) in females, haploid (X-) in males. "Y" (Y), specifying a Y chromosome that is haploid (Y) in males, absent (-) in females. "Z" (Z), specifying a Z chromosome that is diploid (ZZ) in males, haploid (-Z) in females. "W" (W), specifying a W chromosome that is haploid (W) in females, absent (-) in males. And there are some haploid chromosome types that are also supported only in sexual models: "FL" (female line), specifying a haploid autosomal chromosome that is inherited only by females, from the female parent, and is represented by a null haplosome in males. "ML" (male line), specifying a haploid autosomal chromosome that is inherited only by males, from the male parent, and is represented by a null haplosome in females. Finally, two additional values of type, "H-" and "-Y", are supported for backward compatibility (not intended for use in new models). They are discussed in the Chromosome documentation. The mutationRuns parameter specifies how many mutation runs the chromosome should use. Internally, SLiM divides haplosomes into a sequence of consecutive mutation runs, allowing more efficient internal computations. The optimal mutation run length is short enough that each mutation run is relatively unlikely to be modified by mutation/recombination events when inherited, but long enough that each mutation run is likely to contain a relatively large number of mutations; these priorities are in tension, so an intermediate balance between them is generally optimal. The optimal number of mutation runs will depend on the model's details, and may also depend upon the machine and even the compiler used to build SLiM. If the mutationRuns parameter is not 0, SLiM will use the value given as the number of mutation runs inside Haplosome objects for the chromosome. If mutationRuns is 0 (the default), then the behavior depends upon a parameter to the initializeSLiMOptions() function, doMutationRunExperiments. If that flag is F, the behavior here is as if mutationRuns=1 had been passed: one mutation run will be used, and mutation run experiments will not be conducted. If that flag is T (the default), then for mutationRuns=0 SLiM will conduct experiments at runtime, using different mutation run counts, to try to determine the number of mutation runs that produces the best performance. The value that SLiM's experiments determine may not be optimal, however, and in any case there is some overhead associated with conducting these experiments; for maximal performance it can thus be beneficial to determine the true optimal value for the simulation yourself, and set it explicitly using this parameter. Specifying the number of mutation runs is an advanced technique, but in some cases it can improve performance significantly. The order in which initializeChromosome() calls are made is generally unimportant, since the chromosomes assort independently of each other anyway, but SLiM will preserve the order in which they were defined for you (for the chromosomes property of Species, for display in SLiMgui, for writing out to VCF, and so forth). All of the above types of chromosomes can be defined any number of times; you can have any number of autosomal chromosomes, for example. In a sexual model you could even have multiple defined sex chromosomes - not in the sense of a female being XX, but in the sense of a female being X1X1X2X2, where X1 and X2 are two different kinds of X chromosome. Similarly, you could define both an X and a Z for a species, if you wish; each would segregate correctly according to the sex of the offspring. In sexual models in SLiM the sex of an offspring is determined randomly or given by the user in script; it is not a function of the sex chromosomes present in the individual, although the sex chromosomes present in the individual will correlate with sex. In other words, SLiM does not know and does not care what sex-determination system the species is using; the chromosomes follow the sex, rather than the sex following the chromosomes. This should allow any sex-determination system to be modeled, even if it is unusual, non-genetic, etc. As stated above, the new Chromosome object is returned by this call, but it is still under construction so most of its methods and properties will error. It will remain in this state until initialize() callbacks have completed, and will then become active and usable. Until that point, there are only a handful of uses that are guaranteed to be allowed: storing it in a variable; remembering it with defineConstant(); using the methods and properties of its superclasses, notably Dictionary; setting SLiMgui display-related properties such as colorSubstitution; getting and setting its tag property; and accessing those of its properties that were passed to the initializeChromosome() call, specifically id, symbol, name, type, length, and lastPosition. Its other properties, and all Chromosome methods, will raise an error while in this state. This safeguard protects the new Chromosome object from being used while still in an inconsistent state.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method initializeGeneConversion
+
+Documentation for SLiM function \code{initializeGeneConversion}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param nonCrossoverFraction An object of type numeric or numeric or numeric or numeric or logical (singleton).
+@param meanLength An object of type numeric or numeric or numeric or numeric or logical (singleton).
+@param simpleConversionFraction An object of type numeric or numeric or numeric or numeric or logical (singleton).
+@param bias An object of type numeric or numeric or numeric or numeric or logical (singleton).
+@param redrawLengthsOnFailure An object of type numeric or numeric or numeric or numeric or logical (singleton).
+
+@aliases Initialize$initializeGeneConversion Init$initializeGeneConversion
+@family Initialize
+@return An object of type void. 
+@details Calling this function switches the recombination model from a "simple crossover" model to a "double-stranded break (DSB)" model, and configures the details of the gene conversion tracts that will therefore be modeled. The fraction of DSBs that will be modeled as non-crossover events is given by nonCrossoverFraction. The mean length of gene conversion tracts (whether associated with crossover or non-crossover events) is given by meanLength; the actual extent of a gene conversion tract will be the sum of two independent draws from a geometric distribution with mean meanLength/2. The fraction of gene conversion tracts that are modeled as "simple" is given by simpleConversionFraction; the remainder will be modeled as "complex", involving repair of heteroduplex mismatches. Finally, the GC bias during heteroduplex mismatch repair is given by bias, with the default of 0.0 indicating no bias, 1.0 indicating an absolute preference for G/C mutations over A/T mutations, and -1.0 indicating an absolute preference for A/T mutations over G/C mutations. A non-zero bias may only be set in nucleotide-based models. This function, and the way that gene conversion is modeled, fundamentally changed in SLiM 3.3. Beginning in SLiM 4.1, the redrawLengthsOnFailure parameter can be used to modify the internal mechanics of layout of gene conversion tracts. If it is F (the default, and the only behavior supported before SLiM 4.1), then if an attempt to lay out gene conversion tracts fails (because the tracts overlap each other, or overlap the start or end of the chromosome), SLiM will try again by drawing new positions for the tracts - essentially shuffling the tracts around to try to find positions for them that don't overlap. If redrawLengthsOnFailure is T, then if an attempt to lay out gene conversion tracts fails, SLiM will try again by drawing new lengths for the tracts, as well as new positions. This makes it more likely that layout will succeed, but risks biasing the realized mean tract length downward from the requested mean length (since layout of long tracts is more likely fail due to overlap). In either case, if SLiM attempts to lay out gene conversion tracts 100 times without success, an error will result. That error indicates that the specified constraints for gene conversion are difficult to satisfy - tracts may commonly be so long that it is difficult or impossible to find an acceptable layout for them within the specified chromosome length. Setting redrawLengthsOnFailure to T may mitigate this problem, at the price of biasing the mean tract length downward as discussed.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method initializeGenomicElement
+
+Documentation for SLiM function \code{initializeGenomicElement}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param genomicElementType An object of type integer or GenomicElementType object.
+@param start An object of type null or integer.
+@param end An object of type null or integer.
+
+@aliases Initialize$initializeGenomicElement Init$initializeGenomicElement
+@family Initialize
+@return An object of type GenomicElement object. 
+@details Add a genomic element to the chromosome at initialization time. The start and end parameters give the first and last base positions to be spanned by the new genomic element. The new element will be based upon the genomic element type identified by genomicElementType, which can be either an integer, representing the ID of the desired element type, or an object of type GenomicElementType specified directly. Beginning in SLiM 3.3, this function is vectorized: the genomicElementType, start, and end parameters do not have to be singletons. In particular, start and end may be of any length, but must be equal in length; each start/end element pair will generate one new genomic element spanning the given base positions. In this case, genomicElementType may still be a singleton, providing the genomic element type to be used for all of the new genomic elements, or it may be equal in length to start and end, providing an independent genomic element type for each new element. When adding a large number of genomic elements, it will be much faster to add them in order of ascending position with a vectorized call. Beginning in SLiM 5, passing NULL for start and end is allowed by initializeGenomicElement(), but only in one specific case: if the focal chromosome being configured was explicitly defined with initializeChromosome(), and that focal chromosome was given an explicit length (rather than a length of NULL). In that case, start and end may be NULL (both of them, not just one of them), indicating that the genomic element created should span the entire length of the focal chromosome. Since NULL is now the default value for start and end, this makes this common configuration very simple to set up. The return value provides the genomic element(s) created by the call, in the order in which they were specified in the parameters to initializeGenomicElement().
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method initializeGenomicElementType
+
+Documentation for SLiM function \code{initializeGenomicElementType}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param id An object of type integer or string (singleton).
+@param mutationTypes An object of type integer or MutationType object.
+@param proportions An object of type numeric.
+@param mutationMatrix An object of type null or float.
+
+@aliases Initialize$initializeGenomicElementType Init$initializeGenomicElementType
+@family Initialize
+@return An object of type GenomicElementType object. Return will be of length 1 (a singleton)
+@details Add a genomic element type at initialization time. The id must not already be used for any genomic element type in the simulation. The mutationTypes vector identifies the mutation types used by the genomic element, and the proportions vector should be of equal length, specifying the relative proportion of mutations that will be drawn from the corresponding mutation type (proportions do not need to add up to one; they are interpreted relatively). The id parameter may be either an integer giving the ID of the new genomic element type, or a string giving the name of the new genomic element type (such as "g5" to specify an ID of 5). The mutationTypes parameter may be either an integer vector representing the IDs of the desired mutation types, or an object vector of MutationType elements specified directly. The global symbol for the new genomic element type is immediately available; the return value also provides the new object. The mutationMatrix parameter is NULL by default, and in non-nucleotide-based models it must be NULL. In nucleotide-based models, on the other hand, it must be non-NULL, and therefore must be supplied. In that case, mutationMatrix should take one of two standard forms. For sequence-based mutation rates that depend upon only the single nucleotide at a mutation site, mutationMatrix should be a 4x4 float matrix, specifying mutation rates for an existing nucleotide state (rows from 0-3 representing A/C/G/T) to each of the four possible derived nucleotide states (columns, with the same meaning). The mutation rates in this matrix are absolute rates, per nucleotide per gamete; they will be used by SLiM directly unless they are multiplied by a factor from the hotspot map (see initializeHotspotMap()). Rates in mutationMatrix that involve the mutation of a nucleotide to itself (A to A, C to C, etc.) are not used by SLiM and must be 0.0 by convention. It is important to note that the order of the rows and columns used in SLiM, A/C/G/T, is not a universal convention; other sources will present substitution-rate/transition-rate matrices using different conventions, and so care must be taken when importing such matrices into SLiM. For sequence-based mutation rates that depend upon the trinucleotide sequence centered upon a mutation site (the adjacent bases to the left and right, in other words, as well as the mutating nucleotide itself), mutationMatrix should be a 64x4 float matrix, specifying mutation rates for the central nucleotide of an existing trinucleotide sequence (rows from 0-63, representing codons as described in the documentation for the ancestralNucleotides() method of Chromosome) to each of the four possible derived nucleotide states (columns from 0-3 for A/C/G/T as before). Note that in every case it is the central nucleotide of the trinucleotide sequence that is mutating, but rates can be specified independently based upon the nucleotides in the first and third positions as well, with this type of mutation matrix. Several helper functions are defined to construct common types of mutation matrices, such as mmJukesCantor() to create a mutation matrix for a Jukes-Cantor model.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method initializeHotspotMap
+
+Documentation for SLiM function \code{initializeHotspotMap}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param multipliers An object of type numeric.
+@param ends An object of type null or integer.
+@param sex An object of type string (singleton).
+
+@aliases Initialize$initializeHotspotMap Init$initializeHotspotMap
+@family Initialize
+@return An object of type void. 
+@details In nucleotide-based models, set the mutation rate multiplier along the chromosome. Nucleotide-based models define sequence-based mutation rates that are set up with the mutationMatrix parameter to initializeGenomicElementType(). If no hotspot map is specified by calling initializeHotspotMap(), a hotspot map with a multiplier of 1.0 across the whole chromosome is assumed (and so the sequence-based rates are the absolute mutation rates used by SLiM). A hotspot map modifies the sequence-based rates by scaling them up in some regions, with multipliers greater than 1.0 (representing mutational hot spots), and/or scaling them down in some regions, with multipliers less than 1.0 (representing mutational cold spots). There are two ways to call this function. If the optional ends parameter is NULL (the default), then multipliers must be a singleton value that specifies a single multiplier to be used along the entire chromosome (typically 1.0, but not required to be). If, on the other hand, ends is supplied, then multipliers and ends must be the same length, and the values in ends must be specified in ascending order. In that case, multipliers and ends taken together specify the multipliers to be used along successive contiguous stretches of the chromosome, from beginning to end; the last position specified in ends should extend to the end of the chromosome (i.e. at least to the end of the last genomic element, if not further). For example, if the following call is made: initializeHotspotMap(c(1.0, 1.2), c(5000, 9999)); then the result is that the mutation rate multiplier for bases 0...5000 (inclusive) will be 1.0 (and so the specified sequence-based mutation rates will be used verbatim), and the multiplier for bases 5001...9999 (inclusive) will be 1.2 (and so the sequence-based mutation rates will be multiplied by 1.2 within the region). Note that mutations are generated by SLiM only within genomic elements, regardless of the hotspot map. In effect, the hotspot map given is intersected with the coverage area of the genomic elements defined; areas outside of any genomic element are given a multiplier of zero. There is no harm in supplying a hotspot map that specifies multipliers for areas outside of the genomic elements defined; the excess information is simply not used. If the optional sex parameter is "*" (the default), then the supplied hotspot map will be used for both sexes (which is the only option for hermaphroditic simulations). In sexual simulations sex may be "M" or "F" instead, in which case the supplied hotspot map is used only for that sex (i.e., when generating a gamete from a parent of that sex). In this case, two calls must be made to initializeHotspotMap(), one for each sex, even if a multiplier of 1.0 is desired for the other sex; no default hotspot map is supplied.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method initializeInteractionType
+
+Documentation for SLiM function \code{initializeInteractionType}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param id An object of type integer or string (singleton).
+@param spatiality An object of type string (singleton).
+@param reciprocal An object of type logical (singleton).
+@param maxDistance An object of type numeric (singleton).
+@param sexSegregation An object of type string (singleton).
+
+@aliases Initialize$initializeInteractionType Init$initializeInteractionType
+@family Initialize
+@return An object of type InteractionType object. Return will be of length 1 (a singleton)
+@details Add an interaction type at initialization time. The id must not already be used for any interaction type in the simulation. The id parameter may be either an integer giving the ID of the new interaction type, or a string giving the name of the new interaction type (such as "i5" to specify an ID of 5). The spatiality may be "", for non-spatial interactions (i.e., interactions that do not depend upon the distance between individuals); "x", "y", or "z" for one-dimensional interactions; "xy", "xz", or "yz" for two-dimensional interactions; or "xyz" for three-dimensional interactions. The dimensions referenced by spatiality must be defined as spatial dimensions with initializeSLiMOptions(); if the simulation has dimensionality "xy", for example, then interactions in the simulation may have spatiality "", "x", "y", or "xy", but may not reference spatial dimension z and thus may not have spatiality "xz", "yz", or "xyz". If no spatial dimensions have been configured, only non-spatial interactions may be defined. The reciprocal flag may be T, in which case the interaction is guaranteed by the user to be reciprocal: whatever the interaction strength is for exerter B upon receiver A, it will be equal (in magnitude and sign) for exerter A upon receiver B. In principle, this allows the InteractionType to reduce the amount of computation necessary by up to a factor of two (although it may or may not be used). If reciprocal is F, the interaction is not guaranteed to be reciprocal and each interaction will be computed independently. The built-in interaction formulas are all reciprocal, but if you implement an interaction() callback, you must consider whether the callback you have implemented preserves reciprocality or not. For this reason, the default is reciprocal=F, so that bugs are not inadvertently introduced by an invalid assumption of reciprocality. See below for a note regarding reciprocality in sexual simulations when using the sexSegregation flag. The maxDistance parameter supplies the maximum distance over which interactions of this type will be evaluated; at greater distances, the interaction strength is considered to be zero (for efficiency). The default value of maxDistance, INF (positive infinity), indicates that there is no maximum interaction distance; note that this can make some interaction queries much less efficient, and is therefore not recommended. In SLiM 3.1 and later, a warning will be issued if a spatial interaction type is defined with no maximum distance to encourage a maximum distance to be defined. The sexSegregation parameter governs the applicability of the interaction to each sex, in sexual simulations. It does not affect distance calculations in any way; it only modifies the way in which interaction strengths are calculated. The default, "**", implies that the interaction is felt by both sexes (the first character of the string value) and is exerted by both sexes (the second character of the string value). Either or both characters may be M or F instead; for example, "MM" would indicate a male-male interaction, such as male-male competition, whereas "FM" would indicate an interaction influencing only female receivers that is influenced only by male exerters, such as male mating displays that influence female attraction. This parameter may be set only to "**" unless sex has been enabled with initializeSex(). Note that a value of sexSegregation other than "**" may imply some degree of non-reciprocality, but it is not necessary to specify reciprocal to be F for this reason; SLiM will take the sex-segregation of the interaction into account for you. The value of reciprocal may therefore be interpreted as meaning: in those cases, if any, in which A interacts with B and B interacts with A, is the interaction strength guaranteed to be the same in both directions? The sexSegregation parameter is shorthand for setting sex constraints on the interaction type using the setConstraints() method; see that method for a more extensive set of constraints that may be used. By default, the interaction strength is 1.0 for all interactions within maxDistance. Often it is desirable to change the interaction function using setInteractionFunction(); modifying interaction strengths can also be achieved with interaction() callbacks if necessary. In any case, interactions beyond maxDistance always have a strength of 0.0, and the interaction strength of an individual with itself is always 0.0, regardless of the interaction function or callbacks. The global symbol for the new interaction type is immediately available; the return value also provides the new object. Note that in multispecies models, initializeInteractionType() must be called from a non-species-specific interaction() callback (declared as species all initialize()), since interactions are managed at the community level.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method initializeMutationRate
+
+Documentation for SLiM function \code{initializeMutationRate}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param rates An object of type numeric.
+@param ends An object of type null or integer.
+@param sex An object of type string (singleton).
+
+@aliases Initialize$initializeMutationRate Init$initializeMutationRate
+@family Initialize
+@return An object of type void. 
+@details Set the mutation rate per base position per gamete. To be precise, this mutation rate is the expected mean number of mutations that will occur per base position per gamete; note that this is different from how the recombination rate is defined (see initializeRecombinationRate()). The number of mutations that actually occurs at a given base position when generating an offspring haplosome is, in effect, drawn from a Poisson distribution with that expected mean (but under the hood SLiM uses a mathematically equivalent but much more efficient strategy). It is possible for this Poisson draw to indicate that two or more new mutations have arisen at the same base position, particularly when the mutation rate is very high; in this case, the new mutations will be added to the site one at a time, and as always the mutation stacking policy will be followed. There are two ways to call this function. If the optional ends parameter is NULL (the default), then rates must be a singleton value that specifies a single mutation rate to be used along the entire chromosome. If, on the other hand, ends is supplied, then rates and ends must be the same length, and the values in ends must be specified in ascending order. In that case, rates and ends taken together specify the mutation rates to be used along successive contiguous stretches of the chromosome, from beginning to end; the last position specified in ends should extend to the end of the chromosome (i.e. at least to the end of the last genomic element, if not further). For example, if the following call is made: initializeMutationRate(c(1e-7, 2.5e-8), c(5000, 9999)); then the result is that the mutation rate for bases 0...5000 (inclusive) will be 1e-7, and the rate for bases 5001...9999 (inclusive) will be 2.5e-8. Note that mutations are generated by SLiM only within genomic elements, regardless of the mutation rate map. In effect, the mutation rate map given is intersected with the coverage area of the genomic elements defined; areas outside of any genomic element are given a mutation rate of zero. There is no harm in supplying a mutation rate map that specifies rates for areas outside of the genomic elements defined; that rate information is simply not used. The overallMutationRate family of properties on Chromosome provide the overall mutation rate after genomic element coverage has been taken into account, so it will reflect the rate at which new mutations will actually be generated in the simulation as configured. If the optional sex parameter is "*" (the default), then the supplied mutation rate map will be used for both sexes (which is the only option for hermaphroditic simulations). In sexual simulations sex may be "M" or "F" instead, in which case the supplied mutation rate map is used only for that sex (i.e., when generating a gamete from a parent of that sex). In this case, two calls must be made to initializeMutationRate(), one for each sex, even if a rate of zero is desired for the other sex; no default mutation rate map is supplied. In nucleotide-based models, initializeMutationRate() may not be called. Instead, the desired sequence-based mutation rate(s) should be expressed in the mutationMatrix parameter to initializeGenomicElementType(). If variation in the mutation rate along the chromosome is desired, initializeHotspotMap() should be used. The initializeMutationRateFromFile() function is a useful convenience function if you wish to read the mutation rate map from a file.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method initializeMutationRateFromFile
+
+Documentation for SLiM function \code{initializeMutationRateFromFile}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param path An object of type string or integer or float or string or string (singleton).
+@param lastPosition An object of type string or integer or float or string or string (singleton).
+@param scale An object of type string or integer or float or string or string (singleton).
+@param sep An object of type string or integer or float or string or string (singleton).
+@param dec An object of type string or integer or float or string or string (singleton).
+
+@aliases Initialize$initializeMutationRateFromFile Init$initializeMutationRateFromFile
+@family Initialize
+@return An object of type void. 
+@details Set a mutation rate map from data read from the file at path. This function is essentially a wrapper for initializeMutationRate() that uses readCSV() and passes the data through. The file is expected to contain two columns of data. The first column must be integer start positions for rate map regions; the first region should start at position 0 if the map's positions are 0-based, or at position 1 if the map's positions are 1-based; in the latter case, 1 will be subtracted from every position since SLiM uses 0-based positions. The second column must be float rates, relative to the scaling factor specified in scale; for example, if a given rate is 1.2 and scale is 1e-8 (the default), the rate used will be 1.2e-8. No column header line should be present; the file should start immediately with numerical data. The expected separator between columns is a tab character by default, but may be passed in sep; the expected decimal separator is a period by default, but may be passed in dec. Once read, the map is converted into a rate map specified with end positions, rather than start positions, and the position given by lastPosition is used as the end of the last rate region; it should be the last position of the chromosome. See readCSV() for further details on sep and dec, which are passed through to it; and see initializeMutationRate() for details on how the rate map is validated and used. This function is written in Eidos, and its source code can be viewed with functionSource(), so you can copy and modify its code if you need to modify its functionality.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method initializeMutationType
+
+Documentation for SLiM function \code{initializeMutationType}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param id An object of type integer or string (singleton).
+@param dominanceCoeff An object of type numeric (singleton).
+@param distributionType An object of type string (singleton).
+@param ... An object of type NA.
+
+@aliases Initialize$initializeMutationType Init$initializeMutationType
+@family Initialize
+@return An object of type MutationType object. Return will be of length 1 (a singleton)
+@details Add a mutation type at initialization time. The id must not already be used for any mutation type in the simulation. The id parameter may be either an integer giving the ID of the new mutation type, or a string giving the name of the new mutation type (such as "m5" to specify an ID of 5). The dominanceCoeff parameter supplies the dominance coefficient for the mutation type; 0.0 produces no dominance, 1.0 complete dominance, and values greater than 1.0, overdominance. The distributionType may be "f", in which case the ellipsis ... should supply a numeric$ fixed selection coefficient; "e", in which case the ellipsis should supply a numeric$ mean selection coefficient for an exponential distribution; "g", in which case the ellipsis should supply a numeric$ mean selection coefficient and a numeric$ alpha shape parameter for a gamma distribution; "n", in which case the ellipsis should supply a numeric$ mean selection coefficient and a numeric$ sigma (standard deviation) parameter for a normal distribution; "p", in which case the ellipsis should supply a numeric$ mean selection coefficient and a numeric$ scale parameter for a Laplace distribution; "w", in which case the ellipsis should supply a numeric$  scale parameter and a numeric$ k shape parameter for a Weibull distribution; or "s", in which case the ellipsis should supply a string$ Eidos script parameter. The global symbol for the new mutation type is immediately available; the return value also provides the new object. Note that by default in WF models, all mutations of a given mutation type will be converted into Substitution objects when they reach fixation, for efficiency reasons. If you need to disable this conversion, to keep mutations of a given type active in the simulation even after they have fixed, you can do so by setting the convertToSubstitution property of MutationType to F. In contrast, by default in nonWF models mutations will not be converted into Substitution objects when they reach fixation; convertToSubstitution is F by default in nonWF models. To enable conversion in nonWF models for neutral mutation types with no indirect fitness effects, you should therefore set convertToSubstitution to T.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method initializeMutationTypeNuc
+
+Documentation for SLiM function \code{initializeMutationTypeNuc}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param id An object of type integer or string (singleton).
+@param dominanceCoeff An object of type numeric (singleton).
+@param distributionType An object of type string (singleton).
+@param ... An object of type NA.
+
+@aliases Initialize$initializeMutationTypeNuc Init$initializeMutationTypeNuc
+@family Initialize
+@return An object of type MutationType object. Return will be of length 1 (a singleton)
+@details Add a nucleotide-based mutation type at initialization time. This function is identical to initializeMutationType() except that the new mutation type will be nucleotide-based - in other words, mutations belonging to the new mutation type will have an associated nucleotide. This function may be called only in nucleotide-based models (as enabled by the nucleotideBased parameter to initializeSLiMOptions()). Nucleotide-based mutations always use a mutationStackGroup of -1 and a mutationStackPolicy of "l". This ensures that a new nucleotide mutation always replaces any previously existing nucleotide mutation at a given position, regardless of the mutation types of the nucleotide mutations. These values are set automatically by initializeMutationTypeNuc(), and may not be changed. See the documentation for initializeMutationType() for all other discussion.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method initializeRecombinationRate
+
+Documentation for SLiM function \code{initializeRecombinationRate}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param rates An object of type numeric.
+@param ends An object of type null or integer.
+@param sex An object of type string (singleton).
+
+@aliases Initialize$initializeRecombinationRate Init$initializeRecombinationRate
+@family Initialize
+@return An object of type void. 
+@details Set the recombination rate per base position per gamete. To be precise, this recombination rate is the probability that a breakpoint will occur between one base and the next base; note that this is different from how the mutation rate is defined (see initializeMutationRate()). A recombination rate of 1 centimorgan/Mbp corresponds to a recombination rate of 1e-8 in the units used by SLiM. All rates must be in the interval [0.0, 0.5]. A rate of 0.5 implies complete independence between the adjacent bases, which might be used to implement unlinked loci. Whether a breakpoint occurs between two bases is then, in effect, determined by a binomial draw with a single trial and the given rate as probability (but under the hood SLiM uses a mathematically equivalent but much more efficient strategy). The recombinational process in SLiM will never generate more then one crossover between one base and the next (in one generation/haplosome), and a supplied rate of 0.5 will therefore result in an actual probability of 0.5 for a crossover at the relevant position. (Note that this was not true in SLiM 2.x and earlier, however; their implementation of recombination resulted in a crossover probability of about 39.3% for a rate of 0.5, due to the use of an inaccurate approximation method. Recombination rates lower than about 0.01 would have been essentially exact, since the approximation error became large only as the rate approached 0.5.) There are two ways to call this function. If the optional ends parameter is NULL (the default), then rates must be a singleton value that specifies a single recombination rate to be used along the entire chromosome. If, on the other hand, ends is supplied, then rates and ends must be the same length, and the values in ends must be specified in ascending order. In that case, rates and ends taken together specify the recombination rates to be used along successive contiguous stretches of the chromosome, from beginning to end; the last position specified in ends should extend to the end of the chromosome (i.e. at least to the end of the last genomic element, if not further). If the optional sex parameter is "*" (the default), then the supplied recombination rate map will be used for both sexes (which is the only option for hermaphroditic simulations). In sexual simulations sex may be "M" or "F" instead, in which case the supplied recombination map is used only for that sex. In this case, two calls must be made to initializeRecombinationRate(), one for each sex, even if a rate of zero is desired for the other sex; no default recombination map is supplied. The initializeRecombinationRateFromFile() function is a useful convenience function if you wish to read the recombination rate map from a file.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method initializeRecombinationRateFromFile
+
+Documentation for SLiM function \code{initializeRecombinationRateFromFile}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param path An object of type string or integer or float or string or string or string (singleton).
+@param lastPosition An object of type string or integer or float or string or string or string (singleton).
+@param scale An object of type string or integer or float or string or string or string (singleton).
+@param sep An object of type string or integer or float or string or string or string (singleton).
+@param dec An object of type string or integer or float or string or string or string (singleton).
+@param sex An object of type string or integer or float or string or string or string (singleton).
+
+@aliases Initialize$initializeRecombinationRateFromFile Init$initializeRecombinationRateFromFile
+@family Initialize
+@return An object of type void. 
+@details Set a recombination rate map from data read from the file at path. This function is essentially a wrapper for initializeRecombinationRate() that uses readCSV() and passes the data through. The file is expected to contain two columns of data. The first column must be integer start positions for rate map regions; the first region should start at position 0 if the map's positions are 0-based, or at position 1 if the map's positions are 1-based; in the latter case, 1 will be subtracted from every position since SLiM uses 0-based positions. The second column must be float rates, relative to the scaling factor specified in scale; for example, if a given rate is 1.2 and scale is 1e-8 (the default), the rate used will be 1.2e-8. No column header line should be present; the file should start immediately with numerical data. The expected separator between columns is a tab character by default, but may be passed in sep; the expected decimal separator is a period by default, but may be passed in dec. Once read, the map is converted into a rate map specified with end positions, rather than start positions, and the position given by lastPosition is used as the end of the last rate region; it should be the last position of the chromosome. See readCSV() for further details on sep and dec, which are passed through to it; and see initializeRecombinationRate() for details on how the rate map is validated and used, and how the sex parameter is used. This function is written in Eidos, and its source code can be viewed with functionSource(), so you can copy and modify its code if you need to modify its functionality.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method initializeSex
+
+Documentation for SLiM function \code{initializeSex}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param chromosomeType An object of type null or string (singleton).
+
+@aliases Initialize$initializeSex Init$initializeSex
+@family Initialize
+@return An object of type void. 
+@details Enable sex in the simulation. Beginning in SLiM 5, this method should generally be passed NULL, simply indicating that sex should be enabled: individuals will then be male and female (rather than hermaphroditic), biparental crosses will be required to be between a female first parent and a male second parent, and selfing will not be allowed. In this new configuration style, if a sexual simulation involving sex chromosomes is desired, the new initializeChromosome() call should be used to configure the chromosome setup for the simulation. For backward compatibility, the old style of configuring a sexual simulation is still supported, however. This implicitly defines a single chromosome, without a call to initializeChromosome(). With this old configuration approach, the chromosomeType parameter to initializeSex() gives the type of chromosome that should be simulated; this should be "A", "X", or "Y", and this chromosomeType value will be used as the symbol ("A", "X", or "Y") for the implicit chromosome. These legacy chromosome types correspond to the new chromosome types "A", "X", and "-Y" respectively (note that it is not "Y"), when using initializeChromosome(). The implicit chromosome's id property is always 1. This old style of chromosome configuration is much less flexible, however, allowing only these three chromosome types, and only allowing a single chromosome to be set up. This backward compatibility mode may be removed for SLiM in the future, and should be considered deprecated; new models should call initializeChromosome() explicitly instead. There is no way to disable sex once it has been enabled; if you don't want to have sex, don't call this function. If you require more flexibility with mating types and reproductive strategies than SLiM's built-in support for sex provides, do not call initializeSex(); instead, track the sex or mating type of individuals yourself in script (with the tag property of Individual, for example), and manage the consequences of that in your script yourself, in terms of which individuals can mate with which, and exactly how the offspring is produced. The xDominanceCoeff parameter has been deprecated and removed. In SLiM 5 and later, use the hemizygousDominanceCoeff property of MutationType instead. If the chromosomeType is "X", the optional xDominanceCoeff parameter can supply the dominance coefficient used when a mutation is present in an XY male, and is thus "heterozygous" (but in a different sense than the heterozygosity of an XX female with one copy of the mutation).
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method initializeSLiMModelType
+
+Documentation for SLiM function \code{initializeSLiMModelType}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param modelType An object of type string (singleton).
+
+@aliases Initialize$initializeSLiMModelType Init$initializeSLiMModelType
+@family Initialize
+@return An object of type void. 
+@details Configure the type of SLiM model used for the simulation. At present, one of two model types may be selected. If modelType is "WF", SLiM will use a Wright-Fisher (WF) model; this is the model type that has always been supported by SLiM, and is the model type used if initializeSLiMModelType() is not called. If modelType is "nonWF", SLiM will use a non-Wright-Fisher (nonWF) model instead; this is a new model type supported by SLiM 3.0 and above. If initializeSLiMModelType() is called at all then it must be called before any other initialization function, so that SLiM knows from the outset which features are enabled and which are not.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method initializeSLiMOptions
+
+Documentation for SLiM function \code{initializeSLiMOptions}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param keepPedigrees An object of type logical or string or string or logical or logical or logical or logical or logical (singleton).
+@param dimensionality An object of type logical or string or string or logical or logical or logical or logical or logical (singleton).
+@param periodicity An object of type logical or string or string or logical or logical or logical or logical or logical (singleton).
+@param doMutationRunExperiments An object of type logical or string or string or logical or logical or logical or logical or logical (singleton).
+@param preventIncidentalSelfing An object of type logical or string or string or logical or logical or logical or logical or logical (singleton).
+@param nucleotideBased An object of type logical or string or string or logical or logical or logical or logical or logical (singleton).
+@param randomizeCallbacks An object of type logical or string or string or logical or logical or logical or logical or logical (singleton).
+@param checkInfiniteLoops An object of type logical or string or string or logical or logical or logical or logical or logical (singleton).
+
+@aliases Initialize$initializeSLiMOptions Init$initializeSLiMOptions
+@family Initialize
+@return An object of type void. 
+@details Configure options for the simulation. If initializeSLiMOptions() is called at all then it must be called before any other initialization function (except initializeSLiMModelType()), so that SLiM knows from the outset which optional features are enabled and which are not. If keepPedigrees is T, SLiM will keep pedigree information for every individual in the simulation, tracking the identity of its parents and grandparents. This allows individuals to assess their degree of pedigree-based relatedness to other individuals (see Individual's relatedness() and sharedParentCount() methods), as well as allowing a model to find "trios" (two parents and an offspring they generated) using the pedigree properties of Individual. As a side effect of keepPedigrees being T, the pedigreeID, pedigreeParentIDs, and pedigreeGrandparentIDs properties of Individual will have defined values, as will the haplosomePedigreeID property of Haplosome. Note that pedigree-based relatedness doesn't necessarily correspond to genetic relatedness, due to effects such as assortment and recombination. Beginning in SLiM 3.5, keepPedigrees=T also enables tracking of individual reproductive output, available through the reproductiveOutput property of Individual and the lifetimeReproductiveOutput property of Subpopulation. If dimensionality is not "", SLiM will enable its optional "continuous space" facility. Three values for dimensionality are presently supported: "x", "xy", and "xyz", specifying that continuous space should be enabled for one, two, or three dimensions, respectively, using (x), (x, y), and (x, y, z) coordinates respectively. This has a number of side effects. First of all, it means that the specified properties of Individual (x, y, and/or z) will be interpreted by SLiM as spatial positions; in particular, SLiMgui will use those properties to display subpopulations spatially. Second, it allows spatial interactions to be defined, evaluated, and queried using initializeInteractionType() and interaction() callbacks. And third, it enables the use of any other properties and methods related to continuous space, such as setting the spatial boundaries of subpopulations, which would otherwise raise an error. If periodicity is not "", SLiM will designate the specified spatial dimensions as being periodic - wrapping around at the edges of the spatial boundaries of that dimension. This option may only be used if the dimensionality parameter to initializeSLiMOptions() has been used to enable spatiality in the model, and only spatial dimensions that were specified in the dimensionality of the model may be declared to be periodic (but if desired, it is permissible to make just a subset of those dimensions periodic; it is not an all-or-none proposition). For example, if the specified dimensionality is "xy", the model's periodicity may be "x", "y", or "xy" (or "", the default, to specify that there are no periodic dimensions). A one-dimensional periodic model would model a space like the perimeter of a circle. A two-dimensional model periodic in one of those dimensions would model a space like a cylinder without its end caps; if periodic in both dimensions, the modeled space is a torus. The shapes of three-dimensional periodic models are harder to visualize, but are essentially higher-dimensional analogues of these concepts. Periodic boundary conditions are commonly used to model spatial scenarios without "edge effects", since there are no edges in the periodic spatial dimensions. The pointPeriodic() method of Subpopulation is typically used in conjunction with this option, to actually implement the periodic boundary condition for the specified dimensions. The doMutationRunExperiments parameter specifies whether SLiM should attempt to conduct experiments at runtime to determine the optimal number of mutation runs used in the model. This is a performance optimization. If doMutationRunExperiments is T (the default), this optimization is enabled for all chromosomes that do not have an explicitly specified mutation run count; this is generally desirable and may significantly improve performance. If doMutationRunExperiments is F, this optimization is disabled and chromosomes that do not have an explicitly specified mutation run count will simply use a single mutation run. See the documentation for initializeChromosome() for further discussion. Note that this parameter used to be [integer$ mutationRuns = 0], specifying the mutation run count directly. That parameter has been moved to initializeChromosome(), allowing a different mutation run count to be specified for each chromosome in multi-chromosome models. If preventIncidentalSelfing is T, incidental selfing in hermaphroditic models will be prevented by SLiM. By default (i.e., if preventIncidentalSelfing is F), SLiM chooses the first and second parents in a biparental mating event independently. It is therefore possible for the same individual to be chosen as both the first and second parent, resulting in selfing events even when the selfing rate is zero. In many models this is unimportant, since it happens fairly infrequently and does not have large consequences. This behavior is SLiM's default because it is the simplest option, and produces results that most closely align with simple analytical population genetics models. However, in some models this selfing can be undesirable and problematic. In particular, models that involve very high variance in fitness or very small effective population sizes may see elevated rates of selfing that substantially influence model results. If preventIncidentalSelfing is set to T, all such incidental selfing will be prevented (by choosing a new second parent if the first parent was chosen again). Non-incidental selfing, as requested by the selfing rate, will still be permitted. Note that if incidental selfing is prevented, SLiM will hang if it is unable to find a different second parent; there must always be at least two individuals in the population with non-zero fitness, and mateChoice() and modifyChild() callbacks must not absolutely prevent those two individuals from producing viable offspring. Enforcement of the prohibition on incidental selfing will occur after mateChoice() callbacks have been called (and thus the default mating weights provided to mateChoice() callbacks will not exclude the first parent!), but will occur before modifyChild() callbacks are called (so those callbacks may assume that the first and second parents are distinct). If nucleotideBased is T, the model will be nucleotide-based. In this case, auto-generated mutations (i.e., mutation types used by genomic element types) must be nucleotide-based, and an ancestral nucleotide sequence must be supplied with initializeAncestralNucleotides(). Non-nucleotide-based mutations may still be used, but may not be referenced by genomic element types. A mutation rate (or rate map) may not be supplied with initializeMutationRate(); instead, a hotspot map may (optionally) be supplied with initializeHotspotMap(). This choice has many consequences across SLiM. If randomizeCallbacks is T (the default), the order in which individuals are processed in callbacks will be randomized to make it easier to avoid order-dependency bugs. This flag exists because the order of individuals in each subpopulation is non-random; most notably, females always come before males in the individuals vector, but non-random ordering may also occur with respect to things like migrant versus non-migrant status, origin by selfing versus cloning versus biparental mating, and other factors. When this option is F, individuals in a subpopulation are processed in the order of the individuals vector in each tick cycle stage, which may lead to order-dependency issues if there is an enabled callback whose behavior is not fully independent between calls. Setting this option to T will cause individuals within each subpopulation to be processed in a randomized order in each tick cycle stage; specifically, this randomizes the order of calls to mutationEffect() callbacks in both WF and nonWF models, and calls to reproduction() and survival() callbacks in nonWF models. Each subpopulation is still processed separately, in sequential order, so order-dependency issues between subpopulations are still possible if callbacks have effects that are not fully independent. This feature was added in SLiM 4, breaking backward compatibility; to recover the behavior of previous versions of SLiM, pass F for this option (but then be very careful about order-dependency issues in your script). The default of T is the safe option, but a small speed penalty is incurred by the randomization of the processing order - for most models the difference will be less than 1%, but in the worst case it may approach 10%. Models that do not have any order-dependency issue may therefore run somewhat faster if this is set to F. Note that anywhere that your script uses the individuals property of Subpopulation, the order of individuals returned will be non-random (regardless of the setting of this option); you should use sample() to shuffle the order of the individuals vector if necessary to avoid order-dependency issues in your script. If checkInfiniteLoops is T (the default), SLiM and Eidos will check for infinite loops in various circumstances, such as while and do-while loops. This check is conducted only when running in SLiMgui; at the command line, checks for infinite loops are never conducted regardless of the value of this flag. When checking is enabled, an error will be raised if any loop executes more than 10 million times, preventing SLiMgui's user interface from freezing. Normally this is desirable, but if you actually want to execute a loop more than 10 million times, this checking will prove inconvenient. In that case, you can pass F for checkInfiniteLoops to disable these checks. There is no way to turn these checks on or off for individual loops; it is a global setting. This function will likely be extended with further options in the future, added on to the end of the argument list. Using named arguments with this call is recommended for readability. Note that turning on optional features may increase the runtime and memory footprint of SLiM.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method initializeSpecies
+
+Documentation for SLiM function \code{initializeSpecies}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param tickModulo An object of type integer or integer or string or string (singleton).
+@param tickPhase An object of type integer or integer or string or string (singleton).
+@param avatar An object of type integer or integer or string or string (singleton).
+@param color An object of type integer or integer or string or string (singleton).
+
+@aliases Initialize$initializeSpecies Init$initializeSpecies
+@family Initialize
+@return An object of type void. 
+@details Configure options for the species being initialized. This initialization function may only be called in multispecies models (i.e., models with explicit species declarations); in single-species models, the default values are assumed and cannot be changed. The tickModulo and tickPhase parameters determine the activation schedule for the species. The active property of the species will be set to T (thus activating the species) every tickModulo ticks, beginning in tick tickPhase. (However, when the species is activated in a given tick, the skipTick() method may still be called in a first() event to deactivate it.) See the active property of Species for more details. The avatar parameter, if not "", sets a string value used to represent the species graphically, particularly in SLiMgui but perhaps in other contexts also. The avatar should generally be a single character - usually an emoji corresponding to the species, such as "" for foxes or "" for mice. If avatar is the empty string, "", SLiMgui will choose a default avatar. The color parameter, if not "", sets a string color value used to represent the species in SLiMgui. Colors may be specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see the Eidos manual for details). If color is the empty string, "", SLiMgui will choose a default color.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method initializeTreeSeq
+
+Documentation for SLiM function \code{initializeTreeSeq}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param recordMutations An object of type logical (singleton).
+@param simplificationRatio An object of type null or integer or float (singleton).
+@param simplificationInterval An object of type null or integer (singleton).
+@param checkCoalescence An object of type logical (singleton).
+@param runCrosschecks An object of type logical (singleton).
+@param retainCoalescentOnly An object of type logical (singleton).
+@param timeUnit An object of type null or string (singleton).
+
+@aliases Initialize$initializeTreeSeq Init$initializeTreeSeq
+@family Initialize
+@return An object of type void. 
+@details Configure options for tree sequence recording. Calling this function turns on tree sequence recording, as a side effect, for later reconstruction of the simulation's evolutionary dynamics; if you do not want tree sequence recording to be enabled, do not call this function. Note that tree-sequence recording internally uses SLiM's "pedigree tracking" feature to uniquely identify individuals and haplosomes; however, if you want to use pedigree tracking in your script you must still enable it yourself with initializeSLiMOptions(keepPedigrees=T). A separate tree sequence will be recorded for each chromosome in the simulation, as configured with initializeChromosome(). The recordMutations flag controls whether information about individual mutations is recorded or not. Such recording takes time and memory, and so can be turned off if only the tree sequence itself is needed, but it is turned on by default since mutation recording is generally useful. The simplificationRatio and simplificationInterval parameters control how often automatic simplification of the recorded tree sequence occurs. This is a speed-memory tradeoff: more frequent simplification (lower simplificationRatio or smaller simplificationInterval) means the stored tree sequences will use less memory, but at a cost of somewhat longer run times. Conversely, a larger simplificationRatio or simplificationInterval means that SLiM will wait longer between simplifications. There are three ways these parameters can be used. With the first option, with a non-NULL simplificationRatio and a NULL value for simplificationInterval, SLiM will try to find an optimal tick interval for simplification such that the ratio of the memory used by the tree sequence tables, (before:after) simplification, is close to the requested ratio. The default of 10 (used if both simplificationRatio and simplificationInterval are NULL) thus requests that SLiM try to find a tick interval such that the maximum size of the stored tree sequences is ten times the size after simplification. INF may be supplied to indicate that automatic simplification should never occur; 0 may be supplied to indicate that automatic simplification should be performed at the end of every tick. Alternatively - the second option - simplificationRatio may be NULL and simplificationInterval may be set to the interval, in ticks, between simplifications. This may provide more reliable performance, but the interval must be chosen carefully to avoid exceeding the available memory. The simplificationInterval value may be a very large number to specify that simplification should never occur (not INF, though, since it is an integer value), or 1 to simplify every tick. Finally - the third option - both parameters may be non-NULL, in which case simplificationRatio is used as described above, while simplificationInterval provides the initial interval first used by SLiM (and then subsequently increased or decreased to try to match the requested simplification ratio). The default initial interval, used when simplificationInterval is NULL, is usually 20; this is chosen to be relatively frequent, and thus unlikely to lead to a memory overflow, but it can result in rather slow spool-up for models where the equilibrium simplification interval, as determined by the simplification ratio, is much longer. It can therefore be helpful to set a larger initial interval so that the early part of the model run is not excessively bogged down in simplification. The checkCoalescence parameter controls whether a check for full coalescence is conducted after each simplification. If a model will call treeSeqCoalesced() to check for coalescence during its execution, checkCoalescence should be set to T. Since the coalescence checks entail a performance penalty, the default of F is preferable otherwise. See the documentation for treeSeqCoalesced() for further discussion. The runCrosschecks parameter controls whether cross-checks between SLiM's internal data structures and the tree-sequence recording data structures will be conducted. These two sets of data structures record much the same thing (mutations in haplosomes), but using completely different representations, so such cross-checks can be useful to confirm that the two data structures do indeed represent the same conceptual state. This slows down the model considerably, however, and would normally be turned on only for debugging purposes, so it is turned off by default. The retainCoalescentOnly parameter controls how, exactly, simplification of the tree-sequence data is performed in SLiM (both for auto-simplification and for calls to treeSeqSimplify()). More specifically, this parameter controls the behavior of simplification for individuals and haplosomes that have been "retained" by calling treeSeqRememberIndividuals() with the parameter permanent=F. The default of retainCoalescentOnly=T helps to keep the number of retained individuals relatively small, which is helpful if your simulation regularly flags many individuals for retaining. In this case, changing retainCoalescentOnly to F may dramatically increase memory usage and runtime, in a similar way to permanently remembering all the individuals. See the documentation of treeSeqRememberIndividuals() for further discussion. The timeUnit parameter controls the time unit stated in the tree sequence when it is saved (which can be accessed through tskit APIs); it has no effect on the running simulation whatsoever. The default value, NULL, means that a time unit of "ticks" will be used for all model types. (In SLiM 3.7 / 3.7.1, NULL implied a time unit of "generations" for WF models, but "ticks" for nonWF models; given the new multispecies timescale parameters in SLiM 4, a default of "ticks" makes sense in all cases since now even in WF models one tick might not equal one biological generation.) It may be helpful to set timeUnit to "generations" explicitly when modeling non-overlapping generations in which one tick equals one generation, to tell tskit that the time unit does in fact represent biological generations; doing so may avoid warnings from tskit or msprime regarding the time unit, in cases such as recapitation where the simulation timescale is important. 3.2. Nucleotide utilities
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+
+
+SLiM method ancestralNucleotides
+
+Documentation for SLiM function \code{ancestralNucleotides}, which is a method of the SLiM class \code{\link{Chromosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+@param format An object of type string (singleton).
+
+@aliases Chromosome$ancestralNucleotides Ch$ancestralNucleotides
+@family Chromosome
+@return An object of type integer or string. 
+@details [Ni$ start = NULL], [Ni$ end = NULL], [string$ format = "string"]) Returns the ancestral nucleotide sequence originally supplied to initializeAncestralNucleotides(), including any sequence changes due to nucleotide mutations that have fixed and substituted. This nucleotide sequence is the reference sequence for positions in a haplosome that do not contain a nucleotide-based mutation. The range of the returned sequence may be constrained by a start position given in start and/or an end position given in end; nucleotides will be returned from start to end, inclusive. The default value of NULL for start and end represent the first and last base positions of the chromosome, respectively. The format of the returned sequence is controlled by the format parameter. A format of "string" will return the sequence as a singleton string (e.g., "TATA"). A format of "char" will return a string vector with one element per nucleotide (e.g., "T", "A", "T", "A"). A format of "integer" will return an integer vector with values A=0, C=1, G=2, T=3 (e.g., 3, 0, 3, 0). If the sequence returned is likely to be long, the "string" format will be the most memory-efficient, and may also be the fastest (but may be harder to work with). For purposes related to interpreting the nucleotide sequence as a coding sequence, a format of "codon" is also supported. This format will return an integer vector with values from 0 to 63, based upon successive nucleotide triplets in the sequence (which, for this format, must have a length that is a multiple of three). The codon value for a given nucleotide triplet XYZ is 16X + 4Y + Z, where X, Y, and Z have the usual values A=0, C=1, G=2, T=3. For example, the triplet AAA has a codon value of 0, AAC is 1, AAG is 2, AAT is 3, ACA is 4, and on upward to TTT which is 63. If the nucleotide sequence AACACATTT is requested in codon format, the codon vector 1 4 63 will therefore be returned. These codon values can be useful in themselves; they can also be passed to codonToAminoAcid() to translate them into the corresponding amino acid sequence if desired.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method drawBreakpoints
+
+Documentation for SLiM function \code{drawBreakpoints}, which is a method of the SLiM class \code{\link{Chromosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param parent An object of type null or Individual object (singleton).
+@param n An object of type null or integer (singleton).
+
+@aliases Chromosome$drawBreakpoints Ch$drawBreakpoints
+@family Chromosome
+@return An object of type integer. 
+@details [No<Individual>$ parent = NULL], [Ni$ n = NULL]) Draw recombination breakpoints, using the chromosome's recombination rate map, the current gene conversion parameters, and (in some cases - see below) any active and applicable recombination() callbacks. The number of breakpoints to generate, n, may be supplied; if it is NULL (the default), the number of breakpoints will be drawn based upon the overall recombination rate and the chromosome length (following the standard procedure in SLiM). Note that if the double-stranded breaks model has been chosen, the number of breakpoints generated will probably not be equal to the number requested, because most breakpoints will entail gene conversion tracts, which entail additional crossover breakpoints. It is generally recommended that the parent individual be supplied to this method, but parent is NULL by default. The individual supplied in parent is used for two purposes. First, in sexual models that define separate recombination rate maps for males versus females, the sex of parent will be used to determine which map is used; in this case, a non-NULL value must be supplied for parent, since the choice of recombination rate map must be determined. Second, in models that define recombination() callbacks, parent is used to determine the various pseudo-parameters that are passed to recombination() callbacks (individual, haplosome1, haplosome2, subpop), and the subpopulation to which parent belongs is used to select which recombination() callbacks are applicable; given the necessity of this information, recombination() callbacks will not be called as a side effect of this method if parent is NULL. Apart from these two uses, parent is not used, and the caller does not guarantee that the generated breakpoints will actually be used to recombine the haplosomes of parent in particular. If a recombination() callback is called, haplosome1 for that callback will always be the first haplosome of parent for the chromosome; in other words, drawBreakpoints() will always treat the first haplosome of a homologous pair as the initial copy strand. If the caller wishes to randomly choose an initial copy strand (which is usually desirable), they should do that themselves (note that the addRecombinant() and addMultiRecombinant() methods have a flag to facilitate this).
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method genomicElementForPosition
+
+Documentation for SLiM function \code{genomicElementForPosition}, which is a method of the SLiM class \code{\link{Chromosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param positions An object of type integer.
+
+@aliases Chromosome$genomicElementForPosition Ch$genomicElementForPosition
+@family Chromosome
+@return An object of type GenomicElement object. 
+@details integer positions) Returns a vector of GenomicElement objects corresponding to the given vector positions, which contains base positions along the chromosome. If every position lies within a defined genomic element, the returned vector will have the same length as positions, and will correspond one-to-one with it. However, if a position in positions is not within a genomic element, no GenomicElement object will be present for it in the returned vector, and so the returned vector will no longer have the same length as positions, and will no longer correspond one-to-one with it. The method hasGenomicElementForPosition() can be used to detect this circumstance.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method hasGenomicElementForPosition
+
+Documentation for SLiM function \code{hasGenomicElementForPosition}, which is a method of the SLiM class \code{\link{Chromosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param positions An object of type integer.
+
+@aliases Chromosome$hasGenomicElementForPosition Ch$hasGenomicElementForPosition
+@family Chromosome
+@return An object of type logical. 
+@details integer positions) Returns a logical vector corresponding to the given vector positions, which contains base positions along the chromosome. The returned vector will have the same length as positions, and will correspond one-to-one with it, containing T if the corresponding position lies inside a genomic element, or F if it does not. The method genomicElementForPosition() can be used to look up the GenomicElement objects themselves.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setAncestralNucleotides
+
+Documentation for SLiM function \code{setAncestralNucleotides}, which is a method of the SLiM class \code{\link{Chromosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param sequence An object of type integer or string.
+
+@aliases Chromosome$setAncestralNucleotides Ch$setAncestralNucleotides
+@family Chromosome
+@return An object of type integer. Return will be of length 1 (a singleton)
+@details is sequence) This method, which may be called only in nucleotide-based models, replaces the ancestral nucleotide sequence for the model. The sequence parameter is interpreted exactly as it is in the initializeAncestralSequence() function; see that documentation for details. The length of the ancestral sequence is returned. It is unusual to replace the ancestral sequence in a running simulation, since the nucleotide states of segregating and fixed mutations will depend upon the original ancestral sequence. It can be useful when loading a new population state with readHaplosomesFromMS() or readHaplosomesFromVCF(), such as when resetting the simulation state to an earlier state in a conditional simulation; however, that is more commonly done using readFromPopulationFile() with a SLiM or .trees file.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setGeneConversion
+
+Documentation for SLiM function \code{setGeneConversion}, which is a method of the SLiM class \code{\link{Chromosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param nonCrossoverFraction An object of type numeric or numeric or numeric or numeric (singleton).
+@param meanLength An object of type numeric or numeric or numeric or numeric (singleton).
+@param simpleConversionFraction An object of type numeric or numeric or numeric or numeric (singleton).
+@param bias An object of type numeric or numeric or numeric or numeric (singleton).
+
+@aliases Chromosome$setGeneConversion Ch$setGeneConversion
+@family Chromosome
+@return An object of type void. 
+@details numeric$ nonCrossoverFraction, numeric$ meanLength, numeric$ simpleConversionFraction, [numeric$ bias = 0]) This method switches the recombination model to the "double-stranded break (DSB)" model (if it is not already set to that), and configures the details of the gene conversion tracts that will therefore be modeled. The meanings and effects of the parameters exactly mirror the initializeGeneConversion() function.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setHotspotMap
+
+Documentation for SLiM function \code{setHotspotMap}, which is a method of the SLiM class \code{\link{Chromosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param multipliers An object of type numeric.
+@param ends An object of type null or integer.
+@param sex An object of type string (singleton).
+
+@aliases Chromosome$setHotspotMap Ch$setHotspotMap
+@family Chromosome
+@return An object of type void. 
+@details numeric multipliers, [Ni ends = NULL], [string$ sex = "*"]) In nucleotide-based models, set the mutation rate multiplier along the chromosome. There are two ways to call this method. If the optional ends parameter is NULL (the default), then multipliers must be a singleton value that specifies a single multiplier to be used along the entire chromosome. If, on the other hand, ends is supplied, then multipliers and ends must be the same length, and the values in ends must be specified in ascending order. In that case, multipliers and ends taken together specify the multipliers to be used along successive contiguous stretches of the chromosome, from beginning to end; the last position specified in ends should extend to the end of the chromosome (as previously determined, during simulation initialization). See the initializeHotspotMap() function for further discussion of precisely how these multipliers and positions are interpreted. If the optional sex parameter is "*" (the default), then the supplied hotspot map will be used for both sexes (which is the only option for hermaphroditic simulations). In sexual simulations sex may be "M" or "F" instead, in which case the supplied hotspot map is used only for that sex. Note that whether sex-specific hotspot maps will be used is set by the way that the simulation is initially configured with initializeHotspot(), and cannot be changed with this method; so if the simulation was set up to use sex-specific hotspot maps then sex must be "M" or "F" here, whereas if it was set up not to, then sex must be "*" or unsupplied here. If a simulation needs sex-specific hotspot maps only some of the time, the male and female maps can simply be set to be identical the rest of the time. The hotspot map is normally constant in simulations, so be sure you know what you are doing.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setMutationRate
+
+Documentation for SLiM function \code{setMutationRate}, which is a method of the SLiM class \code{\link{Chromosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param rates An object of type numeric.
+@param ends An object of type null or integer.
+@param sex An object of type string (singleton).
+
+@aliases Chromosome$setMutationRate Ch$setMutationRate
+@family Chromosome
+@return An object of type void. 
+@details numeric rates, [Ni ends = NULL], [string$ sex = "*"]) Set the mutation rate per base position per gamete. There are two ways to call this method. If the optional ends parameter is NULL (the default), then rates must be a singleton value that specifies a single mutation rate to be used along the entire chromosome. If, on the other hand, ends is supplied, then rates and ends must be the same length, and the values in ends must be specified in ascending order. In that case, rates and ends taken together specify the mutation rates to be used along successive contiguous stretches of the chromosome, from beginning to end; the last position specified in ends should extend to the end of the chromosome (as previously determined, during simulation initialization). See the initializeMutationRate() function for further discussion of precisely how these rates and positions are interpreted. If the optional sex parameter is "*" (the default), then the supplied mutation rate map will be used for both sexes (which is the only option for hermaphroditic simulations). In sexual simulations sex may be "M" or "F" instead, in which case the supplied mutation rate map is used only for that sex. Note that whether sex-specific mutation rate maps will be used is set by the way that the simulation is initially configured with initializeMutationRate(), and cannot be changed with this method; so if the simulation was set up to use sex-specific mutation rate maps then sex must be "M" or "F" here, whereas if it was set up not to, then sex must be "*" or unsupplied here. If a simulation needs sex-specific mutation rate maps only some of the time, the male and female maps can simply be set to be identical the rest of the time. The mutation rate intervals are normally a constant in simulations, so be sure you know what you are doing. In nucleotide-based models, setMutationRate() may not be called. If variation in the mutation rate along the chromosome is desired, setHotspotMap() should be used.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setRecombinationRate
+
+Documentation for SLiM function \code{setRecombinationRate}, which is a method of the SLiM class \code{\link{Chromosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param rates An object of type numeric.
+@param ends An object of type null or integer.
+@param sex An object of type string (singleton).
+
+@aliases Chromosome$setRecombinationRate Ch$setRecombinationRate
+@family Chromosome
+@return An object of type void. 
+@details numeric rates, [Ni ends = NULL], [string$ sex = "*"]) Set the recombination rate per base position per gamete. All rates must be in the interval [0.0, 0.5]. There are two ways to call this method. If the optional ends parameter is NULL (the default), then rates must be a singleton value that specifies a single recombination rate to be used along the entire chromosome. If, on the other hand, ends is supplied, then rates and ends must be the same length, and the values in ends must be specified in ascending order. In that case, rates and ends taken together specify the recombination rates to be used along successive contiguous stretches of the chromosome, from beginning to end; the last position specified in ends should extend to the end of the chromosome (as previously determined, during simulation initialization). See the initializeRecombinationRate() function for further discussion of precisely how these rates and positions are interpreted. If the optional sex parameter is "*" (the default), then the supplied recombination rate map will be used for both sexes (which is the only option for hermaphroditic simulations). In sexual simulations sex may be "M" or "F" instead, in which case the supplied recombination map is used only for that sex. Note that whether sex-specific recombination maps will be used is set by the way that the simulation is initially configured with initializeRecombinationRate(), and cannot be changed with this method; so if the simulation was set up to use sex-specific recombination maps then sex must be "M" or "F" here, whereas if it was set up not to, then sex must be "*" or unsupplied here. If a simulation needs sex-specific recombination maps only some of the time, the male and female maps can simply be set to be identical the rest of the time. The recombination intervals are normally a constant in simulations, so be sure you know what you are doing.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+
+
+SLiM method createLogFile
+
+Documentation for SLiM function \code{createLogFile}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param filePath An object of type string (singleton).
+@param initialContents An object of type null or string.
+@param append An object of type logical (singleton).
+@param compress An object of type logical (singleton).
+@param sep An object of type string (singleton).
+@param logInterval An object of type null or integer (singleton).
+@param flushInterval An object of type null or integer (singleton).
+@param header An object of type logical (singleton).
+
+@aliases Community$createLogFile Co$createLogFile
+@family Community
+@return An object of type LogFile object. Return will be of length 1 (a singleton)
+@details string$ filePath, [Ns initialContents = NULL], [logical$ append = F], [logical$ compress = F], [string$ sep = ","], [Ni$ logInterval = NULL], [Ni$ flushInterval = NULL], [logical$ header = T]) Creates and returns a new LogFile object that logs data from the simulation (see the documentation for the LogFile class for details). Logged data will be written to the file at filePath, overwriting any existing file at that path by default, or appending to it instead if append is T (successive rows of the log table will always be appended to the previously written content, of course). Before the header line for the log is written out, any string elements in initialContents will be written first, separated by newlines, allowing for a user-defined file header. If compress is T, the contents will be compressed with zlib as they are written, and the standard .gz extension for gzip-compressed files will be appended to the filename in filePath if it is not already present. The sep parameter specifies the separator between data values within a row. The default of "," will generate a "comma-separated value" (CSV) file, while passing sep="\t" will use a tab separator instead to generate a "tab-separated value" (TSV) file. Other values for sep may also be used, but are less standard. LogTable supports periodic automatic logging of a new row of data, enabled by supplying a non-NULL value for logInterval. In this case, a new row will be logged (as if logRow() were called on the LogFile) at the end of every logInterval ticks (just before the tick counter increments, in both WF and nonWF models), starting at the end of the tick in which the LogFile was created. A logInterval of 1 will cause automatic logging at the end of every tick, whereas a logInterval of NULL disables automatic logging. Automatic logging can always be disabled or reconfigured later with the LogFile method setLogInterval(), or logging can be triggered manually by calling logRow(). When compression is enabled, LogFile flushes new data lazily by default, for performance reasons, buffering data for multiple rows before writing to disk. Passing a non-NULL value for flushInterval requests a flush every flushInterval rows (with a value of 1 providing unbuffered operation). Note that flushing very frequently will likely result in both lower performance and a larger final file size (in one simple test, 48943 bytes instead of 4280 bytes, or more than a 10x increase in size). Alternatively, passing a very large value for flushInterval will effectively disable automatic flushing, except at the end of the simulation (but be aware that this may use a large amount of memory for large log files). In any case, the log file will be created immediately, with its requested initial contents; the initial write is not buffered. When compression is not enabled, the flushInterval setting is ignored. The header parameter controls whether a header line is written out at the beginning of logging. If it is T (the default), a header line is written out; if F, no header is written. Suppressing the header output can be useful if you are using LogFile to append data to an existing file that already has a header line. The LogFile documentation discusses how to configure and use LogFile to write out the data you are interested in from your simulation.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method estimatedLastTick
+
+Documentation for SLiM function \code{estimatedLastTick}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases Community$estimatedLastTick Co$estimatedLastTick
+@family Community
+@return An object of type integer. Return will be of length 1 (a singleton)
+@details void) Returns SLiM's current estimate of the last tick in which the model will execute. Because script blocks can be added, removed, and rescheduled, and because the simulation may end prematurely (due to a call to simulationFinished(), for example), this is only an estimate, and may change over time.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method deregisterScriptBlock
+
+Documentation for SLiM function \code{deregisterScriptBlock}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param scriptBlocks An object of type integer or SLiMEidosBlock object.
+
+@aliases Community$deregisterScriptBlock Co$deregisterScriptBlock
+@family Community
+@return An object of type void. 
+@details io<SLiMEidosBlock> scriptBlocks) All SLiMEidosBlock objects specified by scriptBlocks (either with SLiMEidosBlock objects or with integer identifiers) will be scheduled for deregistration. The deregistered blocks remain valid, and may even still be executed in the current stage of the current tick; the blocks are not actually deregistered and deallocated until sometime after the currently executing script block has completed. To immediately prevent a script block from executing, even when it is scheduled to execute in the current stage of the current tick, use the active property of the script block.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method genomicElementTypesWithIDs
+
+Documentation for SLiM function \code{genomicElementTypesWithIDs}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param ids An object of type integer.
+
+@aliases Community$genomicElementTypesWithIDs Co$genomicElementTypesWithIDs
+@family Community
+@return An object of type GenomicElementType object. 
+@details integer ids) Find and return the GenomicElementType objects with id values matching the values in ids. If no matching GenomicElementType object can be found with a given id, an error results.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method interactionTypesWithIDs
+
+Documentation for SLiM function \code{interactionTypesWithIDs}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param ids An object of type integer.
+
+@aliases Community$interactionTypesWithIDs Co$interactionTypesWithIDs
+@family Community
+@return An object of type InteractionType object. 
+@details integer ids) Find and return the InteractionType objects with id values matching the values in ids. If no matching InteractionType object can be found with a given id, an error results.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method mutationTypesWithIDs
+
+Documentation for SLiM function \code{mutationTypesWithIDs}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param ids An object of type integer.
+
+@aliases Community$mutationTypesWithIDs Co$mutationTypesWithIDs
+@family Community
+@return An object of type MutationType object. 
+@details integer ids) Find and return the MutationType objects with id values matching the values in ids. If no matching MutationType object can be found with a given id, an error results.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method outputUsage
+
+Documentation for SLiM function \code{outputUsage}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases Community$outputUsage Co$outputUsage
+@family Community
+@return An object of type void. 
+@details void) Output the current memory usage of the simulation to Eidos's output stream. The specifics of what is printed, and in what format, should not be relied upon as they may change from version to version of SLiM. This method is primarily useful for understanding where the memory usage of a simulation predominantly resides, for debugging or optimization. Note that it does not capture all memory usage by the process; rather, it summarizes the memory usage by SLiM and Eidos in directly allocated objects and buffers. To get the same memory usage reported by outputUsage(), but as a float$ value, use the Community method usage(). To get the total memory usage of the running process (either current or peak), use the Eidos function usage().
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method registerEarlyEvent
+
+Documentation for SLiM function \code{registerEarlyEvent}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param id An object of type null or integer or string (singleton).
+@param source An object of type string (singleton).
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+@param ticksSpec An object of type null or Species object (singleton).
+
+@aliases Community$registerEarlyEvent Co$registerEarlyEvent
+@family Community
+@return An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
+@details Nis$ id, string$ source, [Ni$ start = NULL], [Ni$ end = NULL], [No<Species>$ ticksSpec = NULL]) Register a block of Eidos source code, represented as the string singleton source, as an Eidos early() event in the current simulation, with optional start and end ticks (and, for multispecies models, optional ticks specifier ticksSpec) limiting its applicability. The script block will be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered event is added to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in the current tick. The new SLiMEidosBlock will be defined as a global variable immediately by this method, and will also be returned by this method.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method registerFirstEvent
+
+Documentation for SLiM function \code{registerFirstEvent}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param id An object of type null or integer or string (singleton).
+@param source An object of type string (singleton).
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+@param ticksSpec An object of type null or Species object (singleton).
+
+@aliases Community$registerFirstEvent Co$registerFirstEvent
+@family Community
+@return An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
+@details Nis$ id, string$ source, [Ni$ start = NULL], [Ni$ end = NULL], [No<Species>$ ticksSpec = NULL]) Register a block of Eidos source code, represented as the string singleton source, as an Eidos first() event in the current simulation, with optional start and end ticks (and, for multispecies models, optional ticks specifier ticksSpec) limiting its applicability. The script block will be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered event is added to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in the current tick. The new SLiMEidosBlock will be defined as a global variable immediately by this method, and will also be returned by this method.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method registerInteractionCallback
+
+Documentation for SLiM function \code{registerInteractionCallback}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param id An object of type null or integer or string (singleton).
+@param source An object of type string (singleton).
+@param intType An object of type integer or InteractionType object (singleton).
+@param subpop An object of type null or integer or Subpopulation object (singleton).
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+
+@aliases Community$registerInteractionCallback Co$registerInteractionCallback
+@family Community
+@return An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
+@details Nis$ id, string$ source, io<InteractionType>$ intType, [Nio<Subpopulation>$ subpop = NULL], [Ni$ start = NULL], [Ni$ end = NULL]) Register a block of Eidos source code, represented as the string singleton source, as an Eidos interaction() callback in the current simulation (global to the community), with a required interaction type intType (which may be an integer identifier), optional exerter subpopulation subpop (which may also be an integer identifier, or NULL, the default, to indicate all subpopulations), and optional start and end ticks all limiting its applicability. The script block will be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered callback is added to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it will be eligible to execute the next time an InteractionType is evaluated. The new SLiMEidosBlock will be defined as a global variable immediately by this method, and will also be returned by this method.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method registerLateEvent
+
+Documentation for SLiM function \code{registerLateEvent}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param id An object of type null or integer or string (singleton).
+@param source An object of type string (singleton).
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+@param ticksSpec An object of type null or Species object (singleton).
+
+@aliases Community$registerLateEvent Co$registerLateEvent
+@family Community
+@return An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
+@details Nis$ id, string$ source, [Ni$ start = NULL], [Ni$ end = NULL], [No<Species>$ ticksSpec = NULL]) Register a block of Eidos source code, represented as the string singleton source, as an Eidos late() event in the current simulation, with optional start and end ticks (and, for multispecies models, optional ticks specifier ticksSpec) limiting its applicability. The script block will be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered event is added to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in the current tick. The new SLiMEidosBlock will be defined as a global variable immediately by this method, and will also be returned by this method.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method rescheduleScriptBlock
+
+Documentation for SLiM function \code{rescheduleScriptBlock}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param block An object of type integer or SLiMEidosBlock object (singleton).
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+@param ticks An object of type null or integer.
+
+@aliases Community$rescheduleScriptBlock Co$rescheduleScriptBlock
+@family Community
+@return An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
+@details io<SLiMEidosBlock>$ block, [Ni$ start = NULL], [Ni$ end = NULL], [Ni ticks = NULL]) Reschedule the target script block given by block to execute in a specified set of ticks. The block parameter may be either an integer representing the ID of the desired script block, or a SLiMScriptBlock specified directly. The target script block, block, is returned. The first way to specify the tick set is with start and end parameter values; block will then execute from start to end, inclusive. The second way to specify the tick set is using the ticks parameter, specifying each tick in which the block should execute. The vector supplied for ticks does not need to be in sorted order, but it must not contain any duplicates. It can sometimes be better to handle script block scheduling in other ways. If an early() event needs to execute every tenth tick over the whole duration of a long model run, for example, it might not be advisable to use a call like community.rescheduleScriptBlock(s1, ticks=seq(10, 100000, 10)) for that purpose, since that would make things complicated for SLiM's scheduler. Instead, it might be preferable to add a test such as if (community.tick % 10 != 0) return; at the beginning of the event. It is legal to reschedule a script block while the block is executing; a call like community.rescheduleScriptBlock(self, community.tick + 10, community.tick + 10); made inside a given block would therefore also cause the block to execute every tenth tick, although this sort of self-rescheduling code is probably harder to read, maintain, and debug. Whichever way of specifying the tick set is used, block may continue to be executed during the current tick cycle stage even after it has been rescheduled, unless it is made inactive using its active property, and similarly, the block may not execute during the current tick cycle stage if it was not already scheduled to do so. Rescheduling script blocks during the tick and tick cycle stage in which they are executing, or in which they are intended to execute, should be avoided. Also, note that script blocks which are open-ended (i.e., with no specified end tick), are not used in determining whether the end of the simulation has been reached (because then the simulation would run forever). Note that new script blocks can also be created and scheduled using the register...() methods of Community and Species; by using the same source as a template script block, the template can be duplicated and scheduled for different ticks, perhaps with modifications or variations. In multispecies models, note that blocks may not run due to their species or ticks specifier, even in ticks in which they are scheduled to run.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method scriptBlocksWithIDs
+
+Documentation for SLiM function \code{scriptBlocksWithIDs}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param ids An object of type integer.
+
+@aliases Community$scriptBlocksWithIDs Co$scriptBlocksWithIDs
+@family Community
+@return An object of type SLiMEidosBlock object. 
+@details integer ids) Find and return the SLiMEidosBlock objects with id values matching the values in ids. If no matching SLiMEidosBlock object can be found with a given id, an error results.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method simulationFinished
+
+Documentation for SLiM function \code{simulationFinished}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases Community$simulationFinished Co$simulationFinished
+@family Community
+@return An object of type void. 
+@details void) Declare the current simulation finished. Normally SLiM ends a simulation when, at the end of a tick, there are no script events or callbacks registered for any future tick (excluding scripts with no declared end tick). If you wish to end a simulation before this condition is met, a call to simulationFinished() will cause the current simulation to end at the end of the current tick. For example, a simulation might self-terminate if a test for a dynamic equilibrium condition is satisfied. Note that the current tick will finish executing; if you want the simulation to stop immediately, you can use the Eidos method stop(), which raises an error condition.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method speciesWithIDs
+
+Documentation for SLiM function \code{speciesWithIDs}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param ids An object of type integer.
+
+@aliases Community$speciesWithIDs Co$speciesWithIDs
+@family Community
+@return An object of type Species object. 
+@details integer ids) Find and return the Species objects with id values matching the values in ids. If no matching Species object can be found with a given id, an error results.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method subpopulationsWithIDs
+
+Documentation for SLiM function \code{subpopulationsWithIDs}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param ids An object of type integer.
+
+@aliases Community$subpopulationsWithIDs Co$subpopulationsWithIDs
+@family Community
+@return An object of type Subpopulation object. 
+@details integer ids) Find and return the Subpopulation objects with id values matching the values in ids. If no matching Subpopulation object can be found with a given id, an error results.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method subpopulationsWithNames
+
+Documentation for SLiM function \code{subpopulationsWithNames}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param names An object of type string.
+
+@aliases Community$subpopulationsWithNames Co$subpopulationsWithNames
+@family Community
+@return An object of type Subpopulation object. 
+@details string names) Find and return the Subpopulation objects with name values matching the values in names. If no matching Subpopulation object can be found with a given name, an error results.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method usage
+
+Documentation for SLiM function \code{usage}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases Community$usage Co$usage
+@family Community
+@return An object of type float. Return will be of length 1 (a singleton)
+@details void) Return the current memory usage of the simulation. The specifics of what is totalled up should not be relied upon as it may change from version to version of SLiM. This method is primarily useful for understanding where the memory usage of a simulation predominantly resides, for debugging or optimization. Note that it does not capture all memory usage by the process; rather, it summarizes the memory usage by SLiM and Eidos in directly allocated objects and buffers. To see details of this internal memory usage, use the Community method outputUsage(). To get the total memory usage of the running process (either current or peak), use the Eidos function usage().
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+
+
+SLiM method containsMarkerMutation
+
+Documentation for SLiM function \code{containsMarkerMutation}, which is a method of the SLiM class \code{\link{Haplosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mutType An object of type integer or MutationType object (singleton).
+@param position An object of type integer (singleton).
+@param returnMutation An object of type logical (singleton).
+
+@aliases Haplosome$containsMarkerMutation Ha$containsMarkerMutation
+@family Haplosome
+@return An object of type null or logical or Mutation object. Return will be of length 1 (a singleton)
+@details io<MutationType>$ mutType, integer$ position, [logical$ returnMutation = F]) Returns T if the haplosome contains a mutation of type mutType at position, F otherwise (if returnMutation has its default value of F; see below). This method is, as its name suggests, intended for checking for "marker mutations": mutations of a special mutation type that are not literally mutations in the usual sense, but instead are added in to particular haplosomes to mark them as possessing some property. Marker mutations are not typically added by SLiM's mutation-generating machinery; instead they are added explicitly with addNewMutation() or addNewDrawnMutation() at a known, constant position in the haplosome. This method provides a check for whether a marker mutation of a given type exists in a particular haplosome; because the position to check is known in advance, that check can be done much faster than the equivalent check with containsMutations() or countOfMutationsOfType(), using a binary search of the haplosome. If returnMutation is T (an option added in SLiM 3), this method returns the actual mutation found, rather than just T or F. More specifically, the first mutation found of mutType at position will be returned; if more than one such mutation exists in the target haplosome, which one is returned is not defined. If returnMutation is T and no mutation of mutType is found at position, NULL will be returned.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method containsMutations
+
+Documentation for SLiM function \code{containsMutations}, which is a method of the SLiM class \code{\link{Haplosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mutations An object of type Mutation object.
+
+@aliases Haplosome$containsMutations Ha$containsMutations
+@family Haplosome
+@return An object of type logical. 
+@details object<Mutation> mutations) Returns a logical vector indicating whether each of the mutations in mutations is present in the target haplosome; each element in the returned vector indicates whether the corresponding mutation is present (T) or absent (F). This method is provided for speed; it is much faster than the corresponding Eidos code. Note that the mutations must be associated with the same chromosome as the target haplosome, otherwise an error is raised. The containsMutations() method of Individual does not have this restriction, since it checks for mutations across all of the haplosomes of the target individual. This restriction is intended to find logic errors, since it seems to make little sense to check for a mutation in a haplosome for the wrong chromosome; but if this restriction proves inconvenient in common situations, it could be relaxed.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method countOfMutationsOfType
+
+Documentation for SLiM function \code{countOfMutationsOfType}, which is a method of the SLiM class \code{\link{Haplosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mutType An object of type integer or MutationType object (singleton).
+
+@aliases Haplosome$countOfMutationsOfType Ha$countOfMutationsOfType
+@family Haplosome
+@return An object of type integer. Return will be of length 1 (a singleton)
+@details io<MutationType>$ mutType) Returns the number of mutations that are of the type specified by mutType, out of all of the mutations in the haplosome. If you need a vector of the matching Mutation objects, rather than just a count, use -mutationsOfType(). This method is provided for speed; it is much faster than the corresponding Eidos code. + (integer)mutationCountsInHaplosomes([No<Mutation> mutations = NULL]) Return an integer vector with the frequency counts of all of the Mutation objects passed in mutations, within the target Haplosome vector. If the optional mutations argument is NULL (the default), frequency counts will be returned for all of the active Mutation objects in the species - the same Mutation objects, and in the same order, as would be returned by the mutations property of sim, in other words. In multi-chromosome models, you might often wish to obtain counts only for mutations associated with one particular chromosome. In that case, you would probably want to pass a vector of the mutations associated with that specific chromosome, as obtained from the subsetMutations() method of Species, rather than passing NULL. (Passing NULL in that scenario would give you counts of 0 for all of the mutations associated with other chromosomes in the model.) See the +mutationFrequenciesInHaplosomes() method to obtain float frequencies instead of integer counts. See also the Species methods mutationCounts() and mutationFrequencies(), which might be more efficient for getting counts/frequencies for whole subpopulations or for the whole species. + (float)mutationFrequenciesInHaplosomes([No<Mutation> mutations = NULL]) Return a float vector with the frequencies of all of the Mutation objects passed in mutations, within the target Haplosome vector. If the optional mutations argument is NULL (the default), frequencies will be returned for all of the active Mutation objects in the species - the same Mutation objects, and in the same order, as would be returned by the mutations property of sim, in other words. In multi-chromosome models, the frequency of each mutation is assessed within the subset of target haplosomes that are associated with the same chromosome. In other words, if a mutation is associated with chromosome 1, and the target haplosomes are associated with both chromosomes 1 and 2, the frequency of the mutation will be calculated only within the haplosomes for chromosome 1 (as you would expect). However, you might often wish to obtain frequencies only for mutations associated with one particular chromosome. In that case, you would probably want to pass a vector of the mutations associated with that specific chromosome, as obtained from the subsetMutations() method of Species, rather than passing NULL. (Passing NULL in that scenario would give you frequencies of 0 for all of the mutations associated with other chromosomes in the model.) See the +mutationCountsInHaplosomes() method to obtain integer counts instead of float frequencies. See also the Species methods mutationCounts() and mutationFrequencies(), which might be more efficient for getting counts/frequencies for whole subpopulations or for the whole species.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method mutationsOfType
+
+Documentation for SLiM function \code{mutationsOfType}, which is a method of the SLiM class \code{\link{Haplosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mutType An object of type integer or MutationType object (singleton).
+
+@aliases Haplosome$mutationsOfType Ha$mutationsOfType
+@family Haplosome
+@return An object of type Mutation object. 
+@details io<MutationType>$ mutType) Returns an object vector of all the mutations that are of the type specified by mutType, out of all of the mutations in the haplosome. If you just need a count of the matching Mutation objects, rather than a vector of the matches, use -countOfMutationsOfType(); if you need just the positions of matching Mutation objects, use -positionsOfMutationsOfType(); and if you are aiming for a sum of the selection coefficients of matching Mutation objects, use -sumOfMutationsOfType(). This method is provided for speed; it is much faster than the corresponding Eidos code. See also substitutionsOfType().
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method nucleotides
+
+Documentation for SLiM function \code{nucleotides}, which is a method of the SLiM class \code{\link{Haplosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+@param format An object of type string (singleton).
+
+@aliases Haplosome$nucleotides Ha$nucleotides
+@family Haplosome
+@return An object of type integer or string. 
+@details [Ni$ start = NULL], [Ni$ end = NULL], [string$ format = "string"]) Returns the nucleotide sequence for the haplosome. This is the current ancestral sequence, as would be returned by the Chromosome method ancestralNucleotides(), with the nucleotides for any nucleotide-based mutations in the haplosome overlaid. The range of the returned sequence may be constrained by a start position given in start and/or an end position given in end; nucleotides will be returned from start to end, inclusive. The default value of NULL for start and end represent the first and last base positions of the chromosome, respectively. The format of the returned sequence is controlled by the format parameter. A format of "string" will return the sequence as a singleton string (e.g., "TATA"). A format of "char" will return a string vector with one element per nucleotide (e.g., "T", "A", "T", "A"). A format of "integer" will return an integer vector with values A=0, C=1, G=2, T=3 (e.g., 3, 0, 3, 0). A format of "codon" will return an integer vector with values from 0 to 63, based upon successive nucleotide triplets in the sequence (which, for this format, must have a length that is a multiple of three); see the ancestralNucleotides() documentation for details. If the sequence returned is likely to be long, the "string" format will be the most memory-efficient, and may also be the fastest (but may be harder to work with). Several helper functions are provided for working with sequences, such as nucleotideCounts() to get the counts of A/C/G/T nucleotides in a sequence, nucleotideFrequencies() to get the same information as frequencies, and codonsToAminoAcids() to convert a codon sequence (such as provided by the codon format described above) to an amino acid sequence. + (void)outputHaplosomes([Ns$ filePath = NULL], [logical$ append = F], [logical$ objectTags = F]) Output the target haplosomes in SLiM's native format. This low-level output method may be used to output any sample of Haplosome objects associated with a single chromosome. The Eidos function sample() may be useful for constructing custom samples, as may the SLiM class Individual. For output of a sample from a single Subpopulation, the outputSample() method of Subpopulation may be more straightforward to use. If the optional parameter filePath is NULL (the default), output is directed to SLiM's standard output. Otherwise, the output is sent to the file specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. The objectTags parameter may be used to request that tag values for objects be written out. This option is turned off (F) by default, for brevity; if it turned on (T), the tag property values of all haplosomes and mutations in the output will be written. If there is other state that you wish you persist, such as tags on objects of other classes, values attached to objects with setValue(), and so forth, you should persist that state in separate files using calls such as writeFile(). See outputHaplosomesToMS() and outputHaplosomesToVCF() for other output formats. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick. + (void)outputHaplosomesToMS([Ns$ filePath = NULL], [logical$ append = F], [logical$ filterMonomorphic = F]) Output the target haplosomes in MS format. This low-level output method may be used to output any sample of Haplosome objects associated with a single chromosome. The Eidos function sample() may be useful for constructing custom samples, as may the SLiM class Individual. For output of a sample from a single Subpopulation, the outputMSSample() of Subpopulation may be more straightforward to use. If the optional parameter filePath is NULL (the default), output is directed to SLiM's standard output. Otherwise, the output is sent to the file specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. Positions in the output will span the interval [0,1]. If filterMonomorphic is F (the default), all mutations that are present in the sample will be included in the output. This means that some mutations may be included that are actually monomorphic within the sample (i.e., that exist in every sampled haplosome, and are thus apparently fixed). These may be filtered out with filterMonomorphic = T if desired; note that this option means that some mutations that do exist in the sampled haplosomes might not be included in the output, simply because they exist in every sampled haplosome. See outputHaplosomes() and outputHaplosomesToVCF() for other output formats. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick. + (void)outputHaplosomesToVCF([Ns$ filePath = NULL], [logical$ outputMultiallelics = T], [logical$ append = F], [logical$ simplifyNucleotides = F], [logical$ outputNonnucleotides = T], [logical$ groupAsIndividuals = T]) Output the target haplosomes in VCF format. This low-level output method may be used to output any sample of Haplosome objects associated with a single chromosome. The Eidos function sample() may be useful for constructing custom samples, as may the SLiM class Individual. For output of a sample from a single Subpopulation, the outputVCFSample() method of Subpopulation may be more straightforward to use. If the optional parameter filePath is NULL (the default), output is directed to SLiM's standard output. Otherwise, the output is sent to the file specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. The parameters outputMultiallelics, simplifyNucleotides, and outputNonnucleotides affect the format of the output produced. With groupAsIndividuals being T (the default), the target haplosome vector should be structured as if it represents all of the haplosomes for some set of individuals, for a single focal chromosome. All haplosomes for the focal chromosome should be present, including null haplosomes. It should provide all of the haplosomes for the first individual (for the chosen chromosome); then for the second individual; and so forth. The haplosomes in the target haplosome vector do not, in fact, need to belong to individuals in SLiM following this pattern; they just need to specify well-formed individuals in the VCF output. For an intrinsically haploid chromosome, the target haplosome for a given output individual is used to generate a haploid call (0 or 1) for that individual; if the haplosome is a null haplosome, the call will be ~ (an ASCII tilde). For example, calls for (non-null) Y haplosomes in males will be emitted as 0 or 1, whereas calls for the (null) Y haplosomes in females will be emitted as ~. For an intrinsically diploid chromosome, the pair of target haplosomes for a given individual is used to generate a call for that individual, but null haplosomes are allowed (in the patterns expected by SLiM given the chromosome type). For example, a pair of non-null haplosomes for an X chromosome will be emitted as a diploid call (such as 1|0) for a female (XX), but if the second haplosome of the pair is a null haplosome, the pair will be emitted as a haploid call (0 or 1) for a male (X). If the first haplosome of the pair were a null haplosome for an X chromosome, an error would be raised, since that is not an allowed pattern in SLiM (as discussed in the documentation for the Chromosome class). For a diploid autosome of type "A", however, any pattern is legal, but the VCF format cannot distinguish between a non-null haplosome first and a null haplosome second, versus a null haplosome first and a non-null haplosome second; both will be emitted as a haploid call (0 or 1). For a diploid autosome of type "A", if both haplosomes are null the call will be ~. The VCF specification does not actually seem to discuss sex chromosomes, but this design is intended to follow standard usage. With groupAsIndividuals being F, the focal chromosome is treated as being intrinsically haploid whether it is or not; each haplosome will be called as a haploid sample whether the chromosome type is diploid or haploid. This provides more detailed and accurate information; the exact state of each haplosome will be represented with either 0, 1, or (for null haplosomes) ~, rather than the state of a pair of haplosomes being represented as a single call in a way that can sometimes be ambiguous, as discussed above. However, the resulting output might confuse some VCF parsers that expect diploid calls for individuals, and it will not be as obvious which calls in the output belong to a given diploid individual. See outputHaplosomesToMS() and outputHaplosomes() for other output formats. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method positionsOfMutationsOfType
+
+Documentation for SLiM function \code{positionsOfMutationsOfType}, which is a method of the SLiM class \code{\link{Haplosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mutType An object of type integer or MutationType object (singleton).
+
+@aliases Haplosome$positionsOfMutationsOfType Ha$positionsOfMutationsOfType
+@family Haplosome
+@return An object of type integer. 
+@details io<MutationType>$ mutType) Returns the positions of mutations that are of the type specified by mutType, out of all of the mutations in the haplosome. If you need a vector of the matching Mutation objects, rather than just positions, use -mutationsOfType(). This method is provided for speed; it is much faster than the corresponding Eidos code. + (object<Mutation>)readHaplosomesFromMS(string$ filePath, io<MutationType>$ mutationType) Read new mutations from the MS format file at filePath and add them to the target haplosomes. The number of target haplosomes must match the number of haplosomes represented in the MS file, and all target haplosomes must be associated with the same chromosome, and must not be null haplosomes. The target haplosomes correspond, in order, to the call lines in the MS file. To read into all of the non-null haplosomes in a given subpopulation pN in a single-chromosome model, simply call pN.haplosomesNonNull.readHaplosomesFromMS(), assuming the subpopulation's size matches that of the MS file. A vector containing all of the mutations created by readHaplosomesFromMS() is returned. Each mutation is created at the position specified in the file, using the mutation type given by mutationType. Positions are expected to be in [0,1], and are scaled to the length of the chromosome by multiplying by the last valid base position of the chromosome (i.e., one less than the chromosome length). Selection coefficients are drawn from the mutation type. The population of origin for each mutation is set to -1, and the tick of origin is set to the current tick. In a nucleotide-based model, if mutationType is nucleotide-based, a random nucleotide different from the ancestral nucleotide at the position will be chosen with equal probability. + (object<Mutation>)readHaplosomesFromVCF(string$ filePath, [Nio<MutationType>$ mutationType = NULL]) Read new mutations from the VCF format file at filePath and add them to the target haplosomes. The number of target haplosomes must match the number of haplosomes represented in the VCF file (i.e., two times the number of diploid samples plus one times the number of haploid samples). To read into all of the haplosomes in a given subpopulation pN in a single-chromosome model, simply call pN.haplosomes.readHaplosomesFromVCF(), assuming the subpopulation's size matches that of the VCF file taking ploidy into account. A vector containing all of the mutations created by readHaplosomesFromVCF() is returned. This method and the readIndividualsFromVCF() method of Individual provide two alternative ways of reading VCF data, focused in the perspective of either haplosomes (this method) or individuals (the Individual method). See the documentation of readIndividualsFromVCF() for discussion of the pros and cons of each approach; that discussion will not be duplicated here. SLiM's VCF parsing is quite primitive. The header is parsed only inasmuch as SLiM looks to see whether SLiM-specific VCF fields are defined or not; the rest of the header information is ignored. Call lines are assumed to follow the format: #CHROM POS ID REF ALT QUAL FILTER INFO FORMAT i0...iN The CHROM field is largely ignored, but readHaplosomesFromVCF() does check that its value is identical across all call lines, to prevent the genetic data for more than one chromosome from being glommed together nonsensically; the input VCF file must contain data for just a single chromosome. In single-chromosome models the CHROM field is not otherwise checked or validated. In multi-chromosome models, readHaplosomesFromVCF() imposes some additional restrictions. First, all haplosomes in the target vector must be associated with the same single focal chromosome. Second, the CHROM field for every call line in the VCF file must match the symbol property of that focal chromosome; the VCF file must indicate that it specifically matches the focal chromosome associated with the target haplosomes. These restrictions boil down to the fact that readHaplosomesFromVCF() only reads data for a single chromosome. If you wish to read multi-chromosome VCF data into a multi-chromosome SLiM model, the readIndividualsFromVCF() method provided by the Individual class supports that functionality (because it can work at the level of individuals, rather than haplosomes, making it possible to match calls to the corresponding haplosomes in a reasonable way). Alternatively, you can call readHaplosomesFromVCF() multiple times to read data for different chromosomes one by one. The ID, QUAL, FILTER, and FORMAT fields are ignored, and information in the genotype fields beyond the GT genotype subfield are also ignored. SLiM's own VCF annotations are honored; in particular, mutations will be created using the given values of MID, S, PO, TO, and MT if those subfields are present, and DOM, if it is present, must match the dominance coefficient of the mutation type. The parameter mutationType (a MutationType object or id) will be used for any mutations that have no supplied mutation type id in the MT subfield; if mutationType would be used but is NULL an error will result. Mutation IDs supplied in MID will be used if no mutation IDs have been used in the simulation so far; if any have been used, it is difficult for SLiM to guarantee that there are no conflicts, so a warning will be emitted and the MID values will be ignored. If selection coefficients are not supplied with the S subfield, they will be drawn from the mutation type used for the mutation. If a population of origin is not supplied with the PO subfield, -1 will be used. If a tick of origin is not supplied with the TO subfield (or a generation of origin GO field, which was the SLiM convention before SLiM 4), the current tick will be used. REF and ALT must always be comprised of simple nucleotides (A/C/G/T) rather than values representing indels or other complex states. Beyond this, the handling of the REF and ALT fields depends upon several factors. In non-nucleotide-based models, we have the first case: (1) These fields are ignored, although they are still checked for conformance. In nucleotide-based models, when a header definition for SLiM's NONNUC tag is present (as when nucleotide-based output is generated by SLiM) there are two further possibilities, given as (2) and (3) here: (2) If a NONNUC field is present in the INFO field the call line is taken to represent a non-nucleotide-based mutation, and REF and ALT are again ignored; in this case the mutation type used must be non-nucleotide-based. (3) If a NONNUC field is not present the call line is taken to represent a nucleotide-based mutation; in this case, the mutation type used must be nucleotide-based, and the specified reference nucleotide must match the existing ancestral nucleotide at the given position. Finally, in nucleotide-based models, when a header definition for SLiM's NONNUC tag is not present (as when loading a non-SLiM-generated VCF file), there is a remaining possibility: (4) The mutation type used will govern the way nucleotides are handled. In this case, if the mutation type used for a mutation is nucleotide-based, the nucleotide provided in the VCF file for that allele will be used, whereas if the mutation type is non-nucleotide-based, the nucleotide provided will be ignored. If multiple alleles using the same nucleotide at the same position are specified in the VCF file, a separate mutation will be created for each, mirroring SLiM's behavior with independent mutational lineages when writing VCF. The MULTIALLELIC flag is ignored by readHaplosomesFromVCF(); call lines for mutations at the same base position in the same haplosome will result in stacked mutations whether or not MULTIALLELIC is present. The target haplosomes correspond, in order, to the haploid or diploid calls provided for i0&iN (the sample IDs) in the VCF file. Null haplosomes in the target vector will be skipped, and will not be used to correspond to any of the calls for i0&iN; however, care should be taken in this case that the haplosomes in the VCF file correspond to the target haplosomes in the manner desired. A call of ~ (an ASCII tilde character) for an individual i0&iN is taken to indicate that that individual possesses no genetic information for the chromosome; it lacks that chromosome entirely. For example, if the VCF file represents Y-chromosome data, female individuals should have calls of ~. This is treated differently than a call of 0 or 0|0; a call of 0 matches that call to a non-null target haplosome (but does not add the called mutation to that haplosome), and a call of 0|0 matches two non-null target haplosomes (but does not add the called mutation to either), whereas a call of ~ is simply skipped, without matching to any haplosome in the target vector, mirroring the fact that readHaplosomesFromVCF() skips over null haplosomes in the target haplosome vector. (When reading Y-chromosome data, a female's null Y haplosome could be omitted from the target haplosome vector, or it could be present since it would be skipped anyway - as stated above, all null haplosomes are skipped.) Note that these semantics using ~ are non-standard; the VCF standard does not seem to say anything about how sex chromosomes should be represented (or anything about other types of chromosomes that might be absent from some individuals), so the usage of ~ was invented for SLiM. This is an area where standardization is very much needed. + (void)removeMutations([No<Mutation> mutations = NULL], [logical$ substitute = F]) Remove the mutations in mutations from the target haplosomes, if they are present (if they are not present, they will be ignored). If NULL is passed for mutations (which is the default), then all mutations will be removed from the target haplosomes; in this case, substitute must be F (a specific vector of mutations to be substituted is required). Note that the Mutation objects removed remain valid, and will still be in the simulation's mutation registry (i.e., will be returned by the Species property mutations), until the next tick. All target haplosomes and all mutations in mutations must be associated with the same Chromosome object; attempting to remove a mutation from a haplosome associated with a different chromosome will raise an error. Removing mutations will normally affect the fitness values calculated at the end of the current tick; if you want current fitness values to be affected, you can call the Species method recalculateFitness() - but see the documentation of that method for caveats. The optional parameter substitute was added in SLiM 2.2, with a default of F for backward compatibility. If substitute is T, Substitution objects will be created for all of the removed mutations so that they are recorded in the simulation as having fixed, just as if they had reached fixation and been removed by SLiM's own internal machinery. This will occur regardless of whether the mutations have in fact fixed, regardless of the convertToSubstitution property of the relevant mutation types, and regardless of whether all copies of the mutations have even been removed from the simulation (making it possible to create Substitution objects for mutations that are still segregating). It is up to the caller to perform whatever checks are necessary to preserve the integrity of the simulation's records. Typically substitute will only be set to T in the context of calls like sim.subpopulations.haplosomes.removeMutations(muts, T), such that the substituted mutations are guaranteed to be entirely removed from circulation. As mentioned above, substitute may not be T if mutations is NULL.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method sumOfMutationsOfType
+
+Documentation for SLiM function \code{sumOfMutationsOfType}, which is a method of the SLiM class \code{\link{Haplosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mutType An object of type integer or MutationType object (singleton).
+
+@aliases Haplosome$sumOfMutationsOfType Ha$sumOfMutationsOfType
+@family Haplosome
+@return An object of type float. Return will be of length 1 (a singleton)
+@details io<MutationType>$ mutType) Returns the sum of the selection coefficients of all mutations that are of the type specified by mutType, out of all of the mutations in the haplosome. This is often useful in models that use a particular mutation type to represent QTLs with additive effects; in that context, sumOfMutationsOfType() will provide the sum of the additive effects of the QTLs for the given mutation type. This method is provided for speed; it is much faster than the corresponding Eidos code. Note that this method also exists on Individual, for cases in which the sum across both haplosomes of an individual is desired.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+
+
+SLiM method setGenomicElementType
+
+Documentation for SLiM function \code{setGenomicElementType}, which is a method of the SLiM class \code{\link{GenomicElement}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param genomicElementType An object of type integer or GenomicElementType object (singleton).
+
+@aliases GenomicElement$setGenomicElementType GE$setGenomicElementType
+@family GenomicElement
+@return An object of type void. 
+@details io<GenomicElementType>$ genomicElementType) Set the genomic element type used for a genomic element. The genomicElementType parameter should supply the new genomic element type for the element, either as a GenomicElementType object or as an integer identifier. The genomic element type for a genomic element is normally a constant in simulations, so be sure you know what you are doing.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+
+
+SLiM method setMutationFractions
+
+Documentation for SLiM function \code{setMutationFractions}, which is a method of the SLiM class \code{\link{GenomicElementType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mutationTypes An object of type integer or MutationType object.
+@param proportions An object of type numeric.
+
+@aliases GenomicElementType$setMutationFractions GET$setMutationFractions
+@family GenomicElementType
+@return An object of type void or void. 
+@details io<MutationType> mutationTypes, numeric proportions) Set the mutation type fractions contributing to a genomic element type. The mutationTypes vector should supply the mutation types used by the genomic element (either as MutationType objects or as integer identifiers), and the proportions vector should be of equal length, specifying the relative proportion of mutations that will be drawn from each corresponding type. This is normally a constant in simulations, so be sure you know what you are doing.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setMutationMatrix
+
+Documentation for SLiM function \code{setMutationMatrix}, which is a method of the SLiM class \code{\link{GenomicElementType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mutationMatrix An object of type float.
+
+@aliases GenomicElementType$setMutationMatrix GET$setMutationMatrix
+@family GenomicElementType
+@return An object of type void or void. 
+@details float mutationMatrix) Sets a new nucleotide mutation matrix for the genomic element type. This replaces the mutation matrix originally set by initializeGenomicElementType(). This method may only be called in nucleotide-based models.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+
+
+SLiM method containsMutations
+
+Documentation for SLiM function \code{containsMutations}, which is a method of the SLiM class \code{\link{Individual}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mutations An object of type Mutation object.
+
+@aliases Individual$containsMutations In$containsMutations
+@family Individual
+@return An object of type logical. 
+@details object<Mutation> mutations) Returns a logical vector indicating whether each of the mutations in mutations is present in the individual (in any of its haplosomes); each element in the returned vector indicates whether the corresponding mutation is present (T) or absent (F). This method is provided for speed; it is much faster than the corresponding Eidos code.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method countOfMutationsOfType
+
+Documentation for SLiM function \code{countOfMutationsOfType}, which is a method of the SLiM class \code{\link{Individual}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mutType An object of type integer or MutationType object (singleton).
+
+@aliases Individual$countOfMutationsOfType In$countOfMutationsOfType
+@family Individual
+@return An object of type integer. Return will be of length 1 (a singleton)
+@details io<MutationType>$ mutType) Returns the number of mutations that are of the type specified by mutType, out of all of the mutations in the individual (in all of its haplosomes; a mutation that is present in both homologous haplosomes counts twice). If you need a vector of the matching Mutation objects, rather than just a count, you should probably use mutationsFromHaplosomes(). This method is provided for speed; it is much faster than the corresponding Eidos code.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method haplosomesForChromosomes
+
+Documentation for SLiM function \code{haplosomesForChromosomes}, which is a method of the SLiM class \code{\link{Individual}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param chromosomes An object of type null or integer or string or Chromosome object.
+@param index An object of type null or integer (singleton).
+@param includeNulls An object of type logical (singleton).
+
+@aliases Individual$haplosomesForChromosomes In$haplosomesForChromosomes
+@family Individual
+@return An object of type Haplosome object. 
+@details [Niso<Chromosome> chromosomes = NULL], [Ni$ index = NULL], [logical$ includeNulls = T]) Returns a vector containing the haplosomes of the target individual that correspond to the chromosomes passed in chromosomes (following the order of the chromosomes property of Individual). Chromosomes can be specified by id (integer), by symbol (string) or by the Chromosome objects themselves; if NULL is passed (the default), all chromosomes defined for the species are used, in the order in which they were defined. For chromosomes that are intrinsically diploid (types "A", "X", and "Z", as well as the "H-" and "-Y" backward-compatibility chromosome types), index can be 0 or 1, requesting only the first or second haplosome, respectively, for that chromosome; for other chromosome types, index is ignored. If includeNulls is T (the default), any null haplosomes corresponding to the specified chromosomes are included in the result; if it is F, null haplosomes are excluded. See also the properties haplosomes, haplosomesNonNull, haploidGenome1, haploidGenome1NonNull, haploidGenome2, and haploidGenome2NonNull.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method mutationsFromHaplosomes
+
+Documentation for SLiM function \code{mutationsFromHaplosomes}, which is a method of the SLiM class \code{\link{Individual}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param category An object of type string (singleton).
+@param mutType An object of type null or integer or MutationType object (singleton).
+@param chromosomes An object of type null or integer or string or Chromosome object.
+
+@aliases Individual$mutationsFromHaplosomes In$mutationsFromHaplosomes
+@family Individual
+@return An object of type Mutation object. 
+@details string$ category, [Nio<MutationType>$ mutType = NULL], [Niso<Chromosome> chromosomes = NULL]) Returns a vector of mutations from the haplosomes of the target individual. Several options are provided that filter which mutations are returned. The category parameter must be one of five supported values: "unique", "homozygous", "heterozygous", "hemizygous", or "all". If category is "unique", a given mutation will be returned only once, whether it is present homozygously or heterozygously (or hemizygously, for that matter); this mode of operation is similar to the uniqueMutations property, but provides more control due to the other options provided by this method. If category is "homozygous", a given mutation will be returned only if it is present homozygously (in both of the homologous haplosomes for a given chromosome). If category is "heterozygous", a given mutation will be returned only if it is present heterozygously (in only one of the two homologous non-null haplosomes for a given chromosome). If category is "hemizygous", a given mutation will be returned only if it is present hemizygously (in one haplosome for an intrinsically diploid chromosome, when the other haplosome is a null haplosome). If category is "all", a given mutation will be returned each time that it occurs in the haplosomes of the individual; in other words, it will be present in the returned vector twice if it is homozygous, once if it is heterozygous or hemizygous. Mutations in the single haplosome of an intrinsically haploid chromosome will be returned for category values of "unique", "homozygous", and "all". The mutType parameter may be NULL, or may specify a mutation type by its integer id or with the MutationType object itself. If mutType is NULL (the default), mutations of every mutation type are returned; no filtering by mutation type is done. Otherwise, only mutations of the specified mutation type will be returned. The chromosomes parameter may be NULL, or may provide a vector of chromosomes specified by their integer id, string symbol, or with the Chromosome object itself. If chromosomes is NULL (the default), mutations associated with every chromosome are returned; no filtering by chromosome is done. Otherwise, only mutations associated with the specified chromosomes will be returned. The returned vector will contain tranches of mutations, one tranche per chromosome, in the order that the chromosomes were specified (if chromosomes is non-NULL) or the order the chromosomes were defined in the model (if chromosomes is NULL). Within a given tranche, the mutations for that chromosome will be returned in sorted order by position. (If more than one mutation associated with a given chromosome exists at the same position, the order in which those mutations are returned is undefined.) This method replaces the deprecated method uniqueMutationsOfType(), while providing additional useful options. It is particularly useful for efficient, vectorized assessment of the homozygous versus heterozygous state of the mutations contained by an individual, which is otherwise difficult to assess efficiently. + (void)outputIndividuals([Ns$ filePath = NULL], [logical$ append = F], [Niso<Chromosome>$ chromosome = NULL], [logical$ spatialPositions = T], [logical$ ages = T], [logical$ ancestralNucleotides = F], [logical$ pedigreeIDs = F], [logical$ objectTags = F]) Output the state of the target vector of individuals in SLiM's own format. If the optional parameter filePath is NULL (the default), output will be sent to Eidos's output stream. Otherwise, output will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. This method is quite similar to the Species method outputFull(), but (1) it can produce output for any vector of individuals, not always for the entire population; (2) it does not support output in a binary format; (3) it can produce output regarding the genetics for all chromosomes or for just one focal chromosome; and (4) there is no corresponding read method, as readFromPopulationFile() can read the data saved by outputFull(). The chromosome parameter specifies a focal chromosome for which the genetics of the target individuals will be output. If chromosome is NULL, all chromosomes will be output; otherwise, chromosome may specify the focal chromosome with an integer chromosome id, a string chromosome symbol, or a Chromosome object. The spatialPositions parameter may be used to control the output of the spatial positions of individuals in species for which continuous space has been enabled using the dimensionality option of initializeSLiMOptions(). If spatialPositions is F, the output will not contain spatial positions. If spatialPositions is T, spatial position information will be output if it is available. If the species does not have continuous space enabled, the spatialPositions parameter will be ignored. The ages parameter may be used to control the output of the ages of individuals in nonWF simulations. If ages is F, the output will not contain ages. If ages is T, ages will be output for nonWF models. In WF simulations, the ages parameter will be ignored. The ancestralNucleotides parameter may be used to control the output of the ancestral nucleotide sequence in nucleotide-based models. If ancestralNucleotides is F, the output will not contain ancestral nucleotide information. This option is provided because the ancestral sequence may be quite large, for models with a long chromosome. If the model is not nucleotide-based (as enabled with the nucleotideBased parameter to initializeSLiMOptions()), the ancestralNucleotides parameter will be ignored. Note that in nucleotide-based models the output format will always include the nucleotides associated with any nucleotide-based mutations; the ancestralNucleotides flag governs only the ancestral sequence. The pedigreeIDs parameter may be used to request that pedigree IDs be written out. This option is turned off (F) by default, for brevity. This option may only be used if SLiM's optional pedigree tracking has been enabled with initializeSLiMOptions(keepPedigrees=T). Finally, the objectTags parameter may be used to request that tag values for objects be written out. This option is turned off (F) by default, for brevity; if it turned on (T), the values of all tags for all objects of supported classes (Chromosome, Individual, Haplosome, Mutation) will be written. For individuals, the tag, tagF, tagL0, tagL1, tagL2, tagL3, and tagL4 properties will be written; for chromosomes, haplosomes, and mutations, the tag property will be written. If there is other state that you wish you persist, such as tags on objects of other classes, values attached to objects with setValue(), and so forth, you should persist that state in separate files using calls such as writeFile(). Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick. + (void)outputIndividualsToVCF([Ns$ filePath = NULL], [logical$ append = F], [Niso<Chromosome>$ chromosome = NULL], [logical$ outputMultiallelics = T], [logical$ simplifyNucleotides = F], [logical$ outputNonnucleotides = T]) Output the state of the target vector of individuals in VCF format. If the optional parameter filePath is NULL (the default), output will be sent to Eidos's output stream. Otherwise, output will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. This method is quite similar to the Subpopulation method outputVCFSample(), but (1) it can produce output for any vector of individuals, rather than sampling from a single population; (2) it can produce output regarding the genetics for all chromosomes or for just one focal chromosome, whereas outputVCFSample() can only output data for a single chromosome; and (3) because it can output genetic information for more than one chromosome, the groupAsIndividuals option provided by outputVCFSample() is not available for outputIndividualsToVCF(); each VCF sample has to correspond directly to one individual. The chromosome parameter specifies a focal chromosome for which the genetics of the target individuals will be output. If chromosome is NULL, all chromosomes will be output (distinguished in the VCF output by the chromosome symbol output in the CHROM column); otherwise, chromosome may specify the focal chromosome with an integer chromosome id, a string chromosome symbol, or a Chromosome object. The parameters outputMultiallelics, simplifyNucleotides, and outputNonnucleotides affect the format of the output produced. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick. + (object<Mutation>)readIndividualsFromVCF(string$ filePath, [Nio<MutationType>$ mutationType = NULL]) Read new mutations from the VCF format file at filePath and add them to the target individuals. The number of target individuals must match the number of samples represented in the VCF file; each sample will be associated with a corresponding target individual, in the order that the samples and the target individuals are provided. To read into all of the individuals in a given subpopulation pN, simply call pN.individuals.readIndividualsFromVCF(), assuming the subpopulation's size matches the number of samples in the VCF file. A vector containing all of the mutations created by readIndividualsFromVCF() is returned (not necessarily in the order of the corresponding VCF call lines). This method and the readHaplosomesFromVCF() method of Haplosome provide two alternative ways of reading VCF data, focused on the perspective of either individuals (this method) or haplosomes (the Haplosome method). As described above, this method draws a correspondence between VCF samples and individuals, whereas the Haplosome method draws a correspondence between VCF calls and haplosomes. For example, if a VCF call line contained a series of calls like "1|1 0|1 1 0 1|0" this method would see that as calls for five individuals, three of which are diploid for the chromosome being called, and two of which are haploid. That would make sense if, for example, the chromosome being called is an X chromosome; the diploid individuals would be females, the haploid individuals would be males. The vector of target individuals would need to contain two females, then two males, and then a female, so that the structure of the calls matched the haplosome structure of the individuals, or an error would result. The readHaplosomesFromVCF() method of Haplosome, on the other hand, would see that same series of calls as corresponding to eight haplosomes, and would assign each call to the corresponding non-null target haplosome, without regard to whether the VCF's grouping into diploid and haploid calls corresponded to any coherent structure of individuals in the SLiM model. Each approach has advantages and disadvantages. This method provides much more error-checking and safety when your intention is to read individual-level data from VCF; it can check that the ploidy in the VCF data matches the ploidy of each target individual, and that diploid calls like 1|1 get assigned to the two haplosomes of a single individual correctly. The readHaplosomesFromVCF() method of Haplosome does not perform such checks, and can push VCF data into any arbitrary set of haplosomes, so it provides more power and flexibility, but less error-checking and less intelligence. Because this method works at the level of individuals, it can read VCF data associated with multiple chromosomes into a multi-chromosome SLiM model and place mutations into the correct haplosomes of each individual based upon the CHROM column of the VCF file (which readHaplosomesFromVCF() cannot do). For this to work, the values in the CHROM column of the call lines must correspond exactly to chromosome symbols in the SLiM model, as provided to initializeChromosome(). The call lines in the input file may be in any order (they do not have to be sorted by CHROM value, or any other such requirement). The vector of mutations returned will contain all of the mutations created; when reading multi-chromosome data, that returned vector will therefore contain a mix of mutations with different associated chromosomes. Alternatively, it would work equally well to make a separate call to readIndividualsFromVCF() for each chromosome, providing each call with a separate VCF file that contains only the mutations associated with one chromosome; in that case, each call would return only the mutations added to the chromosome associated with that call, which might be more convenient if post-processing of the returned mutations is necessary. As in readHaplosomesFromVCF(), a call of ~ represents the fact that an individual has no genetic information for the chromosome being called; for example, a call line for a mutation on a Y chromosome should have haploid calls for male individuals (they have or do not have the called mutation), and calls of ~ for female individuals (they have no Y haplosome at all). This convention was invented for SLiM, since the VCF standard does not seem to say anything about how sex chromosomes should be represented (or anything about other types of chromosomes that might be absent from some individuals). The readHaplosomesFromVCF() method's documentation provides many important details on how SLiM treats various VCF fields during input; those details will not be repeated here, for brevity.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method relatedness
+
+Documentation for SLiM function \code{relatedness}, which is a method of the SLiM class \code{\link{Individual}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param individuals An object of type Individual object.
+@param chromosome An object of type null or integer or string or Chromosome object (singleton).
+
+@aliases Individual$relatedness In$relatedness
+@family Individual
+@return An object of type float. 
+@details object<Individual> individuals, [Niso<Chromosome>$ chromosome = NULL]) Returns a vector containing the degrees of relatedness between the receiver and each of the individuals in individuals. The relatedness between A and B is always 1.0 if A and B are actually the same individual; this facility works even if SLiM's optional pedigree tracking is not enabled (in which case all other relatedness values will be 0.0). Otherwise, if pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), this method will use the pedigree information to construct a relatedness estimate. The relatedness is calculated based upon the type of the chromosome specified by chromosome (as an integer id, a string symbol, or a Chromosome object); if chromosome is NULL, it is assumed to be the single chromosome present in the model, or if more than one chromosome is present, an error results and the chromosome must be explicitly given. More specifically, this method uses all available pedigree information from the grandparental and parental pedigree records of A and B to compute an estimate of the degree of consanguinity between A and B. When considering a diploid autosome, siblings have a relatedness of 0.5, as do parents to their children and vice versa; cousins have a relatedness of 0.125; and so forth. If, according to the pedigree information available, A and B have no blood relationship, the value returned is 0.0. Note that the value returned by relatedness() is what is called the "coefficient of relationship" between the two individuals (Wright, 1922; "https://doi.org/10.1086/279872"), and ranges from 0.0 to 1.0. There is another commonly used metric of relatedness, called the "kinship coefficient", that reflects the probability of identity by descent between two individuals A and B. In general, it is approximately equal to one-half of the coefficient of relationship; if an approximate estimate of the kinship coefficient is acceptable, especially in models in which individuals are expected to be outbred, you can simply divide relatedness() by two. However, it should be noted that Wright's coefficient of relationship is not a measure of the probability of identity by descent, and so it is not exactly double the kinship coefficient; they actually measure different things. More precisely, the relationship between them is r = 2/sqrt((1+fA)(1+fB)), where r is Wright's coefficient of relatedness,  is the kinship coefficient, and fA and fB are the inbreeding coefficients of A and B respectively. Note that this relatedness is simply pedigree-based relatedness, and does not necessarily correspond to genetic relatedness, because of the effects of factors like assortment and recombination. If a metric of actual genetic relatedness is desired, tree-sequence recording can be used after simulation is complete, to compute the exact genetic relatedness between individuals based upon the complete ancestry tree (a topic which is beyond the scope of this manual). Actual genetic relatedness cannot presently be calculated during a simulation run; the information is implicitly contained in the recorded tree-sequence tables, but calculating it is too computationally expensive to be reasonable. This method assumes that the grandparents (or the parents, if grandparental information is not available) are themselves unrelated and that they are not inbred; this assumption is necessary because we have no information about their parentage, since SLiM's pedigree tracking information only goes back two generations. Be aware that in a model where inbreeding or selfing occurs at all (including "incidental selfing", where a hermaphroditic individual happens to choose itself as a mate), some level of "background relatedness" will be present and this assumption will be violated. In such circumstances, relatedness() will therefore tend to underestimate the degree of relatedness between individuals, and the greater the degree of inbreeding, the greater the underestimation will be. If inbreeding is allowed in a model - and particularly if it is common - the results of relatedness() should therefore not be taken as an estimate of absolute relatedness, but can still be useful as an estimate of relative relatedness (indicating that, say, A appears from the information available to be more closely related to B than it is to C). See also sharedParentCount() for a different metric of relatedness. + (void)setSpatialPosition(float position) Sets the spatial position of the individual (as accessed through the spatialPosition property). The length of position (the number of coordinates in the spatial position of an individual) depends upon the spatial dimensionality declared with initializeSLiMOptions(). If the spatial dimensionality is zero (as it is by default), it is an error to call this method. The elements of position are set into the values of the x, y, and z properties (if those properties are encompassed by the spatial dimensionality of the simulation). In other words, if the declared dimensionality is "xy", calling individual.setSpatialPosition(c(1.0, 0.5)) property is equivalent to individual.x = 1.0; individual.y = 0.5; individual.z is not set (even if a third value is supplied in position) since it is not encompassed by the simulation's dimensionality in this example. Note that this is an Eidos class method, somewhat unusually, which allows it to work in a special way when called on a vector of individuals. When the target vector of individuals is non-singleton, this method can do one of two things. If position contains just a single point (i.e., is equal in length to the spatial dimensionality of the model), the spatial position of all of the target individuals will be set to the given point. Alternatively, if position contains one point per target individual (i.e., is equal in length to the number of individuals multiplied by the spatial dimensionality of the model), the spatial position of each target individual will be set to the corresponding point from position (where the point data is concatenated, not interleaved, just as it would be returned by accessing the spatialPosition property on the vector of target individuals). Calling this method with a position vector of any other length is an error.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method sharedParentCount
+
+Documentation for SLiM function \code{sharedParentCount}, which is a method of the SLiM class \code{\link{Individual}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param individuals An object of type Individual object.
+
+@aliases Individual$sharedParentCount In$sharedParentCount
+@family Individual
+@return An object of type integer. 
+@details object<Individual> individuals) Returns a vector containing the number of parents shared between the receiver and each of the individuals in individuals. The number of shared parents between A and B is always 2 if A and B are actually the same individual; this facility works even if SLiM's optional pedigree tracking is not enabled (in which case all other relatedness values will be 0). Otherwise, if pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), this method will use the pedigree information to construct a relatedness estimate. More specifically, this method uses the parental pedigree IDs from the pedigree records of a pair of individuals to count the number of shared parents between them, such that full siblings (with all of the same parents) have a count of 2, and half siblings (with half of the same parents) have a count of 1. If possible parents of the two individuals are A, B, C, and D, then the shared parent count is as follows, for some illustrative examples. The first column showing the two parents of the first individual, the second column showing the two parents of the second individual; note that the two parents of an individual can be the same due to cloning or selfing:  AB CD  0 (no shared parents)  AB CC  0 (no shared parents)  AB AC  1 (half siblings)  AB AA  1 (half siblings)  AA AB  1 (half siblings)  AB AB  2 (full siblings)  AB BA  2 (full siblings)  AA AA  2 (full siblings) This method does not estimate consanguinity. For example, if one individual is itself a parent of the other individual, that is irrelevant for this method. Similarly, in simulations of sex chromosomes, the sexes of the parents are irrelevant, even if no genetic material would have been inherited from a given parent. See relatedness() for an assessment of pedigree-based relatedness that does estimate the consanguinity of individuals. The sharedParentCount() method is preferable if your exact question is simply whether individuals are full siblings, half siblings, or non-siblings; in other cases, relatedness() is probably more useful.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method sumOfMutationsOfType
+
+Documentation for SLiM function \code{sumOfMutationsOfType}, which is a method of the SLiM class \code{\link{Individual}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mutType An object of type integer or MutationType object (singleton).
+
+@aliases Individual$sumOfMutationsOfType In$sumOfMutationsOfType
+@family Individual
+@return An object of type float. Return will be of length 1 (a singleton)
+@details io<MutationType>$ mutType) Returns the sum of the selection coefficients of all mutations that are of the type specified by mutType, out of all of the mutations in the haplosomes of the individual. This is often useful in models that use a particular mutation type to represent QTLs with additive effects; in that context, sumOfMutationsOfType() will provide the sum of the additive effects of the QTLs for the given mutation type. This method is provided for speed; it is much faster than the corresponding Eidos code. Note that this method also exists on Haplosome, for cases in which the sum for just one haplosome is desired.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method uniqueMutationsOfType
+
+Documentation for SLiM function \code{uniqueMutationsOfType}, which is a method of the SLiM class \code{\link{Individual}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mutType An object of type integer or MutationType object (singleton).
+
+@aliases Individual$uniqueMutationsOfType In$uniqueMutationsOfType
+@family Individual
+@return An object of type Mutation object. 
+@details io<MutationType>$ mutType) This method has been deprecated, and may be removed in a future release of SLiM. Its functionality was replaced by mutationsFromHaplosomes() in SLiM 5.0. Returns an object vector of all the mutations that are of the type specified by mutType, out of all of the mutations in the individual. Mutations present in both homologous haplosomes will occur only once in the result of this method, and the mutations for a given chromosomes will be given in sorted order by position, so in single-chromosome simulations this method is similar to sortBy(unique(individual.haplosomes.mutationsOfType(mutType)), "position"). (Even with a single chromosome it is not identical to that call, since if multiple mutations exist at the exact same position, they may be sorted differently by this method than they would be by sortBy().) If you just need a count of the matching Mutation objects, rather than a vector of the matches, use -countOfMutationsOfType(). This method is provided for speed; it is much faster than the corresponding Eidos code. Indeed, it is faster than just individual.haplosomes.mutationsOfType(mutType), and gives uniquing and sorting on top of that, so it is advantageous unless duplicate entries for homozygous mutations are actually needed.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+
+
+SLiM method clippedIntegral
+
+Documentation for SLiM function \code{clippedIntegral}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param receivers An object of type null or Individual object.
+
+@aliases InteractionType$clippedIntegral IT$clippedIntegral
+@family InteractionType
+@return An object of type float. 
+@details No<Individual> receivers) Returns a vector containing the integral of the interaction function as experienced by each of the individuals in receivers. For each given individual, the interaction function is clipped to the edges of the spatial bounds of the subpopulation that individual inhabits; the individual's spatial position must be within bounds or an error is raised. A periodic boundary will, correctly, not clip the interaction function. The interaction function is also clipped to the interaction's maximum distance; that distance must be less than half of the extent of the spatial bounds in each dimension (so that, for a given dimension, the interaction function is clipped by the spatial bounds on only one side), otherwise an error is raised. Note that receiver constraints are not applied; an individual might not actually receive any interactions because of those constraints, but it is still considered to have the same interaction function integral. If receivers is NULL, the maximal integral is returned, as would be experienced by an individual farther than the maximum distance from any edge. The evaluate() method must have been previously called for the receiver subpopulation, and positions saved at evaluation time will be used. If the InteractionType is non-spatial, this method may not be called. The computed value of the integral is not exact; it is calculated by an approximate numerical method designed to be fast, but the error should be fairly small (typically less than 1% from the true value). A large amount of computation will occur the first time this method is called (perhaps taking more than a second, depending upon hardware), but subsequent calls should be very fast. This method does not invoke interaction() callbacks; the calculated integrals are only for the interaction function itself, and so will not be accurate if interaction() callbacks modify the relationship between distance and interaction strength. For this reason, the overhead of the first call will not reoccur when individuals move or when the interaction is re-evaluated; for typical models, the initial overhead will be incurred only once. The initial overhead will reoccur, however, if the interaction function itself, or the maximum interaction distance, are changed; frequent change of those parameters may render the performance of this method unacceptable. The integral values returned by clippedIntegral() can be useful for computing interaction metrics that are scaled by the amount of "interaction field" (to coin a term) that is present for a given individual, producing metrics of interaction density. Notably, the localPopulationDensity() method automatically incorporates the mechanics of clippedIntegral() into the calculations it performs; see that method's documentation for further discussion of this concept. This approach can also be useful with the interactingNeighborCount() method, provided that the interaction function is of type "f" (since the neighbor count does not depend upon interaction strength).
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method distance
+
+Documentation for SLiM function \code{distance}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param receiver An object of type Individual object (singleton).
+@param exerters An object of type null or Individual object.
+
+@aliases InteractionType$distance IT$distance
+@family InteractionType
+@return An object of type float. 
+@details object<Individual>$ receiver, [No<Individual> exerters = NULL]) Returns a vector containing distances between receiver and the individuals in exerters. If exerters is NULL (the default), then a vector of the distances from receiver to all individuals in its subpopulation (including itself) is returned; this case may be handled differently internally, for greater speed, so supplying NULL is preferable to supplying the vector of all individuals in the subpopulation explicitly. Otherwise, all individuals in exerters must belong to a single subpopulation (but not necessarily the same subpopulation as receiver). The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. If the InteractionType is non-spatial, this method may not be called. Importantly, distances are calculated according to the spatiality of the InteractionType (as declared in initializeInteractionType()), not the dimensionality of the model as a whole (as declared in initializeSLiMOptions()). The distances returned are therefore the distances that would be used to calculate interaction strengths. However, distance() will return finite distances for all pairs of individuals, even if the individuals are non-interacting due to the maximum interaction distance or the interaction constraints; the distance() between an individual and itself will thus be 0. See interactionDistance() for an alternative distance definition.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method distanceFromPoint
+
+Documentation for SLiM function \code{distanceFromPoint}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param point An object of type float.
+@param exerters An object of type Individual object.
+
+@aliases InteractionType$distanceFromPoint IT$distanceFromPoint
+@family InteractionType
+@return An object of type float. 
+@details float point, object<Individual> exerters) Returns a vector containing distances between the point given by the spatial coordinates in point, which may be thought of as the "receiver", and individuals in exerters. The point vector is interpreted as providing coordinates precisely as specified by the spatiality of the interaction type; if the interaction type's spatiality is "xz", for example, then point[0] is assumed to be an x value, and point[1] is assumed to be a z value, and point must be exactly two elements in length. Be careful; this means that in general it is not safe to pass an individual's spatialPosition property for point, for example (although it is safe if the spatiality of the interaction matches the dimensionality of the simulation); other properties on Individual exist for getting the individual's coordinates in a particular spatiality, such as the xz property for this example. A coordinate for a periodic spatial dimension must be within the spatial bounds for that dimension, since coordinates outside of periodic bounds are meaningless (pointPeriodic() may be used to ensure this); coordinates for non-periodic spatial dimensions are not restricted. All individuals in exerters must belong to a single subpopulation; the evaluate() method must have been previously called for that subpopulation, and positions saved at evaluation time will be used. If the InteractionType is non-spatial, this method may not be called. Importantly, distances are calculated according to the spatiality of the InteractionType (as declared in initializeInteractionType()) not the dimensionality of the model as a whole (as declared in initializeSLiMOptions()). The distances are therefore interaction distances: the distances that are used to calculate interaction strengths. However, the maximum interaction distance and interaction constraints are not used. This method replaces the distanceToPoint() method that existed prior to SLiM 4.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method drawByStrength
+
+Documentation for SLiM function \code{drawByStrength}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param receiver An object of type Individual object.
+@param count An object of type integer (singleton).
+@param exerterSubpop An object of type null or Subpopulation object (singleton).
+@param returnDict An object of type logical (singleton).
+
+@aliases InteractionType$drawByStrength IT$drawByStrength
+@family InteractionType
+@return An object of type . 
+@details object<Individual> receiver, [integer$ count = 1], [No<Subpopulation>$ exerterSubpop = NULL], [logical$ returnDict = F]) Returns an object<Individual> vector containing up to count individuals drawn from exerterSubpop, or if that is NULL (the default), then from the subpopulation of receiver, which must be singleton in the default mode of operation (but see below). The probability of drawing particular individuals is proportional to the strength of interaction they exert upon receiver (which is zero for receiver itself). All exerters must belong to a single subpopulation (but not necessarily the same subpopulation as receiver). The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. This method may be used with either spatial or non-spatial interactions, but will be more efficient with spatial interactions that set a short maximum interaction distance. Draws are done with replacement, so the same individual may be drawn more than once; sometimes using unique() on the result of this call is therefore desirable. If more than one draw will be needed, it is much more efficient to use a single call to drawByStrength(), rather than drawing individuals one at a time. Note that if no individuals exert a non-zero interaction strength upon receiver, the vector returned will be zero-length; it is important to consider this possibility. Beginning in SLiM 4.1, this method has a vectorized mode of operation in which the receiver parameter may be non-singleton. To switch the method to this mode, pass T for returnDict, rather than the default of F (the operation of which is described above). In this mode, the return value is a Dictionary object instead of a vector of Individual objects. This dictionary uses integer keys that range from 0 to N-1, where N is the number of individuals passed in receiver; these keys thus correspond directly to the indices of the individuals in receiver, and there is one entry in the dictionary for each receiver. The value in the dictionary, for a given integer key, is an object<Individual> vector with the individuals drawn for the corresponding receiver, exactly as described above for the non-vectorized case. The results for each receiver can therefore be obtained from the returned dictionary with getValue(), passing the index of the receiver. The speed of this mode of operation will probably be similar to the speed of making N separate non-vectorized calls to drawByStrength(), when running single-threaded. When running multi-threaded, however, a substantial performance improvement may be realized by using the vectorized version of this method, since the queries can then be executed in parallel. In this mode of operation, all receivers must belong to the same subpopulation.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method evaluate
+
+Documentation for SLiM function \code{evaluate}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param subpops An object of type integer or Subpopulation object.
+
+@aliases InteractionType$evaluate IT$evaluate
+@family InteractionType
+@return An object of type void. 
+@details io<Subpopulation> subpops) Snapshots model state in preparation for the use of the interaction, for the receiver and exerter subpopulations specified by subpops. The subpopulations may be supplied either as integer IDs, or as Subpopulation objects. This method will discard all previously cached data for the subpopulation(s), and will cache the current spatial positions of all individuals they contain (so that the spatial positions of those individuals may then change without disturbing the state of the interaction at the moment of evaluation). It will also cache which individuals in the subpopulation are eligible to act as exerters, according to the configured exerter constraints, but it will not cache such eligibility information for receiver constraints (which are applied at the time a spatial query is made). Particular interaction distances and strengths are not computed by evaluate(), and interaction() callbacks will not be called in response to this method; that work is deferred until required to satisfy a query (at which point the tick and cycle counters may have advanced, so be careful with the tick ranges used in defining interaction() callbacks). You must explicitly call evaluate() at an appropriate time in the tick cycle before the interaction is used, but after any relevant changes have been made to the population. SLiM will invalidate any existing interactions after any portion of the tick cycle in which new individuals have been born or existing individuals have died. In a WF model, this occurs just before late() events execute (see the WF tick cycle diagram), so late() events are often the appropriate place to put evaluate() calls, but first() or early() events can work too if the interaction is not needed until that point in the tick cycle anyway. In nonWF models, on the other hand, new offspring are produced just before early() events and then individuals die just before late() events (see the nonWF tick cycle diagram), so interactions will be invalidated twice during each tick cycle. This means that in a nonWF model, an interaction that influences reproduction should usually be evaluated in a first() event, while an interaction that influences fitness or mortality should usually be evaluated in an early() event (and an interaction that affects both may need to be evaluated at both times). If an interaction is never evaluated for a given subpopulation, it is guaranteed that there will be essentially no memory or computational overhead associated with the interaction for that subpopulation. Furthermore, attempting to query an interaction for a receiver or exerter in a subpopulation that has not been evaluated is guaranteed to raise an error.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method interactingNeighborCount
+
+Documentation for SLiM function \code{interactingNeighborCount}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param receivers An object of type Individual object.
+@param exerterSubpop An object of type null or Subpopulation object (singleton).
+
+@aliases InteractionType$interactingNeighborCount IT$interactingNeighborCount
+@family InteractionType
+@return An object of type integer. 
+@details object<Individual> receivers, [No<Subpopulation>$ exerterSubpop = NULL]) Returns the number of interacting individuals for each individual in receivers, within the maximum interaction distance according to the distance metric of the InteractionType, from among the exerters in exerterSubpop (or, if that is NULL, then from among all individuals in the receiver's subpopulation). More specifically, this method counts the number of individuals which can exert an interaction upon each receiver (which does not include the receiver itself). All of the receivers must belong to a single subpopulation, and all of the exerters must belong to a single subpopulation, but those two subpopulations do not need to be the same. The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. This method is similar to nearestInteractingNeighbors() (when passed a large count so as to guarantee that all interacting individuals are returned), but this method returns only a count of the interacting individuals, not a vector containing the individuals. Note that this method uses interaction eligibility as a criterion; it will not count neighbors that do not exert an interaction upon a given receiver (due to the configured receiver or exerter constraints). (It also does not count a receiver as a neighbor of itself.) If a count of all neighbors is desired, rather than just interacting neighbors, use neighborCount(). If the InteractionType is non-spatial, this method may not be called.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method interactionDistance
+
+Documentation for SLiM function \code{interactionDistance}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param receiver An object of type Individual object (singleton).
+@param exerters An object of type null or Individual object.
+
+@aliases InteractionType$interactionDistance IT$interactionDistance
+@family InteractionType
+@return An object of type float. 
+@details object<Individual>$ receiver, [No<Individual> exerters = NULL]) Returns a vector containing interaction-dependent distances between receiver and individuals in exerters. If exerters is NULL (the default), then a vector of the interaction-dependent distances from receiver to all individuals in its subpopulation (including receiver itself) is returned; this case may be handled much more efficiently than if a vector of all individuals in the subpopulation is explicitly provided. Otherwise, all individuals in exerters must belong to a single subpopulation (but not necessarily the same subpopulation as receiver). The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. If the InteractionType is non-spatial, this method may not be called. Importantly, distances are calculated according to the spatiality of the InteractionType (as declared in initializeInteractionType()), not the dimensionality of the model as a whole (as declared in initializeSLiMOptions()). The distances returned are therefore the distances that would be used to calculate interaction strengths. In addition, interactionDistance() will return INF as the distance between receiver and any individual which does not exert an interaction upon receiver; the interactionDistance() between an individual and itself will thus be INF, and likewise for pairs excluded from interacting by receiver constraints, exerter constraints, or the maximum interaction distance of the interaction type. See distance() for an alternative distance definition.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method localPopulationDensity
+
+Documentation for SLiM function \code{localPopulationDensity}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param receivers An object of type Individual object.
+@param exerterSubpop An object of type null or Subpopulation object (singleton).
+
+@aliases InteractionType$localPopulationDensity IT$localPopulationDensity
+@family InteractionType
+@return An object of type float. 
+@details object<Individual> receivers, [No<Subpopulation>$ exerterSubpop = NULL]) Returns a vector of the local population density present at the location of each individual in receivers, which does not need to be a singleton; indeed, it can be a vector of all of the individuals in a given subpopulation. However, all receivers must be in the same subpopulation. The local population density is computed from exerters in exerterSubpop, or if that is NULL (the default), then from the receiver's subpopulation. The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. Population density is estimated using interaction strengths, effectively doing a kernel density estimate using the interaction function as the kernel. What is returned is computed as the total interaction strength present at a given point, divided by the integral of the interaction function around that point after clipping by the spatial bounds of the exerter subpopulation (what one might think of as the amount of "interaction field" around the point). This provides an estimate of local population density, in units of individuals per unit area, as a weighted average over the area covered by the interaction function, where the weight of each exerter in the average is the value of the interaction function at that exerter's position. This can also be thought of as a measure of the amount of interaction happening per unit of interaction field in the space surrounding the point. To calculate the clipped integral of the interaction function, this method uses the same numerical estimator used by the clippedIntegral() method of InteractionType, and all of the caveats described for that method apply here also; notably, all individuals must be within spatial bounds, the maximum interaction distance must be less than half the spatial extent of the subpopulation, and interaction() callbacks are not used (and so, for this method, are not allowed to be active). See the documentation for clippedIntegral() for further discussion of the details of these calculations. To calculate the total interaction strength around the position of a receiver, this method uses the same machinery as the totalOfNeighborStrengths() method of InteractionType, except that - in contrast to other InteractionType methods - the interaction strength exerted by the receiver itself is included in the total (if the exerter subpopulation is the receiver's own subpopulation). This is because population density at the location of an individual includes the individual itself. If this is not desirable, the totalOfNeighborStrengths() method should probably be used. To see the point of this method, consider a receiver located near the edge of the spatial bounds of its subpopulation. Some portion of the interaction function that surrounds that receiver falls outside the spatial bounds of its subpopulation, and will therefore never contain an interacting exerter. If, for example, interaction strengths are used as a measure of competition, this receiver will therefore have an advantage, because it will never feel any competition from the portion of its range that falls outside spatial bounds. However, that portion of its range is presumably also not available to the receiver itself, for foraging or hunting, in which case this advantage is not biologically realistic, but is instead just an undesirable "edge effect" artifact. Dividing by the integral of the interaction function, clipped to the spatial bounds, provides a way to compensate for this edge effect. A nice side effect of using local population densities instead of total interaction strengths is that the maximum interaction strength passed to setInteractionFunction() no longer matters; it cancels out when the total interaction strength is divided by the receiver's clipped integral. However, the shape of the interaction function does still matter; it determines the relative weights used for exerters at different distances from the position of the receiver.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method nearestInteractingNeighbors
+
+Documentation for SLiM function \code{nearestInteractingNeighbors}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param receiver An object of type Individual object.
+@param count An object of type integer (singleton).
+@param exerterSubpop An object of type null or Subpopulation object (singleton).
+@param returnDict An object of type logical (singleton).
+
+@aliases InteractionType$nearestInteractingNeighbors IT$nearestInteractingNeighbors
+@family InteractionType
+@return An object of type . 
+@details object<Individual> receiver, [integer$ count = 1], [No<Subpopulation>$ exerterSubpop = NULL], [logical$ returnDict = F]) Returns an object<Individual> vector containing up to count interacting individuals that are spatially closest to receiver, according to the distance metric of the InteractionType, from among the exerters in exerterSubpop (or, if that is NULL, then from among all individuals in the receiver's subpopulation). More specifically, this method returns only individuals which can exert an interaction upon receiver, which must be singleton in the default mode of operation (but see below). To obtain all of the interacting individuals within the maximum interaction distance of receiver, simply pass a value for count that is greater than or equal to the size of the exerter subpopulation. Note that if fewer than count interacting individuals are within the maximum interaction distance, the vector returned may be shorter than count, or even zero-length; it is important to check for this possibility even when requesting a single neighbor. If only the number of interacting individuals is needed, use interactingNeighborCount() instead. The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. If the InteractionType is non-spatial, this method may not be called. Note that this method uses interaction eligibility as a criterion; it will not return neighbors that cannot exert an interaction upon the receiver (due to the configured receiver or exerter constraints). (It will also never return the receiver as a neighbor of itself.) To find all neighbors of a receiver, whether they can interact with it or not, use nearestNeighbors(). Beginning in SLiM 4.1, this method has a vectorized mode of operation in which the receiver parameter may be non-singleton. To switch the method to this mode, pass T for returnDict, rather than the default of F (the operation of which is described above). In this mode, the return value is a Dictionary object instead of a vector of Individual objects. This dictionary uses integer keys that range from 0 to N-1, where N is the number of individuals passed in receiver; these keys thus correspond directly to the indices of the individuals in receiver, and there is one entry in the dictionary for each receiver. The value in the dictionary, for a given integer key, is an object<Individual> vector with the interacting neighbors found for the corresponding receiver, exactly as described above for the non-vectorized case. The results for each receiver can therefore be obtained from the returned dictionary with getValue(), passing the index of the receiver. The speed of this mode of operation will probably be similar to the speed of making N separate non-vectorized calls to nearestInteractingNeighbors(), when running single-threaded. When running multi-threaded, however, a substantial performance improvement may be realized by using the vectorized version of this method, since the queries can then be executed in parallel. In this mode of operation, all receivers must belong to the same subpopulation.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method nearestNeighbors
+
+Documentation for SLiM function \code{nearestNeighbors}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param receiver An object of type Individual object.
+@param count An object of type integer (singleton).
+@param exerterSubpop An object of type null or Subpopulation object (singleton).
+@param returnDict An object of type logical (singleton).
+
+@aliases InteractionType$nearestNeighbors IT$nearestNeighbors
+@family InteractionType
+@return An object of type . 
+@details object<Individual> receiver, [integer$ count = 1], [No<Subpopulation>$ exerterSubpop = NULL], [logical$ returnDict = F]) Returns an object<Individual> vector containing up to count individuals that are spatially closest to receiver, according to the distance metric of the InteractionType, from among the exerters in exerterSubpop (or, if that is NULL, then from among all individuals in the receiver's subpopulation). In the default mode of operation, receiver must be singleton (but see below). To obtain all of the individuals within the maximum interaction distance of receiver, simply pass a value for count that is greater than or equal to the size of individual's subpopulation. Note that if fewer than count individuals are within the maximum interaction distance, the vector returned may be shorter than count, or even zero-length; it is important to check for this possibility even when requesting a single neighbor. The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. If the InteractionType is non-spatial, this method may not be called. Note that this method does not use interaction eligibility as a criterion; it will return neighbors that could not interact with the receiver due to the configured receiver or exerter constraints. (It will never return the receiver as a neighbor of itself, however.) To find only neighbors that are eligible to exert an interaction upon the receiver, use nearestInteractingNeighbors(). Beginning in SLiM 4.1, this method has a vectorized mode of operation in which the receiver parameter may be non-singleton. To switch the method to this mode, pass T for returnDict, rather than the default of F (the operation of which is described above). In this mode, the return value is a Dictionary object instead of a vector of Individual objects. This dictionary uses integer keys that range from 0 to N-1, where N is the number of individuals passed in receiver; these keys thus correspond directly to the indices of the individuals in receiver, and there is one entry in the dictionary for each receiver. The value in the dictionary, for a given integer key, is an object<Individual> vector with the neighbors found for the corresponding receiver, exactly as described above for the non-vectorized case. The results for each receiver can therefore be obtained from the returned dictionary with getValue(), passing the index of the receiver. The speed of this mode of operation will probably be similar to the speed of making N separate non-vectorized calls to nearestNeighbors(), when running single-threaded. When running multi-threaded, however, a substantial performance improvement may be realized by using the vectorized version of this method, since the queries can then be executed in parallel. In this mode of operation, all receivers must belong to the same subpopulation.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method nearestNeighborsOfPoint
+
+Documentation for SLiM function \code{nearestNeighborsOfPoint}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param point An object of type float.
+@param exerterSubpop An object of type integer or Subpopulation object (singleton).
+@param count An object of type integer (singleton).
+
+@aliases InteractionType$nearestNeighborsOfPoint IT$nearestNeighborsOfPoint
+@family InteractionType
+@return An object of type Individual object. 
+@details float point, io<Subpopulation>$ exerterSubpop, [integer$ count = 1]) Returns up to count individuals in exerterSubpop that are spatially closest to the point given by the spatial coordinates in point, which may be thought of as the "receiver", according to the distance metric of the InteractionType. The point vector is interpreted as providing coordinates precisely as specified by the spatiality of the interaction type; if the interaction type's spatiality is "xz", for example, then point[0] is assumed to be an x value, and point[1] is assumed to be a z value, and point must be exactly two elements in length. Be careful; this means that in general it is not safe to pass an individual's spatialPosition property for point, for example (although it is safe if the spatiality of the interaction matches the dimensionality of the simulation); other properties on Individual exist for getting the individual's coordinates in a particular spatiality, such as the xz property for this example. A coordinate for a periodic spatial dimension must be within the spatial bounds for that dimension, since coordinates outside of periodic bounds are meaningless (pointPeriodic() may be used to ensure this); coordinates for non-periodic spatial dimensions are not restricted. The subpopulation may be supplied either as an integer ID, or as a Subpopulation object. To obtain all of the individuals within the maximum interaction distance of point, simply pass a value for count that is greater than or equal to the size of exerterSubpop. Note that if fewer than count individuals are within the maximum interaction distance, the vector returned may be shorter than count, or even zero-length; it is important to check for this possibility even when requesting a single neighbor. The evaluate() method must have been previously called for exerterSubpop, and positions saved at evaluation time will be used. If the InteractionType is non-spatial, this method may not be called.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method neighborCount
+
+Documentation for SLiM function \code{neighborCount}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param receivers An object of type Individual object.
+@param exerterSubpop An object of type null or Subpopulation object (singleton).
+
+@aliases InteractionType$neighborCount IT$neighborCount
+@family InteractionType
+@return An object of type integer. 
+@details object<Individual> receivers, [No<Subpopulation>$ exerterSubpop = NULL]) Returns the number of neighbors for each individual in receivers, within the maximum interaction distance according to the distance metric of the InteractionType, from among the individuals in exerterSubpop (or, if that is NULL, then from among all individuals in the receiver's subpopulation). All of the receivers must belong to a single subpopulation, and all of the exerters must belong to a single subpopulation, but those two subpopulations do not need to be the same. The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. This method is similar to nearestNeighbors() (when passed a large count so as to guarantee that all neighbors are returned), but this method returns only a count of the individuals, not a vector containing the individuals. Note that this method does not use interaction eligibility as a criterion; it will count neighbors that cannot exert an interaction upon a receiver (due to the configured receiver or exerter constraints). (It still does not count a receiver as a neighbor of itself, however.) If a count of only interacting neighbors is desired, use interactingNeighborCount(). If the InteractionType is non-spatial, this method may not be called.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method neighborCountOfPoint
+
+Documentation for SLiM function \code{neighborCountOfPoint}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param point An object of type float.
+@param exerterSubpop An object of type integer or Subpopulation object (singleton).
+
+@aliases InteractionType$neighborCountOfPoint IT$neighborCountOfPoint
+@family InteractionType
+@return An object of type integer. Return will be of length 1 (a singleton)
+@details float point, io<Subpopulation>$ exerterSubpop) Returns the number of individuals in exerterSubpop that are within the maximum interaction distance of the point given by the spatial coordinates in point, which may be thought of as the "receiver", according to the distance metric of the InteractionType. The point vector is interpreted as providing coordinates precisely as specified by the spatiality of the interaction type; if the interaction type's spatiality is "xz", for example, then point[0] is assumed to be an x value, and point[1] is assumed to be a z value, and point must be exactly two elements in length. Be careful; this means that in general it is not safe to pass an individual's spatialPosition property for point, for example (although it is safe if the spatiality of the interaction matches the dimensionality of the simulation); other properties on Individual exist for getting the individual's coordinates in a particular spatiality, such as the xz property for this example. A coordinate for a periodic spatial dimension must be within the spatial bounds for that dimension, since coordinates outside of periodic bounds are meaningless (pointPeriodic() may be used to ensure this); coordinates for non-periodic spatial dimensions are not restricted. The subpopulation may be supplied either as an integer ID, or as a Subpopulation object. The evaluate() method must have been previously called for exerterSubpop, and positions saved at evaluation time will be used. If the InteractionType is non-spatial, this method may not be called. This method is similar to nearestNeighborsOfPoint() (when passed a large count so as to guarantee that all neighbors are returned), but this method returns only a count of the individuals, not a vector containing the individuals.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setConstraints
+
+Documentation for SLiM function \code{setConstraints}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param who An object of type string (singleton).
+@param sex An object of type null or string (singleton).
+@param tag An object of type null or integer (singleton).
+@param minAge An object of type null or integer (singleton).
+@param maxAge An object of type null or integer (singleton).
+@param migrant An object of type null or logical (singleton).
+@param tagL0 An object of type null or logical (singleton).
+@param tagL1 An object of type null or logical (singleton).
+@param tagL2 An object of type null or logical (singleton).
+@param tagL3 An object of type null or logical (singleton).
+@param tagL4 An object of type null or logical (singleton).
+
+@aliases InteractionType$setConstraints IT$setConstraints
+@family InteractionType
+@return An object of type void. 
+@details string$ who, [Ns$ sex = NULL], [Ni$ tag = NULL], [Ni$ minAge = NULL], [Ni$ maxAge = NULL], [Nl$ migrant = NULL], [Nl$ tagL0 = NULL], [Nl$ tagL1 = NULL], [Nl$ tagL2 = NULL], [Nl$ tagL3 = NULL], [Nl$ tagL4 = NULL]) Sets constraints upon which individuals can be receivers and/or exerters, making the target InteractionType measure interactions between only subsets of the population. The parameter who specifies upon whom the specified constraints apply; it may be "exerter" to set constraints upon exerters, "receiver" to set constraints upon receivers, or "both" to set constraints upon both. If "both" is used, the same constraints are set for both exerters and receivers; different constraints can be set for exerters versus receivers by making a separate call to setConstraints() for each. Constraints only affect queries that involve the concept of interaction; for example, they will affect the result of nearestInteractingNeighbors(), but not the result of nearestNeighbors(). The constraints specified by a given call to setConstraints() override all previously set constraints for the category specified (receivers, exerters, or both). There is a general policy for the remaining arguments: they are NULL by default, and if NULL is used, it specifies "no constraint" for that property (removing any currently existing constraint for that property). The sex parameter constrains the sex of individuals; it may be "M" or "F" (or "*" as another way of specifying no constraint, for historical reasons). If sex is "M" or "F", the individuals to which the constraint is applied (potential receivers/exerters) must belong to a sexual species. The tag parameter constrains the tag property of individuals; if this set, the individuals to which the constraint is applied must have defined tag values. The minAge and maxAge properties constrain the age property of individuals to the given minimum and/or maximum values; these constraints can only be used in nonWF models. The migrant property constraints the migrant property of individuals (T constrains to only migrants, F to only non-migrants). Finally, the tagL0, tagL1, tagL2, tagL3, and tagL4 properties constrain the corresponding logical properties of individuals, requiring them to be either T or F as specified; the individuals to which these constraints are applied must have defined values for the constrained property or properties. Again, NULL should be supplied (as it is by default) for any property which you do not wish to constrain. These constraints may be used in any combination, as desired. For example, calling setConstraints("receivers", sex="M", minAge=5, tagL0=T) constrains the interaction type's operation so that receivers must be males, with an age of at least 5, with a tagL0 property value of T. For that configuration the potential receivers used with the interaction type must be sexual (since sex is specified), must be in a nonWF model (since minAge is specified), and must have a defined value for their tagL0 property (since that property is constrained). Note that the sexSegregation parameter to initializeInteractionType() is a shortcut which does the same thing as the corresponding calls to setConstraints(). Exerter constraints are applied at evaluate() time, whereas receiver constraints are applied at query time; see the InteractionType class documentation for further discussion. The interaction constraints for an interaction type are normally a constant in simulations; in any case, they cannot be changed when an interaction has already been evaluated, so either they should be set prior to evaluation, or unevaluate() should be called first.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setInteractionFunction
+
+Documentation for SLiM function \code{setInteractionFunction}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param functionType An object of type string (singleton).
+@param ... An object of type NA.
+
+@aliases InteractionType$setInteractionFunction IT$setInteractionFunction
+@family InteractionType
+@return An object of type void. 
+@details string$ functionType, ...) Set the function used to translate spatial distances into interaction strengths for an interaction type. The functionType may be "f", in which case the ellipsis ... should supply a numeric$ fixed interaction strength; "l", in which case the ellipsis should supply a numeric$ maximum strength for a linear function; "e", in which case the ellipsis should supply a numeric$ maximum strength and a numeric$ lambda (rate) parameter for a negative exponential function; "n", in which case the ellipsis should supply a numeric$ maximum strength and a numeric$ sigma (standard deviation) parameter for a Gaussian function; "c", in which case the ellipsis should supply a numeric$ maximum strength and a numeric$ scale parameter for a Cauchy distribution function; or "t", in which case the ellipsis should supply a numeric$ maximum strength, a numeric$ degrees of freedom, and a numeric$ scale parameter for a t-distribution function. See the InteractionType class documentation for discussions of these interaction functions. Non-spatial interactions must use function type "f", since no distance values are available in that case. The interaction function for an interaction type is normally a constant in simulations; in any case, it cannot be changed when an interaction has already been evaluated, so either it should be set prior to evaluation, or unevaluate() should be called first.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method strength
+
+Documentation for SLiM function \code{strength}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param receiver An object of type Individual object (singleton).
+@param exerters An object of type null or Individual object.
+
+@aliases InteractionType$strength IT$strength
+@family InteractionType
+@return An object of type float. 
+@details object<Individual>$ receiver, [No<Individual> exerters = NULL]) Returns a vector containing the interaction strengths exerted upon receiver by the individuals in exerters. If exerters is NULL (the default), then a vector of the interaction strengths exerted by all individuals in the subpopulation of receiver (including receiver itself, with a strength of 0.0) is returned; this case may be handled much more efficiently than if a vector of all individuals in the subpopulation is explicitly provided. Otherwise, all individuals in exerters must belong to a single subpopulation (but not necessarily the same subpopulation as receiver). The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. If the strengths of interactions exerted by a single individual upon multiple individuals are needed instead (the inverse of what this method provides), multiple calls to this method will be necessary, one per pairwise interaction queried; the interaction engine is not optimized for the inverse case, and so it will likely be quite slow to compute. If the interaction is reciprocal and has the same receiver and exerter constraints, the opposite query should provide identical results in a single efficient call (because then the interactions exerted are equal to the interactions received); otherwise, the best approach might be to define a second interaction type representing the inverse interaction that you wish to be able to query efficiently.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method testConstraints
+
+Documentation for SLiM function \code{testConstraints}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param individuals An object of type Individual object.
+@param constraints An object of type string (singleton).
+@param returnIndividuals An object of type logical (singleton).
+
+@aliases InteractionType$testConstraints IT$testConstraints
+@family InteractionType
+@return An object of type logical or Individual object. 
+@details object<Individual> individuals, string$ constraints, [logical$ returnIndividuals = F]) Tests the individuals in the parameter individuals against the interaction constraints specified by constraints. The value of constraints may be "receiver" to use the receiver constraints, or "exerter" to use the exerter constraints. If returnIndividuals is F (the default), a logical vector will be returned, with T values indicating that the corresponding individual satisfied the constraints, F values indicating that it did not. If returnIndividuals is T, an object vector of class Individual will be returned containing only those elements of individuals that satisfied the constraints (in the same order as individuals). Note that unlike most queries, the InteractionType does not need to have been evaluated before calling this method, and the individuals passed in need not belong to a single population or even a single species. This method can be useful for narrowing a vector of individuals down to just those that satisfy constraints. Outside the context of InteractionType, similar functionality is provided by the Subpopulation method subsetIndividuals(). Note that the use of testConstraints() is somewhat rare; usually, queries are evaluated across a vector of individuals, each of which might or might not satisfy the defined constraints. Individuals that do not satisfy constraints do not participate in interactions, so their interaction strength with other individuals will simply be zero. See the setConstraints() method to set up constraints, as well as the sexSegregation parameter to initializeInteractionType(). Note that if the constraints tested involve tag values (including tagL0 / tagL1 / tagL2 / tagL3 / tagL4), the corresponding property or properties of the tested individuals must be defined (i.e., must have been set to a value), or an error will result because the constraints cannot be applied.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method totalOfNeighborStrengths
+
+Documentation for SLiM function \code{totalOfNeighborStrengths}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param receivers An object of type Individual object.
+@param exerterSubpop An object of type null or Subpopulation object (singleton).
+
+@aliases InteractionType$totalOfNeighborStrengths IT$totalOfNeighborStrengths
+@family InteractionType
+@return An object of type float. 
+@details object<Individual> receivers, [No<Subpopulation>$ exerterSubpop = NULL]) Returns a vector of the total interaction strength felt by each individual in receivers by the exerters in exerterSubpop (or, if that is NULL, then by all individuals in the receiver's subpopulation). The receivers parameter does not need to be a singleton; indeed, it can be a vector of all of the individuals in a given subpopulation. All of the receivers must belong to a single subpopulation, and all of the exerters must belong to a single subpopulation, but those two subpopulations do not need to be the same. The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. If the InteractionType is non-spatial, this method may not be called. For one individual, this is essentially the same as calling nearestInteractingNeighbors() with a large count so as to obtain the complete vector of all interacting neighbors, calling strength() for each of those interactions to get each interaction strength, and adding those interaction strengths together with sum(). This method is much faster than that implementation, however, since all of that work is done as a single operation. Also, totalOfNeighborStrengths() can total up interactions for more than one receiver in a single vectorized call. Similarly, for one individual this is essentially the same as calling strength() to get the interaction strengths between a receiver and all individuals in the exerter subpopulation, and then calling sum(). Again, this method should be much faster, since this algorithm looks only at neighbors, whereas calling strength() directly assesses interaction strengths with all other individuals. This will make a particularly large difference when the subpopulation size is large and the maximum distance of the InteractionType is small. See localPopulationDensity() for a related method that calculates the total interaction strength divided by the amount of "interaction field" present for an individual (i.e., the integral of the interaction function clipped to the spatial bounds of the subpopulation) to provide an estimate of the "interaction density" felt by an individual.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method unevaluate
+
+Documentation for SLiM function \code{unevaluate}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases InteractionType$unevaluate IT$unevaluate
+@family InteractionType
+@return An object of type void. 
+@details void) Discards all evaluation of this interaction, for all subpopulations. The state of the InteractionType is reset to a state prior to evaluation. This can be useful if the model state has changed in such a way that the evaluation already conducted is no longer valid. For example, if the maximum distance, the interaction function, or the receiver or exerter constraints of the InteractionType need to be changed with immediate effect, or if the data used by an interaction() callback has changed in such a way that previously calculated interaction strengths are no longer correct, unevaluate() allows the interaction to begin again from scratch. In WF models, all interactions are automatically reset to an unevaluated state at the moment when the new offspring generation becomes the parental generation (at step 4 in the tick cycle). In nonWF models, all interactions are automatically reset to an unevaluated state twice per tick: immediately after reproduction() callbacks have completed (after step 1 in the tick cycle), and immediately before viability/survival selection (before step 4 in the tick cycle). Given this automatic invalidation, most simulations have no reason to call unevaluate().
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+
+
+SLiM method addCustomColumn
+
+Documentation for SLiM function \code{addCustomColumn}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param columnName An object of type string or string or any (singleton).
+@param source An object of type string or string or any (singleton).
+@param context An object of type string or string or any.
+
+@aliases LogFile$addCustomColumn LF$addCustomColumn
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. 
+@details string$ columnName, string$ source, [* context = NULL]) Adds a new data column with its name provided by columnName. The new column will be logged each time that a row is generated, either by automatic logging or by a call to logRow(). The value for the column, when a given row is generated, will be produced by the code supplied in source, which is expected to return either NULL (which will write out NA), or a singleton value of any non-object type. The context parameter will be set up as a pseudo-parameter, named context, when source is called, allowing the same source code to be used to generate values for multiple data columns; you might, for example, pass the id of the particular Subpopulation object that you wish source to use for its calculations, and source could then use the Community method subpopulationsWithIDs() to look up the subpopulation from the id value provided in context. Note that the Subpopulation object itself cannot be passed in context, because class Subpopulation is not under retain-release memory management in SLiM, meaning essentially that subpopulation objects can cease to exist unpredictably (because they go extinct, for example). A reference to such an object cannot be kept long-term by your script (including by LogFile), because if the object ceases to exist, the reference would become invalid and a crash would result. Passing such an object - one not under retain-release - to addCustomColumn() will therefore raise an error, to safeguard against that possible crash. The workaround for this limitation is to find a way to look up the desired object, such as the suggestion above of using the subpopulation's id to look it up. The use of context is optional; if the default value of NULL is used, then context will be NULL when source is called. See addMeanSDColumns() for a useful variant.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addCycle
+
+Documentation for SLiM function \code{addCycle}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param species An object of type null or Species object (singleton).
+
+@aliases LogFile$addCycle LF$addCycle
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. 
+@details [No<Species>$ species = NULL]) Adds a new data column that provides the cycle counter for species (the same as the value of the cycle property of that species). The new column will be logged each time that a row is generated, either by automatic logging or by a call to logRow(). In single-species models, species may be NULL to indicate that single species. The column will simply be named cycle in single-species models; an underscore and the name of the species will be appended in multispecies models.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addCycleStage
+
+Documentation for SLiM function \code{addCycleStage}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases LogFile$addCycleStage LF$addCycleStage
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. 
+@details void) Adds a new data column that provides the cycle stage, named cycle_stage. The new column will be logged each time that a row is generated, either by automatic logging or by a call to logRow(). The stage is provided as a string, and will typically be "first", "early", "late", or "end" (the latter used for the point in time at which end-of-tick automatic logging occurs). Other possible values are discussed in the documentation for the cycleStage property of Community, which this column reflects.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addKeysAndValuesFrom
+
+Documentation for SLiM function \code{addKeysAndValuesFrom}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param source An object of type Dictionary object (singleton).
+
+@aliases LogFile$addKeysAndValuesFrom LF$addKeysAndValuesFrom
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. 
+@details object<Dictionary>$ source) This Dictionary method has an override in LogFile to make it illegal to call, since LogFile manages its Dictionary entries.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addMeanSDColumns
+
+Documentation for SLiM function \code{addMeanSDColumns}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param columnName An object of type string or string or any (singleton).
+@param source An object of type string or string or any (singleton).
+@param context An object of type string or string or any.
+
+@aliases LogFile$addMeanSDColumns LF$addMeanSDColumns
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. 
+@details string$ columnName, string$ source, [* context = NULL]) Adds two new data columns with names of columnName_mean and columnName_sd. The new columns will be logged each time that a row is generated, either by automatic logging or by a call to logRow(). When a given row is generated, the code supplied in source is expected to return either a zero-length vector of any type including NULL (which will write out NA to both columns), or a non-zero-length vector of integer or float values. In the latter case, the result vector will be summarized in the two columns by its mean and standard deviation respectively. If the result vector has exactly one value, the standard deviation will be written as NA. The context parameter is set up as a pseudo-parameter when source is called, as described in addCustomColumn(). See the documentation for that method for further discussion of context, including limitations on its use.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addPopulationSexRatio
+
+Documentation for SLiM function \code{addPopulationSexRatio}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param species An object of type null or Species object (singleton).
+
+@aliases LogFile$addPopulationSexRatio LF$addPopulationSexRatio
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. 
+@details [No<Species>$ species = NULL]) Adds a new data column that provides the population sex ratio M:(M+F) for species. The new column will be logged each time that a row is generated, either by automatic logging or by a call to logRow(). In single-species models, species may be NULL to indicate that single species. The column will simply be named sex_ratio in single-species models; an underscore and the name of the species will be appended in multispecies models. If the species is hermaphroditic, NA will be written.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addPopulationSize
+
+Documentation for SLiM function \code{addPopulationSize}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param species An object of type null or Species object (singleton).
+
+@aliases LogFile$addPopulationSize LF$addPopulationSize
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. 
+@details [No<Species>$ species = NULL]) Adds a new data column that provides the total population size for species. The new column will be logged each time that a row is generated, either by automatic logging or by a call to logRow(). In single-species models, species may be NULL to indicate that single species. The column will simply be named num_individuals in single-species models; an underscore and the name of the species will be appended in multispecies models.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addSubpopulationSexRatio
+
+Documentation for SLiM function \code{addSubpopulationSexRatio}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param subpop An object of type integer or Subpopulation object (singleton).
+
+@aliases LogFile$addSubpopulationSexRatio LF$addSubpopulationSexRatio
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. 
+@details io<Subpopulation>$ subpop) Adds a new data column that provides the sex ratio M:(M+F) of the subpopulation subpop, named pX_sex_ratio. The new column will be logged each time that a row is generated, either by automatic logging or by a call to logRow(). If the subpopulation exists but has a size of zero, NA will be written.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addSubpopulationSize
+
+Documentation for SLiM function \code{addSubpopulationSize}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param subpop An object of type integer or Subpopulation object (singleton).
+
+@aliases LogFile$addSubpopulationSize LF$addSubpopulationSize
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. 
+@details io<Subpopulation>$ subpop) Adds a new data column that provides the size of the subpopulation subpop, named pX_num_individuals. The new column will be logged each time that a row is generated, either by automatic logging or by a call to logRow(). If the subpopulation exists but has a size of zero, 0 will be written.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addSuppliedColumn
+
+Documentation for SLiM function \code{addSuppliedColumn}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param columnName An object of type string (singleton).
+
+@aliases LogFile$addSuppliedColumn LF$addSuppliedColumn
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. 
+@details string$ columnName) Adds a new data column with its name provided by columnName. The new column will be logged each time that a row is generated, either by automatic logging or by a call to logRow(). The value for the column is initially undefined, and will be written as NA. A different value may (optionally) be provided by calling setSuppliedValue() with a value for columnName. That value will be used for the column the next time a row is generated (whether automatically or by a call to logRow()), and the column's value will subsequently be undefined again. In other words, for any given logged row the default of NA may be kept, or a different value may be supplied. This allows the value for the column to be set at any point during the tick cycle, which can be convenient if the column's value depends upon transient state that is no longer available at the time the row is logged.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addTick
+
+Documentation for SLiM function \code{addTick}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases LogFile$addTick LF$addTick
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. 
+@details void) Adds a new data column, named tick, that provides the tick number for the simulation. The new column will be logged each time that a row is generated, either by automatic logging or by a call to logRow().
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method clearKeysAndValues
+
+Documentation for SLiM function \code{clearKeysAndValues}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases LogFile$clearKeysAndValues LF$clearKeysAndValues
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. 
+@details void) This Dictionary method has an override in LogFile to make it illegal to call, since LogFile manages its Dictionary entries.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method flush
+
+Documentation for SLiM function \code{flush}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases LogFile$flush LF$flush
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. 
+@details void) Flushes all buffered data to the output file, synchronously. This will make the contents of the file on disk be up-to-date with the running simulation. Flushing frequently may entail a small performance penalty. More importantly, if .gz compression has been requested with compress=T the size of the resulting file will be larger - potentially much larger - if flush() is called frequently. Note that automatic periodic flushing can be requested with the flushInterval parameter to createLogFile().
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method logRow
+
+Documentation for SLiM function \code{logRow}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases LogFile$logRow LF$logRow
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. 
+@details void) This logs a new row of data, by evaluating all of the generators added to the LogFile with add...() calls. Note that the new row may be buffered, and thus may not be written out to disk immediately; see flush(). This method may be used instead of, or in conjunction with, automatic logging. You can get the LogFile instance, in order to call logRow() on it, from community.logFiles, or you can remember it in a global constant with defineConstant().
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setLogInterval
+
+Documentation for SLiM function \code{setLogInterval}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param logInterval An object of type null or integer (singleton).
+
+@aliases LogFile$setLogInterval LF$setLogInterval
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. 
+@details [Ni$ logInterval = NULL]) Sets the automatic logging interval. A logInterval of NULL stops automatic logging immediately. Other values request that a new row should be logged (as if logRow() were called) at the end of every logInterval ticks (just before the tick count increment, in both WF and nonWF models), starting at the end of the tick in which setLogInterval() was called.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setFilePath
+
+Documentation for SLiM function \code{setFilePath}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param filePath An object of type string (singleton).
+@param initialContents An object of type null or string.
+@param append An object of type logical (singleton).
+@param compress An object of type null or logical (singleton).
+@param sep An object of type null or string (singleton).
+@param header An object of type null or logical (singleton).
+
+@aliases LogFile$setFilePath LF$setFilePath
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. 
+@details string$ filePath, [Ns initialContents = NULL], [logical$ append = F], [Nl$ compress = NULL], [Ns$ sep = NULL], [Nl$ header = NULL]) Redirects the LogFile to write new rows to a new filePath. Any rows that have been buffered but not flushed will be written to the previous file first, as if flush() had been called. With this call, new initialContents may be supplied, which will either replace any existing file or will be appended to it, depending upon the value of append. New values may be supplied for compress, sep, and header; the meaning of these parameters is identical to their meaning in createLogFile(), except that a value of NULL for these means "do not change this setting from its previous value". In effect, then, this method lets you start a completely new log file at a new path, without having to create and configure a new LogFile object. The new file will be created (or appended) synchronously, with the specified initial contents.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setSuppliedValue
+
+Documentation for SLiM function \code{setSuppliedValue}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param columnName An object of type string or any but object (singleton).
+@param value An object of type string or any but object (singleton).
+
+@aliases LogFile$setSuppliedValue LF$setSuppliedValue
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. 
+@details string$ columnName, +$ value) Registers a value, passed in value, to be used for the supplied column named columnName when a row is next logged. This column must have been added with addSuppliedColumn(). A value of NULL may be passed to log NA, but logging NA is the default behavior for supplied columns in any case. Otherwise, the value must be a singleton, and its type should match the values previously supplied for the column (otherwise the log file may be difficult to parse, since the values within the column will not be of one consistent type). See addSuppliedColumn() for further details.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setValue
+
+Documentation for SLiM function \code{setValue}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param key An object of type integer or string (singleton).
+@param value An object of type any.
+
+@aliases LogFile$setValue LF$setValue
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. 
+@details is$ key, * value) This Dictionary method has an override in LogFile to make it illegal to call, since LogFile manages its Dictionary entries.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method willAutolog
+
+Documentation for SLiM function \code{willAutolog}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases LogFile$willAutolog LF$willAutolog
+@family LogFile
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical. Return will be of length 1 (a singleton)
+@details void) Returns T if the log file is configured to log a new row automatically at the end of the current tick; otherwise, returns F. This is useful for calculating a value that will be logged only in ticks when the value is needed.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+
+
+SLiM method setMutationType
+
+Documentation for SLiM function \code{setMutationType}, which is a method of the SLiM class \code{\link{Mutation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mutType An object of type integer or MutationType object (singleton).
+
+@aliases Mutation$setMutationType M$setMutationType
+@family Mutation
+@return An object of type void or void. 
+@details io<MutationType>$ mutType) Set the mutation type of the mutation to mutType (which may be specified as either an integer identifier or a MutationType object). This implicitly changes the dominance coefficient of the mutation to that of the new mutation type, since the dominance coefficient is a property of the mutation type. On the other hand, the selection coefficient of the mutation is not changed, since it is a property of the mutation object itself; it can be changed explicitly using the setSelectionCoeff() method if so desired. The mutation type of a mutation is normally a constant in simulations, so be sure you know what you are doing. Changing this will normally affect the fitness values calculated toward the end of the current tick; if you want current fitness values to be affected, you can call the Species method recalculateFitness() - but see the documentation of that method for caveats. In nucleotide-based models, a restriction applies: nucleotide-based mutations may not be changed to a non-nucleotide-based mutation type, and non-nucleotide-based mutations may not be changed to a nucleotide-based mutation type.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setSelectionCoeff
+
+Documentation for SLiM function \code{setSelectionCoeff}, which is a method of the SLiM class \code{\link{Mutation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param selectionCoeff An object of type float (singleton).
+
+@aliases Mutation$setSelectionCoeff M$setSelectionCoeff
+@family Mutation
+@return An object of type void or void. 
+@details float$ selectionCoeff) Set the selection coefficient of the mutation to selectionCoeff. The selection coefficient will be changed for all individuals that possess the mutation, since they all share a single Mutation object (note that the dominance coefficient will remain unchanged, as it is determined by the mutation type). This is normally a constant in simulations, so be sure you know what you are doing; often setting up a mutationEffect() callback is preferable, in order to modify the selection coefficient in a more limited and controlled fashion. Changing this will normally affect the fitness values calculated toward the end of the current tick; if you want current fitness values to be affected, you can call the Species method recalculateFitness() - but see the documentation of that method for caveats.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+
+
+SLiM method drawSelectionCoefficient
+
+Documentation for SLiM function \code{drawSelectionCoefficient}, which is a method of the SLiM class \code{\link{MutationType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param n An object of type integer (singleton).
+
+@aliases MutationType$drawSelectionCoefficient MT$drawSelectionCoefficient
+@family MutationType
+@return An object of type float or void. 
+@details [integer$ n = 1]) Draws and returns a vector of n selection coefficients using the currently defined distribution of fitness effects (DFE) for the target mutation type. If the DFE is type "s", this method will result in synchronous execution of the DFE's script.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setDistribution
+
+Documentation for SLiM function \code{setDistribution}, which is a method of the SLiM class \code{\link{MutationType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param distributionType An object of type string (singleton).
+@param ... An object of type NA.
+
+@aliases MutationType$setDistribution MT$setDistribution
+@family MutationType
+@return An object of type float or void. 
+@details string$ distributionType, ...) Set the distribution of fitness effects for a mutation type. The distributionType may be "f", in which case the ellipsis ... should supply a numeric$ fixed selection coefficient; "e", in which case the ellipsis should supply a numeric$ mean selection coefficient for the exponential distribution; "g", in which case the ellipsis should supply a numeric$ mean selection coefficient and a numeric$ alpha shape parameter for a gamma distribution; "n", in which case the ellipsis should supply a numeric$ mean selection coefficient and a numeric$ sigma (standard deviation) parameter for a normal distribution; "p", in which case the ellipsis should supply a numeric$ mean selection coefficient and a numeric$ scale parameter for a Laplace distribution; "w", in which case the ellipsis should supply a numeric$  scale parameter and a numeric$ k shape parameter for a Weibull distribution; or "s", in which case the ellipsis should supply a string$ Eidos script parameter. The DFE for a mutation type is normally a constant in simulations, so be sure you know what you are doing.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+
+
+SLiM method abline
+
+Documentation for SLiM function \code{abline}, which is a method of the SLiM class \code{\link{Plot}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param a An object of type null or integer or float.
+@param b An object of type null or integer or float.
+@param h An object of type null or integer or float.
+@param v An object of type null or integer or float.
+@param color An object of type string.
+@param lwd An object of type numeric.
+@param alpha An object of type float.
+
+@aliases Plot$abline Pl$abline
+@family Plot
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void. 
+@details [Nif a = NULL], [Nif b = NULL], [Nif h = NULL], [Nif v = NULL], [string color = "red"], [numeric lwd = 1.0], [float alpha = 1.0]) Adds one or more straight lines to the plot. There are three supported modes of operation for this method. In the first mode, the lines are specified by a and b, representing the intercepts and slopes of the lines, respectively; in this case, a and b may be the same length, or one of them may be a singleton to provide a single value used for all of the lines specified by the other. In the second mode, the lines are specified by h, representing the y-values of horizontal lines. In the third mode, the lines are specified by v, representing the x-values of vertical lines. These modes are mutually exclusive and cannot be mixed within one call to abline(). The new lines will be plotted on top of any previously added data. The lines will be drawn in colors, line widths, and alpha (opacity) values specified by color, lwd, and alpha, each of which may be either a singleton (to provide one value used for all lines) or a vector equal in length to the number of lines plotted (to provide one value per line). Alpha values must be in [0.0, 1.0], where 0.0 is fully transparent and 1.0 is fully opaque. See also lines() and segments() for more common approaches to line plotting. The abline() method is different, and more specialized; the lines plotted by it span the full extent of the plot area, and their coordinates are not considered when dynamically resizing the axes of the plot (i.e., when createPlot() is not passed explicit, non-NULL values for xrange or yrange). This is typically useful for plotting things such as expected values and fit lines.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addLegend
+
+Documentation for SLiM function \code{addLegend}, which is a method of the SLiM class \code{\link{Plot}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param position An object of type null or string (singleton).
+@param inset An object of type null or integer (singleton).
+@param labelSize An object of type null or integer or float (singleton).
+@param lineHeight An object of type null or integer or float (singleton).
+@param graphicsWidth An object of type null or integer or float (singleton).
+@param exteriorMargin An object of type null or integer or float (singleton).
+@param interiorMargin An object of type null or integer or float (singleton).
+
+@aliases Plot$addLegend Pl$addLegend
+@family Plot
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void. 
+@details [Ns$ position = NULL], [Ni$ inset = NULL], [Nif$ labelSize = NULL], [Nif$ lineHeight = NULL], [Nif$ graphicsWidth = NULL], [Nif$ exteriorMargin = NULL], [Nif$ interiorMargin = NULL]) Adds a legend to the plot. The legend will be displayed within the plot at the location specified by position, which must be "topRight", "topLeft", "bottomRight", or "bottomLeft", or NULL (the default) requesting that SLiMgui choose the position. The position of the legend will be inset from the chosen corner by a margin inset, measured in pixels; the default of NULL allows SLiMgui to choose the inset. The internal layout of the legend is a bit complex, and can be controlled by five parameters; in all cases, the default value of NULL requests that SLiMgui provide a reasonable default. The labelSize parameter specifies the font size used for the text labels for each legend entry (measured in "points", the standard metric of font sizes). The lineHeight parameter specifies the vertical size, in pixels, of one entry line. The graphicsWidth parameter species the width, in pixels, of the column used to display the "graphics" (whether a line segment, a point symbol, a swatch, or a combination of those) associated with each entry. The exteriorMargin parameter specifies the width/height of margins, in pixels, outside of the entries (between the entries and the legend's frame). Finally, the interiorMargin parameter specifies the width/height of margins, in pixels, vertically between entries, and also between the "graphics" column and the label. It is easy to produce a legend that looks terrible, using these layout metrics; SLiMgui does only minimal sanity-checking of their values, to provide maximal flexibility. The legend is initially empty; entries for it can be added with legendLineEntry(), legendPointEntry(), and legendSwatchEntry().
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method axis
+
+Documentation for SLiM function \code{axis}, which is a method of the SLiM class \code{\link{Plot}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param side An object of type integer (singleton).
+@param at An object of type null or integer or float.
+@param labels An object of type logical or string.
+
+@aliases Plot$axis Pl$axis
+@family Plot
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void. 
+@details integer$ side, [Nif at = NULL], [ls labels = T]) Configures an axis of the plot. The side parameter controls which axis is being configured; at present, it may be 1 for the x-axis (at the bottom of the plot), or 2 for the y-axis (at the left of the plot). The positions of tick marks (and of any associated labels) are controlled by at; if at is NULL (the default) these positions will be computed automatically based upon the range of the data in the plot, otherwise at must be a vector of numeric positions. Note that the coordinate system of the plot is controlled not by this method, but by the xrange and yrange parameters of createPlot(); at controls only the positions of axis ticks within that coordinate system. The labels parameter controls the text labels displayed for ticks; it may be T (the default) to label ticks with their numeric positions, F to suppress all tick labels, or a vector of type string, equal in length to at, providing the label for each position in at. Label values may be the empty string, "", if a label at a given position is not desired, and if labels is T, some ticks may not receive a label for readability.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method image
+
+Documentation for SLiM function \code{image}, which is a method of the SLiM class \code{\link{Plot}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param image An object of type  (singleton).
+@param x1 An object of type numeric (singleton).
+@param y1 An object of type numeric (singleton).
+@param x2 An object of type numeric (singleton).
+@param y2 An object of type numeric (singleton).
+@param flipped An object of type logical (singleton).
+@param alpha An object of type float (singleton).
+
+@aliases Plot$image Pl$image
+@family Plot
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void. 
+@details object$ image, numeric$ x1, numeric$ y1, numeric$ x2, numeric$ y2, [logical$ flipped = F], [float$ alpha = 1.0]) Adds image data given by image to the plot. The data will be plotted as a raster (bitmap, pixel) image in the rectangle specified by x1, y1, x2, and y2, which must be sorted such that x1 <= x2 and y1 <= y2. When flipped is F (the default), the plotted image is shown in a default orientation that is typically best given the source of the image; if flipped is T the image's orientation is flipped vertically relative to that default. The plotted image will use opacity alpha; alpha values must be in [0.0, 1.0], where 0.0 is fully transparent and 1.0 is fully opaque. The new image data will be plotted on top of any previously added data. The image data may be specified in one of two ways. First, image may be a singleton Image object. In this case, the image is simply plotted inside the rectangle specified by x1/y1/x2/y2, fully displaying all of its pixels (in contrast to how the grid values of a spatial map area displayed, as described below). The image may be either RGB or grayscale. Second, image may be a singleton SpatialMap object. In this case, the grid values of the spatial map are plotted aligned to the corners of the rectangle specified by x1/y1/x2/y2, as the map would be used by SLiM; the edge and corner grid points of the map are therefore only partially displayed. (If desired, the gridValues() or mapImage() methods of SpatialMap could be used to convert the map to a matrix or Image representation that could be plotted differently.) The spatial map's display uses the color scheme that was specified for the map. The map's values are not interpolated, regardless of the map's interpolate property; only the raw grid data of the spatial map is displayed. (If interpolated display is desired, the interpolate() method of SpatialMap can be used to increase the grid resolution of the map prior to display.) This method caches the image data being plotted so that plotting the same SpatialMap or Image object multiple times is more efficient. See the matrix() method of Plot for an alternative way of plotting raster data that may be more suitable in some situations, but that is less efficient because it does not provide such caching.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method legendLineEntry
+
+Documentation for SLiM function \code{legendLineEntry}, which is a method of the SLiM class \code{\link{Plot}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param label An object of type string or string or numeric (singleton).
+@param color An object of type string or string or numeric (singleton).
+@param lwd An object of type string or string or numeric (singleton).
+
+@aliases Plot$legendLineEntry Pl$legendLineEntry
+@family Plot
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void. 
+@details string$ label, [string$ color = "red"], [numeric$ lwd = 1.0]) Adds a legend entry with text label to the plot. The entry will be displayed as a line segment drawn in color color, using line width lwd, mirroring the appearance produced by lines() for the same parameters. If one or more other legend entries already exist with the same label, the new entry will be drawn on top of the previously set entries for that label (allowing legend entries that display both a line and a point, for example).
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method legendPointEntry
+
+Documentation for SLiM function \code{legendPointEntry}, which is a method of the SLiM class \code{\link{Plot}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param label An object of type string or integer or string or string or numeric or numeric (singleton).
+@param symbol An object of type string or integer or string or string or numeric or numeric (singleton).
+@param color An object of type string or integer or string or string or numeric or numeric (singleton).
+@param border An object of type string or integer or string or string or numeric or numeric (singleton).
+@param lwd An object of type string or integer or string or string or numeric or numeric (singleton).
+@param size An object of type string or integer or string or string or numeric or numeric (singleton).
+
+@aliases Plot$legendPointEntry Pl$legendPointEntry
+@family Plot
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void. 
+@details string$ label, [integer$ symbol = 0], [string$ color = "red"], [string$ border = "black"], [numeric$ lwd = 1.0], [numeric$ size = 1.0]) Adds a legend entry with text label to the plot. The entry will be displayed as a point symbol specified by symbol, color, border, lwd, and size, mirroring the appearance produced by points() for the same parameters; see points() for further details. If one or more other legend entries already exist with the same label, the new entry will be drawn on top of the previously set entries for that label (allowing legend entries that display both a line and a point, for example).
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method legendSwatchEntry
+
+Documentation for SLiM function \code{legendSwatchEntry}, which is a method of the SLiM class \code{\link{Plot}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param label An object of type string or string (singleton).
+@param color An object of type string or string (singleton).
+
+@aliases Plot$legendSwatchEntry Pl$legendSwatchEntry
+@family Plot
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void. 
+@details string$ label, [string$ color = "red"]) Adds a legend entry with text label to the plot. The entry will be displayed as a swatch drawn in color color. If one or more other legend entries already exist with the same label, the new entry will be drawn on top of the previously set entries for that label (allowing legend entries that display both a line and a point, for example).
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method legendTitleEntry
+
+Documentation for SLiM function \code{legendTitleEntry}, which is a method of the SLiM class \code{\link{Plot}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param label An object of type string (singleton).
+
+@aliases Plot$legendTitleEntry Pl$legendTitleEntry
+@family Plot
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void. 
+@details string$ label) Adds a legend entry with text label to the plot. The entry will be displayed as a title, left-aligned with no graphical representation (no line, point, or swatch). A label of "", the empty string, is allowed and will produce a blank line in the legend (for spacing). Note that title entries always produce their own separate line in the legend; they do not participate in the overdrawing scheme used for other types of legend entries.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method lines
+
+Documentation for SLiM function \code{lines}, which is a method of the SLiM class \code{\link{Plot}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param x An object of type numeric or numeric or string or numeric or float.
+@param y An object of type numeric or numeric or string or numeric or float.
+@param color An object of type numeric or numeric or string or numeric or float (singleton).
+@param lwd An object of type numeric or numeric or string or numeric or float (singleton).
+@param alpha An object of type numeric or numeric or string or numeric or float (singleton).
+
+@aliases Plot$lines Pl$lines
+@family Plot
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void. 
+@details numeric x, numeric y, [string$ color = "red"], [numeric$ lwd = 1.0], [float$ alpha = 1.0]) Adds line data given by x and y to the plot. The data will be plotted as a series of connected line segments, following the (x, y) positions given; note that the x and y vectors must be the same length. The new line data will be plotted on top of any previously added data. The lines will be drawn in color color, using line width lwd, with opacity alpha. Alpha values must be in [0.0, 1.0], where 0.0 is fully transparent and 1.0 is fully opaque. Unlike points() and text(), the parameters color, lwd, and alpha must be singletons, since each point (except the two ends) is shared by two line segments; if you wish to vary the color/width/opacity for each line segment, separate calls to lines() are necessary, or the segments() method may be useful. See also abline() and segments().
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method matrix
+
+Documentation for SLiM function \code{matrix}, which is a method of the SLiM class \code{\link{Plot}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param matrix An object of type numeric.
+@param x1 An object of type numeric (singleton).
+@param y1 An object of type numeric (singleton).
+@param x2 An object of type numeric (singleton).
+@param y2 An object of type numeric (singleton).
+@param flipped An object of type logical (singleton).
+@param valueRange An object of type null or integer or float.
+@param colors An object of type null or string (singleton).
+@param alpha An object of type float (singleton).
+
+@aliases Plot$matrix Pl$matrix
+@family Plot
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void. 
+@details numeric matrix, numeric$ x1, numeric$ y1, numeric$ x2, numeric$ y2, [logical$ flipped = F], [Nif valueRange = NULL], [Ns$ colors = NULL], [float$ alpha = 1.0]) Adds image data given by matrix to the plot. The image data must be specified as a numeric (i.e., integer or float) matrix, as for example produced by the matrix() function in Eidos. The data will be plotted as a raster (bitmap, pixel) image in the rectangle specified by x1, y1, x2, and y2, which must be sorted such that x1 <= x2 and y1 <= y2. When flipped is F (the default), the plotted image is shown in a default orientation that matches the orientation of the matrix (with row 0 topmost); if flipped is T the image's orientation is flipped vertically relative to that default (with row 0 bottommost). Prior to display, the values in the matrix will be rescaled according to the parameter valueRange. If valueRange is NULL (the default), the values will be left unscaled; this is equivalent to passing c(0,1) for valueRange. Otherwise, valueRange should be a numeric vector containing two elements that define the range of values that will be rescaled to span the interval [0, 1] - the range to which the color scheme will then be applied. After rescaling the given range to [0, 1], the resulting values are clamped to the range [0, 1]. It is legal for valueRange[0] to be greater than valueRange[1]; in this case, the rescaling operation will, in effect, reverse the direction of the color scheme by reversing the ranks of the reordered values. The rescaled and clamped values are then colored according to the color scheme named by colors, which should be one of the named schemes supported by the Eidos function colors(): "cm", "heat", "terrain", "parula", "hot", "jet", "turbo", "gray", "magma", "inferno", "plasma", "viridis", or "cividis". If colors is NULL (the default), the color scheme used is the reverse of the "gray" color scheme, shading from black for 0 up to white for 1. In all cases, the color scheme is applied across the range [0, 1] for the rescaled and clamped values. The plotted image will use opacity alpha; alpha values must be in [0.0, 1.0], where 0.0 is fully transparent and 1.0 is fully opaque. The new image data will be plotted on top of any previously added data. See the image() method of Plot for an alternative way of plotting raster data from SpatialMap and Image objects that may be more suitable in some situations.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method mtext
+
+Documentation for SLiM function \code{mtext}, which is a method of the SLiM class \code{\link{Plot}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param x An object of type numeric.
+@param y An object of type numeric.
+@param labels An object of type string.
+@param color An object of type string.
+@param size An object of type numeric.
+@param adj An object of type null or integer or float.
+@param alpha An object of type float.
+@param angle An object of type numeric.
+
+@aliases Plot$mtext Pl$mtext
+@family Plot
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void. 
+@details numeric x, numeric y, string labels, [string color = "black"], [numeric size = 10.0], [Nif adj = NULL], [float alpha = 1.0], [numeric angle = 0.0]) Adds marginal text data given by x, y, and labels to the plot. The string values in labels will be plotted at the (x, y) positions given; note that x, y, and labels must all be the same length. This method differs from the text() method in two respects. The first - the reason that this method draws "marginal" text - is that the text drawn is not clipped to the plot area, allowing text to be drawn in the axis and border areas outside the plot itself. The second is that the x and y coordinates are interpreted differently than other Plot methods; rather than being in the coordinate system of the plot, they are in a coordinate system in which the plot area spans [0,1] on both axes. This is intended to make positioning text outside of the plot area not depend upon the axis ranges of the plot; those axis ranges might vary, but the positions at which mtext() draws, relative to the plot area, will remain fixed. The new marginal text data will be plotted on top of any previously added data. The text will be drawn in color color, at the font size given by size (measured in "points", the standard metric of font sizes); the font family and style cannot be controlled at this time. Opacity values may be supplied with alpha; alpha values must be in [0.0, 1.0], where 0.0 is fully transparent and 1.0 is fully opaque. The angle at which the text is drawn can be specified with angle; angles are measured in degrees, clockwise. All of these parameters (color, size, alpha, and angle) may either be a singleton value applied to all points, or a vector with one value per corresponding point. The exact position of the text, relative to each point (x, y), is adjusted by the optional parameter adj. The value of adj, if specified, must be a vector of length 2, where adj[0] adjusts the x position and adj[1] adjusts the y position of the text. Relative to a given x position, a value of 0.0 aligns the left edge of the text to it; a value of 0.5 aligns the center of the text to it; and a value of 1.0 aligns the right edge of the text to it. Similarly, relative to a given y position, a value of 0.0 aligns the bottom edge of the text to it; a value of 0.5 aligns the center of the text to it; and a value of 1.0 aligns the top edge of the text to it. Intermediate values will produce intermediate alignments, and values of adj outside of [0.0, 1.0] are also allowed. The default value of adj, NULL, is equivalent to c(0.5, 0.5), aligning the center of the text to (x, y) both horizontally and vertically.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method points
+
+Documentation for SLiM function \code{points}, which is a method of the SLiM class \code{\link{Plot}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param x An object of type numeric or numeric or integer or string or string or numeric or numeric or float.
+@param y An object of type numeric or numeric or integer or string or string or numeric or numeric or float.
+@param symbol An object of type numeric or numeric or integer or string or string or numeric or numeric or float.
+@param color An object of type numeric or numeric or integer or string or string or numeric or numeric or float.
+@param border An object of type numeric or numeric or integer or string or string or numeric or numeric or float.
+@param lwd An object of type numeric or numeric or integer or string or string or numeric or numeric or float.
+@param size An object of type numeric or numeric or integer or string or string or numeric or numeric or float.
+@param alpha An object of type numeric or numeric or integer or string or string or numeric or numeric or float.
+
+@aliases Plot$points Pl$points
+@family Plot
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void. 
+@details numeric x, numeric y, [integer symbol = 0], [string color = "red"], [string border = "black"], [numeric lwd = 1.0], [numeric size = 1.0], [float alpha = 1.0]) Adds point data given by x and y to the plot. The data will be plotted as a set of point symbols, centered at the (x, y) positions given; note that the x and y vectors must be the same length. The new point data will be plotted on top of any previously added data. The symbol plotted for each point depends upon the value of symbol. In general, symbols will be drawn in color color, with a line width lwd used for lines (if any) in the symbol, and an overall size scaled by size. Symbols 21-25 involve both a filled shape and a border line around that shape; for those symbols, the border line will use the color provided by border, while the filled shape will use color color. Opacity values may be supplied with alpha; alpha values must be in [0.0, 1.0], where 0.0 is fully transparent and 1.0 is fully opaque. All of these parameters (symbol, color, border, lwd, size, and alpha) may either be a singleton value applied to all points, or a vector with one value per corresponding point.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method rects
+
+Documentation for SLiM function \code{rects}, which is a method of the SLiM class \code{\link{Plot}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param x1 An object of type numeric or numeric or numeric or numeric or string or string or numeric or float.
+@param y1 An object of type numeric or numeric or numeric or numeric or string or string or numeric or float.
+@param x2 An object of type numeric or numeric or numeric or numeric or string or string or numeric or float.
+@param y2 An object of type numeric or numeric or numeric or numeric or string or string or numeric or float.
+@param color An object of type numeric or numeric or numeric or numeric or string or string or numeric or float.
+@param border An object of type numeric or numeric or numeric or numeric or string or string or numeric or float.
+@param lwd An object of type numeric or numeric or numeric or numeric or string or string or numeric or float.
+@param alpha An object of type numeric or numeric or numeric or numeric or string or string or numeric or float.
+
+@aliases Plot$rects Pl$rects
+@family Plot
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void. 
+@details numeric x1, numeric y1, numeric x2, numeric y2, [string color = "red"], [string border = "black"], [numeric lwd = 1.0], [float alpha = 1.0]) Adds rectangle data given by x1, y1, x2, and y2 to the plot; note that these four vectors must all be the same length. The data will be plotted as a series of rectangles, defined by each (x1, y1, x2, y2) quadret providing the left, right, top and bottom of each rectangle. The coordinates of each rectangle do not need to be sorted; in other words, it is not required that x1[i] <= x2[i], or that y1[i] <= y2[i], and different sorting orders for the coordinates of a given rectangle will draw identically. The fill of a each rectangle is contained within its coordinates, but the frame of each rectangle is composed of lines of some width, drawn between the vertices of the rectangle, and will therefore extend beyond the coordinates of the rectangle by one-half of the line width; if this is not desired, inset the rectangle coordinates by one-half of the line width to compensate. The new rectangle data will be plotted on top of any previously added data. The rectangles will be drawn in fill colors color, with border colors border, using line widths lwd, with opacities alpha applied to both the fill and the border. The color, border, lwd, and alpha parameters may each be either a singleton value (applying to all rectangles) or a vector with one value per rectangle. Alpha values must be in [0.0, 1.0], where 0.0 is fully transparent and 1.0 is fully opaque. If a filled rectangle with no border is desired, a border value of "none" can be used; similarly, if a framed rectangle with no fill is desired, a color value of "none" can be used. Note that that "none" a special color value supported only by rects(); it is not part of the standard set of named colors in Eidos.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method segments
+
+Documentation for SLiM function \code{segments}, which is a method of the SLiM class \code{\link{Plot}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param x1 An object of type numeric or numeric or numeric or numeric or string or numeric or float.
+@param y1 An object of type numeric or numeric or numeric or numeric or string or numeric or float.
+@param x2 An object of type numeric or numeric or numeric or numeric or string or numeric or float.
+@param y2 An object of type numeric or numeric or numeric or numeric or string or numeric or float.
+@param color An object of type numeric or numeric or numeric or numeric or string or numeric or float.
+@param lwd An object of type numeric or numeric or numeric or numeric or string or numeric or float.
+@param alpha An object of type numeric or numeric or numeric or numeric or string or numeric or float.
+
+@aliases Plot$segments Pl$segments
+@family Plot
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void. 
+@details numeric x1, numeric y1, numeric x2, numeric y2, [string color = "red"], [numeric lwd = 1.0], [float alpha = 1.0]) Adds line segment data given by x1, y1, x2, and y2 to the plot; note that these four vectors must all be the same length. The data will be plotted as a series of unconnected line segments, from each (x1, y1) position to the corresponding (x2, y2) position. The new line segment data will be plotted on top of any previously added data. The line segments will be drawn in colors color, using line widths lwd, with opacities alpha. The color, lwd, and alpha parameters may each be either a singleton value (applying to all line segments) or a vector with one value per line segment. Alpha values must be in [0.0, 1.0], where 0.0 is fully transparent and 1.0 is fully opaque. See also lines() and abline().
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setBorderless
+
+Documentation for SLiM function \code{setBorderless}, which is a method of the SLiM class \code{\link{Plot}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param marginLeft An object of type numeric or numeric or numeric or numeric (singleton).
+@param marginTop An object of type numeric or numeric or numeric or numeric (singleton).
+@param marginRight An object of type numeric or numeric or numeric or numeric (singleton).
+@param marginBottom An object of type numeric or numeric or numeric or numeric (singleton).
+
+@aliases Plot$setBorderless Pl$setBorderless
+@family Plot
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void. 
+@details [numeric$ marginLeft = 0.0], [numeric$ marginTop = 0.0], [numeric$ marginRight = 0.0], [numeric$ marginBottom = 0.0]) Reconfigures the plot to be borderless - to not display axes, ticks, or the labels for axes and ticks. Since those elements are not present, the plot area in borderless plots essentially fills the window's available area, except for being inset by the margins given in marginLeft, marginTop, marginRight, and marginBottom, which are specified in pixels. The axis ranges are not extended in the usual manner; if the range of the x axis is specified as c(0,1), for example, then that is the range actually used for the x axis. (This is similar to R's "xaxs" and "yaxs" being specified as "i", rather than the usual behavior specified by the default of "r".) If you want the plotted data to have "breathing room" around it, you should therefore specify non-zero margins. Note that the fullBox parameter of createPlot() is still honored; for borderless plots, the box is drawn at the outer edge of the margin area. If you don't want the box to overdraw any of the data area of the plot (within the extents of the axes), you should specify each margin value as 1 (or greater), to provide a pixel of margin space within which the box will be drawn without impinging upon the plotted data.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method text
+
+Documentation for SLiM function \code{text}, which is a method of the SLiM class \code{\link{Plot}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param x An object of type numeric.
+@param y An object of type numeric.
+@param labels An object of type string.
+@param color An object of type string.
+@param size An object of type numeric.
+@param adj An object of type null or integer or float.
+@param alpha An object of type float.
+@param angle An object of type numeric.
+
+@aliases Plot$text Pl$text
+@family Plot
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void. 
+@details numeric x, numeric y, string labels, [string color = "black"], [numeric size = 10.0], [Nif adj = NULL], [float alpha = 1.0], [numeric angle = 0.0]) Adds text data given by x, y, and labels to the plot. The string values in labels will be plotted at the (x, y) positions given; note that x, y, and labels must all be the same length. The new text data will be plotted on top of any previously added data. The text will be drawn in color color, at the font size given by size (measured in "points", the standard metric of font sizes); the font family and style cannot be controlled at this time. Opacity values may be supplied with alpha; alpha values must be in [0.0, 1.0], where 0.0 is fully transparent and 1.0 is fully opaque. The angle at which the text is drawn can be specified with angle; angles are measured in degrees, clockwise. All of these parameters (color, size, alpha, and angle) may either be a singleton value applied to all points, or a vector with one value per corresponding point. The exact position of the text, relative to each point (x, y), is adjusted by the optional parameter adj. The value of adj, if specified, must be a vector of length 2, where adj[0] adjusts the x position and adj[1] adjusts the y position of the text. Relative to a given x position, a value of 0.0 aligns the left edge of the text to it; a value of 0.5 aligns the center of the text to it; and a value of 1.0 aligns the right edge of the text to it. Similarly, relative to a given y position, a value of 0.0 aligns the bottom edge of the text to it; a value of 0.5 aligns the center of the text to it; and a value of 1.0 aligns the top edge of the text to it. Intermediate values will produce intermediate alignments, and values of adj outside of [0.0, 1.0] are also allowed. The default value of adj, NULL, is equivalent to c(0.5, 0.5), aligning the center of the text to (x, y) both horizontally and vertically. See also the mtext() method, for drawing text outside of the plot area.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method write
+
+Documentation for SLiM function \code{write}, which is a method of the SLiM class \code{\link{Plot}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param filePath An object of type string (singleton).
+
+@aliases Plot$write Pl$write
+@family Plot
+@return An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void. 
+@details string$ filePath) Writes the plot to the given filesystem path filePath as a PDF file. It is suggested, but not required, that filePath should end in a .pdf or .PDF filename extension. If the file cannot be written, an error will result.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+
+
+SLiM method createPlot
+
+Documentation for SLiM function \code{createPlot}, which is a method of the SLiM class \code{\link{SLiMgui}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param title An object of type string (singleton).
+@param xrange An object of type null or integer or float.
+@param yrange An object of type null or integer or float.
+@param xlab An object of type string (singleton).
+@param ylab An object of type string (singleton).
+@param width An object of type null or integer or float (singleton).
+@param height An object of type null or integer or float (singleton).
+@param horizontalGrid An object of type logical (singleton).
+@param verticalGrid An object of type logical (singleton).
+@param fullBox An object of type logical (singleton).
+@param axisLabelSize An object of type numeric (singleton).
+@param tickLabelSize An object of type numeric (singleton).
+
+@aliases SLiMgui$createPlot SG$createPlot
+@family SLiMgui
+@return An object of type null or Plot object. Return will be of length 1 (a singleton)
+@details string$ title, [Nif xrange = NULL], [Nif yrange = NULL], [string$ xlab = "x"], [string$ ylab = "y"], [Nif$ width = NULL], [Nif$ height = NULL], [logical$ horizontalGrid = F], [logical$ verticalGrid = F], [logical$ fullBox = T], [numeric$ axisLabelSize = 15], [numeric$ tickLabelSize = 10]) Creates and returns a new custom plot referred to by title, or restarts and returns the existing plot with that title; if the plot cannot be created (notably, when running under SLiMguiLegacy rather than SLiMgui), NULL is returned. The range for the x and y axes of the plot can optionally be provided in xrange and yrange, as vectors of length 2 containing the minimum and maximum values for the corresponding axis; the default of NULL for these parameters requests that the axis ranges be determined heuristically based upon the data subsequently added to the plot. Labels for the x and y axes can be provided in xlab and ylab; if no axis label is desired, the empty string "" may be passed. The width and height of the window itself can optionally be set with width and height, in units of pixels (perhaps 70-100 pixels per inch, depending on your screen's pixel density); the default of NULL for these parameters requests SLiMgui's default plot window size. The display of horizontal grid lines, vertical grid lines, and a full box around the plot area can be controlled with horizontalGrid, verticalGrid, and fullBox respectively, and the size (in points) of axis and tick labels can be controlled with axisLabelSize and tickLabelSize respectively. Once the plot has been created, data can be added to it using Plot methods such as lines(), points(), and text(). As with other plot windows in SLiMgui, the "action button" can be used to access plot configuration options, and to copy or save the final plot as a raster image or a PDF file.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method logFileData
+
+Documentation for SLiM function \code{logFileData}, which is a method of the SLiM class \code{\link{SLiMgui}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param logFile An object of type LogFile object (singleton).
+@param column An object of type integer or string (singleton).
+
+@aliases SLiMgui$logFileData SG$logFileData
+@family SLiMgui
+@return An object of type null or float or string. 
+@details object<LogFile>$ logFile, is$ column) Returns a vector containing data from the LogFile object logFile, taken from a specified column (identified in column either by the column's name or by its zero-based index). If the data are all numeric, they will be returned as a float vector. Otherwise - if the data are non-numeric - they will be returned as a string vector. If the specified column does not exist in the log file, NULL will be returned. This functionality is provided as a method on the SLiMgui class, rather than on LogFile, because in SLiMgui logged data is kept in memory anyway, for display in the debugging output viewer window. When running at the command line logged data is not kept in memory, and thus is not available.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method openDocument
+
+Documentation for SLiM function \code{openDocument}, which is a method of the SLiM class \code{\link{SLiMgui}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param filePath An object of type string (singleton).
+
+@aliases SLiMgui$openDocument SG$openDocument
+@family SLiMgui
+@return An object of type void. 
+@details string$ filePath) Open the document at filePath in SLiMgui, if possible. Supported document types include SLiM model files (typically with a .slim path extension), text files (typically with a .txt path extension, and opened as untitled model files), and PNG, JPG/JPEG, BMP, and GIF image file formats (typically .png / .jpg / .jpeg / .bmp / .gif, respectively). (Note that in SLiMguiLegacy, PDF files (.pdf) are supported but these other image file formats are not.) This method can be particularly useful for opening images created by the simulation itself, often by sublaunching a plotting process in R or another environment.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method pauseExecution
+
+Documentation for SLiM function \code{pauseExecution}, which is a method of the SLiM class \code{\link{SLiMgui}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases SLiMgui$pauseExecution SG$pauseExecution
+@family SLiMgui
+@return An object of type void. 
+@details void) Pauses a model that is playing in SLiMgui. This is essentially equivalent to clicking the "Play" button to stop the execution of the model. Execution can be resumed by the user, by clicking the "Play" button again; unlike calling stop() or simulationFinished(), the simulation is not terminated. This method can be useful for debugging or exploratory purposes, to pause the model at a point of interest. Execution is paused at the end of the currently executing tick, not mid-tick. If the model is being profiled, or is executing forward to a tick number entered in the tick field, pauseExecution() will do nothing; by design, pauseExecution() only pauses execution when SLiMgui is doing a simple "Play" of the model.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method plotWithTitle
+
+Documentation for SLiM function \code{plotWithTitle}, which is a method of the SLiM class \code{\link{SLiMgui}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param title An object of type string (singleton).
+
+@aliases SLiMgui$plotWithTitle SG$plotWithTitle
+@family SLiMgui
+@return An object of type null or Plot object. Return will be of length 1 (a singleton)
+@details string$ title) Returns an existing plot that was created by createPlot() with title; if such a plot does not exist, NULL is returned. Note that other SLiMgui plots cannot be accessed through this method; only plots created by createPlot() are available in Eidos.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+
+
+SLiM method add
+
+Documentation for SLiM function \code{add}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param x An object of type integer or float or SpatialMap object.
+
+@aliases SpatialMap$add SM$add
+@family SpatialMap
+@return An object of type SpatialMap object. Return will be of length 1 (a singleton)
+@details ifo<SpatialMap> x) Adds x to the spatial map. One possibility is that x is a singleton integer or float value; in this case, x is added to each grid value of the target spatial map. Another possibility is that x is an integer or float vector/matrix/array of the same dimensions as the target spatial map's grid; in this case, each value of x is added to the corresponding grid value of the target spatial map. The third possibility is that x is itself a (singleton) spatial map; in this case, each grid value of x is added to the corresponding grid value of the target spatial map (and thus the two spatial maps must match in their spatiality, their spatial bounds, and their grid dimensions). The target spatial map is returned, to allow easy chaining of operations.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method blend
+
+Documentation for SLiM function \code{blend}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param x An object of type integer or float or SpatialMap object.
+@param xFraction An object of type float (singleton).
+
+@aliases SpatialMap$blend SM$blend
+@family SpatialMap
+@return An object of type SpatialMap object. Return will be of length 1 (a singleton)
+@details ifo<SpatialMap> x, float$ xFraction) Blends x into the spatial map, giving x a weight of xFraction and the existing values in the target spatial map a weight of 1 - xFraction, such that the resulting values in the target spatial map are then given by x * xFraction + target * (1 - xFraction). The value of xFraction must be in [0.0, 1.0]. One possibility is that x is a singleton integer or float value; in this case, x is blended with each grid value of the target spatial map. Another possibility is that x is an integer or float vector/matrix/array of the same dimensions as the target spatial map's grid; in this case, each value of x is blended with the corresponding grid value of the target spatial map. The third possibility is that x is itself a (singleton) spatial map; in this case, each grid value of x is blended with the corresponding grid value of the target spatial map (and thus the two spatial maps must match in their spatiality, their spatial bounds, and their grid dimensions). The target spatial map is returned, to allow easy chaining of operations.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method changeColors
+
+Documentation for SLiM function \code{changeColors}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param valueRange An object of type null or integer or float.
+@param colors An object of type null or string.
+
+@aliases SpatialMap$changeColors SM$changeColors
+@family SpatialMap
+@return An object of type void. 
+@details [Nif valueRange = NULL], [Ns colors = NULL]) Changes the color scheme for the target spatial map. The meaning of valueRange and colors are identical to their meaning in defineSpatialMap(), but are also described here. The valueRange and colors parameters travel together; either both are NULL, or both are specified. They control how map values will be transformed into colors, by SLiMgui and by the mapColor() method. The valueRange parameter establishes the color-mapped range of spatial map values, as a vector of length two specifying a minimum and maximum; this does not need to match the actual range of values in the map. The colors parameter then establishes the corresponding colors for values within the interval defined by valueRange: values less than or equal to valueRange[0] will map to colors[0], values greater than or equal to valueRange[1] will map to the last colors value, and intermediate values will shade continuously through the specified vector of colors, with interpolation between adjacent colors to produce a continuous spectrum. This is much simpler than it sounds in this description; see the recipes for an illustration of its use. If valueRange and colors are both NULL, a default grayscale color scheme will be used in SLiMgui, but an error will result if mapColor() is called.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method changeValues
+
+Documentation for SLiM function \code{changeValues}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param x An object of type integer or float or SpatialMap object.
+
+@aliases SpatialMap$changeValues SM$changeValues
+@family SpatialMap
+@return An object of type void. 
+@details ifo<SpatialMap> x) Changes the grid values used for the target spatial map. The parameter x should be either a SpatialMap object from which values are taken directly, or a vector, matrix, or array of numeric values as described in the documentation for defineSpatialMap(). Other characteristics of the spatial map, such as its color mapping (if defined), its spatial bounds, and its spatiality, will remain unchanged. The grid resolution of the spatial map is allowed to change with this method. This method is useful for changing the values of a spatial map over time, such as to implement changes to the landscape's characteristics due to seasonality, climate change, processes such as fire or urbanization, and so forth. As with the original map values provided to defineSpatialMap(), it is often useful to read map values from a PNG image file using the Eidos class Image.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method divide
+
+Documentation for SLiM function \code{divide}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param x An object of type integer or float or SpatialMap object.
+
+@aliases SpatialMap$divide SM$divide
+@family SpatialMap
+@return An object of type SpatialMap object. Return will be of length 1 (a singleton)
+@details ifo<SpatialMap> x) Divides the spatial map by x. One possibility is that x is a singleton integer or float value; in this case, each grid value of the target spatial map is divided by x. Another possibility is that x is an integer or float vector/matrix/array of the same dimensions as the target spatial map's grid; in this case, each grid value of the target spatial map is divided by the corresponding value of x. The third possibility is that x is itself a (singleton) spatial map; in this case, each grid value of the target spatial map is divided by the corresponding grid value of x (and thus the two spatial maps must match in their spatiality, their spatial bounds, and their grid dimensions). The target spatial map is returned, to allow easy chaining of operations.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method exp
+
+Documentation for SLiM function \code{exp}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases SpatialMap$exp SM$exp
+@family SpatialMap
+@return An object of type SpatialMap object. Return will be of length 1 (a singleton)
+@details void) Exponentiates the values of the spatial map. More precisely, each grid value x of the target spatial map is exponentiated - replaced by the value ex. The target spatial map is returned, to allow easy chaining of operations.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method gridValues
+
+Documentation for SLiM function \code{gridValues}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases SpatialMap$gridValues SM$gridValues
+@family SpatialMap
+@return An object of type float. 
+@details void) Returns the values for the spatial map's grid as a vector (for a 1D map), a matrix (for a 2D map), or an array (for a 3D map). The form and orientation of the returned values is such that it could be used to create a new spatial map, with defineSpatialMap(), which would be identical to the original.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method interpolate
+
+Documentation for SLiM function \code{interpolate}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param factor An object of type integer or string (singleton).
+@param method An object of type integer or string (singleton).
+
+@aliases SpatialMap$interpolate SM$interpolate
+@family SpatialMap
+@return An object of type SpatialMap object. Return will be of length 1 (a singleton)
+@details integer$ factor, [string$ method = "linear"]) Increases the resolution of the spatial map by factor, changing the dimensions of the spatial map's grid of values (while leaving its spatial bounds unchanged), by interpolating new values between the existing values. The parameter factor must be an integer in [2, 10001], somewhat arbitrarily. The target spatial map is returned, to allow easy chaining of operations. For a 1D spatial map, factor-1 new values will be inserted between every pair of values in the original value grid. A factor of 2 would therefore insert one new value between each pair of existing values, thereby increasing the map's resolution by a factor of two. Note that if the spatial map's original grid dimension was N, the new grid dimension with a factor of k would be k(N1)+1, not kN, because new values are inserted only between existing values. For 2D and 3D spatial maps, essentially the same process is conducted along each axis of the map's spatiality, increasing the resolution of the map by factor in every dimension. If method is "linear" (the default), linear (or bilinear or trilinear, for 2D/3D maps) interpolation will be used to interpolate the values for the new grid points. Alternatively, if method is "nearest", the nearest value in the old grid will be used for new grid points; with this method, it is recommended that factor be odd, not even, to avoid artifacts due to rounding of coordinates midway between the original grid positions. If method is "cubic", cubic (or bicubic, for 2D maps) will be used; this generally produces smoother interpolation with fewer artifacts than "linear", but it is not supported for 3D maps. The choice of interpolation method used here is independent of the map's interpolate property. Note that while the "nearest" and "linear" interpolation methods will leave the range of values in the map unchanged, "cubic" interpolation may produce interpolated values that are outside the original range of values (by design). Periodic boundaries are currently supported only for "nearest", "linear", and 1D "cubic" interpolation.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method mapColor
+
+Documentation for SLiM function \code{mapColor}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param value An object of type numeric.
+
+@aliases SpatialMap$mapColor SM$mapColor
+@family SpatialMap
+@return An object of type string. 
+@details numeric value) Uses the spatial map's color-translation machinery (as defined by the valueRange and colors parameters to defineSpatialMap()) to translate each element of value into a corresponding color string. If the spatial map does not have color-translation capabilities, an error will result. See the documentation for defineSpatialMap() for information regarding the details of color translation. See the Eidos manual for further information on color strings.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method mapImage
+
+Documentation for SLiM function \code{mapImage}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param width An object of type null or integer (singleton).
+@param height An object of type null or integer (singleton).
+@param centers An object of type logical (singleton).
+@param color An object of type logical (singleton).
+
+@aliases SpatialMap$mapImage SM$mapImage
+@family SpatialMap
+@return An object of type Image object. Return will be of length 1 (a singleton)
+@details [Ni$ width = NULL], [Ni$ height = NULL], [logical$ centers = F], [logical$ color = T]) Returns an Image object sampled from the spatial map. The image will be width pixels wide and height pixels tall; the intrinsic size of the spatial map itself will be used if one of these parameters is NULL. The image will be oriented in the same way as it is displayed in SLiMgui (which conceptually entails a transformation from matrix coordinates, which store values by column, to standard image coordinates, which store values by row; see the Eidos manual's documentation of Image for details). This method may only be called for 2D spatial maps at present. The sampling of the spatial map can be done in one of two ways, as controlled by the centers parameter. If centers is T, a (width+1) x (height+1) grid of lines that delineates width x height rectangular pixels will be overlaid on top of the spatial map, and values will be sampled from the spatial map at the center of each of these pixels. If centers is F (the default), a width x height grid of lines will be overlaid on top of the spatial map, and values will be sampled from the spatial map at the vertices of the grid. If interpolation is not enabled for the spatial map, these two options will both recover the original matrix of values used to define the spatial map (assuming, here and below, that width and height are NULL). If interpolation is enabled for the spatial map, however, centers == F will recover the original values, but will not capture the "typical" value of each pixel in the image; centers == T, on the other hand, will not recover the original values, but will capture the "typical" value of each pixel in the image (i.e., the value at the center of each pixel, as produced by interpolation). If color is T (the default), the valueRange and colors parameters supplied to defineSpatialMap() will be used to translate map values to RGB color values as described in the documentation of that method, providing the same appearance as in SLiMgui; of course those parameters must have been supplied, otherwise an error will result. If color is F, on the other hand, a grayscale image will be produced that directly reflects the map values without color translation. In this case, this method needs to translate map values, which can have any float value, into grayscale pixel values that are integers in [0, 255]. To do so, the map values are multiplied by 255.0, clamped to [0.0, 255.0], and then rounded to the nearest integer. This translation scheme essentially assumes that map values are in [0, 1]; for spatial maps that were defined using the floatK channel of a grayscale PNG image, this should recover the original image's pixel values. (If a different translation scheme is desired, color=T with the desired valueRange and colors should be used.)
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method mapValue
+
+Documentation for SLiM function \code{mapValue}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param point An object of type float.
+
+@aliases SpatialMap$mapValue SM$mapValue
+@family SpatialMap
+@return An object of type float. 
+@details float point) Uses the spatial map's mapping machinery (as defined by the gridSize, values, and interpolate parameters to defineSpatialMap()) to translate the coordinates of point into a corresponding map value. The length of point must be equal to the spatiality of the spatial map; in other words, for a spatial map with spatiality "xz", point must be of length 2, specifying the x and z coordinates of the point to be evaluated. Interpolation will automatically be used if it was enabled for the spatial map. Point coordinates are clamped into the range defined by the spatial boundaries, even if the spatial boundaries are periodic; use pointPeriodic() to wrap the point coordinates first if desired. See the documentation for defineSpatialMap() for information regarding the details of value mapping. The point parameter may also contain more than one point to be looked up. In this case, the length of point must be an exact multiple of the spatiality of the spatial map; for a spatial map with spatiality "xz", for example, the length of point must be an exact multiple of 2, and successive pairs of elements from point (elements 0 and 1, then elements 2 and 3, etc.) will be taken as the x and z coordinates of the points to be evaluated. This allows mapValue() to be used in a vectorized fashion. The spatialMapValue() method of Subpopulation provides essentially the same functionality as this method; it may be more convenient to use, for some usage cases, and it checks that the spatial map is actually added to the subpopulation in question, providing an additional consistency check. However, either method may be used.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method multiply
+
+Documentation for SLiM function \code{multiply}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param x An object of type integer or float or SpatialMap object.
+
+@aliases SpatialMap$multiply SM$multiply
+@family SpatialMap
+@return An object of type SpatialMap object. Return will be of length 1 (a singleton)
+@details ifo<SpatialMap> x) Multiplies the spatial map by x. One possibility is that x is a singleton integer or float value; in this case, each grid value of the target spatial map is multiplied by x. Another possibility is that x is an integer or float vector/matrix/array of the same dimensions as the target spatial map's grid; in this case, each grid value of the target spatial map is multiplied by the corresponding value of x. The third possibility is that x is itself a (singleton) spatial map; in this case, each grid value of the target spatial map is multiplied by the corresponding grid value of x (and thus the two spatial maps must match in their spatiality, their spatial bounds, and their grid dimensions). The target spatial map is returned, to allow easy chaining of operations.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method power
+
+Documentation for SLiM function \code{power}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param x An object of type integer or float or SpatialMap object.
+
+@aliases SpatialMap$power SM$power
+@family SpatialMap
+@return An object of type SpatialMap object. Return will be of length 1 (a singleton)
+@details ifo<SpatialMap> x) Raises the spatial map to the power x. One possibility is that x is a singleton integer or float value; in this case, each grid value of the target spatial map is raised to the power x. Another possibility is that x is an integer or float vector/matrix/array of the same dimensions as the target spatial map's grid; in this case, each grid value of the target spatial map is raised to the power of the corresponding value of x. The third possibility is that x is itself a (singleton) spatial map; in this case, each grid value of the target spatial map is raised to power of the corresponding grid value of x (and thus the two spatial maps must match in their spatiality, their spatial bounds, and their grid dimensions). The target spatial map is returned, to allow easy chaining of operations.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method range
+
+Documentation for SLiM function \code{range}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases SpatialMap$range SM$range
+@family SpatialMap
+@return An object of type float. 
+@details void) Returns the range of values contained in the spatial map. The result is a float vector of length 2; the first element is the minimum map value, and the second element is the maximum map value.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method rescale
+
+Documentation for SLiM function \code{rescale}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param min An object of type numeric or numeric (singleton).
+@param max An object of type numeric or numeric (singleton).
+
+@aliases SpatialMap$rescale SM$rescale
+@family SpatialMap
+@return An object of type SpatialMap object. Return will be of length 1 (a singleton)
+@details [numeric$ min = 0.0], [numeric$ max = 1.0]) Rescales the values of the spatial map to the range [min, max]. By default, the rescaling is to the range [0.0, 1.0]. It is required that min be less than max, and that both be finite. Note that the final range may not be exactly [min, max] due to numerical error. The target spatial map is returned, to allow easy chaining of operations.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method sampleImprovedNearbyPoint
+
+Documentation for SLiM function \code{sampleImprovedNearbyPoint}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param point An object of type float.
+@param maxDistance An object of type float (singleton).
+@param functionType An object of type string (singleton).
+@param ... An object of type NA.
+
+@aliases SpatialMap$sampleImprovedNearbyPoint SM$sampleImprovedNearbyPoint
+@family SpatialMap
+@return An object of type float. 
+@details float point, float$ maxDistance, string$ functionType, ...) This variant of sampleNearbyPoint() samples a Metropolis-Hastings move on the spatial map. See sampleNearbyPoint() for discussion of the basic idea. This method proposes a nearby point drawn from the given kernel. If the drawn point has a larger map value than the original point, the new point is returned. If the drawn point has a smaller map value than the original point, it is returned with a probability equal to the ratio between its map value and the original map value, otherwise the original point is returned. The distribution of points that move (or not) to new locations governed by this method will converge upon the map itself, in a similar manner to how MCMC converges upon the posterior distribution (assuming no other forces, such as birth or death, influence the distribution of individuals). Movement governed by this method is "improved" in the sense that points will tend to remain where they are unless the new sampled point is an improvement for them - a higher map value. Note that unlike sampleNearbyPoint(), this method requires that all map values are non-negative. The parameter point may contain any number of points; the returned vector will contain corresponding points sampled as described above. Each supplied point must provide coordinates precisely as specified by the spatiality of the target map; for example, if the target map's spatiality is "xz" (in an "xyz" species), each point must contain two elements, providing the x and z coordinate. Be careful; this means that in general it is not safe to pass an individual's spatialPosition property for point, for example (although it is safe if the spatiality of the map matches the dimensionality of the simulation); other properties on Individual exist for getting the individual's coordinates in a particular spatiality, such as the xz property for this example. Supplied points are not required to be within bounds, but since nearby points are sampled from the given kernel and must be within bounds, an infinite loop might result if a supplied point is substantially outside bounds. The kernel is specified with a kernel type, functionType, followed by zero or more ellipsis arguments; see smooth() for further information. For this method, at present only kernel types "f", "l", "e", "n", and "t" are supported, and type "t" is not presently supported for 3D kernels. The parameters that define the kernel's shape - the ellipsis arguments that follow functionType - may each, independently, be either a singleton or a vector with length equal to the number of points, providing a separate value for each point being processed. In this way, all of the nearby points can be drawn from the same kernel, or each from a separately defined kernel. Since maxDistance and functionType are required to be singletons, however, their values cannot vary from point to point in the present design. See also the Subpopulation method deviatePositionsWithMap(), which is conceptually similar to this method.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method sampleNearbyPoint
+
+Documentation for SLiM function \code{sampleNearbyPoint}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param point An object of type float.
+@param maxDistance An object of type float (singleton).
+@param functionType An object of type string (singleton).
+@param ... An object of type NA.
+
+@aliases SpatialMap$sampleNearbyPoint SM$sampleNearbyPoint
+@family SpatialMap
+@return An object of type float. 
+@details float point, float$ maxDistance, string$ functionType, ...) For a spatial point supplied in point, returns a nearby point sampled from a kernel weighted by the spatial map's values. Only points within the maximum distance of the kernel, maxDistance, will be chosen, and the probability that a given point is chosen will be proportional to the density of the kernel at that point multiplied by the value of the map at that point (interpolated, if interpolation is enabled for the map). Negative values of the map will be treated as zero. The point returned will be within spatial bounds, respecting periodic boundaries if in effect (so there is no need to call pointPeriodic() on the result). The parameter point may contain any number of points; the returned vector will contain corresponding points sampled as described above. Each supplied point must provide coordinates precisely as specified by the spatiality of the target map; for example, if the target map's spatiality is "xz" (in an "xyz" species), each point must contain two elements, providing the x and z coordinate. Be careful; this means that in general it is not safe to pass an individual's spatialPosition property for point, for example (although it is safe if the spatiality of the map matches the dimensionality of the simulation); other properties on Individual exist for getting the individual's coordinates in a particular spatiality, such as the xz property for this example. Supplied points are not required to be within bounds, but since nearby points are sampled from the given kernel and must be within bounds, an infinite loop might result if a supplied point is substantially outside bounds. The kernel is specified with a kernel type, functionType, followed by zero or more ellipsis arguments; see smooth() for further information. For this method, at present only kernel types "f", "l", "e", "n", and "t" are supported, and type "t" is not presently supported for 3D kernels. The parameters that define the kernel's shape - the ellipsis arguments that follow functionType - may each, independently, be either a singleton or a vector with length equal to the number of points, providing a separate value for each point being processed. In this way, all of the nearby points can be drawn from the same kernel, or each from a separately defined kernel. Since maxDistance and functionType are required to be singletons, however, their values cannot vary from point to point in the present design. This method can be used to find points in the vicinity of individuals that are favorable - possessing more resources, or better environmental conditions, etc. It can also be used to guide the dispersal or foraging behavior of individuals. See sampleImprovedNearbyPoint() for a variant that may be useful for directed movement across a landscape. Note that the algorithm for sampleNearbyPoint() works by rejection sampling, and so will be very inefficient if the maximum value of the map (anywhere, across the entire map) is much larger than the typical value of the map where individuals are. The algorithm for sampleImprovedNearbyPoint() is different, and does not exhibit this performance issue. See also the Subpopulation method deviatePositionsWithMap(), which is conceptually similar to this method.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method smooth
+
+Documentation for SLiM function \code{smooth}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param maxDistance An object of type float (singleton).
+@param functionType An object of type string (singleton).
+@param ... An object of type NA.
+
+@aliases SpatialMap$smooth SM$smooth
+@family SpatialMap
+@return An object of type SpatialMap object. Return will be of length 1 (a singleton)
+@details float$ maxDistance, string$ functionType, ...) Smooths (or blurs, one could say) the values of the spatial map by convolution with a kernel. The kernel is specified with a maximum distance maxDistance (beyond which the kernel cuts off to a value of zero), a kernel type functionType that should be "f", "l", "e", "n", "c", or "t", and additional parameters in the ellipsis ... that depend upon the kernel type and further specify its shape. The target spatial map is returned, to allow easy chaining of operations. The kernel specification is similar to that for the setInteractionType() method of InteractionType, but omits the maximum value of the kernel. Specifically, functionType may be "f", in which case no ellipsis arguments should be supplied; "l", similarly with no ellipsis arguments; "e", in which case the ellipsis should supply a numeric$ lambda (rate) parameter for a negative exponential function; "n", in which case the ellipsis should supply a numeric$ sigma (standard deviation) parameter for a Gaussian function; "c", in which case the ellipsis should supply a numeric$ scale parameter for a Cauchy distribution function; or "t", in which case the ellipsis should supply a numeric$ degrees of freedom and a numeric$ scale parameter for a t-distribution function. See the InteractionType class documentation for discussions of these kernel types. Distance metrics specified to this method, such as maxDistance and the additional kernel shape parameters, are measured in the distance scale of the spatial map - the same distance scale in which the spatial bounds of the map are specified. The operation is performed upon the grid values of the spatial map; distances are internally translated into the scale of the value grid. For non-periodic boundaries, clipping at the edge of the spatial map is done; in a 2D map with no periodic boundaries, for example, the weights of edge and corner grid values are adjusted for their partial (one-half and one-quarter) coverage. For periodic boundaries, the smoothing operation will automatically wrap around based upon the assumption that the grid values at the two connected edges of the periodic boundary have identical values (which they should, since by definition they represent the same position in space). The density scale of the kernel has no effect and will be normalized; this is the reason that smooth(), unlike InteractionType, does not require specification of the maximum value of the kernel. This normalization prevents the kernel from increasing or decreasing the average spatial map value (apart from possible edge effects).
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method subtract
+
+Documentation for SLiM function \code{subtract}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param x An object of type integer or float or SpatialMap object.
+
+@aliases SpatialMap$subtract SM$subtract
+@family SpatialMap
+@return An object of type SpatialMap object. Return will be of length 1 (a singleton)
+@details ifo<SpatialMap> x) Subtracts x from the spatial map. One possibility is that x is a singleton integer or float value; in this case, x is subtracted from each grid value of the target spatial map. Another possibility is that x is an integer or float vector/matrix/array of the same dimensions as the target spatial map's grid; in this case, each value of x is subtracted from the corresponding grid value of the target spatial map. The third possibility is that x is itself a (singleton) spatial map; in this case, each grid value of x is subtracted from the corresponding grid value of the target spatial map (and thus the two spatial maps must match in their spatiality, their spatial bounds, and their grid dimensions). The target spatial map is returned, to allow easy chaining of operations.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+
+
+SLiM method addPatternForClone
+
+Documentation for SLiM function \code{addPatternForClone}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param chromosome An object of type integer or string or Chromosome object (singleton).
+@param pattern An object of type null or Dictionary object (singleton).
+@param parent An object of type Individual object (singleton).
+@param sex An object of type null or string (singleton).
+
+@aliases Species$addPatternForClone Sp$addPatternForClone
+@family Species
+@return An object of type Dictionary object. Return will be of length 1 (a singleton)
+@details iso<Chromosome>$ chromosome, No<Dictionary>$ pattern, object<Individual>$ parent, [Ns$ sex = NULL]) Adds an inheritance dictionary for the specified chromosome to the pattern dictionary pattern, representing producing a clone of parent, with sex optionally specified by sex. The parameter chromosome can provide a chromosome id (an integer), a chromosome symbol (a string), or a Chromosome object. The resulting pattern dictionary is intended for use with the Subpopulation method addMultiRecombinant(); see that method for background on the use of pattern dictionaries. The parameter pattern must be a Dictionary (or a subclass of Dictionary), or NULL. If pattern is NULL, a new singleton object of class Dictionary will be created, set up, and returned; otherwise, the returned object is the same object passed in as pattern. The inheritance dictionary generated by addPatternForClone() will be added to pattern as the value for a particular key. If pattern is already configured to use string keys, the key used will be the symbol property of the chromosome; otherwise, including if pattern is NULL, the key used will be the id property of the chromosome. If the key in question already exists in pattern, its value will be replaced. The precise inheritance pattern generated by this method depends upon the chromosome's type; see initializeChromosome() for a description of the different chromosome types and the ways in which they are inherited. The pattern will be the same as would be used by the addCloned() method for the chromosome. If sex is NULL, the sex of the offspring is assumed to be the same as the parent; in non-sexual models, NULL must be passed. If the sex of the offspring will be different from the parent, "M" or "F" should be passed; if changing the sex from parent to offspring presents any genetic problems (if the chromosome is a sex chromosome, for example), an error will be raised, but if the chromosome does not depend upon sex, the change of sex will be allowed. Note that the generated inheritance dictionary does not encode the offspring sex; the sex parameter is simply used to determine and validate the inheritance pattern for the specified chromosome. The final pattern dictionary passed to addMultiRecombinant() will be validated against the sex parameter given to that method. It is typically not necessary to call addPatternForClone(), since addMultiRecombinant() will usually automatically infer the correct inheritance pattern from its parental individual parent1 if an inheritance dictionary for the chromosome is not supplied in pattern. This method is needed primarily for edge cases, such as if addMultiRecombinant() is being used to generate a biparental cross, but a particular chromosome should be cloned from just one of the parents in a manner that the biparental cross would not do automatically.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addPatternForCross
+
+Documentation for SLiM function \code{addPatternForCross}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param chromosome An object of type integer or string or Chromosome object (singleton).
+@param pattern An object of type null or Dictionary object (singleton).
+@param parent1 An object of type Individual object (singleton).
+@param parent2 An object of type Individual object (singleton).
+@param sex An object of type null or string (singleton).
+
+@aliases Species$addPatternForCross Sp$addPatternForCross
+@family Species
+@return An object of type Dictionary object. Return will be of length 1 (a singleton)
+@details iso<Chromosome>$ chromosome, No<Dictionary>$ pattern, object<Individual>$ parent1, object<Individual>$ parent2, [Ns$ sex = NULL]) Adds an inheritance dictionary for the specified chromosome to the pattern dictionary pattern, representing a biparental cross between parent1 and parent2 to generate an offspring, with sex optionally specified by sex. The parameter chromosome can provide a chromosome id (an integer), a chromosome symbol (a string), or a Chromosome object. The resulting pattern dictionary is intended for use with the Subpopulation method addMultiRecombinant(); see that method for background on the use of pattern dictionaries. The parameter pattern must be a Dictionary (or a subclass of Dictionary), or NULL. If pattern is NULL, a new singleton object of class Dictionary will be created, set up, and returned; otherwise, the returned object is the same object passed in as pattern. The inheritance dictionary generated by addPatternForCross() will be added to pattern as the value for a particular key. If pattern is already configured to use string keys, the key used will be the symbol property of the chromosome; otherwise, including if pattern is NULL, the key used will be the id property of the chromosome. If the key in question already exists in pattern, its value will be replaced. The precise inheritance pattern generated by this method depends upon the chromosome's type; see initializeChromosome() for a description of the different chromosome types and the ways in which they are inherited. The pattern will be the same as would be used by the addCrossed() method for the chromosome. In some cases, the value of sex is unimportant and may be left as NULL; a NULL value for sex essentially asserts that the sex of the offspring is unimportant to the inheritance pattern for the chromosome with the given parents. If that assertion is untrue - if the sex needs to be known, for example to know how a sex chromosome should be inherited - an error will be raised. When the sex needs to be known, "M" or "F" must be passed so that the correct inheritance pattern can be generated. In non-sexual models, NULL must be passed. Note that the generated inheritance dictionary does not encode the offspring sex; the sex parameter is simply used to determine and validate the inheritance pattern for the specified chromosome. The final pattern dictionary passed to addMultiRecombinant() will be validated against the sex parameter given to that method. It is typically not necessary to call addPatternForCross(), since addMultiRecombinant() will usually automatically infer the correct inheritance pattern from its parental individuals parent1 and parent2 if an inheritance dictionary for the chromosome is not supplied in pattern. This method is needed primarily for edge cases, such as if addMultiRecombinant() is being used to generate a clonal offspring, but a particular chromosome should be produced with recombination.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addPatternForNull
+
+Documentation for SLiM function \code{addPatternForNull}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param chromosome An object of type integer or string or Chromosome object (singleton).
+@param pattern An object of type null or Dictionary object (singleton).
+@param sex An object of type null or string (singleton).
+
+@aliases Species$addPatternForNull Sp$addPatternForNull
+@family Species
+@return An object of type Dictionary object. Return will be of length 1 (a singleton)
+@details iso<Chromosome>$ chromosome, No<Dictionary>$ pattern, [Ns$ sex = NULL]) Adds an inheritance dictionary for the specified chromosome to the pattern dictionary pattern, representing a non-inheritance event producing null haplosomes, with sex optionally specified by sex. The parameter chromosome can provide a chromosome id (an integer), a chromosome symbol (a string), or a Chromosome object. The resulting pattern dictionary is intended for use with the Subpopulation method addMultiRecombinant(); see that method for background on the use of pattern dictionaries. The parameter pattern must be a Dictionary (or a subclass of Dictionary), or NULL. If pattern is NULL, a new singleton object of class Dictionary will be created, set up, and returned; otherwise, the returned object is the same object passed in as pattern. The inheritance dictionary generated by addPatternForNull() will be added to pattern as the value for a particular key. If pattern is already configured to use string keys, the key used will be the symbol property of the chromosome; otherwise, including if pattern is NULL, the key used will be the id property of the chromosome. If the key in question already exists in pattern, its value will be replaced. For all chromosome types, this method will simply produce a null haplosome or haplosomes for the specified chromosome. If the chromosome does not allow a null haplosome, an error will be raised. In some cases, the value of sex is unimportant and may be left as NULL; a NULL value for sex essentially asserts that the chromosome allows null haplosomes for any sex. If that assertion is untrue - if the sex needs to be known, for example to know whether a null haplosome is allowed for a sex chromosome - an error will be raised. When the sex needs to be known, "M" or "F" must be passed so that addPatternForNull() is satisfied that a legal pattern for the chromosome will be generated. In non-sexual models, NULL must be passed. Note that the generated inheritance dictionary does not encode the offspring sex; the sex parameter is simply used to determine and validate the inheritance pattern for the specified chromosome. The final pattern dictionary passed to addMultiRecombinant() will be validated against the sex parameter given to that method. If only one of the two haplosomes for a diploid chromosome should be a null haplosome, and addPatternForCrossed() and addPatternForCloned() would not produce the desired pattern, use addPatternForRecombinant(), which provides complete control.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addPatternForRecombinant
+
+Documentation for SLiM function \code{addPatternForRecombinant}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param chromosome An object of type integer or string or Chromosome object (singleton).
+@param pattern An object of type null or Dictionary object (singleton).
+@param strand1 An object of type null or Haplosome object (singleton).
+@param strand2 An object of type null or Haplosome object (singleton).
+@param breaks1 An object of type null or integer.
+@param strand3 An object of type null or Haplosome object (singleton).
+@param strand4 An object of type null or Haplosome object (singleton).
+@param breaks2 An object of type null or integer.
+@param sex An object of type null or string (singleton).
+@param randomizeStrands An object of type logical (singleton).
+
+@aliases Species$addPatternForRecombinant Sp$addPatternForRecombinant
+@family Species
+@return An object of type Dictionary object. Return will be of length 1 (a singleton)
+@details iso<Chromosome>$ chromosome, No<Dictionary>$ pattern, No<Haplosome>$ strand1, No<Haplosome>$ strand2, Ni breaks1, No<Haplosome>$ strand3, No<Haplosome>$ strand4, Ni breaks2, [Ns$ sex = NULL], [logical$ randomizeStrands = T]) Adds an inheritance dictionary for the specified chromosome to the pattern dictionary pattern, representing inheritance by cloning, recombination, or both, to generate an offspring from up to four parental haplosomes, with sex optionally specified by sex. The parameter chromosome can provide a chromosome id (an integer), a chromosome symbol (a string), or a Chromosome object. The resulting pattern dictionary is intended for use with the Subpopulation method addMultiRecombinant(); see that method for background on the use of pattern dictionaries. The parameter pattern must be a Dictionary (or a subclass of Dictionary), or NULL. If pattern is NULL, a new singleton object of class Dictionary will be created, set up, and returned; otherwise, the returned object is the same object passed in as pattern. The inheritance dictionary generated by addPatternForRecombinant() will be added to pattern as the value for a particular key. If pattern is already configured to use string keys, the key used will be the symbol property of the chromosome; otherwise, including if pattern is NULL, the key used will be the id property of the chromosome. If the key in question already exists in pattern, its value will be replaced. When passed the resulting pattern dictionary, the addMultiRecombinant() method will produce the first offspring haplosome using the Haplosome objects strand1 and strand2 with the vector of recombination breakpoints breaks1, and likewise will produce the second offspring haplosome using strand3, strand4, and breaks2. If both parental strands for an offspring haplosome are NULL, the breaks vector must be NULL or empty, and a null haplosome will be produced. If the first parental strand is non-NULL and the second is NULL for an offspring haplosome, the breaks vector must again be NULL or empty, and the first strand will be cloned with mutation. If both parental strands for an offspring haplosome are non-NULL, recombination between the strands will be done using the supplied breaks vector; in this case, if the breaks vector is NULL then addMultiRecombinant() will automatically generate breakpoints for the recombination. All of these semantics are discussed further in the documentation for addMultiRecombinant(); this method is just a helper for that method. The documentation for addRecombinant() may also be helpful for understanding the concepts here, since it is the conceptual foundation upon which the very complex architecture of the addMultiRecombinant() method is built. Unlike addPatternForClone() and addPatternForCrossed(), which must infer the inheritance pattern given the chromosome type and the offspring sex, addPatternForRecombinant() is given the inheritance pattern, and must simply confirm that it is valid. If sex is NULL (the default), this validation only needs to check that the inheritance pattern is possible, for some sex. For example, if the chromosome type is "X" then the inheritance pattern must produce a non-null first haplosome, and the second haplosome can be null (for a male, X-) or non-null (for a female, XX); other inheritance patterns would fail validation. When the sex is known, "M" or "F" may optionally be passed to validate against that sex; X- would then fail validation if a female is specified, for example. In non-sexual models, NULL must be passed. Note that the generated inheritance dictionary does not encode the offspring sex; the sex parameter is simply used for validation. The final pattern dictionary passed to addMultiRecombinant() will be validated against the sex parameter given to that method. The randomizeStrands parameter indicates whether or not the order of recombining parental strands should be randomized in the inheritance dictionary. If randomizeStrands is T, then if strand1 and strand2 are both non-NULL, their order will be randomized; and similarly for strand3 and strand4. If randomizeStrands is F, no randomization will be done in the inheritance dictionary - but strand order randomization may still be done by addMultiRecombinant() if T is passed for its own randomizeStrands parameter. Randomizing the strand order is usually desirable, to avoid an inheritance bias due to a lack of randomization in the initial copy strand. Whether you wish to randomize strand order in addPatternForRecombinant() or in addMultiRecombinant() is up to you; it is harmless to do it in both places, apart from a small performance penalty, but there is no benefit. Of the family of addPatternFor...() methods, addPatternForRecombinant() is the most commonly used. Typically, addMultiRecombinant() can automatically infer the correct inheritance pattern for crossing or cloning (as described in its documentation), but for more complex inheritance patterns, using addPatternForRecombinant() is necessary (unless you want to build the pattern dictionary yourself).
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addSubpop
+
+Documentation for SLiM function \code{addSubpop}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param subpopID An object of type integer or string (singleton).
+@param size An object of type integer (singleton).
+@param sexRatio An object of type float (singleton).
+@param haploid An object of type logical (singleton).
+
+@aliases Species$addSubpop Sp$addSubpop
+@family Species
+@return An object of type Subpopulation object. Return will be of length 1 (a singleton)
+@details is$ subpopID, integer$ size, [float$ sexRatio = 0.5], [logical$ haploid = F]) Add a new subpopulation with id subpopID and size individuals. The subpopID parameter may be either an integer giving the ID of the new subpopulation, or a string giving the name of the new subpopulation (such as "p5" to specify an ID of 5). Only if sex is enabled for the species, the initial sex ratio may optionally be specified as sexRatio (as the male fraction, M:M+F); if it is not specified, a default of 0.5 is used. The new subpopulation will be defined as a global variable immediately by this method, and will also be returned by this method. Subpopulations added by this method will initially consist of individuals with empty haplosomes. In order to model subpopulations that split from an already existing subpopulation, use addSubpopSplit(). The haploid parameter defaults to F, indicating that the generated individuals should adopt their natural ploidy; in particular, type "A" chromosomes should be represented in each individual by two empty haplosomes. The haploid parameter may instead be T; in this case, for all chromosomes of type "A" (and only that type), the second haplosome of each new individual will be a null haplosome, rather than an empty haplosome. This could be useful in a model of haplodiploidy, for example, to generate initial individuals that are haploid for the autosomal chromosomes of the species. For even greater control in nonWF models, you can call addSubpop() with an initial size of 0 and then stock the population with new individuals created however you wish in the next tick's reproduction() callback, such as with the addEmpty() method, providing separate control over the configuration of each individual.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addSubpopSplit
+
+Documentation for SLiM function \code{addSubpopSplit}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param subpopID An object of type integer or string (singleton).
+@param size An object of type integer (singleton).
+@param sourceSubpop An object of type integer or Subpopulation object (singleton).
+@param sexRatio An object of type float (singleton).
+
+@aliases Species$addSubpopSplit Sp$addSubpopSplit
+@family Species
+@return An object of type Subpopulation object. Return will be of length 1 (a singleton)
+@details is$ subpopID, integer$ size, io<Subpopulation>$ sourceSubpop, [float$ sexRatio = 0.5]) Split off a new subpopulation with id subpopID and size individuals derived from subpopulation sourceSubpop. The subpopID parameter may be either an integer giving the ID of the new subpopulation, or a string giving the name of the new subpopulation (such as "p5" to specify an ID of 5). The sourceSubpop parameter may specify the source subpopulation either as a Subpopulation object or by integer identifier. Only if sex is enabled for the species, the initial sex ratio may optionally be specified as sexRatio (as the male fraction, M:M+F); if it is not specified, a default of 0.5 is used. The new subpopulation will be defined as a global variable immediately by this method, and will also be returned by this method. Subpopulations added by this method will consist of individuals that are clonal copies of individuals from the source subpopulation, randomly chosen with probabilities proportional to fitness. The fitness of all of these initial individuals is considered to be 1.0, to avoid a doubled round of selection in the initial tick, given that fitness values were already used to choose the individuals to clone. Once this initial set of individuals has mated to produce offspring, the model is effectively of parental individuals in the source subpopulation mating randomly according to fitness, as usual in SLiM, with juveniles migrating to the newly added subpopulation. Effectively, then, then new subpopulation is created empty, and is filled by migrating juveniles from the source subpopulation, in accordance with SLiM's usual model of juvenile migration.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method chromosomesOfType
+
+Documentation for SLiM function \code{chromosomesOfType}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param type An object of type string (singleton).
+
+@aliases Species$chromosomesOfType Sp$chromosomesOfType
+@family Species
+@return An object of type Chromosome object. 
+@details string$ type) Returns a vector of Chromosome objects of the chromosome type supplied in type, in the order if which they were defined. If type does not correspond to a chromosome type accepted by initializeChromosome(), an error will be raised. See also chromosomesWithIDs() and chromosomesWithSymbols().
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method chromosomesWithIDs
+
+Documentation for SLiM function \code{chromosomesWithIDs}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param ids An object of type integer.
+
+@aliases Species$chromosomesWithIDs Sp$chromosomesWithIDs
+@family Species
+@return An object of type Chromosome object. 
+@details integer ids) Returns a vector of Chromosome objects corresponding to the chromosome ids supplied in ids, in the same order. If any chromosome id in ids does not correspond to a chromosome in the target species, an error will be raised. See also chromosomesOfType() and chromosomesWithSymbols().
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method chromosomesWithSymbols
+
+Documentation for SLiM function \code{chromosomesWithSymbols}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param symbols An object of type string.
+
+@aliases Species$chromosomesWithSymbols Sp$chromosomesWithSymbols
+@family Species
+@return An object of type Chromosome object. 
+@details string symbols) Returns a vector of Chromosome objects corresponding to the chromosome symbols supplied in symbols, in the same order. If any chromosome symbol in symbols does not correspond to a chromosome in the target species, an error will be raised. See also chromosomesOfType() and chromosomesWithIDs().
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method countOfMutationsOfType
+
+Documentation for SLiM function \code{countOfMutationsOfType}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mutType An object of type integer or MutationType object (singleton).
+
+@aliases Species$countOfMutationsOfType Sp$countOfMutationsOfType
+@family Species
+@return An object of type integer. Return will be of length 1 (a singleton)
+@details io<MutationType>$ mutType) Returns the number of mutations that are of the type specified by mutType, out of all of the mutations that are currently active in the species. If you need a vector of the matching Mutation objects, rather than just a count, use -mutationsOfType(). This method is often used to determine whether an introduced mutation is still active (as opposed to being either lost or fixed). This method is provided for speed; it is much faster than the corresponding Eidos code.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method individualsWithPedigreeIDs
+
+Documentation for SLiM function \code{individualsWithPedigreeIDs}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param pedigreeIDs An object of type integer.
+@param subpops An object of type null or integer or Subpopulation object.
+
+@aliases Species$individualsWithPedigreeIDs Sp$individualsWithPedigreeIDs
+@family Species
+@return An object of type Individual object. 
+@details integer pedigreeIDs, [Nio<Subpopulation> subpops = NULL]) Looks up individuals by pedigree ID, optionally within specific subpopulations. Pedigree tracking must be turned on with initializeSLiMOptions(keepPedigrees=T) to use this method, otherwise an error will result. This method is vectorized; more than one pedigree id may be passed in pedigreeID, in which case the returned vector will contain all of the individuals for which a match was found (in the same order in which they were supplied). If a given id is not found, the returned vector will contain no entry for that id (so the length of the returned vector may not match the length of pedigreeIDs). If none of the given ids were found, the returned vector will be object<Individual>(0), an empty object vector of class Individual. If you have more than one pedigree ID to look up, calling this method just once, in vectorized fashion, may be much faster than calling it once for each ID, due to internal optimizations. To find individuals within all subpopulations, pass the default of NULL for subpops. If you are interested only in matches within a specific subpopulation, pass that subpopulation for subpops; that will make the search faster. Similarly, if you know that a particular subpopulation is the most likely to contain matches, you should supply that subpopulation first in the subpops vector so that it will be searched first; the supplied subpopulations are searched in order. Subpopulations may be supplied either as integer IDs, or as Subpopulation objects.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method killIndividuals
+
+Documentation for SLiM function \code{killIndividuals}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param individuals An object of type Individual object.
+
+@aliases Species$killIndividuals Sp$killIndividuals
+@family Species
+@return An object of type void. 
+@details object<Individual> individuals) Immediately kills the individuals in individuals. This removes them from their subpopulation and gives them an index value of -1. The Individual objects are not freed immediately, since references to them could still exist in local Eidos variables; instead, the individuals are kept in a temporary "graveyard" until they can be freed safely. It therefore continues to be safe to use them and their haplosomes, except that accessing their subpopulation property will raise an error since they no longer have a subpopulation. Note that the indices and order of individuals and haplosomes in all source subpopulations will change unpredictably as a side effect of this method. All evaluated interactions are invalidated as a side effect of calling this method. Note that this method is only for use in nonWF models, in which mortality is managed manually by the model script. In WF models, mortality is managed automatically by the SLiM core when the new offspring generation becomes the parental generation and the previous parental generation dies; mortality does not otherwise occur in WF models. In nonWF models, mortality normally occurs during the survival stage of the tick cycle, based upon the fitness values calculated by SLiM, and survival() callbacks can influence the outcome of that survival stage. Calls to killIndividuals(), on the other hand, can be made at any time during first(), early(), or late() events, and the result cannot be modified by survival() callbacks; the given individuals are simply immediately killed. This method therefore provides an alternative, and relatively rarely used, mortality mechanism that is disconnected from fitness.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method mutationCounts
+
+Documentation for SLiM function \code{mutationCounts}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param subpops An object of type null or integer or Subpopulation object.
+@param mutations An object of type null or Mutation object.
+
+@aliases Species$mutationCounts Sp$mutationCounts
+@family Species
+@return An object of type integer. 
+@details Nio<Subpopulation> subpops, [No<Mutation> mutations = NULL]) Return an integer vector with the frequency counts of all of the Mutation objects passed in mutations, within the Subpopulation objects in subpops. The subpops argument is required, but you may pass NULL to get population-wide frequency counts. Subpopulations may be supplied either as integer IDs, or as Subpopulation objects. If the optional mutations argument is NULL (the default), frequency counts will be returned for all of the active Mutation objects in the species - the same Mutation objects, and in the same order, as would be returned by the mutations property of sim, in other words. See the -mutationFrequencies() method to obtain float frequencies instead of integer counts. See also the Haplosome methods mutationCountsInHaplosomes() and mutationFrequenciesInHaplosomes().
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method mutationFrequencies
+
+Documentation for SLiM function \code{mutationFrequencies}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param subpops An object of type null or integer or Subpopulation object.
+@param mutations An object of type null or Mutation object.
+
+@aliases Species$mutationFrequencies Sp$mutationFrequencies
+@family Species
+@return An object of type float. 
+@details Nio<Subpopulation> subpops, [No<Mutation> mutations = NULL]) Return a float vector with the frequencies of all of the Mutation objects passed in mutations, within the Subpopulation objects in subpops. The subpops argument is required, but you may pass NULL to get population-wide frequencies. Subpopulations may be supplied either as integer IDs, or as Subpopulation objects. If the optional mutations argument is NULL (the default), frequencies will be returned for all of the active Mutation objects in the species - the same Mutation objects, and in the same order, as would be returned by the mutations property of sim, in other words. See the -mutationCounts() method to obtain integer counts instead of float frequencies. See also the Haplosome methods mutationCountsInHaplosomes() and mutationFrequenciesInHaplosomes().
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method mutationsOfType
+
+Documentation for SLiM function \code{mutationsOfType}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mutType An object of type integer or MutationType object (singleton).
+
+@aliases Species$mutationsOfType Sp$mutationsOfType
+@family Species
+@return An object of type Mutation object. 
+@details io<MutationType>$ mutType) Returns an object vector of all the mutations that are of the type specified by mutType, out of all of the mutations that are currently active in the species. If you just need a count of the matching Mutation objects, rather than a vector of the matches, use -countOfMutationsOfType(). This method is often used to look up an introduced mutation at a later point in the simulation, since there is no way to keep persistent references to objects in SLiM. This method is provided for speed; it is much faster than the corresponding Eidos code.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method outputFixedMutations
+
+Documentation for SLiM function \code{outputFixedMutations}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param filePath An object of type null or string (singleton).
+@param append An object of type logical (singleton).
+@param objectTags An object of type logical (singleton).
+
+@aliases Species$outputFixedMutations Sp$outputFixedMutations
+@family Species
+@return An object of type void. 
+@details [Ns$ filePath = NULL], [logical$ append = F], [logical$ objectTags = F]) Output all fixed mutations - all Substitution objects, in other words - in a SLiM native format. If the optional parameter filePath is NULL (the default), output will be sent to Eidos's output stream. Otherwise, output will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. Mutations which have fixed but have not been turned into Substitution objects - typically because convertToSubstitution has been set to F for their mutation type - are not output; they are still considered to be segregating mutations by SLiM. In SLiM 3.3 and later, the output format includes the nucleotides associated with any nucleotide-based mutations. In SLiM 5.0 and later, in models with multiple chromosome the output includes the symbol of the chromosome associated with each mutation. Beginning with SLiM 5.0, the objectTags parameter may be used to request that tag values for substitutions be written out. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method outputFull
+
+Documentation for SLiM function \code{outputFull}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param filePath An object of type null or string (singleton).
+@param binary An object of type logical (singleton).
+@param append An object of type logical (singleton).
+@param spatialPositions An object of type logical (singleton).
+@param ages An object of type logical (singleton).
+@param ancestralNucleotides An object of type logical (singleton).
+@param pedigreeIDs An object of type logical (singleton).
+@param objectTags An object of type logical (singleton).
+@param substitutions An object of type logical (singleton).
+
+@aliases Species$outputFull Sp$outputFull
+@family Species
+@return An object of type void. 
+@details [Ns$ filePath = NULL], [logical$ binary = F], [logical$ append = F], [logical$ spatialPositions = T], [logical$ ages = T], [logical$ ancestralNucleotides = T], [logical$ pedigreeIDs = F], [logical$ objectTags = F], [logical$ substitutions = F]) Output the state of the entire population. If the optional parameter filePath is NULL (the default), output will be sent to Eidos's output stream. Otherwise, output will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. When writing to a file, a logical flag, binary, may be supplied as well. If binary is T, the population state will be written as a binary file instead of a text file (binary data cannot be written to the standard output stream). The binary file is usually smaller, and in any case will be read much faster than the corresponding text file would be read. Binary files are not guaranteed to be portable between platforms; in other words, a binary file written on one machine may not be readable on a different machine (but in practice it usually will be, unless the platforms being used are fairly unusual). If binary is F (the default), a text file will be written. Beginning with SLiM 2.3, the spatialPositions parameter may be used to control the output of the spatial positions of individuals in species for which continuous space has been enabled using the dimensionality option of initializeSLiMOptions(). If spatialPositions is F, the output will not contain spatial positions, and will be identical to the output generated by SLiM 2.1 and later. If spatialPositions is T, spatial position information will be output if it is available. If the species does not have continuous space enabled, the spatialPositions parameter will be ignored. Positional information may be output for all output destinations - the Eidos output stream, a text file, or a binary file. Beginning with SLiM 3.0, the ages parameter may be used to control the output of the ages of individuals in nonWF simulations. If ages is F, the output will not contain ages, preserving backward compatibility with the output format of SLiM 2.1 and later. If ages is T, ages will be output for nonWF models. In WF simulations, the ages parameter will be ignored. Beginning with SLiM 3.3, the ancestralNucleotides parameter may be used to control the output of the ancestral nucleotide sequence in nucleotide-based models. If ancestralNucleotides is F, the output will not contain ancestral nucleotide information, and so the ancestral sequence will not be restored correctly if the saved file is loaded with readPopulationFile(). This option is provided because the ancestral sequence may be quite large, for models with a long chromosome (e.g., 1 GB if the chromosome is 109 bases long, when saved in text format, or 0.25 GB when saved in binary format). If the model is not nucleotide-based (as enabled with the nucleotideBased parameter to initializeSLiMOptions()), the ancestralNucleotides parameter will be ignored. Note that in nucleotide-based models the output format will always include the nucleotides associated with any nucleotide-based mutations; the ancestralNucleotides flag governs only the ancestral sequence. Beginning with SLiM 3.5, the pedigreeIDs parameter may be used to request that pedigree IDs be written out (and read in by readFromPopulationFile(), subsequently). This option is turned off (F) by default, for brevity. This option may only be used if SLiM's optional pedigree tracking has been enabled with initializeSLiMOptions(keepPedigrees=T). Beginning with SLiM 5.0, the objectTags parameter may be used to request that tag values for objects be written out. This option is turned off (F) by default, for brevity; if it turned on (T), the values of all tags for all objects of supported classes (Chromosome, Subpopulation, Individual, Haplosome, Mutation, Substitution) will be written. For individuals, the tag, tagF, tagL0, tagL1, tagL2, tagL3, and tagL4 properties will be written; for chromosomes, subpopulations, haplosomes, and mutations, the tag property will be written. The saved tag information can be read in by readFromPopulationFile(), but only if the output is in binary format (binary=T). Note that if there is other state that you wish you persist, such as tags on objects of other classes, values attached to objects with setValue(), and so forth, you should persist that state in separate files using calls such as writeFile(). Beginning with SLiM 5.0, the substitutions parameter may be used to request that information about Substitution objects in the simulation be written out. This option is turned off (F) by default, for brevity. The saved substitution information can be read in by readFromPopulationFile(), but only if the output is in binary format (binary=T). Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method outputMutations
+
+Documentation for SLiM function \code{outputMutations}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mutations An object of type Mutation object.
+@param filePath An object of type null or string (singleton).
+@param append An object of type logical (singleton).
+@param objectTags An object of type logical (singleton).
+
+@aliases Species$outputMutations Sp$outputMutations
+@family Species
+@return An object of type void. 
+@details object<Mutation> mutations, [Ns$ filePath = NULL], [logical$ append = F], [logical$ objectTags = F]) Output all of the given mutations. This can be used to output all mutations of a given mutation type, for example. If the optional parameter filePath is NULL (the default), output will be sent to Eidos's output stream. Otherwise, output will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. In SLiM 3.3 and later, the output format includes the nucleotides associated with any nucleotide-based mutations. In SLiM 5 and later, in models with multiple chromosome the output includes the symbol of the chromosome associated with each mutation. Beginning with SLiM 5.0, the objectTags parameter may be used to request that tag values for mutations be written out. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method readFromPopulationFile
+
+Documentation for SLiM function \code{readFromPopulationFile}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param filePath An object of type string (singleton).
+@param subpopMap An object of type null or Dictionary object (singleton).
+
+@aliases Species$readFromPopulationFile Sp$readFromPopulationFile
+@family Species
+@return An object of type integer. Return will be of length 1 (a singleton)
+@details string$ filePath, [No<Dictionary>$ subpopMap = NULL]) Read from a population file, whether in text or binary format as previously specified to outputFull(), and return the tick counter value represented by the file's contents (i.e., the tick at which the file was generated). Although this is most commonly used to set up initial populations (often in an Eidos event set to run in tick 1, immediately after simulation initialization), it may be called in any early() or late() event; the current state of all populations in the target species will be wiped and replaced by the state in the file at filePath. All Eidos variables that are of type object and have element class Subpopulation, Haplosome, Mutation, Individual, or Substitution will be removed as a side effect of this method if they contain any element that belongs to the target species, because those objects will no longer exist in the SLiM simulation; if you want to preserve any of that state, you should output it or save it to a file prior to this call. New symbols (p1, p2, etc.) will be defined to refer to the new Subpopulation objects loaded from the file. Note that fitness values are not calculated as a side effect of this call (because the simulation will often need to evaluate interactions or modify other state prior to doing so). In SLiM 2.3 and later when using the WF model, calling readFromPopulationFile() from any context other than a late() event causes a warning; calling from a late() event is almost always correct in WF models, so that fitness values can be automatically recalculated by SLiM at the usual time in the tick cycle without the need to force their recalculation (see comments on recalculateFitness()). In SLiM 3.0 when using the nonWF model, calling readFromPopulationFile() from any context other than an early() event causes a warning; calling from an early() event is almost always correct in nonWF models, so that fitness values can be automatically recalculated by SLiM at the usual time in the tick cycle without the need to force their recalculation (see comments on recalculateFitness()). This method changes the tick and cycle counters to the tick and cycle read from the file. If you do not want these counters to be changed, you can change them back after reading, by setting community.tick and sim.cycle to whatever values you wish. Note that restoring a saved past state and running forward again will not yield the same simulation results, because the random number generator's state will not be the same; if you wish to ensure reproducibility from a given time point, setSeed() can be used to establish a new seed value. Any changes made to the structure of the species (mutation types, genomic element types, etc.) will not be wiped and re-established by readFromPopulationFile(); this method loads only the population's state, not the species configuration, so care should be taken to ensure that the species structure meshes coherently with the loaded data. Indeed, state such as the selfing and cloning rates of subpopulations, and values set onto objects with setValue(), will also be lost, since it is not saved out by outputFull(). Only information saved by outputFull() will be restored; all other state associated with the mutations, haplosomes, individuals, and subpopulations in the simulation will be lost, and should be re-established by the model if it is still needed. Note that some state is saved by outputFull() only optionally, such as the tag values of individuals; if a given option is enabled and the corresponding information is saved, then that information will be restored, otherwise it will not be. As of SLiM 2.3, this method will read and restore the spatial positions of individuals if that information is present in the output file and the species has enabled continuous space. If spatial positions are present in the output file but the species has not enabled continuous space (or the number of spatial dimensions does not match), an error will result. If the species has enabled continuous space but spatial positions are not present in the output file, the spatial positions of the individuals read will be undefined, but an error is not raised. As of SLiM 3.0, this method will read and restore the ages of individuals if that information is present in the output file and the simulation is based upon the nonWF model. If ages are present but the simulation uses a WF model, an error will result; the WF model does not use age information. If ages are not present but the simulation uses a nonWF model, an error will also result; the nonWF model requires age information. As of SLiM 3.3, this method will restore the nucleotides of nucleotide-based mutations, and will restore the ancestral nucleotide sequence, if that information is present in the output file. Loading an output file that contains nucleotide information in a non-nucleotide-based model, and vice versa, will produce an error. As of SLiM 3.5, this method will read and restore the pedigree IDs of individuals and haplosomes if that information is present in the output file (as requested with outputFull(pedigreeIDs=T)) and if SLiM's optional pedigree tracking has been enabled with initializeSLiMOptions(keepPedigrees=T). As of SLiM 5.0, this method will read and restore tag values for objects of supported classes (Chromosome, Subpopulation, Individual, Haplosome, Mutation, Substitution) if they were saved by outputFull() with its objectTags=T option. This facility is only available when reading binary output from outputFull(), as chosen by its binary=T option; otherwise, an error will result. As of SLiM 5.0, this method will read and restore substitutions if they were saved by outputFull() with its substitutions=T option. This facility is only available when reading binary output from outputFull(), as chosen by its binary=T option; otherwise, an error will result. This method can also be used to read tree-sequence information, in the form of single-chromosome .trees files and multi-chromosome trees archives, as saved by treeSeqOutput() or generated by the Python pyslim package. Note that the user metadata for a tree-sequence file can be read separately with the treeSeqMetadata() function. Beginning with SLiM 4, the subpopMap parameter may be supplied to re-order the populations of the input tree sequence when it is loaded in to SLiM. This parameter must have a value that is a Dictionary; the keys of this dictionary should be SLiM population identifiers as string values (e.g., "p2"), and the values should be indexes of populations in the input tree sequence; a key/value pair of "p2", 4 would mean that the fifth population in the input (the one at zero-based index 4) should become p2 on loading into SLiM. If subpopMap is non-NULL, all populations in the tree sequence must be explicitly mapped, even if their index will not change and even if they will not be used by SLiM; the only exception is for unused slots in the population table, which can be explicitly remapped but do not have to be. For instance, suppose we have a tree sequence in which population 0 is unused, population 1 is not a SLiM population (for example, an ancestral population produced by msprime), and population 2 is a SLiM population, and we want to load this in with population 2 as p0 in SLiM. To do this, we could supply a value of Dictionary("p0", 2, "p1", 1, "p2", 0) for subpopMap, or we could leave out slot 0 since it is unused, with Dictionary("p0", 2, "p1", 1). Although this facility cannot be used to remove populations in the tree sequence, note that it may add populations that will be visible when treeSeqOutput() is called (although these will not be SLiM populations); if, in this example, we had used Dictionary("p0", 0, "p1", 1, "p5", 2) and then we wrote the result out with treeSeqOutput(), the resulting tree sequence would have six populations, although three of them would be empty and would not be used by SLiM. The use of subpopMap makes it easier to load simulation data that was generated in Python, since that typically uses an id of 0. The subpopMap parameter may not be used with file formats other than tree-sequence files, at the present time; setting up the correct subpopulation ids is typically easier when working with those other formats. Note the tskit command-line interface can be used, like python3 -m tskit populations file.trees, to find out the number of subpopulations in a tree-sequence file and their IDs. When loading a tree sequence, a crosscheck of the loaded data will be performed to ensure that the tree sequence was well-formed and was loaded correctly. When running a Release build of SLiM, however, this crosscheck will only occur the first time that readFromPopulationFile() is called to load a tree sequence; subsequent calls will not perform this crosscheck, for greater speed when running models that load saved population state many times (such as models that are conditional on fixation). If you suspect that a tree sequence file might be corrupted, or might be read incorrectly, running a Debug build of SLiM enables crosschecks after every load.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method recalculateFitness
+
+Documentation for SLiM function \code{recalculateFitness}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param tick An object of type null or integer (singleton).
+
+@aliases Species$recalculateFitness Sp$recalculateFitness
+@family Species
+@return An object of type void. 
+@details [Ni$ tick = NULL]) Force an immediate recalculation of fitness values for all individuals in all subpopulations. Normally fitness values are calculated at a fixed point in each tick, and those values are cached and used until the next recalculation. If simulation parameters are changed in script in a way that affects fitness calculations, and if you wish those changes to take effect immediately rather than taking effect at the next automatic recalculation, you may call recalculateFitness() to force an immediate recalculation and recache. The optional parameter tick provides the tick for which mutationEffect() and fitnessEffect() callbacks should be selected; if it is NULL (the default), the current tick value for the simulation, community.tick, is used. If you call recalculateFitness() in an early() event in a WF model, you may wish this to be community.tick - 1 in order to utilize the mutationEffect() and fitnessEffect() callbacks for the previous tick, as if the changes that you have made to fitness-influencing parameters were already in effect at the end of the previous tick when the new generation was first created and evaluated (usually it is simpler to just make such changes in a late() event instead, however, in which case calling recalculateFitness() is probably not necessary at all since fitness values will be recalculated immediately afterwards). Regardless of the value supplied for tick here, community.tick inside callbacks will report the true tick number, so if your callbacks consult that parameter in order to create tick-specific fitness effects you will need to handle the discrepancy somehow. (Similar considerations apply for nonWF models that call recalculateFitness() in a late() event, which is also not advisable in general.) After this call, the fitness values used for all purposes in SLiM will be the newly calculated values. Calling this method will trigger the calling of any enabled and applicable mutationEffect() and fitnessEffect() callbacks, so this is quite a heavyweight operation; you should think carefully about what side effects might result (which is why fitness recalculation does not just occur automatically after changes that might affect fitness values).
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method registerFitnessEffectCallback
+
+Documentation for SLiM function \code{registerFitnessEffectCallback}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param id An object of type null or integer or string (singleton).
+@param source An object of type string (singleton).
+@param subpop An object of type null or integer or Subpopulation object (singleton).
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+
+@aliases Species$registerFitnessEffectCallback Sp$registerFitnessEffectCallback
+@family Species
+@return An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
+@details Nis$ id, string$ source, [Nio<Subpopulation>$ subpop = NULL], [Ni$ start = NULL], [Ni$ end = NULL]) Register a block of Eidos source code, represented as the string singleton source, as an Eidos fitnessEffect() callback in the current simulation (specific to the target species), with an optional subpopulation subpop (which may be an integer identifier, or NULL, the default, to indicate all subpopulations), and optional start and end ticks all limiting its applicability. The script block will be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered callback is added to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in the current tick. The new SLiMEidosBlock will be defined as a global variable immediately by this method, and will also be returned by this method.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method registerMateChoiceCallback
+
+Documentation for SLiM function \code{registerMateChoiceCallback}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param id An object of type null or integer or string (singleton).
+@param source An object of type string (singleton).
+@param subpop An object of type null or integer or Subpopulation object (singleton).
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+
+@aliases Species$registerMateChoiceCallback Sp$registerMateChoiceCallback
+@family Species
+@return An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
+@details Nis$ id, string$ source, [Nio<Subpopulation>$ subpop = NULL], [Ni$ start = NULL], [Ni$ end = NULL]) Register a block of Eidos source code, represented as the string singleton source, as an Eidos mateChoice() callback in the current simulation (specific to the target species), with optional subpopulation subpop (which may be an integer identifier, or NULL, the default, to indicate all subpopulations) and optional start and end ticks all limiting its applicability. The script block will be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered callback is added to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in the current tick. The new SLiMEidosBlock will be defined as a global variable immediately by this method, and will also be returned by this method.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method registerModifyChildCallback
+
+Documentation for SLiM function \code{registerModifyChildCallback}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param id An object of type null or integer or string (singleton).
+@param source An object of type string (singleton).
+@param subpop An object of type null or integer or Subpopulation object (singleton).
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+
+@aliases Species$registerModifyChildCallback Sp$registerModifyChildCallback
+@family Species
+@return An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
+@details Nis$ id, string$ source, [Nio<Subpopulation>$ subpop = NULL], [Ni$ start = NULL], [Ni$ end = NULL]) Register a block of Eidos source code, represented as the string singleton source, as an Eidos modifyChild() callback in the current simulation (specific to the target species), with optional subpopulation subpop (which may be an integer identifier, or NULL, the default, to indicate all subpopulations) and optional start and end ticks all limiting its applicability. The script block will be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered callback is added to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in the current tick. The new SLiMEidosBlock will be defined as a global variable immediately by this method, and will also be returned by this method.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method registerMutationCallback
+
+Documentation for SLiM function \code{registerMutationCallback}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param id An object of type null or integer or string (singleton).
+@param source An object of type string (singleton).
+@param mutType An object of type null or integer or MutationType object (singleton).
+@param subpop An object of type null or integer or Subpopulation object (singleton).
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+
+@aliases Species$registerMutationCallback Sp$registerMutationCallback
+@family Species
+@return An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
+@details Nis$ id, string$ source, [Nio<MutationType>$ mutType = NULL], [Nio<Subpopulation>$ subpop = NULL], [Ni$ start = NULL], [Ni$ end = NULL]) Register a block of Eidos source code, represented as the string singleton source, as an Eidos mutation() callback in the current simulation (specific to the target species), with an optional mutation type mutType (which may be an integer mutation type identifier, or NULL, the default, to indicate all mutation types), optional subpopulation subpop (which may also be an integer identifier, or NULL, the default, to indicate all subpopulations), and optional start and end ticks all limiting its applicability. The script block will be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered callback is added to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in the current tick. The new SLiMEidosBlock will be defined as a global variable immediately by this method, and will also be returned by this method.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method registerMutationEffectCallback
+
+Documentation for SLiM function \code{registerMutationEffectCallback}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param id An object of type null or integer or string (singleton).
+@param source An object of type string (singleton).
+@param mutType An object of type integer or MutationType object (singleton).
+@param subpop An object of type null or integer or Subpopulation object (singleton).
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+
+@aliases Species$registerMutationEffectCallback Sp$registerMutationEffectCallback
+@family Species
+@return An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
+@details Nis$ id, string$ source, io<MutationType>$ mutType, [Nio<Subpopulation>$ subpop = NULL], [Ni$ start = NULL], [Ni$ end = NULL]) Register a block of Eidos source code, represented as the string singleton source, as an Eidos mutationEffect() callback in the current simulation (specific to the target species), with a required mutation type mutType (which may be an integer mutation type identifier), optional subpopulation subpop (which may also be an integer identifier, or NULL, the default, to indicate all subpopulations), and optional start and end ticks all limiting its applicability. The script block will be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered callback is added to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in the current tick. The new SLiMEidosBlock will be defined as a global variable immediately by this method, and will also be returned by this method.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method registerRecombinationCallback
+
+Documentation for SLiM function \code{registerRecombinationCallback}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param id An object of type null or integer or string (singleton).
+@param source An object of type string (singleton).
+@param subpop An object of type null or integer or Subpopulation object (singleton).
+@param chromosome An object of type null or integer or string or Chromosome object (singleton).
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+
+@aliases Species$registerRecombinationCallback Sp$registerRecombinationCallback
+@family Species
+@return An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
+@details Nis$ id, string$ source, [Nio<Subpopulation>$ subpop = NULL], [Niso<Chromosome>$ chromosome = NULL], [Ni$ start = NULL], [Ni$ end = NULL]) Register a block of Eidos source code, represented as the string singleton source, as an Eidos recombination() callback in the current simulation (specific to the target species), with optional subpopulation subpop (which may be an integer identifier, or NULL, the default, to indicate all subpopulations) and optional start and end ticks all limiting its applicability. In multi-chromosome models, parameter chromosome, if non-NULL, may specify a chromosome to which the callback will apply (as either an integer id, a string symbol, or a Chromosome object); otherwise, NULL indicates that the callback applies to all chromosomes. The script block will be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered callback is added to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in the current tick. The new SLiMEidosBlock will be defined as a global variable immediately by this method, and will also be returned by this method.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method registerReproductionCallback
+
+Documentation for SLiM function \code{registerReproductionCallback}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param id An object of type null or integer or string (singleton).
+@param source An object of type string (singleton).
+@param subpop An object of type null or integer or Subpopulation object (singleton).
+@param sex An object of type null or string (singleton).
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+
+@aliases Species$registerReproductionCallback Sp$registerReproductionCallback
+@family Species
+@return An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
+@details Nis$ id, string$ source, [Nio<Subpopulation>$ subpop = NULL], [Ns$ sex = NULL], [Ni$ start = NULL], [Ni$ end = NULL]) Register a block of Eidos source code, represented as the string singleton source, as an Eidos reproduction() callback in the current simulation (specific to the target species), with optional subpopulation subpop (which may be an integer identifier, or NULL, the default, to indicate all subpopulations), optional sex-specificity sex (which may be "M" or "F" in sexual species to make the callback specific to males or females respectively, or NULL for no sex-specificity), and optional start and end ticks all limiting its applicability. The script block will be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered callback is added to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in the current tick. The new SLiMEidosBlock will be defined as a global variable immediately by this method, and will also be returned by this method.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method registerSurvivalCallback
+
+Documentation for SLiM function \code{registerSurvivalCallback}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param id An object of type null or integer or string (singleton).
+@param source An object of type string (singleton).
+@param subpop An object of type null or integer or Subpopulation object (singleton).
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+
+@aliases Species$registerSurvivalCallback Sp$registerSurvivalCallback
+@family Species
+@return An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
+@details Nis$ id, string$ source, [Nio<Subpopulation>$ subpop = NULL], [Ni$ start = NULL], [Ni$ end = NULL]) Register a block of Eidos source code, represented as the string singleton source, as an Eidos survival() callback in the current simulation (specific to the target species), with optional subpopulation subpop (which may be an integer identifier, or NULL, the default, to indicate all subpopulations) and optional start and end ticks all limiting its applicability. The script block will be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered callback is added to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in the current tick. The new SLiMEidosBlock will be defined as a global variable immediately by this method, and will also be returned by this method.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method simulationFinished
+
+Documentation for SLiM function \code{simulationFinished}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases Species$simulationFinished Sp$simulationFinished
+@family Species
+@return An object of type void. 
+@details void) Declare the current simulation finished. This method is equivalent to the Community method simulationFinished(), except that this method is only legal to call in single-species models (to provide backward compatibility). It is recommended that new code should call the Community method; this method may be deprecated in the future.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method skipTick
+
+Documentation for SLiM function \code{skipTick}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases Species$skipTick Sp$skipTick
+@family Species
+@return An object of type void. 
+@details void) Deactivate the target species for the current tick. This sets the active property of the species to F; it also set the active property of all callbacks that belong to the species (with the species as their species specifier) to F, and sets the active property of all events that are synchronized with the species (with the species as their ticks specifier) to F. The cycle counter for the species will not be incremented at the end of the tick. This method may only be called in first() events, to ensure that species are either active or inactive throughout a given tick.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method subsetMutations
+
+Documentation for SLiM function \code{subsetMutations}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param exclude An object of type null or Mutation object (singleton).
+@param mutType An object of type null or integer or MutationType object (singleton).
+@param position An object of type null or integer (singleton).
+@param nucleotide An object of type null or integer or string (singleton).
+@param tag An object of type null or integer (singleton).
+@param id An object of type null or integer (singleton).
+@param chromosome An object of type null or integer or string or Chromosome object.
+
+@aliases Species$subsetMutations Sp$subsetMutations
+@family Species
+@return An object of type Mutation object. 
+@details [No<Mutation>$ exclude = NULL], [Nio<MutationType>$ mutType = NULL], [Ni$ position = NULL], [Nis$ nucleotide = NULL], [Ni$ tag = NULL], [Ni$ id = NULL], [Niso<Chromosome> chromosome = NULL]) Returns a vector of mutations subset from the list of all active mutations in the species (as would be provided by the mutations property). The parameters specify constraints upon the subset of mutations that will be returned. Parameter exclude, if non-NULL, may specify a specific mutation that should not be included (typically the focal mutation in some operation). Parameter mutType, if non-NULL, may specify a mutation type for the mutations to be returned (as either a MutationType object or an integer identifier). Parameter position, if non-NULL, may specify a base position for the mutations to be returned. Parameter nucleotide, if non-NULL, may specify a nucleotide for the mutations to be returned (either as a string, "A" / "C" / "G" / "T", or as an integer, 0 / 1 / 2 / 3 respectively). Parameter tag, if non-NULL, may specify a tag value for the mutations to be returned. Parameter id, if non-NULL, may specify a required value for the id property of the mutations to be returned. Parameter chromosome, if non-NULL, may specify a chromosome or chromosomes with which the mutations returned must be associated (as either integer ids, string symbols, or Chromosome objects). This method is shorthand for getting the mutations property of the subpopulation, and then using operator [] to select only mutations with the desired properties; besides being much simpler than the equivalent Eidos code, it is also much faster. Note that if you only need to select on mutation type, the mutationsOfType() method will be even faster.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method substitutionsOfType
+
+Documentation for SLiM function \code{substitutionsOfType}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mutType An object of type integer or MutationType object (singleton).
+
+@aliases Species$substitutionsOfType Sp$substitutionsOfType
+@family Species
+@return An object of type Substitution object. 
+@details io<MutationType>$ mutType) Returns an object vector of all the substitutions that are of the type specified by mutType, out of all of the substitutions that are currently present in the species. This method is provided for speed; it is much faster than the corresponding Eidos code. See also mutationsOfType().
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method treeSeqCoalesced
+
+Documentation for SLiM function \code{treeSeqCoalesced}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases Species$treeSeqCoalesced Sp$treeSeqCoalesced
+@family Species
+@return An object of type logical. Return will be of length 1 (a singleton)
+@details void) Returns the coalescence state for the recorded tree sequence at the last simplification. The returned value is a logical singleton flag, T to indicate that full coalescence was observed at the last tree-sequence simplification (meaning that there is a single ancestral individual that roots all ancestry trees at all sites along the chromosome - although not necessarily the same ancestor at all sites), or F if full coalescence was not observed. For simple models, reaching coalescence may indicate that the model has reached an equilibrium state, but this may not be true in models that modify the dynamics of the model during execution by changing migration rates, introducing new mutations programmatically, dictating non-random mating, etc., so be careful not to attach more meaning to coalescence than it is due; some models may require burn-in beyond coalescence to reach equilibrium, or may not have an equilibrium state at all. Also note that some actions by a model, such as adding a new subpopulation, may cause the coalescence state to revert from T back to F (at the next simplification), so a return value of T may not necessarily mean that the model is coalesced at the present moment - only that it was coalesced at the last simplification. This method may only be called if tree sequence recording has been turned on with initializeTreeSeq(); in addition, checkCoalescence=T must have been supplied to initializeTreeSeq(), so that the necessary work is done during each tree-sequence simplification. Since this method does not perform coalescence checking itself, but instead simply returns the coalescence state observed at the last simplification, it may be desirable to call treeSeqSimplify() immediately before treeSeqCoalesced() to obtain up-to-date information. However, the speed penalty of doing this in every tick would be large, and most models do not need this level of precision; usually it is sufficient to know that the model has coalesced, without knowing whether that happened in the current tick or in a recent preceding tick.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method treeSeqOutput
+
+Documentation for SLiM function \code{treeSeqOutput}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param path An object of type string (singleton).
+@param simplify An object of type logical (singleton).
+@param includeModel An object of type logical (singleton).
+@param metadata An object of type null or Dictionary object (singleton).
+@param overwriteDirectory An object of type logical (singleton).
+
+@aliases Species$treeSeqOutput Sp$treeSeqOutput
+@family Species
+@return An object of type void. 
+@details string$ path, [logical$ simplify = T], [logical$ includeModel = T], [No<Dictionary>$ metadata = NULL], [logical$ overwriteDirectory = F]) Outputs the current tree sequence recording tables to the path specified by path. This method may only be called if tree sequence recording has been turned on with initializeTreeSeq(). If simplify is T (the default), simplification will be done immediately prior to output; this is almost always desirable, unless a model wishes to avoid simplification entirely. (Note that if simplification is not done, then all haplosomes since the last simplification will be marked as samples in the resulting tree sequence.) In a model of a single chromosome, a binary tree sequence file will be written to the specified path; a filename extension of .trees is suggested for this type of file, and such a file is often referred to as a ".trees file". In a multi-chromosome model, a directory will instead be created at the specified path, and a separate .trees file will be created within that directory for each chromosome in the model, mirroring the fact that SLiM keeps a separate tree sequence for each chromosome in a multi-chromosome model. These .trees files will be given filenames based upon the symbol property of each chromosome, as provided to initializeChromosome(); for example, the tree sequence for a chromosome with symbol "X" will be saved as chromosome_X.trees within the specified directory. For the name of the directory itself, a suffix of _trees is suggested, rather than .trees, since the use of dot-extensions in directory names is not common; for example, "model_Q_seed_17_trees" would be a path you might pass to treeSeqOutput() as a directory name in a multi-chromosome model. Such a directory, containing separate .trees files for each chromosome, is called a "trees archive". Both .trees files and trees archives can be read by readFromPopulationFile(), as discussed in its documentation. Normally, the full SLiM script used to generate the tree sequence is written out to the provenance entry of the tree sequence file, to the model subkey of the parameters top-level key. Supplying F for includeModel suppresses output of the full script. A Dictionary object containing user-generated metadata may be supplied with the metadata parameter. If present, this dictionary will be serialized as JSON and attached to the saved tree sequence under a key named user_metadata, within the SLiM key. If tskit is used to read the tree sequence in Python, this metadata will automatically be deserialized and made available at ts.metadata["SLiM"]["user_metadata"]. This metadata dictionary is not used by SLiM, or by pyslim, tskit, or msprime; you may use it for any purpose you wish. Note that metadata may actually be any subclass of Dictionary, such as a DataFrame. It can even be a Species object such as sim, or a LogFile instance; however, only the keys and values contained by the object's Dictionary superclass state will be serialized into the metadata (properties of the subclass will be ignored). This metadata dictionary can be recovered from the saved file using the treeSeqMetadata() function. When saving a single .trees file, the standard behavior is to overwrite an existing file of the same name; the convenience of this generally outweighs the danger. When saving a trees archive, however, that balance shifts; overwriting an entire directory is potentially quite dangerous. For this reason, overwriteDirectory=F (the default) specifies that treeSeqOutput() should not overwrite an existing directory; it will instead raise an error. If overwriteDirectory is T, treeSeqOutput() will overwrite an existing directory of the same name (if the existing directory can be deleted without permissions errors and so forth), but only if the existing directory is empty or contains only files with a .trees suffix, for safety; if other files are present, an error will still be raised.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method treeSeqRememberIndividuals
+
+Documentation for SLiM function \code{treeSeqRememberIndividuals}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param individuals An object of type Individual object.
+@param permanent An object of type logical (singleton).
+
+@aliases Species$treeSeqRememberIndividuals Sp$treeSeqRememberIndividuals
+@family Species
+@return An object of type void. 
+@details object<Individual> individuals, [logical$ permanent = T]) Mark the individuals specified by individuals to be kept across tree sequence table simplification. This method may only be called if tree sequence recording has been turned on with initializeTreeSeq(). All currently living individuals are always kept across simplification; this method does not need to be called, and indeed should not be called, for that purpose. Instead, treeSeqRememberIndividuals() allows any individual, including dead individuals, to be kept in the final tree sequence. Typically this would be used, for example, to keep particular individuals that you wanted to be able to trace ancestry back to in later analysis. However, this is not the typical usage pattern for tree sequence recording; most models will not need to call this method. There are two ways to keep individuals across simplification. If permanent is T (the default), then the specified individuals will be permanently remembered: their haplosomes will be added to the current sample, and they will always be present in the tree sequence. Permanently remembering a large number of individuals will, of course, markedly increase memory usage and runtime. Supplying F for permanent will instead mark the individuals only for (temporary) retention: their haplosomes will not be added to the sample, and they will appear in the final tree sequence only if one of their haplosomes is retained across simplification. In other words, the rule of thumb for retained individuals is simple: if a haplosome is kept by simplification, the haplosome's corresponding individual is kept also, if it is retained. Note that permanent remembering takes priority; calling this function with permanent=F on an individual that has previously been permanently remembered will not remove it from the sample. The behavior of simplification for individuals retained with permanent=F depends upon the value of the retainCoalescentOnly flag passed to initializeTreeSeq(); here we will discuss the behavior of that flag in detail. First of all, haplosomes are always removed by simplification unless they are (a) part of the final generation (i.e., in a living individual when simplification occurs), (b) ancestral to the final generation, (c) a haplosome of a permanently remembered individual, or (d) ancestral to a permanently remembered individual. If retainCoalescentOnly is T (the default), they are also always removed if they are not a branch point (i.e., a coalescent node or most recent common ancestor) in the tree sequence. In some cases it may be useful to retain a haplosome and its associated individual when it is simply an intermediate node in the ancestry (i.e., in the middle of a branch). This can be enabled by setting retainCoalescentOnly to F in your call to initializeTreeSeq(). In this case, ancestral haplosomes that are intermediate ("unary nodes", in tskit parlance) and are within an individual that has been retained using the permanent=F flag here are kept, along with the retained individual itself. Since setting retainCoalescentOnly to F will prevent the unary nodes for retained individuals from being pruned, simplification may often be unable to prune very much at all from the tree sequence, and memory usage and runtime may increase rapidly. If you are retaining many individuals, this setting should therefore be used only with caution; it is not necessary if you are purely interested in the most recent common ancestors. See the pyslim documentation for further discussion of retaining and remembering individuals and the effects of the retainCoalescentOnly flag. The metadata (age, location, etc) that are stored in the resulting tree sequence are those values present at either (a) the final generation, if the individual is alive when the tree sequence is output, or (b) the last time that the individual was remembered, if not. Calling treeSeqRememberIndividuals() on an individual that is already remembered will cause the archived information about the remembered individual to be updated to reflect the individual's current state. A case where this is particularly important is for the spatial location of individuals in continuous-space models. SLiM automatically remembers the individuals that comprise the first generation of any new subpopulation created with addSubpop(), for easy recapitation and other analysis. However, since these first-generation individuals are remembered at the moment they are created, their spatial locations have not yet been set up, and will contain garbage - and those garbage values will be archived in their remembered state. If you need correct spatial locations of first-generation individuals for your post-simulation analysis, you should call treeSeqRememberIndividuals() explicitly on the first generation, after setting spatial locations, to update the archived information with the correct spatial positions.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method treeSeqSimplify
+
+Documentation for SLiM function \code{treeSeqSimplify}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases Species$treeSeqSimplify Sp$treeSeqSimplify
+@family Species
+@return An object of type void. 
+@details void) Triggers an immediate simplification of the tree sequence recording tables. This method may only be called if tree sequence recording has been turned on with initializeTreeSeq(). A call to this method will free up memory being used by entries that are no longer in the ancestral path of any individual within the current sample (currently living individuals, in other words, plus those explicitly added to the sample with treeSeqRememberIndividuals()), but it can also take a significant amount of time. Typically calling this method is not necessary; the automatic simplification performed occasionally by SLiM should be sufficient for most models.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+
+
+SLiM method addCloned
+
+Documentation for SLiM function \code{addCloned}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param parent An object of type Individual object (singleton).
+@param count An object of type integer (singleton).
+@param defer An object of type logical (singleton).
+
+@aliases Subpopulation$addCloned P$addCloned
+@family Subpopulation
+@return An object of type Individual object. 
+@details object<Individual>$ parent, [integer$ count = 1], [logical$ defer = F]) Generates a new offspring individual from the given parent by clonal reproduction, queues it for addition to the target subpopulation, and returns it. The new offspring will not be visible as a member of the target subpopulation until the end of the offspring generation tick cycle stage. The subpopulation of parent will be used to locate applicable mutation() and modifyChild() callbacks governing the generation of the offspring individual. Beginning in SLiM 4.1, the count parameter dictates how many offspring will be generated (previously, exactly one offspring was generated). Each offspring is generated independently, based upon the given parameters. The returned vector contains all generated offspring, except those that were rejected by a modifyChild() callback. If all offspring are rejected, object<Individual>(0) is returned, which is a zero-length object vector of class Individual; note that this is a change in behavior from earlier versions, which would return NULL. Beginning in SLiM 4.1, passing T for defer requests that the generation of the haplosomes of the produced offspring be deferred until the end of the reproduction phase. SLiM may or may not honor this request; if not, the offspring will be generated synchronously just as if defer were F. Haplosome generation can only be deferred if there are no active mutation() callbacks; otherwise, an error will result. Furthermore, when haplosome generation is deferred the mutations of the haplosomes of the generated offspring may not be accessed until reproduction is complete (whether from a modifyChild() callback or otherwise). There is little or no advantage to deferring haplosome generation when running single-threaded; in that case, the default of F for defer is generally preferable since it has fewer restrictions. When running multi-threaded, deferring haplosome generation allows that task to be done in parallel (which is the reason this option exists). Also beginning in SLiM 4.1, in spatial models the spatial position of the offspring will be inherited (i.e., copied) from parent; more specifically, the x property will be inherited in all spatial models (1D/2D/3D), the y property in 2D/3D models, and the z property in 3D models. Properties not inherited will be left uninitialized, as they were prior to SLiM 4.1. The parent's spatial position is probably not desirable in itself; the intention here is to make it easy to model the natal dispersal of all the new offspring for a given tick with a single vectorized call to deviatePositions() / pointDeviated(). Note that this method is only for use in nonWF models. See addCrossed() for further general notes on the addition of new offspring individuals.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addCrossed
+
+Documentation for SLiM function \code{addCrossed}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param parent1 An object of type Individual object (singleton).
+@param parent2 An object of type Individual object (singleton).
+@param sex An object of type null or float or string (singleton).
+@param count An object of type integer (singleton).
+@param defer An object of type logical (singleton).
+
+@aliases Subpopulation$addCrossed P$addCrossed
+@family Subpopulation
+@return An object of type Individual object. 
+@details object<Individual>$ parent1, object<Individual>$ parent2, [Nfs$ sex = NULL], [integer$ count = 1], [logical$ defer = F]) Generates a new offspring individual from the given parents by biparental sexual reproduction, queues it for addition to the target subpopulation, and returns it. The new offspring will not be visible as a member of the target subpopulation until the end of the offspring generation tick cycle stage. Attempting to use a newly generated offspring individual as a mate, or to reference it as a member of the target subpopulation in any other way, will result in an error. In most models the returned individual is not used, but it is provided for maximal generality and flexibility. The new offspring individual is generated from parent1 and parent2 by crossing them. In sexual models parent1 must be female and parent2 must be male; in hermaphroditic models, parent1 and parent2 are unrestricted. If parent1 and parent2 are the same individual in a hermaphroditic model, that parent self-fertilizes, or "selfs", to generate the offspring sexually (note this is not the same as clonal reproduction). Such selfing is considered "incidental" by addCrossed(), however; if the preventIncidentalSelfing flag of initializeSLiMOptions() is T, supplying the same individual for parent1 and parent2 is an error (you must check for and prevent incidental selfing if you set that flag in a nonWF model). If non-incidental selfing is desired, addSelfed() should be used instead. The sex parameter specifies the sex of the offspring. A value of NULL means "make the default choice"; in non-sexual models it is the only legal value for sex, and does nothing, whereas in sexual models it causes male or female to be chosen with equal probability. A value of "M" or "F" for sex specifies that the offspring should be male or female, respectively. Finally, a float value from 0.0 to 1.0 for sex provides the probability that the offspring will be male; a value of 0.0 will produce a female, a value of 1.0 will produce a male, and for intermediate values SLiM will draw the sex of the offspring randomly according to the specified probability. Unless you wish the bias the sex ratio of offspring, the default value of NULL should generally be used. Note that any defined, active, and applicable recombination(), mutation(), and modifyChild() callbacks will be called as a side effect of calling this method, before this method even returns. For recombination() and mutation() callbacks, the subpopulation of the parent that is generating a given gamete is used; for modifyChild() callbacks the situation is more complex. In most biparental mating events, parent1 and parent2 will belong to the same subpopulation, and modifyChild() callbacks for that subpopulation will be used, just as in WF models. In certain models (such as models of pollen flow and broadcast spawning), however, biparental mating may occur between parents that are not from the same subpopulation; that is legal in nonWF models, and in that case, modifyChild() callbacks for the subpopulation of parent1 are used (since that is the maternal parent). If the modifyChild() callback process results in rejection of the proposed child, a new offspring individual is not generated. To force the generation of an offspring individual from a given pair of parents, you could loop until addCrossed() succeeds, but note that if your modifyChild() callback rejects all proposed children from those particular parents, your model will then hang, so care must be taken with this approach. Usually, nonWF models do not force generation of offspring in this manner; rejection of a proposed offspring by a modifyChild() callback typically represents a phenomenon such as post-mating reproductive isolation or lethal genetic incompatibilities that would reduce the expected litter size, so the default behavior is typically desirable. Beginning in SLiM 4.1, the count parameter dictates how many offspring will be generated (previously, exactly one offspring was generated). Each offspring is generated independently, based upon the given parameters. The returned vector contains all generated offspring, except those that were rejected by a modifyChild() callback. If all offspring are rejected, object<Individual>(0) is returned, which is a zero-length object vector of class Individual; note that this is a change in behavior from earlier versions, which would return NULL. Beginning in SLiM 4.1, passing T for defer requests that the generation of the haplosomes of the produced offspring be deferred until the end of the reproduction phase. SLiM may or may not honor this request; if not, the offspring will be generated synchronously just as if defer were F. Haplosome generation can only be deferred if there are no active mutation() or recombination() callbacks; otherwise, an error will result. Furthermore, when haplosome generation is deferred the mutations of the haplosomes of the generated offspring may not be accessed until reproduction is complete (whether from a modifyChild() callback or otherwise). There is little or no advantage to deferring haplosome generation when running single-threaded; in that case, the default of F for defer is generally preferable since it has fewer restrictions. When running multi-threaded, deferring haplosome generation allows that task to be done in parallel (which is the reason this option exists). Also beginning in SLiM 4.1, in spatial models the spatial position of the offspring will be inherited (i.e., copied) from parent1; more specifically, the x property will be inherited in all spatial models (1D/2D/3D), the y property in 2D/3D models, and the z property in 3D models. Properties not inherited will be left uninitialized, as they were prior to SLiM 4.1. The parent's spatial position is probably not desirable in itself; the intention here is to make it easy to model the natal dispersal of all the new offspring for a given tick with a single vectorized call to deviatePositions() / pointDeviated(). Note that this method is only for use in nonWF models, in which offspring generation is managed manually by the model script; in such models, addCrossed() must be called only from reproduction() callbacks, and may not be called at any other time. In WF models, offspring generation is managed automatically by the SLiM core.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addEmpty
+
+Documentation for SLiM function \code{addEmpty}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param sex An object of type null or float or string (singleton).
+@param haplosome1Null An object of type null or logical (singleton).
+@param haplosome2Null An object of type null or logical (singleton).
+@param count An object of type integer (singleton).
+
+@aliases Subpopulation$addEmpty P$addEmpty
+@family Subpopulation
+@return An object of type Individual object. 
+@details [Nfs$ sex = NULL], [Nl$ haplosome1Null = NULL], [Nl$ haplosome2Null = NULL], [integer$ count = 1]) Generates a new offspring individual with empty haplosomes (i.e., containing no mutations), queues it for addition to the target subpopulation, and returns it. The new offspring will not be visible as a member of the target subpopulation until the end of the offspring generation tick cycle stage. No recombination() or mutation() callbacks will be called. The target subpopulation will be used to locate applicable modifyChild() callbacks governing the generation of the offspring individual (unlike the other addX() methods, because there is no parental individual to reference). The offspring is considered to have no parents for the purposes of pedigree tracking. The sex parameter is treated as in addCrossed(). For all chromosome types except "A", null haplosomes will be generated as dictated by the sex of the individual and type of the chromosome. For example, for chromosome type "X" a female would be generated with two empty haplosomes for that chromosome (XX), whereas a male would be generated with one empty haplosome and one null haplosome (X-, in SLiM parlance). For chromosome type "H" an empty haplosome is always generated, not a null haplosome. But for chromosome type "A", in particular, more control is afforded. Passing NULL (the default) or F for haplosome1Null will make the first haplosome for every chromosome of type "A" be a non-null (empty) haplosome, the standard behavior. More interestingly, passing T for haplosome1Null would make the first haplosome for every chromosome of type "A" be a null haplosome. Similarly, passing T for haplosome2Null would make the second haplosome for every chromosome of type "A" be a null haplosome. This option could be useful for situations such as adding new haploids into a haplodiploid model. (Separate control over the haploid or diploid configuration of each chromosome of type "A" is not presently supported, but would be a simple extension to the design, by allowing haplosome1Null and haplosome2Null to provide a whole vector of logical flags rather than just a singleton value; please request this feature if you require it.) Beginning in SLiM 4.1, the count parameter dictates how many offspring will be generated (previously, exactly one offspring was generated). Each offspring is generated independently, based upon the given parameters. The returned vector contains all generated offspring, except those that were rejected by a modifyChild() callback. If all offspring are rejected, object<Individual>(0) is returned, which is a zero-length object vector of class Individual; note that this is a change in behavior from earlier versions, which would return NULL. Note that this method is only for use in nonWF models. See addCrossed() for further general notes on the addition of new offspring individuals.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addMultiRecombinant
+
+Documentation for SLiM function \code{addMultiRecombinant}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param pattern An object of type Dictionary object (singleton).
+@param sex An object of type null or float or string (singleton).
+@param parent1 An object of type null or Individual object (singleton).
+@param parent2 An object of type null or Individual object (singleton).
+@param randomizeStrands An object of type null or logical (singleton).
+@param count An object of type integer (singleton).
+@param defer An object of type logical (singleton).
+
+@aliases Subpopulation$addMultiRecombinant P$addMultiRecombinant
+@family Subpopulation
+@return An object of type Individual object. 
+@details object<Dictionary>$ pattern, [Nfs$ sex = NULL], [No<Individual>$ parent1 = NULL], [No<Individual>$ parent2 = NULL], [Nl$ randomizeStrands = NULL], [integer$ count = 1], [logical$ defer = F]) Generates a new offspring individual based upon the inheritance pattern specified by pattern, queues it for addition to the target subpopulation, and returns it. The new offspring will not be visible as a member of the target subpopulation until the end of the offspring generation tick cycle stage. The "pattern dictionary" supplied in pattern must be of class Dictionary (or a subclass of Dictionary), and more particularly, must be a dictionary of dictionaries structured in a specific way as described below. This method is a multi-chromosome version of the addRecombinant() method. For single-chromosome models, using addRecombinant() will be simpler; and it will be easier to understand this extremely complex method if you understand addRecombinant() first. The top-level "pattern dictionary" given by pattern specifies the way in which each chromosome should be handled. It can use integer keys, in which case each key is the id of a chromosome, or string keys, in which case each key is the symbol of a chromosome. In either case, a chromosome's inheritance pattern is specified by an "inheritance dictionary" in pattern attached to such a chromosome id or symbol key. That inheritance dictionary should itself contain up to six keys, with the standard names "strand1", "strand2", "breaks1", "strand3", "strand4", and "breaks2". Any key which is missing in an inheritance dictionary is assumed to have a value of NULL, and missing keys will be referred to having a value of NULL here for simplicity. These key-value pairs are used in precisely the same way as the parameters of the same names for addRecombinant(), to produce the offspring haplosome(s) for each specified chromosome. There is some complication regarding how these six values can be used to produce results like crossing, cloning, and selfing, involving as many as four different "parents" for each chromosome; rather than repeating all of that documentation here, please see the addRecombinant() documentation for more information. When an inheritance dictionary is supplied for a particular chromosome, this method uses the six values that dictionary contains (strand1, strand2, breaks1, strand3, strand4, breaks2) in exactly the same way as addRecombinant() does; addMultiRecombinant() simply supports multiple chromosomes. In addition to that, however, addMultiRecombinant() also allows the pattern dictionary to omit the inheritance dictionaries for particular chromosomes; the behavior of addMultiRecombinant() in that special case will be described below, after discussing all other aspects of the method's implementation. The sex parameter optionally specifies the sex of the offspring. The default value of NULL for sex specifies "default behavior"; in a non-sexual model this is the only legal value, and produces a hermaphroditic offspring. In a sexual model, the "default behavior" of NULL is that the offspring's sex is dictated by the haplosome structure it inherits. For example, if pattern specifies that the offspring will have two non-null haplosomes for a chromosome of type "X", the sex of the offspring must therefore be female, whereas if it will have one non-null "X" haplosome and one null "X" haplosome, it must therefore be male. SLiM will scan through pattern to determine such constraints and enforce them. If the constraints implied by pattern are not self-consistent (if the offspring would have two non-null "X" haplosomes but also a non-null "Y" haplosome, for example), an error will be raised. The constraints defined by each chromosome type, as described in initializeChromosome(), must always be followed, even when using addMultiRecombinant(). If sex is NULL and pattern imposes no constraints upon the sex of the offspring, the offspring will be chosen as male or female with equal probability. A value of "M" or "F" for sex specifies that the offspring should be male or female, respectively. A float value from 0.0 to 1.0 for sex provides the probability that the offspring will be male; a value of 0.0 will produce a female, a value of 1.0 will produce a male, and for intermediate values SLiM will draw the sex of the offspring randomly according to the specified probability. In these cases where sex is not NULL, SLiM will first determine the sex of the individual as just described, and will then scan through pattern to confirm that it is compatible with the sex that was determined. Again, if there is a conflict an error will be raised; you cannot specify the sex of an individual to be incompatible with the haplosomes that it inherits, and if you specify a sex with a string or float value it is up to you to ensure that that is compatible with the specifications in pattern. (If you need more flexibility, you should probably not use a sexual model at all, but simply use chromosome types "A" and "H" in a non-sexual model, track the sex of individuals yourself with a tag value such as tagL0, and manipulate haplosomes during reproduction however you wish; SLiM then imposes no constraints.) By default, the offspring is considered to have no parents, since there may be more than two "parents" in the general case. If specifying parentage is desired, parent1 and/or parent2 may be passed explicitly; this will establish those individuals as the parents of the offspring for purposes of pedigree tracking, and for several other purposes described below. If only one of parent1 and parent2 is non-NULL, that individual will be set as both of the parents of the offspring, mirroring the way that parentage is tracked for other cases such as addCloned() and addSelfed(). It is not required for parent1 or parent2 to actually be a genetic parent of the offspring at all, although typically they would be. To benefit from the full functionality of addMultiRecombinant() as described below, it is best to supply parent1 and parent2 when possible. The randomizeStrands parameter is used to control the recombination behavior of addMultiRecombinant(). An inheritance dictionary can specify two parental strands with crossover breakpoints between them to generate one offspring strand with recombination - for example, with the "strand1", "strand2", and "breaks1" keys, as described above, but the same is true of the "strand3", "strand4", and "breaks2" keys, and the discussion that follows applies to both cases. If randomizeStrands is F, the supplied strands are used as given; for example, "strand1" will be the initial copy strand when generating the first gamete to form the offspring. This mode should be used if you want explicit control over the initial copy strand; one example would be if your script is explicitly generating all four of the products of a meiosis event. If randomizeStrands is T, then if "strand1" and "strand2" are both non-NULL, 50% of the time they will be swapped, making "strand2" the initial copy strand for the first gamete instead. This mode (randomizeStrands=T) is usually the desired behavior, to avoid an inheritance bias due to a lack of randomization in the initial copy strand, so passing T for randomizeStrands is recommended unless you specifically desire otherwise. The default value of randomizeStrands is NULL in order to force either T or F to be explicitly chosen whenever it would make a difference; if it is left as NULL, an error will be raised if generation of the specified offspring involves recombination, since then SLiM needs to know whether the value is T or F. (This unconventional approach has been adopted because the default value was F prior to SLiM 5, but T is almost always the correct behavior, as explained above. To try to prevent accidental bugs, this new policy was adopted to force the user to explicitly choose T or F whenever it matters.) The value of the meanParentAge property of the generated offspring is calculated from the mean parent age of each of its two haplosomes (whether they turn out to be null haplosomes or not). The addRecombinant() documentation provides a simple example; for addMultiRecombinant() the logic is the same, but potentially extended to more than two offspring haplosomes. Callbacks can be involved in offspring generation with addMultiRecombinant(), but because there are up to four strands with up to four different parents, things are a bit complicated and different from other add...() methods; the policy described here seems like the best compromise. The target subpopulation for the addMultiRecombinant() call will be used to locate applicable mutation() and modifyChild() callbacks governing the generation of the offspring individual. On the other hand, recombination() callbacks will be found based upon the subpopulations to which parent1 and parent2 belong (for reasons discussed further in drawBreakpoints()); if a parent individual is not supplied, recombination() callbacks will not be called at all when generating the corresponding offspring haplosome. When breakpoints are explicitly supplied to addMultiRecombinant() with breaks1 or breaks2, gene conversion tracts are not well-supported by this method; the breaks1 and breaks2 vectors provide simple crossover breakpoints, which may be used to implement crossovers or simple gene conversion tracts, but complex gene conversion tracts with heteroduplex mismatch repair are not supported in this mode of operation since there is no way to supply the relevant information. If, on the other hand, breaks1 or breaks2 is NULL when generating a haplosome with recombination, then as described above, addRecombinant() will generate breakpoints internally for that cross, and in this case, complex gene conversion tracts with heteroduplex mismatch repair are supported, since all of the necessary information is available. Similarly, if the inheritance dictionary for a given chromosome is omitted from pattern entirely and a cross between parent1 and parent2 is inferred (as discussed below), the recombination algorithm used will support gene conversion including heteroduplex mismatch repair. Finally, count is the number of offspring to generate using the given pattern and parameters, and defer is used for deferral of offspring generation, as described for addRecombinant(). Any other details omitted from this documentation are all as described for addRecombinant(). Constructing a well-formed pattern dictionary with inheritance dictionaries for every chromosome can be a bit complex and require many lines of code. To ease the process, see the Species methods addPatternForCross(), addPatternForClone(), addPatternForNull(), and addPatternForRecombinant(), which help you to build a pattern dictionary one inheritance dictionary at a time. However, several of these methods will probably be used infrequently, because of the final aspect of addMultiRecombinant() that we have not yet properly discussed. As mentioned earlier, not all chromosomes need to be specified with an inheritance dictionary in pattern; whenever SLiM's default inheritance behavior is well-defined and is desired for a given chromosome, the inheritance dictionary for that chromosome may be omitted, and will be inferred by addMultiRecombinant() automatically. This behavior makes it easy to specify a reproduction event that is, for example, like a regular biparental cross involving many chromosomes, but that uses a different reproductive pattern just for one particular chromosome that behaves in a special way. The inferred inheritance dictionary for a given chromosome is based upon the chromosome type, the values of parent1 and parent2, and the sex of the offspring (which has, by this point, been determined in all cases). The rules for this inference are actually quite simple. If both parents are specified (that is, are both non-NULL), the inferred inheritance dictionary is the same as would be produced by a call to addPatternForCross() with those two parents, given in that order, for that chromosome, for the determined offspring sex. If only one parent is specified (non-NULL), the inferred inheritance dictionary is the same as would be produced by a call to addPatternForClone() with that one parent, for that chromosome, for the determined offspring sex. If selfing is desired for the inferred inheritance dictionary, pass the same individual for both parent1 and parent2; the behavior of addPatternForCross() in that case is essentially to self the individual, as discussed in that method. If the inferred inheritance dictionary for a given chromosome is not well-defined, as discussed in the documentation for addPatternForCross() and addPatternForClone(), or if both parent1 and parent2 are NULL, an error will be raised. In such cases, the inheritance dictionary cannot be inferred, and will need to be given explicitly in pattern.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addRecombinant
+
+Documentation for SLiM function \code{addRecombinant}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param strand1 An object of type null or Haplosome object (singleton).
+@param strand2 An object of type null or Haplosome object (singleton).
+@param breaks1 An object of type null or integer.
+@param strand3 An object of type null or Haplosome object (singleton).
+@param strand4 An object of type null or Haplosome object (singleton).
+@param breaks2 An object of type null or integer.
+@param sex An object of type null or float or string (singleton).
+@param parent1 An object of type null or Individual object (singleton).
+@param parent2 An object of type null or Individual object (singleton).
+@param randomizeStrands An object of type null or logical (singleton).
+@param count An object of type integer (singleton).
+@param defer An object of type logical (singleton).
+
+@aliases Subpopulation$addRecombinant P$addRecombinant
+@family Subpopulation
+@return An object of type Individual object. 
+@details No<Haplosome>$ strand1, No<Haplosome>$ strand2, Ni breaks1, No<Haplosome>$ strand3, No<Haplosome>$ strand4, Ni breaks2, [Nfs$ sex = NULL], [No<Individual>$ parent1 = NULL], [No<Individual>$ parent2 = NULL], [Nl$ randomizeStrands = NULL], [integer$ count = 1], [logical$ defer = F]) Generates a new offspring individual from the given parental haplosomes with the specified crossover breakpoints, queues it for addition to the target subpopulation, and returns it. The new offspring will not be visible as a member of the target subpopulation until the end of the offspring generation tick cycle stage. This method is an advanced feature; most models will use addCrossed(), addSelfed(), or addCloned() instead. This method may only be used in single-chromosome models; in multi-chromosome models, use addMultiRecombinant(), a more general version of addRecombinant(). This method supports several possible configurations for strand1, strand2, and breaks1 (and the same applies for strand3, strand4, and breaks2). If strand1 and strand2 are both NULL, the corresponding haplosome in the generated offspring will be a null haplosome; in this case, breaks1 must be NULL or zero-length. If strand1 is non-NULL but strand2 is NULL, the corresponding haplosome in the generated offspring will be a clonal copy of strand1 with mutations added, as from addCloned(); in this case, breaks1 must again be NULL or zero-length. If strand1 and strand2 are both non-NULL, the corresponding haplosome in the generated offspring will result from recombination between strand1 and strand2 with mutations added, as from addCrossed(), with strand1 being the initial copy strand by default (but see below). Copying will switch between strands at each crossover breakpoint. Breakpoints may be supplied in breaks1, which need not be sorted or uniqued (SLiM will sort and unique the supplied breakpoints internally). Alternatively, breaks1 may be NULL, which requests that addRecombinant() draw breakpoints automatically to recombine strand1 and strand2, following SLiM's usual breakpoint-drawing algorithm. (If you do not want any breakpoints, pass integer(0), a zero-length integer vector, for breaks1.) Finally, it is not currently legal for strand1 to be NULL and strand2 non-NULL; that variant may be assigned some meaning in future. Again, this discussion applies equally to strand3, strand4, and breaks2, mutatis mutandis. Null haplosomes may never be passed as any of the four parental strands; pass NULL, not a null haplosome, if that strand is not inherited from. When modeling a chromosome that is intrinsically haploid, such as the Y, NULL must be passed for strand3, strand4, and breaks2; you cannot supply genetic information for an offspring haplosome that will not exist. Note that when new mutations are generated by addRecombinant(), their subpopID property will be the id of the offspring's subpopulation, since the parental subpopulation is ambiguous in the general case; this behavior differs from the other add...() methods. These semantics allow several uses for addRecombinant(). When all strands are non-NULL, it is similar to addCrossed() except that the recombination breakpoints can be specified explicitly, allowing very precise offspring generation without having to override SLiM's breakpoint generation with a recombination() callback. When only strand1 and strand3 are supplied, it is very similar to addCloned(), creating a clonal offspring, except that the two parental haplosomes need not belong to the same individual (whatever that might mean biologically). Supplying only strand1 is useful for modeling clonally reproducing haploids, or any chromosome type that is intrinsically haploid, such as the Y chromosome. For a model of clonally reproducing haploids that undergo horizontal gene transfer (HGT), supplying only strand1 and strand2 will allow HGT from strand2 to replace segments of an otherwise clonal copy of strand1, while the second haplosome of the generated offspring will be a null haplosome; this could be useful for modeling bacterial conjugation, for example. Other variations are also possible. The sex parameter optionally specifies the sex of the offspring. The default value of NULL for sex specifies "default behavior"; in a non-sexual model this is the only legal value, and produces a hermaphroditic offspring. In a sexual model, the "default behavior" of NULL is that the offspring's sex is dictated by the haplosome structure it inherits. For example, if the supplied strands indicate that the offspring will have two non-null haplosomes for a chromosome of type "X", the sex of the offspring must therefore be female, whereas if it will have one non-null "X" haplosome and one null "X" haplosome, it must therefore be male. SLiM will examine the supplied strands to determine such constraints and enforce them. The constraints defined by each chromosome type, as described in initializeChromosome(), must always be followed, even when using addRecombinant(). If sex is NULL and the sex of the offspring is unconstrained, the offspring will be chosen as male or female with equal probability. A value of "M" or "F" for sex specifies that the offspring should be male or female, respectively. A float value from 0.0 to 1.0 for sex provides the probability that the offspring will be male; a value of 0.0 will produce a female, a value of 1.0 will produce a male, and for intermediate values SLiM will draw the sex of the offspring randomly according to the specified probability. In these cases where sex is not NULL, SLiM will first determine the sex of the individual as just described, and will then examine the supplied strands to confirm that it is compatible with the sex that was determined. Again, if there is a conflict an error will be raised; you cannot specify the sex of an individual to be incompatible with the haplosomes that it inherits, and if you specify a sex with a string or float value it is up to you to ensure that that is compatible with the supplied strands. (If you need more flexibility, you should probably not use a sexual model at all, but simply use chromosome type "A" or "H" in a non-sexual model, track the sex of individuals yourself with a tag value such as tagL0, and manipulate haplosomes during reproduction however you wish; SLiM then imposes no constraints.) By default, the offspring is considered to have no parents, since there may be more than two "parents" in the general case. If specifying parentage is desired, parent1 and/or parent2 may be passed to explicitly; this will establish those individuals as the parents of the offspring for purposes of pedigree tracking, and for several other purposes described below. If only one of parent1 and parent2 is non-NULL, that individual will be set as both of the parents of the offspring, mirroring the way that parentage is tracked for other cases such as addCloned() and addSelfed(). It is not required for parent1 or parent2 to actually be a genetic parent of the offspring at all, although typically they would be. To benefit from the full functionality of addRecombinant() as described below, it is best to supply parent1 and parent2 when possible. The randomizeStrands parameter is used to control the recombination behavior of addRecombinant(). As described above, two parental strands with crossover breakpoints between them can be specified to generate one offspring strand with recombination - for example, with the strand1, strand2, and breaks1 parameters, but the same is true of the strand3, strand4, and breaks2 parameters, and the discussion that follows applies to both cases. If randomizeStrands is F, the supplied strands are used as given; for example, strand1 will be the initial copy strand when generating the first gamete to form the offspring. This mode should be used if you want explicit control over the initial copy strand; one example would be if your script is explicitly generating all four of the products of a meiosis event. If randomizeStrands is T, then if strand1 and strand2 are both non-NULL, 50% of the time they will be swapped, making strand2 the initial copy strand for the first gamete instead. This mode (randomizeStrands=T) is usually the desired behavior, to avoid an inheritance bias due to a lack of randomization in the initial copy strand, so passing T for randomizeStrands is recommended unless you specifically desire otherwise. The default value of randomizeStrands is NULL in order to force either T or F to be explicitly chosen whenever it would make a difference; if it is left as NULL, an error will be raised if generation of the specified offspring involves recombination, since then SLiM needs to know whether the value is T or F. (This unconventional approach has been adopted because the default value was F prior to SLiM 5, but T is almost always the correct behavior, as explained above. To try to prevent accidental bugs, this new policy was adopted to force the user to explicitly choose T or F whenever it matters.) The value of the meanParentAge property of the generated offspring is calculated from the mean parent age of each of its two haplosomes (whether they turn out to be null haplosomes or not); that may be an average of two values (if both offspring haplosomes have at least one parent), a single value (if one offspring haplosome has no parent), or no values (if both offspring haplosomes have no parent, in which case 0.0 results). The mean parent age of a given offspring haplosome is the mean of the ages of the parents of the two strands used to generate that offspring haplosome; if one strand is NULL then the mean parent age for that offspring haplosome is the age of the parent of the non-NULL strand, while if both strands are NULL then that offspring haplosome is parentless and is not used in the final calculation. In other words, if one offspring haplosome has two parents with ages A and B, and the other offspring haplosome has one parent with age C, the meanParentAge of the offspring will be (A+B+C+C) / 4, or equivalently, ((A+B)/2 + C) / 2, not (A+B+C) / 3. Callbacks can be involved in offspring generation with addRecombinant(), but because there are up to four strands with up to four different parents, things are a bit complicated and different from other add...() methods; the policy described here seems like the best compromise. The target subpopulation for the addRecombinant() call will be used to locate applicable mutation() and modifyChild() callbacks governing the generation of the offspring individual. On the other hand, recombination() callbacks will be found based upon the subpopulations to which parent1 and parent2 belong (for reasons discussed further in drawBreakpoints()); if a parent individual is not supplied, recombination() callbacks will not be called at all when generating the corresponding offspring haplosome. When breakpoints are explicitly supplied to addRecombinant() with breaks1 or breaks2, gene conversion tracts are not well-supported by this method; the breaks1 and breaks2 vectors provide simple crossover breakpoints, which may be used to implement crossovers or simple gene conversion tracts, but complex gene conversion tracts with heteroduplex mismatch repair are not supported in this mode of operation since there is no way to supply the relevant information. If, on the other hand, breaks1 or breaks2 is NULL when generating a haplosome with recombination, then as described above, addRecombinant() will generate breakpoints internally for that cross, and in this case, complex gene conversion tracts with heteroduplex mismatch repair are supported, since all of the necessary information is available. Beginning in SLiM 4.1, the count parameter dictates how many offspring will be generated (previously, exactly one offspring was generated). Each offspring is generated independently, based upon the given parameters. The returned vector contains all generated offspring, except those that were rejected by a modifyChild() callback. If all offspring are rejected, object<Individual>(0) is returned, which is a zero-length object vector of class Individual; note that this is a change in behavior from earlier versions, which would return NULL. Beginning in SLiM 4.1, passing T for defer requests that the generation of the haplosomes of the produced offspring be deferred until the end of the reproduction phase. SLiM may or may not honor this request; if not, the offspring will be generated synchronously just as if defer were F. Haplosome generation can only be deferred if there are no active mutation() callbacks; otherwise, an error will result. Furthermore, when haplosome generation is deferred the mutations of the haplosomes of the generated offspring may not be accessed until reproduction is complete (whether from a modifyChild() callback or otherwise). There is little or no advantage to deferring haplosome generation when running single-threaded; in that case, the default of F for defer is generally preferable since it has fewer restrictions. When running multi-threaded, deferring haplosome generation allows that task to be done in parallel (which is the reason this option exists). Also beginning in SLiM 4.1, in spatial models the spatial position of the offspring will be inherited (i.e., copied) from parent1; more specifically, the x property will be inherited in all spatial models (1D/2D/3D), the y property in 2D/3D models, and the z property in 3D models. Properties not inherited will be left uninitialized, as they were prior to SLiM 4.1. The parent's spatial position is probably not desirable in itself; the intention here is to make it easy to model the natal dispersal of all the new offspring for a given tick with a single vectorized call to deviatePositions() / pointDeviated(). If parent1 is NULL, parent2 will be used; if it is also NULL, no spatial position will be inherited. Note that this method is only for use in nonWF models. See addCrossed() for further general notes on the addition of new offspring individuals.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addSelfed
+
+Documentation for SLiM function \code{addSelfed}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param parent An object of type Individual object (singleton).
+@param count An object of type integer (singleton).
+@param defer An object of type logical (singleton).
+
+@aliases Subpopulation$addSelfed P$addSelfed
+@family Subpopulation
+@return An object of type Individual object. 
+@details object<Individual>$ parent, [integer$ count = 1], [logical$ defer = F]) Generates a new offspring individual from the given parent by selfing, queues it for addition to the target subpopulation, and returns it. The new offspring will not be visible as a member of the target subpopulation until the end of the offspring generation tick cycle stage. The subpopulation of parent will be used to locate applicable mutation(), recombination(), and modifyChild() callbacks governing the generation of the offspring individual. Since selfing requires that parent act as a source of both a male and a female gamete, this method may be called only in hermaphroditic models; calling it in sexual models will result in an error. This method represents a non-incidental selfing event, so the preventIncidentalSelfing flag of initializeSLiMOptions() has no effect on this method (in contrast to the behavior of addCrossed(), where selfing is assumed to be incidental). Beginning in SLiM 4.1, the count parameter dictates how many offspring will be generated (previously, exactly one offspring was generated). Each offspring is generated independently, based upon the given parameters. The returned vector contains all generated offspring, except those that were rejected by a modifyChild() callback. If all offspring are rejected, object<Individual>(0) is returned, which is a zero-length object vector of class Individual; note that this is a change in behavior from earlier versions, which would return NULL. Beginning in SLiM 4.1, passing T for defer requests that the generation of the haplosomes of the produced offspring be deferred until the end of the reproduction phase. SLiM may or may not honor this request; if not, the offspring will be generated synchronously just as if defer were F. Haplosome generation can only be deferred if there are no active mutation() or recombination() callbacks; otherwise, an error will result. Furthermore, when haplosome generation is deferred the mutations of the haplosomes of the generated offspring may not be accessed until reproduction is complete (whether from a modifyChild() callback or otherwise). There is little or no advantage to deferring haplosome generation when running single-threaded; in that case, the default of F for defer is generally preferable since it has fewer restrictions. When running multi-threaded, deferring haplosome generation allows that task to be done in parallel (which is the reason this option exists). Also beginning in SLiM 4.1, in spatial models the spatial position of the offspring will be inherited (i.e., copied) from parent; more specifically, the x property will be inherited in all spatial models (1D/2D/3D), the y property in 2D/3D models, and the z property in 3D models. Properties not inherited will be left uninitialized, as they were prior to SLiM 4.1. The parent's spatial position is probably not desirable in itself; the intention here is to make it easy to model the natal dispersal of all the new offspring for a given tick with a single vectorized call to deviatePositions() / pointDeviated(). Note that this method is only for use in nonWF models. See addCrossed() for further general notes on the addition of new offspring individuals.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method addSpatialMap
+
+Documentation for SLiM function \code{addSpatialMap}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param map An object of type SpatialMap object (singleton).
+
+@aliases Subpopulation$addSpatialMap P$addSpatialMap
+@family Subpopulation
+@return An object of type void. 
+@details object<SpatialMap>$ map) Adds the given SpatialMap object, map, to the subpopulation. (The spatial map would have been previously created with a call to defineSpatialMap() on a different subpopulation; addSpatialMap() can then be used to add that existing spatial map with other subpopulations, sharing the map between subpopulations.) If the map is already added to the target subpopulation, this method does nothing; if a different map with the same name is already added to the subpopulation, an error results (because map names must be unique within each subpopulation). The map being added must be compatible with the target subpopulation; in particular, the spatial bounds utilized by the map must exactly match the corresponding spatial bounds for the subpopulation, and the dimensionality of the subpopulation must encompass the spatiality of the map. For example, if the map has a spatiality of "xz" then the subpopulation must have a dimensionality of "xyz" so that it encompasses both "x" and "z", and the subpopulation's spatial bounds for "x" and "z" must match those for the map (but the spatial bounds for "y" are unimportant, since the map does not use that dimension). Adding a map to a subpopulation is not strictly necessary, at present; one may query a SpatialMap object directly using mapValue(), regarding points in a subpopulation, without the map actually having been added to that subpopulation. However, it is a good idea to use addSpatialMap(), both for its compatibility check that prevents unnoticed scripting errors, and because it ensures correct display of the model in SLiMgui.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method cachedFitness
+
+Documentation for SLiM function \code{cachedFitness}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param indices An object of type null or integer.
+
+@aliases Subpopulation$cachedFitness P$cachedFitness
+@family Subpopulation
+@return An object of type float. 
+@details Ni indices) The fitness values calculated for the individuals at the indices given are returned. If NULL is passed, fitness values for all individuals in the subpopulation are returned. The fitness values returned are cached values; mutationEffect() and fitnessEffect() callbacks are therefore not called as a side effect of this method. It is always an error to call cachedFitness() from inside a mutationEffect() or fitnessEffect() callback, since fitness values are in the middle of being set up. In WF models, it is also an error to call cachedFitness() from a late() event, because fitness values for the new offspring generation have not yet been calculated and are undefined. In nonWF models, the population may be a mixture of new and old individuals, so instead, NAN will be returned as the fitness of any new individuals whose fitness has not yet been calculated. When new subpopulations are first created with addSubpop() or addSubpopSplit(), the fitness of all of the newly created individuals is considered to be 1.0 until fitness values are recalculated.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method configureDisplay
+
+Documentation for SLiM function \code{configureDisplay}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param center An object of type null or float.
+@param scale An object of type null or float (singleton).
+@param color An object of type null or string (singleton).
+
+@aliases Subpopulation$configureDisplay P$configureDisplay
+@family Subpopulation
+@return An object of type void. 
+@details [Nf center = NULL], [Nf$ scale = NULL], [Ns$ color = NULL]) This method customizes the display of the subpopulation in SLiMgui's Population Visualization graph. When this method is called by a model running outside SLiMgui, it will do nothing except type-checking and bounds-checking its arguments. When called by a model running in SLiMgui, the position, size, and color of the subpopulation's displayed circle can be controlled as specified below. The center parameter sets the coordinates of the center of the subpopulation's displayed circle; it must be a float vector of length two, such that center[0] provides the x-coordinate and center[1] provides the y-coordinate. The square central area of the Population Visualization occupies scaled coordinates in [0,1] for both x and y, so the values in center must be within those bounds. If a value of NULL is provided, SLiMgui's default center will be used (which currently arranges subpopulations in a circle). The scale parameter sets a scaling factor to be applied to the radius of the subpopulation's displayed circle. The default radius used by SLiMgui is a function of the subpopulation's number of individuals; this default radius is then multiplied by scale. If a value of NULL is provided, the default radius will be used; this is equivalent to supplying a scale of 1.0. Typically the same scale value should be used by all subpopulations, to scale all of their circles up or down uniformly, but that is not required. The color parameter sets the color to be used for the displayed subpopulation's circle. Colors may be specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see the Eidos manual). If color is NULL or the empty string, "", SLiMgui's default (fitness-based) color will be used.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method defineSpatialMap
+
+Documentation for SLiM function \code{defineSpatialMap}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param name An object of type string (singleton).
+@param spatiality An object of type string (singleton).
+@param values An object of type numeric.
+@param interpolate An object of type logical (singleton).
+@param valueRange An object of type null or integer or float.
+@param colors An object of type null or string.
+
+@aliases Subpopulation$defineSpatialMap P$defineSpatialMap
+@family Subpopulation
+@return An object of type SpatialMap object. Return will be of length 1 (a singleton)
+@details string$ name, string$ spatiality, numeric values, [logical$ interpolate = F], [Nif valueRange = NULL], [Ns colors = NULL]) Defines a spatial map for the subpopulation; see the SpatialMap documentation regarding this class. The new map is automatically added to the subpopulation; addSpatialMap() does not need to be called. (That method is for sharing the map with additional subpopulations, beyond the one for which the map was originally defined.) The new SpatialMap object is returned, and may be retained permanently using defineConstant() or defineGlobal() for convenience. The name of the map is given by name, and can be used to identify it. The map uses the spatial dimensions referenced by spatiality, which must be a subset of the dimensions defined for the simulation in initializeSLiMOptions(). Spatiality "x" is permitted for dimensionality "x"; spatiality "x", "y", or "xy" for dimensionality "xy"; and spatiality "x", "y", "z", "xy", "yz", "xz", or "xyz" for dimensionality "xyz". The spatial map is defined by a grid of values supplied in parameter values. That grid of values is aligned with the spatial bounds of the subpopulation, as described in more detail below; the spatial map is therefore coupled to those spatial bounds, and can only be used in subpopulations that match those particular spatial bounds (to avoid stretching or shrinking the map). The remaining optional parameters are described below. Note that the semantics of this method changed in SLiM 3.5; in particular, the gridSize parameter was removed, and the interpretation of the values parameter changed as described below. Existing code written prior to SLiM 3.5 will produce an error, due to the removed gridSize parameter, and must be revised carefully to obtain the same result, even if NULL had been passed for gridSize previously. Beginning in SLiM 3.5, the values parameter must be a vector/matrix/array with the number of dimensions appropriate for the declared spatiality of the map; for example, a map with spatiality "x" would require a (one-dimensional) vector, spatiality "xy" would require a (two-dimensional) matrix, and a map with spatiality of "xyz" would require a three-dimensional array. (See the Eidos manual for discussion of vectors, matrices, and arrays.) The data in values is interpreted in such a way that a two-dimensional matrix of values, with (0, 0) at upper left and values by column, is transformed into the format expected by SLiM, with (0, 0) at lower left and values by row; in other words, the two-dimensional matrix as it prints in the Eidos console will match the appearance of the two-dimensional spatial map as seen in SLiMgui. This is a change in behavior from versions prior to SLiM 3.5; it ensures that images loaded from disk with the Eidos class Image can be used directly as spatial maps, achieving the expected orientation, with no need for transposition or flipping. If the spatial map is a three-dimensional array, it is read as successive z-axis "planes", each of which is a two-dimensional matrix that is treated as described above. Moving on to the other parameters of defineSpatialMap(): if interpolate is F, values across the spatial map are not interpolated; the value at a given point is equal to the nearest value defined by the grid of values specified. If interpolate is T, values across the spatial map will be interpolated (using linear, bilinear, or trilinear interpolation as appropriate) to produce spatially continuous variation in values. In either case, the corners of the value grid are exactly aligned with the corners of the spatial boundaries of the subpopulation as specified by setSpatialBounds(), and the value grid is then stretched across the spatial extent of the subpopulation in such a manner as to produce equal spacing between the values along each dimension. The setting of interpolation only affects how values between these grid points are calculated: by nearest-neighbor, or by linear interpolation. Interpolation of spatial maps with periodic boundaries is not handled specially; to ensure that the edges of a periodic spatial map join smoothly, simply ensure that the grid values at the edges of the map are identical, since they will be coincident after periodic wrapping. Note that cubic/bicubic interpolation is generally smoother than linear/bilinear interpolation, with fewer artifacts, but it is substantially slower to calculate; use the interpolate() method of SpatialMap to precalculate an interpolated map using cubic/bucubic interpolation. The valueRange and colors parameters travel together; either both are unspecified, or both are specified. They control how map values will be transformed into colors, by SLiMgui and by the mapColor() method. The valueRange parameter establishes the color-mapped range of spatial map values, as a vector of length two specifying a minimum and maximum; this does not need to match the actual range of values in the map. The colors parameter then establishes the corresponding colors for values within the interval defined by valueRange: values less than or equal to valueRange[0] will map to colors[0], values greater than or equal to valueRange[1] will map to the last colors value, and intermediate values will shade continuously through the specified vector of colors, with interpolation between adjacent colors to produce a continuous spectrum. This is much simpler than it sounds in this description; see the recipes for an illustration of its use. Note that at present, SLiMgui will only display spatial maps of spatiality "x", "y", or "xy"; the color-mapping parameters will simply be ignored by SLiMgui for other spatiality values (even if the spatiality is a superset of these values; SLiMgui will not attempt to display an "xyz" spatial map, for example, since it has no way to choose which 2D slice through the xyz space it ought to display). The mapColor() method will return translated color strings for any spatial map, however, even if SLiMgui is unable to display the spatial map. If there are multiple spatial maps that SLiMgui is capable of displaying, it choose one for display by default, but other maps may be selected from the action menu on the individuals view (by clicking on the button with the gear icon).
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method deviatePositions
+
+Documentation for SLiM function \code{deviatePositions}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param individuals An object of type null or Individual object.
+@param boundary An object of type string (singleton).
+@param maxDistance An object of type numeric (singleton).
+@param functionType An object of type string (singleton).
+@param ... An object of type NA.
+
+@aliases Subpopulation$deviatePositions P$deviatePositions
+@family Subpopulation
+@return An object of type Individual object. 
+@details No<Individual> individuals, string$ boundary, numeric$ maxDistance, string$ functionType, ...) Deviates the spatial positions of the individuals supplied in individuals, using the provided boundary condition and dispersal kernel. If individuals is NULL, the positions of all individuals in the target subpopulation are deviated. This method is essentially a more efficient shorthand for getting the spatial positions of individuals from the spatialPosition property, deviating those positions with pointDeviated(), and setting the deviated positions back into individuals with the setSpatialPosition() method. The boundary condition boundary must be one of "none", "periodic", "reflecting", "stopping", "reprising", or "absorbing", and the spatial kernel type functionType must be one of "f", "l", "e", "n", or "t", with the ellipsis parameters ... supplying kernel configuration parameters appropriate for that kernel type; see pointDeviated() for further details. As with pointDeviated(), the ellipsis parameters that follow functionType may each, independently, be either a singleton or a vector of length equal to n. This allows each individual's position to be deviated with a different kernel, representing, for example, the movements of individuals with differing dispersal capabilities/propensities. (However, other parameters such as boundary, maxDistance, and functionType must be the same for all of the points, in the present design.) The returned vector contains individuals that did not survive the dispersal process. For "absorbing" boundaries, this will contain the individuals that attempted to disperse beyond the spatial bounds, and in most cases the caller will then kill those individuals - probably by passing them to killIndividuals(), but perhaps by setting their fitnessScaling to zero. (The positions of the individuals in the returned vector will be the out-of-bounds positions that were drawn for them; rather than killing those individuals, the caller could conceivably handle them in some other way.) For all other boundary conditions, the returned vector of individuals will be empty and may be ignored by the caller.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method deviatePositionsWithMap
+
+Documentation for SLiM function \code{deviatePositionsWithMap}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param individuals An object of type null or Individual object.
+@param boundary An object of type string (singleton).
+@param map An object of type string or SpatialMap object (singleton).
+@param maxDistance An object of type numeric (singleton).
+@param functionType An object of type string (singleton).
+@param ... An object of type NA.
+
+@aliases Subpopulation$deviatePositionsWithMap P$deviatePositionsWithMap
+@family Subpopulation
+@return An object of type Individual object. 
+@details No<Individual> individuals, string$ boundary, so<SpatialMap>$ map, numeric$ maxDistance, string$ functionType, ...) Deviates the spatial positions of the individuals supplied in individuals, using the provided boundary condition and dispersal kernel. The supplied SpatialMap object (or a string specifying a map by name), map, is used (in addition to the spatial bounds of the subpopulation) to define which positions are considered to be "out of bounds", as described below. If individuals is NULL, the positions of all individuals in the target subpopulation are deviated. This method is essentially an extension of the deviatePositions() method, adding bounds-checking using map; however, there are some differences as described below. The boundary condition boundary must be either "reprising" or "absorbing". In the simple case where map values are either 0 (bad habitat) or 1 (good habitat), "reprising" means a new location is drawn conditional on falling within the good habitat; "absorbing" means individuals falling outside the good habitat are "absorbed" (killed, probably). The details are discussed below, when map is discussed. Note that the boundary condition "none" is not supported because points must be within the boundaries of the spatial map to be checked. Reflecting and stopping boundaries are not supported because, with the spatial map, if a drawn point is considered out-of-bounds it is not clear where the "edge" is, and therefore reflecting off of the edge, or stopping at the edge, are not well-defined. Finally, "periodic" is not supported because it does not specify any action to be taken when a drawn point is considered to be "out of bounds" according to the spatial map; instead, this method automatically applies any periodic boundaries that have been defined and then, using the resulting point, checks the subpopulation's spatial bounds and the spatial map, and applies reprising or absorbing boundaries as requested if the point is "out of bounds". The spatial map defined by map must be configured in a specific way. First of all, it must be defined in, or added to, the target subpopulation (and thus, by implication, it must match the spatial bounds of the subpopulation. Second, its spatiality must be equal to the dimensionality of the species; in an "xy" species, for example, the map must also be "xy". Third, the values in the spatial map must represent "habitability", in the following sense. The value of map at a given drawn point is obtained, symbolized here by x. Next, x is clamped to the range [0, 1]; values less than 0 become 0, values greater than 1 become 1. The resulting x value is then interpreted as the probability that the point is considered "within bounds" (as far as the spatial map is concerned; points that are outside the subpopulation's spatial bounds are always considered "out of bounds"). If boundary is "reprising", 1-x is thus the probability that the point will be redrawn; if boundary is "absorbing", 1-x is thus the probability that the individual will be considered "absorbed", as discussed below. In this manner, the concept of "out of bounds" is treated as a probability by this method, rather than a binary state. The spatial kernel type functionType must be one of "f", "l", "e", "n", or "t", with the ellipsis parameters ... supplying kernel configuration parameters appropriate for that kernel type; see pointDeviated() for further details. As with pointDeviated(), the ellipsis parameters that follow functionType may each, independently, be either a singleton or a vector of length equal to n. This allows each individual's position to be deviated with a different kernel, representing, for example, the movements of individuals with differing dispersal capabilities/propensities. (However, other parameters such as boundary, maxDistance, and functionType must be the same for all of the points, in the present design.) The returned vector contains individuals that did not survive the dispersal process. For "absorbing" boundaries, this will contain the individuals that attempted to disperse to a point considered "out of bounds" as described above, and in most cases the caller will then kill those individuals - probably by passing them to killIndividuals(), but perhaps by setting their fitnessScaling to zero. (The positions of the individuals in the returned vector will be the out-of-bounds positions that were drawn for them; rather than killing those individuals, the caller could conceivably handle them in some other way.) For all other boundary conditions, the returned vector of individuals will be empty and may be ignored by the caller. See also the SpatialMap methods sampleNearbyPoint() and sampleImprovedNearbyPoint(), which are in some ways conceptually similar to this method.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method haplosomesForChromosomes
+
+Documentation for SLiM function \code{haplosomesForChromosomes}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param chromosomes An object of type null or integer or string or Chromosome object.
+@param index An object of type null or integer (singleton).
+@param includeNulls An object of type logical (singleton).
+
+@aliases Subpopulation$haplosomesForChromosomes P$haplosomesForChromosomes
+@family Subpopulation
+@return An object of type Haplosome object. 
+@details [Niso<Chromosome> chromosomes = NULL], [Ni$ index = NULL], [logical$ includeNulls = T]) Returns a vector containing the subpopulation's haplosomes that correspond to the chromosomes passed in chromosomes (following the order of the chromosomes property of Individual). Chromosomes can be specified by id (integer), by symbol (string) or by the Chromosome objects themselves; if NULL is passed (the default), all chromosomes defined for the species are used, in the order in which they were defined. This method is equivalent to calling haplosomesForChromosomes(chromosomes, index, includeNulls) on subpop.individuals, where subpop is the target subpopulation. It therefore appends together the specified haplosomes from each individual in the subpopulation to form a single vector. See the documentation for the Individual method haplosomesForChromosomes() for further details, such as on the meaning of the index and includeNulls parameters.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method outputMSSample
+
+Documentation for SLiM function \code{outputMSSample}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param sampleSize An object of type integer (singleton).
+@param replace An object of type logical (singleton).
+@param requestedSex An object of type string (singleton).
+@param filePath An object of type null or string (singleton).
+@param append An object of type logical (singleton).
+@param filterMonomorphic An object of type logical (singleton).
+@param chromosome An object of type null or integer or string or Chromosome object (singleton).
+
+@aliases Subpopulation$outputMSSample P$outputMSSample
+@family Subpopulation
+@return An object of type void. 
+@details integer$ sampleSize, [logical$ replace = T], [string$ requestedSex = "*"], [Ns$ filePath = NULL], [logical$ append = F], [logical$ filterMonomorphic = F], [Niso<Chromosome>$ chromosome = NULL]) Output a random sample from the subpopulation in MS format. Positions in the output will span the interval [0,1]. A sample of non-null haplosomes (not entire individuals, note) of size sampleSize from the subpopulation will be output. The sample may be done either with or without replacement, as specified by replace; the default is to sample with replacement. A particular sex of individuals may be requested for the sample, for simulations in which sex is enabled, by passing "M" or "F" for requestedSex; passing "*", the default, indicates that haplosomes from individuals should be selected randomly, without respect to sex. If the sampling options provided by this method are not adequate, see the outputHaplosomesToMS() method of Haplosome for a more flexible low-level option. If the optional parameter filePath is NULL (the default), output will be sent to Eidos's output stream. Otherwise, output will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. If filterMonomorphic is F (the default), all mutations that are present in the sample will be included in the output. This means that some mutations may be included that are actually monomorphic within the sample (i.e., that exist in every sampled haplosome, and are thus apparently fixed). These may be filtered out with filterMonomorphic = T if desired; note that this option means that some mutations that do exist in the sampled haplosomes might not be included in the output, simply because they exist in every sampled haplosome. The chromosome parameter identifies the chromosome for which the sample of haplosomes should be taken. The default of NULL may be used only in single-chromosome models where the choice of chromosome is unambiguous. In multi-chromosome models, chromosome must be non-NULL; it must specify the chromosome by id (integer), by symbol (string) or by the Chromosome object itself. See outputSample() and outputVCFSample() for other output formats. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method outputSample
+
+Documentation for SLiM function \code{outputSample}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param sampleSize An object of type integer (singleton).
+@param replace An object of type logical (singleton).
+@param requestedSex An object of type string (singleton).
+@param filePath An object of type null or string (singleton).
+@param append An object of type logical (singleton).
+@param chromosome An object of type null or integer or string or Chromosome object (singleton).
+
+@aliases Subpopulation$outputSample P$outputSample
+@family Subpopulation
+@return An object of type void. 
+@details integer$ sampleSize, [logical$ replace = T], [string$ requestedSex = "*"], [Ns$ filePath = NULL], [logical$ append = F], [Niso<Chromosome>$ chromosome = NULL]) Output a random sample from the subpopulation in SLiM's native format. A sample of non-null haplosomes (not entire individuals, note) of size sampleSize from the subpopulation will be output. The sample may be done either with or without replacement, as specified by replace; the default is to sample with replacement. A particular sex of individuals may be requested for the sample, for simulations in which sex is enabled, by passing "M" or "F" for requestedSex; passing "*", the default, indicates that haplosomes from individuals should be selected randomly, without respect to sex. If the sampling options provided by this method are not adequate, see the outputHaplosomes() method of Haplosome for a more flexible low-level option. If the optional parameter filePath is NULL (the default), output will be sent to Eidos's output stream. Otherwise, output will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. The chromosome parameter identifies the chromosome for which the sample of haplosomes should be taken. The default of NULL may be used only in single-chromosome models where the choice of chromosome is unambiguous. In multi-chromosome models, chromosome must be non-NULL; it must specify the chromosome by id (integer), by symbol (string) or by the Chromosome object itself. See outputMSSample() and outputVCFSample() for other output formats. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method outputVCFSample
+
+Documentation for SLiM function \code{outputVCFSample}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param sampleSize An object of type integer (singleton).
+@param replace An object of type logical (singleton).
+@param requestedSex An object of type string (singleton).
+@param outputMultiallelics An object of type logical (singleton).
+@param filePath An object of type null or string (singleton).
+@param append An object of type logical (singleton).
+@param simplifyNucleotides An object of type logical (singleton).
+@param outputNonnucleotides An object of type logical (singleton).
+@param groupAsIndividuals An object of type logical (singleton).
+@param chromosome An object of type null or integer or string or Chromosome object (singleton).
+
+@aliases Subpopulation$outputVCFSample P$outputVCFSample
+@family Subpopulation
+@return An object of type void. 
+@details integer$ sampleSize, [logical$ replace = T], [string$ requestedSex = "*"], [logical$ outputMultiallelics = T], [Ns$ filePath = NULL], [logical$ append = F], [logical$ simplifyNucleotides = F], [logical$ outputNonnucleotides = T], [logical$ groupAsIndividuals = T], [Niso<Chromosome>$ chromosome = NULL]) Output a random sample from the subpopulation in VCF format. A sample of individuals (not haplosomes, note - unlike the outputSample() and outputMSSample() methods) of size sampleSize from the subpopulation will be output. The sample may be done either with or without replacement, as specified by replace; the default is to sample with replacement. A particular sex of individuals may be requested for the sample, for simulations in which sex is enabled, by passing "M" or "F" for requestedSex; passing "*", the default, indicates that individuals should be selected randomly, without respect to sex. If the sampling options provided by this method are not adequate, see the outputHaplosomesToVCF() method of Haplosome for a more flexible low-level option. If the optional parameter filePath is NULL (the default), output will be sent to Eidos's output stream. Otherwise, output will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. The parameters outputMultiallelics, simplifyNucleotides, outputNonnucleotides, and groupAsIndividuals affect the format of the output produced. The chromosome parameter identifies the chromosome for which haplosomes of the sampled individuals should be output. The default of NULL may be used only in single-chromosome models where the choice of chromosome is unambiguous. In multi-chromosome models, chromosome must be non-NULL; it must specify the chromosome by id (integer), by symbol (string) or by the Chromosome object itself. The symbol property of the chromosome will be output in the CHROM field of call lines in the VCF output. See outputMSSample() and outputSample() for other output formats. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method pointDeviated
+
+Documentation for SLiM function \code{pointDeviated}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param n An object of type integer (singleton).
+@param point An object of type float.
+@param boundary An object of type string (singleton).
+@param maxDistance An object of type numeric (singleton).
+@param functionType An object of type string (singleton).
+@param ... An object of type NA.
+
+@aliases Subpopulation$pointDeviated P$pointDeviated
+@family Subpopulation
+@return An object of type float. 
+@details integer$ n, float point, string$ boundary, numeric$ maxDistance, string$ functionType, ...) Returns a vector containing n points that are derived from point by adding a deviation drawn from a dispersal kernel (specified by maxDistance, functionType, and the ellipsis parameters ..., as detailed below) and then applying a boundary condition specified by boundary. This method therefore performs the steps of a simple dispersal algorithm in a single vectorized call. See deviatePositions() for an even more efficient approach. The parameter point may contain a single point which is deviated and bounded n independent times, or may contain n points each of which is deviated and bounded. In any case, each point in point should match the dimensionality of the model - one element in a 1D model, two elements in a 2D model, or three elements in a 3D model. This method should not be called in a non-spatial model. The dispersal kernel is specified similarly to other kernel-based methods, such as setInteractionFunction() and smooth(). For pointDeviated(), functionType may be "f" with no ellipsis arguments ... to use a flat kernel out to maxDistance; "l" with no ellipsis arguments for a kernel that decreases linearly from the center to zero at maxDistance; "e", in which case the ellipsis should supply a numeric$ lambda (rate) parameter for a negative exponential function; "n", in which case the ellipsis should supply a numeric$ sigma (standard deviation) parameter for a Gaussian function; or "t", in which case the ellipsis should supply a numeric$ degrees of freedom and a numeric$ scale parameter for a t-distribution function. The Cauchy ("c") kernel is not supported by pointDeviated() since it is not well-behaved for this purpose, and the Student's t ("t") kernel is not allowed in 3D models at present simply because it hasn't been implemented. See the InteractionType class documentation for more detailed discussion of the available kernel types and their parameters and probability distribution functions. For pointDeviated(), the ellipsis parameters that follow functionType may each, independently, be either a singleton or a vector of length equal to n. This allows each point to be deviated with a different kernel, representing, for example, the movements of individuals with differing dispersal capabilities/propensities. (However, other parameters such as boundary, maxDistance, and functionType must be the same for all of the points, in the present design.) The random points returned from this method are drawn from the probability distribution that is radially symmetric and has density proportional to the kernel - in other words, at distance r the density is proportional to the kernel type referred to by functionType. (Said another way, the shape of the cross-section through the probability density function is given by the kernel.) For instance, the value of the type "e" (exponential) kernel with rate a at r is proportional to exp(ar), and so in 2D, the probability density that this method with kernel type "e" draws from has density proportional to p(x, y) = exp(a sqrt(x2 + y2)), since r = sqrt(x2 + y2) is the distance. Note that the distribution of the distance is not given by the kernel except in 1D: in the type "e" example, the distribution of the distance in 1D is exponential, while in 2D it has density proportional to r exp(ar) (i.e., Gamma with shape parameter 1). For another example, the value of the type "n" (Normal) kernel at r with standard deviation 1 is proportional to exp(r2 / 2), and so the density is proportional to p(x, y) = exp((x2 + y2) / 2). This is the standard bivariate Normal, and equivalent to drawing independent Normals for the x and y directions; however, the Normal is the only distribution for which independent draws along each axis will result in a radially symmetric distribution. The distribution of the distance in 2D with type "n" is proportional to r exp(r2 / 2), i.e., Rayleigh. The boundary condition must be one of "none", "periodic", "reflecting", "stopping", or "reprising". For "none", no boundary condition is enforced; the deviated points are simply returned as is. For "periodic", "reflecting", and "stopping", the boundary condition is enforced just as it is by the pointPeriodic(), pointReflected(), and pointStopped() methods; see their documentation for further details. For "reprising", if the deviated point is out of bounds a new deviated point will be chosen, based upon the same original point, until a point inside bounds is obtained. Note that absorbing boundaries (for which being out-of-bounds is lethal) would need to be implemented in script; this method cannot enforce them. (Note, however, that the deviatePositions() method of Subpopulation can enforce absorbing boundaries.) Note that for the typical usage case, in which point comes from the spatialPosition property for a vector of individuals, and the result is then set back onto the same vector of individuals using the setSpatialPosition() method, the deviatePositions() method provides an even more efficient alternative.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method pointInBounds
+
+Documentation for SLiM function \code{pointInBounds}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param point An object of type float.
+
+@aliases Subpopulation$pointInBounds P$pointInBounds
+@family Subpopulation
+@return An object of type logical. 
+@details float point) Returns T if point is inside the spatial boundaries of the subpopulation, F otherwise. For example, for a simulation with "xy" dimensionality, if point contains exactly two values constituting an (x,y) point, the result will be T if and only if ((point[0]>=x0) & (point[0]<=x1) & (point[1]>=y0) & (point[1]<=y1)) given spatial bounds (x0, y0, x1, y1). This method is useful for implementing absorbing or reprising boundary conditions. This may only be called in simulations for which continuous space has been enabled with initializeSLiMOptions(). The length of point must be an exact multiple of the dimensionality of the simulation; in other words, point may contain values comprising more than one point. In this case, a logical vector will be returned in which each element is T if the corresponding point in point is inside the spatial boundaries of the subpopulation, F otherwise.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method pointPeriodic
+
+Documentation for SLiM function \code{pointPeriodic}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param point An object of type float.
+
+@aliases Subpopulation$pointPeriodic P$pointPeriodic
+@family Subpopulation
+@return An object of type float. 
+@details float point) Returns a revised version of point that has been brought inside the periodic spatial boundaries of the subpopulation (as specified by the periodicity parameter of initializeSLiMOptions()) by wrapping around periodic spatial boundaries. In brief, if a coordinate of point lies beyond a periodic spatial boundary, that coordinate is wrapped around the boundary, so that it lies inside the spatial extent by the same magnitude that it previously lay outside, but on the opposite side of the space; in effect, the two edges of the periodic spatial boundary are seamlessly joined. This is done iteratively until all coordinates lie inside the subpopulation's periodic boundaries. Note that non-periodic spatial boundaries are not enforced by this method; they should be enforced using pointReflected(), pointStopped(), or some other means of enforcing boundary constraints (which can be used after pointPeriodic() to bring the remaining coordinates into bounds; coordinates already brought into bounds by pointPeriodic() will be unaffected by those calls). This method is useful for implementing periodic boundary conditions. This may only be called in simulations for which continuous space and at least one periodic spatial dimension have been enabled with initializeSLiMOptions(). The length of point must be an exact multiple of the dimensionality of the simulation; in other words, point may contain values comprising more than one point. In this case, each point will be processed as described above and a new vector containing all of the processed points will be returned.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method pointReflected
+
+Documentation for SLiM function \code{pointReflected}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param point An object of type float.
+
+@aliases Subpopulation$pointReflected P$pointReflected
+@family Subpopulation
+@return An object of type float. 
+@details float point) Returns a revised version of point that has been brought inside the spatial boundaries of the subpopulation by reflection. In brief, if a coordinate of point lies beyond a spatial boundary, that coordinate is reflected across the boundary, so that it lies inside the boundary by the same magnitude that it previously lay outside the boundary. This is done iteratively until all coordinates lie inside the subpopulation's boundaries. This method is useful for implementing reflecting boundary conditions. This may only be called in simulations for which continuous space has been enabled with initializeSLiMOptions(). The length of point must be an exact multiple of the dimensionality of the simulation; in other words, point may contain values comprising more than one point. In this case, each point will be processed as described above and a new vector containing all of the processed points will be returned.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method pointStopped
+
+Documentation for SLiM function \code{pointStopped}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param point An object of type float.
+
+@aliases Subpopulation$pointStopped P$pointStopped
+@family Subpopulation
+@return An object of type float. 
+@details float point) Returns a revised version of point that has been brought inside the spatial boundaries of the subpopulation by clamping. In brief, if a coordinate of point lies beyond a spatial boundary, that coordinate is set to exactly the position of the boundary, so that it lies on the edge of the spatial boundary. This method is useful for implementing stopping boundary conditions. This may only be called in simulations for which continuous space has been enabled with initializeSLiMOptions(). The length of point must be an exact multiple of the dimensionality of the simulation; in other words, point may contain values comprising more than one point. In this case, each point will be processed as described above and a new vector containing all of the processed points will be returned.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method pointUniform
+
+Documentation for SLiM function \code{pointUniform}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param n An object of type integer (singleton).
+
+@aliases Subpopulation$pointUniform P$pointUniform
+@family Subpopulation
+@return An object of type float. 
+@details [integer$ n = 1]) Returns a new point (or points, for n > 1) generated from uniform draws for each coordinate, within the spatial boundaries of the subpopulation. The returned vector will contain n points, each comprised of a number of coordinates equal to the dimensionality of the simulation, so it will be of total length n*dimensionality. This may only be called in simulations for which continuous space has been enabled with initializeSLiMOptions(). See pointUniformWithMap() for an extension to this method which uses a spatial map to govern the probability of a particular point being chosen.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method pointUniformWithMap
+
+Documentation for SLiM function \code{pointUniformWithMap}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param n An object of type integer (singleton).
+@param map An object of type string or SpatialMap object (singleton).
+
+@aliases Subpopulation$pointUniformWithMap P$pointUniformWithMap
+@family Subpopulation
+@return An object of type float. 
+@details integer$ n, so<SpatialMap>$ map) Returns a new point (or points, for n > 1) generated from uniform draws for each coordinate, within the spatial boundaries of the subpopulation, and rejection sampled using the spatial map map as described below. The returned vector will contain n points, each comprised of a number of coordinates equal to the dimensionality of the simulation, so it will be of total length n*dimensionality. This may only be called in simulations for which continuous space has been enabled with initializeSLiMOptions(). The spatial map defined by map must be configured in a specific way. First of all, it must be defined in, or added to, the target subpopulation (and thus, by implication, it must match the spatial bounds of the subpopulation, and its spatiality must be compatible with the subpopulation's dimensionality, as discussed in defineSpatialMap() and/or addSpatialMap()). Second, the values in the spatial map must represent "habitability", in the following sense. The value of map at a given drawn point is obtained, symbolized here by x. Next, x is clamped to the range [0, 1]; values less than 0 become 0, values greater than 1 become 1. The resulting x value is then interpreted as the probability that the point is considered "within bounds" (as far as the spatial map is concerned; points that are outside the subpopulation's spatial bounds are always considered "out of bounds"). Given this, 1-x is thus the probability that the point will be redrawn because it fell out of bounds. Each point will be redrawn repeatedly until a point considered "within bounds" is obtained.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method removeSpatialMap
+
+Documentation for SLiM function \code{removeSpatialMap}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param map An object of type string or SpatialMap object (singleton).
+
+@aliases Subpopulation$removeSpatialMap P$removeSpatialMap
+@family Subpopulation
+@return An object of type void. 
+@details so<SpatialMap>$ map) Removes the SpatialMap object specified by map from the subpopulation. The parameter map may be either a SpatialMap object, or a string name for spatial map. The map must have been added to the subpopulation with addSpatialMap(); if it has not been, an error results. Removing spatial maps that are no longer in use is optional in most cases. It is generally a good idea because it might decrease SLiM's memory footprint; also, it avoids an error if the subpopulation's spatial bounds are changed (see setSpatialBounds()).
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method removeSubpopulation
+
+Documentation for SLiM function \code{removeSubpopulation}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param void An object of type object.
+
+@aliases Subpopulation$removeSubpopulation P$removeSubpopulation
+@family Subpopulation
+@return An object of type void. 
+@details void) Removes this subpopulation from the model. The subpopulation is immediately removed from the list of active subpopulations, and the symbol representing the subpopulation is undefined. The subpopulation object itself remains unchanged until children are next generated (at which point it is deallocated), but it is no longer part of the simulation and should not be used. Note that this method is only for use in nonWF models, in which there is a distinction between a subpopulation being empty and a subpopulation being removed from the simulation; an empty subpopulation may be re-colonized by migrants, whereas as a removed subpopulation no longer exists at all. WF models do not make this distinction; when a subpopulation is empty it is automatically removed. WF models should therefore call setSubpopulationSize(0) instead of this method; setSubpopulationSize() is the standard way for WF models to change the subpopulation size, including to a size of 0.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method sampleIndividuals
+
+Documentation for SLiM function \code{sampleIndividuals}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param size An object of type integer (singleton).
+@param replace An object of type logical (singleton).
+@param exclude An object of type null or Individual object (singleton).
+@param sex An object of type null or string (singleton).
+@param tag An object of type null or integer (singleton).
+@param minAge An object of type null or integer (singleton).
+@param maxAge An object of type null or integer (singleton).
+@param migrant An object of type null or logical (singleton).
+@param tagL0 An object of type null or logical (singleton).
+@param tagL1 An object of type null or logical (singleton).
+@param tagL2 An object of type null or logical (singleton).
+@param tagL3 An object of type null or logical (singleton).
+@param tagL4 An object of type null or logical (singleton).
+
+@aliases Subpopulation$sampleIndividuals P$sampleIndividuals
+@family Subpopulation
+@return An object of type Individual object. 
+@details integer$ size, [logical$ replace = F], [No<Individual>$ exclude = NULL], [Ns$ sex = NULL], [Ni$ tag = NULL], [Ni$ minAge = NULL], [Ni$ maxAge = NULL], [Nl$ migrant = NULL], [Nl$ tagL0 = NULL], [Nl$ tagL1 = NULL], [Nl$ tagL2 = NULL], [Nl$ tagL3 = NULL], [Nl$ tagL4 = NULL]) Returns a vector of individuals, of size less than or equal to parameter size, sampled from the individuals in the target subpopulation. Sampling is done without replacement if replace is F (the default), or with replacement if replace is T. The remaining parameters specify constraints upon the pool of individuals that will be considered candidates for the sampling. Parameter exclude, if non-NULL, may specify a specific individual that should not be considered a candidate (typically the focal individual in some operation). Parameter sex, if non-NULL, may specify a sex ("M" or "F") for the individuals to be drawn, in sexual models. Parameter tag, if non-NULL, may specify a tag property value for the individuals to be drawn. Parameters minAge and maxAge, if non-NULL, may specify a minimum or maximum age for the individuals to be drawn, in nonWF models. Parameter migrant, if non-NULL, may specify a required value for the migrant property of the individuals to be drawn (so T will require that individuals be migrants, F will require that they not be). Finally, parameters tagL0, tagL1, tagL2, tagL3, and tagL4, if non-NULL, may specify a required value (T or F) for the corresponding properties (tagL0, tagL1, tagL2, tagL3, and tagL4) of the individuals to be drawn. Note that if any tag/tagL parameter is specified as non-NULL, that tag/tagL property must have a defined value for every individual in the subpopulation, otherwise an error may result (although this requirement will not necessarily be checked comprehensively by this method in every invocation). If the candidate pool is smaller than the requested sample size, all eligible candidates will be returned (in randomized order); the result will be a zero-length vector if no eligible candidates exist (unlike sample()). This method is similar to getting the individuals property of the subpopulation, using operator [] to select only individuals with the desired properties, and then using sample() to sample from that candidate pool. However, besides being much simpler than the equivalent Eidos code, it is also much faster, and it does not fail if less than the full sample size is available. See subsetIndividuals() for a similar method that returns a full subset, rather than a sample.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setCloningRate
+
+Documentation for SLiM function \code{setCloningRate}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param rate An object of type numeric.
+
+@aliases Subpopulation$setCloningRate P$setCloningRate
+@family Subpopulation
+@return An object of type void. 
+@details numeric rate) Set the cloning rate of this subpopulation. The rate is changed to rate, which should be between 0.0 and 1.0, inclusive (see the SLiM manual for further details). Clonal reproduction can be enabled in both non-sexual (i.e. hermaphroditic) and sexual simulations. In non-sexual simulations, rate must be a singleton value representing the overall clonal reproduction rate for the subpopulation. In sexual simulations, rate may be either a singleton (specifying the clonal reproduction rate for both sexes) or a vector containing two numeric values (the female and male cloning rates specified separately, at indices 0 and 1 respectively). During mating and offspring generation, the probability that any given offspring individual will be generated by cloning - by asexual reproduction without gametes or meiosis - will be equal to the cloning rate (for its sex, in sexual simulations) set in the parental (not the offspring!) subpopulation.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setMigrationRates
+
+Documentation for SLiM function \code{setMigrationRates}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param sourceSubpops An object of type integer or Subpopulation object.
+@param rates An object of type numeric.
+
+@aliases Subpopulation$setMigrationRates P$setMigrationRates
+@family Subpopulation
+@return An object of type void. 
+@details io<Subpopulation> sourceSubpops, numeric rates) Set the migration rates to this subpopulation from the subpopulations in sourceSubpops to the corresponding rates specified in rates; in other words, rates gives the expected fractions of the children in this subpopulation that will subsequently be generated from parents in the subpopulations sourceSubpops (see the SLiM manual for further details). This method will only set the migration fractions from the subpopulations given; migration rates from other subpopulations will be left unchanged (explicitly set a zero rate to turn off migration from a given subpopulation). The type of sourceSubpops may be either integer, specifying subpopulations by identifier, or object, specifying subpopulations directly.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setSelfingRate
+
+Documentation for SLiM function \code{setSelfingRate}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param rate An object of type numeric (singleton).
+
+@aliases Subpopulation$setSelfingRate P$setSelfingRate
+@family Subpopulation
+@return An object of type void. 
+@details numeric$ rate) Set the selfing rate of this subpopulation. The rate is changed to rate, which should be between 0.0 and 1.0, inclusive (see the SLiM manual for further details). Selfing can only be enabled in non-sexual (i.e. hermaphroditic) simulations. During mating and offspring generation, the probability that any given offspring individual will be generated by selfing - by self-fertilization via gametes produced by meiosis by a single parent - will be equal to the selfing rate set in the parental (not the offspring!) subpopulation.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setSexRatio
+
+Documentation for SLiM function \code{setSexRatio}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param sexRatio An object of type float (singleton).
+
+@aliases Subpopulation$setSexRatio P$setSexRatio
+@family Subpopulation
+@return An object of type void. 
+@details float$ sexRatio) Set the sex ratio of this subpopulation to sexRatio. As defined in SLiM, this is actually the fraction of the subpopulation that is male; in other words, the M:(M+F) ratio. This will take effect when children are next generated; it does not change the current subpopulation state. Unlike the selfing rate, the cloning rate, and migration rates, the sex ratio is deterministic: SLiM will generate offspring that exactly satisfy the requested sex ratio (within integer roundoff limits).
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setSpatialBounds
+
+Documentation for SLiM function \code{setSpatialBounds}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param bounds An object of type numeric.
+
+@aliases Subpopulation$setSpatialBounds P$setSpatialBounds
+@family Subpopulation
+@return An object of type void. 
+@details numeric bounds) Set the spatial boundaries of the subpopulation to bounds. This method may be called only for simulations in which continuous space has been enabled with initializeSLiMOptions(). The length of bounds must be double the spatial dimensionality, so that it supplies both minimum and maximum values for each coordinate. More specifically, for a dimensionality of "x", bounds should supply (x0, x1) values; for dimensionality "xy" it should supply (x0, y0, x1, y1) values; and for dimensionality "xyz" it should supply (x0, y0, z0, x1, y1, z1) (in that order). These boundaries will be used by SLiMgui to calibrate the display of the subpopulation, and will be used by methods such as pointInBounds(), pointReflected(), pointStopped(), and pointUniform(). The default spatial boundaries for all subpopulations span the interval [0,1] in each dimension. Spatial dimensions that are periodic (as established with the periodicity parameter to initializeSLiMOptions()) must have a minimum coordinate value of 0.0 (a restriction that allows the handling of periodicity to be somewhat more efficient). The current spatial bounds for the subpopulation may be obtained through the spatialBounds property. The spatial bounds of a subpopulation are shared with any SpatialMap objects added to the subpopulation. For this reason, once a spatial map has been added to a subpopulation, the spatial bounds of the subpopulation can no longer be changed (because it would stretch or shrink the associated spatial map, which does not seem to make physical sense). The bounds for a subpopulation should therefore be configured before any spatial maps are added to it. If those bounds do need to change subsequently, any associated spatial maps must first be removed with removeSpatialMap(), to ensure model consistency.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method setSubpopulationSize
+
+Documentation for SLiM function \code{setSubpopulationSize}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param size An object of type integer (singleton).
+
+@aliases Subpopulation$setSubpopulationSize P$setSubpopulationSize
+@family Subpopulation
+@return An object of type void. 
+@details integer$ size) Set the size of this subpopulation to size individuals (see the SLiM manual for further details). This will take effect when children are next generated; it does not change the current subpopulation state. Setting a subpopulation to a size of 0 does have some immediate effects that serve to disconnect it from the simulation: the subpopulation is removed from the list of active subpopulations, the subpopulation is removed as a source of migration for all other subpopulations, and the symbol representing the subpopulation is undefined. In this case, the subpopulation itself remains unchanged until children are next generated (at which point it is deallocated), but it is no longer part of the simulation and should not be used.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method spatialMapColor
+
+Documentation for SLiM function \code{spatialMapColor}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param name An object of type string or numeric (singleton).
+@param value An object of type string or numeric.
+
+@aliases Subpopulation$spatialMapColor P$spatialMapColor
+@family Subpopulation
+@return An object of type string. 
+@details string$ name, numeric value) This method has been deprecated, and may be removed in a future release of SLiM. In SLiM 4.1 and later, use the SpatialMap method mapColor() instead, and see that method's documentation. (This method differs only in taking a name parameter, which is used to look up the spatial map from those that have been added to the subpopulation.)
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method spatialMapImage
+
+Documentation for SLiM function \code{spatialMapImage}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param name An object of type string (singleton).
+@param width An object of type null or integer (singleton).
+@param height An object of type null or integer (singleton).
+@param centers An object of type logical (singleton).
+@param color An object of type logical (singleton).
+
+@aliases Subpopulation$spatialMapImage P$spatialMapImage
+@family Subpopulation
+@return An object of type Image object. Return will be of length 1 (a singleton)
+@details string$ name, [Ni$ width = NULL], [Ni$ height = NULL], [logical$ centers = F], [logical$ color = T]) This method has been deprecated, and may be removed in a future release of SLiM. In SLiM 4.1 and later, use the SpatialMap method mapImage() instead, and see that method's documentation. (This method differs only in taking a name parameter, which is used to look up the spatial map from those that have been added to the subpopulation.)
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method spatialMapValue
+
+Documentation for SLiM function \code{spatialMapValue}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param map An object of type string or SpatialMap object (singleton).
+@param point An object of type float.
+
+@aliases Subpopulation$spatialMapValue P$spatialMapValue
+@family Subpopulation
+@return An object of type float. 
+@details so<SpatialMap>$ map, float point) Looks up the spatial map specified by map, and uses its mapping machinery (as defined by the gridSize, values, and interpolate parameters to defineSpatialMap()) to translate the coordinates of point into a corresponding map value. The parameter map may specify the map either as a SpatialMap object, or by its string name; in either case, the map must have been added to the subpopulation. The length of point must be equal to the spatiality of the spatial map; in other words, for a spatial map with spatiality "xz", point must be of length 2, specifying the x and z coordinates of the point to be evaluated. Interpolation will automatically be used if it was enabled for the spatial map. Point coordinates are clamped into the range defined by the spatial boundaries, even if the spatial boundaries are periodic; use pointPeriodic() to wrap the point coordinates first if desired. See the documentation for defineSpatialMap() for information regarding the details of value mapping. Beginning in SLiM 3.3, point may contain more than one point to be looked up. In this case, the length of point must be an exact multiple of the spatiality of the spatial map; for a spatial map with spatiality "xz", for example, the length of point must be an exact multiple of 2, and successive pairs of elements from point (elements 0 and 1, then elements 2 and 3, etc.) will be taken as the x and z coordinates of the points to be evaluated. This allows spatialMapValue() to be used in a vectorized fashion. The mapValue() method of SpatialMap provides the same functionality directly on the SpatialMap class; spatialMapValue() is provided on Subpopulation partly for backward compatibility, but also for convenience in some usage cases.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method subsetIndividuals
+
+Documentation for SLiM function \code{subsetIndividuals}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param exclude An object of type null or Individual object (singleton).
+@param sex An object of type null or string (singleton).
+@param tag An object of type null or integer (singleton).
+@param minAge An object of type null or integer (singleton).
+@param maxAge An object of type null or integer (singleton).
+@param migrant An object of type null or logical (singleton).
+@param tagL0 An object of type null or logical (singleton).
+@param tagL1 An object of type null or logical (singleton).
+@param tagL2 An object of type null or logical (singleton).
+@param tagL3 An object of type null or logical (singleton).
+@param tagL4 An object of type null or logical (singleton).
+
+@aliases Subpopulation$subsetIndividuals P$subsetIndividuals
+@family Subpopulation
+@return An object of type Individual object. 
+@details [No<Individual>$ exclude = NULL], [Ns$ sex = NULL], [Ni$ tag = NULL], [Ni$ minAge = NULL], [Ni$ maxAge = NULL], [Nl$ migrant = NULL], [Nl$ tagL0 = NULL], [Nl$ tagL1 = NULL], [Nl$ tagL2 = NULL], [Nl$ tagL3 = NULL], [Nl$ tagL4 = NULL]) Returns a vector of individuals subset from the individuals in the target subpopulation. The parameters specify constraints upon the subset of individuals that will be returned. Parameter exclude, if non-NULL, may specify a specific individual that should not be included (typically the focal individual in some operation). Parameter sex, if non-NULL, may specify a sex ("M" or "F") for the individuals to be returned, in sexual models. Parameter tag, if non-NULL, may specify a tag property value for the individuals to be returned. Parameters minAge and maxAge, if non-NULL, may specify a minimum or maximum age for the individuals to be returned, in nonWF models. Parameter migrant, if non-NULL, may specify a required value for the migrant property of the individuals to be returned (so T will require that individuals be migrants, F will require that they not be). Finally, parameters tagL0, tagL1, tagL2, tagL3, and tagL4, if non-NULL, may specify a required value (T or F) for the corresponding properties (tagL0, tagL1, tagL2, tagL3, and tagL4) of the individuals to be returned. Note that if any tag/tagL parameter is specified as non-NULL, that tag/tagL property must have a defined value for every individual in the subpopulation, otherwise an error may result (although this requirement will not necessarily be checked comprehensively by this method in every invocation). This method is shorthand for getting the individuals property of the subpopulation, and then using operator [] to select only individuals with the desired properties; besides being much simpler than the equivalent Eidos code, it is also much faster. See sampleIndividuals() for a similar method that returns a sample taken from a chosen subset of individuals.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM method takeMigrants
+
+Documentation for SLiM function \code{takeMigrants}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param migrants An object of type Individual object.
+
+@aliases Subpopulation$takeMigrants P$takeMigrants
+@family Subpopulation
+@return An object of type void. 
+@details object<Individual> migrants) Immediately moves the individuals in migrants to the target subpopulation (removing them from their previous subpopulation). Individuals in migrants that are already in the target subpopulation are unaffected. Note that the indices and order of individuals and haplosomes in both the target and source subpopulations will change unpredictably as a side effect of this method. Note that this method is only for use in nonWF models, in which migration is managed manually by the model script. In WF models, migration is managed automatically by the SLiM core based upon the migration rates set for each subpopulation with setMigrationRates().
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+
+
+SLiM function codonsToAminoAcids
+
+Documentation for SLiM function \code{codonsToAminoAcids}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param codons An object of type integer.
+@param long An object of type logical or integer (singleton).
+@param paste An object of type logical (singleton).
+
+@aliases E$codonsToAminoAcids
+@family Eidos
+@return An object of type integer or string. 
+@details Returns the amino acid sequence corresponding to the codon sequence in codons. Codons should be represented with values in [0, 63] where AAA is 0, AAC is 1, AAG is 2, and TTT is 63; see ancestralNucleotides() for discussion of this encoding. If long is F (the default), the standard single-letter codes for amino acids will be used (where Serine is "S", etc.); if long is T, the standard three-letter codes will be used instead (where Serine is "Ser", etc.). Beginning in SLiM 3.5, if long is 0, integer codes will be used as follows (and paste will be ignored): stop (TAA, TAG, TGA) 0Alanine 1Arginine 2Asparagine 3Aspartic acid (Aspartate) 4Cysteine 5Glutamine 6Glutamic acid (Glutamate) 7Glycine 8Histidine 9Isoleucine 10Leucine 11Lysine 12Methionine 13Phenylalanine 14Proline 15Serine 16Threonine 17Tryptophan 18Tyrosine 19Valine 20 There does not seem to be a widely used standard for integer coding of amino acids, so SLiM just numbers them alphabetically, making stop codons 0. If you want a different coding, you can make your own 64-element vector and use it to convert codons to whatever integer codes you need. Other integer values of long are reserved for future use (to support other codings), and will currently produce an error. When long is T or F and paste is T (the default), the amino acid sequence returned will be a singleton string, such as "LYATI" (when long is F) or "Leu-Tyr-Ala-Thr-Ile" (when long is T). When long is T or F and paste is F, the amino acid sequence will instead be returned as a string vector, with one element per amino acid, such as "L" "Y" "A" "T" "I" (when long is F) or "Leu" "Tyr" "Ala" "Thr" "Ile" (when long is T). Using the paste=T option is considerably faster than using paste() in script. This function interprets the supplied codon sequence as the sense strand (i.e., the strand that is not transcribed, and which mirrors the mRNA's sequence). This uses the standard DNA codon table directly. For example, if the nucleotide sequence is CAA TTC, that will correspond to a codon vector of 16 61, and will result in the amino acid sequence Gln-Phe ("QF").
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function codonsToNucleotides
+
+Documentation for SLiM function \code{codonsToNucleotides}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param codons An object of type integer or string.
+@param format An object of type integer or string (singleton).
+
+@aliases E$codonsToNucleotides
+@family Eidos
+@return An object of type integer or string. 
+@details Returns the nucleotide sequence corresponding to the codon sequence supplied in codons. Codons should be represented with values in [0, 63] where AAA is 0, AAC is 1, AAG is 2, and TTT is 63; see ancestralNucleotides() for discussion of this encoding. The format parameter controls the format of the returned sequence. It may be "string" to obtain the sequence as a singleton string (e.g., "TATACG"), "char" to obtain it as a string vector of single characters (e.g., "T", "A", "T", "A", "C", "G"), or "integer" to obtain it as an integer vector (e.g., 3, 0, 3, 0, 1, 2), using SLiM's standard code of A=0, C=1, G=2, T=3.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function mm16To256
+
+Documentation for SLiM function \code{mm16To256}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mutationMatrix16 An object of type float.
+
+@aliases E$mm16To256
+@family Eidos
+@return An object of type float. 
+@details Returns a 64x4 mutation matrix that is functionally identical to the supplied 4x4 mutation matrix in mutationMatrix16. The mutation rate for each of the 64 trinucleotides will depend only upon the central nucleotide of the trinucleotide, and will be taken from the corresponding entry for the same nucleotide in mutationMatrix16. This function can be used to easily construct a simple trinucleotide-based mutation matrix which can then be modified so that specific trinucleotides sustain a mutation rate that does not depend only upon their central nucleotide. See the documentation for initializeGenomicElementType() for further discussion of how these 64x4 mutation matrices are interpreted and used.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function mmJukesCantor
+
+Documentation for SLiM function \code{mmJukesCantor}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param alpha An object of type float (singleton).
+
+@aliases E$mmJukesCantor
+@family Eidos
+@return An object of type float. 
+@details Returns a mutation matrix representing a Jukes-Cantor (1969) model with mutation rate alpha to each possible alternative nucleotide at a site. This 2x2 matrix is suitable for use with initializeGenomicElementType(). Note that the actual mutation rate produced by this matrix is 3*alpha.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function mmKimura
+
+Documentation for SLiM function \code{mmKimura}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param alpha An object of type float or float (singleton).
+@param beta An object of type float or float (singleton).
+
+@aliases E$mmKimura
+@family Eidos
+@return An object of type float. 
+@details Returns a mutation matrix representing a Kimura (1980) model with transition rate alpha and transversion rate beta. This 2x2 matrix is suitable for use with initializeGenomicElementType(). Note that the actual mutation rate produced by this model is alpha+2*beta.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function nucleotideCounts
+
+Documentation for SLiM function \code{nucleotideCounts}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param sequence An object of type integer or string.
+
+@aliases E$nucleotideCounts
+@family Eidos
+@return An object of type integer. 
+@details A convenience function that returns an integer vector of length four, providing the number of occurrences of A / C / G / T nucleotides, respectively, in the supplied nucleotide sequence. The parameter sequence may be a singleton string (e.g., "TATA"), a string vector of single characters (e.g., "T", "A", "T", "A"), or an integer vector (e.g., 3, 0, 3, 0), using SLiM's standard code of A=0, C=1, G=2, T=3.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function nucleotideFrequencies
+
+Documentation for SLiM function \code{nucleotideFrequencies}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param sequence An object of type integer or string.
+
+@aliases E$nucleotideFrequencies
+@family Eidos
+@return An object of type float. 
+@details A convenience function that returns a float vector of length four, providing the frequencies of occurrences of A / C / G / T nucleotides, respectively, in the supplied nucleotide sequence. The parameter sequence may be a singleton string (e.g., "TATA"), a string vector of single characters (e.g., "T", "A", "T", "A"), or an integer vector (e.g., 3, 0, 3, 0), using SLiM's standard code of A=0, C=1, G=2, T=3.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function nucleotidesToCodons
+
+Documentation for SLiM function \code{nucleotidesToCodons}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param sequence An object of type integer or string.
+
+@aliases E$nucleotidesToCodons
+@family Eidos
+@return An object of type integer. 
+@details Returns the codon sequence corresponding to the nucleotide sequence in sequence. The codon sequence is an integer vector with values from 0 to 63, based upon successive nucleotide triplets in the nucleotide sequence. The codon value for a given nucleotide triplet XYZ is 16X + 4Y + Z, where X, Y, and Z have the usual values A=0, C=1, G=2, T=3. For example, the triplet AAA has a codon value of 0, AAC is 1, AAG is 2, AAT is 3, ACA is 4, and on upward to TTT which is 63. If the nucleotide sequence AACACATTT is passed in, the codon vector 1 4 63 will therefore be returned. These codon values can be useful in themselves; they can also be passed to codonsToAminoAcids() to translate them into the corresponding amino acid sequence if desired. The nucleotide sequence in sequence may be supplied in any of three formats: a string vector with single-letter nucleotides (e.g., "T", "A", "T", "A"), a singleton string of nucleotide letters (e.g., "TATA"), or an integer vector of nucleotide values (e.g., 3, 0, 3, 0) using SLiM's standard code of A=0, C=1, G=2, T=3. If the choice of format is not driven by other considerations, such as ease of manipulation, then the singleton string format will certainly be the most memory-efficient for long sequences, and will probably also be the fastest. The nucleotide sequence provided must be a multiple of three in length, so that it translates to an integral number of codons.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function randomNucleotides
+
+Documentation for SLiM function \code{randomNucleotides}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param length An object of type integer (singleton).
+@param basis An object of type null or integer or float.
+@param format An object of type string (singleton).
+
+@aliases E$randomNucleotides
+@family Eidos
+@return An object of type integer or string. 
+@details Generates a new random nucleotide sequence with length bases. The four nucleotides ACGT are equally probable if basis is NULL (the default); otherwise, basis may be a 4-element integer or float vector providing relative fractions for A, C, G, and T respectively (these need not sum to 1.0, as they will be normalized). More complex generative models such as Markov processes are not supported intrinsically in SLiM at this time, but arbitrary generated sequences may always be loaded from files on disk. The format parameter controls the format of the returned sequence. It may be "string" to obtain the generated sequence as a singleton string (e.g., "TATA"), "char" to obtain it as a string vector of single characters (e.g., "T", "A", "T", "A"), or "integer" to obtain it as an integer vector (e.g., 3, 0, 3, 0), using SLiM's standard code of A=0, C=1, G=2, T=3. For passing directly to initializeAncestralNucleotides(), format "string" (a singleton string) will certainly be the most memory-efficient, and probably also the fastest. Memory efficiency can be a significant consideration; the nucleotide sequence for a chromosome of length 109 will occupy approximately 1 GB of memory when stored as a singleton string (with one byte per nucleotide), and much more if stored in the other formats. However, the other formats can be easier to work with in Eidos, and so may be preferable for relatively short chromosomes if you are manipulating the generated sequence. 3.3. Population genetics utilities
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function calcDxy
+
+Documentation for SLiM function \code{calcDxy}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param haplosomes1 An object of type Haplosome object.
+@param haplosomes2 An object of type Haplosome object.
+@param muts An object of type null or Mutation object.
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+@param normalize An object of type logical (singleton).
+
+@aliases E$calcDxy
+@family Eidos
+@return An object of type float. Return will be of length 1 (a singleton)
+@details Calculates the estimated Dxy between two Haplosome vectors for the set of mutations given in muts. Dxy is the expected number of differences between two sequences, typically drawn from two different subpopulations whose haplosomes are given in haplosomes1 and haplosomes2. It is therefore a metric of genetic divergence, comparable in some respects to FST; see Cruickshank and Hahn (2014, Molecular Ecology) for a discussion of FST versus Dxy. This method implements Dxy as defined by Nei (1987) in Molecular Evolutionary Genomics (eq. 10.20), with optimizations for computational efficiency based upon an assumption that that multiallelic loci are rare (this is compatible with the infinite-sites model). The calculation can be narrowed to apply to only a window - a subrange of the full haplosomes - by passing the interval bounds [start, end] for the desired window. In this case, the vector of mutations used for the calculation will be subset to include only mutations within the specified window. The default behavior, with start and end of NULL, provides the haplosome-wide Dxy. If normalize is F (the default), the returned float value is simply the expected number of differences, following Nei. Often, however, it will be desirable to normalize that value by dividing by the length of the sequence considered, yielding the expected number of differences per site, a metric that then does not depend upon the sequence length; passing normalize=T will return that normalized value, and that is probably what most users of this function will want. The implementation of calcDxy(), viewable with functionSource(), treats every mutation in muts as independent in its calculations (similar to calcPi()); in other words, if mutations are stacked, the Dxy value calculated is by mutation, not by site. Similarly, if multiple Mutation objects exist in different haplosomes at the same site (whether representing different genetic states, or multiple mutational lineages for the same genetic state), each Mutation object is treated separately for purposes of the calculation, just as if they were at different sites. One could regard these choices as embodying an infinite-sites interpretation of the segregating mutations. In most biologically realistic models, such genetic states will be quite rare, and so the impact of these choices will be negligible; however, in some models these distinctions may be important. See calcPairHeterozygosity() for further discussion. All haplosomes and mutations must be associated with the same chromosome. If muts is NULL (the default), all mutations in the population associated with the same chromosome as the given haplosomes will be used. This function was written by Vitor Sudbrack (currently affiliated with University of Lausanne).
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function calcFST
+
+Documentation for SLiM function \code{calcFST}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param haplosomes1 An object of type Haplosome object.
+@param haplosomes2 An object of type Haplosome object.
+@param muts An object of type null or Mutation object.
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+
+@aliases E$calcFST
+@family Eidos
+@return An object of type float. Return will be of length 1 (a singleton)
+@details Calculates the FST between two Haplosome vectors - typically, but not necessarily, the haplosomes that constitute two different subpopulations (which we will assume for the purposes of this discussion). In general, higher FST indicates greater genetic divergence between subpopulations. The haplosomes may be associated with more than one chromosome, in a multi-chromosome model; if so, haplosomes1 and haplosomes2 must be associated with the same set of chromosomes, defining the focal set of chromosomes for the calculation. The calculation is done using only the mutations in muts; if muts is NULL, all mutations associated with the focal chromosomes are used. The muts parameter can be used to calculate the FST only for a particular mutation type (by passing only mutations of that type), for example; it can focus the calculation on particular mutations of interest. The mutations in muts must always be associated with the focal chromosomes. If there is a single focal chromosome, the calculation can be narrowed to apply to only a window - a subrange of the focal chromosome - by passing the interval bounds [start, end] for the desired window. In this case, the vector of mutations used for the calculation will be subset to include only mutations within the specified window. The default behavior, with start and end of NULL, provides the chromosome-wide FST, which is often used to assess the overall level of genetic divergence between sister species or allopatric subpopulations. The code for calcFST() is, roughly, an Eidos implementation of Wright's definition of FST (but see below for further discussion and clarification): FST = 1 - HS / HT where HS is the average heterozygosity in the two subpopulations, and HT is the total heterozygosity when both subpopulations are combined. In this implementation, the two haplosome vectors are weighted equally, not weighted by their size. In SLiM 3, the implementation followed Wright's definition closely, and returned the average of ratios: mean(1.0 - H_s/H_t), in the Eidos code. In SLiM 4, it returns the ratio of averages instead: 1.0 - mean(H_s)/mean(H_t). In other words, the FST value reported by SLiM 4 is an average across the specified mutations in the two sets of haplosomes, where H_s and H_t are first averaged across all specified mutations prior to taking the ratio of the two. This ratio of averages is less biased than the average of ratios, and and is generally considered to be best practice (see, e.g., Bhatia et al., 2013). This means that the behavior of calcFST() differs between SLiM 3 and SLiM 4. As can be seen from its equation, the FST is undefined if HT is zero, which occurs if no mutations are present in the haplosomes provided (given the optionally specified window and set of mutations). In that case, calcFST() will return NAN. It is up to the caller to detect this with isNAN() and handle it as necessary. The implementation of calcFST(), viewable with functionSource(), treats every mutation in muts as independent in the heterozygosity calculations; in other words, if mutations are stacked, the heterozygosity calculated is by mutation, not by site. Similarly, if multiple Mutation objects exist in different haplosomes at the same site (whether representing different genetic states, or multiple mutational lineages for the same genetic state), each Mutation object is treated separately for purposes of the heterozygosity calculation, just as if they were at different sites. One could regard these choices as embodying an infinite-sites interpretation of the segregating mutations. In most biologically realistic models, such genetic states will be quite rare, and so the impact of these choices will be negligible; however, in some models these distinctions may be important.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function calcHeterozygosity
+
+Documentation for SLiM function \code{calcHeterozygosity}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param haplosomes An object of type Haplosome object.
+@param muts An object of type null or Mutation object.
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+
+@aliases E$calcHeterozygosity
+@family Eidos
+@return An object of type float. Return will be of length 1 (a singleton)
+@details Calculates the heterozygosity for a vector of haplosomes (containing at least one element), based upon the frequencies of mutations in the haplosomes. The result is the expected heterozygosity, for the individuals to which the haplosomes belong, assuming that they are under Hardy-Weinberg equilibrium; this can be compared to the observed heterozygosity of an individual, as calculated by calcPairHeterozygosity(). Often haplosomes will be all of the haplosomes in a subpopulation, or in the entire population, but any haplosome vector may be used. By default, with muts=NULL, the calculation is based upon all mutations in the simulation; the calculation can instead be based upon a subset of mutations, such as mutations of a specific mutation type, by passing the desired vector of mutations for muts. In multi-chromosome models, all of the haplosomes and mutations passed in haplosomes and muts must all be associated with the same single chromosome. If you wish to calculate heterozygosity across multiple chromosomes, you can simply write a for loop that calculates it for each chromosome and combines the results; but it is not entirely clear how to weight the chromosomes to produce a single number, especially when sex chromosomes and other chromosomes of variable ploidy might be represented in haplosomes, so it is not done automatically by this function. The calculation can be narrowed to apply to only a window - a subrange of the full chromosome - by passing the interval bounds [start, end] for the desired window. In this case, the vector of mutations used for the calculation will be subset to include only mutations within the specified window. The default behavior, with start and end of NULL, provides the haplosome-wide heterozygosity. The implementation of calcHeterozygosity(), viewable with functionSource(), treats every mutation as independent in the heterozygosity calculations. One could regard this choice as embodying an infinite-sites interpretation of the segregating mutations. In most biologically realistic models, such genetic states will be quite rare, and so the impact of this choice will be negligible; however, in some models this distinction may be important. See calcPairHeterozygosity() for further discussion.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function calcInbreedingLoad
+
+Documentation for SLiM function \code{calcInbreedingLoad}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param haplosomes An object of type Haplosome object.
+@param mutType An object of type null or integer or MutationType object (singleton).
+
+@aliases E$calcInbreedingLoad
+@family Eidos
+@return An object of type float. Return will be of length 1 (a singleton)
+@details Calculates inbreeding load (the haploid number of lethal equivalents, or B) for a vector of haplosomes (containing at least one element) passed in haplosomes. The calculation can be limited to a focal mutation type passed in mutType (which may be either an integer representing the ID of the desired mutation type, or a MutationType object specified directly); if mutType is NULL (the default), all of the mutations for the focal species will be considered. In any case, only deleterious mutations (those with a negative selection coefficient) will be included in the final calculation. The inbreeding load is a measure of the quantity of recessive deleterious variation that is heterozygous in a population and can contribute to fitness declines under inbreeding. This function implements the following equation from Morton et al. (1956), which assumes no epistasis and random mating: B = sum(qs)  sum(q2s)  2sum(q(1q)sh) where q is the frequency of a given deleterious allele, s is the absolute value of the selection coefficient, and h is its dominance coefficient. Note that the implementation, viewable with functionSource(), sets a maximum |s| of 1.0 (i.e., a lethal allele); |s| can sometimes be greater than 1.0 when s is drawn from a distribution, but in practice an allele with s < -1.0 has the same lethal effect as when s = -1.0. Also note that this implementation will not work when the model changes the dominance coefficients of mutations using mutationEffect() callbacks, since it relies on the dominanceCoeff property of MutationType. Finally, note that, to estimate the diploid number of lethal equivalents (2B), the result from this function can simply be multiplied by two. This function was contributed by Chris Kyriazis; thanks, Chris!
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function calcLD_D
+
+Documentation for SLiM function \code{calcLD_D}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mut1 An object of type Mutation object (singleton).
+@param mut2 An object of type null or Mutation object.
+@param haplosomes An object of type null or Haplosome object.
+
+@aliases E$calcLD_D
+@family Eidos
+@return An object of type float. 
+@details Calculates the linkage disequilibrium (LD) coefficient D between a focal mutation mut1 and one or more mutations in mut2, evaluated across a set of haplosomes given by haplosomes. The result is a float vector that matches the size and order of mut2. The implementation of this function, viewable with functionSource(), calculates D as defined by Hill and Robertson (1968, p. 226). The coefficient D is within [p(1p), p(1p)], where p is the frequency of the more common mutation (that is, p = max(f1, f2) where f1 and f2 are the frequencies of the two mutations for which D is being calculated); for the normalized LD metric r2, which is within [0, 1], see calcLD_Rsquared(). Departures of D from zero indicate LD; more specifically, D > 0 indicates that the mutations occur together more often than expected by chance (positive linkage), whereas D < 0 indicates they occur together less often than expected by chance (negative linkage). All mutations in mut2 must be associated with the same chromosome as mut1; this function does not currently calculate LD between mutations associated with different chromosomes. If mut2 is NULL (the default), all such mutations in the population (including mut1 itself) will be used. Similarly, all haplosomes must be associated with the same chromosome as mut1. If the haplosomes parameter is NULL (the default), all such haplosomes in the population will be used. This function was written by Vitor Sudbrack (currently affiliated with University of Lausanne).
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function calcLD_Rsquared
+
+Documentation for SLiM function \code{calcLD_Rsquared}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param mut1 An object of type Mutation object (singleton).
+@param mut2 An object of type null or Mutation object.
+@param haplosomes An object of type null or Haplosome object.
+@param squared An object of type logical (singleton).
+
+@aliases E$calcLD_Rsquared
+@family Eidos
+@return An object of type float. 
+@details Calculates the linkage disequilibrium (LD) squared correlation coefficient r2 between a focal mutation mut1 and one or more mutations in mut2, evaluated across a set of haplosomes given by haplosomes. The result is a float vector that matches the size and order of mut2. The implementation of this function, viewable with functionSource(), calculates r2 as defined by Hill and Robertson (1968, p. 227). The squared correlation coefficient r2 is a normalized measure of LD within [0, 1] (for the unnormalized LD coefficient D, see calcLD_D()). When r2 = 0, there is no statistical association between the mutations; they co-occur as expected by chance. A value of r2 = 1 indicates complete correlation: the mutations either always appear together or never appear together, depending on the sign of the underlying correlation coefficient r. To obtain the raw (signed) r value instead of r2, you can pass squared=F instead of the default of T. All mutations in mut2 must be associated with the same chromosome as mut1; this function does not currently calculate LD between mutations associated with different chromosomes. If mut2 is NULL (the default), all such mutations in the population (including mut1 itself) will be used. Similarly, all haplosomes must be associated with the same chromosome as mut1. If the haplosomes parameter is NULL (the default), all such haplosomes in the population will be used. This function was written by Vitor Sudbrack (currently affiliated with University of Lausanne).
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function calcMeanFroh
+
+Documentation for SLiM function \code{calcMeanFroh}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param individuals An object of type Individual object.
+@param minimumLength An object of type integer (singleton).
+@param chromosome An object of type null or integer or string or Chromosome object (singleton).
+
+@aliases E$calcMeanFroh
+@family Eidos
+@return An object of type float. Return will be of length 1 (a singleton)
+@details Calculates the mean value of the Froh statistic across the individuals passed in individuals. This statistic is a measure of individual autozygosity, likely resulting from inbreeding, and is calculated based upon "runs of homozygosity", or ROH, in the genome of an individual. Broadly speaking, Froh is the proportion of an individual's genome that is spanned by ROH longer than a given threshold length. However, it should be noted that there are many different ways of calculating Froh, producing different results. For example, the threshold length might be a given constant, or might be determined statistically from the characteristics of the population. Furthermore, some heterozygous sites might be discarded (to compensate for genotyping errors), a minimum SNP density might be required within a sliding window for an ROH to be diagnosed, and so forth - it can get quite complex, as seen in the software PLINK (Purcell et al., 2007) and GARLIC (Szpiech, Blant and Pemberton, 2017). The method used by calcMeanFroh() is the simplest possible method, assessing ROH for each individual directly from the simulated mutations without filtering or modification, and applying a given constant threshold length. If a more sophisticated Froh algorithm is desired, one could modify the implementation of calcMeanFroh(), which is viewable with functionSource(), or one could output VCF data from SLiM and analyze it with other tools, perhaps calling out from the running SLiM script with system(). The threshold ROH length used by calcMeanFroh() is supplied by the parameter minimumLength. It defaults to 1e6, or 1 Mbp, since that is a length commonly used in the literature, but can be adjusted as desired. The chromosome parameter can be supplied to focus the Froh calculation on a specific chromosome; otherwise, the calculation spans all chromosomes for which the individual is actually diploid (without a null haplosome). If Froh cannot be calculated for an individual (due to the presence of null haplosomes for every intrinsically diploid chromosome being analyzed), that individual is omitted from the mean Froh calculation; for example, if an X chromosome is the focal chromosome being analyzed, all males will be omitted from the mean Froh calculation. If all individuals are omitted from the mean Froh calculation for this reason, NAN is returned. This function was developed with advice from Ryan Chaffee. Thanks, Ryan!
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function calcPairHeterozygosity
+
+Documentation for SLiM function \code{calcPairHeterozygosity}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param haplosome1 An object of type Haplosome object (singleton).
+@param haplosome2 An object of type Haplosome object (singleton).
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+@param infiniteSites An object of type logical (singleton).
+
+@aliases E$calcPairHeterozygosity
+@family Eidos
+@return An object of type float. Return will be of length 1 (a singleton)
+@details Calculates the heterozygosity for a pair of haplosomes; these will typically be two homologous haplosomes of the same diploid individual, but any two haplosomes associated with the same chromosome may be supplied. The calculation can be narrowed to apply to only a window - a subrange of the full chromosome - by passing the interval bounds [start, end] for the desired window. In this case, the vector of mutations used for the calculation will be subset to include only mutations within the specified window. The default behavior, with start and end of NULL, provides the haplosome-wide heterozygosity. The implementation calcPairHeterozygosity(), viewable with functionSource(), treats every mutation as independent in the heterozygosity calculations by default (i.e., with infiniteSites=T). If mutations are stacked, the heterozygosity calculated therefore depends upon the number of unshared mutations, not the number of differing sites. Similarly, if multiple Mutation objects exist in different haplosomes at the same site (whether representing different genetic states, or multiple mutational lineages for the same genetic state), each Mutation object is treated separately for purposes of the heterozygosity calculation, just as if they were at different sites. One could regard these choices as embodying an infinite-sites interpretation of the segregating mutations. In most biologically realistic models, such genetic states will be quite rare, and so the impact of this choice will be negligible; however, in some models this distinction may be important. The behavior of calcPairHeterozygosity() can be switched to calculate based upon the number of differing sites, rather than the number of unshared mutations, by passing infiniteSites=F.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function calcPi
+
+Documentation for SLiM function \code{calcPi}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param haplosomes An object of type Haplosome object.
+@param muts An object of type null or Mutation object.
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+
+@aliases E$calcPi
+@family Eidos
+@return An object of type float. Return will be of length 1 (a singleton)
+@details Calculates  (nucleotide diversity, a metric of genetic diversity) for a vector of haplosomes (containing at least two elements), based upon the mutations in the haplosomes.  is computed by calculating the mean number of pairwise differences at each site, summing across all sites, and dividing by the number of sites. Therefore, it is interpretable as the number of differences per site expected between two randomly chosen sequences. The mathematical formulation (as an estimator of the population parameter ) is based on work in Nei and Li (1979), Nei and Tajima (1981), and Tajima (1983; equation A3). The exact formula used here is common in textbooks (e.g., equations 9.1-9.5 in Li 1997, equation 3.3 in Hahn 2018, or equation 2.2 in Coop 2020). Often haplosomes will be all of the haplosomes in a subpopulation, or in the entire population, but any haplosome vector may be used. By default, with muts=NULL, the calculation is based upon all mutations in the simulation; the calculation can instead be based upon a subset of mutations, such as mutations of a specific mutation type, by passing the desired vector of mutations for muts. The calculation can be narrowed to apply to only a window - a subrange of the full chromosome - by passing the interval bounds [start, end] for the desired window. In this case, the vector of mutations used for the calculation will be subset to include only mutations within the specified window. The default behavior, with start and end of NULL, provides the haplosome-wide value of . The implementation of calcPi(), viewable with functionSource(), treats every mutation as independent in the heterozygosity calculations. One could regard this choice as embodying an infinite-sites interpretation of the segregating mutations, as with calcHeterozygosity(). Indeed, finite-sites models of  have been derived (Tajima 1996) though are not used here. In most biologically realistic models, such genetic states will be quite rare, and so the impact of this assumption will be negligible; however, in some models this distinction may be important. See calcPairHeterozygosity() for further discussion. This function was written by Nick Bailey (currently affiliated with CNRS and the Laboratory of Biometry and Evolutionary Biology at University Lyon 1), with helpful input from Peter Ralph and Chase Nelson.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function calcSFS
+
+Documentation for SLiM function \code{calcSFS}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param binCount An object of type null or integer (singleton).
+@param haplosomes An object of type null or Haplosome object.
+@param muts An object of type null or Mutation object.
+@param metric An object of type string (singleton).
+@param fold An object of type logical (singleton).
+
+@aliases E$calcSFS
+@family Eidos
+@return An object of type numeric. 
+@details Calculates the site frequency spectrum, or SFS, for the mutations specified by muts, within the haplosomes specified by haplosomes. The site frequency spectrum or SFS (sometimes called the allele frequency spectrum, although some authors distinguish between the two) is essentially a histogram of the frequencies of the mutations within the haplosomes; the first bin spans the lowest range of frequencies (down to a frequency of 0.0, or a count of 1), whereas the last bin spans the highest range of frequencies (up to a frequency of 1.0, or a count equal to number of haplosomes minus one). The idea was introduced by Watterson (1975), and will be discussed in any population genetics textbook (e.g., A. Cutter, 2019, pp. 50-52). This histogram can be returned as a float vector of density values for each bin by specifying "density" for metric (the default), or as an integer vector of count values for each bin by specifying "count". There are two modes of operation for calcSFS(). If a specific number of bins is passed for binCount, then the frequency range [0.0, 1.0] is subdivided into binCount intervals of equal width, and the mutations are tallied into those bins according to their frequencies within the haplosomes to produce the histogram. In this mode, there will be exactly binCount elements in the returned vector. Note that either "density" or "count" can be chosen in this mode; you can return the frequency bin tallies as either densities or counts. In the other mode of operation, chosen with a binCount value of NULL, the bins instead represent the count of the number of occurrences for each mutation, and range from a count of 1 (the bin for mutations that occur only once in the haplosomes, sometimes called "singletons") up to a count of N-1 where N is the number of haplosomes. (Note that mutations occurring in all N haplosomes are not included in the tally, since they would not be empirically observable.) In this mode, there will be exactly N-1 elements in the returned vector. Again, either "density" or "count" can be chosen in this mode; you can return the count bin tallies as either densities or counts (it's a bit confusing, but we're talking about two different kinds of "counts", the count of the number of times a mutation occurs in the haplosomes versus the count of the number of mutations that were tallied into a particular count bin). The haplosomes parameter can be either a vector of Haplosome objects or NULL. If NULL is passed, calcSFS() will calculate the SFS across the whole species, using all non-null haplosomes present (and thus there must be only a single species in the model, since an SFS cannot be calculated across multiple species). Otherwise, haplosomes can contain any set of haplosomes desired, such as from the individuals of one subpopulation, several subpopulations, or an entire species. However, they must all belong to the same species, and null haplosomes will be automatically and silently excluded from the set. The muts parameter can be either a vector of Mutation objects or NULL. If NULL is passed, calcSFS() will calculate the SFS across all mutations belonging to the focal species (as determined from the species of the haplosomes). Otherwise, muts can contain any set of mutations desired, such as mutations belonging to a specific mutation type, mutations within a specific range of positions along the chromosome, or all of the mutations in the focal species. The binCount and metric parameters have already been discussed. Finally, the fold parameter, if T, "folds" the calculated SFS, adding the first and last bins, the second and next-to-last bins, etc., until the center is reached. Folding is common when working with empirical data, where one often doesn't know the "polarity" - which allele at a site is ancestral and which is derived. Folding solves this problem, because the polarity then doesn't matter; the tally for a given mutation ends up in the same bin regardless. If the number of bins is even, folding can be performed without ambiguity; the final number of bins is exactly half the original number of bins, and each final bin is the sum of two original bins. If the number of bins is odd, the correct treatment of the central bin is somewhat ambiguous. In calcFST(), the central bin is added to itself - doubled - and the number of bins is equal to half the original number of bins rounded up. If you would prefer to exclude the central bin altogether - another population treatment - then when the original number of bins is odd, you can simply discard the final value in the returned vector (and, if you wish to work with densities rather than counts, re-normalize the result to sum to 1.0). The implementation of calcSFS(), viewable with functionSource(), tallies each mutation separately, even if more than one mutation occurs at the same position (or is even stacked with another mutation). One could regard this choice as embodying an infinite-sites interpretation of the SFS, perhaps; in any case, it follows SLiM's behavior in other population-genetics utility functions. In most biologically realistic models, such genetic states will be quite rare, and so the impact of this assumption will be negligible; however, in some models this distinction may be important. This function is compatible with multi-chromosome models, in the following sense. When binCount is specified with an integer value, mutations are binned according to their frequencies, as described above. In a multi-chromosome model, the haplosomes and mutations used by calcSFS() may be associated with more than one chromosome, and the frequency assessed for each mutation is its frequency specifically within the haplosomes associated with its chromosome (as you would expect). Mutations occurring in different chromosomes can therefore be tallied together into the same frequency bins, and combined into a single SFS; this produces a meaningful SFS. (If you want an SFS for just a single chromosome, then of course you can pass just those haplosomes and mutations to calcSFS().) When binCount is NULL, on the other hand, mutations are binned according to their counts, as described above. In a multi-chromosome model, it would not make sense to bin counts together from different chromosomes, since those counts might not be on the same scale - the number of haplosomes associated with the various chromosomes might not be equal. In this case, calcSFS() will raise an error if haplosomes from more than one chromosome are supplied, or if haplosomes is NULL (since it doesn't know which chromosome to choose). If you wish to tally according to counts, with binCount=NULL, you must pass in a vector of haplosomes associated with a single chromosome. (If you know what you are doing and wish to combine counts across multiple chromosomes, you can simply call calcSFS() once per chromosome, and combine the resulting vectors by adding them together.) Thanks to Ryan Chaffee and Chase Nelson for helpful input.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function calcTajimasD
+
+Documentation for SLiM function \code{calcTajimasD}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param haplosomes An object of type Haplosome object.
+@param muts An object of type null or Mutation object.
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+
+@aliases E$calcTajimasD
+@family Eidos
+@return An object of type float. Return will be of length 1 (a singleton)
+@details Calculates Tajima's D (a test of neutrality based on the allele frequency spectrum) for a vector of haplosomes (containing at least four elements), based upon the mutations in the haplosomes. The mathematical formulation is given in Tajima 1989 (equation 38) and remains unchanged (e.g., equations 2.30 in Durrett 2008, 8.4 in Hahn 2018, and 4.44 in Coop 2020). Often haplosomes will be all of the haplosomes in a subpopulation, or in the entire population, but any haplosome vector may be used. By default, with muts=NULL, the calculation is based upon all mutations in the simulation; the calculation can instead be based upon a subset of mutations, such as mutations of a specific mutation type, by passing the desired vector of mutations for muts. The calculation can be narrowed to apply to only a window - a subrange of the full chromosome - by passing the interval bounds [start, end] for the desired window. In this case, the vector of mutations used for the calculation will be subset to include only mutations within the specified window. The default behavior, with start and end of NULL, provides the haplosome-wide Tajima's D. If the genetic diversity contained within the haplosomes is insufficient for the calculation, calcTajimasD() may return NAN. It is up to the caller to detect this with isNAN() and handle it as necessary. The implementation of calcTajimasD(), viewable with functionSource(), treats every mutation as independent in the heterozygosity calculations. One could regard this choice as embodying an infinite-sites interpretation of the segregating mutations, as with calcHeterozygosity(). Indeed, Tajima's D can be modified with finite-sites models of  and  (Misawa and Tajima 1997) though these are not used here. In most biologically realistic models, such genetic states will be quite rare, and so the impact of this assumption will be negligible; however, in some models this distinction may be important. See calcPairHeterozygosity() for further discussion. This function was written by Nick Bailey (currently affiliated with CNRS and the Laboratory of Biometry and Evolutionary Biology at University Lyon 1), with helpful input from Peter Ralph.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function calcVA
+
+Documentation for SLiM function \code{calcVA}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param individuals An object of type Individual object.
+@param mutType An object of type integer or MutationType object (singleton).
+
+@aliases E$calcVA
+@family Eidos
+@return An object of type float. Return will be of length 1 (a singleton)
+@details Calculates VA, the additive genetic variance, among a vector of individuals (containing at least two elements) passed in individuals, in a particular mutation type mutType that represents quantitative trait loci (QTLs) influencing a quantitative phenotypic trait. The mutType parameter may be either an integer representing the ID of the desired mutation type, or a MutationType object specified directly. This function assumes that mutations of type mutType encode their effect size upon the quantitative trait in their selectionCoeff property, as is fairly standard in SLiM. The implementation of calcVA(), which is viewable with functionSource(), is quite simple; if effect sizes are stored elsewhere (such as with setValue()), a new user-defined function following the pattern of calcVA() can easily be written.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function calcWattersonsTheta
+
+Documentation for SLiM function \code{calcWattersonsTheta}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param haplosomes An object of type Haplosome object.
+@param muts An object of type null or Mutation object.
+@param start An object of type null or integer (singleton).
+@param end An object of type null or integer (singleton).
+
+@aliases E$calcWattersonsTheta
+@family Eidos
+@return An object of type float. Return will be of length 1 (a singleton)
+@details Calculates Watterson's theta (a metric of genetic diversity comparable to heterozygosity) for a vector of haplosomes (containing at least one element), based upon the mutations in the haplosomes. Often haplosomes will be all of the haplosomes in a subpopulation, or in the entire population, but any haplosome vector may be used. By default, with muts=NULL, the calculation is based upon all mutations in the simulation; the calculation can instead be based upon a subset of mutations, such as mutations of a specific mutation type, by passing the desired vector of mutations for muts. The calculation can be narrowed to apply to only a window - a subrange of the full chromosome - by passing the interval bounds [start, end] for the desired window. In this case, the vector of mutations used for the calculation will be subset to include only mutations within the specified window. The default behavior, with start and end of NULL, provides the haplosome-wide Watterson's theta. The implementation of calcWattersonsTheta(), viewable with functionSource(), treats every mutation as independent in the heterozygosity calculations. One could regard this choice as embodying an infinite-sites interpretation of the segregating mutations, as with calcHeterozygosity(). In most biologically realistic models, such genetic states will be quite rare, and so the impact of this assumption will be negligible; however, in some models this distinction may be important. See calcPairHeterozygosity() for further discussion. 3.4. Other utilities
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function summarizeIndividuals
+
+Documentation for SLiM function \code{summarizeIndividuals}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param individuals An object of type Individual object.
+@param dim An object of type integer.
+@param spatialBounds An object of type numeric.
+@param operation An object of type string (singleton).
+@param empty An object of type null or logical or integer or float (singleton).
+@param perUnitArea An object of type logical (singleton).
+@param spatiality An object of type null or string (singleton).
+
+@aliases E$summarizeIndividuals
+@family Eidos
+@return An object of type float. 
+@details Returns a vector, matrix, or array that summarizes spatial patterns of information related to the individuals in individuals. In essence, those individuals are assigned into bins according to their spatial position, and then a summary value for each bin is calculated based upon the individuals each bin contains. The individuals might be binned in one dimension (resulting in a vector of summary values), in two dimensions (resulting in a matrix), or in three dimensions (resulting in an array). Typically the spatiality of the result (the dimensions into which the individuals are binned) will match the dimensionality of the model, as indicated by the default value of NULL for the optional spatiality parameter; for example, a two-dimensional ("xy") model would by default produce a two-dimensional matrix as a summary. However, a spatiality that is more restrictive than the model dimensionality may be passed; for example, in a two-dimensional ("xy") model a spatiality of "y" could be passed to summarize individuals into a vector, rather than a matrix, assigning them to bins based only upon their y position (i.e., the value of their y property). Whatever spatiality is chosen, the parameter dim provides the dimensions of the desired result, in the same form that the dim() function does: first the number of rows, then the number of columns, and then the number of planes, as needed (see the Eidos manual for discussion of matrices, arrays, and dim()). The length of dims must match the requested spatiality; for spatiality "xy", for example, dims might be c(50,100) to request that the returned matrix have 50 rows and 100 columns. The result vector/matrix/array is in the correct orientation to be directly usable as a spatial map, by passing it to the defineSpatialMap() method of Subpopulation. For further discussion of dimensionality and spatiality, see initializeInteractionType() and InteractionType. The spatialBounds parameter defines the spatial boundaries within which the individuals are binned. Typically this is the spatial bounds of a particular subpopulation, within which the individuals reside; for individuals in p1, for example, you would likely pass p1.spatialBounds for this. However, this is not required; individuals may come from any or all subpopulations in the model, and spatialBounds may be any bounds of non-zero area (if an individual falls outside of the given spatial bounds, it is excluded, as if it were not in individuals at all). If you have multiple subpopulations that conceptually reside within the same overall coordinate space, for example, that can be accommodated here. The bounds are supplied in the dimensionality of the model, in the same form as for Subpopulation; for an "xy" model, for example, they are supplied as a four-element vector of the form c(x0, y0, x1, y1) even if the summary is being produced with spatiality "y". To produce the result, a grid with dimensions defined by dims is conceptually stretched out across the given spatial bounds, such that the centers of the edge and corner grid squares are aligned with the limits of the spatial bounds. This matches the way that defineSpatialMap() defines its maps. The particular summary produced depends upon the parameters operation and empty. Consider a single grid square represented by a single element in the result. That grid square contains zero or more of the individuals in individuals. If it contains zero individuals and empty is not NULL, the empty value is used for the result, regardless of operation, providing specific, separate control over the treatment of empty grid squares. If empty is NULL, this separate control over the treatment of empty grid squares is declined; empty grid squares will be handled through the standard mechanism described next. In all other cases for the given grid square - when it contains more than zero individuals, or when empty is NULL - operation is executed as an Eidos lambda, a small snippet of code, supplied as a singleton string, that is executed in a manner similar to a function call. Within the execution of the operation lambda, a constant named individuals is defined to be the focal individuals being evaluated - all of the individuals within that grid square. This lambda should evaluate to a singleton logical, integer, or float value, comprising the result value for the grid square; these types will all be coerced to float (T being 1 and F being 0). Two examples may illustrate the use of empty and operation. To produce a summary indicating presence/absence, simply use the default of 0.0 for empty, and "1.0; " (or "1;", or "T;") for operation. This will produce 0.0 for empty grid squares, and 1.0 for those that contain at least one individual. Note that the use of empty is essential here, because operation doesn't even check whether individuals are present or not. To produce a summary with a count of the number of individuals in each grid square, again use the default of 0.0 for empty, but now use an operation of "individuals.size();", counting the number of individuals in each grid square. In this case, empty could be NULL instead and operation would still produce the correct result; but using empty makes summarizeIndividuals() more efficient since it allows the execution of operation to be skipped for those squares. Lambdas are not limited in their complexity; they can use if, for, etc., and can call methods and functions. A typical operation to compute the mean phenotype in a quantitative genetic model that stores phenotype values in tagF, for example, would be "mean(individuals.tagF);", and this is still quite simple compared to what is possible. However, keep in mind that the lambda will be evaluated for every grid cell (or at least those that are non-empty), so efficiency can be a concern, and you may wish to pre-calculate values shared by all of the lambda calls, making them available to your lambda code using defineGlobal() or defineConstant(). There is one last twist, if perUnitArea is T: values are divided by the area (or length, in 1D, or volume, in 3D) that their corresponding grid cell comprises, so that each value is in units of "per unit area" (or "per unit length", or "per unit volume"). The total area of the grid is defined by the spatial bounds, and the area of a given grid cell is defined by the portion of the spatial bounds that is within that cell. This is not the same for all grid cells; grid cells that fall partially outside spatialBounds (because, remember, the centers of the edge/corner grid cells are aligned with the limits of spatialBounds) will have a smaller area inside the bounds. For an "xy" spatiality summary, for example, corner cells have only a quarter of their area inside spatialBounds, while edge elements have half of their area inside spatialBounds; for purposes of perUnitArea, then, their respective areas are 1/4 and 1/2 the area of an interior grid cell. By default, perUnitArea is F, and no scaling is performed. Whether you want perUnitArea to be F or T depends upon whether the summary you are producing is, conceptually, "per unit area", such as density (individuals per unit area) or local competition strength (total interaction strength per unit area), or is not, such as "mean individual age", or "maximum tag value". For the previous example of counting individuals with an operation of "individuals.size();", a value of F for perUnitArea (the default) will produce a simple count of individuals in each grid square, whereas with T it would produce the density of individuals in each grid square.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+SLiM function treeSeqMetadata
+
+Documentation for SLiM function \code{treeSeqMetadata}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
+
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+
+@param filePath An object of type string or logical (singleton).
+@param userData An object of type string or logical (singleton).
+
+@aliases E$treeSeqMetadata
+@family Eidos
+@return An object of type Dictionary object. Return will be of length 1 (a singleton)
+@details Returns a Dictionary containing top-level metadata from the .trees (tree-sequence) file at filePath. If userData is T (the default), the top-level metadata under the SLiM/user_metadata key is returned; this is the same metadata that can optionally be supplied to treeSeqOutput() in its metadata parameter, so it makes it easy to recover metadata that you attached to the tree sequence when it was saved. If userData is F, the entire top-level metadata Dictionary object is returned; this can be useful for examining the values of other keys under the SLiM key, or values inside the top-level dictionary itself that might have been placed there by msprime or other software. This function can be used to read in parameter values or other saved state (tag property values, for example), in order to resuscitate the complete state of a simulation that was written to a .trees file. It could be used for more esoteric purposes too, such as to search through .trees files in a directory (with the help of the Eidos function filesAtPath()) to find those files that satisfy some metadata criterion.
+@section Copyright:
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
+on the official website: \url{https://messerlab.org/slim/}
+@author Benjamin C Haller (\email{bhaller@@benhaller.com}) and Philipp W Messer (\email{messer@@cornell.edu})
+@export
+
+
+
+
+
+
+
+Initialize
+
+Documentation for Initialize class from SLiM
+
+@name Initialize
+@rdname Initialize_Class
+@export
+@aliases Init
+@family Initialize
+@details Initialize callback functions for setting up simulations.
+This class has the following methods (functions):
+\itemize{
+\item{\code{\link{initializeAncestralNucleotides}}}
+}
+This class has the following properties:
+\describe{
+\item{None.}{This class has no properties.}
+}
+#..NULL
+
+
+
+Chromosome
+
+Documentation for Chromosome class from SLiM
+
+@name Chromosome
+@rdname Chromosome_Class
+@export
+@aliases Ch
+@family Chromosome
+@details 5.2.1 Chromosome properties 5.2 Class Chromosome
+This class has the following methods (functions):
+\itemize{
+\item{\code{\link{ancestralNucleotides}}}
+}
+This class has the following properties:
+\describe{
+\item{colorSubstitution}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The color used to display substitutions in SLiMgui when both mutations and substitutions are being displayed in the chromosome view. Outside of SLiMgui, this property still exists, but is not used by SLiM. Colors may be specified by name, or with hexadecimal RGB values of the form "#RRGGBB". If colorSubstitution is the empty string, "", SLiMgui will defer to the color scheme of each MutationType, just as it does when only substitutions are being displayed. The default, "3333FF", causes all substitutions to be shown as dark blue when displayed in conjunction with mutations, to prevent the view from becoming too noisy. Note that when substitutions are displayed without mutations also being displayed, this value is ignored by SLiMgui and the substitutions use the color scheme of each MutationType.}
+\item{geneConversionEnabled}{A property of type logical. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} When gene conversion has been enabled by calling initializeGeneConversion(), switching to the DSB recombination model, this property is T; otherwise, when using the crossover breakpoints model, it is F.}
+\item{geneConversionGCBias}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The gene conversion bias coefficient, which expresses a bias in the resolution of heteroduplex mismatches in complex gene conversion tracts. When gene conversion has not been enabled by calling initializeGeneConversion(), this property will be unavailable.}
+\item{geneConversionNonCrossoverFraction}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The fraction of double-stranded breaks that result in non-crossover events. When gene conversion has not been enabled by calling initializeGeneConversion(), this property will be unavailable.}
+\item{geneConversionMeanLength}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The mean length of a gene conversion tract (in base positions). When gene conversion has not been enabled by calling initializeGeneConversion(), this property will be unavailable.}
+\item{geneConversionSimpleConversionFraction}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The fraction of gene conversion tracts that are "simple" (i.e., not involving resolution of heteroduplex mismatches); the remainder will be "complex". When gene conversion has not been enabled by calling initializeGeneConversion(), this property will be unavailable.}
+\item{genomicElements}{A property of type GenomicElement object.  This property is a constant, so it is not modifiable. \strong{Property Description:} All of the GenomicElement objects that comprise the chromosome, in sorted order (not necessarily in the order in which they were defined).}
+\item{hotspotEndPositions}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} The end positions for hotspot map regions along the chromosome. Each hotspot map region is assumed to start at the position following the end of the previous hotspot map region; in other words, the regions are assumed to be contiguous. When using sex-specific hotspot maps, this property will unavailable; see hotspotEndPositionsF and hotspotEndPositionsM.}
+\item{hotspotEndPositionsF}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} The end positions for hotspot map regions for females, when using sex-specific hotspot maps; unavailable otherwise. See hotspotEndPositions for further explanation.}
+\item{hotspotEndPositionsM}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} The end positions for hotspot map regions for males, when using sex-specific hotspot maps; unavailable otherwise. See hotspotEndPositions for further explanation.}
+\item{hotspotMultipliers}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The hotspot multiplier for each of the hotspot map regions specified by hotspotEndPositions. When using sex-specific hotspot maps, this property will be unavailable; see hotspotMultipliersF and hotspotMultipliersM.}
+\item{hotspotMultipliersF}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The hotspot multiplier for each of the hotspot map regions specified by hotspotEndPositionsF, when using sex-specific hotspot maps; unavailable otherwise.}
+\item{hotspotMultipliersM}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The hotspot multiplier for each of the hotspot map regions specified by hotspotEndPositionsM, when using sex-specific hotspot maps; unavailable otherwise.}
+\item{id}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The id for the chromosome, as given to initializeChromosome(). For an implicitly defined chromosome, the id will be 1. The id can be used to refer to the chromosome; see also symbol.}
+\item{intrinsicPloidy}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The intrinsic ploidy of the chromosome, meaning the number of haplosome objects that are allocated in each individual, associated with the chromosome (even if some of those haplosomes are null haplosomes acting as placeholders). This is a consequence of the chromosome's type. Chromosome types "A", "X", and "Z" are intrinsically diploid (and thus this property would have the value 2), as are the backwards-compatibility chromosome types "H-" and "-Y". All other chromosome types are intrinsically haploid (and thus this property would have the value 1).}
+\item{isSexChromosome}{A property of type logical. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} Indicates whether the chromosome is a sex chromosome (T) or not (F). This is a consequence of the chromosome's type. Chromosome types "X", "Y", "Z", and "W" are considered sex chromosomes, as is the backwards-compatibility type "-Y"; all other chromosome types are not. See also the sexChromosomes property of Species.}
+\item{lastPosition}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The last valid position in the chromosome; equal to length-1, where length is the length as given to initializeChromosome(). For an implicitly defined chromosome, the chromosome's last position is determined by the maximum of the end of the last genomic element, the end of the last recombination region, and the end of the last mutation map region (or hotspot map region). See also length.}
+\item{length}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The length of the chromosome (meaning the number of valid base positions it contains), as given to initializeChromosome(). The length is simply equal to the last position plus 1, since the chromosome always starts at 0. See also lastPosition.}
+\item{mutationEndPositions}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} The end positions for mutation rate regions along the chromosome. Each mutation rate region is assumed to start at the position following the end of the previous mutation rate region; in other words, the regions are assumed to be contiguous. When using sex-specific mutation rate maps, this property will unavailable; see mutationEndPositionsF and mutationEndPositionsM. This property is unavailable in nucleotide-based models.}
+\item{mutationEndPositionsF}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} The end positions for mutation rate regions for females, when using sex-specific mutation rate maps; unavailable otherwise. See mutationEndPositions for further explanation. This property is unavailable in nucleotide-based models.}
+\item{mutationEndPositionsM}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} The end positions for mutation rate regions for males, when using sex-specific mutation rate maps; unavailable otherwise. See mutationEndPositions for further explanation. This property is unavailable in nucleotide-based models.}
+\item{mutationRates}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The mutation rate for each of the mutation rate regions specified by mutationEndPositions. When using sex-specific mutation rate maps, this property will be unavailable; see mutationRatesF and mutationRatesM. This property is unavailable in nucleotide-based models.}
+\item{mutationRatesF}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The mutation rate for each of the mutation rate regions specified by mutationEndPositionsF, when using sex-specific mutation rate maps; unavailable otherwise. This property is unavailable in nucleotide-based models.}
+\item{mutationRatesM}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The mutation rate for each of the mutation rate regions specified by mutationEndPositionsM, when using sex-specific mutation rate maps; unavailable otherwise. This property is unavailable in nucleotide-based models.}
+\item{name}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The name of the chromosome, as given to initializeChromosome(). The chromosome name is not used by SLiM, and may be whatever you wish.}
+\item{overallMutationRate}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The overall mutation rate across the whole chromosome determining the overall number of mutation events that will occur anywhere in the chromosome, as calculated from the individual mutation ranges and rates as well as the coverage of the chromosome by genomic elements (since mutations are only generated within genomic elements, regardless of the mutation rate map). When using sex-specific mutation rate maps, this property will unavailable; see overallMutationRateF and overallMutationRateM. This property is unavailable in nucleotide-based models.}
+\item{overallMutationRateF}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The overall mutation rate for females, when using sex-specific mutation rate maps; unavailable otherwise. See overallMutationRate for further explanation. This property is unavailable in nucleotide-based models.}
+\item{overallMutationRateM}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The overall mutation rate for males, when using sex-specific mutation rate maps; unavailable otherwise. See overallMutationRate for further explanation. This property is unavailable in nucleotide-based models.}
+\item{overallRecombinationRate}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The overall recombination rate across the whole chromosome determining the overall number of recombination events that will occur anywhere in the chromosome, as calculated from the individual recombination ranges and rates. When using sex-specific recombination maps, this property will unavailable; see overallRecombinationRateF and overallRecombinationRateM.}
+\item{overallRecombinationRateF}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The overall recombination rate for females, when using sex-specific recombination maps; unavailable otherwise. See overallRecombinationRate for further explanation.}
+\item{overallRecombinationRateM}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The overall recombination rate for males, when using sex-specific recombination maps; unavailable otherwise. See overallRecombinationRate for further explanation.}
+\item{recombinationEndPositions}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} The end positions for recombination regions along the chromosome. Each recombination region is assumed to start at the position following the end of the previous recombination region; in other words, the regions are assumed to be contiguous. When using sex-specific recombination maps, this property will unavailable; see recombinationEndPositionsF and recombinationEndPositionsM.}
+\item{recombinationEndPositionsF}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} The end positions for recombination regions for females, when using sex-specific recombination maps; unavailable otherwise. See recombinationEndPositions for further explanation.}
+\item{recombinationEndPositionsM}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} The end positions for recombination regions for males, when using sex-specific recombination maps; unavailable otherwise. See recombinationEndPositions for further explanation.}
+\item{recombinationRates}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The recombination rate for each of the recombination regions specified by recombinationEndPositions. When using sex-specific recombination maps, this property will unavailable; see recombinationRatesF and recombinationRatesM.}
+\item{recombinationRatesF}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The recombination rate for each of the recombination regions specified by recombinationEndPositionsF, when using sex-specific recombination maps; unavailable otherwise.}
+\item{recombinationRatesM}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The recombination rate for each of the recombination regions specified by recombinationEndPositionsM, when using sex-specific recombination maps; unavailable otherwise.}
+\item{species}{A property of type Species object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The species to which the target object belongs.}
+\item{symbol}{A property of type string. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The symbol for the chromosome, as given to initializeChromosome(); see the documentation for that function. For an implicitly defined chromosome, the symbol is "A" for non-sexual models, and for sexual models (for historical reasons) is determined by the model type passed to initializeSex() as documented there. The symbol can be used to refer to the chromosome; see also id.}
+\item{tag}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.}
+\item{type}{A property of type string. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The type of the chromosome, as given to initializeChromosome(); see the documentation for that function for a list of the supported chromosome types. For an implicitly defined chromosome, the type is "A" for non-sexual models, and for sexual models (for historical reasons) is determined by the model type passed to initializeSex() as documented there.}
+}
+#..NULL
+
+
+
+Community
+
+Documentation for Community class from SLiM
+
+@name Community
+@rdname Community_Class
+@export
+@aliases Co
+@family Community
+@details 5.3.1 Community properties 5.3 Class Community
+This class has the following methods (functions):
+\itemize{
+\item{\code{\link{createLogFile}}}
+}
+This class has the following properties:
+\describe{
+\item{allGenomicElementTypes}{A property of type GenomicElementType object.  This property is a constant, so it is not modifiable. \strong{Property Description:} All of the GenomicElementType objects defined in the simulation. These are guaranteed to be in sorted order, by their id property.}
+\item{allInteractionTypes}{A property of type InteractionType object.  This property is a constant, so it is not modifiable. \strong{Property Description:} All of the InteractionType objects defined in the simulation. These are guaranteed to be in sorted order, by their id property.}
+\item{allMutationTypes}{A property of type MutationType object.  This property is a constant, so it is not modifiable. \strong{Property Description:} All of the MutationType objects defined in the simulation. These are guaranteed to be in sorted order, by their id property.}
+\item{allScriptBlocks}{A property of type SLiMEidosBlock object.  This property is a constant, so it is not modifiable. \strong{Property Description:} All registered SLiMEidosBlock objects in the simulation. These are guaranteed to be in sorted order, by their id property.}
+\item{allSpecies}{A property of type Species object.  This property is a constant, so it is not modifiable. \strong{Property Description:} All of the Species objects defined in the simulation (in species declaration order).}
+\item{allSubpopulations}{A property of type Subpopulation object.  This property is a constant, so it is not modifiable. \strong{Property Description:} All of the Subpopulation objects defined in the simulation.}
+\item{cycleStage}{A property of type string. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The current cycle stage, as a string. The values of this property essentially mirror the cycle stages of WF and nonWF models. Common values include "first" (during execution of first() events), "early" (during execution of early() events), "reproduction" (during offspring generation), "fitness" (during fitness evaluation), "survival" (while applying selection and mortality in nonWF models), and "late" (during execution of late() events). Other possible values include "begin" (during internal setup before each cycle), "tally" (while tallying mutation reference counts and removing fixed mutations), "swap" (while swapping the offspring generation into the parental generation in WF models), "end" (during internal bookkeeping after each cycle), and "console" (during the in-between-ticks state in which commands in SLiMgui's Eidos console are executed). It would probably be a good idea not to use this latter set of values; they are probably not user-visible during ordinary model execution anyway. During execution of initialize() callbacks, no Community object yet exists and so this property cannot be accessed. To detect this state, use exists("community"); if that is F, community does not exist, and therefore your code is executing during initialize() callbacks (or outside of SLiM entirely, in some other Eidos-based context).}
+\item{logFiles}{A property of type LogFile object.  This property is a constant, so it is not modifiable. \strong{Property Description:} The LogFile objects being used in the simulation.}
+\item{modelType}{A property of type string. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The type of model being simulated, as specified in initializeSLiMModelType(). This will be "WF" for WF models (Wright-Fisher models, the default), or "nonWF" for nonWF models (non-Wright-Fisher models). This must be the same for all species in the community; it is therefore a property on Community, not Species.}
+\item{tag}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to the simulation.}
+\item{tick}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The current tick number.}
+\item{verbosity}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The verbosity level, for SLiM's logging of information about the simulation. This is 1 by default, but can be changed at the command line with the -l[ong] option. It is provided here so that scripts can consult it to govern the level of verbosity of their own output, or set the verbosity level for particular sections of their code. A verbosity level of 0 suppresses most of SLiM's optional output; 2 adds some extra output beyond SLiM's standard output.}
+}
+#..NULL
+
+
+
+Eidos
+
+Documentation for Eidos class from SLiM
+
+@name Eidos
+@rdname Eidos_Class
+@export
+@aliases E
+@family Eidos
+@details Eidos functions available in SLiM scripts.
+This class has the following methods (functions):
+\itemize{
+\item{\code{\link{codonsToAminoAcids}}}
+}
+This class has the following properties:
+\describe{
+\item{None.}{This class has no properties.}
+}
+#..NULL
+
+
+
+GenomicElement
+
+Documentation for GenomicElement class from SLiM
+
+@name GenomicElement
+@rdname GenomicElement_Class
+@export
+@aliases GE
+@family GenomicElement
+@details 5.5.1 GenomicElement properties 5.5 Class GenomicElement
+This class has the following methods (functions):
+\itemize{
+\item{\code{\link{setGenomicElementType}}}
+}
+This class has the following properties:
+\describe{
+\item{endPosition}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The last position in the chromosome contained by this genomic element.}
+\item{genomicElementType}{A property of type GenomicElementType object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The GenomicElementType object that defines the behavior of this genomic element.}
+\item{startPosition}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The first position in the chromosome contained by this genomic element.}
+\item{tag}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.}
+}
+#..NULL
+
+
+
+GenomicElementType
+
+Documentation for GenomicElementType class from SLiM
+
+@name GenomicElementType
+@rdname GenomicElementType_Class
+@export
+@aliases GET
+@family GenomicElementType
+@details 5.6.1 GenomicElementType properties 5.6 Class GenomicElementType
+This class has the following methods (functions):
+\itemize{
+\item{\code{\link{setMutationFractions}}}
+}
+This class has the following properties:
+\describe{
+\item{color}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The color used to display genomic elements of this type in SLiMgui. Outside of SLiMgui, this property still exists, but is not used by SLiM. Colors may be specified by name, or with hexadecimal RGB values of the form "#RRGGBB". If color is the empty string, "", SLiMgui's default color scheme is used; this is the default for new GenomicElementType objects.}
+\item{id}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The identifier for this genomic element type; for genomic element type g3, for example, this is 3.}
+\item{mutationFractions}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} For each MutationType represented in this genomic element type, this property has the corresponding fraction of all mutations that will be drawn from that MutationType.}
+\item{mutationMatrix}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The nucleotide mutation matrix used for this genomic element type, set up by initializeGenomicElementType() and setMutationMatrix(). This property is only defined in nucleotide-based models; it is unavailable otherwise.}
+\item{mutationTypes}{A property of type MutationType object.  This property is a constant, so it is not modifiable. \strong{Property Description:} The MutationType instances used by this genomic element type.}
+\item{species}{A property of type Species object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The species to which the target object belongs.}
+\item{tag}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to genomic element types.}
+}
+#..NULL
+
+
+
+Haplosome
+
+Documentation for Haplosome class from SLiM
+
+@name Haplosome
+@rdname Haplosome_Class
+@export
+@aliases Ha
+@family Haplosome
+@details 5.4.1 Haplosome properties 5.4 Class Haplosome
+This class has the following methods (functions):
+\itemize{
+\item{\code{\link{containsMarkerMutation}}}
+}
+This class has the following properties:
+\describe{
+\item{chromosome}{A property of type Chromosome object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The Chromosome object which this haplosome represents; for example, if this haplosome represents the X sex chromosome in a particular individual, then this property provides the Chromosome object that defines the genetic structure of the X sex chromosome in that individual's species.}
+\item{chromosomeSubposition}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The position index of the haplosome, within the set of haplosomes associated with the Chromosome object which this haplosome represents. For example, if an individual in a multi-chromosome model has two haplosomes that represent a given chromosome within its haplosomes vector, the first of those haplosomes will have a chromosomeSubposition value of 0, the second will have a chromosomeSubposition value of 1. For an intrinsically diploid chromosome in individuals generated by a standard biparental cross, the first haplosome (at subposition 0) came from its first parent (the female parent, in sexual models), and the second haplosome (at subposition 1) came from its second parent (the male parent, in sexual models).}
+\item{haplosomePedigreeID}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), haplosomePedigreeID is a "semi-unique" non-negative identifier for each haplosome in a simulation, never re-used throughout the duration of the simulation run. The haplosomePedigreeID of a given haplosome will be equal to either (2*pedigreeID) or (2*pedigreeID + 1) of the individual that the haplosome belongs to (the former for a first haplosome of the individual, the latter for a second haplosome of the individual if one exists); this invariant relationship is guaranteed. This value is "semi-unique" in the sense that it is shared by all of the first haplosomes of an individual, or by all of the second haplosomes of an individual. In a single-chromosome model, a given individual will have just one first haplosome, and perhaps (depending on the chromosome type) one second haplosome, and so the value of haplosomePedigreeID for each of those haplosomes will be truly unique. In a multi-chromosome model, however, an individual has a first haplosome for each chromosome, and perhaps (depending on the chromosome types) a second haplosome for each chromosome. In that case, the value of haplosomePedigreeID is unique in the sense that it is different for each individual, but it is not unique in the sense that it will be shared by other haplosomes within the same individual - shared by all the first haplosomes, or shared by all the second haplosomes. This "semi-uniqueness" is intentional; it allows haplosomePedigreeID to be used as a "key" that associates the haplosomes of an individual across disparate datasets, such as across the different tree sequences for each chromosome that are produced by tree-sequence recording in a multi-chromosome model. See sections 1.5.1 and 8.3 for further discussion of multi-chromosome models. If pedigree tracking is not enabled, this property is unavailable.}
+\item{individual}{A property of type Individual object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The Individual object to which this haplosome belongs.}
+\item{isNullHaplosome}{A property of type logical. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} T if the haplosome is a "null" haplosome, F if it is an ordinary haplosome object. Null haplosomes are used as placeholders when a real haplosome doesn't exist in a particular slot, allowing SLiM's code to operate in the same way across a wide variety of genomic configurations. For example, when simulating chromosome type "X" (an X chromosome), the second haplosome for that chromosome in males will be a null haplosome, preserving a constant number of haplosomes for all individuals even though males have one X while females have two. Null haplosomes should not be accessed or manipulated.}
+\item{mutations}{A property of type Mutation object.  This property is a constant, so it is not modifiable. \strong{Property Description:} All of the Mutation objects present in this haplosome.}
+\item{tag}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use. Note that the Haplosome objects used by SLiM are new with every new individual, so the tag value of each new offspring haplosome generated in each tick will be initially undefined.}
+}
+#..NULL
+
+
+
+Individual
+
+Documentation for Individual class from SLiM
+
+@name Individual
+@rdname Individual_Class
+@export
+@aliases In
+@family Individual
+@details 5.7.1 Individual properties 5.7 Class Individual
+This class has the following methods (functions):
+\itemize{
+\item{\code{\link{containsMutations}}}
+}
+This class has the following properties:
+\describe{
+\item{age}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The age of the individual, measured in cycles. A newly generated offspring individual will have an age of 0 in the same tick in which it was created. The age of every individual is incremented by one at the same point that its species cycle counter is incremented, at the end of the tick cycle, if and only if its species was active in that tick. The age of individuals may be changed; usually this only makes sense when setting up the initial state of a model, however.}
+\item{color}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The color used to display the individual in SLiMgui. Outside of SLiMgui, this property still exists, but is not used by SLiM. Colors may be specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see the Eidos manual). If color is the empty string, "", SLiMgui's default (fitness-based) color scheme is used; this is the default for new Individual objects. Note that named colors will be converted to RGB internally, so the value of this property will always be a hexadecimal RGB color string (or "").}
+\item{fitnessScaling}{A property of type float. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A float scaling factor applied to the individual's fitness (i.e., the fitness value computed for the individual will be multiplied by this value). This provides a simple, fast way to modify the fitness of an individual; conceptually it is similar to returning a fitness effect for the individual from a fitnessEffect() callback, but without the complexity and performance overhead of implementing such a callback. To scale the fitness of all individuals in a subpopulation by the same factor, see the fitnessScaling property of Subpopulation. The value of fitnessScaling is reset to 1.0 every tick, so that any scaling factor set lasts for only a single tick. This reset occurs immediately after fitness values are calculated, in both WF and nonWF models.}
+\item{haploidGenome1}{A property of type Haplosome object.  This property is a constant, so it is not modifiable. \strong{Property Description:} A vector of all Haplosome objects associated with this individual that are attributed to its first parent (the female parent, in sexual models). This method assumes the individual was generated by the typical method for each chromosome type, as explained below; it does not trace back the true ancestry of each haplosome. The semantics of this are more obvious for some chromosome types than others, depending on the inheritance pattern of the chromosome as described in initializeChromosome(). For chromosomes with two associated haplosomes (types "A", "X", "Z", "H-", and "-Y"), the first haplosome is assumed to be from the first parent, and is thus included, whereas the second haplosome is assumed to be from the second parent and is thus not included. For chromosomes with one associated haplosome that is inherited from the female/first parent in one way or another (types "W", "HF", and "FL"), that haplosome is always included. For type "H", the single haplosome is assumed to have come from the first parent (since clonal inheritance is the common case), and so is included. Other chromosome types ("Y", "HM", "ML") are never included. See also the haploidGenome1NonNull property and the haplosomesForChromosomes() method.}
+\item{haploidGenome1NonNull}{A property of type Haplosome object.  This property is a constant, so it is not modifiable. \strong{Property Description:} This provides the same vector of haplosomes as the haploidGenome1 property, except that null haplosomes are not included in this property. This is a convenience shorthand, sometimes useful in models that involve null haplosomes. See also the haplosomesForChromosomes() method.}
+\item{haploidGenome2}{A property of type Haplosome object.  This property is a constant, so it is not modifiable. \strong{Property Description:} A vector of all Haplosome objects associated with this individual that are attributed to its second parent (the male parent, in sexual models). This method assumes the individual was generated by the typical method for each chromosome type, as explained below; it does not trace back the true ancestry of each haplosome. The semantics of this are more obvious for some chromosome types than others, depending on the inheritance pattern of the chromosome as described in initializeChromosome(). For chromosomes with two associated haplosomes (types "A", "X", "Z", "H-", and"-Y"), the second haplosome is assumed to be from the second parent, and is thus included, whereas the first haplosome is assumed to be from the first parent and is thus not included. For chromosomes with one associated haplosome that is inherited from the male/second parent in one way or another (types "Y", "HM", and "ML"), that haplosome is always included. For type "H", the single haplosome is assumed to have come from the first parent (since clonal inheritance is the common case), and so is not included. Other chromosome types ("W", "HF", "FL") are never included. See also the haploidGenome2NonNull property and the haplosomesForChromosomes() method.}
+\item{haploidGenome2NonNull}{A property of type Haplosome object.  This property is a constant, so it is not modifiable. \strong{Property Description:} This provides the same vector of haplosomes as the haploidGenome2 property, except that null haplosomes are not included in this property. This is a convenience shorthand, sometimes useful in models that involve null haplosomes. See also the haplosomesForChromosomes() method.}
+\item{haplosomes}{A property of type Haplosome object.  This property is a constant, so it is not modifiable. \strong{Property Description:} A vector of all Haplosome objects associated with this individual, in the order in which the chromosomes were defined for the species. See also the haplosomesNonNull, haploidGenome1, haploidGenome1NonNull, haploidGenome2, and haploidGenome2NonNull properties and the haplosomesForChromosomes() method.}
+\item{haplosomesNonNull}{A property of type Haplosome object.  This property is a constant, so it is not modifiable. \strong{Property Description:} A vector of all Haplosome objects associated with this individual, in the order in which the chromosomes were defined for the species (as with the haplosomes property), but excluding any null haplosomes from the returned vector. This is a convenience shorthand, sometimes useful in models that involve null haplosomes.}
+\item{index}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The index of the individual in the individuals vector of its Subpopulation.}
+\item{meanParentAge}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The average age of the parents of this individual, measured in cycles. Parentless individuals will have a meanParentAge of 0.0. The mean parent age is determined when a new offspring is generated, from the age property of the parent or parents involved in generating the offspring. For addRecombinant() and addMultiRecombinant() that is somewhat complex; see those methods for details.}
+\item{migrant}{A property of type logical. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} Set to T if the individual is a recent migrant, F otherwise. The definition of "recent" depends upon the model type (WF or nonWF). In WF models, this flag is set at the point when a new child is generated if it is a migrant (i.e., if its source subpopulation is not the same as its subpopulation), and remains valid, with the same value, for the rest of the individual's lifetime. In nonWF models, this flag is F for all new individuals, is set to F in all individuals at the end of the reproduction tick cycle stage, and is set to T on all individuals moved to a new subpopulation by takeMigrants() or a survival() callback; the T value set by takeMigrants() or survival() will remain until it is reset at the end of the next reproduction tick cycle stage.}
+\item{pedigreeID}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), pedigreeID is a unique non-negative identifier for each individual in a simulation, never re-used throughout the duration of the simulation run. If pedigree tracking is not enabled, this property is unavailable.}
+\item{pedigreeParentIDs}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), pedigreeParentIDs contains the values of pedigreeID that were possessed by the parents of an individual; it is thus a vector of two values. If pedigree tracking is not enabled, this property is unavailable. Parental values may be -1 if insufficient ticks have elapsed for that information to be available (because the simulation just started, or because a subpopulation is new).}
+\item{pedigreeGrandparentIDs}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), pedigreeGrandparentIDs contains the values of pedigreeID that were possessed by the grandparents of an individual; it is thus a vector of four values. If pedigree tracking is not enabled, this property is unavailable. Grandparental values may be -1 if insufficient ticks have elapsed for that information to be available (because the simulation just started, or because a subpopulation is new).}
+\item{reproductiveOutput}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), reproductiveOutput contains the number of offspring for which this individual has been a parent. If pedigree tracking is not enabled, this property is unavailable. If an individual is a parent by cloning or selfing, or as both parents for a biparental mating, this value is incremented by two. Involvement of an individual as a parent for an addRecombinant() or addMultiRecombinant() call does not change this property's value, since the reproductive contribution in that case is unclear; one must conduct separate bookkeeping for that case if necessary, or use tree-sequence recording to infer it from the inheritance record. See also the Subpopulation property lifetimeReproductiveOutput.}
+\item{sex}{A property of type string. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The sex of the individual. This will be "H" if sex is not enabled in the simulation (i.e., for hermaphrodites), otherwise "F" or "M" as appropriate.}
+\item{spatialPosition}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The spatial position of the individual. The length of the spatialPosition property (the number of coordinates in the spatial position of an individual) depends upon the spatial dimensionality declared with initializeSLiMOptions(). If the spatial dimensionality is zero (as it is by default), it is an error to access this property. The elements of this property are identical to the values of the x, y, and z properties (if those properties are encompassed by the spatial dimensionality of the simulation). In other words, if the declared dimensionality is "xy", the individual.spatialPosition property is equivalent to c(individual.x, individual.y); individual.z is not used since it is not encompassed by the simulation's dimensionality.}
+\item{subpopulation}{A property of type Subpopulation object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The Subpopulation object to which the individual belongs.}
+\item{tag}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value (as opposed to tagF, which is of type float). The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to individuals. Note that the Individual objects used by SLiM are new for every new offspring, so the tag value of each new offspring generated in each tick will be initially undefined.}
+\item{tagF}{A property of type float. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined float value (as opposed to tag, which is of type integer). The value of tagF is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tagF is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to individuals. Note that at present, although many classes in SLiM have an integer-type tag property, only Individual has a float-type tagF property, because attaching model state to individuals seems to be particularly common and useful. If a tagF property would be helpful on another class, it would be easy to add. See the description of the tag property above for additional comments.}
+\item{tagL0}{A property of type logical. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined logical value (see also tag and tagF). The value of tagL0 is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tagL0 is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to individuals.}
+\item{tagL1}{A property of type logical. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined logical value (see also tag and tagF). The value of tagL1 is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tagL1 is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to individuals.}
+\item{tagL2}{A property of type logical. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined logical value (see also tag and tagF). The value of tagL2 is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tagL2 is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to individuals.}
+\item{tagL3}{A property of type logical. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined logical value (see also tag and tagF). The value of tagL3 is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tagL3 is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to individuals.}
+\item{tagL4}{A property of type logical. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined logical value (see also tag and tagF). The value of tagL4 is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tagL4 is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to individuals.}
+\item{uniqueMutations}{A property of type Mutation object.  This property is a constant, so it is not modifiable. \strong{Property Description:} All of the Mutation objects present in this individual. Mutations present in homologous haplosomes will occur only once in this property, and the mutations for a given chromosome will be given in sorted order by position, so in single-chromosome simulations this property is similar to sortBy(unique(individual.haplosomes.mutations), "position"). (Even with a single chromosome it is not identical to that call, since if multiple mutations exist at the exact same position, they might be sorted differently by this method than they would be by sortBy().) This method is provided primarily for speed; it executes much faster than the Eidos equivalent above. Indeed, it is faster than just individual.haplosomes.mutations, and gives uniquing and sorting on top of that, so it is advantageous unless duplicate entries for homozygous mutations are actually needed. For more flexibility, see the method mutationsFromHaplosomes().}
+\item{x}{A property of type float. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined float value. The value of x is initially undefined (i.e., has an effectively random value that could be different every time you run your model); if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of x is not used by SLiM unless the optional "continuous space" facility is enabled with the dimensionality parameter to initializeSLiMOptions(), in which case x will be understood to represent the x coordinate of the individual in space. If continuous space is not enabled, you may use x as an additional tag value of type float.}
+\item{xy}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} This property provides joint read-only access to the x and y properties; they are returned as a two-element float vector. This can be useful in complex spatial models in which the spatiality of interactions/maps differs from the overall dimensionality of the model. See the documentation for the separate properties x and y for further comments.}
+\item{xyz}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} This property provides joint read-only access to the x, y, and z properties; they are returned as a three-element float vector. This can be useful in complex spatial models in which the spatiality of interactions/maps differs from the overall dimensionality of the model. See the documentation for the separate properties x, y, and z for further comments.}
+\item{xz}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} This property provides joint read-only access to the x and z properties; they are returned as a two-element float vector. This can be useful in complex spatial models in which the spatiality of interactions/maps differs from the overall dimensionality of the model. See the documentation for the separate properties x and z for further comments.}
+\item{y}{A property of type float. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined float value. The value of y is initially undefined (i.e., has an effectively random value that could be different every time you run your model); if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of y is not used by SLiM unless the optional "continuous space" facility is enabled with the dimensionality parameter to initializeSLiMOptions(), in which case y will be understood to represent the y coordinate of the individual in space (if the dimensionality is "xy" or "xyz"). If continuous space is not enabled, or the dimensionality is not "xy" or "xyz", you may use y as an additional tag value of type float.}
+\item{yz}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} This property provides joint read-only access to the y and z properties; they are returned as a two-element float vector. This can be useful in complex spatial models in which the spatiality of interactions/maps differs from the overall dimensionality of the model. See the documentation for the separate properties y and z for further comments.}
+\item{z}{A property of type float. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined float value. The value of z is initially undefined (i.e., has an effectively random value that could be different every time you run your model); if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of z is not used by SLiM unless the optional "continuous space" facility is enabled with the dimensionality parameter to initializeSLiMOptions(), in which case z will be understood to represent the z coordinate of the individual in space (if the dimensionality is "xyz"). If continuous space is not enabled, or the dimensionality is not "xyz", you may use z as an additional tag value of type float.}
+}
+#..NULL
+
+
+
+InteractionType
+
+Documentation for InteractionType class from SLiM
+
+@name InteractionType
+@rdname InteractionType_Class
+@export
+@aliases IT
+@family InteractionType
+@details 5.8.1 InteractionType properties 5.8 Class InteractionType
+This class has the following methods (functions):
+\itemize{
+\item{\code{\link{clippedIntegral}}}
+}
+This class has the following properties:
+\describe{
+\item{id}{A property of type integer or float or logical or string or string or integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The identifier for this interaction type; for interaction type i3, for example, this is 3.}
+\item{maxDistance}{A property of type integer or float or logical or string or string or integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The maximum distance over which this interaction will be evaluated. For inter-individual distances greater than maxDistance, the interaction strength will be zero.}
+\item{reciprocal}{A property of type integer or float or logical or string or string or integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The reciprocality of the interaction, as specified in initializeInteractionType(). This will be T for reciprocal interactions (those for which the interaction strength of B upon A is equal to the interaction strength of A upon B), and F otherwise.}
+\item{sexSegregation}{A property of type integer or float or logical or string or string or integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The sex-segregation of the interaction, as specified in initializeInteractionType() or with setConstraints(). For non-sexual simulations, this will be "**". For sexual simulations, this string value indicates the sex of individuals feeling the interaction, and the sex of individuals exerting the interaction; see initializeInteractionType() for details.}
+\item{spatiality}{A property of type integer or float or logical or string or string or integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The spatial dimensions used by the interaction, as specified in initializeInteractionType(). This will be "" (the empty string) for non-spatial interactions, or "x", "y", "z", "xy", "xz", "yz", or "xyz", for interactions using those spatial dimensions respectively. The specified dimensions are used to calculate the distances between individuals for this interaction. The value of this property is always the same as the value given to initializeInteractionType().}
+\item{tag}{A property of type integer or float or logical or string or string or integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to interaction types.}
+}
+#..NULL
+
+
+
+LogFile
+
+Documentation for LogFile class from SLiM
+
+@name LogFile
+@rdname LogFile_Class
+@export
+@aliases LF
+@family LogFile
+@details 5.9.1 LogFile properties 5.9 Class LogFile
+This class has the following methods (functions):
+\itemize{
+\item{\code{\link{addCustomColumn}}}
+}
+This class has the following properties:
+\describe{
+\item{filePath}{A property of type string or integer or integer or integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The path of the log file being written to. This may be changed with setFilePath().}
+\item{logInterval}{A property of type string or integer or integer or integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The interval for automatic logging; a new row of data will be logged every logInterval ticks. This may be set with the logInterval parameter to createLogFile() and changed with setLogInterval(). If automatic logging has been disabled, this property will be 0.}
+\item{precision}{A property of type string or integer or integer or integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The precision of float output. To be exact, precision specifies the preferred number of significant digits that will be output for float values. The default is 6; values in [1,22] are legal, but 17 is probably the largest value that makes sense given the limits of double-precision floating point.}
+\item{tag}{A property of type string or integer or integer or integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.}
+}
+#..NULL
+
+
+
+Mutation
+
+Documentation for Mutation class from SLiM
+
+@name Mutation
+@rdname Mutation_Class
+@export
+@aliases M
+@family Mutation
+@details 5.10.1 Mutation properties 5.10 Class Mutation
+This class has the following methods (functions):
+\itemize{
+\item{\code{\link{setMutationType}}}
+}
+This class has the following properties:
+\describe{
+\item{chromosome}{A property of type Chromosome object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The Chromosome object with which the mutation is associated.}
+\item{id}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The identifier for this mutation. Each mutation created during a run receives an immutable identifier that will be unique across the duration of the run. These identifiers are not re-used during a run, except that if a population file is loaded from disk, the loaded mutations will receive their original identifier values as saved in the population file.}
+\item{isFixed}{A property of type logical. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} T if the mutation has fixed (in the SLiM sense of having been converted to a Substitution object), F otherwise. Since fixed/substituted mutations are removed from the simulation, you will only see this flag be T if you have held onto a mutation beyond its usual lifetime.}
+\item{isSegregating}{A property of type logical. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} T if the mutation is segregating (in the SLiM sense of not having been either lost or converted to a Substitution object), F otherwise. Since both lost and fixed/substituted mutations are removed from the simulation, you will only see this flag be F if you have held onto a mutation beyond its usual lifetime. Note that if isSegregating is F, isFixed will let you determine whether the mutation is no longer segregating because it was lost, or because it fixed.}
+\item{mutationType}{A property of type MutationType object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The MutationType from which this mutation was drawn.}
+\item{nucleotide}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A string representing the nucleotide associated with this mutation; this will be "A", "C", "G", or "T". If the mutation is not nucleotide-based, this property is unavailable.}
+\item{nucleotideValue}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} An integer representing the nucleotide associated with this mutation; this will be 0 (A), 1 (C), 2 (G), or 3 (T). If the mutation is not nucleotide-based, this property is unavailable.}
+\item{originTick}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The tick in which this mutation arose.}
+\item{position}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The position in the chromosome of this mutation.}
+\item{selectionCoeff}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The selection coefficient of the mutation, drawn from the distribution of fitness effects of its MutationType. If a mutation has a selectionCoeff of s, the multiplicative fitness effect of the mutation in a homozygote is 1+s; in a heterozygote it is 1+hs, where h is the dominance coefficient kept by the mutation type. Note that this property has a quirk: it is stored internally in SLiM using a single-precision float, not the double-precision float type normally used by Eidos. This means that if you set a mutation mut's selection coefficient to some number x, mut.selectionCoeff==x may be F due to floating-point rounding error. Comparisons of floating-point numbers for exact equality is often a bad idea, but this is one case where it may fail unexpectedly. Instead, it is recommended to use the id or tag properties to identify particular mutations.}
+\item{subpopID}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The identifier of the subpopulation in which this mutation arose. This property can be used to track the ancestry of mutations through their subpopulation of origin. If you don't care which subpopulation a mutation originated in, the subpopID may be used as an arbitrary integer "tag" value for any purpose you wish; SLiM does not do anything with the value of subpopID except propagate it to Substitution objects and report it in output. (It must still be >= 0, however, since SLiM object identifiers are limited to nonnegative integers).}
+\item{tag}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.}
+}
+#..NULL
+
+
+
+MutationType
+
+Documentation for MutationType class from SLiM
+
+@name MutationType
+@rdname MutationType_Class
+@export
+@aliases MT
+@family MutationType
+@details 5.11.1 MutationType properties 5.11 Class MutationType
+This class has the following methods (functions):
+\itemize{
+\item{\code{\link{drawSelectionCoefficient}}}
+}
+This class has the following properties:
+\describe{
+\item{color}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The color used to display mutations of this type in SLiMgui. Outside of SLiMgui, this property still exists, but is not used by SLiM. Colors may be specified by name, or with hexadecimal RGB values of the form "#RRGGBB". If color is the empty string, "", SLiMgui's default (selection-coefficient-based) color scheme is used; this is the default for new MutationType objects.}
+\item{colorSubstitution}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The color used to display substitutions of this type in SLiMgui (see the discussion for the colorSubstitution property of the Chromosome class for details). Outside of SLiMgui, this property still exists, but is not used by SLiM. Colors may be specified by name, or with hexadecimal RGB values of the form "#RRGGBB". If colorSubstitution is the empty string, "", SLiMgui's default (selection-coefficient-based) color scheme is used; this is the default for new MutationType objects.}
+\item{convertToSubstitution}{A property of type logical. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} This property governs whether mutations of this mutation type will be converted to Substitution objects when they reach fixation. In WF models this property is T by default, since conversion to Substitution objects provides large speed benefits; it should be set to F only if necessary, and only on the mutation types for which it is necessary. This might be needed, for example, if you are using a mutationEffect() callback to implement an epistatic relationship between mutations; a mutation epistatically influencing the fitness of other mutations through a mutationEffect() callback would need to continue having that influence even after reaching fixation, but if the simulation were to replace the fixed mutation with a Substitution object the mutation would no longer be considered in fitness calculations (unless the callback explicitly consulted the list of Substitution objects kept by the simulation). Other script-defined behaviors in mutationEffect(), interaction(), mateChoice(), modifyChild(), and recombination() callbacks might also necessitate the disabling of substitution for a given mutation type; this is an important consideration to keep in mind. In contrast, for nonWF models this property is F by default, because even mutations with no epistatis or other indirect fitness effects will continue to influence the survival probabilities of individuals. For nonWF models, only neutral mutation types with no epistasis or other side effects can safely be converted to substitutions upon fixation. When such a pure-neutral mutation type is defined in a nonWF model, this property should be set to T to tell SLiM that substitution is allowed; this may have very large positive effects on performance, so it is important to remember when modeling background neutral mutations. SLiM consults this flag at the end of each tick when deciding whether to substitute each fixed mutation. If this flag is T, all eligible fixed mutations will be converted at the end of the current tick, even if they were previously left unconverted because of the previous value of the flag. Setting this flag to F will prevent future substitutions, but will not cause any existing Substitution objects to be converted back into Mutation objects.}
+\item{distributionParams}{A property of type float or string.  This property is a constant, so it is not modifiable. \strong{Property Description:} The parameters that configure the chosen distribution of fitness effects. This will be of type string for DFE type "s", and type float for all other DFE types.}
+\item{distributionType}{A property of type string. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The type of distribution of fitness effects; one of "f", "g", "e", "n", "w", or "s": "f" - A fixed fitness effect. This DFE type has a single parameter, the selection coefficient s to be used by all mutations of the mutation type. "g" - A gamma-distributed fitness effect. This DFE type is specified by two parameters, a shape parameter and a mean value. The gamma distribution from which mutations are drawn is given by the probability density function P(s | ,) = [()]1exp(s/), where  is the shape parameter, and the specified mean for the distribution is equal to . Note that this parameterization is the same as for the Eidos function rgamma(). A gamma distribution is often used to model deleterious mutations at functional sites. "e" - An exponentially-distributed fitness effect. This DFE type is specified by a single parameter, the mean of the distribution. The exponential distribution from which mutations are drawn is given by the probability density function P(s | ) = 1exp(s/), where  is the specified mean for the distribution. This parameterization is the same as for the Eidos function rexp(). An exponential distribution is often used to model beneficial mutations. "n" - A normally-distributed fitness effect. This DFE type is specified by two parameters, a mean and a standard deviation. The normal distribution from which mutations are drawn is given by the probability density function P(s | ,) = (22)1/2exp((s)2/22), where  is the mean and  is the standard deviation. This parameterization is the same as for the Eidos function rnorm(). A normal distribution is often used to model mutations that can be either beneficial or deleterious, since both tails of the distribution are unbounded. "p" - A Laplace-distributed fitness effect. This DFE type is specified by two parameters, a mean and a scale. The Laplace distribution from which mutations are drawn is given by the probability density function P(s | ,b) = exp(|s|/b)/2b, where  is the mean and b is the scale parameter. A Laplace distribution is sometimes used to model a mix of both deleterious and beneficial mutations. "w" - A Weibull-distributed fitness effect. This DFE type is specified by a scale parameter and a shape parameter. The Weibull distribution from which mutations are drawn is given by the probability density function P(s | ,k) = (k/k)sk1exp((s/)k), where  is the scale parameter and k is the shape parameter. This parameterization is the same as for the Eidos function rweibull(). A Weibull distribution is often used to model mutations following extreme-value theory. "s" - A script-based fitness effect. This DFE type is specified by a script parameter of type string, specifying an Eidos script to be executed to produce each new selection coefficient. For example, the script "return rbinom(1);" could be used to generate selection coefficients drawn from a binomial distribution, using the Eidos function rbinom(), even though that mutational distribution is not supported by SLiM directly. The script must return a singleton float or integer. Note that these distributions can in principle produce selection coefficients smaller than -1.0. In that case, the mutations will be evaluated as "lethal" by SLiM, and the relative fitness of the individual will be set to 0.0.}
+\item{dominanceCoeff}{A property of type float. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The dominance coefficient used for mutations of this type when heterozygous. Changing this will normally affect the fitness values calculated toward the end of the current tick; if you want current fitness values to be affected, you can call the Species method recalculateFitness() - but see the documentation of that method for caveats. Note that the dominance coefficient is not bounded. A dominance coefficient greater than 1.0 may be used to achieve an overdominance effect. By making the selection coefficient very small and the dominance coefficient very large, an overdominance scenario in which both homozygotes have the same fitness may be approximated, to a nearly arbitrary degree of precision. Note that this property has a quirk: it is stored internally in SLiM using a single-precision float, not the double-precision float type normally used by Eidos. This means that if you set a mutation type muttype's dominance coefficient to some number x, muttype.dominanceCoeff==x may be F due to floating-point rounding error. Comparisons of floating-point numbers for exact equality is often a bad idea, but this is one case where it may fail unexpectedly. Instead, it is recommended to use the id or tag properties to identify particular mutation types.}
+\item{hemizygousDominanceCoeff}{A property of type float. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The dominance coefficient used for mutations of this type when they occur opposite a null haplosome (as can occur in sex-chromosome models and models involving a mix of haploids and diploids). This defaults to 1.0, and is used only in models where null haplosomes are present; the dominanceCoeff property is the dominance coefficient used in most circumstances. Changing this will normally affect the fitness values calculated toward the end of the current tick; if you want current fitness values to be affected, you can call the Species method recalculateFitness() - but see the documentation of that method for caveats. As with the dominanceCoeff property, this is stored internally using a single-precision float; see the documentation for dominanceCoeff for discussion.}
+\item{id}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The identifier for this mutation type; for mutation type m3, for example, this is 3.}
+\item{mutationStackGroup}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The group into which this mutation type belongs for purposes of mutation stacking policy. This is equal to the mutation type's id by default. See mutationStackPolicy, below, for discussion. In nucleotide-based models, the stacking group for nucleotide-based mutation types is always -1, and cannot be changed. Non-nucleotide-based mutation types may also be set to share the -1 stacking group, if they should participate in the same stacking policy as nucleotide-based mutations, but that would be quite unusual.}
+\item{mutationStackPolicy}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} This property and the mutationStackGroup property together govern whether mutations of this mutation type's stacking group can "stack" - can occupy the same position in a single individual. A set of mutation types with the same value for mutationStackGroup is called a "stacking group", and all mutation types in a given stacking group must have the same mutationStackPolicy value, which defines the stacking behavior of all mutations of the mutation types in the stacking group. In other words, one stacking group might allow its mutations to stack, while another stacking group might not, but the policy within each stacking group must be unambiguous. This property is "s" by default, indicating that mutations in this stacking group should be allowed to stack without restriction. If the policy is set to "f", the first mutation of stacking group at a given site is retained; further mutations of this stacking group at the same site are discarded with no effect. This can be useful for modeling one-way changes; once a gene is disabled by a premature stop codon, for example, you might wish to assume, for simplicity, that further mutations cannot alter that fact. If the policy is set to "l", the last mutation of this stacking group at a given site is retained; earlier mutation of this stacking group at the same site are discarded. This can be useful for modeling an "infinite-alleles" scenario in which every new mutation at a site generates a completely new allele, rather than retaining the previous mutations at the site. The mutation stacking policy applies only within the given mutation type's stacking group; mutations of different stacking groups are always allowed to stack in SLiM. The policy applies to all mutations added to the model after the policy is set, whether those mutations are introduced by calls such as addMutation(), addNewMutation(), or addNewDrawnMutation(), or are added by SLiM's own mutation-generation machinery. However, no attempt is made to enforce the policy for mutations already existing at the time the policy is set; typically, therefore, the policy is set in an initialize() callback so that it applies throughout the simulation. The policy is also not enforced upon the mutations loaded from a file with readFromPopulationFile(); such mutations were governed by whatever stacking policy was in effect when the population file was generated. In nucleotide-based models, the stacking policy for nucleotide-based mutation types is always "l", and cannot be changed. This ensures that new nucleotide mutations always replace the previous nucleotide at a site, and that more than one nucleotide mutation is never present at the same position in a single haplosome.}
+\item{nucleotideBased}{A property of type logical. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} If the mutation type was created with initializeMutationType(), it is not nucleotide-based, and this property is F. If it was created with initializeMutationTypeNuc(), it is nucleotide-based, and this property is T. See those methods for further discussion.}
+\item{species}{A property of type Species object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The species to which the target object belongs.}
+\item{tag}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to mutation types.}
+}
+#..NULL
+
+
+
+Plot
+
+Documentation for Plot class from SLiM
+
+@name Plot
+@rdname Plot_Class
+@export
+@aliases Pl
+@family Plot
+@details 5.12.1 Plot properties 5.12 Class Plot
+This class has the following methods (functions):
+\itemize{
+\item{\code{\link{abline}}}
+}
+This class has the following properties:
+\describe{
+\item{title}{A property of type string. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The title of the plot, as originally passed to createPlot(). See also the plotWithTitle() method of SLiMgui.}
+}
+#..NULL
+
+
+
+SLiMEidosBlock
+
+Documentation for SLiMEidosBlock class from SLiM
+
+@name SLiMEidosBlock
+@rdname SLiMEidosBlock_Class
+@export
+@aliases SEB
+@family SLiMEidosBlock
+@details 5.13.1 SLiMEidosBlock properties 5.13 Class SLiMEidosBlock
+This class has the following methods (functions):
+\itemize{
+\item{None. This class has no methods.}
+}
+This class has the following properties:
+\describe{
+\item{active}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} If this evaluates to logical F (i.e., is equal to 0), the script block is inactive and will not be called. The value of active for all registered script blocks is reset to -1 at the beginning of each tick, prior to script events being called, thus activating all blocks (except callbacks associated with a species that is not active in that tick, which are deactivated as part of the deactivation of the species). Any integer value other than -1 may be used instead of -1 to represent that a block is active; for example, active may be used as a counter to make a block execute a fixed number of times in each tick. This value is not cached by SLiM; if it is changed, the new value takes effect immediately. For example, a callback might be activated and inactivated repeatedly during a single tick.}
+\item{end}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The last tick in which the script block is active.}
+\item{id}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The identifier for this script block; for script s3, for example, this is 3. A script block for which no id was given will have an id of -1.}
+\item{source}{A property of type string. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The source code string of the script block.}
+\item{speciesSpec}{A property of type Species object.  This property is a constant, so it is not modifiable. \strong{Property Description:} The species specifier for the script block. The species specifier for a callback block indicates the callback's associated species; the callback is called to modify the default behavior for that species. If the script block has no species specifier, this property's value is a zero-length object vector of class Species. This property is read-only; normally it is set by preceding the definition of a callback with a species specifier, of the form species <species-name>.}
+\item{start}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The first tick in which the script block is active.}
+\item{tag}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.}
+\item{ticksSpec}{A property of type Species object.  This property is a constant, so it is not modifiable. \strong{Property Description:} The ticks specifier for the script block. The ticks specifier for an event block indicates the event's associated species; the event executes only in ticks when that species is active. If the script block has no ticks specifier, this property's value is a zero-length object vector of class Species. This property is read-only; normally it is set by preceding the definition of an event with a ticks specifier, of the form ticks <species-name>.}
+\item{type}{A property of type string. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The type of the script block; this will be "first", "early", or "late" for the three types of Eidos events, or "initialize", "fitnessEffect", "interaction", "mateChoice", "modifyChild", "mutation", "mutationEffect", "recombination", "reproduction", or "survival" for the respective types of Eidos callbacks.}
+}
+#..NULL
+
+
+
+SLiMgui
+
+Documentation for SLiMgui class from SLiM
+
+@name SLiMgui
+@rdname SLiMgui_Class
+@export
+@aliases SG
+@family SLiMgui
+@details 5.14.1 SLiMgui properties 5.14 Class SLiMgui
+This class has the following methods (functions):
+\itemize{
+\item{\code{\link{createPlot}}}
+}
+This class has the following properties:
+\describe{
+\item{pid}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The Un*x process identifier (commonly called the "pid") of the running SLiMgui application. This can be useful for scripts that wish to use system calls to influence the SLiMgui application.}
+}
+#..NULL
+
+
+
+SpatialMap
+
+Documentation for SpatialMap class from SLiM
+
+@name SpatialMap
+@rdname SpatialMap_Class
+@export
+@aliases SM
+@family SpatialMap
+@details (object<SpatialMap>$)SpatialMap(string$ name, object<SpatialMap>$ map) Creates a new SpatialMap object that is a copy of map, named name.
+This class has the following methods (functions):
+\itemize{
+\item{\code{\link{add}}}
+}
+This class has the following properties:
+\describe{
+\item{gridDimensions}{A property of type integer or logical or string or float or string or integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} The dimensions of the spatial map's grid of values, in the order of the components of the map's spatiality. For example, a map with spatiality "xz" and a grid of values that is 500 in the "x" dimension by 300 in the "z" dimension would return c(500, 300) for this property.}
+\item{interpolate}{A property of type integer or logical or string or float or string or integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} Whether interpolation between grid values is enabled (T) or disabled (F). The initial value of this property is set by defineSpatialMap(), but it can be changed. The interpolation performed is linear; for cubic interpolation, use the interpolate() method.}
+\item{name}{A property of type integer or logical or string or float or string or integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The name of the spatial map, usually as provided to defineSpatialMap(). The names of spatial maps must be unique within any given subpopulation, but the same name may be reused for different spatial maps in different subpopulations. The name is used to identify a map for methods such as spatialMapValue(), and is also used for display in SLiMgui.}
+\item{spatialBounds}{A property of type integer or logical or string or float or string or integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} The spatial bounds to which the spatial map is aligned. These bounds come from the subpopulation that originally created the map, with the defineSpatialMap() method, and cannot be subsequently changed. All subpopulations that use a given spatial map must match that map's spatial bounds, so that the map does not stretch or shrink relative to its initial configuration. The components of the spatial bounds of a map correspond to the components of the map's spatiality; for example, a map with spatiality "xz" will have bounds (x0, z0, x1, z1); bounds for "y" are not included, since that dimension is not used by the spatial map.}
+\item{spatiality}{A property of type integer or logical or string or float or string or integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The spatiality of the map: the subset of the model's dimensions that are used by the spatial map. The spatiality of a map is configured by defineSpatialMap() and cannot subsequently be changed. For example, a 3D model (with dimensionality "xyz") might define a 2D spatial map with spatiality "xz", providing spatial values that do not depend upon the "y" dimension. Often, however, the spatiality of a map will match the dimensionality of the model.}
+\item{tag}{A property of type integer or logical or string or float or string or integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to spatial maps.}
+}
+#..NULL
+
+
+
+Species
+
+Documentation for Species class from SLiM
+
+@name Species
+@rdname Species_Class
+@export
+@aliases Sp
+@family Species
+@details 5.16.1 Species properties 5.16 Class Species
+This class has the following methods (functions):
+\itemize{
+\item{\code{\link{addPatternForClone}}}
+}
+This class has the following properties:
+\describe{
+\item{avatar}{A property of type string. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The avatar string used to represent this species in SLiMgui. Outside of SLiMgui, this property still exists, but is not used by SLiM. Avatars are typically one-character strings, often using an emoji that symbolizes the species. This property is read-only; its value should be set with the avatar parameter of initializeSpecies().}
+\item{chromosome}{A property of type Chromosome object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The Chromosome object used by the species. This property may only be accessed in a single-chromosome model; if there are multiple chromosomes (or none), the chromosomes property must be used instead.}
+\item{chromosomes}{A property of type Chromosome object.  This property is a constant, so it is not modifiable. \strong{Property Description:} The Chromosome objects used by the species, in the order in which they were defined. See also the sexChromosomes property.}
+\item{color}{A property of type string. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The color used to display information about this species in SLiMgui. Outside of SLiMgui, this property still exists, but is not used by SLiM. Colors may be specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see the Eidos manual). This property is read-only; its value should be set with the color parameter of initializeSpecies().}
+\item{cycle}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The current cycle count for this species. This counter begins at 1, and increments at the end of every tick in which the species is active. In models with non-overlapping generations, particularly WF models, this can be thought of as a generation counter.}
+\item{description}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A human-readable string description for the species. By default, this is the empty string, ""; however, it may be set to whatever you wish.}
+\item{dimensionality}{A property of type string. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The spatial dimensionality of the simulation for this species, as specified in initializeSLiMOptions(). This will be "" (the empty string) for non-spatial simulations (the default), or "x", "xy", or "xyz", for simulations using those spatial dimensions respectively.}
+\item{genomicElementTypes}{A property of type GenomicElementType object.  This property is a constant, so it is not modifiable. \strong{Property Description:} The GenomicElementType objects being used in the species. These are guaranteed to be in sorted order, by their id property.}
+\item{id}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The identifier for this species. Species identifiers are determined by their declaration order in the script; the first declared species is given an id of 0, the second is given an id of 1, and so forth.}
+\item{mutationTypes}{A property of type MutationType object.  This property is a constant, so it is not modifiable. \strong{Property Description:} The MutationType objects being used in the species. These are guaranteed to be in sorted order, by their id property.}
+\item{mutations}{A property of type Mutation object.  This property is a constant, so it is not modifiable. \strong{Property Description:} The Mutation objects that are currently active in the species.}
+\item{name}{A property of type string. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} A human-readable string name for the subpopulation. This is always the declared name of the species, as given in the explicit species declaration in script, and cannot be changed. The name of a species may appear as a label in SLiMgui, and it can be useful in generating output, debugging, and other purposes. See also the description property, which can be changed by the user and used for any purpose.}
+\item{nucleotideBased}{A property of type logical. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} If T, the model for this species is nucleotide-based; if F, it is not. See the discussion of the nucleotideBased parameter to initializeSLiMOptions() for discussion.}
+\item{periodicity}{A property of type string. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The spatial periodicity of the simulation for this species, as specified in initializeSLiMOptions(). This will be "" (the empty string) for non-spatial simulations and simulations with no periodic spatial dimensions (the default). Otherwise, it will be a string representing the subset of spatial dimensions that have been declared to be periodic, as specified to initializeSLiMOptions().}
+\item{scriptBlocks}{A property of type SLiMEidosBlock object.  This property is a constant, so it is not modifiable. \strong{Property Description:} All registered SLiMEidosBlock objects in the simulation that have been declared with this species as their species specifier (not ticks specifier). These will always be callback blocks; callbacks are species-specific, while other types of blocks are not.}
+\item{sexChromosomes}{A property of type Chromosome object.  This property is a constant, so it is not modifiable. \strong{Property Description:} The Chromosome objects used by the species that represent sex chromosomes, in the order in which they were defined. Sex chromosomes are specifically those of type "X", "Y", "W", "Z", and "-Y". See also the chromosomes property, and the isSexChromosome property of Chromosome.}
+\item{sexEnabled}{A property of type logical. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} If T, sex is enabled for this species; if F, individuals are hermaphroditic.}
+\item{subpopulations}{A property of type Subpopulation object.  This property is a constant, so it is not modifiable. \strong{Property Description:} The Subpopulation instances currently defined in the species. These are guaranteed to be in sorted order, by their id property.}
+\item{substitutions}{A property of type Substitution object.  This property is a constant, so it is not modifiable. \strong{Property Description:} A vector of Substitution objects, representing all mutations that have been fixed in this species.}
+\item{tag}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to the simulation.}
+}
+#..NULL
+
+
+
+Subpopulation
+
+Documentation for Subpopulation class from SLiM
+
+@name Subpopulation
+@rdname Subpopulation_Class
+@export
+@aliases P
+@family Subpopulation
+@details 5.17.1 Subpopulation properties 5.17 Class Subpopulation
+This class has the following methods (functions):
+\itemize{
+\item{\code{\link{addCloned}}}
+}
+This class has the following properties:
+\describe{
+\item{cloningRate}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The fraction of children in the next generation that will be produced by cloning (as opposed to biparental mating). In non-sexual (i.e. hermaphroditic) simulations, this property is a singleton float representing the overall subpopulation cloning rate. In sexual simulations, this property is a float vector with two values: the cloning rate for females (at index 0) and for males (at index 1).}
+\item{description}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A human-readable string description for the subpopulation. By default, this is the empty string, ""; however, it may be set to whatever you wish. When tree-sequence recording is enabled, description is persisted in the subpopulation's metadata in tree-sequence output.}
+\item{firstMaleIndex}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The index of the first male individual in the subpopulation. The individuals vector of the subpopulation is sorted into females first and males second; firstMaleIndex gives the position of the boundary between those sections. The firstMaleIndex property is also the number of females in the subpopulation, given this design. For non-sexual (i.e. hermaphroditic) simulations, the value of this property is undefined and should not be used.}
+\item{fitnessScaling}{A property of type float. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A float scaling factor applied to the fitness of all individuals in this subpopulation (i.e., the fitness value computed for each individual will be multiplied by this value). This is primarily of use in nonWF models, where fitness is absolute, rather than in WF models, where fitness is relative (and thus a constant factor multiplied into the fitness of every individual will make no difference); however, it may be used in either type of model. This provides a simple, fast way to modify the fitness of all individuals in a subpopulation; conceptually it is similar to returning the same fitness effect for all individuals in the subpopulation from a fitnessEffect() callback, but without the complexity and performance overhead of implementing such a callback. To scale the fitness of individuals by different (individual-specific) factors, see the fitnessScaling property of Individual. The value of fitnessScaling is reset to 1.0 every tick, so that any scaling factor set lasts for only a single tick. This reset occurs immediately after fitness values are calculated, in both WF and nonWF models.}
+\item{haplosomes}{A property of type Haplosome object.  This property is a constant, so it is not modifiable. \strong{Property Description:} All of the haplosomes contained by the subpopulation. All of the haplosomes for the first individual in the individuals property are provided, followed by all the haplosomes for the second individual, etc., in the same order as individuals.}
+\item{haplosomesNonNull}{A property of type Haplosome object.  This property is a constant, so it is not modifiable. \strong{Property Description:} All of the haplosomes contained by the subpopulation, as with the haplosomes property, if all of them are not null haplosomes; any null haplosomes present are excluded from the returned vector. This is a convenience shorthand, sometimes useful in models that involve null haplosomes.}
+\item{id}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The identifier for this subpopulation; for subpopulation p3, for example, this is 3.}
+\item{immigrantSubpopFractions}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The expected value of the fraction of children in the next generation that are immigrants arriving from particular subpopulations.}
+\item{immigrantSubpopIDs}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} The identifiers of the particular subpopulations from which immigrants will arrive in the next generation.}
+\item{individualCount}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The number of individuals in the subpopulation.}
+\item{individuals}{A property of type Individual object.  This property is a constant, so it is not modifiable. \strong{Property Description:} All of the individuals contained by the subpopulation. See the sampleIndividuals() and subsetIndividuals() for fast ways to get a subset of the individuals in a subpopulation.}
+\item{lifetimeReproductiveOutput}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), lifetimeReproductiveOutput contains the value of the Individual property reproductiveOutput for all individuals in the subpopulation that died in the last viability/survival tick cycle stage (or, for WF models, immediately after reproduction). This allows access to the lifetime reproductive output of individuals in the subpopulation at the end of their lives. If pedigree tracking is not on, this property is unavailable.}
+\item{lifetimeReproductiveOutputF}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), lifetimeReproductiveOutputF contains the value of the Individual property reproductiveOutput for all female individuals in the subpopulation that died in the last viability/survival tick cycle stage (or, for WF models, immediately after reproduction). This property is undefined if separate sexes have not been enabled, or if pedigree tracking is not on.}
+\item{lifetimeReproductiveOutputM}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), lifetimeReproductiveOutputM contains the value of the Individual property reproductiveOutput for all male individuals in the subpopulation that died in the last viability/survival tick cycle stage (or, for WF models, immediately after reproduction). This property is undefined if separate sexes have not been enabled, or if pedigree tracking is not on.}
+\item{name}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A human-readable string name for the subpopulation. By default, this is the subpopulation's symbol as a string; for subpopulation p3, for example, name defaults to "p3". However, it may be set to whatever you wish except that subpopulation names must be unique across time (two different subpopulations may not both have the name "foo", even if they never exist at the same time). A subpopulation's name may appear as a label in SLiMgui, and it can be useful in generating output, debugging, and other purposes. When tree-sequence recording is enabled, name is persisted in the subpopulation's metadata in tree-sequence output, and can then be used in Python to identify the subpopulation; if you plan to take advantage of that feature, name should follow the syntax of Python identifiers: starting with a letter or underscore [a-zA-Z_], followed by letters, digits, or underscores [a-zA-Z0-9_], without spaces, hyphens, or other characters.}
+\item{selfingRate}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The expected value of the fraction of children in the next generation that will be produced by selfing (as opposed to biparental mating). Selfing is only possible in non-sexual (i.e. hermaphroditic) simulations; for sexual simulations this property always has a value of 0.0.}
+\item{sexRatio}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} For sexual simulations, the sex ratio for the subpopulation. This is defined, in SLiM, as the fraction of the subpopulation that is male; in other words, it is actually the M:(M+F) ratio. For non-sexual (i.e. hermaphroditic) simulations, this property has an undefined value and should not be used.}
+\item{spatialMaps}{A property of type SpatialMap object.  This property is a constant, so it is not modifiable. \strong{Property Description:} The spatial maps that are currently added to the subpopulation.}
+\item{spatialBounds}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The spatial boundaries of the subpopulation. The length of the spatialBounds property depends upon the spatial dimensionality declared with initializeSLiMOptions(). If the spatial dimensionality is zero (as it is by default), the value of this property is float(0) (a zero-length float vector). Otherwise, minimums are supplied for each coordinate used by the dimensionality of the simulation, followed by maximums for each. In other words, if the declared dimensionality is "xy", the spatialBounds property will contain values (x0, y0, x1, y1); bounds for the z coordinate will not be included in that case, since that coordinate is not used in the simulation's dimensionality. This property cannot be set, but the setSpatialBounds() method may be used to achieve the same thing.}
+\item{species}{A property of type Species object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The species to which the target object belongs.}
+\item{tag}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to subpopulations.}
+}
+#..NULL
+
+
+
+Substitution
+
+Documentation for Substitution class from SLiM
+
+@name Substitution
+@rdname Substitution_Class
+@export
+@aliases S
+@family Substitution
+@details 5.18.1 Substitution properties 5.18 Class Substitution
+This class has the following methods (functions):
+\itemize{
+\item{None. This class has no methods.}
+}
+This class has the following properties:
+\describe{
+\item{chromosome}{A property of type Chromosome object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The Chromosome object with which the mutation is associated.}
+\item{id}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The identifier for this mutation. Each mutation created during a run receives an immutable identifier that will be unique across the duration of the run, and that identifier is carried over to the Substitution object when the mutation fixes.}
+\item{fixationTick}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The tick in which this mutation fixed.}
+\item{mutationType}{A property of type MutationType object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The MutationType from which this mutation was drawn.}
+\item{nucleotide}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A string representing the nucleotide associated with this mutation; this will be "A", "C", "G", or "T". If the mutation is not nucleotide-based, this property is unavailable.}
+\item{nucleotideValue}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} An integer representing the nucleotide associated with this mutation; this will be 0 (A), 1 (C), 2 (G), or 3 (T). If the mutation is not nucleotide-based, this property is unavailable.}
+\item{originTick}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The tick in which this mutation arose.}
+\item{position}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The position in the chromosome of this mutation.}
+\item{selectionCoeff}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The selection coefficient of the mutation, drawn from the distribution of fitness effects of its MutationType.}
+\item{subpopID}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The identifier of the subpopulation in which this mutation arose. This value is carried over from the Mutation object directly; if a "tag" value was used in the Mutation object, that value will carry over to the corresponding Substitution object. The subpopID in Substitution is a read-write property to allow it to be used as a "tag" in the same way, if the origin subpopulation identifier is not needed.}
+\item{tag}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is carried over automatically from the original Mutation object. Apart from that, the value of tag is not used by SLiM; it is free for you to use.}
+}
+#..NULL

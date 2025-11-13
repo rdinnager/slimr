@@ -3,60 +3,37 @@
 \name{addCustomColumn}
 \alias{addCustomColumn}
 \alias{LogFile$addCustomColumn}
-\alias{.LF$addCustomColumn}
+\alias{LF$addCustomColumn}
 \title{SLiM method addCustomColumn}
 \usage{
-addCustomColumn(columnName, source, context)
+addCustomColumn(columnName, source, context = NULL)
 }
 \arguments{
-\item{columnName}{An object of type string or string or any. Must be of length 1
-(a singleton). See details for description.}
+\item{columnName}{An object of type string or string or any (singleton).}
 
-\item{source}{An object of type string or string or any. Must be of length 1 (a
-singleton). See details for description.}
+\item{source}{An object of type string or string or any (singleton).}
 
-\item{context}{An object of type string or string or any. The default value is
-\code{NULL}. See details for description.}
+\item{context}{An object of type string or string or any.}
 }
 \value{
-An object of type void or void or void or void or void or void or void
-or void or void or void or void or void or void or void or void or void or void
-or void or logical.
+An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical.
 }
 \description{
-Documentation for SLiM function \code{addCustomColumn}, which is a method of the
-SLiM class \code{\link{LogFile}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{addCustomColumn}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=701}{SLiM manual: page
-701}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Adds a new data column with its name provided by columnName. The value
-for the column, when a given row is generated, will be produced by the code
-supplied in source, which is expected to return either NULL (which will write
-out NA), or a singleton value of any non-object type. The context parameter will
-be set up as a pseudo-parameter, named context, when source is called, allowing
-the same source code to be used to generate values for multiple data columns;
-you might, for example, provide the particular Subpopulation object here that
-you wish source to use for its calculations. This is optional; if the default
-value of NULL is used, then context will be NULL when source is called. See
-addMeanSDColumns() for a useful variant.
+string$ columnName, string$ source, [* context = NULL]) Adds a new data column with its name provided by columnName. The new column will be logged each time that a row is generated, either by automatic logging or by a call to logRow(). The value for the column, when a given row is generated, will be produced by the code supplied in source, which is expected to return either NULL (which will write out NA), or a singleton value of any non-object type. The context parameter will be set up as a pseudo-parameter, named context, when source is called, allowing the same source code to be used to generate values for multiple data columns; you might, for example, pass the id of the particular Subpopulation object that you wish source to use for its calculations, and source could then use the Community method subpopulationsWithIDs() to look up the subpopulation from the id value provided in context. Note that the Subpopulation object itself cannot be passed in context, because class Subpopulation is not under retain-release memory management in SLiM, meaning essentially that subpopulation objects can cease to exist unpredictably (because they go extinct, for example). A reference to such an object cannot be kept long-term by your script (including by LogFile), because if the object ceases to exist, the reference would become invalid and a crash would result. Passing such an object - one not under retain-release - to addCustomColumn() will therefore raise an error, to safeguard against that possible crash. The workaround for this limitation is to find a way to look up the desired object, such as the suggestion above of using the subpopulation's id to look it up. The use of context is optional; if the default value of NULL is used, then context will be NULL when source is called. See addMeanSDColumns() for a useful variant.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -83,7 +60,6 @@ Other LogFile:
 \code{\link{willAutolog}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{LogFile}

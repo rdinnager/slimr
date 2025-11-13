@@ -2,73 +2,39 @@
 % Please edit documentation in R/slim_lang.R
 \name{eidos_writeTempFile}
 \alias{eidos_writeTempFile}
-\alias{Eidos$writeTempFile}
-\alias{.E$writeTempFile}
-\title{Eidos method writeTempFile}
+\alias{E$writeTempFile}
+\title{SLiM function writeTempFile}
 \usage{
-eidos_writeTempFile(prefix, suffix, contents, compress)
+eidos_writeTempFile(prefix, suffix, contents, compress = NULL)
 }
 \arguments{
-\item{prefix}{An object of type string or string or string or logical. Must be
-of length 1 (a singleton). See details for description.}
+\item{prefix}{An object of type string or string or string or logical (singleton).}
 
-\item{suffix}{An object of type string or string or string or logical. Must be
-of length 1 (a singleton). See details for description.}
+\item{suffix}{An object of type string or string or string or logical (singleton).}
 
-\item{contents}{An object of type string or string or string or logical. See
-details for description.}
+\item{contents}{An object of type string or string or string or logical.}
 
-\item{compress}{An object of type string or string or string or logical. Must
-be of length 1 (a singleton). The default value is \code{F}. See details for
-description.}
+\item{compress}{An object of type string or string or string or logical (singleton).}
 }
 \value{
 An object of type string. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for Eidos function \code{writeTempFile}, which is a method of
-\code{\link{Eidos}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{writeTempFile}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Writes to a unique temporary file with contents specified by contents,
-a string vector of lines. The filename used will begin with prefix and end
-with suffix, and will contain six random characters in between; for example,
-if prefix is "plot1_" and suffix is ".pdf", the generated filename might look
-like "plot1_r5Mq0t.pdf". It is legal for prefix, suffix, or both to be the empty
-string, "", but supplying a file extension is usually advisable at minimum.
-The file will be created inside the / tmp/ directory of the system, which is
-provided by Un*x systems as a standard location for temporary files; the /tmp/
-directory should not be specified as part of prefix (nor should any other
-directory information). The filename generated is guaranteed not to already
-exist in /tmp/. The file is created with Un*x permissions 0600, allowing reading
-and writing only by the user for security. If the write is successful, the full
-path to the temporary file will be returned; if not, "" will be returned. If
-compress is T, the contents will be compressed with zlib as they are written,
-and the standard .gz extension for gzip-compressed files will be appended to
-the filename suffix in suffix if it is not already present. The compress option
-was added in Eidos 2.4 (SLiM 3.4). Note that readFile() does not currently
-support reading in compressed data. Note that newline characters will be added
-at the ends of the lines in contents. If you do not wish to have newlines added,
-you should use paste() to assemble the elements of contents together into a
-singleton string.
+Writes to a unique temporary file with contents specified by contents, a string vector of lines. The filename used will begin with prefix and end with suffix, and will contain six random characters in between; for example, if prefix is "plot1_" and suffix is ".pdf", the generated filename might look like "plot1_r5Mq0t.pdf". It is legal for prefix, suffix, or both to be the empty string, "", but supplying a file extension is usually advisable at minimum. The file will be created inside the /tmp/ directory of the system, which is provided by Un*x systems as a standard location for temporary files; the /tmp/ directory should not be specified as part of prefix (nor should any other directory information). The filename generated is guaranteed not to already exist in /tmp/. The file is created with Un*x permissions 0600, allowing reading and writing only by the user for security. If the write is successful, the full path to the temporary file will be returned; if not, "" will be returned. If compress is T, the contents will be compressed with zlib as they are written, and the standard .gz extension for gzip-compressed files will be appended to the filename suffix in suffix if it is not already present. The compress option was added in Eidos 2.4 (SLiM 3.4). Note that readFile() does not currently support reading in compressed data. Note that newline characters will be added at the ends of the lines in contents. If you do not wish to have newlines added, you should use paste() to assemble the elements of contents together into a singleton string. 3.10. Color manipulation functions
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -85,6 +51,7 @@ Other Eidos:
 \code{\link{eidos_asInteger}()},
 \code{\link{eidos_asLogical}()},
 \code{\link{eidos_asString}()},
+\code{\link{eidos_asVector}()},
 \code{\link{eidos_asin}()},
 \code{\link{eidos_assert}()},
 \code{\link{eidos_atan}()},
@@ -98,6 +65,7 @@ Other Eidos:
 \code{\link{eidos_citation}()},
 \code{\link{eidos_clock}()},
 \code{\link{eidos_cmColors}()},
+\code{\link{eidos_colSums}()},
 \code{\link{eidos_color2rgb}()},
 \code{\link{eidos_colors}()},
 \code{\link{eidos_cor}()},
@@ -112,18 +80,22 @@ Other Eidos:
 \code{\link{eidos_defineConstant}()},
 \code{\link{eidos_defineGlobal}()},
 \code{\link{eidos_deleteFile}()},
+\code{\link{eidos_det}()},
 \code{\link{eidos_dexp}()},
 \code{\link{eidos_dgamma}()},
 \code{\link{eidos_diag}()},
 \code{\link{eidos_dim}()},
 \code{\link{eidos_dmvnorm}()},
 \code{\link{eidos_dnorm}()},
+\code{\link{eidos_doCall}()},
 \code{\link{eidos_drop}()},
 \code{\link{eidos_elementType}()},
+\code{\link{eidos_executeLambda}()},
 \code{\link{eidos_exists}()},
 \code{\link{eidos_exp}()},
 \code{\link{eidos_fileExists}()},
 \code{\link{eidos_filesAtPath}()},
+\code{\link{eidos_filter}()},
 \code{\link{eidos_findInterval}()},
 \code{\link{eidos_float}()},
 \code{\link{eidos_floor}()},
@@ -133,6 +105,7 @@ Other Eidos:
 \code{\link{eidos_functionSource}()},
 \code{\link{eidos_getSeed}()},
 \code{\link{eidos_getwd}()},
+\code{\link{eidos_grep}()},
 \code{\link{eidos_heatColors}()},
 \code{\link{eidos_hsv2rgb}()},
 \code{\link{eidos_identical}()},
@@ -140,6 +113,7 @@ Other Eidos:
 \code{\link{eidos_integer}()},
 \code{\link{eidos_integerDiv}()},
 \code{\link{eidos_integerMod}()},
+\code{\link{eidos_inverse}()},
 \code{\link{eidos_isFinite}()},
 \code{\link{eidos_isFloat}()},
 \code{\link{eidos_isInfinite}()},
@@ -160,6 +134,7 @@ Other Eidos:
 \code{\link{eidos_match}()},
 \code{\link{eidos_matrix}()},
 \code{\link{eidos_matrixMult}()},
+\code{\link{eidos_matrixPow}()},
 \code{\link{eidos_max}()},
 \code{\link{eidos_mean}()},
 \code{\link{eidos_min}()},
@@ -168,6 +143,12 @@ Other Eidos:
 \code{\link{eidos_nrow}()},
 \code{\link{eidos_object}()},
 \code{\link{eidos_order}()},
+\code{\link{eidos_outerProduct}()},
+\code{\link{eidos_parallelGetMaxThreads}()},
+\code{\link{eidos_parallelGetNumThreads}()},
+\code{\link{eidos_parallelGetTaskThreadCounts}()},
+\code{\link{eidos_parallelSetNumThreads}()},
+\code{\link{eidos_parallelSetTaskThreadCounts}()},
 \code{\link{eidos_paste}()},
 \code{\link{eidos_paste0}()},
 \code{\link{eidos_pmax}()},
@@ -202,9 +183,11 @@ Other Eidos:
 \code{\link{eidos_rnbinom}()},
 \code{\link{eidos_rnorm}()},
 \code{\link{eidos_round}()},
+\code{\link{eidos_rowSums}()},
 \code{\link{eidos_rpois}()},
 \code{\link{eidos_runif}()},
 \code{\link{eidos_rweibull}()},
+\code{\link{eidos_rztpois}()},
 \code{\link{eidos_sample}()},
 \code{\link{eidos_sapply}()},
 \code{\link{eidos_sd}()},
@@ -217,6 +200,7 @@ Other Eidos:
 \code{\link{eidos_setSymmetricDifference}()},
 \code{\link{eidos_setUnion}()},
 \code{\link{eidos_setwd}()},
+\code{\link{eidos_sign}()},
 \code{\link{eidos_sin}()},
 \code{\link{eidos_size}()},
 \code{\link{eidos_sort}()},
@@ -243,6 +227,7 @@ Other Eidos:
 \code{\link{eidos_tempdir}()},
 \code{\link{eidos_terrainColors}()},
 \code{\link{eidos_time}()},
+\code{\link{eidos_tr}()},
 \code{\link{eidos_trunc}()},
 \code{\link{eidos_ttest}()},
 \code{\link{eidos_type}()},
@@ -257,7 +242,6 @@ Other Eidos:
 \code{\link{eidos_writeFile}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Eidos}

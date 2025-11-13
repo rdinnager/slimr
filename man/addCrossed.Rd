@@ -3,132 +3,41 @@
 \name{addCrossed}
 \alias{addCrossed}
 \alias{Subpopulation$addCrossed}
-\alias{.P$addCrossed}
+\alias{P$addCrossed}
 \title{SLiM method addCrossed}
 \usage{
-addCrossed(parent1, parent2, sex, count, defer)
+addCrossed(parent1, parent2, sex = NULL, count = NULL, defer = NULL)
 }
 \arguments{
-\item{parent1}{An object of type Individual object. Must be of length 1 (a
-singleton). See details for description.}
+\item{parent1}{An object of type Individual object (singleton).}
 
-\item{parent2}{An object of type Individual object. Must be of length 1 (a
-singleton). See details for description.}
+\item{parent2}{An object of type Individual object (singleton).}
 
-\item{sex}{An object of type null or float or string. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{sex}{An object of type null or float or string (singleton).}
 
-\item{count}{An object of type integer. Must be of length 1 (a singleton). The
-default value is \code{1}. See details for description.}
+\item{count}{An object of type integer (singleton).}
 
-\item{defer}{An object of type logical. Must be of length 1 (a singleton). The
-default value is \code{F}. See details for description.}
+\item{defer}{An object of type logical (singleton).}
 }
 \value{
 An object of type Individual object.
 }
 \description{
-Documentation for SLiM function \code{addCrossed}, which is a method of the SLiM
-class \code{\link{Subpopulation}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{addCrossed}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=733}{SLiM manual: page
-733}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Generates a new offspring individual from the given parents
-by biparental sexual reproduction, queues it for addition to the target
-subpopulation, and returns it. The new offspring will not be visible as a
-member of the target subpopulation until the end of the offspring generation
-tick cycle stage. Attempting to use a newly generated offspring individual
-as a mate, or to reference it as a member of the target subpopulation in any
-other way, will result in an error. In most models the returned individual is
-not used, but it is provided for maximal generality and flexibility. The new
-offspring individual is generated from parent1 and parent2 by crossing them. In
-sexual models parent1 must be female and parent2 must be male; in hermaphroditic
-models, parent1 and parent2 are unrestricted. If parent1 and parent2 are the
-same individual in a hermaphroditic model, that parent self-fertilizes, or
-"selfs", to generate the offspring sexually (note this is not the same as
-clonal reproduction). Such selfing is considered "incidental" by addCrossed(),
-however; if the preventIncidentalSelfing flag of initializeSLiMOptions() is
-T, supplying the same individual for parent1 and parent2 is an error (you must
-check for and prevent incidental selfing if you set that flag in a nonWF model).
-If non-incidental selfing is desired, addSelfed() should be used instead.
-The sex parameter specifies the sex of the offspring. A value of NULL means
-"make the default choice"; in non-sexual models it is the only legal value
-for sex, and does nothing, whereas in sexual models it causes male or female
-to be chosen with equal probability. A value of "M" or "F" for sex specifies
-that the offspring should be male or female, respectively. Finally, a float
-value from 0.0 to 1.0 for sex provides the probability that the offspring will
-be male; a value of 0.0 will produce a female, a value of 1.0 will produce
-a male, and for intermediate values SLiM will draw the sex of the offspring
-randomly according to the specified probability. Unless you wish the bias the
-sex ratio of offspring, the default value of NULL should generally be used.
-Note that any defined, active, and applicable recombination(), mutation(), and
-modifyChild() callbacks will be called as a side effect of calling this method,
-before this method even returns. For recombination() and mutation() callbacks,
-the subpopulation of the parent that is generating a given gamete is used;
-for modifyChild() callbacks the situation is more complex. In most biparental
-mating events, parent1 and parent2 will belong to the same subpopulation,
-and modifyChild() callbacks for that subpopulation will be used, just as in
-WF models. In certain models (such as models of pollen flow and broadcast
-spawning), however, biparental mating may occur between parents that are not
-from the same subpopulation; that is legal in nonWF models, and in that case,
-modifyChild() callbacks for the subpopulation of parent1 are used (since that
-is the maternal parent). If the modifyChild() callback process results in
-rejection of the proposed child (see section 26.5), a new offspring individual
-is not be generated. To force the generation of an offspring individual from
-a given pair of parents, you could loop until addCrossed() succeeds, but note
-that if your modifyChild() callback rejects all proposed children from those
-particular parents, your model will then hang, so care must be taken with this
-approach. Usually, nonWF models do not force generation of offspring in this
-manner; rejection of a proposed offspring by a modifyChild() callback typically
-represents a phenomenon such as post-mating reproductive isolation or lethal
-genetic incompatibilities that would reduce the expected litter size, so the
-default behavior is typically desirable. Beginning in SLiM 4.1, the count
-parameter dictates how many offspring will be generated (previously, exactly
-one offspring was generated). Each offspring is generated independently, based
-upon the given parameters. The returned vector contains all generated offspring,
-except those that were rejected by a modifyChild() callback. If all offspring
-are rejected, object<Individual>(0) is returned, which is a zero-length object
-vector of class Individual; note that this is a change in behavior from earlier
-versions, which would return NULL. Beginning in SLiM 4.1, passing T for defer
-will defer the generation of the genomes of the produced offspring until the
-end of the reproduction phase. Genome generation can only be deferred if there
-are no active mutation() or recombination() callbacks; otherwise, an error will
-result. Furthermore, when genome generation is deferred the mutations of the
-genomes of the generated offspring may not be accessed until reproduction is
-complete (whether from a modifyChild() callback or otherwise). There is little
-or no advantage to deferring genome generation at this time (it is in place
-for future expansion); the default of F for defer is generally preferable since
-it has fewer restrictions. Also beginning in SLiM 4.1, in spatial models the
-spatial position of the offspring will be inherited (i.e., copied) from parent1;
-more specifically, the x property will be inherited in all spatial models
-(1D/2D/3D), the y property in 2D/3D models, and the z property in 3D models.
-Properties not inherited will be left uninitialized, as they were prior to SLiM
-4.1. The parent's spatial position is probably not desirable in itself; the
-intention here is to make it easy to model the natal dispersal of all the new
-offspring for a given tick with a single vectorized call to pointDeviated().
-Note that this method is only for use in nonWF models, in which offspring
-generation is managed manually by the model script; in such models, addCrossed()
-must be called only from reproduction() callbacks, and may not be called at any
-other time. In WF models, offspring generation is managed automatically by the
-SLiM core.
+object<Individual>$ parent1, object<Individual>$ parent2, [Nfs$ sex = NULL], [integer$ count = 1], [logical$ defer = F]) Generates a new offspring individual from the given parents by biparental sexual reproduction, queues it for addition to the target subpopulation, and returns it. The new offspring will not be visible as a member of the target subpopulation until the end of the offspring generation tick cycle stage. Attempting to use a newly generated offspring individual as a mate, or to reference it as a member of the target subpopulation in any other way, will result in an error. In most models the returned individual is not used, but it is provided for maximal generality and flexibility. The new offspring individual is generated from parent1 and parent2 by crossing them. In sexual models parent1 must be female and parent2 must be male; in hermaphroditic models, parent1 and parent2 are unrestricted. If parent1 and parent2 are the same individual in a hermaphroditic model, that parent self-fertilizes, or "selfs", to generate the offspring sexually (note this is not the same as clonal reproduction). Such selfing is considered "incidental" by addCrossed(), however; if the preventIncidentalSelfing flag of initializeSLiMOptions() is T, supplying the same individual for parent1 and parent2 is an error (you must check for and prevent incidental selfing if you set that flag in a nonWF model). If non-incidental selfing is desired, addSelfed() should be used instead. The sex parameter specifies the sex of the offspring. A value of NULL means "make the default choice"; in non-sexual models it is the only legal value for sex, and does nothing, whereas in sexual models it causes male or female to be chosen with equal probability. A value of "M" or "F" for sex specifies that the offspring should be male or female, respectively. Finally, a float value from 0.0 to 1.0 for sex provides the probability that the offspring will be male; a value of 0.0 will produce a female, a value of 1.0 will produce a male, and for intermediate values SLiM will draw the sex of the offspring randomly according to the specified probability. Unless you wish the bias the sex ratio of offspring, the default value of NULL should generally be used. Note that any defined, active, and applicable recombination(), mutation(), and modifyChild() callbacks will be called as a side effect of calling this method, before this method even returns. For recombination() and mutation() callbacks, the subpopulation of the parent that is generating a given gamete is used; for modifyChild() callbacks the situation is more complex. In most biparental mating events, parent1 and parent2 will belong to the same subpopulation, and modifyChild() callbacks for that subpopulation will be used, just as in WF models. In certain models (such as models of pollen flow and broadcast spawning), however, biparental mating may occur between parents that are not from the same subpopulation; that is legal in nonWF models, and in that case, modifyChild() callbacks for the subpopulation of parent1 are used (since that is the maternal parent). If the modifyChild() callback process results in rejection of the proposed child, a new offspring individual is not generated. To force the generation of an offspring individual from a given pair of parents, you could loop until addCrossed() succeeds, but note that if your modifyChild() callback rejects all proposed children from those particular parents, your model will then hang, so care must be taken with this approach. Usually, nonWF models do not force generation of offspring in this manner; rejection of a proposed offspring by a modifyChild() callback typically represents a phenomenon such as post-mating reproductive isolation or lethal genetic incompatibilities that would reduce the expected litter size, so the default behavior is typically desirable. Beginning in SLiM 4.1, the count parameter dictates how many offspring will be generated (previously, exactly one offspring was generated). Each offspring is generated independently, based upon the given parameters. The returned vector contains all generated offspring, except those that were rejected by a modifyChild() callback. If all offspring are rejected, object<Individual>(0) is returned, which is a zero-length object vector of class Individual; note that this is a change in behavior from earlier versions, which would return NULL. Beginning in SLiM 4.1, passing T for defer requests that the generation of the haplosomes of the produced offspring be deferred until the end of the reproduction phase. SLiM may or may not honor this request; if not, the offspring will be generated synchronously just as if defer were F. Haplosome generation can only be deferred if there are no active mutation() or recombination() callbacks; otherwise, an error will result. Furthermore, when haplosome generation is deferred the mutations of the haplosomes of the generated offspring may not be accessed until reproduction is complete (whether from a modifyChild() callback or otherwise). There is little or no advantage to deferring haplosome generation when running single-threaded; in that case, the default of F for defer is generally preferable since it has fewer restrictions. When running multi-threaded, deferring haplosome generation allows that task to be done in parallel (which is the reason this option exists). Also beginning in SLiM 4.1, in spatial models the spatial position of the offspring will be inherited (i.e., copied) from parent1; more specifically, the x property will be inherited in all spatial models (1D/2D/3D), the y property in 2D/3D models, and the z property in 3D models. Properties not inherited will be left uninitialized, as they were prior to SLiM 4.1. The parent's spatial position is probably not desirable in itself; the intention here is to make it easy to model the natal dispersal of all the new offspring for a given tick with a single vectorized call to deviatePositions() / pointDeviated(). Note that this method is only for use in nonWF models, in which offspring generation is managed manually by the model script; in such models, addCrossed() must be called only from reproduction() callbacks, and may not be called at any other time. In WF models, offspring generation is managed automatically by the SLiM core.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -137,12 +46,16 @@ Other Subpopulation:
 \code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addEmpty}()},
+\code{\link{addMultiRecombinant}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
 \code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
+\code{\link{deviatePositions}()},
+\code{\link{deviatePositionsWithMap}()},
+\code{\link{haplosomesForChromosomes}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
@@ -152,6 +65,7 @@ Other Subpopulation:
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{pointUniformWithMap}()},
 \code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
@@ -168,7 +82,6 @@ Other Subpopulation:
 \code{\link{takeMigrants}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Subpopulation}

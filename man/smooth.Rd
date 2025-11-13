@@ -3,81 +3,37 @@
 \name{smooth}
 \alias{smooth}
 \alias{SpatialMap$smooth}
-\alias{.SM$smooth}
+\alias{SM$smooth}
 \title{SLiM method smooth}
 \usage{
 smooth(maxDistance, functionType, ...)
 }
 \arguments{
-\item{maxDistance}{An object of type float. Must be of length 1 (a singleton).
-See details for description.}
+\item{maxDistance}{An object of type float (singleton).}
 
-\item{functionType}{An object of type string. Must be of length 1 (a singleton).
-See details for description.}
+\item{functionType}{An object of type string (singleton).}
 
-\item{...}{An object of type NA. NA See details for description.}
+\item{...}{An object of type NA.}
 }
 \value{
-An object of type SpatialMap object. Return will be of length 1 (a
-singleton)
+An object of type SpatialMap object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{smooth}, which is a method of the SLiM
-class \code{\link{SpatialMap}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{smooth}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=717}{SLiM manual: page
-717}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Smooths (or blurs, one could say) the values of the spatial map by
-convolution with a kernel. The kernel is specified with a maximum distance
-maxDistance (beyond which the kernel cuts off to a value of zero), a kernel
-type functionType that should be "f", "l", "e", "n", "c", or "t", and
-additional parameters in the ellipsis ... that depend upon the kernel type and
-further specify its shape. The target spatial map is returned, to allow easy
-chaining of operations. The kernel specification is similar to that for the
-setInteractionType() method of InteractionType, but omits the maximum value of
-the kernel. Specifically, functionType may be "f", in which case no ellipsis
-arguments should be supplied; "l", similarly with no ellipsis arguments; "e",
-in which case the ellipsis should supply a numeric$ lambda (rate) parameter
-for a negative exponential function; "n", in which case the ellipsis should
-supply a numeric$ sigma (standard deviation) parameter for a Gaussian function;
-"c", in which case the ellipsis should supply a numeric$ scale parameter for a
-Cauchy distribution function; or "t", in which case the ellipsis should supply a
-numeric$ degrees of freedom and a numeric$ scale parameter for a t-distribution
-function. See the InteractionType class documentation for discussions of these
-kernel types. Distance metrics specified to this method, such as maxDistance and
-the additional kernel shape parameters, are measured in the distance scale of
-the spatial map - the same distance scale in which the spatial bounds of the map
-are specified. The operation is performed upon the grid values of the spatial
-map; distances are internally translated into the scale of the value grid. For
-non-periodic boundaries, clipping at the edge of the spatial map is done; in a
-2D map with no periodic boundaries, for example, the weights of edge and corner
-grid values are adjusted for their partial (one-half and one-quarter) coverage.
-For periodic boundaries, the smoothing operation will automatically wrap around
-based upon the assumption that the grid values at the two connected edges of the
-periodic boundary have identical values (which they should, since by definition
-they represent the same position in space). The density scale of the kernel
-has no effect and will be normalized; this is the reason that smooth(), unlike
-InteractionType, does not require specification of the maximum value of the
-kernel. This normalization prevents the kernel from increasing or decreasing the
-average spatial map value (apart from possible edge effects).
+float$ maxDistance, string$ functionType, ...) Smooths (or blurs, one could say) the values of the spatial map by convolution with a kernel. The kernel is specified with a maximum distance maxDistance (beyond which the kernel cuts off to a value of zero), a kernel type functionType that should be "f", "l", "e", "n", "c", or "t", and additional parameters in the ellipsis ... that depend upon the kernel type and further specify its shape. The target spatial map is returned, to allow easy chaining of operations. The kernel specification is similar to that for the setInteractionType() method of InteractionType, but omits the maximum value of the kernel. Specifically, functionType may be "f", in which case no ellipsis arguments should be supplied; "l", similarly with no ellipsis arguments; "e", in which case the ellipsis should supply a numeric$ lambda (rate) parameter for a negative exponential function; "n", in which case the ellipsis should supply a numeric$ sigma (standard deviation) parameter for a Gaussian function; "c", in which case the ellipsis should supply a numeric$ scale parameter for a Cauchy distribution function; or "t", in which case the ellipsis should supply a numeric$ degrees of freedom and a numeric$ scale parameter for a t-distribution function. See the InteractionType class documentation for discussions of these kernel types. Distance metrics specified to this method, such as maxDistance and the additional kernel shape parameters, are measured in the distance scale of the spatial map - the same distance scale in which the spatial bounds of the map are specified. The operation is performed upon the grid values of the spatial map; distances are internally translated into the scale of the value grid. For non-periodic boundaries, clipping at the edge of the spatial map is done; in a 2D map with no periodic boundaries, for example, the weights of edge and corner grid values are adjusted for their partial (one-half and one-quarter) coverage. For periodic boundaries, the smoothing operation will automatically wrap around based upon the assumption that the grid values at the two connected edges of the periodic boundary have identical values (which they should, since by definition they represent the same position in space). The density scale of the kernel has no effect and will be normalized; this is the reason that smooth(), unlike InteractionType, does not require specification of the maximum value of the kernel. This normalization prevents the kernel from increasing or decreasing the average spatial map value (apart from possible edge effects).
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -104,7 +60,6 @@ Other SpatialMap:
 \code{\link{subtract}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{SpatialMap}

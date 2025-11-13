@@ -952,13 +952,23 @@ slim_save_data_one <- function(df, file_name, format) {
 #' GUI (for debugging purposes)
 #'
 #' @export
-#' @examples
-#' if(interactive()) {
-#'   slim_open(minimal_slimr_script())
-#' }
+#' @examplesIf interactive()
+#' slim_open(minimal_slimr_script())
 slim_open <- function(slimr_script,
                       slim_gui_path = Sys.getenv("slim_gui_path")) {
 
+  # Check if SLiMGUI path is provided
+  if (slim_gui_path == "" || is.na(slim_gui_path)) {
+    stop("SLiMGUI path not found. Please set the 'slim_gui_path' environment variable to the path of your SLiMGUI or QtSLiM executable.",
+         call. = FALSE)
+  }
+
+  # Check if the executable exists
+  if (!file.exists(slim_gui_path)) {
+    stop("SLiMGUI executable not found at: ", slim_gui_path, "\n",
+         "Please ensure SLiMGUI is installed and the path is correct.",
+         call. = FALSE)
+  }
 
   platform <- get_os()
 

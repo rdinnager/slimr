@@ -3,7 +3,7 @@
 \name{addRecombinant}
 \alias{addRecombinant}
 \alias{Subpopulation$addRecombinant}
-\alias{.P$addRecombinant}
+\alias{P$addRecombinant}
 \title{SLiM method addRecombinant}
 \usage{
 addRecombinant(
@@ -13,194 +13,58 @@ addRecombinant(
   strand3,
   strand4,
   breaks2,
-  sex,
-  parent1,
-  parent2,
-  randomizeStrands,
-  count,
-  defer
+  sex = NULL,
+  parent1 = NULL,
+  parent2 = NULL,
+  randomizeStrands = NULL,
+  count = NULL,
+  defer = NULL
 )
 }
 \arguments{
-\item{strand1}{An object of type null or Genome object. Must be of length 1 (a
-singleton). See details for description.}
+\item{strand1}{An object of type null or Haplosome object (singleton).}
 
-\item{strand2}{An object of type null or Genome object. Must be of length 1 (a
-singleton). See details for description.}
+\item{strand2}{An object of type null or Haplosome object (singleton).}
 
-\item{breaks1}{An object of type null or integer. See details for description.}
+\item{breaks1}{An object of type null or integer.}
 
-\item{strand3}{An object of type null or Genome object. Must be of length 1 (a
-singleton). See details for description.}
+\item{strand3}{An object of type null or Haplosome object (singleton).}
 
-\item{strand4}{An object of type null or Genome object. Must be of length 1 (a
-singleton). See details for description.}
+\item{strand4}{An object of type null or Haplosome object (singleton).}
 
-\item{breaks2}{An object of type null or integer. See details for description.}
+\item{breaks2}{An object of type null or integer.}
 
-\item{sex}{An object of type null or float or string. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{sex}{An object of type null or float or string (singleton).}
 
-\item{parent1}{An object of type null or Individual object. Must be of length 1
-(a singleton). The default value is \code{NULL}. See details for description.}
+\item{parent1}{An object of type null or Individual object (singleton).}
 
-\item{parent2}{An object of type null or Individual object. Must be of length 1
-(a singleton). The default value is \code{NULL}. See details for description.}
+\item{parent2}{An object of type null or Individual object (singleton).}
 
-\item{randomizeStrands}{An object of type logical. Must be of length 1 (a
-singleton). The default value is \code{F}. See details for description.}
+\item{randomizeStrands}{An object of type null or logical (singleton).}
 
-\item{count}{An object of type integer. Must be of length 1 (a singleton). The
-default value is \code{1}. See details for description.}
+\item{count}{An object of type integer (singleton).}
 
-\item{defer}{An object of type logical. Must be of length 1 (a singleton). The
-default value is \code{F}. See details for description.}
+\item{defer}{An object of type logical (singleton).}
 }
 \value{
 An object of type Individual object.
 }
 \description{
-Documentation for SLiM function \code{addRecombinant}, which is a method of the
-SLiM class \code{\link{Subpopulation}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{addRecombinant}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=735}{SLiM manual: page
-735}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Generates a new offspring individual from the given parental genomes
-with the specified crossover breakpoints, queues it for addition to the target
-subpopulation, and returns it. The new offspring will not be visible as a
-member of the target subpopulation until the end of the offspring generation
-tick cycle stage. The target subpopulation will be used to locate applicable
-mutation() and modifyChild() callbacks governing the generation of the offspring
-individual (unlike the other addX() methods, because there are potentially up
-to four parental individuals to reference); recombination() callbacks will not
-be called by this method. This method is an advanced feature; most models will
-use addCrossed(), addSelfed(), or addCloned() instead. This method supports
-several possible configurations for strand1, strand2, and breaks1 (and the same
-applies for strand3, strand4, and breaks2). If strand1 and strand2 are both
-NULL, the corresponding genome in the generated offspring will be empty, as
-from addEmpty(), with no parental genomes and no added mutations; in this case,
-breaks1 must be NULL or zero-length. If strand1 is non-NULL but strand2 is NULL,
-the corresponding genome in the generated offspring will be a clonal copy of
-strand1 with mutations added, as from addCloned(); in this case, breaks1 must
-similarly be NULL or zero-length. If strand1 and strand2 are both non-NULL, the
-corresponding genome in the generated offspring will result from recombination
-between strand1 and strand2 with mutations added, as from addCrossed(), with
-strand1 being the initial copy strand; copying will switch between strands at
-each breakpoint in breaks1, which must be non-NULL but need not be sorted or
-uniqued (SLiM will sort and unique the supplied breakpoints internally). (It is
-not currently legal for strand1 to be NULL and strand2 non-NULL; that variant
-may be assigned some meaning in future.) Again, this discussion applies equally
-to strand3, strand4, and breaks2, mutatis mutandis. Note that when new mutations
-are generated by addRecombinant(), their subpopID property will be the id of
-the offspring's subpopulation, since the parental subpopulation is ambiguous
-in the general case; this behavior differs from the other add...() methods.
-The sex parameter is interpreted exactly as in addCrossed(); see that method
-for discussion. If the offspring sex is specified in any way (i.e., if sex is
-non-NULL), the strands provided must be compatible with the sex chosen. If the
-offspring sex is not specified (i.e., if sex is NULL), the sex will be inferred
-from the strands provided where possible (when modeling an X or Y chromosome),
-or will be chosen randomly otherwise (when modeling autosomes); it will not be
-inferred from the sex of the individuals possessing the parental strands, even
-when the reproductive mode is essentially clonal from a single parent, since
-such inference would be ambiguous in the general case. When modeling the X or
-Y, strand1 and strand2 must be X genomes (or NULL), and strand3 and strand4
-must both be X genomes or both be Y genomes (or NULL). By default, the offspring
-is considered to have no parents for the purposes of pedigree tracking, since
-there may be more than two "parents" in the general case. If pedigree tracking
-of parentage is desired, parent1 and/or parent2 may be passed to explicitly
-establish particular individuals as the parents of the offspring for purposes
-of pedigree tracking. In this case, if only one of parent1 and parent2 is
-non-NULL, that individual will be set as both of the parents of the offspring,
-mirroring the way that parentage is tracked for other cases such as addCloned()
-and addSelfed(). It is not required for parent1 or parent2 to actually be a
-genetic parent of the offspring at all, although typically they would be. If
-randomizeStrands is F (the default), strand1 will be the initial copy strand
-when generating the first gamete to form the offspring, and strand3 will be
-the initial copy strand when generating the second gamete. If randomizeStrands
-is T, then if strand1 and strand2 are both non-NULL, 50% of the time they
-will be swapped, making strand2 the initial copy strand for the first gamete;
-and similarly, if strand3 and strand4 are both non-NULL, 50% of the time they
-will be swapped, making strand4 the initial copy strand for the second gamete.
-This is probably usually the desired behavior, to avoid an inheritance bias
-due to a lack of randomization in the initial copy strand, so passing T for
-randomizeStrands is recommended unless you specifically desire otherwise.
-It is not the default behavior only for reasons of backward compatibility.
-These semantics allow several uses for addRecombinant(). When all strands
-are non-NULL, it is similar to addCrossed() except that the recombination
-breakpoints are specified explicitly, allowing very precise offspring generation
-without having to override SLiM's breakpoint generation with a recombination()
-callback. When only strand1 and strand3 are supplied, it is very similar to
-addCloned(), creating a clonal offspring, except that the two parental genomes
-need not belong to the same individual (whatever that might mean biologically).
-Supplying only strand1 is useful for modeling clonally reproducing haploids;
-the second genome of every offspring will be kept empty and will not receive new
-mutations. For a model of clonally reproducing haploids that undergo horizontal
-gene transfer (HGT), supplying only strand1 and strand2 will allow HGT from
-strand2 to replace segments of an otherwise clonal copy of strand1, while the
-second genome of the generated offspring will again be kept empty; this could
-be useful for modeling bacterial conjugation, for example. Other variations
-are also possible. The value of the meanParentAge property of the generated
-offspring is calculated from the mean parent age of each of its two genomes
-(whether they turn out to be null genomes or not); that may be an average of
-two values (if both offspring genomes have at least one parent), a single value
-(if one offspring genome has no parent), or no values (if both offspring genomes
-have no parent, in which case 0.0 results). The mean parent age of a given
-offspring genome is the mean of the ages of the parents of the two strands used
-to generate that offspring genome; if one strand is NULL then the mean parent
-age for that offspring genome is the age of the parent of the non-NULL strand,
-while if both strands are NULL then that offspring genome is parentless and
-is not used in the final calculation. In other words, if one offspring genome
-has two parents with ages A and B, and the other offspring genome has one
-parent with age C, the meanParentAge of the offspring will be (A+B+C+C) / 4,
-not (A+B+C) / 3. Note that gene conversion tracts are not explicitly supported
-by this method; the breaks vectors provide crossover breakpoints, which may be
-used to implement crossovers or simple gene conversion tracts. There is no way
-to specify complex gene conversion tracts with heteroduplex mismatch repair.
-Beginning in SLiM 4.1, the count parameter dictates how many offspring will
-be generated (previously, exactly one offspring was generated). Each offspring
-is generated independently, based upon the given parameters. The returned
-vector contains all generated offspring, except those that were rejected by a
-modifyChild() callback. If all offspring are rejected, object<Individual>(0)
-is returned, which is a zero-length object vector of class Individual; note
-that this is a change in behavior from earlier versions, which would return
-NULL. Beginning in SLiM 4.1, passing T for defer will defer the generation
-of the genomes of the produced offspring until the end of the reproduction
-phase. Genome generation can only be deferred if there are no active mutation()
-callbacks; otherwise, an error will result. Furthermore, when genome generation
-is deferred the mutations of the genomes of the generated offspring may not be
-accessed until reproduction is complete (whether from a modifyChild() callback
-or otherwise). There is little or no advantage to deferring genome generation
-at this time (it is in place for future expansion); the default of F for defer
-is generally preferable since it has fewer restrictions. Also beginning in SLiM
-4.1, in spatial models the spatial position of the offspring will be inherited
-(i.e., copied) from parent1; more specifically, the x property will be inherited
-in all spatial models (1D/2D/3D), the y property in 2D/3D models, and the z
-property in 3D models. Properties not inherited will be left uninitialized,
-as they were prior to SLiM 4.1. The parent's spatial position is probably not
-desirable in itself; the intention here is to make it easy to model the natal
-dispersal of all the new offspring for a given tick with a single vectorized
-call to pointDeviated(). If parent1 is NULL (the default), parent2 will be used;
-if it is also NULL, no spatial position will be inherited. Note that this method
-is only for use in nonWF models. See addCrossed() for further general notes on
-the addition of new offspring individuals.
+No<Haplosome>$ strand1, No<Haplosome>$ strand2, Ni breaks1, No<Haplosome>$ strand3, No<Haplosome>$ strand4, Ni breaks2, [Nfs$ sex = NULL], [No<Individual>$ parent1 = NULL], [No<Individual>$ parent2 = NULL], [Nl$ randomizeStrands = NULL], [integer$ count = 1], [logical$ defer = F]) Generates a new offspring individual from the given parental haplosomes with the specified crossover breakpoints, queues it for addition to the target subpopulation, and returns it. The new offspring will not be visible as a member of the target subpopulation until the end of the offspring generation tick cycle stage. This method is an advanced feature; most models will use addCrossed(), addSelfed(), or addCloned() instead. This method may only be used in single-chromosome models; in multi-chromosome models, use addMultiRecombinant(), a more general version of addRecombinant(). This method supports several possible configurations for strand1, strand2, and breaks1 (and the same applies for strand3, strand4, and breaks2). If strand1 and strand2 are both NULL, the corresponding haplosome in the generated offspring will be a null haplosome; in this case, breaks1 must be NULL or zero-length. If strand1 is non-NULL but strand2 is NULL, the corresponding haplosome in the generated offspring will be a clonal copy of strand1 with mutations added, as from addCloned(); in this case, breaks1 must again be NULL or zero-length. If strand1 and strand2 are both non-NULL, the corresponding haplosome in the generated offspring will result from recombination between strand1 and strand2 with mutations added, as from addCrossed(), with strand1 being the initial copy strand by default (but see below). Copying will switch between strands at each crossover breakpoint. Breakpoints may be supplied in breaks1, which need not be sorted or uniqued (SLiM will sort and unique the supplied breakpoints internally). Alternatively, breaks1 may be NULL, which requests that addRecombinant() draw breakpoints automatically to recombine strand1 and strand2, following SLiM's usual breakpoint-drawing algorithm. (If you do not want any breakpoints, pass integer(0), a zero-length integer vector, for breaks1.) Finally, it is not currently legal for strand1 to be NULL and strand2 non-NULL; that variant may be assigned some meaning in future. Again, this discussion applies equally to strand3, strand4, and breaks2, mutatis mutandis. Null haplosomes may never be passed as any of the four parental strands; pass NULL, not a null haplosome, if that strand is not inherited from. When modeling a chromosome that is intrinsically haploid, such as the Y, NULL must be passed for strand3, strand4, and breaks2; you cannot supply genetic information for an offspring haplosome that will not exist. Note that when new mutations are generated by addRecombinant(), their subpopID property will be the id of the offspring's subpopulation, since the parental subpopulation is ambiguous in the general case; this behavior differs from the other add...() methods. These semantics allow several uses for addRecombinant(). When all strands are non-NULL, it is similar to addCrossed() except that the recombination breakpoints can be specified explicitly, allowing very precise offspring generation without having to override SLiM's breakpoint generation with a recombination() callback. When only strand1 and strand3 are supplied, it is very similar to addCloned(), creating a clonal offspring, except that the two parental haplosomes need not belong to the same individual (whatever that might mean biologically). Supplying only strand1 is useful for modeling clonally reproducing haploids, or any chromosome type that is intrinsically haploid, such as the Y chromosome. For a model of clonally reproducing haploids that undergo horizontal gene transfer (HGT), supplying only strand1 and strand2 will allow HGT from strand2 to replace segments of an otherwise clonal copy of strand1, while the second haplosome of the generated offspring will be a null haplosome; this could be useful for modeling bacterial conjugation, for example. Other variations are also possible. The sex parameter optionally specifies the sex of the offspring. The default value of NULL for sex specifies "default behavior"; in a non-sexual model this is the only legal value, and produces a hermaphroditic offspring. In a sexual model, the "default behavior" of NULL is that the offspring's sex is dictated by the haplosome structure it inherits. For example, if the supplied strands indicate that the offspring will have two non-null haplosomes for a chromosome of type "X", the sex of the offspring must therefore be female, whereas if it will have one non-null "X" haplosome and one null "X" haplosome, it must therefore be male. SLiM will examine the supplied strands to determine such constraints and enforce them. The constraints defined by each chromosome type, as described in initializeChromosome(), must always be followed, even when using addRecombinant(). If sex is NULL and the sex of the offspring is unconstrained, the offspring will be chosen as male or female with equal probability. A value of "M" or "F" for sex specifies that the offspring should be male or female, respectively. A float value from 0.0 to 1.0 for sex provides the probability that the offspring will be male; a value of 0.0 will produce a female, a value of 1.0 will produce a male, and for intermediate values SLiM will draw the sex of the offspring randomly according to the specified probability. In these cases where sex is not NULL, SLiM will first determine the sex of the individual as just described, and will then examine the supplied strands to confirm that it is compatible with the sex that was determined. Again, if there is a conflict an error will be raised; you cannot specify the sex of an individual to be incompatible with the haplosomes that it inherits, and if you specify a sex with a string or float value it is up to you to ensure that that is compatible with the supplied strands. (If you need more flexibility, you should probably not use a sexual model at all, but simply use chromosome type "A" or "H" in a non-sexual model, track the sex of individuals yourself with a tag value such as tagL0, and manipulate haplosomes during reproduction however you wish; SLiM then imposes no constraints.) By default, the offspring is considered to have no parents, since there may be more than two "parents" in the general case. If specifying parentage is desired, parent1 and/or parent2 may be passed to explicitly; this will establish those individuals as the parents of the offspring for purposes of pedigree tracking, and for several other purposes described below. If only one of parent1 and parent2 is non-NULL, that individual will be set as both of the parents of the offspring, mirroring the way that parentage is tracked for other cases such as addCloned() and addSelfed(). It is not required for parent1 or parent2 to actually be a genetic parent of the offspring at all, although typically they would be. To benefit from the full functionality of addRecombinant() as described below, it is best to supply parent1 and parent2 when possible. The randomizeStrands parameter is used to control the recombination behavior of addRecombinant(). As described above, two parental strands with crossover breakpoints between them can be specified to generate one offspring strand with recombination - for example, with the strand1, strand2, and breaks1 parameters, but the same is true of the strand3, strand4, and breaks2 parameters, and the discussion that follows applies to both cases. If randomizeStrands is F, the supplied strands are used as given; for example, strand1 will be the initial copy strand when generating the first gamete to form the offspring. This mode should be used if you want explicit control over the initial copy strand; one example would be if your script is explicitly generating all four of the products of a meiosis event. If randomizeStrands is T, then if strand1 and strand2 are both non-NULL, 50% of the time they will be swapped, making strand2 the initial copy strand for the first gamete instead. This mode (randomizeStrands=T) is usually the desired behavior, to avoid an inheritance bias due to a lack of randomization in the initial copy strand, so passing T for randomizeStrands is recommended unless you specifically desire otherwise. The default value of randomizeStrands is NULL in order to force either T or F to be explicitly chosen whenever it would make a difference; if it is left as NULL, an error will be raised if generation of the specified offspring involves recombination, since then SLiM needs to know whether the value is T or F. (This unconventional approach has been adopted because the default value was F prior to SLiM 5, but T is almost always the correct behavior, as explained above. To try to prevent accidental bugs, this new policy was adopted to force the user to explicitly choose T or F whenever it matters.) The value of the meanParentAge property of the generated offspring is calculated from the mean parent age of each of its two haplosomes (whether they turn out to be null haplosomes or not); that may be an average of two values (if both offspring haplosomes have at least one parent), a single value (if one offspring haplosome has no parent), or no values (if both offspring haplosomes have no parent, in which case 0.0 results). The mean parent age of a given offspring haplosome is the mean of the ages of the parents of the two strands used to generate that offspring haplosome; if one strand is NULL then the mean parent age for that offspring haplosome is the age of the parent of the non-NULL strand, while if both strands are NULL then that offspring haplosome is parentless and is not used in the final calculation. In other words, if one offspring haplosome has two parents with ages A and B, and the other offspring haplosome has one parent with age C, the meanParentAge of the offspring will be (A+B+C+C) / 4, or equivalently, ((A+B)/2 + C) / 2, not (A+B+C) / 3. Callbacks can be involved in offspring generation with addRecombinant(), but because there are up to four strands with up to four different parents, things are a bit complicated and different from other add...() methods; the policy described here seems like the best compromise. The target subpopulation for the addRecombinant() call will be used to locate applicable mutation() and modifyChild() callbacks governing the generation of the offspring individual. On the other hand, recombination() callbacks will be found based upon the subpopulations to which parent1 and parent2 belong (for reasons discussed further in drawBreakpoints()); if a parent individual is not supplied, recombination() callbacks will not be called at all when generating the corresponding offspring haplosome. When breakpoints are explicitly supplied to addRecombinant() with breaks1 or breaks2, gene conversion tracts are not well-supported by this method; the breaks1 and breaks2 vectors provide simple crossover breakpoints, which may be used to implement crossovers or simple gene conversion tracts, but complex gene conversion tracts with heteroduplex mismatch repair are not supported in this mode of operation since there is no way to supply the relevant information. If, on the other hand, breaks1 or breaks2 is NULL when generating a haplosome with recombination, then as described above, addRecombinant() will generate breakpoints internally for that cross, and in this case, complex gene conversion tracts with heteroduplex mismatch repair are supported, since all of the necessary information is available. Beginning in SLiM 4.1, the count parameter dictates how many offspring will be generated (previously, exactly one offspring was generated). Each offspring is generated independently, based upon the given parameters. The returned vector contains all generated offspring, except those that were rejected by a modifyChild() callback. If all offspring are rejected, object<Individual>(0) is returned, which is a zero-length object vector of class Individual; note that this is a change in behavior from earlier versions, which would return NULL. Beginning in SLiM 4.1, passing T for defer requests that the generation of the haplosomes of the produced offspring be deferred until the end of the reproduction phase. SLiM may or may not honor this request; if not, the offspring will be generated synchronously just as if defer were F. Haplosome generation can only be deferred if there are no active mutation() callbacks; otherwise, an error will result. Furthermore, when haplosome generation is deferred the mutations of the haplosomes of the generated offspring may not be accessed until reproduction is complete (whether from a modifyChild() callback or otherwise). There is little or no advantage to deferring haplosome generation when running single-threaded; in that case, the default of F for defer is generally preferable since it has fewer restrictions. When running multi-threaded, deferring haplosome generation allows that task to be done in parallel (which is the reason this option exists). Also beginning in SLiM 4.1, in spatial models the spatial position of the offspring will be inherited (i.e., copied) from parent1; more specifically, the x property will be inherited in all spatial models (1D/2D/3D), the y property in 2D/3D models, and the z property in 3D models. Properties not inherited will be left uninitialized, as they were prior to SLiM 4.1. The parent's spatial position is probably not desirable in itself; the intention here is to make it easy to model the natal dispersal of all the new offspring for a given tick with a single vectorized call to deviatePositions() / pointDeviated(). If parent1 is NULL, parent2 will be used; if it is also NULL, no spatial position will be inherited. Note that this method is only for use in nonWF models. See addCrossed() for further general notes on the addition of new offspring individuals.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -210,11 +74,15 @@ Other Subpopulation:
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
+\code{\link{addMultiRecombinant}()},
 \code{\link{addSelfed}()},
 \code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
+\code{\link{deviatePositions}()},
+\code{\link{deviatePositionsWithMap}()},
+\code{\link{haplosomesForChromosomes}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
@@ -224,6 +92,7 @@ Other Subpopulation:
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{pointUniformWithMap}()},
 \code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
@@ -240,7 +109,6 @@ Other Subpopulation:
 \code{\link{takeMigrants}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Subpopulation}

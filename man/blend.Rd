@@ -3,60 +3,35 @@
 \name{blend}
 \alias{blend}
 \alias{SpatialMap$blend}
-\alias{.SM$blend}
+\alias{SM$blend}
 \title{SLiM method blend}
 \usage{
 blend(x, xFraction)
 }
 \arguments{
-\item{x}{An object of type integer or float or SpatialMap object. See details
-for description.}
+\item{x}{An object of type integer or float or SpatialMap object.}
 
-\item{xFraction}{An object of type float. Must be of length 1 (a singleton). See
-details for description.}
+\item{xFraction}{An object of type float (singleton).}
 }
 \value{
-An object of type SpatialMap object. Return will be of length 1 (a
-singleton)
+An object of type SpatialMap object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{blend}, which is a method of the SLiM
-class \code{\link{SpatialMap}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{blend}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=713}{SLiM manual: page
-713}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Blends x into the spatial map, giving x a weight of xFraction and the
-existing values in the target spatial map a weight of 1 - xFraction, such that
-the resulting values in the target spatial map are then given by x * xFraction
-+ target * (1 - xFraction). The value of xFraction must be in [0.0, 1.0]. One
-possibility is that x is a singleton integer or float value; in this case, x
-is blended with each grid value of the target spatial map. Another possibility
-is that x is an integer or float vector/ matrix/array of the same dimensions
-as the target spatial map's grid; in this case, each value of x is blended with
-the corresponding grid value of the target spatial map. The third possibility
-is that x is itself a (singleton) spatial map; in this case, each grid value of
-x is blended with the corresponding grid value of the target spatial map (and
-thus the two spatial maps must match in their spatiality, their spatial bounds,
-and their grid dimensions). The target spatial map is returned, to allow easy
-chaining of operations.
+ifo<SpatialMap> x, float$ xFraction) Blends x into the spatial map, giving x a weight of xFraction and the existing values in the target spatial map a weight of 1 - xFraction, such that the resulting values in the target spatial map are then given by x * xFraction + target * (1 - xFraction). The value of xFraction must be in [0.0, 1.0]. One possibility is that x is a singleton integer or float value; in this case, x is blended with each grid value of the target spatial map. Another possibility is that x is an integer or float vector/matrix/array of the same dimensions as the target spatial map's grid; in this case, each value of x is blended with the corresponding grid value of the target spatial map. The third possibility is that x is itself a (singleton) spatial map; in this case, each grid value of x is blended with the corresponding grid value of the target spatial map (and thus the two spatial maps must match in their spatiality, their spatial bounds, and their grid dimensions). The target spatial map is returned, to allow easy chaining of operations.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -83,7 +58,6 @@ Other SpatialMap:
 \code{\link{subtract}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{SpatialMap}

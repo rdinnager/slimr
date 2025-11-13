@@ -3,55 +3,33 @@
 \name{cachedFitness}
 \alias{cachedFitness}
 \alias{Subpopulation$cachedFitness}
-\alias{.P$cachedFitness}
+\alias{P$cachedFitness}
 \title{SLiM method cachedFitness}
 \usage{
 cachedFitness(indices)
 }
 \arguments{
-\item{indices}{An object of type null or integer. See details for description.}
+\item{indices}{An object of type null or integer.}
 }
 \value{
 An object of type float.
 }
 \description{
-Documentation for SLiM function \code{cachedFitness}, which is a method of the
-SLiM class \code{\link{Subpopulation}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{cachedFitness}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=738}{SLiM manual: page
-738}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-The fitness values calculated for the individuals at the indices
-given are returned. If NULL is passed, fitness values for all individuals in
-the subpopulation are returned. The fitness values returned are cached values;
-mutationEffect() and fitnessEffect() callbacks are therefore not called as
-a side effect of this method. It is always an error to call cachedFitness()
-from inside a mutationEffect() or fitnessEffect() callback, since fitness
-values are in the middle of being set up. In WF models, it is also an error to
-call cachedFitness() from a late() event, because fitness values for the new
-offspring generation have not yet been calculated and are undefined. In nonWF
-models, the population may be a mixture of new and old individuals, so instead,
-NAN will be returned as the fitness of any new individuals whose fitness has not
-yet been calculated. When new subpopulations are first created with addSubpop()
-or addSubpopSplit(), the fitness of all of the newly created individuals is
-considered to be 1.0 until fitness values are recalculated.
+Ni indices) The fitness values calculated for the individuals at the indices given are returned. If NULL is passed, fitness values for all individuals in the subpopulation are returned. The fitness values returned are cached values; mutationEffect() and fitnessEffect() callbacks are therefore not called as a side effect of this method. It is always an error to call cachedFitness() from inside a mutationEffect() or fitnessEffect() callback, since fitness values are in the middle of being set up. In WF models, it is also an error to call cachedFitness() from a late() event, because fitness values for the new offspring generation have not yet been calculated and are undefined. In nonWF models, the population may be a mixture of new and old individuals, so instead, NAN will be returned as the fitness of any new individuals whose fitness has not yet been calculated. When new subpopulations are first created with addSubpop() or addSubpopSplit(), the fitness of all of the newly created individuals is considered to be 1.0 until fitness values are recalculated.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -61,11 +39,15 @@ Other Subpopulation:
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
+\code{\link{addMultiRecombinant}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
 \code{\link{addSpatialMap}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
+\code{\link{deviatePositions}()},
+\code{\link{deviatePositionsWithMap}()},
+\code{\link{haplosomesForChromosomes}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
@@ -75,6 +57,7 @@ Other Subpopulation:
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{pointUniformWithMap}()},
 \code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
@@ -91,7 +74,6 @@ Other Subpopulation:
 \code{\link{takeMigrants}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Subpopulation}

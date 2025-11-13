@@ -3,77 +3,47 @@
 \name{calcPairHeterozygosity}
 \alias{calcPairHeterozygosity}
 \alias{SLiMBuiltin$calcPairHeterozygosity}
-\alias{.SB$calcPairHeterozygosity}
+\alias{SB$calcPairHeterozygosity}
 \title{SLiM method calcPairHeterozygosity}
 \usage{
-calcPairHeterozygosity(genome1, genome2, start, end, infiniteSites)
+calcPairHeterozygosity(
+  haplosome1,
+  haplosome2,
+  start = NULL,
+  end = NULL,
+  infiniteSites = NULL
+)
 }
 \arguments{
-\item{genome1}{An object of type Genome object. Must be of length 1 (a
-singleton). See details for description.}
+\item{haplosome1}{An object of type Haplosome object (singleton).}
 
-\item{genome2}{An object of type Genome object. Must be of length 1 (a
-singleton). See details for description.}
+\item{haplosome2}{An object of type Haplosome object (singleton).}
 
-\item{start}{An object of type null or integer. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{start}{An object of type null or integer (singleton).}
 
-\item{end}{An object of type null or integer. Must be of length 1 (a singleton).
-The default value is \code{NULL}. See details for description.}
+\item{end}{An object of type null or integer (singleton).}
 
-\item{infiniteSites}{An object of type logical. Must be of length 1 (a
-singleton). The default value is \code{T}. See details for description.}
+\item{infiniteSites}{An object of type logical (singleton).}
 }
 \value{
 An object of type float. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{calcPairHeterozygosity}, which is a method
-of the SLiM class \code{\link{SLiMBuiltin}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{calcPairHeterozygosity}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=752}{SLiM manual: page
-752}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Calculates the heterozygosity for a pair of genomes; these will
-typically be the two genomes of a diploid individual (individual.genome1 and
-individual.genome2), but any two genomes may be supplied. The calculation can
-be narrowed to apply to only a window - a subrange of the full chromosome - by
-passing the interval bounds [start, end] for the desired window. In this case,
-the vector of mutations used for the calculation will be subset to include
-only mutations within the specified window. The default behavior, with start
-and end of NULL, provides the genome-wide heterozygosity. The implementation
-calcPairHeterozygosity(), viewable with functionSource(), treats every mutation
-as independent in the heterozygosity calculations by default (i.e., with
-infiniteSites=T). If mutations are stacked, the heterozygosity calculated
-therefore depends upon the number of unshared mutations, not the number of
-differing sites. Similarly, if multiple Mutation objects exist in different
-genomes at the same site (whether representing different genetic states, or
-multiple mutational lineages for the same genetic state), each Mutation object
-is treated separately for purposes of the heterozygosity calculation, just as
-if they were at different sites. One could regard these choices as embodying an
-infinite-sites interpretation of the segregating mutations. In most biologically
-realistic models, such genetic states will be quite rare, and so the impact of
-this choice will be negligible; however, in some models this distinction may be
-important. The behavior of calcPairHeterozygosity() can be switched to calculate
-based upon the number of differing sites, rather than the number of unshared
-mutations, by passing infiniteSites=F.
+Calculates the heterozygosity for a pair of haplosomes; these will typically be two homologous haplosomes of the same diploid individual, but any two haplosomes associated with the same chromosome may be supplied. The calculation can be narrowed to apply to only a window - a subrange of the full chromosome - by passing the interval bounds [start, end] for the desired window. In this case, the vector of mutations used for the calculation will be subset to include only mutations within the specified window. The default behavior, with start and end of NULL, provides the haplosome-wide heterozygosity. The implementation calcPairHeterozygosity(), viewable with functionSource(), treats every mutation as independent in the heterozygosity calculations by default (i.e., with infiniteSites=T). If mutations are stacked, the heterozygosity calculated therefore depends upon the number of unshared mutations, not the number of differing sites. Similarly, if multiple Mutation objects exist in different haplosomes at the same site (whether representing different genetic states, or multiple mutational lineages for the same genetic state), each Mutation object is treated separately for purposes of the heterozygosity calculation, just as if they were at different sites. One could regard these choices as embodying an infinite-sites interpretation of the segregating mutations. In most biologically realistic models, such genetic states will be quite rare, and so the impact of this choice will be negligible; however, in some models this distinction may be important. The behavior of calcPairHeterozygosity() can be switched to calculate based upon the number of differing sites, rather than the number of unshared mutations, by passing infiniteSites=F.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -84,23 +54,31 @@ calcPairHeterozygosity()
 \seealso{
 Other SLiMBuiltin: 
 \code{\link{SB}},
+\code{\link{calcDxy}()},
 \code{\link{calcFST}()},
 \code{\link{calcHeterozygosity}()},
 \code{\link{calcInbreedingLoad}()},
+\code{\link{calcLD_D}()},
+\code{\link{calcLD_Rsquared}()},
+\code{\link{calcMeanFroh}()},
+\code{\link{calcPi}()},
+\code{\link{calcSFS}()},
+\code{\link{calcTajimasD}()},
 \code{\link{calcVA}()},
 \code{\link{calcWattersonsTheta}()},
 \code{\link{codonsToAminoAcids}()},
+\code{\link{codonsToNucleotides}()},
 \code{\link{mm16To256}()},
 \code{\link{mmJukesCantor}()},
 \code{\link{mmKimura}()},
 \code{\link{nucleotideCounts}()},
 \code{\link{nucleotideFrequencies}()},
 \code{\link{nucleotidesToCodons}()},
+\code{\link{randomNucleotides}()},
 \code{\link{summarizeIndividuals}()},
 \code{\link{treeSeqMetadata}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{SLiMBuiltin}

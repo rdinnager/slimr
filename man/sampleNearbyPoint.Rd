@@ -3,71 +3,39 @@
 \name{sampleNearbyPoint}
 \alias{sampleNearbyPoint}
 \alias{SpatialMap$sampleNearbyPoint}
-\alias{.SM$sampleNearbyPoint}
+\alias{SM$sampleNearbyPoint}
 \title{SLiM method sampleNearbyPoint}
 \usage{
 sampleNearbyPoint(point, maxDistance, functionType, ...)
 }
 \arguments{
-\item{point}{An object of type float. See details for description.}
+\item{point}{An object of type float.}
 
-\item{maxDistance}{An object of type float. Must be of length 1 (a singleton).
-See details for description.}
+\item{maxDistance}{An object of type float (singleton).}
 
-\item{functionType}{An object of type string. Must be of length 1 (a singleton).
-See details for description.}
+\item{functionType}{An object of type string (singleton).}
 
-\item{...}{An object of type NA. NA See details for description.}
+\item{...}{An object of type NA.}
 }
 \value{
 An object of type float.
 }
 \description{
-Documentation for SLiM function \code{sampleNearbyPoint}, which is a method of
-the SLiM class \code{\link{SpatialMap}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{sampleNearbyPoint}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=716}{SLiM manual: page
-716}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-For a spatial point supplied in point, returns a nearby point sampled
-from a kernel weighted by the spatial map's values. Only points within the
-maximum distance of the kernel, maxDistance, will be chosen, and the probability
-that a given point is chosen will be proportional to the density of the kernel
-at that point multiplied by the value of the map at that point (interpolated,
-if interpolation is enabled for the map). Negative values of the map will be
-treated as zero. The point returned will be within spatial bounds, respecting
-periodic boundaries if in effect (so there is no need to call pointPeriodic() on
-the result). The kernel is specified with a kernel shape, functionType, followed
-by zero or more ellipsis arguments; see smooth() for further information.
-For this method, at present only kernel types "f", "l", "e", "n", and "t" are
-supported, and type "t" is not presently supported for 3D kernels. This method
-can be used to find points in the vicinity of individuals that are favorable
-- possessing more resources, or better environmental conditions, etc. It can
-also be used to guide the dispersal or foraging behavior of individuals. See
-sampleImprovedNearbyPoint() for a variant that may be useful for directed
-movement across a landscape. Note that the algorithm for sampleNearbyPoint()
-works by rejection sampling, and so will be very inefficient if the maximum
-value of the map (anywhere, across the entire map) is much larger than
-the typical value of the map where individuals are. The algorithm for
-sampleImprovedNearbyPoint() is different, and does not exhibit this performance
-issue.
+float point, float$ maxDistance, string$ functionType, ...) For a spatial point supplied in point, returns a nearby point sampled from a kernel weighted by the spatial map's values. Only points within the maximum distance of the kernel, maxDistance, will be chosen, and the probability that a given point is chosen will be proportional to the density of the kernel at that point multiplied by the value of the map at that point (interpolated, if interpolation is enabled for the map). Negative values of the map will be treated as zero. The point returned will be within spatial bounds, respecting periodic boundaries if in effect (so there is no need to call pointPeriodic() on the result). The parameter point may contain any number of points; the returned vector will contain corresponding points sampled as described above. Each supplied point must provide coordinates precisely as specified by the spatiality of the target map; for example, if the target map's spatiality is "xz" (in an "xyz" species), each point must contain two elements, providing the x and z coordinate. Be careful; this means that in general it is not safe to pass an individual's spatialPosition property for point, for example (although it is safe if the spatiality of the map matches the dimensionality of the simulation); other properties on Individual exist for getting the individual's coordinates in a particular spatiality, such as the xz property for this example. Supplied points are not required to be within bounds, but since nearby points are sampled from the given kernel and must be within bounds, an infinite loop might result if a supplied point is substantially outside bounds. The kernel is specified with a kernel type, functionType, followed by zero or more ellipsis arguments; see smooth() for further information. For this method, at present only kernel types "f", "l", "e", "n", and "t" are supported, and type "t" is not presently supported for 3D kernels. The parameters that define the kernel's shape - the ellipsis arguments that follow functionType - may each, independently, be either a singleton or a vector with length equal to the number of points, providing a separate value for each point being processed. In this way, all of the nearby points can be drawn from the same kernel, or each from a separately defined kernel. Since maxDistance and functionType are required to be singletons, however, their values cannot vary from point to point in the present design. This method can be used to find points in the vicinity of individuals that are favorable - possessing more resources, or better environmental conditions, etc. It can also be used to guide the dispersal or foraging behavior of individuals. See sampleImprovedNearbyPoint() for a variant that may be useful for directed movement across a landscape. Note that the algorithm for sampleNearbyPoint() works by rejection sampling, and so will be very inefficient if the maximum value of the map (anywhere, across the entire map) is much larger than the typical value of the map where individuals are. The algorithm for sampleImprovedNearbyPoint() is different, and does not exhibit this performance issue. See also the Subpopulation method deviatePositionsWithMap(), which is conceptually similar to this method.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -94,7 +62,6 @@ Other SpatialMap:
 \code{\link{subtract}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{SpatialMap}

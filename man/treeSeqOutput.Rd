@@ -3,84 +3,62 @@
 \name{treeSeqOutput}
 \alias{treeSeqOutput}
 \alias{Species$treeSeqOutput}
-\alias{.Sp$treeSeqOutput}
+\alias{Sp$treeSeqOutput}
 \title{SLiM method treeSeqOutput}
 \usage{
-treeSeqOutput(path, simplify, includeModel, metadata)
+treeSeqOutput(
+  path,
+  simplify = NULL,
+  includeModel = NULL,
+  metadata = NULL,
+  overwriteDirectory = NULL
+)
 }
 \arguments{
-\item{path}{An object of type string. Must be of length 1 (a singleton). See
-details for description.}
+\item{path}{An object of type string (singleton).}
 
-\item{simplify}{An object of type logical. Must be of length 1 (a singleton).
-The default value is \code{T}. See details for description.}
+\item{simplify}{An object of type logical (singleton).}
 
-\item{includeModel}{An object of type logical. Must be of length 1 (a
-singleton). The default value is \code{T}. See details for description.}
+\item{includeModel}{An object of type logical (singleton).}
 
-\item{metadata}{An object of type null. Must be of length 1 (a singleton). The
-default value is \code{NULL}. See details for description.}
+\item{metadata}{An object of type null or Dictionary object (singleton).}
+
+\item{overwriteDirectory}{An object of type logical (singleton).}
 }
 \value{
 An object of type void.
 }
 \description{
-Documentation for SLiM function \code{treeSeqOutput}, which is a method of the
-SLiM class \code{\link{Species}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{treeSeqOutput}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=728}{SLiM manual: page
-728}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Outputs the current tree sequence recording tables to the path
-specified by path. This method may only be called if tree sequence recording
-has been turned on with initializeTreeSeq(). If simplify is T (the default),
-simplification will be done immediately prior to output; this is almost always
-desirable, unless a model wishes to avoid simplification entirely. (Note that if
-simplification is not done, then all genomes since the last simplification will
-be marked as samples in the resulting tree sequence.) A binary tree sequence
-file will be written to the specified path; a filename extension of .trees
-is suggested for this type of file. Normally, the full SLiM script used to
-generate the tree sequence is written out to the provenance entry of the tree
-sequence file, to the model subkey of the parameters top-level key. Supplying
-F for includeModel suppresses output of the full script; see section 27.4.6
-for further discussion. A Dictionary object containing user-generated metadata
-may be supplied with the metadata parameter. If present, this dictionary will
-be serialized as JSON and attached to the saved tree sequence under a key
-named user_metadata, within the SLiM key (see section 27.4.5). If tskit is
-used to read the tree sequence in Python, this metadata will automatically be
-deserialized and made available at ts.metadata["SLiM"]["user_metadata"]. This
-metadata dictionary is not used by SLiM, or by pyslim, tskit, or msprime; you
-may use it for any purpose you wish. Note that metadata may actually be any
-subclass of Dictionary, such as a DataFrame. It can even be a Species object
-such as sim, or a LogFile instance; however, only the keys and values contained
-by the object's Dictionary superclass state will be serialized into the metadata
-(properties of the subclass will be ignored). This metadata dictionary can be
-recovered from the saved file using the treeSeqMetadata() function.
+string$ path, [logical$ simplify = T], [logical$ includeModel = T], [No<Dictionary>$ metadata = NULL], [logical$ overwriteDirectory = F]) Outputs the current tree sequence recording tables to the path specified by path. This method may only be called if tree sequence recording has been turned on with initializeTreeSeq(). If simplify is T (the default), simplification will be done immediately prior to output; this is almost always desirable, unless a model wishes to avoid simplification entirely. (Note that if simplification is not done, then all haplosomes since the last simplification will be marked as samples in the resulting tree sequence.) In a model of a single chromosome, a binary tree sequence file will be written to the specified path; a filename extension of .trees is suggested for this type of file, and such a file is often referred to as a ".trees file". In a multi-chromosome model, a directory will instead be created at the specified path, and a separate .trees file will be created within that directory for each chromosome in the model, mirroring the fact that SLiM keeps a separate tree sequence for each chromosome in a multi-chromosome model. These .trees files will be given filenames based upon the symbol property of each chromosome, as provided to initializeChromosome(); for example, the tree sequence for a chromosome with symbol "X" will be saved as chromosome_X.trees within the specified directory. For the name of the directory itself, a suffix of _trees is suggested, rather than .trees, since the use of dot-extensions in directory names is not common; for example, "model_Q_seed_17_trees" would be a path you might pass to treeSeqOutput() as a directory name in a multi-chromosome model. Such a directory, containing separate .trees files for each chromosome, is called a "trees archive". Both .trees files and trees archives can be read by readFromPopulationFile(), as discussed in its documentation. Normally, the full SLiM script used to generate the tree sequence is written out to the provenance entry of the tree sequence file, to the model subkey of the parameters top-level key. Supplying F for includeModel suppresses output of the full script. A Dictionary object containing user-generated metadata may be supplied with the metadata parameter. If present, this dictionary will be serialized as JSON and attached to the saved tree sequence under a key named user_metadata, within the SLiM key. If tskit is used to read the tree sequence in Python, this metadata will automatically be deserialized and made available at ts.metadata["SLiM"]["user_metadata"]. This metadata dictionary is not used by SLiM, or by pyslim, tskit, or msprime; you may use it for any purpose you wish. Note that metadata may actually be any subclass of Dictionary, such as a DataFrame. It can even be a Species object such as sim, or a LogFile instance; however, only the keys and values contained by the object's Dictionary superclass state will be serialized into the metadata (properties of the subclass will be ignored). This metadata dictionary can be recovered from the saved file using the treeSeqMetadata() function. When saving a single .trees file, the standard behavior is to overwrite an existing file of the same name; the convenience of this generally outweighs the danger. When saving a trees archive, however, that balance shifts; overwriting an entire directory is potentially quite dangerous. For this reason, overwriteDirectory=F (the default) specifies that treeSeqOutput() should not overwrite an existing directory; it will instead raise an error. If overwriteDirectory is T, treeSeqOutput() will overwrite an existing directory of the same name (if the existing directory can be deleted without permissions errors and so forth), but only if the existing directory is empty or contains only files with a .trees suffix, for safety; if other files are present, an error will still be raised.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
 \seealso{
 Other Species: 
 \code{\link{Sp}},
+\code{\link{addPatternForClone}()},
+\code{\link{addPatternForCross}()},
+\code{\link{addPatternForNull}()},
+\code{\link{addPatternForRecombinant}()},
 \code{\link{addSubpop}()},
 \code{\link{addSubpopSplit}()},
+\code{\link{chromosomesOfType}()},
+\code{\link{chromosomesWithIDs}()},
+\code{\link{chromosomesWithSymbols}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{individualsWithPedigreeIDs}()},
 \code{\link{killIndividuals}()},
@@ -103,12 +81,12 @@ Other Species:
 \code{\link{simulationFinished}()},
 \code{\link{skipTick}()},
 \code{\link{subsetMutations}()},
+\code{\link{substitutionsOfType}()},
 \code{\link{treeSeqCoalesced}()},
 \code{\link{treeSeqRememberIndividuals}()},
 \code{\link{treeSeqSimplify}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Species}

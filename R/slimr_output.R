@@ -324,7 +324,7 @@ r_output_nucleotides <- function(name = "seqs", subpops = FALSE, both_genomes = 
 
   if(!both_genomes) {
     if(subpops) {
-      out1 <- slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".genome1.nucleotides())")),
+      out1 <- slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".haploidGenome1.nucleotides())")),
                    name, type = "slim_nucleotides",
                    expression = "slimr_output_nucleotides()",
                    ...)
@@ -334,7 +334,7 @@ r_output_nucleotides <- function(name = "seqs", subpops = FALSE, both_genomes = 
                    ...)
       return(list(out1, out2))
     } else {
-      slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".genome1.nucleotides())")),
+      slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".haploidGenome1.nucleotides())")),
                    name, type = "slim_nucleotides",
                    expression = "slimr_output_nucleotides()",
                    ...)
@@ -342,7 +342,7 @@ r_output_nucleotides <- function(name = "seqs", subpops = FALSE, both_genomes = 
   } else {
 
     if(subpops) {
-      out1 <- slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".genomes.nucleotides())")),
+      out1 <- slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".haplosomes.nucleotides())")),
                            name, type = "slim_nucleotides_both",
                            expression = "slimr_output_nucleotides()",
                            ...)
@@ -352,7 +352,7 @@ r_output_nucleotides <- function(name = "seqs", subpops = FALSE, both_genomes = 
                            ...)
       return(list(out1, out2))
     } else {
-      slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".genomes.nucleotides())")),
+      slimr_output(!!rlang::parse_expr(paste0("paste(", rlang::expr_deparse(inds), ".haplosomes.nucleotides())")),
                    name, type = "slim_nucleotides_both",
                    expression = "slimr_output_nucleotides()",
                    ...)
@@ -503,7 +503,7 @@ r_output_snp <- function(name = "snp", subpops = FALSE, ...) {
   if(subpops) {
     snp_out <- slimr_output(paste(size(sim.subpopulations.individuals),
                                   size(sim.mutations),
-                                  sim.subpopulations.individuals.genomes.containsMutations(sim.mutations)),
+                                  sim.subpopulations.individuals.haplosomes.containsMutations(sim.mutations)),
                             name, type = "slim_snp",
                             expression = "slimr_output_snp()",
                             ...)
@@ -519,7 +519,7 @@ r_output_snp <- function(name = "snp", subpops = FALSE, ...) {
   } else {
     snp_out <- slimr_output(paste(size(sim.subpopulations.individuals),
                                   size(sim.mutations),
-                                  sim.subpopulations.individuals.genomes.containsMutations(sim.mutations)),
+                                  sim.subpopulations.individuals.haplosomes.containsMutations(sim.mutations)),
                             name, type = "slim_snp",
                             expression = "slimr_output_snp()",
                             ...)

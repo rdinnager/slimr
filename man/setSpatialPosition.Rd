@@ -3,65 +3,33 @@
 \name{setSpatialPosition}
 \alias{setSpatialPosition}
 \alias{Individual$setSpatialPosition}
-\alias{.I$setSpatialPosition}
+\alias{In$setSpatialPosition}
 \title{SLiM method setSpatialPosition}
 \usage{
 setSpatialPosition(position)
 }
 \arguments{
-\item{position}{An object of type float. See details for description.}
+\item{position}{An object of type float.}
 }
 \value{
 An object of type void.
 }
 \description{
-Documentation for SLiM function \code{setSpatialPosition}, which is a method of
-the SLiM class \code{\link{Individual}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{setSpatialPosition}, which is a method of the SLiM class \code{\link{Individual}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=684}{SLiM manual: page
-684}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Sets the spatial position of the individual (as accessed through
-the spatialPosition property). The length of position (the number of
-coordinates in the spatial position of an individual) depends upon the
-spatial dimensionality declared with initializeSLiMOptions(). If the spatial
-dimensionality is zero (as it is by default), it is an error to call this
-method. The elements of position are set into the values of the x, y, and z
-properties (if those properties are encompassed by the spatial dimensionality
-of the simulation). In other words, if the declared dimensionality is "xy",
-calling individual.setSpatialPosition(c(1.0, 0.5)) property is equivalent to
-individual.x = 1.0; individual.y = 0.5; individual.z is not set (even if a third
-value is supplied in position) since it is not encompassed by the simulation's
-dimensionality in this example. Note that this is an Eidos class method,
-somewhat unusually, which allows it to work in a special way when called on a
-vector of individuals. When the target vector of individuals is non-singleton,
-this method can do one of two things. If position contains just a single point
-(i.e., is equal in length to the spatial dimensionality of the model), the
-spatial position of all of the target individuals will be set to the given
-point. Alternatively, if position contains one point per target individual
-(i.e., is equal in length to the number of individuals multiplied by the spatial
-dimensionality of the model), the spatial position of each target individual
-will be set to the corresponding point from position (where the point data is
-concatenated, not interleaved, just as it would be returned by accessing the
-spatialPosition property on the vector of target individuals). Calling this
-method with a position vector of any other length is an error.
+float position) Sets the spatial position of the individual (as accessed through the spatialPosition property). The length of position (the number of coordinates in the spatial position of an individual) depends upon the spatial dimensionality declared with initializeSLiMOptions(). If the spatial dimensionality is zero (as it is by default), it is an error to call this method. The elements of position are set into the values of the x, y, and z properties (if those properties are encompassed by the spatial dimensionality of the simulation). In other words, if the declared dimensionality is "xy", calling individual.setSpatialPosition(c(1.0, 0.5)) property is equivalent to individual.x = 1.0; individual.y = 0.5; individual.z is not set (even if a third value is supplied in position) since it is not encompassed by the simulation's dimensionality in this example. Note that this is an Eidos class method, somewhat unusually, which allows it to work in a special way when called on a vector of individuals. When the target vector of individuals is non-singleton, this method can do one of two things. If position contains just a single point (i.e., is equal in length to the spatial dimensionality of the model), the spatial position of all of the target individuals will be set to the given point. Alternatively, if position contains one point per target individual (i.e., is equal in length to the number of individuals multiplied by the spatial dimensionality of the model), the spatial position of each target individual will be set to the corresponding point from position (where the point data is concatenated, not interleaved, just as it would be returned by accessing the spatialPosition property on the vector of target individuals). Calling this method with a position vector of any other length is an error.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -70,13 +38,17 @@ Other Individual:
 \code{\link{In}},
 \code{\link{containsMutations}()},
 \code{\link{countOfMutationsOfType}()},
+\code{\link{haplosomesForChromosomes}()},
+\code{\link{mutationsFromHaplosomes}()},
+\code{\link{outputIndividuals}()},
+\code{\link{outputIndividualsToVCF}()},
+\code{\link{readIndividualsFromVCF}()},
 \code{\link{relatedness}()},
 \code{\link{sharedParentCount}()},
 \code{\link{sumOfMutationsOfType}()},
 \code{\link{uniqueMutationsOfType}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Individual}

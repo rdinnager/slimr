@@ -20,7 +20,7 @@ GUI (for debugging purposes)
 Title
 }
 \examples{
-if(interactive()) {
-  slim_open(minimal_slimr_script())
-}
+\dontshow{if (interactive()) withAutoprint(\{ # examplesIf}
+slim_open(minimal_slimr_script())
+\dontshow{\}) # examplesIf}
 }

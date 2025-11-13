@@ -3,49 +3,33 @@
 \name{addCycleStage}
 \alias{addCycleStage}
 \alias{LogFile$addCycleStage}
-\alias{.LF$addCycleStage}
+\alias{LF$addCycleStage}
 \title{SLiM method addCycleStage}
 \usage{
 addCycleStage(void)
 }
 \arguments{
-\item{void}{An object of type . See details for description.}
+\item{void}{An object of type object.}
 }
 \value{
-An object of type void or void or void or void or void or void or void
-or void or void or void or void or void or void or void or void or void or void
-or void or logical.
+An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical.
 }
 \description{
-Documentation for SLiM function \code{addCycleStage}, which is a method of the
-SLiM class \code{\link{LogFile}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{addCycleStage}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=701}{SLiM manual: page
-701}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Adds a new data column that provides the cycle stage, named
-cycle_stage. The stage is provided as a string, and will typically be "first",
-"early", "late", or "end" (the latter used for the point in time at which
-end-of-tick automatic logging occurs). Other possible values are discussed in
-the documentation for the cycleStage property of Community, which this column
-reflects.
+void) Adds a new data column that provides the cycle stage, named cycle_stage. The new column will be logged each time that a row is generated, either by automatic logging or by a call to logRow(). The stage is provided as a string, and will typically be "first", "early", "late", or "end" (the latter used for the point in time at which end-of-tick automatic logging occurs). Other possible values are discussed in the documentation for the cycleStage property of Community, which this column reflects.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -72,7 +56,6 @@ Other LogFile:
 \code{\link{willAutolog}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{LogFile}

@@ -3,47 +3,33 @@
 \name{mapColor}
 \alias{mapColor}
 \alias{SpatialMap$mapColor}
-\alias{.SM$mapColor}
+\alias{SM$mapColor}
 \title{SLiM method mapColor}
 \usage{
 mapColor(value)
 }
 \arguments{
-\item{value}{An object of type numeric. See details for description.}
+\item{value}{An object of type numeric.}
 }
 \value{
 An object of type string.
 }
 \description{
-Documentation for SLiM function \code{mapColor}, which is a method of the SLiM
-class \code{\link{SpatialMap}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{mapColor}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=714}{SLiM manual: page
-714}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Uses the spatial map's color-translation machinery (as defined by
-the valueRange and colors parameters to defineSpatialMap()) to translate each
-element of value into a corresponding color string. If the spatial map does not
-have color-translation capabilities, an error will result. See the documentation
-for defineSpatialMap() for information regarding the details of color
-translation. See the Eidos manual for further information on color strings.
+numeric value) Uses the spatial map's color-translation machinery (as defined by the valueRange and colors parameters to defineSpatialMap()) to translate each element of value into a corresponding color string. If the spatial map does not have color-translation capabilities, an error will result. See the documentation for defineSpatialMap() for information regarding the details of color translation. See the Eidos manual for further information on color strings.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -70,7 +56,6 @@ Other SpatialMap:
 \code{\link{subtract}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{SpatialMap}

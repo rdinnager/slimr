@@ -3,49 +3,33 @@
 \name{addPopulationSize}
 \alias{addPopulationSize}
 \alias{LogFile$addPopulationSize}
-\alias{.LF$addPopulationSize}
+\alias{LF$addPopulationSize}
 \title{SLiM method addPopulationSize}
 \usage{
-addPopulationSize(species)
+addPopulationSize(species = NULL)
 }
 \arguments{
-\item{species}{An object of type null or Species object. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{species}{An object of type null or Species object (singleton).}
 }
 \value{
-An object of type void or void or void or void or void or void or void
-or void or void or void or void or void or void or void or void or void or void
-or void or logical.
+An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical.
 }
 \description{
-Documentation for SLiM function \code{addPopulationSize}, which is a method of
-the SLiM class \code{\link{LogFile}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{addPopulationSize}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
-702}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Adds a new data column that provides the total population size for
-species. In single-species models, species may be NULL to indicate that single
-species. The column will simply be named num_individuals in single-species
-models; an underscore and the name of the species will be appended in
-multispecies models.
+[No<Species>$ species = NULL]) Adds a new data column that provides the total population size for species. The new column will be logged each time that a row is generated, either by automatic logging or by a call to logRow(). In single-species models, species may be NULL to indicate that single species. The column will simply be named num_individuals in single-species models; an underscore and the name of the species will be appended in multispecies models.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -72,7 +56,6 @@ Other LogFile:
 \code{\link{willAutolog}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{LogFile}

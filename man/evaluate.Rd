@@ -3,78 +3,33 @@
 \name{evaluate}
 \alias{evaluate}
 \alias{InteractionType$evaluate}
-\alias{.IT$evaluate}
+\alias{IT$evaluate}
 \title{SLiM method evaluate}
 \usage{
 evaluate(subpops)
 }
 \arguments{
-\item{subpops}{An object of type integer or Subpopulation object. See details
-for description.}
+\item{subpops}{An object of type integer or Subpopulation object.}
 }
 \value{
 An object of type void.
 }
 \description{
-Documentation for SLiM function \code{evaluate}, which is a method of the SLiM
-class \code{\link{InteractionType}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{evaluate}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=693}{SLiM manual: page
-693}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Snapshots model state in preparation for the use of the interaction,
-for the receiver and exerter subpopulations specified by subpops. The
-subpopulations may be supplied either as integer IDs, or as Subpopulation
-objects. This method will discard all previously cached data for the
-subpopulation(s), and will cache the current spatial positions of all
-individuals they contain (so that the spatial positions of those individuals
-may then change without disturbing the state of the interaction at the moment
-of evaluation). It will also cache which individuals in the subpopulation are
-eligible to act as exerters, according to the configured exerter constraints,
-but it will not cache such eligibility information for receiver constraints
-(which are applied at the time a spatial query is made). Particular interaction
-distances and strengths are not computed by evaluate(), and interaction()
-callbacks will not be called in response to this method; that work is deferred
-until required to satisfy a query (at which point the tick and cycle counters
-may have advanced, so be careful with the tick ranges used in defining
-interaction() callbacks). You must explicitly call evaluate() at an appropriate
-time in the tick cycle before the interaction is used, but after any relevant
-changes have been made to the population. SLiM will invalidate any existing
-interactions after any portion of the tick cycle in which new individuals have
-been born or existing individuals have died. In a WF model, this occurs just
-before late() events execute (see the WF tick cycle diagram in chapter 23),
-so late() events are often the appropriate place to put evaluate() calls, but
-first() or early() events can work too if the interaction is not needed until
-that point in the tick cycle anyway. In nonWF models, on the other hand, new
-offspring are produced just before early() events and then individuals die
-just before late() events (see the nonWF tick cycle diagram in chapter 24), so
-interactions will be invalidated twice during each tick cycle. This means that
-in a nonWF model, an interaction that influences reproduction should usually be
-evaluated in a first() event, while an interaction that influences fitness or
-mortality should usually be evaluated in an early() event (and an interaction
-that affects both may need to be evaluated at both times). If an interaction is
-never evaluated for a given subpopulation, it is guaranteed that there will be
-essentially no memory or computational overhead associated with the interaction
-for that subpopulation. Furthermore, attempting to query an interaction for a
-receiver or exerter in a subpopulation that has not been evaluated is guaranteed
-to raise an error.
+io<Subpopulation> subpops) Snapshots model state in preparation for the use of the interaction, for the receiver and exerter subpopulations specified by subpops. The subpopulations may be supplied either as integer IDs, or as Subpopulation objects. This method will discard all previously cached data for the subpopulation(s), and will cache the current spatial positions of all individuals they contain (so that the spatial positions of those individuals may then change without disturbing the state of the interaction at the moment of evaluation). It will also cache which individuals in the subpopulation are eligible to act as exerters, according to the configured exerter constraints, but it will not cache such eligibility information for receiver constraints (which are applied at the time a spatial query is made). Particular interaction distances and strengths are not computed by evaluate(), and interaction() callbacks will not be called in response to this method; that work is deferred until required to satisfy a query (at which point the tick and cycle counters may have advanced, so be careful with the tick ranges used in defining interaction() callbacks). You must explicitly call evaluate() at an appropriate time in the tick cycle before the interaction is used, but after any relevant changes have been made to the population. SLiM will invalidate any existing interactions after any portion of the tick cycle in which new individuals have been born or existing individuals have died. In a WF model, this occurs just before late() events execute (see the WF tick cycle diagram), so late() events are often the appropriate place to put evaluate() calls, but first() or early() events can work too if the interaction is not needed until that point in the tick cycle anyway. In nonWF models, on the other hand, new offspring are produced just before early() events and then individuals die just before late() events (see the nonWF tick cycle diagram), so interactions will be invalidated twice during each tick cycle. This means that in a nonWF model, an interaction that influences reproduction should usually be evaluated in a first() event, while an interaction that influences fitness or mortality should usually be evaluated in an early() event (and an interaction that affects both may need to be evaluated at both times). If an interaction is never evaluated for a given subpopulation, it is guaranteed that there will be essentially no memory or computational overhead associated with the interaction for that subpopulation. Furthermore, attempting to query an interaction for a receiver or exerter in a subpopulation that has not been evaluated is guaranteed to raise an error.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -101,7 +56,6 @@ Other InteractionType:
 \code{\link{unevaluate}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{InteractionType}

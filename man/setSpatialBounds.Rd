@@ -3,65 +3,33 @@
 \name{setSpatialBounds}
 \alias{setSpatialBounds}
 \alias{Subpopulation$setSpatialBounds}
-\alias{.P$setSpatialBounds}
+\alias{P$setSpatialBounds}
 \title{SLiM method setSpatialBounds}
 \usage{
 setSpatialBounds(bounds)
 }
 \arguments{
-\item{bounds}{An object of type numeric. See details for description.}
+\item{bounds}{An object of type numeric.}
 }
 \value{
 An object of type void.
 }
 \description{
-Documentation for SLiM function \code{setSpatialBounds}, which is a method of
-the SLiM class \code{\link{Subpopulation}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{setSpatialBounds}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=745}{SLiM manual: page
-745}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Set the spatial boundaries of the subpopulation to bounds. This
-method may be called only for simulations in which continuous space has been
-enabled with initializeSLiMOptions(). The length of bounds must be double the
-spatial dimensionality, so that it supplies both minimum and maximum values
-for each coordinate. More specifically, for a dimensionality of "x", bounds
-should supply (x0, x1) values; for dimensionality "xy" it should supply (x0,
-y0, x1, y1) values; and for dimensionality "xyz" it should supply (x0, y0,
-z0, x1, y1, z1) (in that order). These boundaries will be used by SLiMgui to
-calibrate the display of the subpopulation, and will be used by methods such
-as pointInBounds(), pointReflected(), pointStopped(), and pointUniform(). The
-default spatial boundaries for all subpopulations span the interval [0,1] in
-each dimension. Spatial dimensions that are periodic (as established with the
-periodicity parameter to initializeSLiMOptions()) must have a minimum coordinate
-value of 0.0 (a restriction that allows the handling of periodicity to be
-somewhat more efficient). The current spatial bounds for the subpopulation
-may be obtained through the spatialBounds property. The spatial bounds of a
-subpopulation are shared with any SpatialMap objects added to the subpopulation.
-For this reason, once a spatial map has been added to a subpopulation, the
-spatial bounds of the subpopulation can no longer be changed (because it
-would stretch or shrink the associated spatial map, which does not seem to
-make physical sense). The bounds for a subpopulation should therefore be
-configured before any spatial maps are added to it. If those bounds do need
-to change subsequently, any associated spatial maps must first be removed with
-removeSpatialMap(), to ensure model consistency.
+numeric bounds) Set the spatial boundaries of the subpopulation to bounds. This method may be called only for simulations in which continuous space has been enabled with initializeSLiMOptions(). The length of bounds must be double the spatial dimensionality, so that it supplies both minimum and maximum values for each coordinate. More specifically, for a dimensionality of "x", bounds should supply (x0, x1) values; for dimensionality "xy" it should supply (x0, y0, x1, y1) values; and for dimensionality "xyz" it should supply (x0, y0, z0, x1, y1, z1) (in that order). These boundaries will be used by SLiMgui to calibrate the display of the subpopulation, and will be used by methods such as pointInBounds(), pointReflected(), pointStopped(), and pointUniform(). The default spatial boundaries for all subpopulations span the interval [0,1] in each dimension. Spatial dimensions that are periodic (as established with the periodicity parameter to initializeSLiMOptions()) must have a minimum coordinate value of 0.0 (a restriction that allows the handling of periodicity to be somewhat more efficient). The current spatial bounds for the subpopulation may be obtained through the spatialBounds property. The spatial bounds of a subpopulation are shared with any SpatialMap objects added to the subpopulation. For this reason, once a spatial map has been added to a subpopulation, the spatial bounds of the subpopulation can no longer be changed (because it would stretch or shrink the associated spatial map, which does not seem to make physical sense). The bounds for a subpopulation should therefore be configured before any spatial maps are added to it. If those bounds do need to change subsequently, any associated spatial maps must first be removed with removeSpatialMap(), to ensure model consistency.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -71,12 +39,16 @@ Other Subpopulation:
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
+\code{\link{addMultiRecombinant}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
 \code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
+\code{\link{deviatePositions}()},
+\code{\link{deviatePositionsWithMap}()},
+\code{\link{haplosomesForChromosomes}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
@@ -86,6 +58,7 @@ Other Subpopulation:
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{pointUniformWithMap}()},
 \code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
@@ -101,7 +74,6 @@ Other Subpopulation:
 \code{\link{takeMigrants}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Subpopulation}

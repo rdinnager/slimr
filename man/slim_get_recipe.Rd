@@ -4,17 +4,26 @@
 \alias{slim_get_recipe}
 \title{Get a SLiM recipe}
 \usage{
-slim_get_recipe(recipe = 1)
+slim_get_recipe(recipe_num)
 }
 \arguments{
-\item{recipe}{Integer or Character specifying the recipe number, or the recipe name.}
+\item{recipe_num}{Character or numeric. Can be a recipe name (e.g., "4.1") or numeric index (e.g., 1, 2, 3).}
 }
 \value{
-A SLiM recipe as a length 1 character vector
+Character vector containing the SLiM recipe code
 }
 \description{
 Get a SLiM recipe
 }
 \examples{
-slim_get_recipe(recipe = "4.1")
+\dontrun{
+# Get recipe by name
+recipe <- slim_get_recipe("4.1")
+
+# Get recipe by index
+recipe <- slim_get_recipe(1)
+
+# Convert to slimr_script
+script <- as_slimr_script(slim_get_recipe(1))
+}
 }

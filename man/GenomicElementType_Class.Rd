@@ -8,56 +8,20 @@
 Documentation for GenomicElementType class from SLiM
 }
 \details{
-This class represents a type of genomic element, with particular
-mutation types. The genomic
-element types currently defined in the simulation are defined as global
-constants with the same
-names used in the SLiM input file - g1, g2, and so forth. Section 1.5.4 presents
-an overview of the
-conceptual role of this class.
+5.6.1 GenomicElementType properties 5.6 Class GenomicElementType
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{setMutationFractions}}}
-\item{\code{\link{setMutationMatrix}}}
 }
 This class has the following properties:
 \describe{
-\item{color}{A property of type string. It is of length one (a singleton). This
-property is a variable, so it is modifiable. \strong{Property Description:}
-The color used to display genomic elements of this type in SLiMgui. Outside
-of SLiMgui, this property still exists, but is not used by SLiM. Colors may be
-specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see the
-Eidos manual). If color is the empty string, "", SLiMgui's default color scheme
-is used; this is the default for new GenomicElementType objects. }
-\item{id}{A property of type integer. It is of length one (a singleton). This
-property is a constant, so it is not modifiable. \strong{Property Description:}
-The identifier for this genomic element type; for genomic element type g3, for
-example, this is 3. }
-\item{mutationFractions}{A property of type float. This property is a constant,
-so it is not modifiable. \strong{Property Description:} For each MutationType
-represented in this genomic element type, this property has the corresponding
-fraction of all mutations that will be drawn from that MutationType. }
-\item{mutationMatrix}{A property of type float. This property is a
-constant, so it is not modifiable. \strong{Property Description:} The
-nucleotide mutation matrix used for this genomic element type, set up by
-initializeGenomicElementType() and setMutationMatrix(). This property is only
-defined in nucleotide-based models; it is unavailable otherwise. }
-\item{mutationTypes}{A property of type MutationType object. This property
-is a constant, so it is not modifiable. \strong{Property Description:} The
-MutationType instances used by this genomic element type. }
-\item{species}{A property of type Species object. It is of length one
-(a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The species to which the target object belongs. }
-\item{tag}{A property of type integer. It is of length one (a singleton). This
-property is a variable, so it is modifiable. \strong{Property Description:}
-A user-defined integer value. The value of tag is initially undefined, and
-it is an error to try to read it; if you wish it to have a defined value, you
-must arrange that yourself by explicitly setting its value prior to using it
-elsewhere in your code. The value of tag is not used by SLiM; it is free for
-you to use. See also the getValue() and setValue() methods (provided by the
-Dictionary class; see the Eidos manual), for another way of attaching state to
-genomic element types.}
-
+\item{color}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The color used to display genomic elements of this type in SLiMgui. Outside of SLiMgui, this property still exists, but is not used by SLiM. Colors may be specified by name, or with hexadecimal RGB values of the form "#RRGGBB". If color is the empty string, "", SLiMgui's default color scheme is used; this is the default for new GenomicElementType objects.}
+\item{id}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The identifier for this genomic element type; for genomic element type g3, for example, this is 3.}
+\item{mutationFractions}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} For each MutationType represented in this genomic element type, this property has the corresponding fraction of all mutations that will be drawn from that MutationType.}
+\item{mutationMatrix}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The nucleotide mutation matrix used for this genomic element type, set up by initializeGenomicElementType() and setMutationMatrix(). This property is only defined in nucleotide-based models; it is unavailable otherwise.}
+\item{mutationTypes}{A property of type MutationType object.  This property is a constant, so it is not modifiable. \strong{Property Description:} The MutationType instances used by this genomic element type.}
+\item{species}{A property of type Species object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The species to which the target object belongs.}
+\item{tag}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to genomic element types.}
 }
 }
 \seealso{

@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(timeout 120 Rscript:*)",
+      "Bash(run_examples_output.txt)",
+      "Bash(do sed -n '/\\\\examples/,/^}/p' \"$f\")",
+      "Bash(Rscript:*)",
+      "Bash(tee:*)",
+      "Bash(/dev/null)",
+      "Bash(cat:*)",
+      "Bash(if [ -f final_verification_check.log ])",
+      "Bash(then tail -50 final_verification_check.log)",
+      "Bash(else echo \"Log file not found - running fresh check\")",
+      "Bash(fi)",
+      "Bash(NUL)",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

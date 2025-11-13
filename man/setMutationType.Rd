@@ -3,57 +3,33 @@
 \name{setMutationType}
 \alias{setMutationType}
 \alias{Mutation$setMutationType}
-\alias{.M$setMutationType}
+\alias{M$setMutationType}
 \title{SLiM method setMutationType}
 \usage{
 setMutationType(mutType)
 }
 \arguments{
-\item{mutType}{An object of type integer or MutationType object. Must be of
-length 1 (a singleton). See details for description.}
+\item{mutType}{An object of type integer or MutationType object (singleton).}
 }
 \value{
 An object of type void or void.
 }
 \description{
-Documentation for SLiM function \code{setMutationType}, which is a method of the
-SLiM class \code{\link{Mutation}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{setMutationType}, which is a method of the SLiM class \code{\link{Mutation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=705}{SLiM manual: page
-705}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Set the mutation type of the mutation to mutType (which may be
-specified as either an integer identifier or a MutationType object). This
-implicitly changes the dominance coefficient of the mutation to that of the new
-mutation type, since the dominance coefficient is a property of the mutation
-type. On the other hand, the selection coefficient of the mutation is not
-changed, since it is a property of the mutation object itself; it can be changed
-explicitly using the setSelectionCoeff() method if so desired. The mutation
-type of a mutation is normally a constant in simulations, so be sure you know
-what you are doing. Changing this will normally affect the fitness values
-calculated toward the end of the current tick; if you want current fitness
-values to be affected, you can call the Species method recalculateFitness()
-- but see the documentation of that method for caveats. In nucleotide-based
-models, a restriction applies: nucleotide-based mutations may not be changed to
-a non-nucleotide-based mutation type, and non-nucleotide-based mutations may not
-be changed to a nucleotide-based mutation type.
+io<MutationType>$ mutType) Set the mutation type of the mutation to mutType (which may be specified as either an integer identifier or a MutationType object). This implicitly changes the dominance coefficient of the mutation to that of the new mutation type, since the dominance coefficient is a property of the mutation type. On the other hand, the selection coefficient of the mutation is not changed, since it is a property of the mutation object itself; it can be changed explicitly using the setSelectionCoeff() method if so desired. The mutation type of a mutation is normally a constant in simulations, so be sure you know what you are doing. Changing this will normally affect the fitness values calculated toward the end of the current tick; if you want current fitness values to be affected, you can call the Species method recalculateFitness() - but see the documentation of that method for caveats. In nucleotide-based models, a restriction applies: nucleotide-based mutations may not be changed to a non-nucleotide-based mutation type, and non-nucleotide-based mutations may not be changed to a nucleotide-based mutation type.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -63,7 +39,6 @@ Other Mutation:
 \code{\link{setSelectionCoeff}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Mutation}

@@ -2,94 +2,33 @@
 % Please edit documentation in R/slim_lang.R
 \name{eidos_type}
 \alias{eidos_type}
-\alias{Eidos$type}
-\alias{.E$type}
-\title{Eidos method type}
+\alias{E$type}
+\title{SLiM function type}
 \usage{
 eidos_type(x)
 }
 \arguments{
-\item{x}{An object of type any. See details for description.}
+\item{x}{An object of type any.}
 }
 \value{
 An object of type string. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for Eidos function \code{type}, which is a method of
-\code{\link{Eidos}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{type}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Returns the type of x, as a string: "NULL", "logical", "integer",
-"float", "string", or "object". Contrast this with elementType().
-(lis)grep(string$ pattern, string x, [logical$ ignoreCase = F], [string$ grammar
-= "ECMAScript"], [string$ value = "indices"], [logical$ fixed = F], [logical$
-invert = F]) Searches for regular expression matches in the string-elements of
-x. Regular expressions (regexes) express patterns that strings can either match
-or not match; they are very widely used in programming languages and terminal
-shells. The topic of regexes is very complex, and a great deal of information
-about them can be found online, including examples and tutorials; this manual
-will not attempt to document the topic in detail. The grep() function uses a
-regex supplied in pattern, looking for matches for the regex in each element
-of x. If ignoreCase is F (the default), the pattern matching will be case
-sensitive (i.e., uppercase versus lowercase will matter); if it is T, the
-pattern matching will be case-insensitive. 68 The grammar parameter determines
-the regex grammar used to find matches. Several options are available. The
-default, "ECMAScript", is a straightforward regex grammar, the specification
-for which can be found at https://www.cplusplus.com/reference/regex/ECMAScript/
-among many other links. The "basic" grammar uses POSIX basic
-regular expressions, often called BRE; this is documented at
-https://en.wikibooks.org/wiki/Regular_Expressions/POSIX_Basic_Regular_Expressions.
-The "extended" grammar uses POSIX extended regular
-expressions, often called ERE; this is documented at
-https://en.wikibooks.org/wiki/Regular_Expressions/POSIX-Extended_Regular_Expressions.
-The "awk" grammar is based upon the "extended" grammar, with more escapes for
-non-printing characters. The "grep" and "egrep" grammars are based upon the
-"basic" and "extended" grammars, respectively, but also allow newline characters
-("\\n") to separate alternations. If you are not sure which grammar you want
-to use, "ECMAScript" is recommended. All of these grammars are implemented
-internally in Eidos using the C++ <regex> library, so if you need clarification
-on the details of a grammar, you can search for related C++ materials online.
-Information about the matches found is returned in one of four ways. If value is
-"indices" (the default), an integer vector is returned containing the index in
-x for each match. If value is "elements", a string vector is returned containing
-the actual string-elements of x for each match. If value is "matches", a
-string vector is returned containing only the substring that matched, within
-each string-element in x that matched (if more than one substring in a given
-element matched, the first match is returned). Finally, if value is "logical"
-a logical vector is returned, of the same length as x, containing T where the
-corresponding element of x matched, or F where it did not match. This function
-therefore encapsulates the functionality of both the grep() and grepl()
-functions of R; use value="logical" for functionality like that of R's grepl().
-If fixed is F (the default), matching is determined using pattern following the
-specified regex grammar as described above. If fixed is T, matching is instead
-determined using pattern as a string value to be matched "as is", rather than
-as a regular expression; the grammar specified does not matter in this case,
-but ignoreCase still applies. This could be thought of as another grammar value,
-really, meaning "no grammar", but it is supplied as a separate flag following R.
-Finally, if invert if F (the default) matching proceeds as normal for the chosen
-regex grammar, whereas if invert if T matching is inverted: indices, elements,
-or logical values are returned for the elements of x that did not match. If
-invert is T, the value parameter may not be "matches". Note that there is not
-presently any way to extract subpattern matches, nor is there any way to perform
-replacements of matches.
+Returns the type of x, as a string: "NULL", "logical", "integer", "float", "string", or "object". Contrast this with elementType(). 3.7. String manipulation functions
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -106,6 +45,7 @@ Other Eidos:
 \code{\link{eidos_asInteger}()},
 \code{\link{eidos_asLogical}()},
 \code{\link{eidos_asString}()},
+\code{\link{eidos_asVector}()},
 \code{\link{eidos_asin}()},
 \code{\link{eidos_assert}()},
 \code{\link{eidos_atan}()},
@@ -119,6 +59,7 @@ Other Eidos:
 \code{\link{eidos_citation}()},
 \code{\link{eidos_clock}()},
 \code{\link{eidos_cmColors}()},
+\code{\link{eidos_colSums}()},
 \code{\link{eidos_color2rgb}()},
 \code{\link{eidos_colors}()},
 \code{\link{eidos_cor}()},
@@ -133,18 +74,22 @@ Other Eidos:
 \code{\link{eidos_defineConstant}()},
 \code{\link{eidos_defineGlobal}()},
 \code{\link{eidos_deleteFile}()},
+\code{\link{eidos_det}()},
 \code{\link{eidos_dexp}()},
 \code{\link{eidos_dgamma}()},
 \code{\link{eidos_diag}()},
 \code{\link{eidos_dim}()},
 \code{\link{eidos_dmvnorm}()},
 \code{\link{eidos_dnorm}()},
+\code{\link{eidos_doCall}()},
 \code{\link{eidos_drop}()},
 \code{\link{eidos_elementType}()},
+\code{\link{eidos_executeLambda}()},
 \code{\link{eidos_exists}()},
 \code{\link{eidos_exp}()},
 \code{\link{eidos_fileExists}()},
 \code{\link{eidos_filesAtPath}()},
+\code{\link{eidos_filter}()},
 \code{\link{eidos_findInterval}()},
 \code{\link{eidos_float}()},
 \code{\link{eidos_floor}()},
@@ -154,6 +99,7 @@ Other Eidos:
 \code{\link{eidos_functionSource}()},
 \code{\link{eidos_getSeed}()},
 \code{\link{eidos_getwd}()},
+\code{\link{eidos_grep}()},
 \code{\link{eidos_heatColors}()},
 \code{\link{eidos_hsv2rgb}()},
 \code{\link{eidos_identical}()},
@@ -161,6 +107,7 @@ Other Eidos:
 \code{\link{eidos_integer}()},
 \code{\link{eidos_integerDiv}()},
 \code{\link{eidos_integerMod}()},
+\code{\link{eidos_inverse}()},
 \code{\link{eidos_isFinite}()},
 \code{\link{eidos_isFloat}()},
 \code{\link{eidos_isInfinite}()},
@@ -181,6 +128,7 @@ Other Eidos:
 \code{\link{eidos_match}()},
 \code{\link{eidos_matrix}()},
 \code{\link{eidos_matrixMult}()},
+\code{\link{eidos_matrixPow}()},
 \code{\link{eidos_max}()},
 \code{\link{eidos_mean}()},
 \code{\link{eidos_min}()},
@@ -189,6 +137,12 @@ Other Eidos:
 \code{\link{eidos_nrow}()},
 \code{\link{eidos_object}()},
 \code{\link{eidos_order}()},
+\code{\link{eidos_outerProduct}()},
+\code{\link{eidos_parallelGetMaxThreads}()},
+\code{\link{eidos_parallelGetNumThreads}()},
+\code{\link{eidos_parallelGetTaskThreadCounts}()},
+\code{\link{eidos_parallelSetNumThreads}()},
+\code{\link{eidos_parallelSetTaskThreadCounts}()},
 \code{\link{eidos_paste}()},
 \code{\link{eidos_paste0}()},
 \code{\link{eidos_pmax}()},
@@ -223,9 +177,11 @@ Other Eidos:
 \code{\link{eidos_rnbinom}()},
 \code{\link{eidos_rnorm}()},
 \code{\link{eidos_round}()},
+\code{\link{eidos_rowSums}()},
 \code{\link{eidos_rpois}()},
 \code{\link{eidos_runif}()},
 \code{\link{eidos_rweibull}()},
+\code{\link{eidos_rztpois}()},
 \code{\link{eidos_sample}()},
 \code{\link{eidos_sapply}()},
 \code{\link{eidos_sd}()},
@@ -238,6 +194,7 @@ Other Eidos:
 \code{\link{eidos_setSymmetricDifference}()},
 \code{\link{eidos_setUnion}()},
 \code{\link{eidos_setwd}()},
+\code{\link{eidos_sign}()},
 \code{\link{eidos_sin}()},
 \code{\link{eidos_size}()},
 \code{\link{eidos_sort}()},
@@ -264,6 +221,7 @@ Other Eidos:
 \code{\link{eidos_tempdir}()},
 \code{\link{eidos_terrainColors}()},
 \code{\link{eidos_time}()},
+\code{\link{eidos_tr}()},
 \code{\link{eidos_trunc}()},
 \code{\link{eidos_ttest}()},
 \code{\link{eidos_unique}()},
@@ -278,7 +236,6 @@ Other Eidos:
 \code{\link{eidos_writeTempFile}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Eidos}

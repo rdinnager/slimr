@@ -3,58 +3,33 @@
 \name{unevaluate}
 \alias{unevaluate}
 \alias{InteractionType$unevaluate}
-\alias{.IT$unevaluate}
+\alias{IT$unevaluate}
 \title{SLiM method unevaluate}
 \usage{
 unevaluate(void)
 }
 \arguments{
-\item{void}{An object of type . See details for description.}
+\item{void}{An object of type object.}
 }
 \value{
 An object of type void.
 }
 \description{
-Documentation for SLiM function \code{unevaluate}, which is a method of the SLiM
-class \code{\link{InteractionType}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{unevaluate}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=699}{SLiM manual: page
-699}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Discards all evaluation of this interaction, for all subpopulations.
-The state of the InteractionType is reset to a state prior to evaluation. This
-can be useful if the model state has changed in such a way that the evaluation
-already conducted is no longer valid. For example, if the maximum distance,
-the interaction function, or the receiver or exerter constraints of the
-InteractionType need to be changed with immediate effect, or if the data used by
-an interaction() callback has changed in such a way that previously calculated
-interaction strengths are no longer correct, unevaluate() allows the interaction
-to begin again from scratch. In WF models, all interactions are automatically
-reset to an unevaluated state at the moment when the new offspring generation
-becomes the parental generation (at step 4 in the tick cycle; see section 23.4).
-In nonWF models, all interactions are automatically reset to an unevaluated
-state twice per tick: immediately after reproduction() callbacks have completed
-(after step 1 in the tick cycle; see section 24.1), and immediately before
-viability/survival selection (before step 4 in the tick cycle; see section
-24.4). Given this automatic invalidation, most simulations have no reason to
-call unevaluate().
+void) Discards all evaluation of this interaction, for all subpopulations. The state of the InteractionType is reset to a state prior to evaluation. This can be useful if the model state has changed in such a way that the evaluation already conducted is no longer valid. For example, if the maximum distance, the interaction function, or the receiver or exerter constraints of the InteractionType need to be changed with immediate effect, or if the data used by an interaction() callback has changed in such a way that previously calculated interaction strengths are no longer correct, unevaluate() allows the interaction to begin again from scratch. In WF models, all interactions are automatically reset to an unevaluated state at the moment when the new offspring generation becomes the parental generation (at step 4 in the tick cycle). In nonWF models, all interactions are automatically reset to an unevaluated state twice per tick: immediately after reproduction() callbacks have completed (after step 1 in the tick cycle), and immediately before viability/survival selection (before step 4 in the tick cycle). Given this automatic invalidation, most simulations have no reason to call unevaluate().
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -81,7 +56,6 @@ Other InteractionType:
 \code{\link{totalOfNeighborStrengths}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{InteractionType}

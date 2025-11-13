@@ -3,94 +3,35 @@
 \name{relatedness}
 \alias{relatedness}
 \alias{Individual$relatedness}
-\alias{.I$relatedness}
+\alias{In$relatedness}
 \title{SLiM method relatedness}
 \usage{
-relatedness(individuals)
+relatedness(individuals, chromosome = NULL)
 }
 \arguments{
-\item{individuals}{An object of type Individual object. See details for
-description.}
+\item{individuals}{An object of type Individual object.}
+
+\item{chromosome}{An object of type null or integer or string or Chromosome object (singleton).}
 }
 \value{
 An object of type float.
 }
 \description{
-Documentation for SLiM function \code{relatedness}, which is a method of the
-SLiM class \code{\link{Individual}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{relatedness}, which is a method of the SLiM class \code{\link{Individual}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=683}{SLiM manual: page
-683}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Returns a vector containing the degrees of relatedness between the
-receiver and each of the individuals in individuals. The relatedness between A
-and B is always 1.0 if A and B are actually the same individual; this facility
-works even if SLiM's optional pedigree tracking is not enabled (in which case
-all other relatedness values will be 0.0). Otherwise, if pedigree tracking is
-turned on with initializeSLiMOptions(keepPedigrees=T), this method will use
-the pedigree information described in section 25.7.1 to construct a relatedness
-estimate. More specifically, this method uses all available pedigree information
-from the grandparental and parental pedigree records of A and B to compute
-an estimate of the degree of consanguinity between A and B. Siblings have a
-relatedness of 0.5, as do parents to their children and vice versa; cousins have
-a relatedness of 0.125; and so forth. If, according to the pedigree information
-available, A and B have no blood relationship, the value returned is 0.0. Note
-that the value returned by relatedness() is what is called the "coefficient
-of relationship" between the two individuals (Wright, 1922; https://
-doi.org/10.1086/279872), and ranges from 0.0 to 1.0. There is another commonly
-used metric of relatedness, called the "kinship coefficient", that reflects the
-probability of identity by descent between two individuals A and B. In general,
-it is approximately equal to one-half of the coefficient of relationship; if
-an approximate estimate of the kinship coefficient is acceptable, especially in
-models in which individuals are expected to be outbred, you can simply divide
-relatedness() by two. However, it should be noted that Wright's coefficient
-of relationship is not a measure of the probability of identity by descent,
-and so it is not exactly double the kinship coefficient; they actually
-measure different things. More precisely, the relationship between them is
-r = 2φ/sqrt((1+fA)(1+fB)), where r is Wright's coefficient of relatedness,
-φ is the kinship coefficient, and fA and fB are the inbreeding coefficients
-of A and B respectively. Note that this relatedness is simply pedigree-based
-relatedness, and does not necessarily correspond to genetic relatedness, because
-of the effects of factors like assortment and recombination. If a metric of
-actual genetic relatedness is desired, tree-sequence recording can be used
-after simulation is complete, to compute the exact genetic relatedness between
-individuals based upon the complete ancestry tree (a topic which is beyond
-the scope of this manual). Actual genetic relatedness cannot presently be
-calculated during a simulation run; the information is implicitly contained in
-the recorded tree-sequence tables, but calculating it is too computationally
-expensive to be reasonable. This method assumes that the grandparents (or the
-parents, if grandparental information is not available) are themselves unrelated
-and that they are not inbred; this assumption is necessary because we have no
-information about their parentage, since SLiM's pedigree tracking information
-only goes back two generations. Be aware that in a model where inbreeding or
-selfing occurs at all (including "incidental selfing", where a hermaphroditic
-individual happens to choose itself as a mate), some level of "background
-relatedness" will be present and this assumption will be violated. In such
-circumstances, relatedness() will therefore tend to underestimate the degree of
-relatedness between individuals, and the greater the degree of inbreeding, the
-greater the underestimation will be. If inbreeding is allowed in a model - and
-particularly if it is common - the results of relatedness() should therefore
-not be taken as an estimate of absolute relatedness, but can still be useful as
-an estimate of relative relatedness (indicating that, say, A appears from the
-information available to be more closely related to B than it is to C). See also
-sharedParentCount() for a different metric of relatedness.
+object<Individual> individuals, [Niso<Chromosome>$ chromosome = NULL]) Returns a vector containing the degrees of relatedness between the receiver and each of the individuals in individuals. The relatedness between A and B is always 1.0 if A and B are actually the same individual; this facility works even if SLiM's optional pedigree tracking is not enabled (in which case all other relatedness values will be 0.0). Otherwise, if pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), this method will use the pedigree information to construct a relatedness estimate. The relatedness is calculated based upon the type of the chromosome specified by chromosome (as an integer id, a string symbol, or a Chromosome object); if chromosome is NULL, it is assumed to be the single chromosome present in the model, or if more than one chromosome is present, an error results and the chromosome must be explicitly given. More specifically, this method uses all available pedigree information from the grandparental and parental pedigree records of A and B to compute an estimate of the degree of consanguinity between A and B. When considering a diploid autosome, siblings have a relatedness of 0.5, as do parents to their children and vice versa; cousins have a relatedness of 0.125; and so forth. If, according to the pedigree information available, A and B have no blood relationship, the value returned is 0.0. Note that the value returned by relatedness() is what is called the "coefficient of relationship" between the two individuals (Wright, 1922; "https://doi.org/10.1086/279872"), and ranges from 0.0 to 1.0. There is another commonly used metric of relatedness, called the "kinship coefficient", that reflects the probability of identity by descent between two individuals A and B. In general, it is approximately equal to one-half of the coefficient of relationship; if an approximate estimate of the kinship coefficient is acceptable, especially in models in which individuals are expected to be outbred, you can simply divide relatedness() by two. However, it should be noted that Wright's coefficient of relationship is not a measure of the probability of identity by descent, and so it is not exactly double the kinship coefficient; they actually measure different things. More precisely, the relationship between them is r = 2/sqrt((1+fA)(1+fB)), where r is Wright's coefficient of relatedness,  is the kinship coefficient, and fA and fB are the inbreeding coefficients of A and B respectively. Note that this relatedness is simply pedigree-based relatedness, and does not necessarily correspond to genetic relatedness, because of the effects of factors like assortment and recombination. If a metric of actual genetic relatedness is desired, tree-sequence recording can be used after simulation is complete, to compute the exact genetic relatedness between individuals based upon the complete ancestry tree (a topic which is beyond the scope of this manual). Actual genetic relatedness cannot presently be calculated during a simulation run; the information is implicitly contained in the recorded tree-sequence tables, but calculating it is too computationally expensive to be reasonable. This method assumes that the grandparents (or the parents, if grandparental information is not available) are themselves unrelated and that they are not inbred; this assumption is necessary because we have no information about their parentage, since SLiM's pedigree tracking information only goes back two generations. Be aware that in a model where inbreeding or selfing occurs at all (including "incidental selfing", where a hermaphroditic individual happens to choose itself as a mate), some level of "background relatedness" will be present and this assumption will be violated. In such circumstances, relatedness() will therefore tend to underestimate the degree of relatedness between individuals, and the greater the degree of inbreeding, the greater the underestimation will be. If inbreeding is allowed in a model - and particularly if it is common - the results of relatedness() should therefore not be taken as an estimate of absolute relatedness, but can still be useful as an estimate of relative relatedness (indicating that, say, A appears from the information available to be more closely related to B than it is to C). See also sharedParentCount() for a different metric of relatedness.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -99,13 +40,17 @@ Other Individual:
 \code{\link{In}},
 \code{\link{containsMutations}()},
 \code{\link{countOfMutationsOfType}()},
+\code{\link{haplosomesForChromosomes}()},
+\code{\link{mutationsFromHaplosomes}()},
+\code{\link{outputIndividuals}()},
+\code{\link{outputIndividualsToVCF}()},
+\code{\link{readIndividualsFromVCF}()},
 \code{\link{setSpatialPosition}()},
 \code{\link{sharedParentCount}()},
 \code{\link{sumOfMutationsOfType}()},
 \code{\link{uniqueMutationsOfType}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Individual}

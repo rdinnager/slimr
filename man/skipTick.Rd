@@ -3,57 +3,48 @@
 \name{skipTick}
 \alias{skipTick}
 \alias{Species$skipTick}
-\alias{.Sp$skipTick}
+\alias{Sp$skipTick}
 \title{SLiM method skipTick}
 \usage{
 skipTick(void)
 }
 \arguments{
-\item{void}{An object of type . See details for description.}
+\item{void}{An object of type object.}
 }
 \value{
 An object of type void.
 }
 \description{
-Documentation for SLiM function \code{skipTick}, which is a method of the SLiM
-class \code{\link{Species}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{skipTick}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=727}{SLiM manual: page
-727}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Deactivate the target species for the current tick. This sets
-the active property of the species to F; it also set the active property
-of all callbacks that belong to the species (with the species as their
-species specifier) to F, and sets the active property of all events that are
-synchronized with the species (with the species as their ticks specifier) to
-F. The cycle counter for the species will not be incremented at the end of the
-tick. This method may only be called in first() events, to ensure that species
-are either active or inactive throughout a given tick.
+void) Deactivate the target species for the current tick. This sets the active property of the species to F; it also set the active property of all callbacks that belong to the species (with the species as their species specifier) to F, and sets the active property of all events that are synchronized with the species (with the species as their ticks specifier) to F. The cycle counter for the species will not be incremented at the end of the tick. This method may only be called in first() events, to ensure that species are either active or inactive throughout a given tick.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
 \seealso{
 Other Species: 
 \code{\link{Sp}},
+\code{\link{addPatternForClone}()},
+\code{\link{addPatternForCross}()},
+\code{\link{addPatternForNull}()},
+\code{\link{addPatternForRecombinant}()},
 \code{\link{addSubpop}()},
 \code{\link{addSubpopSplit}()},
+\code{\link{chromosomesOfType}()},
+\code{\link{chromosomesWithIDs}()},
+\code{\link{chromosomesWithSymbols}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{individualsWithPedigreeIDs}()},
 \code{\link{killIndividuals}()},
@@ -75,13 +66,13 @@ Other Species:
 \code{\link{registerSurvivalCallback}()},
 \code{\link{simulationFinished}()},
 \code{\link{subsetMutations}()},
+\code{\link{substitutionsOfType}()},
 \code{\link{treeSeqCoalesced}()},
 \code{\link{treeSeqOutput}()},
 \code{\link{treeSeqRememberIndividuals}()},
 \code{\link{treeSeqSimplify}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Species}

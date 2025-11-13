@@ -3,111 +3,43 @@
 \name{pointDeviated}
 \alias{pointDeviated}
 \alias{Subpopulation$pointDeviated}
-\alias{.P$pointDeviated}
+\alias{P$pointDeviated}
 \title{SLiM method pointDeviated}
 \usage{
 pointDeviated(n, point, boundary, maxDistance, functionType, ...)
 }
 \arguments{
-\item{n}{An object of type integer. Must be of length 1 (a singleton). See
-details for description.}
+\item{n}{An object of type integer (singleton).}
 
-\item{point}{An object of type float. See details for description.}
+\item{point}{An object of type float.}
 
-\item{boundary}{An object of type string. Must be of length 1 (a singleton). See
-details for description.}
+\item{boundary}{An object of type string (singleton).}
 
-\item{maxDistance}{An object of type numeric. Must be of length 1 (a singleton).
-See details for description.}
+\item{maxDistance}{An object of type numeric (singleton).}
 
-\item{functionType}{An object of type string. Must be of length 1 (a singleton).
-See details for description.}
+\item{functionType}{An object of type string (singleton).}
 
-\item{...}{An object of type NA. NA See details for description.}
+\item{...}{An object of type NA.}
 }
 \value{
 An object of type float.
 }
 \description{
-Documentation for SLiM function \code{pointDeviated}, which is a method of the
-SLiM class \code{\link{Subpopulation}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{pointDeviated}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=741}{SLiM manual: page
-741}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Returns a vector containing n points that are derived from point by
-adding a deviation drawn from a dispersal kernel (specified by maxDistance,
-functionType, and the ellipsis parameters ..., as detailed below) and then
-applying a boundary condition specified by boundary. This method therefore
-performs the steps of a simple dispersal algorithm in a single vectorized call.
-The parameter point may contain a single point which is deviated and bounded
-n independent times, or may contain n points each of which is deviated and
-bounded. In any case, each point in point should match the dimensionality of the
-model - one element in a 1D model, two elements in a 2D model, or three elements
-in a 3D model. This method should not be called in a non-spatial model. The
-dispersal kernel is specified similarly to other kernel-based methods, such as
-setInteractionFunction() and smooth(). For pointDeviated(), functionType may be
-"f" with no ellipsis arguments ... to use a flat kernel out to maxDistance; "l"
-with no ellipsis arguments for a kernel that decreases linearly from the center
-to zero at maxDistance; "e", in which case the ellipsis should supply a numeric$
-lambda (rate) parameter for a negative exponential function; "n", in which case
-the ellipsis should supply a numeric$ sigma (standard deviation) parameter for
-a Gaussian function; or "t", in which case the ellipsis should supply a numeric$
-degrees of freedom and a numeric$ scale parameter for a t-distribution function.
-The Cauchy ("c") kernel is not supported by pointDeviated() since it is not
-well-behaved for this purpose, and the Student's t ("t") kernel is not allowed
-in 3D models at present simply because it hasn't been implemented. See the
-InteractionType class documentation (section 25.8) for more detailed discussion
-of the available kernel types and their parameters and probability distribution
-functions. The random points returned from this method are drawn from the
-probability distribution that is radially symmetric and has density proportional
-to the kernel - in other words, at distance r the density is proportional to
-the kernel type referred to by functionType. (Said another way, the shape of
-the cross-section through the probability density function is given by the
-kernel.) For instance, the value of the type "e" (exponential) kernel with rate
-a at r is proportional to exp(−ar), and so in 2D, the probability density that
-this method with kernel type "e" draws from has density proportional to p(x,
-y) = exp(−a sqrt(x2 + y2)), since r = sqrt(x2 + y2) is the distance. Note that
-the distribution of the distance is not given by the kernel except in 1D: in
-the type "e" example, the distribution of the distance in 1D is exponential,
-while in 2D it has density proportional to r exp(−ar) (i.e., Gamma with shape
-parameter 1). For another example, the value of the type "n" (Normal) kernel
-at r with standard deviation 1 is proportional to exp(−r2 / 2), and so the
-density is proportional to p(x, y) = exp(− (x2 + y2) / 2). This is the standard
-bivariate Normal, and equivalent to drawing independent Normals for the x and y
-directions; however, the Normal is the only distribution for which independent
-draws along each axis will result in a radially symmetric distribution. The
-distribution of the distance in 2D with type "n" is proportional to r exp(−r2 /
-2), i.e., Rayleigh. The boundary condition must be one of "none", "periodic",
-"reflecting", "stopping", or "reprising". For "none", no boundary condition
-is enforced; the deviated points are simply returned as is. For "periodic",
-"reflecting", and "stopping", the boundary condition is enforced just as it is
-by the pointPeriodic(), pointReflected(), and pointStopped() methods; see their
-documentation for further details. For "reprising", if the deviated point is
-out of bounds a new deviated point will be chosen, based upon the same original
-point, until a point inside bounds is obtained. Note that absorbing boundaries
-(for which being out-of-bounds is lethal) would be implemented in script; this
-method cannot enforce them. In the typical usage case, point comes from the
-spatialPosition property for a vector of individuals, and the result is then set
-back onto the same vector of individuals using the setSpatialPosition() method;
-however, this method might be useful in other situations too.
+integer$ n, float point, string$ boundary, numeric$ maxDistance, string$ functionType, ...) Returns a vector containing n points that are derived from point by adding a deviation drawn from a dispersal kernel (specified by maxDistance, functionType, and the ellipsis parameters ..., as detailed below) and then applying a boundary condition specified by boundary. This method therefore performs the steps of a simple dispersal algorithm in a single vectorized call. See deviatePositions() for an even more efficient approach. The parameter point may contain a single point which is deviated and bounded n independent times, or may contain n points each of which is deviated and bounded. In any case, each point in point should match the dimensionality of the model - one element in a 1D model, two elements in a 2D model, or three elements in a 3D model. This method should not be called in a non-spatial model. The dispersal kernel is specified similarly to other kernel-based methods, such as setInteractionFunction() and smooth(). For pointDeviated(), functionType may be "f" with no ellipsis arguments ... to use a flat kernel out to maxDistance; "l" with no ellipsis arguments for a kernel that decreases linearly from the center to zero at maxDistance; "e", in which case the ellipsis should supply a numeric$ lambda (rate) parameter for a negative exponential function; "n", in which case the ellipsis should supply a numeric$ sigma (standard deviation) parameter for a Gaussian function; or "t", in which case the ellipsis should supply a numeric$ degrees of freedom and a numeric$ scale parameter for a t-distribution function. The Cauchy ("c") kernel is not supported by pointDeviated() since it is not well-behaved for this purpose, and the Student's t ("t") kernel is not allowed in 3D models at present simply because it hasn't been implemented. See the InteractionType class documentation for more detailed discussion of the available kernel types and their parameters and probability distribution functions. For pointDeviated(), the ellipsis parameters that follow functionType may each, independently, be either a singleton or a vector of length equal to n. This allows each point to be deviated with a different kernel, representing, for example, the movements of individuals with differing dispersal capabilities/propensities. (However, other parameters such as boundary, maxDistance, and functionType must be the same for all of the points, in the present design.) The random points returned from this method are drawn from the probability distribution that is radially symmetric and has density proportional to the kernel - in other words, at distance r the density is proportional to the kernel type referred to by functionType. (Said another way, the shape of the cross-section through the probability density function is given by the kernel.) For instance, the value of the type "e" (exponential) kernel with rate a at r is proportional to exp(ar), and so in 2D, the probability density that this method with kernel type "e" draws from has density proportional to p(x, y) = exp(a sqrt(x2 + y2)), since r = sqrt(x2 + y2) is the distance. Note that the distribution of the distance is not given by the kernel except in 1D: in the type "e" example, the distribution of the distance in 1D is exponential, while in 2D it has density proportional to r exp(ar) (i.e., Gamma with shape parameter 1). For another example, the value of the type "n" (Normal) kernel at r with standard deviation 1 is proportional to exp(r2 / 2), and so the density is proportional to p(x, y) = exp((x2 + y2) / 2). This is the standard bivariate Normal, and equivalent to drawing independent Normals for the x and y directions; however, the Normal is the only distribution for which independent draws along each axis will result in a radially symmetric distribution. The distribution of the distance in 2D with type "n" is proportional to r exp(r2 / 2), i.e., Rayleigh. The boundary condition must be one of "none", "periodic", "reflecting", "stopping", or "reprising". For "none", no boundary condition is enforced; the deviated points are simply returned as is. For "periodic", "reflecting", and "stopping", the boundary condition is enforced just as it is by the pointPeriodic(), pointReflected(), and pointStopped() methods; see their documentation for further details. For "reprising", if the deviated point is out of bounds a new deviated point will be chosen, based upon the same original point, until a point inside bounds is obtained. Note that absorbing boundaries (for which being out-of-bounds is lethal) would need to be implemented in script; this method cannot enforce them. (Note, however, that the deviatePositions() method of Subpopulation can enforce absorbing boundaries.) Note that for the typical usage case, in which point comes from the spatialPosition property for a vector of individuals, and the result is then set back onto the same vector of individuals using the setSpatialPosition() method, the deviatePositions() method provides an even more efficient alternative.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -117,12 +49,16 @@ Other Subpopulation:
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
+\code{\link{addMultiRecombinant}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
 \code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
+\code{\link{deviatePositions}()},
+\code{\link{deviatePositionsWithMap}()},
+\code{\link{haplosomesForChromosomes}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
@@ -131,6 +67,7 @@ Other Subpopulation:
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{pointUniformWithMap}()},
 \code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
@@ -147,7 +84,6 @@ Other Subpopulation:
 \code{\link{takeMigrants}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Subpopulation}

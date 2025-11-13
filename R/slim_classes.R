@@ -20,8 +20,8 @@ Community <- new.env()
 Co <- Community
 Eidos <- new.env()
 E <- Eidos
-Genome <- new.env()
-G <- Genome
+Haplosome <- new.env()
+Ha <- Haplosome
 GenomicElement <- new.env()
 GE <- GenomicElement
 GenomicElementType <- new.env()
@@ -36,6 +36,8 @@ Mutation <- new.env()
 M <- Mutation
 MutationType <- new.env()
 MT <- MutationType
+Plot <- new.env()
+Pl <- Plot
 SLiMBuiltin <- new.env()
 SB <- SLiMBuiltin
 SLiMEidosBlock <- new.env()
@@ -44,8 +46,6 @@ SLiMgui <- new.env()
 SG <- SLiMgui
 SpatialMap <- new.env()
 SM <- SpatialMap
-SLiMSim <- new.env()
-SS <- SLiMSim
 Species <- new.env()
 Sp <- Species
 Subpopulation <- new.env()
@@ -73,8 +73,8 @@ NULL
 #'@export
 NULL
 
-#'@name G
-#'@rdname Genome_Class
+#'@name Ha
+#'@rdname Haplosome_Class
 #'@export
 NULL
 
@@ -113,6 +113,13 @@ NULL
 #'@export
 NULL
 
+#'@name Pl
+#'@rdname Plot_Class
+#'@export
+NULL
+
+#' SLiMBuiltin is a slimr-created class that houses built-in SLiM functions
+#' that are not part of the Eidos language or Initialize functions.
 #'@name SB
 #'@rdname SLiMBuiltin_Class
 #'@export
@@ -130,13 +137,6 @@ NULL
 
 #'@name SM
 #'@rdname SpatialMap_Class
-#'@export
-NULL
-
-#' SLiMSim was a class used prior to v4.0 in SLiM. It remains in `slimr`
-#' for backwards compatibility but its use is now deprecated.
-#'@name SS
-#'@rdname SLiMSim_Class
 #'@export
 NULL
 

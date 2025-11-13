@@ -8,75 +8,24 @@
 Documentation for Substitution class from SLiM
 }
 \details{
-This class represents a mutation that has been fixed; Mutation objects
-are converted to
-Substitution objects upon fixation. Its properties are thus very similar to
-those of Mutation.
-Section 1.5.2 presents an overview of the conceptual role of this class.
-Since Substitution objects represent fixation events that occurred in the past,
-they are
-relatively immutable. However, since it may be useful to attach (possibly
-dynamic) state to
-substitutions, their tag and subpopID properties are mutable, and they also
-provide the same
-getValue() / setValue() functionality as Mutation (inherited from the Eidos
-class Dictionary).
-Values set on a Mutation object will carry over to the corresponding
-Substitution object
-automatically upon fixation.
+5.18.1 Substitution properties 5.18 Class Substitution
 This class has the following methods (functions):
 \itemize{
 \item{None. This class has no methods.}
 }
 This class has the following properties:
 \describe{
-\item{id}{A property of type integer. It is of length one (a singleton). This
-property is a constant, so it is not modifiable. \strong{Property Description:}
-The identifier for this mutation. Each mutation created during a run receives
-an immutable identifier that will be unique across the duration of the run, and
-that identifier is carried over to the Substitution object when the mutation
-fixes. }
-\item{fixationTick}{A property of type integer. It is of length one
-(a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The tick in which this mutation fixed. }
-\item{mutationType}{A property of type MutationType object. It is of length
-one (a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The MutationType from which this mutation was
-drawn. }
-\item{nucleotide}{A property of type string. It is of length one (a singleton).
-This property is a variable, so it is modifiable. \strong{Property Description:}
-A string representing the nucleotide associated with this mutation; this will be
-"A", "C", "G", or "T". If the mutation is not nucleotide-based, this property is
-unavailable. }
-\item{nucleotideValue}{A property of type integer. It is of length one (a
-singleton). This property is a variable, so it is modifiable. \strong{Property
-Description:} An integer representing the nucleotide associated with this
-mutation; this will be 0 (A), 1 (C), 2 (G), or 3 (T). If the mutation is not
-nucleotide-based, this property is unavailable. }
-\item{originTick}{A property of type integer. It is of length one (a singleton).
-This property is a constant, so it is not modifiable. \strong{Property
-Description:} The tick in which this mutation arose. }
-\item{position}{A property of type integer. It is of length one (a singleton).
-This property is a constant, so it is not modifiable. \strong{Property
-Description:} The position in the chromosome of this mutation. }
-\item{selectionCoeff}{A property of type float. It is of length one
-(a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The selection coefficient of the mutation, drawn
-from the distribution of fitness effects of its MutationType. }
-\item{subpopID}{A property of type integer. It is of length one (a singleton).
-This property is a variable, so it is modifiable. \strong{Property Description:}
-The identifier of the subpopulation in which this mutation arose. This value
-is carried over from the Mutation object directly; if a "tag" value was used
-in the Mutation object (see section 25.10.1), that value will carry over to the
-corresponding Substitution object. The subpopID in Substitution is a read-write
-property to allow it to be used as a "tag" in the same way, if the origin
-subpopulation identifier is not needed. }
-\item{tag}{A property of type integer. It is of length one (a singleton). This
-property is a variable, so it is modifiable. \strong{Property Description:} A
-user-defined integer value. The value of tag is carried over automatically from
-the original Mutation object. Apart from that, the value of tag is not used by
-SLiM; it is free for you to use.}
-
+\item{chromosome}{A property of type Chromosome object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The Chromosome object with which the mutation is associated.}
+\item{id}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The identifier for this mutation. Each mutation created during a run receives an immutable identifier that will be unique across the duration of the run, and that identifier is carried over to the Substitution object when the mutation fixes.}
+\item{fixationTick}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The tick in which this mutation fixed.}
+\item{mutationType}{A property of type MutationType object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The MutationType from which this mutation was drawn.}
+\item{nucleotide}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A string representing the nucleotide associated with this mutation; this will be "A", "C", "G", or "T". If the mutation is not nucleotide-based, this property is unavailable.}
+\item{nucleotideValue}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} An integer representing the nucleotide associated with this mutation; this will be 0 (A), 1 (C), 2 (G), or 3 (T). If the mutation is not nucleotide-based, this property is unavailable.}
+\item{originTick}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The tick in which this mutation arose.}
+\item{position}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The position in the chromosome of this mutation.}
+\item{selectionCoeff}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The selection coefficient of the mutation, drawn from the distribution of fitness effects of its MutationType.}
+\item{subpopID}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The identifier of the subpopulation in which this mutation arose. This value is carried over from the Mutation object directly; if a "tag" value was used in the Mutation object, that value will carry over to the corresponding Substitution object. The subpopID in Substitution is a read-write property to allow it to be used as a "tag" in the same way, if the origin subpopulation identifier is not needed.}
+\item{tag}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is carried over automatically from the original Mutation object. Apart from that, the value of tag is not used by SLiM; it is free for you to use.}
 }
 }
 \concept{Substitution}

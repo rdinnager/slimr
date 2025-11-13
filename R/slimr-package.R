@@ -4,8 +4,8 @@
 if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
                                                         "Eidos",
                                                         ".E",
-                                                        ".G",
-                                                        "Genome",
+                                                        ".Ha",
+                                                        "Haplosome",
                                                         ".GE",
                                                         "GenomicElement",
                                                         ".GET",
@@ -22,12 +22,12 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
                                                         "MutationType",
                                                         ".P",
                                                         "Subpopulation",
-                                                        ".S",
-                                                        "Substitution",
+                                                        ".Pl",
+                                                        "Plot",
                                                         ".SB",
                                                         "SLiMBuiltin",
-                                                        ".SS",
-                                                        "SLiMSim",
+                                                        ".S",
+                                                        "Substitution",
                                                         ".Sp",
                                                         "Species",
                                                         ".SG",
@@ -51,7 +51,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
                                                         "sim.simulationFinished",
                                                         "str",
                                                         "sim.outputFull",
-                                                        "sim.subpopulations.individuals.genome1.nucleotides",
+                                                        "sim.subpopulations.individuals.haploidGenome1.nucleotides",
                                                         "sim.subpopulations.individuals.sex",
                                                         "sim.subpopulations.individuals.subpopulation",
                                                         "sim.subpopulations.individuals.x",
@@ -62,7 +62,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
                                                         "sim.mutations",
                                                         "sim.mutations.position",
                                                         "sim.subpopulations.individuals",
-                                                        "sim.subpopulations.individuals.genomes.containsMutations",
+                                                        "sim.subpopulations.individuals.haplosomes.containsMutations",
                                                         "size",
                                                         "community.createLogFile",
                                                         "cyc.addCycle",
@@ -119,7 +119,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
 
   resources_used <- purrr::map_lgl(recipes_using_resources,
                                ~!purrr::is_empty(.x) > 0)
-  recipes_using_resources <- recipes_using_resources %>%
+  recipes_using_resources <- recipes_using_resources |>
     purrr::simplify()
 
   slim_recipes[recipes_using_resources] <- purrr::map2(slim_recipes[recipes_using_resources],
@@ -160,7 +160,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
   Ch <- list2env(.Ch, Chromosome)
   Co <- list2env(.Co, Community)
   E <- list2env(.E, Eidos)
-  G <- list2env(.G, Genome)
+  Ha <- list2env(.Ha, Haplosome)
   GE <- list2env(.GE, GenomicElement)
   GET <- list2env(.GET, GenomicElementType)
   In <- list2env(.I, Individual)
@@ -168,26 +168,16 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
   LF <- list2env(.LF, LogFile)
   M <- list2env(.M, Mutation)
   MT <- list2env(.MT, MutationType)
+  Pl <- list2env(.Pl, Plot)
   SB <- list2env(.SB, SLiMBuiltin)
   SEB <- list2env(.SEB, SLiMEidosBlock)
   SG <- list2env(.SG, SLiMgui)
   SM <- list2env(.SM, SpatialMap)
-  SS <- list2env(.SS, SLiMSim)
   Sp <- list2env(.Sp, Species)
   P <- list2env(.P, Subpopulation)
   S <- list2env(.S, Substitution)
 
   ##### make class nesting ############
-  SLiMSim$chromosome <- Chromosome
-  SLiMSim$genomicElementTypes <- GenomicElementType
-  SLiMSim$interactionTypes <- InteractionType
-  SLiMSim$logFiles <- LogFile
-  SLiMSim$mutationTypes <- MutationType
-  SLiMSim$mutations <- Mutation
-  SLiMSim$scriptBlocks <- SLiMEidosBlock
-  SLiMSim$subpopulations <- Subpopulation
-  SLiMSim$substitutions <- Substitution
-
   Species$chromosome <- Chromosome
   Species$genomicElementTypes <- GenomicElementType
   Species$mutationTypes <- MutationType
@@ -206,21 +196,21 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".",
 
   Chromosome$genomicElements <- GenomicElement
 
-  Genome$individual <- Individual
-  Genome$mutations <- Mutation
+  Haplosome$individual <- Individual
+  Haplosome$mutations <- Mutation
 
   GenomicElement$genomicElementType <- GenomicElementType
 
-  Individual$genome1 <- Genome
-  Individual$genome2 <- Genome
-  Individual$genomes <- Genome
+  Individual$haploidGenome1 <- Haplosome
+  Individual$haploidGenome2 <- Haplosome
+  Individual$haplosomes <- Haplosome
   Individual$uniqueMutations <- Mutation
   Individual$subpopulation <- Subpopulation
 
   Mutation$mutationType <- MutationType
 
   Subpopulation$individuals <- Individual
-  Subpopulation$genomes <- Genome
+  Subpopulation$haplosomes <- Haplosome
   Subpopulation$individuals <- Individual
 
 }

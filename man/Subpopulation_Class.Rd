@@ -8,201 +8,34 @@
 Documentation for Subpopulation class from SLiM
 }
 \details{
-This class represents one subpopulation in the simulated population.
-Section 1.5.5 presents an
-overview of the conceptual role of this class. The subpopulations currently
-defined in the
-simulation are defined as global constants with the same names used in the SLiM
-input file - p1,
-p2, and so forth.
+5.17.1 Subpopulation properties 5.17 Class Subpopulation
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{addCloned}}}
-\item{\code{\link{addCrossed}}}
-\item{\code{\link{addEmpty}}}
-\item{\code{\link{addRecombinant}}}
-\item{\code{\link{addSelfed}}}
-\item{\code{\link{addSpatialMap}}}
-\item{\code{\link{cachedFitness}}}
-\item{\code{\link{configureDisplay}}}
-\item{\code{\link{defineSpatialMap}}}
-\item{\code{\link{outputMSSample}}}
-\item{\code{\link{outputSample}}}
-\item{\code{\link{outputVCFSample}}}
-\item{\code{\link{pointDeviated}}}
-\item{\code{\link{pointInBounds}}}
-\item{\code{\link{pointPeriodic}}}
-\item{\code{\link{pointReflected}}}
-\item{\code{\link{pointStopped}}}
-\item{\code{\link{pointUniform}}}
-\item{\code{\link{removeSpatialMap}}}
-\item{\code{\link{removeSubpopulation}}}
-\item{\code{\link{sampleIndividuals}}}
-\item{\code{\link{setCloningRate}}}
-\item{\code{\link{setMigrationRates}}}
-\item{\code{\link{setSelfingRate}}}
-\item{\code{\link{setSexRatio}}}
-\item{\code{\link{setSpatialBounds}}}
-\item{\code{\link{setSubpopulationSize}}}
-\item{\code{\link{spatialMapColor}}}
-\item{\code{\link{spatialMapImage}}}
-\item{\code{\link{spatialMapValue}}}
-\item{\code{\link{subsetIndividuals}}}
-\item{\code{\link{takeMigrants}}}
 }
 This class has the following properties:
 \describe{
-\item{cloningRate}{A property of type float. This property is a constant, so it
-is not modifiable. \strong{Property Description:} The fraction of children in
-the next generation that will be produced by cloning (as opposed to biparental
-mating). In non-sexual (i.e. hermaphroditic) simulations, this property is a
-singleton float representing the overall subpopulation cloning rate. In sexual
-simulations, this property is a float vector with two values: the cloning rate
-for females (at index 0) and for males (at index 1). }
-\item{description}{A property of type string. It is of length one (a
-singleton). This property is a variable, so it is modifiable. \strong{Property
-Description:} A human-readable string description for the subpopulation. By
-default, this is the empty string, ""; however, it may be set to whatever you
-wish. When tree-sequence recording is enabled, description is persisted in the
-subpopulation's metadata in tree-sequence output. }
-\item{firstMaleIndex}{A property of type integer. It is of length one
-(a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The index of the first male individual in
-the subpopulation. The genomes vector is sorted into females first and males
-second; firstMaleIndex gives the position of the boundary between those
-sections. Note, however, that there are two genomes per diploid individual,
-and the firstMaleIndex is not premultiplied by 2; you must multiply it by 2
-before using it to decide whether a given index into genomes is a genome for
-a male or a female. The firstMaleIndex property is also the number of females
-in the subpopulation, given this design. For non-sexual (i.e. hermaphroditic)
-simulations, this property has an undefined value and should not be used. }
-\item{fitnessScaling}{A property of type float. It is of length one (a
-singleton). This property is a variable, so it is modifiable. \strong{Property
-Description:} A float scaling factor applied to the fitness of all individuals
-in this subpopulation (i.e., the fitness value computed for each individual
-will be multiplied by this value). This is primarily of use in nonWF models,
-where fitness is absolute, rather than in WF models, where fitness is relative
-(and thus a constant factor multiplied into the fitness of every individual
-will make no difference); however, it may be used in either type of model.
-This provides a simple, fast way to modify the fitness of all individuals in a
-subpopulation; conceptually it is similar to returning the same fitness effect
-for all individuals in the subpopulation from a fitnessEffect() callback, but
-without the complexity and performance overhead of implementing such a callback.
-To scale the fitness of individuals by different (individual-specific) factors,
-see the fitnessScaling property of Individual. The value of fitnessScaling is
-reset to 1.0 every tick, so that any scaling factor set lasts for only a single
-tick. This reset occurs immediately after fitness values are calculated, in both
-WF and nonWF models. }
-\item{genomes}{A property of type Genome object. This property is a constant,
-so it is not modifiable. \strong{Property Description:} All of the genomes
-contained by the subpopulation; there are two genomes per diploid individual. }
-\item{genomesNonNull}{A property of type Genome object. This property is a
-constant, so it is not modifiable. \strong{Property Description:} All of the
-genomes contained by the subpopulation, as with the genomes property, if all
-of them are not null genomes; any null genomes present are excluded from the
-returned vector. This is a convenience shorthand, sometimes useful in models
-that involve null genomes. }
-\item{id}{A property of type integer. It is of length one (a singleton). This
-property is a constant, so it is not modifiable. \strong{Property Description:}
-The identifier for this subpopulation; for subpopulation p3, for example, this
-is 3. }
-\item{immigrantSubpopFractions}{A property of type float. This property is a
-constant, so it is not modifiable. \strong{Property Description:} The expected
-value of the fraction of children in the next generation that are immigrants
-arriving from particular subpopulations. }
-\item{immigrantSubpopIDs}{A property of type integer. This property is
-a constant, so it is not modifiable. \strong{Property Description:} The
-identifiers of the particular subpopulations from which immigrants will arrive
-in the next generation. }
-\item{individualCount}{A property of type integer. It is of length one
-(a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The number of individuals in the subpopulation;
-one-half of the number of genomes. }
-\item{individuals}{A property of type Individual object. This property is a
-constant, so it is not modifiable. \strong{Property Description:} All of the
-individuals contained by the subpopulation. Each individual is diploid and thus
-contains two Genome objects. See the sampleIndividuals() and subsetIndividuals()
-for fast ways to get a subset of the individuals in a subpopulation. }
-\item{lifetimeReproductiveOutput}{A property of type integer. This property
-is a constant, so it is not modifiable. \strong{Property Description:} If
-pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
-lifetimeReproductiveOutput contains the value of the Individual property
-reproductiveOutput for all individuals in the subpopulation that died in
-the last viability/survival tick cycle stage (or, for WF models, immediately
-after reproduction). This allows access to the lifetime reproductive output of
-individuals in the subpopulation at the end of their lives. If pedigree tracking
-is not on, this property is unavailable. }
-\item{lifetimeReproductiveOutputF}{A property of type integer. This property
-is a constant, so it is not modifiable. \strong{Property Description:} If
-pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
-lifetimeReproductiveOutputF contains the value of the Individual property
-reproductiveOutput for all female individuals in the subpopulation that died in
-the last viability/ survival tick cycle stage (or, for WF models, immediately
-after reproduction). This property is undefined if separate sexes have not been
-enabled, or if pedigree tracking is not on. }
-\item{lifetimeReproductiveOutputM}{A property of type integer. This property
-is a constant, so it is not modifiable. \strong{Property Description:} If
-pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
-lifetimeReproductiveOutputM contains the value of the Individual property
-reproductiveOutput for all male individuals in the subpopulation that died in
-the last viability/ survival tick cycle stage (or, for WF models, immediately
-after reproduction). This property is undefined if separate sexes have not been
-enabled, or if pedigree tracking is not on. }
-\item{name}{A property of type string. It is of length one (a singleton). This
-property is a variable, so it is modifiable. \strong{Property Description:}
-A human-readable string name for the subpopulation. By default, this is the
-subpopulation's symbol as a string; for subpopulation p3, for example, name
-defaults to "p3". However, it may be set to whatever you wish except that
-subpopulation names must be unique across time (two different subpopulations
-may not both have the name "foo", even if they never exist at the same time). A
-subpopulation's name may appear as a label in SLiMgui, and it can be useful in
-generating output, debugging, and other purposes. When tree-sequence recording
-is enabled, name is persisted in the subpopulation's metadata in tree-sequence
-output, and can then be used in Python to identify the subpopulation; if
-you plan to take advantage of that feature, name should follow the syntax of
-Python identifiers: starting with a letter or underscore [a-zA-Z_], followed by
-letters, digits, or underscores [a-zA-Z0-9_], without spaces, hyphens, or other
-characters. }
-\item{selfingRate}{A property of type float. It is of length one (a singleton).
-This property is a constant, so it is not modifiable. \strong{Property
-Description:} The expected value of the fraction of children in the next
-generation that will be produced by selfing (as opposed to biparental mating).
-Selfing is only possible in non-sexual (i.e. hermaphroditic) simulations; for
-sexual simulations this property always has a value of 0.0. }
-\item{sexRatio}{A property of type float. It is of length one (a singleton).
-This property is a constant, so it is not modifiable. \strong{Property
-Description:} For sexual simulations, the sex ratio for the subpopulation. This
-is defined, in SLiM, as the fraction of the subpopulation that is male; in other
-words, it is actually the M:(M+F) ratio. For non-sexual (i.e. hermaphroditic)
-simulations, this property has an undefined value and should not be used. }
-\item{spatialBounds}{A property of type float. This property is a constant, so
-it is not modifiable. \strong{Property Description:} The spatial boundaries of
-the subpopulation. The length of the spatialBounds property depends upon the
-spatial dimensionality declared with initializeSLiMOptions(). If the spatial
-dimensionality is zero (as it is by default), the value of this property is
-float(0) (a zero-length float vector). Otherwise, minimums are supplied for
-each coordinate used by the dimensionality of the simulation, followed by
-maximums for each. In other words, if the declared dimensionality is "xy", the
-spatialBounds property will contain values (x0, y0, x1, y1); bounds for the
-z coordinate will not be included in that case, since that coordinate is not
-used in the simulation's dimensionality. This property cannot be set, but the
-setSpatialBounds() method may be used to achieve the same thing. }
-\item{spatialMaps}{A property of type SpatialMap object. This property is a
-constant, so it is not modifiable. \strong{Property Description:} The spatial
-maps that are currently added to the subpopulation. }
-\item{species}{A property of type Species object. It is of length one
-(a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The species to which the target object belongs. }
-\item{tag}{A property of type integer. It is of length one (a singleton). This
-property is a variable, so it is modifiable. \strong{Property Description:}
-A user-defined integer value. The value of tag is initially undefined, and
-it is an error to try to read it; if you wish it to have a defined value, you
-must arrange that yourself by explicitly setting its value prior to using it
-elsewhere in your code. The value of tag is not used by SLiM; it is free for
-you to use. See also the getValue() and setValue() methods (provided by the
-Dictionary class; see the Eidos manual), for another way of attaching state to
-subpopulations.}
-
+\item{cloningRate}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The fraction of children in the next generation that will be produced by cloning (as opposed to biparental mating). In non-sexual (i.e. hermaphroditic) simulations, this property is a singleton float representing the overall subpopulation cloning rate. In sexual simulations, this property is a float vector with two values: the cloning rate for females (at index 0) and for males (at index 1).}
+\item{description}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A human-readable string description for the subpopulation. By default, this is the empty string, ""; however, it may be set to whatever you wish. When tree-sequence recording is enabled, description is persisted in the subpopulation's metadata in tree-sequence output.}
+\item{firstMaleIndex}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The index of the first male individual in the subpopulation. The individuals vector of the subpopulation is sorted into females first and males second; firstMaleIndex gives the position of the boundary between those sections. The firstMaleIndex property is also the number of females in the subpopulation, given this design. For non-sexual (i.e. hermaphroditic) simulations, the value of this property is undefined and should not be used.}
+\item{fitnessScaling}{A property of type float. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A float scaling factor applied to the fitness of all individuals in this subpopulation (i.e., the fitness value computed for each individual will be multiplied by this value). This is primarily of use in nonWF models, where fitness is absolute, rather than in WF models, where fitness is relative (and thus a constant factor multiplied into the fitness of every individual will make no difference); however, it may be used in either type of model. This provides a simple, fast way to modify the fitness of all individuals in a subpopulation; conceptually it is similar to returning the same fitness effect for all individuals in the subpopulation from a fitnessEffect() callback, but without the complexity and performance overhead of implementing such a callback. To scale the fitness of individuals by different (individual-specific) factors, see the fitnessScaling property of Individual. The value of fitnessScaling is reset to 1.0 every tick, so that any scaling factor set lasts for only a single tick. This reset occurs immediately after fitness values are calculated, in both WF and nonWF models.}
+\item{haplosomes}{A property of type Haplosome object.  This property is a constant, so it is not modifiable. \strong{Property Description:} All of the haplosomes contained by the subpopulation. All of the haplosomes for the first individual in the individuals property are provided, followed by all the haplosomes for the second individual, etc., in the same order as individuals.}
+\item{haplosomesNonNull}{A property of type Haplosome object.  This property is a constant, so it is not modifiable. \strong{Property Description:} All of the haplosomes contained by the subpopulation, as with the haplosomes property, if all of them are not null haplosomes; any null haplosomes present are excluded from the returned vector. This is a convenience shorthand, sometimes useful in models that involve null haplosomes.}
+\item{id}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The identifier for this subpopulation; for subpopulation p3, for example, this is 3.}
+\item{immigrantSubpopFractions}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The expected value of the fraction of children in the next generation that are immigrants arriving from particular subpopulations.}
+\item{immigrantSubpopIDs}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} The identifiers of the particular subpopulations from which immigrants will arrive in the next generation.}
+\item{individualCount}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The number of individuals in the subpopulation.}
+\item{individuals}{A property of type Individual object.  This property is a constant, so it is not modifiable. \strong{Property Description:} All of the individuals contained by the subpopulation. See the sampleIndividuals() and subsetIndividuals() for fast ways to get a subset of the individuals in a subpopulation.}
+\item{lifetimeReproductiveOutput}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), lifetimeReproductiveOutput contains the value of the Individual property reproductiveOutput for all individuals in the subpopulation that died in the last viability/survival tick cycle stage (or, for WF models, immediately after reproduction). This allows access to the lifetime reproductive output of individuals in the subpopulation at the end of their lives. If pedigree tracking is not on, this property is unavailable.}
+\item{lifetimeReproductiveOutputF}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), lifetimeReproductiveOutputF contains the value of the Individual property reproductiveOutput for all female individuals in the subpopulation that died in the last viability/survival tick cycle stage (or, for WF models, immediately after reproduction). This property is undefined if separate sexes have not been enabled, or if pedigree tracking is not on.}
+\item{lifetimeReproductiveOutputM}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), lifetimeReproductiveOutputM contains the value of the Individual property reproductiveOutput for all male individuals in the subpopulation that died in the last viability/survival tick cycle stage (or, for WF models, immediately after reproduction). This property is undefined if separate sexes have not been enabled, or if pedigree tracking is not on.}
+\item{name}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A human-readable string name for the subpopulation. By default, this is the subpopulation's symbol as a string; for subpopulation p3, for example, name defaults to "p3". However, it may be set to whatever you wish except that subpopulation names must be unique across time (two different subpopulations may not both have the name "foo", even if they never exist at the same time). A subpopulation's name may appear as a label in SLiMgui, and it can be useful in generating output, debugging, and other purposes. When tree-sequence recording is enabled, name is persisted in the subpopulation's metadata in tree-sequence output, and can then be used in Python to identify the subpopulation; if you plan to take advantage of that feature, name should follow the syntax of Python identifiers: starting with a letter or underscore [a-zA-Z_], followed by letters, digits, or underscores [a-zA-Z0-9_], without spaces, hyphens, or other characters.}
+\item{selfingRate}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The expected value of the fraction of children in the next generation that will be produced by selfing (as opposed to biparental mating). Selfing is only possible in non-sexual (i.e. hermaphroditic) simulations; for sexual simulations this property always has a value of 0.0.}
+\item{sexRatio}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} For sexual simulations, the sex ratio for the subpopulation. This is defined, in SLiM, as the fraction of the subpopulation that is male; in other words, it is actually the M:(M+F) ratio. For non-sexual (i.e. hermaphroditic) simulations, this property has an undefined value and should not be used.}
+\item{spatialMaps}{A property of type SpatialMap object.  This property is a constant, so it is not modifiable. \strong{Property Description:} The spatial maps that are currently added to the subpopulation.}
+\item{spatialBounds}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The spatial boundaries of the subpopulation. The length of the spatialBounds property depends upon the spatial dimensionality declared with initializeSLiMOptions(). If the spatial dimensionality is zero (as it is by default), the value of this property is float(0) (a zero-length float vector). Otherwise, minimums are supplied for each coordinate used by the dimensionality of the simulation, followed by maximums for each. In other words, if the declared dimensionality is "xy", the spatialBounds property will contain values (x0, y0, x1, y1); bounds for the z coordinate will not be included in that case, since that coordinate is not used in the simulation's dimensionality. This property cannot be set, but the setSpatialBounds() method may be used to achieve the same thing.}
+\item{species}{A property of type Species object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The species to which the target object belongs.}
+\item{tag}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to subpopulations.}
 }
 }
 \seealso{
@@ -210,12 +43,16 @@ Other Subpopulation:
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
+\code{\link{addMultiRecombinant}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
 \code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
+\code{\link{deviatePositions}()},
+\code{\link{deviatePositionsWithMap}()},
+\code{\link{haplosomesForChromosomes}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
@@ -225,6 +62,7 @@ Other Subpopulation:
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{pointUniformWithMap}()},
 \code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},

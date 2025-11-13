@@ -3,56 +3,35 @@
 \name{calcVA}
 \alias{calcVA}
 \alias{SLiMBuiltin$calcVA}
-\alias{.SB$calcVA}
+\alias{SB$calcVA}
 \title{SLiM method calcVA}
 \usage{
 calcVA(individuals, mutType)
 }
 \arguments{
-\item{individuals}{An object of type Individual object. See details for
-description.}
+\item{individuals}{An object of type Individual object.}
 
-\item{mutType}{An object of type integer or MutationType object. Must be of
-length 1 (a singleton). See details for description.}
+\item{mutType}{An object of type integer or MutationType object (singleton).}
 }
 \value{
 An object of type float. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{calcVA}, which is a method of the SLiM
-class \code{\link{SLiMBuiltin}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{calcVA}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=753}{SLiM manual: page
-753}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Calculates VA, the additive genetic variance, among a vector
-individuals, in a particular mutation type mutType that represents quantitative
-trait loci (QTLs) influencing a quantitative phenotypic trait. The mutType
-parameter may be either an integer representing the ID of the desired mutation
-type, or a MutationType object specified directly. This function assumes
-that mutations of type mutType encode their effect size upon the quantitative
-trait in their selectionCoeff property, as is fairly standard in SLiM (see,
-e.g., section 13.2). The implementation of calcVA(), which is viewable with
-functionSource(), is quite simple; if effect sizes are stored elsewhere (such as
-with setValue(), as in section 13.5), a new user-defined function following the
-pattern of calcVA() can easily be written.
+Calculates VA, the additive genetic variance, among a vector of individuals (containing at least two elements) passed in individuals, in a particular mutation type mutType that represents quantitative trait loci (QTLs) influencing a quantitative phenotypic trait. The mutType parameter may be either an integer representing the ID of the desired mutation type, or a MutationType object specified directly. This function assumes that mutations of type mutType encode their effect size upon the quantitative trait in their selectionCoeff property, as is fairly standard in SLiM. The implementation of calcVA(), which is viewable with functionSource(), is quite simple; if effect sizes are stored elsewhere (such as with setValue()), a new user-defined function following the pattern of calcVA() can easily be written.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -63,23 +42,31 @@ calcVA()
 \seealso{
 Other SLiMBuiltin: 
 \code{\link{SB}},
+\code{\link{calcDxy}()},
 \code{\link{calcFST}()},
 \code{\link{calcHeterozygosity}()},
 \code{\link{calcInbreedingLoad}()},
+\code{\link{calcLD_D}()},
+\code{\link{calcLD_Rsquared}()},
+\code{\link{calcMeanFroh}()},
 \code{\link{calcPairHeterozygosity}()},
+\code{\link{calcPi}()},
+\code{\link{calcSFS}()},
+\code{\link{calcTajimasD}()},
 \code{\link{calcWattersonsTheta}()},
 \code{\link{codonsToAminoAcids}()},
+\code{\link{codonsToNucleotides}()},
 \code{\link{mm16To256}()},
 \code{\link{mmJukesCantor}()},
 \code{\link{mmKimura}()},
 \code{\link{nucleotideCounts}()},
 \code{\link{nucleotideFrequencies}()},
 \code{\link{nucleotidesToCodons}()},
+\code{\link{randomNucleotides}()},
 \code{\link{summarizeIndividuals}()},
 \code{\link{treeSeqMetadata}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{SLiMBuiltin}

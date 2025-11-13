@@ -3,92 +3,62 @@
 \name{outputVCFSample}
 \alias{outputVCFSample}
 \alias{Subpopulation$outputVCFSample}
-\alias{.P$outputVCFSample}
+\alias{P$outputVCFSample}
 \title{SLiM method outputVCFSample}
 \usage{
 outputVCFSample(
   sampleSize,
-  replace,
-  requestedSex,
-  outputMultiallelics,
-  filePath,
-  append,
-  simplifyNucleotides,
-  outputNonnucleotides
+  replace = NULL,
+  requestedSex = NULL,
+  outputMultiallelics = NULL,
+  filePath = NULL,
+  append = NULL,
+  simplifyNucleotides = NULL,
+  outputNonnucleotides = NULL,
+  groupAsIndividuals = NULL,
+  chromosome = NULL
 )
 }
 \arguments{
-\item{sampleSize}{An object of type integer. Must be of length 1 (a singleton).
-See details for description.}
+\item{sampleSize}{An object of type integer (singleton).}
 
-\item{replace}{An object of type logical. Must be of length 1 (a singleton). The
-default value is \code{T}. See details for description.}
+\item{replace}{An object of type logical (singleton).}
 
-\item{requestedSex}{An object of type string. Must be of length 1 (a singleton).
-The default value is \code{"*"}. See details for description.}
+\item{requestedSex}{An object of type string (singleton).}
 
-\item{outputMultiallelics}{An object of type logical. Must be of length 1 (a
-singleton). The default value is \code{T}. See details for description.}
+\item{outputMultiallelics}{An object of type logical (singleton).}
 
-\item{filePath}{An object of type null or string. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{filePath}{An object of type null or string (singleton).}
 
-\item{append}{An object of type logical. Must be of length 1 (a singleton). The
-default value is \code{F}. See details for description.}
+\item{append}{An object of type logical (singleton).}
 
-\item{simplifyNucleotides}{An object of type logical. Must be of length 1 (a
-singleton). The default value is \code{F}. See details for description.}
+\item{simplifyNucleotides}{An object of type logical (singleton).}
 
-\item{outputNonnucleotides}{An object of type logical. Must be of length 1 (a
-singleton). The default value is \code{T}. See details for description.}
+\item{outputNonnucleotides}{An object of type logical (singleton).}
+
+\item{groupAsIndividuals}{An object of type logical (singleton).}
+
+\item{chromosome}{An object of type null or integer or string or Chromosome object (singleton).}
 }
 \value{
 An object of type void.
 }
 \description{
-Documentation for SLiM function \code{outputVCFSample}, which is a method of the
-SLiM class \code{\link{Subpopulation}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{outputVCFSample}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=741}{SLiM manual: page
-741}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Output a random sample from the subpopulation in VCF format (see
-sections 27.2.3 and 27.2.4 for output format details). A sample of individuals
-(not genomes, note - unlike the outputSample() and outputMSSample() methods) of
-size sampleSize from the subpopulation will be output. The sample may be done
-either with or without replacement, as specified by replace; the default is to
-sample with replacement. A particular sex of individuals may be requested for
-the sample, for simulations in which sex is enabled, by passing "M" or "F" for
-requestedSex; passing "*", the default, indicates that genomes from individuals
-should be selected randomly, without respect to sex. If the sampling options
-provided by this method are not adequate, see the outputVCF() method of Genome
-for a more flexible low-level option. If the optional parameter filePath is
-NULL (the default), output will be sent to Eidos's output stream (see section
-4.2.1). Otherwise, output will be sent to the filesystem path specified by
-filePath, overwriting that file if append if F, or appending to the end of
-it if append is T. The parameters outputMultiallelics, simplifyNucleotides,
-and outputNonnucleotides affect the format of the output produced; see
-sections 27.2.3 and 27.2.4 for further discussion. See outputMSSample() and
-outputSample() for other output formats. Output is generally done in a late()
-event, so that the output reflects the state of the simulation at the end of a
-tick.
+integer$ sampleSize, [logical$ replace = T], [string$ requestedSex = "*"], [logical$ outputMultiallelics = T], [Ns$ filePath = NULL], [logical$ append = F], [logical$ simplifyNucleotides = F], [logical$ outputNonnucleotides = T], [logical$ groupAsIndividuals = T], [Niso<Chromosome>$ chromosome = NULL]) Output a random sample from the subpopulation in VCF format. A sample of individuals (not haplosomes, note - unlike the outputSample() and outputMSSample() methods) of size sampleSize from the subpopulation will be output. The sample may be done either with or without replacement, as specified by replace; the default is to sample with replacement. A particular sex of individuals may be requested for the sample, for simulations in which sex is enabled, by passing "M" or "F" for requestedSex; passing "*", the default, indicates that individuals should be selected randomly, without respect to sex. If the sampling options provided by this method are not adequate, see the outputHaplosomesToVCF() method of Haplosome for a more flexible low-level option. If the optional parameter filePath is NULL (the default), output will be sent to Eidos's output stream. Otherwise, output will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. The parameters outputMultiallelics, simplifyNucleotides, outputNonnucleotides, and groupAsIndividuals affect the format of the output produced. The chromosome parameter identifies the chromosome for which haplosomes of the sampled individuals should be output. The default of NULL may be used only in single-chromosome models where the choice of chromosome is unambiguous. In multi-chromosome models, chromosome must be non-NULL; it must specify the chromosome by id (integer), by symbol (string) or by the Chromosome object itself. The symbol property of the chromosome will be output in the CHROM field of call lines in the VCF output. See outputMSSample() and outputSample() for other output formats. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -98,12 +68,16 @@ Other Subpopulation:
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
+\code{\link{addMultiRecombinant}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
 \code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
+\code{\link{deviatePositions}()},
+\code{\link{deviatePositionsWithMap}()},
+\code{\link{haplosomesForChromosomes}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{pointDeviated}()},
@@ -112,6 +86,7 @@ Other Subpopulation:
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{pointUniformWithMap}()},
 \code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
@@ -128,7 +103,6 @@ Other Subpopulation:
 \code{\link{takeMigrants}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Subpopulation}

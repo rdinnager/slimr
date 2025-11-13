@@ -3,63 +3,37 @@
 \name{initializeGenomicElement}
 \alias{initializeGenomicElement}
 \alias{Initialize$initializeGenomicElement}
-\alias{.Init$initializeGenomicElement}
+\alias{Init$initializeGenomicElement}
 \title{SLiM method initializeGenomicElement}
 \usage{
-initializeGenomicElement(genomicElementType, start, end)
+initializeGenomicElement(genomicElementType, start = NULL, end = NULL)
 }
 \arguments{
-\item{genomicElementType}{An object of type integer or GenomicElementType
-object. See details for description.}
+\item{genomicElementType}{An object of type integer or GenomicElementType object.}
 
-\item{start}{An object of type integer. See details for description.}
+\item{start}{An object of type null or integer.}
 
-\item{end}{An object of type integer. See details for description.}
+\item{end}{An object of type null or integer.}
 }
 \value{
 An object of type GenomicElement object.
 }
 \description{
-Documentation for SLiM function \code{initializeGenomicElement}, which is a
-method of the SLiM class \code{\link{Initialize}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{initializeGenomicElement}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=648}{SLiM manual: page
-648}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Add a genomic element to the chromosome at initialization time.
-The start and end parameters give the first and last base positions to be
-spanned by the new genomic element. The new element will be based upon the
-genomic element type identified by genomicElementType, which can be either an
-integer, representing the ID of the desired element type, or an object of type
-GenomicElementType specified directly. Beginning in SLiM 3.3, this function is
-vectorized: the genomicElementType, start, and end parameters do not have to be
-singletons. In particular, start and end may be of any length, but must be equal
-in length; each start/end element pair will generate one new genomic element
-spanning the given base positions. In this case, genomicElementType may still
-be a singleton, providing the genomic element type to be used for all of the
-new genomic elements, or it may be equal in length to start and end, providing
-an independent genomic element type for each new element. When adding a large
-number of genomic elements, it will be much faster to add them in order of
-ascending position with a vectorized call. The return value provides the genomic
-element(s) created by the call, in the order in which they were specified in the
-parameters to initializeGenomicElement().
+Add a genomic element to the chromosome at initialization time. The start and end parameters give the first and last base positions to be spanned by the new genomic element. The new element will be based upon the genomic element type identified by genomicElementType, which can be either an integer, representing the ID of the desired element type, or an object of type GenomicElementType specified directly. Beginning in SLiM 3.3, this function is vectorized: the genomicElementType, start, and end parameters do not have to be singletons. In particular, start and end may be of any length, but must be equal in length; each start/end element pair will generate one new genomic element spanning the given base positions. In this case, genomicElementType may still be a singleton, providing the genomic element type to be used for all of the new genomic elements, or it may be equal in length to start and end, providing an independent genomic element type for each new element. When adding a large number of genomic elements, it will be much faster to add them in order of ascending position with a vectorized call. Beginning in SLiM 5, passing NULL for start and end is allowed by initializeGenomicElement(), but only in one specific case: if the focal chromosome being configured was explicitly defined with initializeChromosome(), and that focal chromosome was given an explicit length (rather than a length of NULL). In that case, start and end may be NULL (both of them, not just one of them), indicating that the genomic element created should span the entire length of the focal chromosome. Since NULL is now the default value for start and end, this makes this common configuration very simple to set up. The return value provides the genomic element(s) created by the call, in the order in which they were specified in the parameters to initializeGenomicElement().
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -71,14 +45,17 @@ initializeGenomicElement()
 Other Initialize: 
 \code{\link{Init}},
 \code{\link{initializeAncestralNucleotides}()},
+\code{\link{initializeChromosome}()},
 \code{\link{initializeGeneConversion}()},
 \code{\link{initializeGenomicElementType}()},
 \code{\link{initializeHotspotMap}()},
 \code{\link{initializeInteractionType}()},
 \code{\link{initializeMutationRate}()},
+\code{\link{initializeMutationRateFromFile}()},
 \code{\link{initializeMutationType}()},
 \code{\link{initializeMutationTypeNuc}()},
 \code{\link{initializeRecombinationRate}()},
+\code{\link{initializeRecombinationRateFromFile}()},
 \code{\link{initializeSLiMModelType}()},
 \code{\link{initializeSLiMOptions}()},
 \code{\link{initializeSex}()},
@@ -86,7 +63,6 @@ Other Initialize:
 \code{\link{initializeTreeSeq}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Initialize}

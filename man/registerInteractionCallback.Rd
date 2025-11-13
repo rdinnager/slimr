@@ -3,72 +3,50 @@
 \name{registerInteractionCallback}
 \alias{registerInteractionCallback}
 \alias{Community$registerInteractionCallback}
-\alias{.Co$registerInteractionCallback}
+\alias{Co$registerInteractionCallback}
 \title{SLiM method registerInteractionCallback}
 \usage{
-registerInteractionCallback(id, source, intType, subpop, start, end)
+registerInteractionCallback(
+  id,
+  source,
+  intType,
+  subpop = NULL,
+  start = NULL,
+  end = NULL
+)
 }
 \arguments{
-\item{id}{An object of type null or integer or string. Must be of length 1 (a
-singleton). See details for description.}
+\item{id}{An object of type null or integer or string (singleton).}
 
-\item{source}{An object of type string. Must be of length 1 (a singleton). See
-details for description.}
+\item{source}{An object of type string (singleton).}
 
-\item{intType}{An object of type integer or InteractionType object. Must be of
-length 1 (a singleton). See details for description.}
+\item{intType}{An object of type integer or InteractionType object (singleton).}
 
-\item{subpop}{An object of type null or integer or Subpopulation object. Must
-be of length 1 (a singleton). The default value is \code{NULL}. See details for
-description.}
+\item{subpop}{An object of type null or integer or Subpopulation object (singleton).}
 
-\item{start}{An object of type null or integer. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{start}{An object of type null or integer (singleton).}
 
-\item{end}{An object of type null or integer. Must be of length 1 (a singleton).
-The default value is \code{NULL}. See details for description.}
+\item{end}{An object of type null or integer (singleton).}
 }
 \value{
-An object of type SLiMEidosBlock object. Return will be of length 1 (a
-singleton)
+An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{registerInteractionCallback}, which is a
-method of the SLiM class \code{\link{Community}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{registerInteractionCallback}, which is a method of the SLiM class \code{\link{Community}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=667}{SLiM manual: page
-667}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Register a block of Eidos source code, represented as the string
-singleton source, as an Eidos interaction() callback in the current simulation
-(global to the community), with a required interaction type intType (which may
-be an integer identifier), optional exerter subpopulation subpop (which may also
-be an integer identifier, or NULL, the default, to indicate all subpopulations),
-and optional start and end ticks all limiting its applicability. The script
-block will be given identifier id (specified as an integer, or as a string
-symbolic name such as "s5"); this may be NULL if there is no need to be able
-to refer to the block later. The registered callback is added to the end of the
-list of registered SLiMEidosBlock objects, and is active immediately; it will
-be eligible to execute the next time an InteractionType is evaluated. The new
-SLiMEidosBlock will be defined as a global variable immediately by this method
-(see section 25.12), and will also be returned by this method.
+Nis$ id, string$ source, io<InteractionType>$ intType, [Nio<Subpopulation>$ subpop = NULL], [Ni$ start = NULL], [Ni$ end = NULL]) Register a block of Eidos source code, represented as the string singleton source, as an Eidos interaction() callback in the current simulation (global to the community), with a required interaction type intType (which may be an integer identifier), optional exerter subpopulation subpop (which may also be an integer identifier, or NULL, the default, to indicate all subpopulations), and optional start and end ticks all limiting its applicability. The script block will be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered callback is added to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it will be eligible to execute the next time an InteractionType is evaluated. The new SLiMEidosBlock will be defined as a global variable immediately by this method, and will also be returned by this method.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -77,6 +55,7 @@ Other Community:
 \code{\link{Co}},
 \code{\link{createLogFile}()},
 \code{\link{deregisterScriptBlock}()},
+\code{\link{estimatedLastTick}()},
 \code{\link{genomicElementTypesWithIDs}()},
 \code{\link{interactionTypesWithIDs}()},
 \code{\link{mutationTypesWithIDs}()},
@@ -89,10 +68,10 @@ Other Community:
 \code{\link{simulationFinished}()},
 \code{\link{speciesWithIDs}()},
 \code{\link{subpopulationsWithIDs}()},
+\code{\link{subpopulationsWithNames}()},
 \code{\link{usage}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Community}

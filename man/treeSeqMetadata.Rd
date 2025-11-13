@@ -3,61 +3,35 @@
 \name{treeSeqMetadata}
 \alias{treeSeqMetadata}
 \alias{SLiMBuiltin$treeSeqMetadata}
-\alias{.SB$treeSeqMetadata}
+\alias{SB$treeSeqMetadata}
 \title{SLiM method treeSeqMetadata}
 \usage{
-treeSeqMetadata(filePath, userData)
+treeSeqMetadata(filePath, userData = NULL)
 }
 \arguments{
-\item{filePath}{An object of type string or logical. Must be of length 1 (a
-singleton). See details for description.}
+\item{filePath}{An object of type string or logical (singleton).}
 
-\item{userData}{An object of type string or logical. Must be of length 1 (a
-singleton). The default value is \code{T}. See details for description.}
+\item{userData}{An object of type string or logical (singleton).}
 }
 \value{
-An object of type Dictionary object. Return will be of length 1 (a
-singleton)
+An object of type Dictionary object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{treeSeqMetadata}, which is a method of the
-SLiM class \code{\link{SLiMBuiltin}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{treeSeqMetadata}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=755}{SLiM manual: page
-755}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Returns a Dictionary containing top-level metadata from the .trees
-(tree-sequence) file at filePath. If userData is T (the default), the top-level
-metadata under the SLiM/user_metadata key is returned; this is the same metadata
-that can optionally be supplied to treeSeqOutput() in its metadata parameter, so
-it makes it easy to recover metadata that you attached to the tree sequence when
-it was saved. If userData is F, the entire top-level metadata Dictionary object
-is returned; this can be useful for examining the values of other keys under the
-SLiM key (see section 27.4), or values inside the top-level dictionary itself
-that might have been placed there by msprime or other software. This function
-can be used to read in parameter values or other saved state (tag property
-values, for example), in order to resuscitate the complete state of a simulation
-that was written to a .trees file. It could be used for more esoteric purposes
-too, such as to search through .trees files in a directory (with the help of
-the Eidos function filesAtPath()) to find those files that satisfy some metadata
-criterion.
+Returns a Dictionary containing top-level metadata from the .trees (tree-sequence) file at filePath. If userData is T (the default), the top-level metadata under the SLiM/user_metadata key is returned; this is the same metadata that can optionally be supplied to treeSeqOutput() in its metadata parameter, so it makes it easy to recover metadata that you attached to the tree sequence when it was saved. If userData is F, the entire top-level metadata Dictionary object is returned; this can be useful for examining the values of other keys under the SLiM key, or values inside the top-level dictionary itself that might have been placed there by msprime or other software. This function can be used to read in parameter values or other saved state (tag property values, for example), in order to resuscitate the complete state of a simulation that was written to a .trees file. It could be used for more esoteric purposes too, such as to search through .trees files in a directory (with the help of the Eidos function filesAtPath()) to find those files that satisfy some metadata criterion.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -68,23 +42,31 @@ treeSeqMetadata()
 \seealso{
 Other SLiMBuiltin: 
 \code{\link{SB}},
+\code{\link{calcDxy}()},
 \code{\link{calcFST}()},
 \code{\link{calcHeterozygosity}()},
 \code{\link{calcInbreedingLoad}()},
+\code{\link{calcLD_D}()},
+\code{\link{calcLD_Rsquared}()},
+\code{\link{calcMeanFroh}()},
 \code{\link{calcPairHeterozygosity}()},
+\code{\link{calcPi}()},
+\code{\link{calcSFS}()},
+\code{\link{calcTajimasD}()},
 \code{\link{calcVA}()},
 \code{\link{calcWattersonsTheta}()},
 \code{\link{codonsToAminoAcids}()},
+\code{\link{codonsToNucleotides}()},
 \code{\link{mm16To256}()},
 \code{\link{mmJukesCantor}()},
 \code{\link{mmKimura}()},
 \code{\link{nucleotideCounts}()},
 \code{\link{nucleotideFrequencies}()},
 \code{\link{nucleotidesToCodons}()},
+\code{\link{randomNucleotides}()},
 \code{\link{summarizeIndividuals}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{SLiMBuiltin}

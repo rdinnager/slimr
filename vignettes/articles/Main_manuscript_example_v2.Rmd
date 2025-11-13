@@ -1003,9 +1003,9 @@ slim_script(
       ind_sample = c(sample(p1.individuals, ssizes[0]),
                      sample(p2.individuals, ssizes[1]),
                      sample(p3.individuals, ssizes[2]))
-      ## output individuals genomes
-      slimr_output(ind_sample.genomes.output(), "pop_sample", do_every = 1);
-      slimr_output(ind_sample.genomes.individual.subpopulation, "subpops", do_every = 1)
+      ## output individuals haplosomes
+      slimr_output(ind_sample.haplosomes.output(), "pop_sample", do_every = 1);
+      slimr_output(ind_sample.haplosomes.individual.subpopulation, "subpops", do_every = 1)
     }
     
   }),

@@ -3,49 +3,35 @@
 \name{mmKimura}
 \alias{mmKimura}
 \alias{SLiMBuiltin$mmKimura}
-\alias{.SB$mmKimura}
+\alias{SB$mmKimura}
 \title{SLiM method mmKimura}
 \usage{
 mmKimura(alpha, beta)
 }
 \arguments{
-\item{alpha}{An object of type float or float. Must be of length 1 (a
-singleton). See details for description.}
+\item{alpha}{An object of type float or float (singleton).}
 
-\item{beta}{An object of type float or float. Must be of length 1 (a singleton).
-See details for description.}
+\item{beta}{An object of type float or float (singleton).}
 }
 \value{
 An object of type float.
 }
 \description{
-Documentation for SLiM function \code{mmKimura}, which is a method of the SLiM
-class \code{\link{SLiMBuiltin}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{mmKimura}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=749}{SLiM manual: page
-749}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Returns a mutation matrix representing a Kimura (1980) model with
-transition rate alpha and transversion rate beta: This 2×2 matrix is suitable
-for use with initializeGenomicElementType(). Note that the actual mutation rate
-produced by this model is alpha+2*beta.
+Returns a mutation matrix representing a Kimura (1980) model with transition rate alpha and transversion rate beta. This 2x2 matrix is suitable for use with initializeGenomicElementType(). Note that the actual mutation rate produced by this model is alpha+2*beta.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -56,23 +42,31 @@ mmKimura()
 \seealso{
 Other SLiMBuiltin: 
 \code{\link{SB}},
+\code{\link{calcDxy}()},
 \code{\link{calcFST}()},
 \code{\link{calcHeterozygosity}()},
 \code{\link{calcInbreedingLoad}()},
+\code{\link{calcLD_D}()},
+\code{\link{calcLD_Rsquared}()},
+\code{\link{calcMeanFroh}()},
 \code{\link{calcPairHeterozygosity}()},
+\code{\link{calcPi}()},
+\code{\link{calcSFS}()},
+\code{\link{calcTajimasD}()},
 \code{\link{calcVA}()},
 \code{\link{calcWattersonsTheta}()},
 \code{\link{codonsToAminoAcids}()},
+\code{\link{codonsToNucleotides}()},
 \code{\link{mm16To256}()},
 \code{\link{mmJukesCantor}()},
 \code{\link{nucleotideCounts}()},
 \code{\link{nucleotideFrequencies}()},
 \code{\link{nucleotidesToCodons}()},
+\code{\link{randomNucleotides}()},
 \code{\link{summarizeIndividuals}()},
 \code{\link{treeSeqMetadata}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{SLiMBuiltin}

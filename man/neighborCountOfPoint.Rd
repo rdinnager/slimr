@@ -3,53 +3,35 @@
 \name{neighborCountOfPoint}
 \alias{neighborCountOfPoint}
 \alias{InteractionType$neighborCountOfPoint}
-\alias{.IT$neighborCountOfPoint}
+\alias{IT$neighborCountOfPoint}
 \title{SLiM method neighborCountOfPoint}
 \usage{
 neighborCountOfPoint(point, exerterSubpop)
 }
 \arguments{
-\item{point}{An object of type float. See details for description.}
+\item{point}{An object of type float.}
 
-\item{exerterSubpop}{An object of type integer or Subpopulation object. Must be
-of length 1 (a singleton). See details for description.}
+\item{exerterSubpop}{An object of type integer or Subpopulation object (singleton).}
 }
 \value{
 An object of type integer. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{neighborCountOfPoint}, which is a method
-of the SLiM class \code{\link{InteractionType}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{neighborCountOfPoint}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=697}{SLiM manual: page
-697}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Returns the number of individuals in exerterSubpop that are within
-the maximum interaction distance according to the distance metric of the
-InteractionType. The subpopulation may be supplied either as an integer ID,
-or as a Subpopulation object. The evaluate() method must have been previously
-called for exerterSubpop, and positions saved at evaluation time will be used.
-If the InteractionType is non-spatial, this method may not be called. This
-method is similar to nearestNeighborsOfPoint() (when passed a large count so as
-to guarantee that all neighbors are returned), but this method returns only a
-count of the individuals, not a vector containing the individuals.
+float point, io<Subpopulation>$ exerterSubpop) Returns the number of individuals in exerterSubpop that are within the maximum interaction distance of the point given by the spatial coordinates in point, which may be thought of as the "receiver", according to the distance metric of the InteractionType. The point vector is interpreted as providing coordinates precisely as specified by the spatiality of the interaction type; if the interaction type's spatiality is "xz", for example, then point[0] is assumed to be an x value, and point[1] is assumed to be a z value, and point must be exactly two elements in length. Be careful; this means that in general it is not safe to pass an individual's spatialPosition property for point, for example (although it is safe if the spatiality of the interaction matches the dimensionality of the simulation); other properties on Individual exist for getting the individual's coordinates in a particular spatiality, such as the xz property for this example. A coordinate for a periodic spatial dimension must be within the spatial bounds for that dimension, since coordinates outside of periodic bounds are meaningless (pointPeriodic() may be used to ensure this); coordinates for non-periodic spatial dimensions are not restricted. The subpopulation may be supplied either as an integer ID, or as a Subpopulation object. The evaluate() method must have been previously called for exerterSubpop, and positions saved at evaluation time will be used. If the InteractionType is non-spatial, this method may not be called. This method is similar to nearestNeighborsOfPoint() (when passed a large count so as to guarantee that all neighbors are returned), but this method returns only a count of the individuals, not a vector containing the individuals.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -76,7 +58,6 @@ Other InteractionType:
 \code{\link{unevaluate}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{InteractionType}

@@ -3,57 +3,33 @@
 \name{initializeAncestralNucleotides}
 \alias{initializeAncestralNucleotides}
 \alias{Initialize$initializeAncestralNucleotides}
-\alias{.Init$initializeAncestralNucleotides}
+\alias{Init$initializeAncestralNucleotides}
 \title{SLiM method initializeAncestralNucleotides}
 \usage{
 initializeAncestralNucleotides(sequence)
 }
 \arguments{
-\item{sequence}{An object of type integer or string. See details for
-description.}
+\item{sequence}{An object of type integer or string.}
 }
 \value{
 An object of type integer. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{initializeAncestralNucleotides}, which is
-a method of the SLiM class \code{\link{Initialize}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{initializeAncestralNucleotides}, which is a method of the SLiM class \code{\link{Initialize}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=647}{SLiM manual: page
-647}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-This function, which may be called only in nucleotide-based models
-(see section 1.8), supplies an ancestral nucleotide sequence for the model.
-The sequence parameter may be an integer vector providing nucleotide values
-(A=0, C=1, G=2, T=3), or a string vector providing single-character nucleotides
-("A", "C", "G", "T"), or a singleton string providing the sequence as one
-string ("ACGT..."), or a singleton string providing the filesystem path of a
-FASTA file which will be read in to provide the sequence (if the file contains
-than one sequence, the first sequence will be used). Only A/C/G/T nucleotide
-values may be provided; other symbols, such as those for amino acids, gaps, or
-nucleotides of uncertain identity, are not allowed. The two semantic meanings of
-sequence that involve a singleton string value are distinguished heuristically;
-a singleton string that contains only the letters ACGT will be assumed to be a
-nucleotide sequence rather than a filename. The length of the ancestral sequence
-is returned. A utility function, randomNucleotides(), is provided by SLiM to
-assist in generating simple random nucleotide sequences; see section 25.18.1.
+This function, which may be called only in nucleotide-based models, supplies an ancestral nucleotide sequence for the model. The sequence parameter may be an integer vector providing nucleotide values (A=0, C=1, G=2, T=3), or a string vector providing single-character nucleotides ("A", "C", "G", "T"), or a singleton string providing the sequence as one string ("ACGT..."), or a singleton string providing the filesystem path of a FASTA file which will be read in to provide the sequence (if the file contains than one sequence, the first sequence will be used). Only A/C/G/T nucleotide values may be provided; other symbols, such as those for amino acids, gaps, or nucleotides of uncertain identity, are not allowed. The two semantic meanings of sequence that involve a singleton string value are distinguished heuristically; a singleton string that contains only the letters ACGT will be assumed to be a nucleotide sequence rather than a filename. The length of the ancestral sequence is returned. A utility function, randomNucleotides(), is provided by SLiM to assist in generating simple random nucleotide sequences.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -64,15 +40,18 @@ initializeAncestralNucleotides()
 \seealso{
 Other Initialize: 
 \code{\link{Init}},
+\code{\link{initializeChromosome}()},
 \code{\link{initializeGeneConversion}()},
 \code{\link{initializeGenomicElement}()},
 \code{\link{initializeGenomicElementType}()},
 \code{\link{initializeHotspotMap}()},
 \code{\link{initializeInteractionType}()},
 \code{\link{initializeMutationRate}()},
+\code{\link{initializeMutationRateFromFile}()},
 \code{\link{initializeMutationType}()},
 \code{\link{initializeMutationTypeNuc}()},
 \code{\link{initializeRecombinationRate}()},
+\code{\link{initializeRecombinationRateFromFile}()},
 \code{\link{initializeSLiMModelType}()},
 \code{\link{initializeSLiMOptions}()},
 \code{\link{initializeSex}()},
@@ -80,7 +59,6 @@ Other Initialize:
 \code{\link{initializeTreeSeq}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Initialize}

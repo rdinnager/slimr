@@ -8,252 +8,26 @@
 Documentation for MutationType class from SLiM
 }
 \details{
-This class represents a type of mutation with a particular distribution
-of fitness effects, such as
-neutral mutations or weakly beneficial mutations. Sections 1.5.3 and 1.5.4
-present an overview of
-the conceptual role of this class. The mutation types currently defined in the
-simulation are
-defined as global constants with the same names used in the SLiM input file -
-m1, m2, and so forth.
-There are currently six options for the distribution of fitness effects in SLiM,
-represented by
-single-character codes:
-"f" - A fixed fitness effect. This DFE type has a single parameter, the
-selection coefficient s to
-be used by all mutations of the mutation type.
-"g" - A gamma-distributed fitness effect. This DFE type is specified by two
-parameters, a mean
-value and a shape parameter. The gamma distribution from which mutations are
-drawn is given by
-the probability density function P(s | α,β) = [Γ(α)βα]−1sα−1exp(−s/β), where α
-is the shape parameter,
-and the specified mean for the distribution is equal to αβ. Note that this
-parameterization is the
-same as for the Eidos function rgamma(). A gamma distribution is often used to
-model deleterious
-mutations at functional sites.
-"e" - An exponentially-distributed fitness effect. This DFE type is specified by
-a single
-parameter, the mean of the distribution. The exponential distribution from which
-mutations are
-drawn is given by the probability density function P(s | β) = β−1exp(−s/β),
-where β is the specified
-mean for the distribution. This parameterization is the same as for the Eidos
-function rexp(). An
-exponential distribution is often used to model beneficial mutations.
-"n" - A normally-distributed fitness effect. This DFE type is specified by two
-parameters, a
-mean and a standard deviation. The normal distribution from which mutations are
-drawn is given
-by the probability density function P(s | μ,σ) = (2πσ2)−1/2exp(−(s−μ)2/2σ2),
-where μ is the mean and σ
-is the standard deviation. This parameterization is the same as for the Eidos
-function rnorm(). A
-normal distribution is often used to model mutations that can be either
-beneficial or deleterious,
-since both tails of the distribution are unbounded.
-"p" - A Laplace-distributed fitness effect. This DFE type is specified by two
-parameters, a mean
-and a scale. The Laplace distribution from which mutations are drawn is given by
-the probability
-density function P(s | μ,b) = exp(−|s−μ|/b)/2b, where μ is the mean and b is the
-scale parameter. A
-Laplace distribution is sometimes used to model a mix of both deleterious and
-beneficial
-mutations.
-"w" - A Weibull-distributed fitness effect. This DFE type is specified by a
-scale parameter and a
-shape parameter. The Weibull distribution from which mutations are drawn is
-given by the
-probability density function P(s | λ,k) = (k/λk)sk−1exp(−(s/λ)k), where λ is the
-scale parameter and k is
-the shape parameter. This parameterization is the same as for the Eidos function
-rweibull(). A
-Weibull distribution is often used to model mutations following extreme-value
-theory.
-"s" - A script-based fitness effect. This DFE type is specified by a script
-parameter of type
-string, specifying an Eidos script to be executed to produce each new selection
-coefficient. For
-example, the script "return rbinom(1);" could be used to generate selection
-coefficients drawn
-from a binomial distribution, using the Eidos function rbinom(), even though
-that mutational
-distribution is not supported by SLiM directly. The script must return a
-singleton float or integer.
-Note that these distributions can in principle produce selection coefficients
-smaller than -1.0.
-In that case, the mutations will be evaluated as "lethal" by SLiM, and the
-relative fitness of the
-individual will be set to 0.0.
+5.11.1 MutationType properties 5.11 Class MutationType
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{drawSelectionCoefficient}}}
-\item{\code{\link{setDistribution}}}
 }
 This class has the following properties:
 \describe{
-\item{color}{A property of type string. It is of length one (a singleton). This
-property is a variable, so it is modifiable. \strong{Property Description:}
-The color used to display mutations of this type in SLiMgui. Outside of
-SLiMgui, this property still exists, but is not used by SLiM. Colors may
-be specified by name, or with hexadecimal RGB values of the form "#RRGGBB"
-(see the Eidos manual). If color is the empty string, "", SLiMgui's default
-(selection-coefficient-based) color scheme is used; this is the default for new
-MutationType objects. }
-\item{colorSubstitution}{A property of type string. It is of length one (a
-singleton). This property is a variable, so it is modifiable. \strong{Property
-Description:} The color used to display substitutions of this type in SLiMgui
-(see the discussion for the colorSubstitution property of the Chromosome class
-for details). Outside of SLiMgui, this property still exists, but is not used
-by SLiM. Colors may be specified by name, or with hexadecimal RGB values of the
-form "#RRGGBB" (see the Eidos manual). If colorSubstitution is the empty string,
-"", SLiMgui's default (selection-coefficient-based) color scheme is used; this
-is the default for new MutationType objects. }
-\item{convertToSubstitution}{A property of type logical. It is of length one (a
-singleton). This property is a variable, so it is modifiable. \strong{Property
-Description:} This property governs whether mutations of this mutation type
-will be converted to Substitution objects when they reach fixation. In WF models
-this property is T by default, since conversion to Substitution objects provides
-large speed benefits; it should be set to F only if necessary, and only on the
-mutation types for which it is necessary. This might be needed, for example, if
-you are using a mutationEffect() callback to implement an epistatic relationship
-between mutations; a mutation epistatically influencing the fitness of other
-mutations through a mutationEffect() callback would need to continue having that
-influence even after reaching fixation, but if the simulation were to replace
-the fixed mutation with a Substitution object the mutation would no longer be
-considered in fitness calculations (unless the callback explicitly consulted
-the list of Substitution objects kept by the simulation). Other scriptdefined
-behaviors in mutationEffect(), interaction(), mateChoice(), modifyChild(), and
-recombination() callbacks might also necessitate the disabling of substitution
-for a given mutation type; this is an important consideration to keep in mind.
-See section 23.3 for further discussion of convertToSubstitution in WF models.
-In contrast, for nonWF models this property is F by default, because even
-mutations with no epistatis or other indirect fitness effects will continue
-to influence the survival probabilities of individuals. For nonWF models, only
-neutral mutation types with no epistasis or other side effects can safely be
-converted to substitutions upon fixation. When such a pure-neutral mutation
-type is defined in a nonWF model, this property should be set to T to tell
-SLiM that substitution is allowed; this may have very large positive effects
-on performance, so it is important to remember when modeling background neutral
-mutations. See section 24.5 for further discussion of convertToSubstitution
-in nonWF models. SLiM consults this flag at the end of each tick when deciding
-whether to substitute each fixed mutation. If this flag is T, all eligible
-fixed mutations will be converted at the end of the current tick, even if they
-were previously left unconverted because of the previous value of the flag.
-Setting this flag to F will prevent future substitutions, but will not cause any
-existing Substitution objects to be converted back into Mutation objects. }
-\item{distributionParams}{A property of type float. This property is a constant,
-so it is not modifiable. \strong{Property Description:} The parameters that
-configure the chosen distribution of fitness effects. This will be of type
-string for DFE type "s", and type float for all other DFE types. }
-\item{distributionType}{A property of type string. It is of length one
-(a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The type of distribution of fitness effects; one
-of "f", "g", "e", "n", "p", "w", or "s" (see section 25.11, above). }
-\item{dominanceCoeff}{A property of type float. It is of length one (a
-singleton). This property is a variable, so it is modifiable. \strong{Property
-Description:} The dominance coefficient used for mutations of this type when
-heterozygous. Changing this will normally affect the fitness values calculated
-toward the end of the current tick; if you want current fitness values to be
-affected, you can call the Species method recalculateFitness() - but see the
-documentation of that method for caveats. Note that the dominance coefficient
-is not bounded. A dominance coefficient greater than 1.0 may be used to achieve
-an overdominance effect. By making the selection coefficient very small and
-the dominance coefficient very large, an overdominance scenario in which both
-homozygotes have the same fitness may be approximated, to a nearly arbitrary
-degree of precision. Note that this property has a quirk: it is stored
-internally in SLiM using a single-precision float, not the double-precision
-float type normally used by Eidos. This means that if you set a mutation type
-muttype's dominance coefficient to some number x, muttype.dominanceCoeff==x may
-be F due to floating-point rounding error. Comparisons of floating-point numbers
-for exact equality is often a bad idea, but this is one case where it may fail
-unexpectedly. Instead, it is recommended to use the id or tag properties to
-identify particular mutation types. }
-\item{haploidDominanceCoeff}{A property of type float. It is of length
-one (a singleton). This property is a variable, so it is modifiable.
-\strong{Property Description:} The dominance coefficient used for mutations
-of this type when they occur opposite a null genome (as in sex-chromosome
-models and models involving haploids). This defaults to 1.0, and is used
-only in models where null genomes are present; the dominanceCoeff property
-is the dominance coefficient used in most circumstances. Changing this will
-normally affect the fitness values calculated toward the end of the current
-tick; if you want current fitness values to be affected, you can call the
-Species method recalculateFitness() - but see the documentation of that method
-for caveats. As with the dominanceCoeff property, this is stored internally
-using a single-precision float; see the documentation for dominanceCoeff for
-discussion. }
-\item{id}{A property of type integer. It is of length one (a singleton). This
-property is a constant, so it is not modifiable. \strong{Property Description:}
-The identifier for this mutation type; for mutation type m3, for example, this
-is 3. }
-\item{mutationStackGroup}{A property of type integer. It is of length one (a
-singleton). This property is a variable, so it is modifiable. \strong{Property
-Description:} The group into which this mutation type belongs for purposes of
-mutation stacking policy. This is equal to the mutation type's id by default.
-See mutationStackPolicy, below, for discussion. In nucleotide-based models,
-the stacking group for nucleotide-based mutation types is always -1, and cannot
-be changed. Non-nucleotide-based mutation types may also be set to share the
--1 stacking group, if they should participate in the same stacking policy as
-nucleotide-based mutations, but that would be quite unusual. }
-\item{mutationStackPolicy}{A property of type string. It is of length one (a
-singleton). This property is a variable, so it is modifiable. \strong{Property
-Description:} This property and the mutationStackGroup property together govern
-whether mutations of this mutation type's stacking group can "stack" - can
-occupy the same position in a single individual. A set of mutation types with
-the same value for mutationStackGroup is called a "stacking group", and all
-mutation types in a given stacking group must have the same mutationStackPolicy
-value, which defines the stacking behavior of all mutations of the mutation
-types in the stacking group. In other words, one stacking group might allow
-its mutations to stack, while another stacking group might not, but the
-policy within each stacking group must be unambiguous. This property is "s" by
-default, indicating that mutations in this stacking group should be allowed to
-stack without restriction. If the policy is set to "f", the first mutation of
-stacking group at a given site is retained; further mutations of this stacking
-group at the same site are discarded with no effect. This can be useful for
-modeling one-way changes; once a gene is disabled by a premature stop codon,
-for example, you might wish to assume, for simplicity, that further mutations
-cannot alter that fact. If the policy is set to "l", the last mutation of
-this stacking group at a given site is retained; earlier mutation of this
-stacking group at the same site are discarded. This can be useful for modeling
-an "infinitealleles" scenario in which every new mutation at a site generates
-a completely new allele, rather than retaining the previous mutations at the
-site. The mutation stacking policy applies only within the given mutation type's
-stacking group; mutations of different stacking groups are always allowed to
-stack in SLiM. The policy applies to all mutations added to the model after
-the policy is set, whether those mutations are introduced by calls such as
-addMutation(), addNewMutation(), or addNewDrawnMutation(), or are added by
-SLiM's own mutation-generation machinery. However, no attempt is made to
-enforce the policy for mutations already existing at the time the policy is
-set; typically, therefore, the policy is set in an initialize() callback so that
-it applies throughout the simulation. The policy is also not enforced upon the
-mutations loaded from a file with readFromPopulationFile(); such mutations were
-governed by whatever stacking policy was in effect when the population file was
-generated. In nucleotide-based models, the stacking policy for nucleotide-based
-mutation types is always "l", and cannot be changed. This ensures that new
-nucleotide mutations always replace the previous nucleotide at a site, and that
-more than one nucleotide mutation is never present at the same position in a
-single genome. }
-\item{nucleotideBased}{A property of type logical. It is of length one
-(a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} If the mutation type was created with
-initializeMutationType(), it is not nucleotide-based, and this property is F.
-If it was created with initializeMutationTypeNuc(), it is nucleotide-based, and
-this property is T. See those methods for further discussion. }
-\item{species}{A property of type Species object. It is of length one
-(a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The species to which the target object belongs. }
-\item{tag}{A property of type integer. It is of length one (a singleton). This
-property is a variable, so it is modifiable. \strong{Property Description:}
-A user-defined integer value. The value of tag is initially undefined, and
-it is an error to try to read it; if you wish it to have a defined value, you
-must arrange that yourself by explicitly setting its value prior to using it
-elsewhere in your code. The value of tag is not used by SLiM; it is free for
-you to use. See also the getValue() and setValue() methods (provided by the
-Dictionary class; see the Eidos manual), for another way of attaching state to
-mutation types.}
-
+\item{color}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The color used to display mutations of this type in SLiMgui. Outside of SLiMgui, this property still exists, but is not used by SLiM. Colors may be specified by name, or with hexadecimal RGB values of the form "#RRGGBB". If color is the empty string, "", SLiMgui's default (selection-coefficient-based) color scheme is used; this is the default for new MutationType objects.}
+\item{colorSubstitution}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The color used to display substitutions of this type in SLiMgui (see the discussion for the colorSubstitution property of the Chromosome class for details). Outside of SLiMgui, this property still exists, but is not used by SLiM. Colors may be specified by name, or with hexadecimal RGB values of the form "#RRGGBB". If colorSubstitution is the empty string, "", SLiMgui's default (selection-coefficient-based) color scheme is used; this is the default for new MutationType objects.}
+\item{convertToSubstitution}{A property of type logical. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} This property governs whether mutations of this mutation type will be converted to Substitution objects when they reach fixation. In WF models this property is T by default, since conversion to Substitution objects provides large speed benefits; it should be set to F only if necessary, and only on the mutation types for which it is necessary. This might be needed, for example, if you are using a mutationEffect() callback to implement an epistatic relationship between mutations; a mutation epistatically influencing the fitness of other mutations through a mutationEffect() callback would need to continue having that influence even after reaching fixation, but if the simulation were to replace the fixed mutation with a Substitution object the mutation would no longer be considered in fitness calculations (unless the callback explicitly consulted the list of Substitution objects kept by the simulation). Other script-defined behaviors in mutationEffect(), interaction(), mateChoice(), modifyChild(), and recombination() callbacks might also necessitate the disabling of substitution for a given mutation type; this is an important consideration to keep in mind. In contrast, for nonWF models this property is F by default, because even mutations with no epistatis or other indirect fitness effects will continue to influence the survival probabilities of individuals. For nonWF models, only neutral mutation types with no epistasis or other side effects can safely be converted to substitutions upon fixation. When such a pure-neutral mutation type is defined in a nonWF model, this property should be set to T to tell SLiM that substitution is allowed; this may have very large positive effects on performance, so it is important to remember when modeling background neutral mutations. SLiM consults this flag at the end of each tick when deciding whether to substitute each fixed mutation. If this flag is T, all eligible fixed mutations will be converted at the end of the current tick, even if they were previously left unconverted because of the previous value of the flag. Setting this flag to F will prevent future substitutions, but will not cause any existing Substitution objects to be converted back into Mutation objects.}
+\item{distributionParams}{A property of type float or string.  This property is a constant, so it is not modifiable. \strong{Property Description:} The parameters that configure the chosen distribution of fitness effects. This will be of type string for DFE type "s", and type float for all other DFE types.}
+\item{distributionType}{A property of type string. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The type of distribution of fitness effects; one of "f", "g", "e", "n", "w", or "s": "f" - A fixed fitness effect. This DFE type has a single parameter, the selection coefficient s to be used by all mutations of the mutation type. "g" - A gamma-distributed fitness effect. This DFE type is specified by two parameters, a shape parameter and a mean value. The gamma distribution from which mutations are drawn is given by the probability density function P(s | ,) = [()]1exp(s/), where  is the shape parameter, and the specified mean for the distribution is equal to . Note that this parameterization is the same as for the Eidos function rgamma(). A gamma distribution is often used to model deleterious mutations at functional sites. "e" - An exponentially-distributed fitness effect. This DFE type is specified by a single parameter, the mean of the distribution. The exponential distribution from which mutations are drawn is given by the probability density function P(s | ) = 1exp(s/), where  is the specified mean for the distribution. This parameterization is the same as for the Eidos function rexp(). An exponential distribution is often used to model beneficial mutations. "n" - A normally-distributed fitness effect. This DFE type is specified by two parameters, a mean and a standard deviation. The normal distribution from which mutations are drawn is given by the probability density function P(s | ,) = (22)1/2exp((s)2/22), where  is the mean and  is the standard deviation. This parameterization is the same as for the Eidos function rnorm(). A normal distribution is often used to model mutations that can be either beneficial or deleterious, since both tails of the distribution are unbounded. "p" - A Laplace-distributed fitness effect. This DFE type is specified by two parameters, a mean and a scale. The Laplace distribution from which mutations are drawn is given by the probability density function P(s | ,b) = exp(|s|/b)/2b, where  is the mean and b is the scale parameter. A Laplace distribution is sometimes used to model a mix of both deleterious and beneficial mutations. "w" - A Weibull-distributed fitness effect. This DFE type is specified by a scale parameter and a shape parameter. The Weibull distribution from which mutations are drawn is given by the probability density function P(s | ,k) = (k/k)sk1exp((s/)k), where  is the scale parameter and k is the shape parameter. This parameterization is the same as for the Eidos function rweibull(). A Weibull distribution is often used to model mutations following extreme-value theory. "s" - A script-based fitness effect. This DFE type is specified by a script parameter of type string, specifying an Eidos script to be executed to produce each new selection coefficient. For example, the script "return rbinom(1);" could be used to generate selection coefficients drawn from a binomial distribution, using the Eidos function rbinom(), even though that mutational distribution is not supported by SLiM directly. The script must return a singleton float or integer. Note that these distributions can in principle produce selection coefficients smaller than -1.0. In that case, the mutations will be evaluated as "lethal" by SLiM, and the relative fitness of the individual will be set to 0.0.}
+\item{dominanceCoeff}{A property of type float. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The dominance coefficient used for mutations of this type when heterozygous. Changing this will normally affect the fitness values calculated toward the end of the current tick; if you want current fitness values to be affected, you can call the Species method recalculateFitness() - but see the documentation of that method for caveats. Note that the dominance coefficient is not bounded. A dominance coefficient greater than 1.0 may be used to achieve an overdominance effect. By making the selection coefficient very small and the dominance coefficient very large, an overdominance scenario in which both homozygotes have the same fitness may be approximated, to a nearly arbitrary degree of precision. Note that this property has a quirk: it is stored internally in SLiM using a single-precision float, not the double-precision float type normally used by Eidos. This means that if you set a mutation type muttype's dominance coefficient to some number x, muttype.dominanceCoeff==x may be F due to floating-point rounding error. Comparisons of floating-point numbers for exact equality is often a bad idea, but this is one case where it may fail unexpectedly. Instead, it is recommended to use the id or tag properties to identify particular mutation types.}
+\item{hemizygousDominanceCoeff}{A property of type float. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The dominance coefficient used for mutations of this type when they occur opposite a null haplosome (as can occur in sex-chromosome models and models involving a mix of haploids and diploids). This defaults to 1.0, and is used only in models where null haplosomes are present; the dominanceCoeff property is the dominance coefficient used in most circumstances. Changing this will normally affect the fitness values calculated toward the end of the current tick; if you want current fitness values to be affected, you can call the Species method recalculateFitness() - but see the documentation of that method for caveats. As with the dominanceCoeff property, this is stored internally using a single-precision float; see the documentation for dominanceCoeff for discussion.}
+\item{id}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The identifier for this mutation type; for mutation type m3, for example, this is 3.}
+\item{mutationStackGroup}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The group into which this mutation type belongs for purposes of mutation stacking policy. This is equal to the mutation type's id by default. See mutationStackPolicy, below, for discussion. In nucleotide-based models, the stacking group for nucleotide-based mutation types is always -1, and cannot be changed. Non-nucleotide-based mutation types may also be set to share the -1 stacking group, if they should participate in the same stacking policy as nucleotide-based mutations, but that would be quite unusual.}
+\item{mutationStackPolicy}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} This property and the mutationStackGroup property together govern whether mutations of this mutation type's stacking group can "stack" - can occupy the same position in a single individual. A set of mutation types with the same value for mutationStackGroup is called a "stacking group", and all mutation types in a given stacking group must have the same mutationStackPolicy value, which defines the stacking behavior of all mutations of the mutation types in the stacking group. In other words, one stacking group might allow its mutations to stack, while another stacking group might not, but the policy within each stacking group must be unambiguous. This property is "s" by default, indicating that mutations in this stacking group should be allowed to stack without restriction. If the policy is set to "f", the first mutation of stacking group at a given site is retained; further mutations of this stacking group at the same site are discarded with no effect. This can be useful for modeling one-way changes; once a gene is disabled by a premature stop codon, for example, you might wish to assume, for simplicity, that further mutations cannot alter that fact. If the policy is set to "l", the last mutation of this stacking group at a given site is retained; earlier mutation of this stacking group at the same site are discarded. This can be useful for modeling an "infinite-alleles" scenario in which every new mutation at a site generates a completely new allele, rather than retaining the previous mutations at the site. The mutation stacking policy applies only within the given mutation type's stacking group; mutations of different stacking groups are always allowed to stack in SLiM. The policy applies to all mutations added to the model after the policy is set, whether those mutations are introduced by calls such as addMutation(), addNewMutation(), or addNewDrawnMutation(), or are added by SLiM's own mutation-generation machinery. However, no attempt is made to enforce the policy for mutations already existing at the time the policy is set; typically, therefore, the policy is set in an initialize() callback so that it applies throughout the simulation. The policy is also not enforced upon the mutations loaded from a file with readFromPopulationFile(); such mutations were governed by whatever stacking policy was in effect when the population file was generated. In nucleotide-based models, the stacking policy for nucleotide-based mutation types is always "l", and cannot be changed. This ensures that new nucleotide mutations always replace the previous nucleotide at a site, and that more than one nucleotide mutation is never present at the same position in a single haplosome.}
+\item{nucleotideBased}{A property of type logical. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} If the mutation type was created with initializeMutationType(), it is not nucleotide-based, and this property is F. If it was created with initializeMutationTypeNuc(), it is nucleotide-based, and this property is T. See those methods for further discussion.}
+\item{species}{A property of type Species object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The species to which the target object belongs.}
+\item{tag}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to mutation types.}
 }
 }
 \seealso{

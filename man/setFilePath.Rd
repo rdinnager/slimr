@@ -3,67 +3,50 @@
 \name{setFilePath}
 \alias{setFilePath}
 \alias{LogFile$setFilePath}
-\alias{.LF$setFilePath}
+\alias{LF$setFilePath}
 \title{SLiM method setFilePath}
 \usage{
-setFilePath(filePath, initialContents, append, compress, sep)
+setFilePath(
+  filePath,
+  initialContents = NULL,
+  append = NULL,
+  compress = NULL,
+  sep = NULL,
+  header = NULL
+)
 }
 \arguments{
-\item{filePath}{An object of type string. Must be of length 1 (a singleton). See
-details for description.}
+\item{filePath}{An object of type string (singleton).}
 
-\item{initialContents}{An object of type null or string. The default value is
-\code{NULL}. See details for description.}
+\item{initialContents}{An object of type null or string.}
 
-\item{append}{An object of type logical. Must be of length 1 (a singleton). The
-default value is \code{F}. See details for description.}
+\item{append}{An object of type logical (singleton).}
 
-\item{compress}{An object of type null or logical. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{compress}{An object of type null or logical (singleton).}
 
-\item{sep}{An object of type null or string. Must be of length 1 (a singleton).
-The default value is \code{NULL}. See details for description.}
+\item{sep}{An object of type null or string (singleton).}
+
+\item{header}{An object of type null or logical (singleton).}
 }
 \value{
-An object of type void or void or void or void or void or void or void
-or void or void or void or void or void or void or void or void or void or void
-or void or logical.
+An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical.
 }
 \description{
-Documentation for SLiM function \code{setFilePath}, which is a method of the
-SLiM class \code{\link{LogFile}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{setFilePath}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=703}{SLiM manual: page
-703}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Redirects the LogFile to write new rows to a new filePath. Any rows
-that have been buffered but not flushed will be written to the previous file
-first, as if flush() had been called. With this call, new initialContents may
-be supplied, which will either replace any existing file or will be appended to
-it, depending upon the value of append. New values may be supplied for compress
-and sep; the meaning of these parameters is identical to their meaning in
-createLogFile(), except that a value of NULL for these means "do not change this
-setting from its previous value". In effect, then, this method lets you start
-a completely new log file at a new path, without having to create and configure
-a new LogFile object. The new file will be created (or appended) synchronously,
-with the specified initial contents.
+string$ filePath, [Ns initialContents = NULL], [logical$ append = F], [Nl$ compress = NULL], [Ns$ sep = NULL], [Nl$ header = NULL]) Redirects the LogFile to write new rows to a new filePath. Any rows that have been buffered but not flushed will be written to the previous file first, as if flush() had been called. With this call, new initialContents may be supplied, which will either replace any existing file or will be appended to it, depending upon the value of append. New values may be supplied for compress, sep, and header; the meaning of these parameters is identical to their meaning in createLogFile(), except that a value of NULL for these means "do not change this setting from its previous value". In effect, then, this method lets you start a completely new log file at a new path, without having to create and configure a new LogFile object. The new file will be created (or appended) synchronously, with the specified initial contents.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -90,7 +73,6 @@ Other LogFile:
 \code{\link{willAutolog}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{LogFile}

@@ -3,75 +3,37 @@
 \name{ancestralNucleotides}
 \alias{ancestralNucleotides}
 \alias{Chromosome$ancestralNucleotides}
-\alias{.Ch$ancestralNucleotides}
+\alias{Ch$ancestralNucleotides}
 \title{SLiM method ancestralNucleotides}
 \usage{
-ancestralNucleotides(start, end, format = "string")
+ancestralNucleotides(start = NULL, end = NULL, format = NULL)
 }
 \arguments{
-\item{start}{An object of type null or integer. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{start}{An object of type null or integer (singleton).}
 
-\item{end}{An object of type null or integer. Must be of length 1 (a singleton).
-The default value is \code{NULL}. See details for description.}
+\item{end}{An object of type null or integer (singleton).}
 
-\item{format}{= "string" An object of type string. Must be of length 1 (a
-singleton). See details for description.}
+\item{format}{An object of type string (singleton).}
 }
 \value{
 An object of type integer or string.
 }
 \description{
-Documentation for SLiM function \code{ancestralNucleotides}, which is a method
-of the SLiM class \code{\link{Chromosome}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{ancestralNucleotides}, which is a method of the SLiM class \code{\link{Chromosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=661}{SLiM manual: page
-661}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Returns the ancestral nucleotide sequence originally supplied
-to initializeAncestralNucleotides(), including any sequence changes due
-to nucleotide mutations that have fixed and substituted. This nucleotide
-sequence is the reference sequence for positions in a genome that do not
-contain a nucleotide-based mutation. The range of the returned sequence may
-be constrained by a start position given in start and/or an end position
-given in end; nucleotides will be returned from start to end, inclusive. The
-default value of NULL for start and end represent the first and last base
-positions of the chromosome, respectively. The format of the returned sequence
-is controlled by the format parameter. A format of "string" will return the
-sequence as a singleton string (e.g., "TATA"). A format of "char" will return
-a string vector with one element per nucleotide (e.g., "T", "A", "T", "A"). A
-format of "integer" will return an integer vector with values A=0, C=1, G=2,
-T=3 (e.g., 3, 0, 3, 0). If the sequence returned is likely to be long, the
-"string" format will be the most memory-efficient, and may also be the fastest
-(but may be harder to work with). For purposes related to interpreting the
-nucleotide sequence as a coding sequence, a format of "codon" is also supported.
-This format will return an integer vector with values from 0 to 63, based
-upon successive nucleotide triplets in the sequence (which, for this format,
-must have a length that is a multiple of three). The codon value for a given
-nucleotide triplet XYZ is 16X + 4Y + Z, where X, Y, and Z have the usual values
-A=0, C=1, G=2, T=3. For example, the triplet AAA has a codon value of 0, AAC
-is 1, AAG is 2, AAT is 3, ACA is 4, and on upward to TTT which is 63. If the
-nucleotide sequence AACACATTT is requested in codon format, the codon vector 1
-4 63 will therefore be returned. These codon values can be useful in themselves;
-they can also be passed to codonsToAminoAcids() to translate them into the
-corresponding amino acid sequence if desired (see section 25.18.1).
+[Ni$ start = NULL], [Ni$ end = NULL], [string$ format = "string"]) Returns the ancestral nucleotide sequence originally supplied to initializeAncestralNucleotides(), including any sequence changes due to nucleotide mutations that have fixed and substituted. This nucleotide sequence is the reference sequence for positions in a haplosome that do not contain a nucleotide-based mutation. The range of the returned sequence may be constrained by a start position given in start and/or an end position given in end; nucleotides will be returned from start to end, inclusive. The default value of NULL for start and end represent the first and last base positions of the chromosome, respectively. The format of the returned sequence is controlled by the format parameter. A format of "string" will return the sequence as a singleton string (e.g., "TATA"). A format of "char" will return a string vector with one element per nucleotide (e.g., "T", "A", "T", "A"). A format of "integer" will return an integer vector with values A=0, C=1, G=2, T=3 (e.g., 3, 0, 3, 0). If the sequence returned is likely to be long, the "string" format will be the most memory-efficient, and may also be the fastest (but may be harder to work with). For purposes related to interpreting the nucleotide sequence as a coding sequence, a format of "codon" is also supported. This format will return an integer vector with values from 0 to 63, based upon successive nucleotide triplets in the sequence (which, for this format, must have a length that is a multiple of three). The codon value for a given nucleotide triplet XYZ is 16X + 4Y + Z, where X, Y, and Z have the usual values A=0, C=1, G=2, T=3. For example, the triplet AAA has a codon value of 0, AAC is 1, AAG is 2, AAT is 3, ACA is 4, and on upward to TTT which is 63. If the nucleotide sequence AACACATTT is requested in codon format, the codon vector 1 4 63 will therefore be returned. These codon values can be useful in themselves; they can also be passed to codonToAminoAcid() to translate them into the corresponding amino acid sequence if desired.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -79,6 +41,8 @@ on the official website: \url{https://messerlab.org/slim/}
 Other Chromosome: 
 \code{\link{Ch}},
 \code{\link{drawBreakpoints}()},
+\code{\link{genomicElementForPosition}()},
+\code{\link{hasGenomicElementForPosition}()},
 \code{\link{setAncestralNucleotides}()},
 \code{\link{setGeneConversion}()},
 \code{\link{setHotspotMap}()},
@@ -86,7 +50,6 @@ Other Chromosome:
 \code{\link{setRecombinationRate}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Chromosome}

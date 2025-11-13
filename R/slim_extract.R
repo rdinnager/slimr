@@ -344,20 +344,20 @@ slim_extract_full_one <- function(string, type, expand_mutations, generation) {
                                                                 dotall = TRUE))[ , 2],
 
                 mutations = stringr::str_match(string,
-                                              stringr::regex("Mutations:\n(?:(.*?))\nIndividuals:",
+                                              stringr::regex("Mutations:\n(?:(.*?))\n(?:Genomes|Haplosomes):",
                                                              dotall = TRUE))[ , 2],
 
                 individuals = stringr::str_match(string,
-                                stringr::regex("Individuals:\n(?:(.*?))\nGenomes:",
+                                stringr::regex("Individuals:\n(?:(.*?))\nChromosome:",
                                                dotall = TRUE))[ , 2],
 
                 genomes = if(ancs) {
                   stringr::str_match(string,
-                                     stringr::regex("Genomes:\n(?:(.*?))\nAncestral sequence:",
+                                     stringr::regex("(?:Genomes|Haplosomes):\n(?:(.*?))\nAncestral sequence:",
                                                     dotall = TRUE))[ , 2]
                 } else {
                   stringr::str_match(string,
-                                     stringr::regex("Genomes:\n(?:(.*?))$",
+                                     stringr::regex("(?:Genomes|Haplosomes):\n(?:(.*?))$",
                                                     dotall = TRUE))[ , 2] #%>%
                     # stringr::str_replace_all(stringr::regex("(^p[:digit:]+\\:[:digit:]+[:blank:]+[:upper:])([:blank:]+)(.*?)$",
                     #                                         multiline = TRUE),
@@ -368,6 +368,13 @@ slim_extract_full_one <- function(string, type, expand_mutations, generation) {
 
   )
 
+  # Check if extraction failed (dat is NA)
+  if(is.na(dat)) {
+    stop("Failed to extract '", type, "' data from SLiM output. ",
+         "This may indicate an unexpected output format or a parsing error. ",
+         "Output string length: ", nchar(string))
+  }
+
   if(stringr::str_detect(dat, "\n", negate = TRUE)) {
     dat <- paste(dat, "\n")
   }
@@ -377,45 +384,45 @@ slim_extract_full_one <- function(string, type, expand_mutations, generation) {
                 metadat = dplyr::tibble(metadata = dat),
 
                 populations = suppressWarnings(readr::read_table2(dat,
-                                                                  col_types = "cicd",
-                                                                  col_names = c("subpop", "n_ind",
-                                                                                "sex_type", "sex_ratio"))),
+                                                                col_types = "cicd",
+                                                                col_names = c("subpop", "n_ind",
+                                                                              "sex_type", "sex_ratio"))),
 
-                mutations = suppressWarnings(readr::read_table2(dat,
-                                                                col_types = "iiciddciic",
-                                                                col_names = c("mut_id", "unique_mut_id",
-                                                                              "mut_type", "chrome_pos",
-                                                                              "selection", "dominance",
-                                                                              "subpop", "first_gen",
-                                                                              "prevalence",
-                                                                              "nucleotide"))),
+              mutations = suppressWarnings(readr::read_table2(dat,
+                                                              col_types = "iiciddciic",
+                                                              col_names = c("mut_id", "unique_mut_id",
+                                                                            "mut_type", "chrome_pos",
+                                                                            "selection", "dominance",
+                                                                            "subpop", "first_gen",
+                                                                            "prevalence",
+                                                                            "nucleotide"))),
 
-                individuals = suppressWarnings(readr::read_table2(dat,
-                                                                  col_types = "ccccc",
-                                                                  col_names = c("unique_ind_id", "sex",
-                                                                                "gen_id_1", "gen_id_2",
-                                                                                "extra"))) %>%
-                  tidyr::separate("unique_ind_id", c("pop_id", "ind_id"), sep = ":", remove = FALSE) %>%
-                  tidyr::pivot_longer(c("gen_id_1", "gen_id_2"),
-                                      names_prefix = "gen_id_",
-                                      names_to = "genome_num",
-                                      values_to = "gen_id"),
+              individuals = suppressWarnings(readr::read_table2(dat,
+                                                                col_types = "ccccc",
+                                                                col_names = c("unique_ind_id", "sex",
+                                                                              "gen_id_1", "gen_id_2",
+                                                                              "extra"))) %>%
+                tidyr::separate("unique_ind_id", c("pop_id", "ind_id"), sep = ":", remove = FALSE) %>%
+                tidyr::pivot_longer(c("gen_id_1", "gen_id_2"),
+                                    names_prefix = "gen_id_",
+                                    names_to = "genome_num",
+                                    values_to = "gen_id"),
 
-                coordinates = suppressWarnings(readr::read_table2(dat,
-                                                                  col_types = "ccccddd",
-                                                                  col_names = c("unique_ind_id", "sex",
-                                                                                "gen_id_1", "gen_id_2",
-                                                                                "x", "y", "z"))) %>%
-                  tidyr::separate("unique_ind_id", c("pop_id", "ind_id"), sep = ":", remove = FALSE),
+              coordinates = suppressWarnings(readr::read_table2(dat,
+                                                                col_types = "ccccddd",
+                                                                col_names = c("unique_ind_id", "sex",
+                                                                              "gen_id_1", "gen_id_2",
+                                                                              "x", "y", "z"))) %>%
+                tidyr::separate("unique_ind_id", c("pop_id", "ind_id"), sep = ":", remove = FALSE),
 
-                genomes = suppressWarnings(read_with_excess(dat,
-                                                            col_types = "ccc",
-                                                            col_names = c("gen_id", "gen_type",
-                                                                          "mut_list"))) %>%
-                  dplyr::mutate("mut_list" := stringr::str_split(.data$mut_list, " ")),
+              genomes = suppressWarnings(read_with_excess(dat,
+                                                          col_types = "ccc",
+                                                          col_names = c("gen_id", "gen_type",
+                                                                        "mut_list"))) %>%
+                dplyr::mutate("mut_list" := stringr::str_split(.data$mut_list, " ")),
 
-                NULL
-  )
+              NULL
+)
 
   if(expand_mutations) {
     if(type == "genomes") {
@@ -459,7 +466,7 @@ slim_extract_full_one <- function(string, type, expand_mutations, generation) {
 #'     slim_block_init_minimal(mutation_rate = 1e-6),
 #'     slim_block_add_subpops(1, 100),
 #'     slim_block(1, 20, late(), {
-#'       r_output(p1.genomes.output(), "out", do_every = 10)
+#'       r_output(sim.outputFull(), "out", do_every = 10)
 #'     })
 #'   ) %>%
 #'     slim_run()
@@ -499,9 +506,16 @@ slim_extract_genome <- function(output, type = c("mutations",
                     ~get_one(.x, output$data, output$generation))
 
   if("metadat" %in% type) {
-    GS <- as.integer(stringr::str_match(dat[[1]]$metadata[1],
-                             stringr::regex("GS ([:digit:]+)"))[ , 2])
-    genomes <- dplyr::tibble(gen_id = paste0("p*:", rep(1:GS)))
+    # Extract haplosome/genome count from metadata
+    # SLiM 5.x uses "HS" (Haplosome), SLiM 4.x used "GS" (Genome)
+    HS <- as.integer(stringr::str_match(dat[[1]]$metadata[1],
+                             stringr::regex("(?:HS|GS) ([:digit:]+)"))[ , 2])
+    if(is.na(HS)) {
+      stop("Failed to extract haplosome/genome count from metadata. ",
+           "Expected format like '#OUT: 20 20 HS 200' or 'GS 200'. ",
+           "Got: ", dat[[1]]$metadata[1])
+    }
+    genomes <- dplyr::tibble(gen_id = paste0("p*:", rep(1:HS)))
     dat <- dat[-1]
     dat[[1]] <- dplyr::left_join(genomes, dat[[1]], by = "gen_id")
   }
@@ -536,21 +550,26 @@ slim_extract_genome_one <- function(string, type, expand_mutations, generation) 
                                                             dotall = TRUE))[ , 2],
 
                 mutations = stringr::str_match(string,
-                                               stringr::regex("Mutations:\n(?:(.*?))\nGenomes:",
+                                               stringr::regex("Mutations:\n(?:(.*?))\n(?:Genomes|Haplosomes):",
                                                               dotall = TRUE))[ , 2],
 
                 genomes = stringr::str_match(string,
-                                     stringr::regex("Genomes:\n(?:(.*?))$",
-                                                    dotall = TRUE))[ , 2] %>%
-                    stringr::str_replace_all(stringr::regex("(^p[:digit:]+\\:[:digit:]+[:blank:]+[:upper:])([:blank:]+)(.*?)$",
-                                                            multiline = TRUE),
-                                             '\\1\\2"\\3"'),
+                                     stringr::regex("(?:Genomes|Haplosomes):\n(?:(.*?))$",
+                                                    dotall = TRUE))[ , 2],
 
                 NULL
 
   )
 
   if(!is.na(dat)){
+    # Apply string replacement for genomes type
+    if(type == "genomes") {
+      dat <- stringr::str_replace_all(dat,
+                                      stringr::regex("(^p[:digit:]+\\:[:digit:]+[:blank:]+[:upper:])([:blank:]+)(.*?)$",
+                                                     multiline = TRUE),
+                                      '\\1\\2"\\3"')
+    }
+
     if(stringr::str_detect(dat, "\n", negate = TRUE)) {
       dat <- paste(dat, "\n")
     }
@@ -592,11 +611,9 @@ slim_extract_genome_one <- function(string, type, expand_mutations, generation) 
                                             "prevalence" = NA,
                                             "nucleotide" = NA),
 
-                  genomes = suppressWarnings(read_with_excess(dat,
-                                                              col_types = "ccc",
-                                                              col_names = c("gen_id", "gen_type",
-                                                                            "mut_list"))) %>%
-                    dplyr::mutate("mut_list" := stringr::str_split(.data$mut_list, " ")),
+                  genomes = dplyr::tibble("gen_id" = NA,
+                                          "gen_type" = NA,
+                                          "mut_list" = NA),
 
                   NULL
     )

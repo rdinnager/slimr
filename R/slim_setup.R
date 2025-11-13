@@ -484,6 +484,36 @@ assert_slim_installed <- function() {
   if(!slim_is_avail()) {
     rlang::abort("SLiM is not installed or can't be found. Please install using slim_setup() or manually by following the instruction at https://messerlab.org/slim/ . If you are sure SLiM is already installed, you can let slimr know where it is by setting the environmental variable SLIM_PATH, e.g. Sys.setenv(SLIM_PATH = 'slim_path'), where slim_path is the path to your SLiM executable (usually slim or slim.exe)")
   }
+
+  # Check SLiM version (slimr v0.5.0+ requires SLiM >= 5.0)
+  version <- get_slim_version_string()
+  major_version <- as.numeric(stringr::str_extract(version, "^[0-9]+"))
+
+  if (!is.na(major_version) && major_version < 5) {
+    rlang::abort(
+      paste0(
+        "slimr v0.5.0+ requires SLiM >= 5.0. You have SLiM ", version, ".\n",
+        "Please upgrade SLiM using slim_setup(), or use slimr v0.4.x for SLiM 4.x support.\n",
+        "To upgrade: slim_setup(force = TRUE)"
+      )
+    )
+  }
+}
+
+# Internal function to get SLiM version string without calling assert_slim_installed()
+get_slim_version_string <- function() {
+  if (!slim_is_avail()) {
+    return(NA_character_)
+  }
+  path <- get_slim_path()
+  version_output <- system2(path, "--version", stdout = TRUE)
+  if (length(version_output) == 0) {
+    return(NA_character_)
+  }
+  version_output[[1]] |>
+    stringr::str_extract("SLiM version [0-9.]+") |>
+    stringr::str_remove("SLiM version ") |>
+    stringr::str_trim()
 }
 
 #' Find out what version of SLiM is being used by \code{slimr}
@@ -497,9 +527,5 @@ assert_slim_installed <- function() {
 #' }
 slim_version <- function() {
   assert_slim_installed()
-  path <- get_slim_path()
-  system2(path, "--version", stdout = TRUE)[[1]] |>
-    stringr::str_extract("SLiM version [0-9.]+") |>
-    stringr::str_remove("SLiM version ") |>
-    stringr::str_trim()
+  get_slim_version_string()
 }

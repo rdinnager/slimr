@@ -3,49 +3,33 @@
 \name{removeSpatialMap}
 \alias{removeSpatialMap}
 \alias{Subpopulation$removeSpatialMap}
-\alias{.P$removeSpatialMap}
+\alias{P$removeSpatialMap}
 \title{SLiM method removeSpatialMap}
 \usage{
 removeSpatialMap(map)
 }
 \arguments{
-\item{map}{An object of type string or SpatialMap object. Must be of length 1 (a
-singleton). See details for description.}
+\item{map}{An object of type string or SpatialMap object (singleton).}
 }
 \value{
 An object of type void.
 }
 \description{
-Documentation for SLiM function \code{removeSpatialMap}, which is a method of
-the SLiM class \code{\link{Subpopulation}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{removeSpatialMap}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=743}{SLiM manual: page
-743}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Removes the SpatialMap object specified by map from the subpopulation.
-The parameter map may be either a SpatialMap object, or a string name
-for spatial map. The map must have been added to the subpopulation with
-addSpatialMap(); if it has not been, an error results. Removing spatial maps
-that are no longer in use is optional in most cases. It is generally a good idea
-because it might decrease SLiM's memory footprint; also, it avoids an error if
-the subpopulation's spatial bounds are changed (see setSpatialBounds()).
+so<SpatialMap>$ map) Removes the SpatialMap object specified by map from the subpopulation. The parameter map may be either a SpatialMap object, or a string name for spatial map. The map must have been added to the subpopulation with addSpatialMap(); if it has not been, an error results. Removing spatial maps that are no longer in use is optional in most cases. It is generally a good idea because it might decrease SLiM's memory footprint; also, it avoids an error if the subpopulation's spatial bounds are changed (see setSpatialBounds()).
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -55,12 +39,16 @@ Other Subpopulation:
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
+\code{\link{addMultiRecombinant}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
 \code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
+\code{\link{deviatePositions}()},
+\code{\link{deviatePositionsWithMap}()},
+\code{\link{haplosomesForChromosomes}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
@@ -70,6 +58,7 @@ Other Subpopulation:
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{pointUniformWithMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
 \code{\link{setCloningRate}()},
@@ -85,7 +74,6 @@ Other Subpopulation:
 \code{\link{takeMigrants}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Subpopulation}

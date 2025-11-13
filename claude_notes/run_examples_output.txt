@@ -1,0 +1,1220 @@
+ℹ Loading slimr
+Welcome to the slimr package for forward population genetics simulation in SLiM. For more information on SLiM please visit https://messerlab.org/slim/ .
+ℹ Updating slimr documentation
+ℹ Loading slimr
+Welcome to the slimr package for forward population genetics simulation in SLiM. For more information on SLiM please visit https://messerlab.org/slim/ .
+── Running 556 example files ────────────────────────────────────────── slimr ──
+ℹ Loading slimr
+Welcome to the slimr package for forward population genetics simulation in SLiM. For more information on SLiM please visit https://messerlab.org/slim/ .
+
+> script <- slim_script(slim_block(initialize(), {
++     initializeMutationRate(1e-07)
++     initializeMutationType("m1", 0.5, "f", 0)
++     initializeGenomicElementType("g1", m1, 1)
++     initializeGenomicElement(g1, 0, 99999)
++     initializeRecombinationRate(1e-08)
++ }), slim_block(1, {
++     sim.addSubpop("p1", 500)
++ }), slim_block(10000, {
++     sim.simulationFinished()
++ }))
+
+> as_slim_text(script)
+[1] "initialize() {\n    initializeMutationRate(1e-07);\n    initializeMutationType(\"m1\", 0.5, \"f\", 0);\n    initializeGenomicElementType(\"g1\", m1, 1);\n    initializeGenomicElement(g1, 0, 99999);\n    initializeRecombinationRate(1e-08);\n}\n\n1 early() {\n    sim.addSubpop(\"p1\", 500);\n}\n\n10000 early() {\n    sim.simulationFinished();\n}\n"
+
+> script <- slim_script(slim_block(initialize(), {
++     initializeMutationRate(1e-07)
++     initializeMutationType("m1", 0.5, "f", 0)
++     initializeGenomicElementType("g1", m1, 1)
++     initializeGenomicElement(g1, 0, 99999)
++     initializeRecombinationRate(1e-08)
++ }), slim_block(1, {
++     sim.addSubpop("p1", 500)
++ }), slim_block(10000, {
++     sim.simulationFinished()
++ }))
+
+> as_slim_text(script)
+[1] "initialize() {\n    initializeMutationRate(1e-07);\n    initializeMutationType(\"m1\", 0.5, \"f\", 0);\n    initializeGenomicElementType(\"g1\", m1, 1);\n    initializeGenomicElement(g1, 0, 99999);\n    initializeRecombinationRate(1e-08);\n}\n\n1 early() {\n    sim.addSubpop(\"p1\", 500);\n}\n\n10000 early() {\n    sim.simulationFinished();\n}\n"
+
+> as_slimr_code(slim_recipes$`5.3.4`)
+slim_script(
+
+    slim_block(initialize(),  {
+        initializeMutationRate(1e-07)
+        initializeMutationType("m1", 0.5, "f", asFloat(0))
+        initializeMutationType("m2", 0.5, "f", 0.3)
+        initializeGenomicElementType("g1", m1, asFloat(1))
+        initializeGenomicElement(g1, 0, 99999)
+        initializeRecombinationRate(1e-08)
+    }),
+
+    slim_block(1, late(),  {
+        mSide = 10
+        for (i in 1:(mSide * mSide)) sim.addSubpop(i, 500)
+        subpops = sim.subpopulations
+        for (x in 1:mSide) for (y in 1:mSide) {
+            destID = (x - 1) + (y - 1) * mSide + 1
+            ds = subpops[destID - 1]
+            if (x > 1) ds.setMigrationRates(destID - 1, runif(1, asFloat(0), 0.05))
+            if (x < mSide) ds.setMigrationRates(destID + 1, runif(1, asFloat(0), 0.05))
+            if (y > 1) ds.setMigrationRates(destID - mSide, runif(1, asFloat(0), 0.05))
+            if (y < mSide) ds.setMigrationRates(destID + mSide, runif(1, asFloat(0), 0.05))
+            xd = ((x - 1)/(mSide - 1)) * 0.9 + 0.05
+            yd = ((y - 1)/(mSide - 1)) * 0.9 + 0.05
+            ds.configureDisplay(c(xd, yd), 0.4)
+        }
+        subpops[sample(0:99, 25)] %.% setSubpopulationSize(0)
+        target_subpop = sample(sim.subpopulations, 1)
+        sample(target_subpop.genomes, 10) %.% addNewDrawnMutation(m2, 20000)
+    }),
+
+    slim_block(10000, late(),  {
+        sim.outputFixedMutations()
+    })
+)
+> cat(slim_recipes[[1]])
+// Keywords: 
+
+// set up a simple neutral simulation
+initialize()
+{
+	// set the overall mutation rate
+	initializeMutationRate(1e-7);
+	
+	// m1 mutation type: neutral
+	initializeMutationType("m1", 0.5, "f", 0.0);
+	
+	// g1 genomic element type: uses m1 for all mutations
+	initializeGenomicElementType("g1", m1, 1.0);
+	
+	// uniform chromosome of length 100 kb
+	initializeGenomicElement(g1, 0, 99999);
+	
+	// uniform recombination along the chromosome
+	initializeRecombinationRate(1e-8);
+}
+
+// create a population of 500 individuals
+1 early()
+{
+	sim.addSubpop("p1", 500);
+}
+
+// run to tick 10000
+10000 early()
+{
+	sim.simulationFinished();
+}
+> as_slimr_script(slim_recipes[[1]])
+<slimr_script[3]>
+block_init_1:initialize() {
+    initializeMutationRate(1e-07);
+    initializeMutationType("m1", 0.5, "f", asFloat(0));
+    initializeGenomicElementType("g1", m1, asFloat(1));
+    initializeGenomicElement(g1, 0, 99999);
+    initializeRecombinationRate(1e-08);
+}
+
+block_2:1 early() {
+    sim.addSubpop("p1", 500);
+}
+
+block_3:10000 early() {
+    sim.simulationFinished();
+}
+
+> calcDxy()
+ℹ Rendering development documentation for "calcDxy"
+
+> calcFST()
+ℹ Rendering development documentation for "calcFST"
+
+> calcHeterozygosity()
+ℹ Rendering development documentation for "calcHeterozygosity"
+
+> calcInbreedingLoad()
+ℹ Rendering development documentation for "calcInbreedingLoad"
+
+> calcLD_D()
+ℹ Rendering development documentation for "calcLD_D"
+
+> calcLD_Rsquared()
+ℹ Rendering development documentation for "calcLD_Rsquared"
+
+> calcMeanFroh()
+ℹ Rendering development documentation for "calcMeanFroh"
+
+> calcPairHeterozygosity()
+ℹ Rendering development documentation for "calcPairHeterozygosity"
+
+> calcPi()
+ℹ Rendering development documentation for "calcPi"
+
+> calcSFS()
+ℹ Rendering development documentation for "calcSFS"
+
+> calcTajimasD()
+ℹ Rendering development documentation for "calcTajimasD"
+
+> calcVA()
+ℹ Rendering development documentation for "calcVA"
+
+> calcWattersonsTheta()
+ℹ Rendering development documentation for "calcWattersonsTheta"
+
+> slim_block(initialize(), {
++     initializeMutationRate(1e-07)
++     initializeMutationType("m1", 0.5, "f", 0)
++     initializeGenomicElementType("g1", m1, 1)
++     initializeGenomicElement(g1, 0, 99999)
++     initializeRecombinationRate(1e-08)
++ })
+A slimr_block:
+<slimr_script[1]>
+block_1:initialize() {
+    initializeMutationRate(1e-07);
+    initializeMutationType("m1", 0.5, "f", 0);
+    initializeGenomicElementType("g1", m1, 1);
+    initializeGenomicElement(g1, 0, 99999);
+    initializeRecombinationRate(1e-08);
+}
+
+> script <- slim_script(slim_block_init_minimal(), slim_block_finish(100))
+
+> code(script)
+<slimr_code[2]>
+{initializeMutationRate(1e-07); initializeMutationType("m1", 0.5, "f", 0); initializeGenomicElementType("g1", m1, 1); initializeGenomicElement(g1, 0, 1e+05 - 1L); initializeRecombinationRate(1e-08)} {sim.simulationFinished()}
+> code(minimal_slimr_script())
+<slimr_code[2]>
+{initializeMutationRate(1e-07); initializeMutationType("m1", 0.5, "f", 0); initializeGenomicElementType("g1", m1, 1); initializeGenomicElement(g1, 0, 99999); initializeRecombinationRate(1e-08)} {sim.addSubpop("p1", 500); print("Hello world!"); sim.simulationFinished()}
+> codonsToAminoAcids()
+ℹ Rendering development documentation for "codonsToAminoAcids"
+
+> codonsToNucleotides()
+ℹ Rendering development documentation for "codonsToNucleotides"
+
+> slim_block(1, early(), {
++     sim.addSubpop("p1", 100)
++ })
+A slimr_block:
+<slimr_script[1]>
+block_1:1 early() {
+    sim.addSubpop("p1", 100);
+}
+
+> script <- slim_script(slim_block_init_minimal(), slim_block(1, 
++     100, {
++         sim.outputFull()
++     }))
+
+> script
+<slimr_script[2]>
+block_1:initialize() {
+    initializeMutationRate(1e-07);
+    initializeMutationType("m1", 0.5, "f", 0);
+    initializeGenomicElementType("g1", m1, 1);
+    initializeGenomicElement(g1, 0, 1e+05 - 1);
+    initializeRecombinationRate(1e-08);
+}
+
+block_2:1:100 early() {
+    sim.outputFull();
+}
+
+> end_gen(script)
+[1] NA    "100"
+
+> end_gen(script)[2] <- 1000
+
+> script
+<slimr_script[2]>
+block_1:initialize() {
+    initializeMutationRate(1e-07);
+    initializeMutationType("m1", 0.5, "f", 0);
+    initializeGenomicElementType("g1", m1, 1);
+    initializeGenomicElement(g1, 0, 1e+05 - 1);
+    initializeRecombinationRate(1e-08);
+}
+
+block_2:1:1000 early() {
+    sim.outputFull();
+}
+
+> slim_block(1, early(), {
++     sim.addSubpop("p1", 100)
++ })
+A slimr_block:
+<slimr_script[1]>
+block_1:1 early() {
+    sim.addSubpop("p1", 100);
+}
+
+> slim_block(fitness(m2), {
++     return(1.5 - sim.mutationFrequencies(p1, mut))
++ })
+A slimr_block:
+<slimr_script[1]>
+block_1:1:1 fitness(m2) {
+    return(1.5 - sim.mutationFrequencies(p1, mut));
+}
+
+> slim_block(fitnessEffect(p3), {
++     return(0.75)
++ })
+A slimr_block:
+<slimr_script[1]>
+block_1:1:1 fitnessEffect(p3) {
+    return(0.75);
+}
+
+> script <- slim_script(slim_block_init_minimal(), slim_block_finish(100))
+
+> get_block(script, "block_1")
+<slimr_script[1]>
+block_1:initialize() {
+    initializeMutationRate(1e-07);
+    initializeMutationType("m1", 0.5, "f", 0);
+    initializeGenomicElementType("g1", m1, 1);
+    initializeGenomicElement(g1, 0, 1e+05 - 1);
+    initializeRecombinationRate(1e-08);
+}
+
+> get_block(script, 2)
+<slimr_script[1]>
+block_2:100 early() {
+    sim.simulationFinished();
+}
+
+> slim_script(slim_block_init_minimal(mutation_rate = 1e-06), 
++     slim_block(1, early(), {
++         sim %.% Sp$addSubpop("p1", 100)
++     }))
+<slimr_script[2]>
+block_1:initialize() {
+    initializeMutationRate(1e-06);
+    initializeMutationType("m1", 0.5, "f", 0);
+    initializeGenomicElementType("g1", m1, 1);
+    initializeGenomicElement(g1, 0, 1e+05 - 1);
+    initializeRecombinationRate(1e-08);
+}
+
+block_2:1 early() {
+    sim.addSubpop("p1", 100);
+}
+
+> cat(as_slim_text(slim_script(slim_block_init_minimal(), 
++     slim_block(cat(fixed %?% "FIXED\\n" %else% "LOST\\n")))))
+initialize() {
+    initializeMutationRate(1e-07);
+    initializeMutationType("m1", 0.5, "f", 0);
+    initializeGenomicElementType("g1", m1, 1);
+    initializeGenomicElement(g1, 0, 1e+05 - 1);
+    initializeRecombinationRate(1e-08);
+}
+
+1:1 early() {
+    cat(fixed ? "FIXED\\n" else "LOST\\n");
+}
+
+> cat(as_slim_text(slim_script(slim_block_init_minimal(), 
++     slim_block(cat(fixed %?% "FIXED\\n" %else% "LOST\\n")))))
+initialize() {
+    initializeMutationRate(1e-07);
+    initializeMutationType("m1", 0.5, "f", 0);
+    initializeGenomicElementType("g1", m1, 1);
+    initializeGenomicElement(g1, 0, 1e+05 - 1);
+    initializeRecombinationRate(1e-08);
+}
+
+1:1 early() {
+    cat(fixed ? "FIXED\\n" else "LOST\\n");
+}
+
+> initializeAncestralNucleotides()
+ℹ Rendering development documentation for "initializeAncestralNucleotides"
+
+> initializeChromosome()
+ℹ Rendering development documentation for "initializeChromosome"
+
+> initializeGeneConversion()
+ℹ Rendering development documentation for "initializeGeneConversion"
+
+> initializeGenomicElement()
+ℹ Rendering development documentation for "initializeGenomicElement"
+
+> initializeGenomicElementType()
+ℹ Rendering development documentation for "initializeGenomicElementType"
+
+> initializeHotspotMap()
+ℹ Rendering development documentation for "initializeHotspotMap"
+
+> initializeInteractionType()
+ℹ Rendering development documentation for "initializeInteractionType"
+
+> initializeMutationRate()
+ℹ Rendering development documentation for "initializeMutationRate"
+
+> initializeMutationRateFromFile()
+ℹ Rendering development documentation for "initializeMutationRateFromFile"
+
+> initializeMutationType()
+ℹ Rendering development documentation for "initializeMutationType"
+
+> initializeMutationTypeNuc()
+ℹ Rendering development documentation for "initializeMutationTypeNuc"
+
+> initializeRecombinationRate()
+ℹ Rendering development documentation for "initializeRecombinationRate"
+
+> initializeRecombinationRateFromFile()
+ℹ Rendering development documentation for "initializeRecombinationRateFromFile"
+
+> initializeSex()
+ℹ Rendering development documentation for "initializeSex"
+
+> initializeSLiMModelType()
+ℹ Rendering development documentation for "initializeSLiMModelType"
+
+> initializeSLiMOptions()
+ℹ Rendering development documentation for "initializeSLiMOptions"
+
+> initializeSpecies()
+ℹ Rendering development documentation for "initializeSpecies"
+
+> initializeTreeSeq()
+ℹ Rendering development documentation for "initializeTreeSeq"
+
+> slim_block(interaction(), {
++     return(dnorm(exerter.tagF, receiver.tagF, 0.1)/dnorm(0, 0, 
++         0.1))
++ })
+A slimr_block:
+<slimr_script[1]>
+block_1:1:1 interaction() {
+    return(dnorm(exerter.tagF, receiver.tagF, 0.1)/dnorm(0, 0, 0.1));
+}
+
+> slim_block(100, late(), {
++     sim.simulationFinished()
++ })
+A slimr_block:
+<slimr_script[1]>
+block_1:100 late() {
+    sim.simulationFinished();
+}
+
+> herm <- load_herm(download = FALSE)
+
+> herm
+[1] "https://figshare.com/ndownloader/files/43810926"
+
+> slim_block(mateChoice(p2), {
++     return(weights^2)
++ })
+A slimr_block:
+<slimr_script[1]>
+block_1:1:1 mateChoice(p2) {
+    return(weights^2);
+}
+
+> minimal_slim_sim()
+slim_script(slim_block(initialize(), {
+    initializeMutationRate(1e-07)
+    initializeMutationType("m1", 0.5, "f", 0)
+    initializeGenomicElementType("g1", m1, 1)
+    initializeGenomicElement(g1, 0, 99999)
+    initializeRecombinationRate(1e-08)
+}), slim_block(1, {
+    sim.addSubpop("p1", 500)
+    print("Hello world!")
+    sim.simulationFinished()
+}))
+
+> minimal_slimr_script()
+<slimr_script[2]>
+block_1:initialize() {
+    initializeMutationRate(1e-07);
+    initializeMutationType("m1", 0.5, "f", 0);
+    initializeGenomicElementType("g1", m1, 1);
+    initializeGenomicElement(g1, 0, 99999);
+    initializeRecombinationRate(1e-08);
+}
+
+block_2:1 early() {
+    sim.addSubpop("p1", 500);
+    print("Hello world!");
+    sim.simulationFinished();
+}
+
+> mm16To256()
+ℹ Rendering development documentation for "mm16To256"
+
+> mmJukesCantor()
+ℹ Rendering development documentation for "mmJukesCantor"
+
+> mmKimura()
+ℹ Rendering development documentation for "mmKimura"
+
+> slim_block(modifyChild(), {
++     if (parent1 == parent2) {
++         return(F)
++     }
++     return(T)
++ })
+A slimr_block:
+<slimr_script[1]>
+block_1:1:1 modifyChild() {
+    if (parent1 == parent2) {
+        return(F);
+    }
+    return(T);
+}
+
+> slim_block(recombination(), {
++     if (genome1.containsMarkerMutation(m2, 25000) == genome2.containsMarkerMutation(m2, 
++         25000)) {
++         return(F)
++     }
++     inInv = (breakpoints > 25000) & (breakpoints < 75000)
++     if (!any(inInv)) {
++         return(F)
++     }
++     breakpoints = breakpoints[!inInv]
++     return(T)
++ })
+A slimr_block:
+<slimr_script[1]>
+block_1:1:1 recombination() {
+    if (genome1.containsMarkerMutation(m2, 25000) == genome2.containsMarkerMutation(m2, 25000)) {
+        return(F);
+    }
+    inInv = (breakpoints > 25000) & (breakpoints < 75000);
+    if (!any(inInv)) {
+        return(F);
+    }
+    breakpoints = breakpoints[!inInv];
+    return(T);
+}
+
+> slim_block(mutationEffect(), {
++     if (homozygous) {
++         return(1 + mut.selectionCoeff)
++     }
++     else {
++         return(1 + mut.mutationType.dominanceCoeff * mut.selectionCoeff)
++     }
++ })
+A slimr_block:
+<slimr_script[1]>
+block_1:1:1 mutationEffect() {
+    if (homozygous) {
+        return(1 + mut.selectionCoeff);
+    } else {
+        return(1 + mut.mutationType.dominanceCoeff * mut.selectionCoeff);
+    }
+}
+
+> nucleotideCounts()
+ℹ Rendering development documentation for "nucleotideCounts"
+
+> nucleotideFrequencies()
+ℹ Rendering development documentation for "nucleotideFrequencies"
+
+> nucleotidesToCodons()
+ℹ Rendering development documentation for "nucleotidesToCodons"
+
+> popsizes <- c(100, 200, 300)
+
+> slim_script(slim_block(initialize(), {
++     initializeMutationRate(1e-07)
++     initializeMutationType("m1", 0.5, "f", 0)
++     initializeGenomicElementType("g1", m1, 1)
++     initializeGenomicElement(g1, 0, 99999)
++     initializeRecombinationRate(1e-08)
++ }), slim_block(1, {
++     popsizes <- r_inline(popsizes, delay = TRUE)
++     sim.addSubpop("p1", popsizes[1])
++     sim.addSubpop("p2", popsizes[2])
++     sim.addSubpop("p3", popsizes[3])
++ }), slim_block(10000, {
++     sim.simulationFinished()
++ }))
+<slimr_script[3]>
+block_1:initialize() {
+    initializeMutationRate(1e-07);
+    initializeMutationType("m1", 0.5, "f", 0);
+    initializeGenomicElementType("g1", m1, 1);
+    initializeGenomicElement(g1, 0, 99999);
+    initializeRecombinationRate(1e-08);
+}
+
+block_2:1 early() {
+    popsizes = r_inline(popsizes);
+    sim.addSubpop("p1", popsizes[1]);
+    sim.addSubpop("p2", popsizes[2]);
+    sim.addSubpop("p3", popsizes[3]);
+}
+
+block_3:10000 early() {
+    sim.simulationFinished();
+}
+
+> test_sim <- slim_script(slim_block(initialize(), {
++     initializeMutationRate(1e-07)
++     initializeMutationType("m1", 0.5, "f", 0)
++     initializeGenomicElementType("g1", m1, 1)
++     initializeGenomicElement(g1, 0, 99999)
++     initializeRecombinationRate(1e-08)
++ }), slim_block(1, {
++     sim.addSubpop("p1", 100)
++ }), slim_block(1, 10000, {
++     r_message(c("This is generation", community.tick), do_every = 100)
++ }), slim_block(10000, {
++     sim.simulationFinished()
++ }))
+
+> test_sim
+<slimr_script[4]>
+block_1:initialize() {
+    initializeMutationRate(1e-07);
+    initializeMutationType("m1", 0.5, "f", 0);
+    initializeGenomicElementType("g1", m1, 1);
+    initializeGenomicElement(g1, 0, 99999);
+    initializeRecombinationRate(1e-08);
+}
+
+block_2:1 early() {
+    sim.addSubpop("p1", 100);
+}
+
+block_3:1:10000 early() {
+    {c("This is generation", community.tick) -> r_message}
+}
+
+block_4:10000 early() {
+    sim.simulationFinished();
+}
+
+> if (slim_is_avail()) {
++     run_w_out <- slim_script(slim_block(initialize(), {
++         initializeMutationRate(1e-07)
++         initializeMutationType("m1", 0.5, "f", 0)
++         initializeGenomicElementType("g1", m1, 1)
++         initializeGenomicElement(g1, 0, 99999)
++         initializeRecombinationRate(1e-08)
++     }), slim_block(1, {
++         sim.addSubpop("p1", 100)
++     }), slim_block(100, {
++         r_output(p1.outputVCFSample(sampleSize = 10), name = "VCF")
++         sim.simulationFinished()
++     })) %>% slim_run()
++     cat(run_w_out$output_data$data[[1]])
++ }
+
+
+Simulation finished with exit status: 0
+
+Success!
+#OUT: 100 100 SV p1 10
+##fileformat=VCFv4.2
+##fileDate=20251110
+##source=SLiM
+##INFO=<ID=MID,Number=.,Type=Integer,Description="Mutation ID in SLiM">
+##INFO=<ID=S,Number=.,Type=Float,Description="Selection Coefficient">
+##INFO=<ID=DOM,Number=.,Type=Float,Description="Dominance">
+##INFO=<ID=PO,Number=.,Type=Integer,Description="Population of Origin">
+##INFO=<ID=TO,Number=.,Type=Integer,Description="Tick of Origin">
+##INFO=<ID=MT,Number=.,Type=Integer,Description="Mutation Type">
+##INFO=<ID=AC,Number=.,Type=Integer,Description="Allele Count">
+##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
+##INFO=<ID=MULTIALLELIC,Number=0,Type=Flag,Description="Multiallelic">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##contig=<ID=1,URL=https://github.com/MesserLab/SLiM>
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	i0	i1	i2	i3	i4	i5	i6	i7	i8	i9
+A	1528	.	A	T	1000	PASS	MID=179;S=0;DOM=0.5;PO=1;TO=92;MT=1;AC=2;DP=1000	GT	0|0	0|0	0|0	0|0	0|0	0|1	1|0	0|0	0|0	0|0
+A	17114	.	A	T	1000	PASS	MID=29;S=0;DOM=0.5;PO=1;TO=16;MT=1;AC=10;DP=1000	GT	1|0	0|1	0|0	0|0	1|1	0|1	1|1	0|1	0|1	0|1
+A	19958	.	A	T	1000	PASS	MID=154;S=0;DOM=0.5;PO=1;TO=78;MT=1;AC=1;DP=1000	GT	0|1	0|0	0|0	0|0	0|0	0|0	0|0	0|0	0|0	0|0
+A	31843	.	A	T	1000	PASS	MID=100;S=0;DOM=0.5;PO=1;TO=57;MT=1;AC=3;DP=1000	GT	1|0	0|0	0|0	0|0	1|0	0|0	0|1	0|0	0|0	0|0
+A	60461	.	A	T	1000	PASS	MID=51;S=0;DOM=0.5;PO=1;TO=27;MT=1;AC=3;DP=1000	GT	0|0	0|0	0|0	1|0	0|0	1|0	0|0	1|0	0|0	0|0
+A	85271	.	A	T	1000	PASS	MID=96;S=0;DOM=0.5;PO=1;TO=55;MT=1;AC=3;DP=1000	GT	0|0	0|0	0|0	0|0	0|0	0|1	1|0	0|1	0|0	0|0
+
+> if (slim_is_avail()) {
++     test_sim <- slim_run(slim_script(slim_block(initialize(), 
++         {
++             initializeSLiMOptions(dimensionality = "xy")
++             initializeMutationRate(1e-07)
++             initializeMutationType("m1", 0.5, "f", asFloat(0))
++             initializeGenomicElementType("g1", m1, asFloat(1))
++             initializeGenomicElement(g1, 0, 99999)
++             initializeRecombinationRate(1e-08)
++         }), slim_block(1, late(), {
++         sim.addSubpop("p1", 500)
++         p1.individuals.x = runif(p1.individualCount)
++         p1.individuals.y = runif(p1.individualCount)
++     }), slim_block(1, 2000, late(), {
++         r_output_coords(dimensionality = "xy", do_every = 10)
++     }), slim_block(modifyChild(), {
++         child.x = parent1.x + rnorm(1, 0, 0.02)
++         while ((child.x < asFloat(0)) | (child.x > asFloat(1))) {
++             child.x = parent1.x + rnorm(1, 0, 0.02)
++         }
++         child.y = parent1.y + rnorm(1, 0, 0.02)
++         while ((child.y < asFloat(0)) | (child.y > asFloat(1))) {
++             child.y = parent1.y + rnorm(1, 0, 0.02)
++         }
++         return(T)
++     }), slim_block(2000, late(), {
++         sim.outputFixedMutations()
++     })))
++     slim_results_to_data(test_sim)
++ }
+
+
+Simulation finished with exit status: 0
+
+Success!
+# A tibble: 400 × 5
+   type                                     expression    generation name  data 
+   <chr>                                    <chr>              <int> <chr> <lis>
+ 1 "float [0:499] 0.27291 0.700121 ...\n"   sim.subpopul…         10 x     <chr>
+ 2 "float [0:499] 0.458145 0.689649 ...\n"  sim.subpopul…         10 y     <chr>
+ 3 "float [0:499] 0.415526 0.362542 ...\n"  sim.subpopul…         20 x     <chr>
+ 4 "float [0:499] 0.372113 0.413087 ...\n"  sim.subpopul…         20 y     <chr>
+ 5 "float [0:499] 0.63627 0.361624 ...\n"   sim.subpopul…         30 x     <chr>
+ 6 "float [0:499] 0.457574 0.251256 ...\n"  sim.subpopul…         30 y     <chr>
+ 7 "float [0:499] 0.52382 0.512403 ...\n"   sim.subpopul…         40 x     <chr>
+ 8 "float [0:499] 0.286367 0.90085 ...\n"   sim.subpopul…         40 y     <chr>
+ 9 "float [0:499] 0.0499296 0.511876 ...\n" sim.subpopul…         50 x     <chr>
+10 "float [0:499] 0.267835 0.891865 ...\n"  sim.subpopul…         50 y     <chr>
+# ℹ 390 more rows
+
+> test_sim <- slim_script(slim_block_init_minimal(mutation_rate = 1e-06), 
++     slim_block_add_subpops(1, 100), slim_block(1, 20, late(), 
++         {
++             r_output_full("out", do_every = 10)
++         }))
+
+> test_sim
+<slimr_script[3]>
+block_1:initialize() {
+    initializeMutationRate(1e-06);
+    initializeMutationType("m1", 0.5, "f", 0);
+    initializeGenomicElementType("g1", m1, 1);
+    initializeGenomicElement(g1, 0, 1e+05 - 1);
+    initializeRecombinationRate(1e-08);
+}
+
+block_2:1 early() {
+    sim.addSubpop("p1", 100);
+}
+
+block_3:1:20 late() {
+    {sim.outputFull() -> out}
+}
+
+> test_sim <- slim_script(slim_block(initialize(), {
++     initializeSLiMOptions(nucleotideBased = T)
++     initializeAncestralNucleotides(randomNucleotides(1000))
++     initializeMutationTypeNuc("m1", 0.5, "f", 0)
++     initializeGenomicElementType("g1", m1, 1, mmJukesCantor(1e-05))
++     initializeGenomicElement(g1, 0, 1000 - 1)
++     initializeRecombinationRate(1e-08)
++ }), slim_block_add_subpops(1, 100), slim_block(1, 20, late(), 
++     {
++         r_output_nucleotides("out", do_every = 10)
++     }))
+
+> test_sim
+<slimr_script[3]>
+block_1:initialize() {
+    initializeSLiMOptions(nucleotideBased = T);
+    initializeAncestralNucleotides(randomNucleotides(1000));
+    initializeMutationTypeNuc("m1", 0.5, "f", 0);
+    initializeGenomicElementType("g1", m1, 1, mmJukesCantor(1e-05));
+    initializeGenomicElement(g1, 0, 1000 - 1);
+    initializeRecombinationRate(1e-08);
+}
+
+block_2:1 early() {
+    sim.addSubpop("p1", 100);
+}
+
+block_3:1:20 late() {
+    {paste(sim.subpopulations.individuals.haploidGenome1.nucleotides()) -> out}
+}
+
+> if (slim_is_avail()) {
++     test_sim <- slim_script(slim_block_init_minimal(mutation_rate = 1e-06), 
++         slim_block_add_subpops(1, 100), slim_block(1, 20, late(), 
++             {
++                 r_output_sex("sex", do_every = 10)
++             })) %>% slim_run()
++     slim_results_to_data(test_sim$output_data)
++ }
+
+
+Simulation finished with exit status: 0
+
+Success!
+# A tibble: 2 × 5
+  type                              expression            generation name  data 
+  <chr>                             <chr>                      <int> <chr> <lis>
+1 "string [0:99] \"H\" \"H\" ...\n" sim.subpopulations.i…         10 sex   <chr>
+2 "string [0:99] \"H\" \"H\" ...\n" sim.subpopulations.i…         20 sex   <chr>
+
+> if (slim_is_avail()) {
++     test_sim <- slim_script(slim_block_init_minimal(mutation_rate = 1e-06), 
++         slim_block_add_subpops(1, 100), slim_block(1, 20, late(), 
++             {
++                 r_output_snp("snp", do_every = 10)
++             })) %>% slim_run()
++     slim_results_to_data(test_sim)
++ }
+
+
+Simulation finished with exit status: 0
+
+Success!
+# A tibble: 2 × 6
+  type     expression         generation name  data              pos        
+  <chr>    <chr>                   <int> <chr> <list>            <list>     
+1 slim_snp slimr_output_snp()         10 snp   <dbl [100 × 74]>  <chr [74]> 
+2 slim_snp slimr_output_snp()         20 snp   <dbl [100 × 101]> <chr [101]>
+
+> test_sim <- slim_script(slim_block_init_minimal(mutation_rate = r_template("mut_rate", 
++     1e-07)), slim_block(1, early(), {
++     sim.addSubpop("p1", r_template("p1", 100))
++ }))
+
+> test_sim
+<slimr_script[2]>
+block_1:initialize() {
+    initializeMutationRate(..mut_rate..);
+    initializeMutationType("m1", 0.5, "f", 0);
+    initializeGenomicElementType("g1", m1, 1);
+    initializeGenomicElement(g1, 0, 1e+05 - 1);
+    initializeRecombinationRate(1e-08);
+}
+
+block_2:1 early() {
+    sim.addSubpop("p1", ..p1..);
+}
+This slimr_script has templating in block(s) block_1 and block_2 for variables
+mut_rate and p1.
+> slim_script_render(test_sim, data.frame(p1 = c(100, 
++     200), mut_rate = c(1e-07, 1e-08)))
+<slimr_script_coll[2]>
+<1>
+
+block_1:initialize() {
+    initializeMutationRate(1e-07);
+    initializeMutationType("m1", 0.5, "f", 0);
+    initializeGenomicElementType("g1", m1, 1);
+    initializeGenomicElement(g1, 0, 1e+05 - 1);
+    initializeRecombinationRate(1e-08);
+}
+
+block_2:1 early() {
+    sim.addSubpop("p1", 100);
+}
+
+<2>
+
+block_1:initialize() {
+    initializeMutationRate(1e-08);
+    initializeMutationType("m1", 0.5, "f", 0);
+    initializeGenomicElementType("g1", m1, 1);
+    initializeGenomicElement(g1, 0, 1e+05 - 1);
+    initializeRecombinationRate(1e-08);
+}
+
+block_2:1 early() {
+    sim.addSubpop("p1", 200);
+}
+
+> test_sim <- slim_script(slim_block(initialize(), {
++     r_template_constant("pop1", 100)
++     r_template_constant("pop2", 100)
++ }), slim_block(1, early(), {
++     sim.addSubpop("p1", pop1)
++     sim.addSubpop("p2", pop2)
++ }))
+
+> test_sim
+<slimr_script[2]>
+block_1:initialize() {
+    defineConstant("pop1", ..pop1..);
+    defineConstant("pop2", ..pop2..);
+}
+
+block_2:1 early() {
+    sim.addSubpop("p1", pop1);
+    sim.addSubpop("p2", pop2);
+}
+This slimr_script has templating in block(s) block_1 for variables pop1 and
+pop2.
+> slim_script_render(test_sim, data.frame(pop1 = c(200, 
++     200), pop2 = c(100, 300)))
+<slimr_script_coll[2]>
+<1>
+
+block_1:initialize() {
+    defineConstant("pop1", 200);
+    defineConstant("pop2", 100);
+}
+
+block_2:1 early() {
+    sim.addSubpop("p1", pop1);
+    sim.addSubpop("p2", pop2);
+}
+
+<2>
+
+block_1:initialize() {
+    defineConstant("pop1", 200);
+    defineConstant("pop2", 300);
+}
+
+block_2:1 early() {
+    sim.addSubpop("p1", pop1);
+    sim.addSubpop("p2", pop2);
+}
+
+> randomNucleotides()
+ℹ Rendering development documentation for "randomNucleotides"
+
+> slim_block(recombination(), {
++     if (genome1.containsMarkerMutation(m2, 25000) == genome2.containsMarkerMutation(m2, 
++         25000)) {
++         return(F)
++     }
++     inInv = (breakpoints > 25000) & (breakpoints < 75000)
++     if (!any(inInv)) {
++         return(F)
++     }
++     breakpoints = breakpoints[!inInv]
++     return(T)
++ })
+A slimr_block:
+<slimr_script[1]>
+block_1:1:1 recombination() {
+    if (genome1.containsMarkerMutation(m2, 25000) == genome2.containsMarkerMutation(m2, 25000)) {
+        return(F);
+    }
+    inInv = (breakpoints > 25000) & (breakpoints < 75000);
+    if (!any(inInv)) {
+        return(F);
+    }
+    breakpoints = breakpoints[!inInv];
+    return(T);
+}
+
+> script <- slim_script(slim_block(initialize(), {
++     .Init$initializeMutationRate(1e-07)
++     .Init$initializeMutationType("m1", 0.5, "f", 0)
++     .Init$initializeGenomicElementType("g1", m1, 1)
++     .Init$initializeGenomicElement(g1, 0, 99999)
++     .Init$initializeRecombinationRate(1e-08)
++ }), slim_block(1, {
++     sim %.% .SS$addSubpop("p1", 500)
++ }), slim_block(10000, {
++     sim %.% .SS$simulationFinished()
++ }))
+
+> reconstruct(script)
+[1] "slim_script(\n\n    slim_block(initialize(),  {\n        .Init$initializeMutationRate(1e-07)\n        .Init$initializeMutationType(\"m1\", 0.5, \"f\", 0)\n        .Init$initializeGenomicElementType(\"g1\", m1, 1)\n        .Init$initializeGenomicElement(g1, 0, 99999)\n        .Init$initializeRecombinationRate(1e-08)\n    }),\n\n    slim_block(1, early(),  {\n        sim %.% .SS$addSubpop(\"p1\", 500)\n    }),\n\n    slim_block(10000, early(),  {\n        sim %.% .SS$simulationFinished()\n    })\n)"
+
+> script <- slim_script(slim_block(initialize(), {
++     .Init$initializeMutationRate(1e-07)
++     .Init$initializeMutationType("m1", 0.5, "f", 0)
++     .Init$initializeGenomicElementType("g1", m1, 1)
++     .Init$initializeGenomicElement(g1, 0, 99999)
++     .Init$initializeRecombinationRate(1e-08)
++ }), slim_block(1, {
++     sim %.% .SS$addSubpop("p1", 500)
++ }), slim_block(10000, {
++     sim %.% .SS$simulationFinished()
++ }))
+
+> reconstruct(script)
+[1] "slim_script(\n\n    slim_block(initialize(),  {\n        .Init$initializeMutationRate(1e-07)\n        .Init$initializeMutationType(\"m1\", 0.5, \"f\", 0)\n        .Init$initializeGenomicElementType(\"g1\", m1, 1)\n        .Init$initializeGenomicElement(g1, 0, 99999)\n        .Init$initializeRecombinationRate(1e-08)\n    }),\n\n    slim_block(1, early(),  {\n        sim %.% .SS$addSubpop(\"p1\", 500)\n    }),\n\n    slim_block(10000, early(),  {\n        sim %.% .SS$simulationFinished()\n    })\n)"
+
+> slim_block(reproduction(), {
++     subpop.addCrossed(individual, subpop.sampleIndividuals(1))
++ })
+A slimr_block:
+<slimr_script[1]>
+block_1:1:1 reproduction() {
+    subpop.addCrossed(individual, subpop.sampleIndividuals(1));
+}
+
+> slim_script(slim_block("s1", 1, 10000, late(), {
++     print("Hello World!")
++ }))
+<slimr_script[1]>
+block_1:s1 1:10000 late() {
+    print("Hello World!");
+}
+
+> slim_block_add_subpops(2, 100)
+A slimr_block:
+<slimr_script[1]>
+block_1:1 early() {
+    {
+        sim.addSubpop(p1, 100);
+        sim.addSubpop(p2, 100);
+    }
+}
+
+> slim_script(slim_block_init_minimal(), slim_block_finish(100))
+<slimr_script[2]>
+block_1:initialize() {
+    initializeMutationRate(1e-07);
+    initializeMutationType("m1", 0.5, "f", 0);
+    initializeGenomicElementType("g1", m1, 1);
+    initializeGenomicElement(g1, 0, 1e+05 - 1);
+    initializeRecombinationRate(1e-08);
+}
+
+block_2:100 early() {
+    sim.simulationFinished();
+}
+
+> slim_script(slim_block_init_minimal(), slim_block_finish(100))
+<slimr_script[2]>
+block_1:initialize() {
+    initializeMutationRate(1e-07);
+    initializeMutationType("m1", 0.5, "f", 0);
+    initializeGenomicElementType("g1", m1, 1);
+    initializeGenomicElement(g1, 0, 1e+05 - 1);
+    initializeRecombinationRate(1e-08);
+}
+
+block_2:100 early() {
+    sim.simulationFinished();
+}
+
+> if (slim_is_avail()) {
++     test_sim <- slim_script(slim_block_init_minimal(mutation_rate = 1e-06), 
++         slim_block_add_subpops(1, 100), slim_block(1, 20, late(), 
++             {
++                 r_output(sim.outputFull(), "out", do_every = 10)
++             })) %>% slim_run()
++     slim_extract_full(test_sim$output_data, type = "mutations")
++ }
+
+
+Simulation finished with exit status: 0
+
+Success!
+# A tibble: 168 × 11
+   generation mut_id unique_mut_id mut_type chrome_pos selection dominance
+        <int>  <int>         <int> <chr>         <int>     <dbl>     <dbl>
+ 1         10      9             2 m1            97635         0       0.5
+ 2         10      5             4 m1             7766         0       0.5
+ 3         10     43             7 m1            24867         0       0.5
+ 4         10      3            12 m1            53704         0       0.5
+ 5         10     19            17 m1            91575         0       0.5
+ 6         10     40            27 m1             9872         0       0.5
+ 7         10      6            30 m1            86104         0       0.5
+ 8         10      7            39 m1            75743         0       0.5
+ 9         10     18            40 m1            65607         0       0.5
+10         10     28            41 m1            16776         0       0.5
+# ℹ 158 more rows
+# ℹ 4 more variables: subpop <chr>, first_gen <int>, prevalence <int>,
+#   nucleotide <chr>
+
+> if (slim_is_avail()) {
++     test_sim <- slim_script(slim_block_init_minimal(mutation_rate = 1e-06), 
++         slim_block_add_subpops(1, 100), slim_block(1, 20, late(), 
++             {
++                 r_output(sim.outputFull(), "out", do_every = 10)
++             })) %>% slim_run()
++     if (require("adegenet", quietly = TRUE)) {
++         plot(slim_extract_genlight(test_sim$output_data))
++     }
++ }
+
+
+Simulation finished with exit status: 0
+
+Success!
+
+> if (slim_is_avail()) {
++     test_sim <- slim_script(slim_block_init_minimal(mutation_rate = 1e-06), 
++         slim_block_add_subpops(1, 100), slim_block(1, 20, late(), 
++             {
++                 r_output(sim.outputFull(), "out", do_every = 10)
++             })) %>% slim_run()
++     slim_extract_genome(test_sim$output_data, type = "mutations")
++ }
+
+
+Simulation finished with exit status: 0
+
+Success!
+# A tibble: 170 × 11
+   generation mut_id unique_mut_id mut_type chrome_pos selection dominance
+        <int>  <int>         <int> <chr>         <int>     <dbl>     <dbl>
+ 1         10      5             3 m1            97755         0       0.5
+ 2         10     29            10 m1            81111         0       0.5
+ 3         10      1            15 m1            13498         0       0.5
+ 4         10     28            19 m1            41237         0       0.5
+ 5         10     23            31 m1            47855         0       0.5
+ 6         10      2            35 m1            41983         0       0.5
+ 7         10      3            37 m1            21863         0       0.5
+ 8         10     30            41 m1            68176         0       0.5
+ 9         10      6            42 m1            89296         0       0.5
+10         10     46            45 m1            26356         0       0.5
+# ℹ 160 more rows
+# ℹ 4 more variables: subpop <chr>, first_gen <int>, prevalence <int>,
+#   nucleotide <chr>
+
+> if (slim_is_avail()) {
++     test_sim <- slim_script(slim_block_init_minimal(), slim_block_add_subpops(1, 
++         100), slim_block(1, 20, late(), {
++         r_output(p1$size(), "MS", do_every = 10)
++     })) %>% slim_run(simple = TRUE)
++     slim_extract_output_data(test_sim$output)
++ }
+// Initial random seed:
+965788445
+
+// RunInitializeCallbacks():
+initializeMutationRate(1e-07);
+initializeMutationType(1, 0.5, "f", 0);
+initializeGenomicElementType(1, m1, 1);
+initializeGenomicElement(g1, 0, 99999);
+initializeRecombinationRate(1e-08);
+
+// Starting run at tick <start>:
+1 
+
+
+<slimr_out:start>
+10,'MS','p1.size()','integer [0:0] 1
+','1'
+<slimr_out:end>
+
+<slimr_out:start>
+20,'MS','p1.size()','integer [0:0] 1
+','1'
+<slimr_out:end>
+
+
+Simulation finished with exit status: 0
+
+Success!
+$data
+# A tibble: 0 × 0
+
+$extra_out
+character(0)
+
+$leftovers
+character(0)
+
+$last_line
+NULL
+
+
+> test_sim <- slim_script(slim_function("o<Subpopulation>$ subpop1", 
++     "o<Subpopulation>$ subpop2", name = "calculateFST", return_type = "f$", 
++     body = function(subpop1, subpop2) {
++         p1_p = sim.mutationFrequencies(subpop1)
++         p2_p = sim.mutationFrequencies(subpop2)
++         mean_p = (p1_p + p2_p)/2
++         H_t = 2 * mean_p * (1 - mean_p)
++         H_s = p1_p * (1 - p1_p) + p2_p * (1 - p2_p)
++         fst = 1 - H_s/H_t
++         fst = fst[isFinite(fst)]
++         return(mean(fst))
++     }), slim_block_init_minimal(mutation_rate = 1e-06), slim_block_add_subpops(2, 
++     100), slim_block(1, 20, late(), {
++     r_output(calculateFST(p1, p2), "out", do_every = 10)
++ }))
+
+> test_sim
+<slimr_script[4]>
+block_1:function  (f$)calculateFST(o<Subpopulation>$ subpop1, o<Subpopulation>$ subpop2) {
+    p1_p = sim.mutationFrequencies(subpop1);
+    p2_p = sim.mutationFrequencies(subpop2);
+    mean_p = (p1_p + p2_p)/2;
+    H_t = 2 * mean_p * (1 - mean_p);
+    H_s = p1_p * (1 - p1_p) + p2_p * (1 - p2_p);
+    fst = 1 - H_s/H_t;
+    fst = fst[isFinite(fst)];
+    return(mean(fst));
+}
+
+block_2:initialize() {
+    initializeMutationRate(1e-06);
+    initializeMutationType("m1", 0.5, "f", 0);
+    initializeGenomicElementType("g1", m1, 1);
+    initializeGenomicElement(g1, 0, 1e+05 - 1);
+    initializeRecombinationRate(1e-08);
+}
+
+block_3:1 early() {
+    {
+        sim.addSubpop(p1, 100);
+        sim.addSubpop(p2, 100);
+    }
+}
+
+block_4:1:20 late() {
+    {calculateFST(p1, p2) -> out}
+}
+
+> slim_install_path()
+[1] "C:\\Users\\dinnage\\AppData\\Local\\r-miniconda\\envs\\slimr-conda\\Library\\bin\\slim.exe"
+
+> slim_is_avail()
+[1] TRUE
+
+> slim_load_globals(c(p = 4, g = 2))
+
+> pop_file <- slim_make_pop_input(matrix(rbinom(1000, 
++     2, 0.25), nrow = 100, ncol = 100))
+
+> cat(readLines(pop_file))
+#OUT 10000 A Version: 4 Populations: p1 100 H Mutations: 0 0 m1 1 0 0.5 p1 1 46 1 1 m1 2 0 0.5 p1 1 58 2 2 m1 3 0 0.5 p1 1 55 3 3 m1 4 0 0.5 p1 1 51 4 4 m1 5 0 0.5 p1 1 57 5 5 m1 6 0 0.5 p1 1 50 6 6 m1 7 0 0.5 p1 1 45 7 7 m1 8 0 0.5 p1 1 38 8 8 m1 9 0 0.5 p1 1 43 9 9 m1 10 0 0.5 p1 1 55 10 10 m1 11 0 0.5 p1 1 46 11 11 m1 12 0 0.5 p1 1 58 12 12 m1 13 0 0.5 p1 1 55 13 13 m1 14 0 0.5 p1 1 51 14 14 m1 15 0 0.5 p1 1 57 15 15 m1 16 0 0.5 p1 1 50 16 16 m1 17 0 0.5 p1 1 45 17 17 m1 18 0 0.5 p1 1 38 18 18 m1 19 0 0.5 p1 1 43 19 19 m1 20 0 0.5 p1 1 55 20 20 m1 21 0 0.5 p1 1 46 21 21 m1 22 0 0.5 p1 1 58 22 22 m1 23 0 0.5 p1 1 55 23 23 m1 24 0 0.5 p1 1 51 24 24 m1 25 0 0.5 p1 1 57 25 25 m1 26 0 0.5 p1 1 50 26 26 m1 27 0 0.5 p1 1 45 27 27 m1 28 0 0.5 p1 1 38 28 28 m1 29 0 0.5 p1 1 43 29 29 m1 30 0 0.5 p1 1 55 30 30 m1 31 0 0.5 p1 1 46 31 31 m1 32 0 0.5 p1 1 58 32 32 m1 33 0 0.5 p1 1 55 33 33 m1 34 0 0.5 p1 1 51 34 34 m1 35 0 0.5 p1 1 57 35 35 m1 36 0 0.5 p1 1 50 36 36 m1 37 0 0.5 p1 1 45 37 37 m1 38 0 0.5 p1 1 38 38 38 m1 39 0 0.5 p1 1 43 39 39 m1 40 0 0.5 p1 1 55 40 40 m1 41 0 0.5 p1 1 46 41 41 m1 42 0 0.5 p1 1 58 42 42 m1 43 0 0.5 p1 1 55 43 43 m1 44 0 0.5 p1 1 51 44 44 m1 45 0 0.5 p1 1 57 45 45 m1 46 0 0.5 p1 1 50 46 46 m1 47 0 0.5 p1 1 45 47 47 m1 48 0 0.5 p1 1 38 48 48 m1 49 0 0.5 p1 1 43 49 49 m1 50 0 0.5 p1 1 55 50 50 m1 51 0 0.5 p1 1 46 51 51 m1 52 0 0.5 p1 1 58 52 52 m1 53 0 0.5 p1 1 55 53 53 m1 54 0 0.5 p1 1 51 54 54 m1 55 0 0.5 p1 1 57 55 55 m1 56 0 0.5 p1 1 50 56 56 m1 57 0 0.5 p1 1 45 57 57 m1 58 0 0.5 p1 1 38 58 58 m1 59 0 0.5 p1 1 43 59 59 m1 60 0 0.5 p1 1 55 60 60 m1 61 0 0.5 p1 1 46 61 61 m1 62 0 0.5 p1 1 58 62 62 m1 63 0 0.5 p1 1 55 63 63 m1 64 0 0.5 p1 1 51 64 64 m1 65 0 0.5 p1 1 57 65 65 m1 66 0 0.5 p1 1 50 66 66 m1 67 0 0.5 p1 1 45 67 67 m1 68 0 0.5 p1 1 38 68 68 m1 69 0 0.5 p1 1 43 69 69 m1 70 0 0.5 p1 1 55 70 70 m1 71 0 0.5 p1 1 46 71 71 m1 72 0 0.5 p1 1 58 72 72 m1 73 0 0.5 p1 1 55 73 73 m1 74 0 0.5 p1 1 51 74 74 m1 75 0 0.5 p1 1 57 75 75 m1 76 0 0.5 p1 1 50 76 76 m1 77 0 0.5 p1 1 45 77 77 m1 78 0 0.5 p1 1 38 78 78 m1 79 0 0.5 p1 1 43 79 79 m1 80 0 0.5 p1 1 55 80 80 m1 81 0 0.5 p1 1 46 81 81 m1 82 0 0.5 p1 1 58 82 82 m1 83 0 0.5 p1 1 55 83 83 m1 84 0 0.5 p1 1 51 84 84 m1 85 0 0.5 p1 1 57 85 85 m1 86 0 0.5 p1 1 50 86 86 m1 87 0 0.5 p1 1 45 87 87 m1 88 0 0.5 p1 1 38 88 88 m1 89 0 0.5 p1 1 43 89 89 m1 90 0 0.5 p1 1 55 90 90 m1 91 0 0.5 p1 1 46 91 91 m1 92 0 0.5 p1 1 58 92 92 m1 93 0 0.5 p1 1 55 93 93 m1 94 0 0.5 p1 1 51 94 94 m1 95 0 0.5 p1 1 57 95 95 m1 96 0 0.5 p1 1 50 96 96 m1 97 0 0.5 p1 1 45 97 97 m1 98 0 0.5 p1 1 38 98 98 m1 99 0 0.5 p1 1 43 99 99 m1 100 0 0.5 p1 1 55 Individuals: p1:i0 H p1:0 p1:1 p1:i1 H p1:2 p1:3 p1:i2 H p1:4 p1:5 p1:i3 H p1:6 p1:7 p1:i4 H p1:8 p1:9 p1:i5 H p1:10 p1:11 p1:i6 H p1:12 p1:13 p1:i7 H p1:14 p1:15 p1:i8 H p1:16 p1:17 p1:i9 H p1:18 p1:19 p1:i10 H p1:20 p1:21 p1:i11 H p1:22 p1:23 p1:i12 H p1:24 p1:25 p1:i13 H p1:26 p1:27 p1:i14 H p1:28 p1:29 p1:i15 H p1:30 p1:31 p1:i16 H p1:32 p1:33 p1:i17 H p1:34 p1:35 p1:i18 H p1:36 p1:37 p1:i19 H p1:38 p1:39 p1:i20 H p1:40 p1:41 p1:i21 H p1:42 p1:43 p1:i22 H p1:44 p1:45 p1:i23 H p1:46 p1:47 p1:i24 H p1:48 p1:49 p1:i25 H p1:50 p1:51 p1:i26 H p1:52 p1:53 p1:i27 H p1:54 p1:55 p1:i28 H p1:56 p1:57 p1:i29 H p1:58 p1:59 p1:i30 H p1:60 p1:61 p1:i31 H p1:62 p1:63 p1:i32 H p1:64 p1:65 p1:i33 H p1:66 p1:67 p1:i34 H p1:68 p1:69 p1:i35 H p1:70 p1:71 p1:i36 H p1:72 p1:73 p1:i37 H p1:74 p1:75 p1:i38 H p1:76 p1:77 p1:i39 H p1:78 p1:79 p1:i40 H p1:80 p1:81 p1:i41 H p1:82 p1:83 p1:i42 H p1:84 p1:85 p1:i43 H p1:86 p1:87 p1:i44 H p1:88 p1:89 p1:i45 H p1:90 p1:91 p1:i46 H p1:92 p1:93 p1:i47 H p1:94 p1:95 p1:i48 H p1:96 p1:97 p1:i49 H p1:98 p1:99 p1:i50 H p1:100 p1:101 p1:i51 H p1:102 p1:103 p1:i52 H p1:104 p1:105 p1:i53 H p1:106 p1:107 p1:i54 H p1:108 p1:109 p1:i55 H p1:110 p1:111 p1:i56 H p1:112 p1:113 p1:i57 H p1:114 p1:115 p1:i58 H p1:116 p1:117 p1:i59 H p1:118 p1:119 p1:i60 H p1:120 p1:121 p1:i61 H p1:122 p1:123 p1:i62 H p1:124 p1:125 p1:i63 H p1:126 p1:127 p1:i64 H p1:128 p1:129 p1:i65 H p1:130 p1:131 p1:i66 H p1:132 p1:133 p1:i67 H p1:134 p1:135 p1:i68 H p1:136 p1:137 p1:i69 H p1:138 p1:139 p1:i70 H p1:140 p1:141 p1:i71 H p1:142 p1:143 p1:i72 H p1:144 p1:145 p1:i73 H p1:146 p1:147 p1:i74 H p1:148 p1:149 p1:i75 H p1:150 p1:151 p1:i76 H p1:152 p1:153 p1:i77 H p1:154 p1:155 p1:i78 H p1:156 p1:157 p1:i79 H p1:158 p1:159 p1:i80 H p1:160 p1:161 p1:i81 H p1:162 p1:163 p1:i82 H p1:164 p1:165 p1:i83 H p1:166 p1:167 p1:i84 H p1:168 p1:169 p1:i85 H p1:170 p1:171 p1:i86 H p1:172 p1:173 p1:i87 H p1:174 p1:175 p1:i88 H p1:176 p1:177 p1:i89 H p1:178 p1:179 p1:i90 H p1:180 p1:181 p1:i91 H p1:182 p1:183 p1:i92 H p1:184 p1:185 p1:i93 H p1:186 p1:187 p1:i94 H p1:188 p1:189 p1:i95 H p1:190 p1:191 p1:i96 H p1:192 p1:193 p1:i97 H p1:194 p1:195 p1:i98 H p1:196 p1:197 p1:i99 H p1:198 p1:199 Genomes: p1:0 A 4 9 14 17 19 24 29 34 37 39 44 54 62 64 67 72 74 77 82 84 87 89 92 94 97 99 p1:1 A 2 4 7 12 14 22 24 27 32 34 42 44 47 49 52 54 57 59 64 69 74 79 84 94 p1:2 A 4 5 7 9 14 17 24 25 35 39 44 45 48 49 55 58 67 68 73 78 79 84 87 89 93 94 98 p1:3 A 3 8 13 15 18 19 23 27 28 29 33 34 37 38 43 47 53 54 57 59 63 64 65 69 74 75 77 83 85 88 95 97 99 p1:4 A 2 3 8 9 12 18 19 22 29 32 33 38 43 49 58 59 68 72 79 82 88 92 93 p1:5 A 13 23 28 39 42 48 52 53 62 63 69 73 78 83 89 98 99 p1:6 A 0 6 10 11 16 20 23 30 36 40 43 50 56 60 66 70 80 81 86 90 96 p1:7 A 0 1 3 10 13 20 21 26 30 31 33 40 41 46 50 51 53 60 61 63 70 71 73 76 80 83 90 91 93 p1:8 A 5 6 9 12 19 32 35 36 39 42 45 46 55 72 95 p1:9 A 2 15 16 22 25 26 29 49 52 56 59 62 65 66 69 75 76 79 82 85 86 89 92 96 99 p1:10 A 3 4 10 15 20 22 23 28 32 33 34 35 38 42 43 44 48 60 62 63 72 74 84 85 92 95 98 p1:11 A 0 2 5 8 12 13 14 18 24 25 30 40 45 50 52 53 54 55 58 64 65 68 70 73 75 78 80 82 83 88 90 93 94 p1:12 A 9 11 19 20 29 35 39 40 41 49 51 59 65 69 75 79 80 89 90 95 99 p1:13 A 0 1 5 9 10 15 19 21 25 29 30 31 39 45 49 50 55 59 60 61 69 70 71 79 81 85 89 91 99 p1:14 A 3 5 9 15 19 23 25 29 33 35 39 41 55 61 63 65 69 71 73 79 83 85 89 93 95 99 p1:15 A 1 11 13 21 31 43 45 49 51 53 59 75 81 91 p1:16 A 6 7 11 17 25 31 35 36 37 45 51 55 56 57 65 75 77 81 85 95 97 p1:17 A 1 5 15 16 21 26 27 41 46 47 61 66 67 71 76 86 87 91 96 p1:18 A 1 4 5 6 14 16 21 24 26 31 34 37 41 44 45 47 54 55 57 64 65 66 74 77 81 84 85 87 91 94 95 97 p1:19 A 4 7 11 14 15 17 24 25 27 34 35 36 44 46 51 54 56 61 64 67 71 74 75 76 84 86 94 96 p1:20 A 1 5 11 15 25 31 35 41 45 55 61 65 71 75 85 91 95 p1:21 A 5 15 21 25 35 45 51 55 65 75 81 85 95 p1:22 A 0 1 4 5 10 11 15 21 24 25 31 34 35 41 45 50 51 54 55 60 61 65 71 75 81 84 85 91 94 95 p1:23 A 1 5 11 14 15 20 21 25 30 31 35 40 41 44 45 51 55 61 64 65 70 71 74 75 80 81 85 90 91 95 p1:24 A 0 1 2 8 10 11 12 18 20 22 30 31 32 38 40 42 48 50 52 60 61 62 68 70 71 72 78 80 82 88 90 91 92 p1:25 A 0 2 10 12 20 21 22 28 30 32 40 41 42 50 51 52 58 60 62 70 72 80 81 82 90 92 98 p1:26 A 0 3 9 11 17 19 23 27 29 30 39 40 41 43 49 50 53 57 59 60 61 63 69 70 79 80 89 90 97 99 p1:27 A 1 7 9 10 13 19 20 21 29 31 33 37 39 47 49 51 59 67 69 71 73 77 79 81 83 87 89 91 93 99 p1:28 A 0 2 4 5 12 24 25 35 44 50 65 67 70 74 82 84 85 87 90 92 95 97 p1:29 A 7 10 14 15 17 20 22 27 30 32 34 37 40 42 45 47 52 54 55 57 60 62 64 72 75 77 80 94 p1:30 A 1 2 22 32 39 41 42 51 59 61 62 69 71 92 p1:31 A 9 11 12 19 21 29 31 49 52 72 79 81 82 89 91 99 p1:32 A 0 6 7 9 10 16 20 26 27 29 30 36 37 40 46 47 49 50 56 60 66 67 69 70 76 77 79 80 86 90 96 97 p1:33 A 0 6 10 16 17 19 20 26 30 36 39 40 46 50 56 57 59 60 66 70 76 80 86 87 89 90 96 99 p1:34 A 0 2 3 4 9 10 15 18 20 25 30 32 34 39 40 49 50 54 55 60 65 70 72 73 78 79 82 83 85 92 93 95 98 99 p1:35 A 5 8 12 13 14 19 22 23 24 28 29 33 35 38 42 43 44 45 48 52 53 58 59 62 63 64 68 69 74 75 80 84 88 89 90 94 p1:36 A 19 32 49 52 62 72 79 92 99 p1:37 A 2 9 12 22 29 39 42 59 69 82 89 p1:38 A 4 9 10 14 19 20 22 24 29 30 34 39 40 44 49 54 59 62 64 69 72 74 79 80 84 89 92 94 99 p1:39 A 0 2 4 9 12 14 19 24 29 32 34 39 42 44 49 50 52 54 59 60 64 69 70 74 79 82 84 89 90 94 99 p1:40 A 0 1 4 5 6 10 11 12 14 16 20 21 24 30 31 34 35 39 40 41 42 44 45 49 50 51 52 54 55 59 60 61 63 64 65 66 69 70 71 72 74 76 79 80 81 82 84 85 90 91 92 93 94 p1:41 A 0 1 2 3 4 9 10 11 13 14 15 19 20 21 22 23 24 25 26 29 30 31 32 33 34 36 40 41 43 44 46 50 51 53 54 56 60 61 62 64 70 71 73 74 75 80 81 83 84 86 89 90 91 94 95 96 99 p1:42 A 2 12 17 22 28 32 42 47 48 52 58 62 67 72 78 82 88 92 98 p1:43 A 2 7 8 12 18 22 27 32 37 38 42 52 57 62 68 72 77 82 87 92 97 p1:44 A 4 5 8 10 19 25 28 29 34 38 40 44 45 49 50 58 59 60 65 74 78 79 80 95 p1:45 A 0 9 14 15 18 20 24 30 35 39 48 54 55 64 68 69 70 75 84 85 88 89 90 94 98 99 p1:46 A 1 8 18 26 28 31 38 41 46 48 58 68 71 76 78 81 86 88 91 98 p1:47 A 6 8 11 16 18 21 28 36 38 48 51 56 58 61 66 68 78 88 96 98 p1:48 A 1 4 24 31 32 41 52 62 71 72 82 91 p1:49 A 2 11 12 14 21 22 34 42 44 51 54 61 64 74 81 84 92 94 p1:50 A 9 11 19 23 29 39 41 43 49 51 59 63 69 73 79 83 89 91 93 99 p1:51 A 1 3 9 13 19 21 29 31 33 39 49 53 59 61 69 71 79 81 89 99 p1:52 A 19 24 39 44 59 74 84 94 99 p1:53 A 4 9 14 29 34 49 54 64 69 79 89 p1:54 A 3 6 13 16 23 26 36 43 56 73 86 93 96 p1:55 A 33 46 53 63 66 76 83 p1:56 A 2 12 16 22 26 28 32 36 42 48 52 56 62 72 82 92 p1:57 A 2 6 8 12 18 22 32 38 42 46 52 58 62 66 68 72 76 78 82 86 88 92 96 98 p1:58 A 1 2 11 12 13 22 32 42 43 52 62 63 71 72 82 92 p1:59 A 2 3 12 21 22 23 31 32 33 41 42 51 52 53 61 62 72 73 81 82 83 91 92 93 p1:60 A  p1:61 A  p1:62 A 4 5 6 13 15 16 23 24 25 26 31 34 35 36 43 44 45 46 53 54 55 56 61 63 64 65 66 73 74 75 76 81 84 85 86 91 93 95 96 p1:63 A 1 3 5 6 11 14 15 16 21 25 26 33 35 36 41 45 46 51 55 56 65 66 71 75 76 83 85 86 94 95 96 p1:64 A 1 5 11 12 15 21 25 31 35 41 42 51 55 61 71 72 81 91 95 p1:65 A 1 2 11 21 22 31 32 41 45 51 52 61 62 65 71 75 81 82 85 91 92 p1:66 A 2 5 9 12 15 18 19 21 22 24 26 27 29 31 32 33 36 38 39 42 46 47 49 52 59 61 62 63 64 66 67 69 71 73 74 75 76 77 78 79 81 82 83 84 85 86 88 89 92 93 95 96 97 98 99 p1:67 A 1 3 4 6 7 8 9 11 13 14 16 17 19 23 25 28 29 34 35 37 39 41 43 44 45 48 49 51 53 54 55 56 57 58 59 65 68 69 72 79 87 89 91 94 99 p1:68 A 4 5 14 20 24 28 34 38 44 45 48 54 55 58 60 64 68 70 74 75 78 80 84 88 94 98 p1:69 A 0 4 8 10 14 15 18 24 25 30 34 35 40 44 50 54 64 65 74 84 85 90 94 95 p1:70 A 1 5 7 11 15 17 25 31 35 37 41 45 55 60 61 65 71 75 77 81 85 87 90 91 95 97 p1:71 A 0 5 10 15 20 21 25 27 30 35 40 45 47 50 51 55 57 65 67 70 75 80 85 95 p1:72 A 6 23 31 33 36 66 71 73 76 93 p1:73 A 1 3 11 13 16 21 26 41 43 46 51 53 56 61 63 81 83 86 91 96 p1:74 A 2 6 7 10 17 22 26 27 29 30 32 37 39 40 42 47 49 50 56 57 60 62 67 69 70 72 76 77 79 80 82 87 90 92 97 99 p1:75 A 0 7 9 12 16 17 19 20 27 36 37 46 47 52 57 59 66 67 77 86 87 89 96 97 p1:76 A 2 3 5 8 10 12 13 14 15 18 20 22 23 25 27 30 32 33 34 35 40 43 44 45 48 50 53 54 55 62 63 64 65 68 70 72 73 74 75 77 78 80 82 83 85 87 88 93 94 95 p1:77 A 0 3 4 5 7 13 15 17 23 24 25 28 33 35 37 38 42 43 45 47 52 53 55 57 58 60 63 65 67 73 75 83 84 85 90 92 93 95 97 98 p1:78 A 1 3 4 8 9 11 13 18 19 23 29 30 33 34 39 43 44 49 53 58 59 63 69 73 74 78 79 80 81 83 84 89 90 91 93 98 99 p1:79 A 0 3 9 10 13 14 19 20 21 23 24 28 29 31 33 38 39 40 41 43 48 49 50 51 53 54 59 60 61 63 64 68 69 70 71 73 79 83 88 89 93 94 99 p1:80 A 11 12 18 20 22 30 31 38 39 40 41 43 48 49 52 63 68 69 70 71 72 73 81 88 90 91 92 93 98 99 p1:81 A 0 1 2 3 8 9 10 13 19 21 23 28 29 32 33 42 50 51 53 58 59 60 61 62 78 79 80 82 83 89 p1:82 A 1 5 8 9 11 18 19 21 22 28 31 32 35 38 39 41 42 45 48 51 52 55 58 59 61 62 65 69 71 72 75 78 81 88 89 91 95 98 p1:83 A 1 2 11 12 15 21 25 29 31 41 49 51 61 68 71 79 81 82 85 91 92 99 p1:84 A 3 4 13 14 17 24 27 30 33 37 43 53 60 63 64 70 73 77 80 93 94 97 p1:85 A 0 7 10 20 23 34 40 44 47 50 54 57 67 74 83 84 87 90 p1:86 A 1 9 11 14 21 39 41 61 71 84 89 91 p1:87 A 4 19 24 29 31 34 44 49 51 54 59 64 69 74 79 81 94 99 p1:88 A 1 11 19 21 29 31 39 61 69 99 p1:89 A 9 41 49 51 59 71 79 81 89 91 p1:90 A 1 3 9 13 19 21 23 26 29 31 33 36 39 43 46 49 51 53 56 59 61 63 66 69 73 76 79 81 83 89 91 93 96 99 p1:91 A 3 6 9 11 13 16 19 23 29 33 39 41 43 49 53 59 63 69 71 73 79 83 86 89 93 99 p1:92 A 17 37 47 57 97 p1:93 A 7 27 67 77 87 p1:94 A 2 12 22 23 43 46 56 73 83 p1:95 A 3 6 13 16 26 32 33 36 42 52 53 62 63 66 72 76 82 86 92 93 96 p1:96 A 1 2 12 16 19 21 22 26 29 31 32 36 39 42 49 52 59 61 66 76 81 82 86 91 92 99 p1:97 A 6 9 11 41 46 51 56 62 69 71 72 79 89 96 p1:98 A 3 4 8 9 14 23 25 33 34 35 43 44 45 48 49 53 54 58 64 65 68 69 78 79 85 p1:99 A 5 13 15 18 19 24 28 29 38 39 55 59 63 73 74 75 83 84 88 89 93 94 95 98 99 p1:100 A 5 6 17 24 25 26 34 36 46 54 56 64 67 75 76 77 86 94 96 p1:101 A 4 7 14 15 16 27 35 37 44 45 47 55 57 65 66 74 84 85 87 95 97 p1:102 A 0 3 9 12 13 19 20 23 24 29 30 32 33 34 39 40 42 43 49 50 52 54 59 60 64 69 72 73 74 79 80 82 89 90 92 93 94 99 p1:103 A 2 4 9 10 14 19 22 29 39 44 49 53 59 62 63 69 70 79 83 84 89 99 p1:104 A 7 8 9 14 18 19 27 28 34 37 38 39 44 57 79 84 87 88 89 94 97 98 p1:105 A 4 17 24 29 47 48 49 54 58 59 64 67 68 69 74 77 78 99 p1:106 A 0 3 5 8 13 14 15 16 17 18 20 23 24 25 33 35 40 43 44 45 53 54 55 57 63 65 67 73 74 75 76 80 83 85 86 90 93 95 p1:107 A 3 4 5 6 7 10 13 15 23 25 26 27 28 30 33 34 35 36 37 38 43 45 46 47 48 50 53 55 56 58 60 63 64 65 66 68 70 73 75 77 78 83 84 85 87 88 93 94 95 96 97 98 p1:108 A 1 2 6 7 11 16 21 22 26 27 31 32 36 37 41 42 46 51 52 56 61 66 71 76 81 86 91 92 96 97 p1:109 A 1 6 11 12 16 17 21 26 31 36 41 46 47 51 56 57 61 62 66 67 71 72 76 77 81 82 86 87 91 96 p1:110 A 1 7 11 12 13 17 21 22 31 37 41 42 43 47 51 53 57 61 62 71 72 81 82 83 87 91 p1:111 A 1 2 3 11 21 23 27 31 32 33 41 51 52 61 63 67 71 73 77 81 91 92 93 97 p1:112 A 4 10 11 14 18 20 24 34 44 48 54 58 64 68 71 74 80 81 84 90 94 p1:113 A 0 1 4 8 14 21 24 28 30 31 34 38 40 41 44 50 51 54 60 61 64 70 74 78 84 88 91 94 98 p1:114 A 3 4 13 14 23 33 38 43 44 53 54 63 68 73 78 83 93 p1:115 A 3 8 13 18 23 24 28 33 34 43 48 53 58 63 64 73 74 83 84 88 93 94 98 p1:116 A 0 3 10 13 20 23 30 40 43 50 60 63 70 73 80 90 p1:117 A 0 10 20 30 33 40 50 53 60 70 80 83 90 93 p1:118 A 3 11 13 16 23 26 33 43 46 51 61 63 71 73 96 p1:119 A 1 6 21 31 36 41 53 56 66 76 81 83 86 91 93 p1:120 A 2 12 14 16 17 22 32 42 44 46 56 57 67 82 84 87 94 p1:121 A 4 6 7 24 26 27 34 36 37 47 52 54 62 64 66 72 74 76 77 86 92 96 97 p1:122 A 1 9 11 12 17 19 22 27 29 31 37 39 47 49 51 57 61 69 71 72 79 99 p1:123 A 2 7 21 32 41 42 52 59 62 67 77 81 82 87 89 91 92 97 p1:124 A 2 6 7 8 12 16 17 18 22 26 27 32 36 37 38 39 42 47 48 52 58 59 62 67 72 79 82 86 87 88 89 92 96 99 p1:125 A 2 9 12 19 22 28 29 32 42 46 49 52 56 57 62 66 68 69 72 76 77 78 82 92 97 98 p1:126 A 5 11 18 21 25 28 31 34 35 44 51 54 55 58 61 64 65 68 71 74 81 85 88 94 95 p1:127 A 1 4 8 14 15 24 38 41 45 48 75 78 84 91 98 p1:128 A 7 12 17 22 25 35 42 55 57 72 77 92 97 p1:129 A 2 5 15 27 32 37 45 47 52 62 65 67 75 82 85 87 95 p1:130 A 11 15 21 22 25 32 35 36 41 42 46 51 52 66 75 82 92 95 p1:131 A 1 2 5 6 12 16 26 31 45 55 56 61 62 65 71 72 76 81 85 86 91 96 p1:132 A 3 8 10 20 21 26 28 30 36 37 38 40 43 46 48 53 57 58 61 63 67 68 73 76 77 78 81 83 87 90 93 p1:133 A 0 1 6 7 11 13 16 17 18 23 27 31 33 41 47 50 51 56 60 66 70 71 80 86 88 91 96 97 98 p1:134 A 0 1 4 13 14 15 23 24 33 34 35 41 43 44 45 47 53 54 55 63 64 67 70 71 72 73 74 77 80 81 82 84 87 94 95 97 p1:135 A 2 3 4 5 7 10 11 12 14 17 20 21 22 24 25 27 30 31 32 34 37 40 42 44 50 51 52 54 57 60 61 62 64 65 74 75 83 84 85 90 91 92 93 94 p1:136 A 3 4 5 13 15 19 23 24 25 33 34 35 45 49 55 63 65 73 74 75 79 84 85 89 95 99 p1:137 A 5 9 14 15 25 29 35 39 43 44 45 53 54 55 59 64 65 69 75 83 85 93 94 95 p1:138 A 0 4 6 9 10 13 16 17 19 20 23 26 27 28 29 36 39 46 47 49 50 54 56 59 60 66 68 69 73 76 77 79 80 83 84 86 88 89 96 99 p1:139 A 3 6 7 8 9 14 16 18 19 24 26 29 30 33 34 36 37 38 39 40 43 44 46 48 49 53 56 57 58 59 63 64 66 67 69 70 74 76 78 79 86 87 89 90 93 94 96 97 98 99 p1:140 A 2 3 5 6 8 14 15 16 20 23 24 26 34 35 36 40 44 45 46 48 52 55 62 63 65 68 70 72 74 80 82 83 84 85 93 96 p1:141 A 0 4 10 12 13 18 22 25 28 30 32 33 38 42 43 50 53 54 56 58 60 64 66 73 75 76 78 86 88 90 92 94 95 98 p1:142 A 0 4 9 11 17 18 19 20 21 23 27 28 29 30 32 33 34 37 39 47 49 52 54 58 59 60 61 62 63 69 70 71 72 74 78 79 83 84 87 88 89 90 99 p1:143 A 1 2 3 7 8 9 10 12 13 14 19 22 24 29 31 38 39 40 41 42 43 44 48 49 50 51 53 57 59 64 67 68 69 73 77 79 80 81 82 89 91 92 93 94 97 98 99 p1:144 A 2 5 12 25 35 42 45 55 62 72 82 85 95 p1:145 A 15 22 32 52 65 75 92 p1:146 A 2 4 6 8 14 22 25 28 32 35 36 38 45 46 52 62 65 72 76 84 85 86 88 94 98 p1:147 A 5 12 15 16 18 24 26 34 42 44 48 54 55 56 58 64 66 68 74 75 78 82 92 95 96 p1:148 A 5 15 16 19 25 26 29 36 39 46 49 56 59 65 66 69 75 76 85 86 96 p1:149 A 6 9 35 45 55 79 89 95 99 p1:150 A 4 6 14 22 26 34 36 44 52 62 74 84 92 p1:151 A 2 12 16 24 32 42 46 54 56 64 66 72 76 82 86 94 96 p1:152 A 0 6 7 11 16 17 26 27 30 36 46 50 51 56 66 70 71 76 77 86 87 91 96 p1:153 A 1 6 10 16 20 21 26 31 36 37 40 41 46 47 56 57 60 61 66 67 76 80 81 86 90 96 97 p1:154 A 1 8 9 11 13 18 19 21 23 28 29 31 38 39 41 48 49 51 53 58 61 68 71 78 81 88 91 98 p1:155 A 1 3 8 11 18 21 28 31 33 38 41 43 48 51 58 59 61 63 68 69 71 73 78 79 81 83 88 89 91 93 98 99 p1:156 A 0 2 4 10 12 14 20 22 23 32 34 40 42 44 52 62 63 64 72 74 82 84 90 92 93 94 p1:157 A 2 3 12 13 22 24 30 32 33 42 43 50 52 53 54 60 62 70 72 73 80 82 83 92 p1:158 A 2 4 6 8 11 12 18 26 28 31 34 36 39 41 42 48 49 51 52 56 58 59 72 74 82 84 86 89 94 96 98 99 p1:159 A 1 9 14 16 19 21 22 24 29 32 38 44 46 54 61 62 64 66 68 69 71 76 78 79 81 88 91 92 p1:160 A 0 4 7 10 17 20 24 27 29 30 33 34 37 38 40 43 47 48 49 50 57 58 59 60 64 67 69 70 74 77 80 83 84 87 90 93 94 97 98 p1:161 A 0 3 7 8 9 10 13 14 17 18 19 20 23 27 28 30 37 39 40 44 47 50 53 54 57 60 63 67 68 70 73 77 78 79 80 87 88 89 90 97 99 p1:162 A 6 8 10 11 12 16 17 20 21 27 28 31 36 41 46 47 50 56 57 60 62 66 67 68 70 71 72 76 77 81 86 87 92 97 p1:163 A 0 1 2 7 18 22 26 30 32 37 38 40 42 48 51 52 58 61 78 80 82 88 90 91 96 98 p1:164 A 1 4 14 24 31 34 41 44 51 54 61 64 71 74 84 91 94 p1:165 A 4 11 14 21 24 34 44 54 64 74 81 84 94 p1:166 A 0 1 2 4 6 9 10 11 12 15 16 19 21 26 29 30 31 32 34 35 36 41 42 44 46 50 51 52 54 56 59 61 64 65 66 69 71 75 76 80 81 84 86 89 90 91 92 95 96 99 p1:167 A 1 5 6 11 14 16 20 21 22 24 25 26 31 36 39 40 41 45 46 49 51 55 56 60 61 62 66 70 71 72 74 76 79 81 82 85 86 91 94 96 p1:168 A 1 2 3 8 10 15 18 22 23 24 25 28 31 33 35 38 40 42 43 44 45 48 54 58 61 64 65 68 70 73 74 78 80 81 82 83 84 88 90 91 92 95 98 p1:169 A 0 4 5 8 11 12 13 14 18 20 21 28 30 32 34 38 41 48 50 51 52 53 55 58 60 62 63 68 71 72 75 78 85 88 93 94 98 p1:170 A 2 9 12 16 36 49 52 72 79 82 89 96 p1:171 A 6 19 22 26 29 32 39 42 46 56 59 62 66 69 76 86 92 99 p1:172 A 4 13 24 26 33 34 53 54 63 74 76 84 93 p1:173 A 3 6 14 16 23 36 43 44 46 56 64 66 73 83 86 94 96 p1:174 A 3 11 15 23 25 43 45 51 55 61 63 71 75 81 93 95 p1:175 A 1 5 13 21 31 33 35 41 53 65 73 83 85 91 p1:176 A 0 3 13 30 33 38 40 43 48 50 53 58 68 73 78 83 88 90 p1:177 A 8 10 18 20 23 28 60 63 70 80 93 98 p1:178 A 5 9 11 17 19 21 29 35 45 57 64 67 79 84 85 91 94 p1:179 A 1 4 7 14 15 24 25 27 31 34 37 39 41 44 47 49 51 54 55 59 61 65 69 71 74 75 77 81 87 89 95 97 99 p1:180 A 1 3 11 13 16 21 26 28 31 33 51 56 58 63 73 76 93 96 98 p1:181 A 6 8 18 23 36 38 41 43 46 48 53 61 66 68 71 78 81 83 86 88 91 p1:182 A 1 3 6 8 16 18 19 23 28 31 33 37 38 43 48 49 51 59 61 69 81 83 87 88 89 91 93 97 98 99 p1:183 A 7 9 11 13 17 21 26 27 29 36 39 41 46 47 53 56 57 58 63 66 67 68 71 73 76 77 78 79 86 96 p1:184 A 3 4 5 9 13 14 19 24 25 34 35 39 43 44 45 49 54 58 63 64 65 74 78 83 84 88 89 94 95 98 99 p1:185 A 4 8 14 15 18 23 24 28 29 33 34 38 44 48 53 54 55 59 64 68 69 73 74 75 79 84 85 93 94 p1:186 A 0 3 12 21 22 24 32 34 40 42 43 50 51 54 61 64 70 71 73 80 81 90 91 92 94 p1:187 A 1 2 4 10 11 13 14 20 23 30 31 33 41 44 52 53 60 62 63 72 74 82 83 84 93 p1:188 A 0 5 7 10 11 15 17 18 19 20 27 28 30 31 35 36 37 38 41 46 47 51 55 56 58 65 66 71 76 77 78 80 85 86 87 90 97 99 p1:189 A 1 6 8 9 16 21 25 26 29 39 40 45 48 49 50 57 59 60 61 67 68 69 70 75 79 81 88 89 91 95 96 98 p1:190 A 2 5 6 7 12 15 16 17 20 22 23 25 26 32 33 35 42 45 46 52 53 55 56 62 63 65 67 72 73 75 76 77 80 82 83 85 86 92 95 96 97 p1:191 A 0 2 3 5 10 12 13 15 22 25 27 30 32 35 36 37 40 42 43 45 47 50 52 55 57 60 62 65 66 70 72 75 82 85 87 90 92 93 95 p1:192 A 4 5 15 25 29 35 39 59 64 65 74 75 79 85 94 99 p1:193 A 9 14 19 24 34 44 45 49 54 55 69 84 89 95 p1:194 A 18 19 28 39 47 49 58 77 87 98 99 p1:195 A 7 8 9 17 27 29 37 38 48 57 59 67 68 69 78 79 88 89 97 p1:196 A 0 2 4 5 7 8 14 17 18 22 23 24 25 27 28 30 33 34 35 38 40 48 52 53 57 58 60 68 73 74 77 78 82 84 85 87 88 90 92 93 94 95 97 98 p1:197 A 3 8 10 12 13 15 18 20 28 32 37 38 42 43 44 45 47 48 50 54 55 58 62 63 64 65 67 68 70 72 75 78 80 83 88 98 p1:198 A 0 2 4 5 12 14 15 20 22 24 30 32 42 44 45 50 52 54 60 62 64 72 82 84 92 94 95 p1:199 A 2 10 12 22 25 32 34 35 40 42 52 55 62 65 70 72 74 75 80 82 85 90 92
+> if (interactive()) {
++     slim_open(minimal_slimr_script())
++ }
+Error: '\.' is an unrecognized escape in character string (<input>:12:13)
+In addition: Warning message:
+slim_load_globals modifies the global environment so please be careful when using this function!
+It has assigned values to the following names:
+
+• p1, p2, p3, p4
+• g1, g2
+• sim
+• community
+• self
+• genome1
+• genome2
+• childGenome1
+• childGenome2
+• parent1Genome1
+• parent1Genome2
+• parent2Genome1
+• parent2Genome2
+• subpop
+• sourceSubpop
+• individual
+• receiver
+• exerter
+• child
+• parent1
+• parent2
+• mut
+
+If there were already objects with any of these names in the global environment
+then their values have been replaced.
+Use slim_unload_globals() to remove them.
+This warning is displayed once per session. 
+ℹ Loading slimr
+Welcome to the slimr package for forward population genetics simulation in SLiM. For more information on SLiM please visit https://messerlab.org/slim/ .
+Execution halted

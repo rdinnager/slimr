@@ -3,67 +3,35 @@
 \name{spatialMapValue}
 \alias{spatialMapValue}
 \alias{Subpopulation$spatialMapValue}
-\alias{.P$spatialMapValue}
+\alias{P$spatialMapValue}
 \title{SLiM method spatialMapValue}
 \usage{
 spatialMapValue(map, point)
 }
 \arguments{
-\item{map}{An object of type string or SpatialMap object. Must be of length 1 (a
-singleton). See details for description.}
+\item{map}{An object of type string or SpatialMap object (singleton).}
 
-\item{point}{An object of type float. See details for description.}
+\item{point}{An object of type float.}
 }
 \value{
 An object of type float.
 }
 \description{
-Documentation for SLiM function \code{spatialMapValue}, which is a method of the
-SLiM class \code{\link{Subpopulation}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{spatialMapValue}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=745}{SLiM manual: page
-745}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Looks up the spatial map specified by map, and uses its mapping
-machinery (as defined by the gridSize, values, and interpolate parameters to
-defineSpatialMap()) to translate the coordinates of point into a corresponding
-map value. The parameter map may specify the map either as a SpatialMap object,
-or by its string name; in either case, the map must have been added to the
-subpopulation. The length of point must be equal to the spatiality of the
-spatial map; in other words, for a spatial map with spatiality "xz", point must
-be of length 2, specifying the x and z coordinates of the point to be evaluated.
-Interpolation will automatically be used if it was enabled for the spatial map.
-Point coordinates are clamped into the range defined by the spatial boundaries,
-even if the spatial boundaries are periodic; use pointPeriodic() to wrap the
-point coordinates first if desired. See the documentation for defineSpatialMap()
-for information regarding the details of value mapping. Beginning in SLiM 3.3,
-point may contain more than one point to be looked up. In this case, the length
-of point must be an exact multiple of the spatiality of the spatial map; for a
-spatial map with spatiality "xz", for example, the length of point must be an
-exact multiple of 2, and successive pairs of elements from point (elements 0 and
-1, then elements 2 and 3, etc.) will be taken as the x and z coordinates of the
-points to be evaluated. This allows spatialMapValue() to be used in a vectorized
-fashion. The mapValue() method of SpatialMap provides the same functionality
-directly on the SpatialMap class; spatialMapValue() is provided on Subpopulation
-partly for backward compatibility, but also for convenience for the most common
-usage case of spatial maps.
+so<SpatialMap>$ map, float point) Looks up the spatial map specified by map, and uses its mapping machinery (as defined by the gridSize, values, and interpolate parameters to defineSpatialMap()) to translate the coordinates of point into a corresponding map value. The parameter map may specify the map either as a SpatialMap object, or by its string name; in either case, the map must have been added to the subpopulation. The length of point must be equal to the spatiality of the spatial map; in other words, for a spatial map with spatiality "xz", point must be of length 2, specifying the x and z coordinates of the point to be evaluated. Interpolation will automatically be used if it was enabled for the spatial map. Point coordinates are clamped into the range defined by the spatial boundaries, even if the spatial boundaries are periodic; use pointPeriodic() to wrap the point coordinates first if desired. See the documentation for defineSpatialMap() for information regarding the details of value mapping. Beginning in SLiM 3.3, point may contain more than one point to be looked up. In this case, the length of point must be an exact multiple of the spatiality of the spatial map; for a spatial map with spatiality "xz", for example, the length of point must be an exact multiple of 2, and successive pairs of elements from point (elements 0 and 1, then elements 2 and 3, etc.) will be taken as the x and z coordinates of the points to be evaluated. This allows spatialMapValue() to be used in a vectorized fashion. The mapValue() method of SpatialMap provides the same functionality directly on the SpatialMap class; spatialMapValue() is provided on Subpopulation partly for backward compatibility, but also for convenience in some usage cases.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -73,12 +41,16 @@ Other Subpopulation:
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
+\code{\link{addMultiRecombinant}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
 \code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
+\code{\link{deviatePositions}()},
+\code{\link{deviatePositionsWithMap}()},
+\code{\link{haplosomesForChromosomes}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
@@ -88,6 +60,7 @@ Other Subpopulation:
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{pointUniformWithMap}()},
 \code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
@@ -103,7 +76,6 @@ Other Subpopulation:
 \code{\link{takeMigrants}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Subpopulation}

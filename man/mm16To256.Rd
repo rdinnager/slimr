@@ -3,51 +3,33 @@
 \name{mm16To256}
 \alias{mm16To256}
 \alias{SLiMBuiltin$mm16To256}
-\alias{.SB$mm16To256}
+\alias{SB$mm16To256}
 \title{SLiM method mm16To256}
 \usage{
 mm16To256(mutationMatrix16)
 }
 \arguments{
-\item{mutationMatrix16}{An object of type float. See details for description.}
+\item{mutationMatrix16}{An object of type float.}
 }
 \value{
 An object of type float.
 }
 \description{
-Documentation for SLiM function \code{mm16To256}, which is a method of the SLiM
-class \code{\link{SLiMBuiltin}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{mm16To256}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=749}{SLiM manual: page
-749}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Returns a 64×4 mutation matrix that is functionally identical to
-the supplied 4×4 mutation matrix in mutationMatrix16. The mutation rate for
-each of the 64 trinucleotides will depend only upon the central nucleotide
-of the trinucleotide, and will be taken from the corresponding entry for
-the same nucleotide in mutationMatrix16. This function can be used to easily
-construct a simple trinucleotide-based mutation matrix which can then be
-modified so that specific trinucleotides sustain a mutation rate that does
-not depend only upon their central nucleotide. See the documentation for
-initializeGenomicElementType() in section 25.1 for further discussion of how
-these 64×4 mutation matrices are interpreted and used.
+Returns a 64x4 mutation matrix that is functionally identical to the supplied 4x4 mutation matrix in mutationMatrix16. The mutation rate for each of the 64 trinucleotides will depend only upon the central nucleotide of the trinucleotide, and will be taken from the corresponding entry for the same nucleotide in mutationMatrix16. This function can be used to easily construct a simple trinucleotide-based mutation matrix which can then be modified so that specific trinucleotides sustain a mutation rate that does not depend only upon their central nucleotide. See the documentation for initializeGenomicElementType() for further discussion of how these 64x4 mutation matrices are interpreted and used.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -58,23 +40,31 @@ mm16To256()
 \seealso{
 Other SLiMBuiltin: 
 \code{\link{SB}},
+\code{\link{calcDxy}()},
 \code{\link{calcFST}()},
 \code{\link{calcHeterozygosity}()},
 \code{\link{calcInbreedingLoad}()},
+\code{\link{calcLD_D}()},
+\code{\link{calcLD_Rsquared}()},
+\code{\link{calcMeanFroh}()},
 \code{\link{calcPairHeterozygosity}()},
+\code{\link{calcPi}()},
+\code{\link{calcSFS}()},
+\code{\link{calcTajimasD}()},
 \code{\link{calcVA}()},
 \code{\link{calcWattersonsTheta}()},
 \code{\link{codonsToAminoAcids}()},
+\code{\link{codonsToNucleotides}()},
 \code{\link{mmJukesCantor}()},
 \code{\link{mmKimura}()},
 \code{\link{nucleotideCounts}()},
 \code{\link{nucleotideFrequencies}()},
 \code{\link{nucleotidesToCodons}()},
+\code{\link{randomNucleotides}()},
 \code{\link{summarizeIndividuals}()},
 \code{\link{treeSeqMetadata}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{SLiMBuiltin}

@@ -3,56 +3,33 @@
 \name{uniqueMutationsOfType}
 \alias{uniqueMutationsOfType}
 \alias{Individual$uniqueMutationsOfType}
-\alias{.I$uniqueMutationsOfType}
+\alias{In$uniqueMutationsOfType}
 \title{SLiM method uniqueMutationsOfType}
 \usage{
 uniqueMutationsOfType(mutType)
 }
 \arguments{
-\item{mutType}{An object of type integer or MutationType object. Must be of
-length 1 (a singleton). See details for description.}
+\item{mutType}{An object of type integer or MutationType object (singleton).}
 }
 \value{
 An object of type Mutation object.
 }
 \description{
-Documentation for SLiM function \code{uniqueMutationsOfType}, which is a method
-of the SLiM class \code{\link{Individual}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{uniqueMutationsOfType}, which is a method of the SLiM class \code{\link{Individual}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=685}{SLiM manual: page
-685}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Returns an object vector of all the mutations that are of the type
-specified by mutType, out of all of the mutations in the individual. Mutations
-present in both genomes will occur only once in the result of this method,
-and the mutations will be given in sorted order by position, so this method
-is similar to sortBy(unique(individual.genomes.mutationsOfType(mutType)),
-"position"). It is not identical to that call, only because if multiple
-mutations exist at the exact same position, they may be sorted differently
-by this method than they would be by sortBy(). If you just need a count
-of the matching Mutation objects, rather than a vector of the matches, use
--countOfMutationsOfType(). This method is provided for speed; it is much
-faster than the corresponding Eidos code. Indeed, it is faster than just
-individual.genomes.mutationsOfType(mutType), and gives uniquing and sorting
-on top of that, so it is advantageous unless duplicate entries for homozygous
-mutations are actually needed.
+io<MutationType>$ mutType) This method has been deprecated, and may be removed in a future release of SLiM. Its functionality was replaced by mutationsFromHaplosomes() in SLiM 5.0. Returns an object vector of all the mutations that are of the type specified by mutType, out of all of the mutations in the individual. Mutations present in both homologous haplosomes will occur only once in the result of this method, and the mutations for a given chromosomes will be given in sorted order by position, so in single-chromosome simulations this method is similar to sortBy(unique(individual.haplosomes.mutationsOfType(mutType)), "position"). (Even with a single chromosome it is not identical to that call, since if multiple mutations exist at the exact same position, they may be sorted differently by this method than they would be by sortBy().) If you just need a count of the matching Mutation objects, rather than a vector of the matches, use -countOfMutationsOfType(). This method is provided for speed; it is much faster than the corresponding Eidos code. Indeed, it is faster than just individual.haplosomes.mutationsOfType(mutType), and gives uniquing and sorting on top of that, so it is advantageous unless duplicate entries for homozygous mutations are actually needed.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -61,13 +38,17 @@ Other Individual:
 \code{\link{In}},
 \code{\link{containsMutations}()},
 \code{\link{countOfMutationsOfType}()},
+\code{\link{haplosomesForChromosomes}()},
+\code{\link{mutationsFromHaplosomes}()},
+\code{\link{outputIndividuals}()},
+\code{\link{outputIndividualsToVCF}()},
+\code{\link{readIndividualsFromVCF}()},
 \code{\link{relatedness}()},
 \code{\link{setSpatialPosition}()},
 \code{\link{sharedParentCount}()},
 \code{\link{sumOfMutationsOfType}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Individual}

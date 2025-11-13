@@ -25,3 +25,9 @@
 ^IMPROVEMENTS_SUMMARY\.md$
 ^PR_DESCRIPTION\.md$
 ^\.\.Rcheck$
+^claude_notes$
+^CLAUDE\.md$
+^NUL$
+^\.Renviron$
+^\.check$
+.*\.log$

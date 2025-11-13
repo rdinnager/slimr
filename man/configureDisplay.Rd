@@ -3,71 +3,37 @@
 \name{configureDisplay}
 \alias{configureDisplay}
 \alias{Subpopulation$configureDisplay}
-\alias{.P$configureDisplay}
+\alias{P$configureDisplay}
 \title{SLiM method configureDisplay}
 \usage{
-configureDisplay(center, scale, color)
+configureDisplay(center = NULL, scale = NULL, color = NULL)
 }
 \arguments{
-\item{center}{An object of type null or float. The default value is \code{NULL}.
-See details for description.}
+\item{center}{An object of type null or float.}
 
-\item{scale}{An object of type null or float. Must be of length 1 (a singleton).
-The default value is \code{NULL}. See details for description.}
+\item{scale}{An object of type null or float (singleton).}
 
-\item{color}{An object of type null or string. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{color}{An object of type null or string (singleton).}
 }
 \value{
 An object of type void.
 }
 \description{
-Documentation for SLiM function \code{configureDisplay}, which is a method of
-the SLiM class \code{\link{Subpopulation}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{configureDisplay}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=738}{SLiM manual: page
-738}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-This method customizes the display of the subpopulation in SLiMgui's
-Population Visualization graph. When this method is called by a model running
-outside SLiMgui, it will do nothing except typechecking and bounds-checking
-its arguments. When called by a model running in SLiMgui, the position,
-size, and color of the subpopulation's displayed circle can be controlled
-as specified below. The center parameter sets the coordinates of the center
-of the subpopulation's displayed circle; it must be a float vector of length
-two, such that center[0] provides the x-coordinate and center[1] provides the
-y-coordinate. The square central area of the Population Visualization occupies
-scaled coordinates in [0,1] for both x and y, so the values in center must
-be within those bounds. If a value of NULL is provided, SLiMgui's default
-center will be used (which currently arranges subpopulations in a circle).
-The scale parameter sets a scaling factor to be applied to the radius of the
-subpopulation's displayed circle. The default radius used by SLiMgui is a
-function of the subpopulation's number of individuals; this default radius is
-then multiplied by scale. If a value of NULL is provided, the default radius
-will be used; this is equivalent to supplying a scale of 1.0. Typically the
-same scale value should be used by all subpopulations, to scale all of their
-circles up or down uniformly, but that is not required. The color parameter
-sets the color to be used for the displayed subpopulation's circle. Colors may
-be specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see
-the Eidos manual). If color is NULL or the empty string, "", SLiMgui's default
-(fitness-based) color will be used.
+[Nf center = NULL], [Nf$ scale = NULL], [Ns$ color = NULL]) This method customizes the display of the subpopulation in SLiMgui's Population Visualization graph. When this method is called by a model running outside SLiMgui, it will do nothing except type-checking and bounds-checking its arguments. When called by a model running in SLiMgui, the position, size, and color of the subpopulation's displayed circle can be controlled as specified below. The center parameter sets the coordinates of the center of the subpopulation's displayed circle; it must be a float vector of length two, such that center[0] provides the x-coordinate and center[1] provides the y-coordinate. The square central area of the Population Visualization occupies scaled coordinates in [0,1] for both x and y, so the values in center must be within those bounds. If a value of NULL is provided, SLiMgui's default center will be used (which currently arranges subpopulations in a circle). The scale parameter sets a scaling factor to be applied to the radius of the subpopulation's displayed circle. The default radius used by SLiMgui is a function of the subpopulation's number of individuals; this default radius is then multiplied by scale. If a value of NULL is provided, the default radius will be used; this is equivalent to supplying a scale of 1.0. Typically the same scale value should be used by all subpopulations, to scale all of their circles up or down uniformly, but that is not required. The color parameter sets the color to be used for the displayed subpopulation's circle. Colors may be specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see the Eidos manual). If color is NULL or the empty string, "", SLiMgui's default (fitness-based) color will be used.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -77,11 +43,15 @@ Other Subpopulation:
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
+\code{\link{addMultiRecombinant}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
 \code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{defineSpatialMap}()},
+\code{\link{deviatePositions}()},
+\code{\link{deviatePositionsWithMap}()},
+\code{\link{haplosomesForChromosomes}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
@@ -91,6 +61,7 @@ Other Subpopulation:
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{pointUniformWithMap}()},
 \code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
@@ -107,7 +78,6 @@ Other Subpopulation:
 \code{\link{takeMigrants}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Subpopulation}

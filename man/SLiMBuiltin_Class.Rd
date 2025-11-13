@@ -3,33 +3,16 @@
 \name{SB}
 \alias{SB}
 \alias{SLiMBuiltin}
-\title{SLiMBuiltin}
+\title{SLiMBuiltin is a slimr-created class that houses built-in SLiM functions
+that are not part of the Eidos language or Initialize functions.}
 \description{
 Documentation for SLiMBuiltin class from SLiM
 }
 \details{
-SLiM provides a small number of built-in functions, documented here.
-Note that these are
-distinct from the functions built into the Eidos language itself, which are
-documented in the Eidos
-manual.
+SLiM provides a small number of built-in functions, documented here. Note that these are distinct from the functions built into the Eidos language itself, which are documented in the Eidos manual.
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{codonsToAminoAcids}}}
-\item{\code{\link{mm16To256}}}
-\item{\code{\link{mmJukesCantor}}}
-\item{\code{\link{mmKimura}}}
-\item{\code{\link{nucleotideCounts}}}
-\item{\code{\link{nucleotideFrequencies}}}
-\item{\code{\link{nucleotidesToCodons}}}
-\item{\code{\link{calcFST}}}
-\item{\code{\link{calcHeterozygosity}}}
-\item{\code{\link{calcInbreedingLoad}}}
-\item{\code{\link{calcPairHeterozygosity}}}
-\item{\code{\link{calcVA}}}
-\item{\code{\link{calcWattersonsTheta}}}
-\item{\code{\link{summarizeIndividuals}}}
-\item{\code{\link{treeSeqMetadata}}}
 }
 This class has the following properties:
 \describe{
@@ -38,19 +21,28 @@ This class has the following properties:
 }
 \seealso{
 Other SLiMBuiltin: 
+\code{\link{calcDxy}()},
 \code{\link{calcFST}()},
 \code{\link{calcHeterozygosity}()},
 \code{\link{calcInbreedingLoad}()},
+\code{\link{calcLD_D}()},
+\code{\link{calcLD_Rsquared}()},
+\code{\link{calcMeanFroh}()},
 \code{\link{calcPairHeterozygosity}()},
+\code{\link{calcPi}()},
+\code{\link{calcSFS}()},
+\code{\link{calcTajimasD}()},
 \code{\link{calcVA}()},
 \code{\link{calcWattersonsTheta}()},
 \code{\link{codonsToAminoAcids}()},
+\code{\link{codonsToNucleotides}()},
 \code{\link{mm16To256}()},
 \code{\link{mmJukesCantor}()},
 \code{\link{mmKimura}()},
 \code{\link{nucleotideCounts}()},
 \code{\link{nucleotideFrequencies}()},
 \code{\link{nucleotidesToCodons}()},
+\code{\link{randomNucleotides}()},
 \code{\link{summarizeIndividuals}()},
 \code{\link{treeSeqMetadata}()}
 }

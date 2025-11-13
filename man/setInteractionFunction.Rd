@@ -3,62 +3,35 @@
 \name{setInteractionFunction}
 \alias{setInteractionFunction}
 \alias{InteractionType$setInteractionFunction}
-\alias{.IT$setInteractionFunction}
+\alias{IT$setInteractionFunction}
 \title{SLiM method setInteractionFunction}
 \usage{
 setInteractionFunction(functionType, ...)
 }
 \arguments{
-\item{functionType}{An object of type string. Must be of length 1 (a singleton).
-See details for description.}
+\item{functionType}{An object of type string (singleton).}
 
-\item{...}{An object of type NA. NA See details for description.}
+\item{...}{An object of type NA.}
 }
 \value{
 An object of type void.
 }
 \description{
-Documentation for SLiM function \code{setInteractionFunction}, which is a method
-of the SLiM class \code{\link{InteractionType}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{setInteractionFunction}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=698}{SLiM manual: page
-698}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Set the function used to translate spatial distances into interaction
-strengths for an interaction type. The functionType may be "f", in which case
-the ellipsis ... should supply a numeric$ fixed interaction strength; "l", in
-which case the ellipsis should supply a numeric$ maximum strength for a linear
-function; "e", in which case the ellipsis should supply a numeric$ maximum
-strength and a numeric$ lambda (rate) parameter for a negative exponential
-function; "n", in which case the ellipsis should supply a numeric$ maximum
-strength and a numeric$ sigma (standard deviation) parameter for a Gaussian
-function; "c", in which case the ellipsis should supply a numeric$ maximum
-strength and a numeric$ scale parameter for a Cauchy distribution function; or
-"t", in which case the ellipsis should supply a numeric$ maximum strength, a
-numeric$ degrees of freedom, and a numeric$ scale parameter for a t-distribution
-function. See section 25.8 above for discussions of these interaction functions.
-Non-spatial interactions must use function type "f", since no distance values
-are available in that case. The interaction function for an interaction type
-is normally a constant in simulations; in any case, it cannot be changed when
-an interaction has already been evaluated, so either it should be set prior to
-evaluation, or unevaluate() should be called first.
+string$ functionType, ...) Set the function used to translate spatial distances into interaction strengths for an interaction type. The functionType may be "f", in which case the ellipsis ... should supply a numeric$ fixed interaction strength; "l", in which case the ellipsis should supply a numeric$ maximum strength for a linear function; "e", in which case the ellipsis should supply a numeric$ maximum strength and a numeric$ lambda (rate) parameter for a negative exponential function; "n", in which case the ellipsis should supply a numeric$ maximum strength and a numeric$ sigma (standard deviation) parameter for a Gaussian function; "c", in which case the ellipsis should supply a numeric$ maximum strength and a numeric$ scale parameter for a Cauchy distribution function; or "t", in which case the ellipsis should supply a numeric$ maximum strength, a numeric$ degrees of freedom, and a numeric$ scale parameter for a t-distribution function. See the InteractionType class documentation for discussions of these interaction functions. Non-spatial interactions must use function type "f", since no distance values are available in that case. The interaction function for an interaction type is normally a constant in simulations; in any case, it cannot be changed when an interaction has already been evaluated, so either it should be set prior to evaluation, or unevaluate() should be called first.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -85,7 +58,6 @@ Other InteractionType:
 \code{\link{unevaluate}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{InteractionType}

@@ -3,51 +3,35 @@
 \name{setMutationFractions}
 \alias{setMutationFractions}
 \alias{GenomicElementType$setMutationFractions}
-\alias{.GET$setMutationFractions}
+\alias{GET$setMutationFractions}
 \title{SLiM method setMutationFractions}
 \usage{
 setMutationFractions(mutationTypes, proportions)
 }
 \arguments{
-\item{mutationTypes}{An object of type integer or MutationType object. See
-details for description.}
+\item{mutationTypes}{An object of type integer or MutationType object.}
 
-\item{proportions}{An object of type numeric. See details for description.}
+\item{proportions}{An object of type numeric.}
 }
 \value{
 An object of type void or void.
 }
 \description{
-Documentation for SLiM function \code{setMutationFractions}, which is a method
-of the SLiM class \code{\link{GenomicElementType}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{setMutationFractions}, which is a method of the SLiM class \code{\link{GenomicElementType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=678}{SLiM manual: page
-678}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Set the mutation type fractions contributing to a genomic element type.
-The mutationTypes vector should supply the mutation types used by the genomic
-element (either as MutationType objects or as integer identifiers), and the
-proportions vector should be of equal length, specifying the relative proportion
-of mutations that will be drawn from each corresponding type (see section
-1.5.4). This is normally a constant in simulations, so be sure you know what you
-are doing.
+io<MutationType> mutationTypes, numeric proportions) Set the mutation type fractions contributing to a genomic element type. The mutationTypes vector should supply the mutation types used by the genomic element (either as MutationType objects or as integer identifiers), and the proportions vector should be of equal length, specifying the relative proportion of mutations that will be drawn from each corresponding type. This is normally a constant in simulations, so be sure you know what you are doing.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -57,7 +41,6 @@ Other GenomicElementType:
 \code{\link{setMutationMatrix}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{GenomicElementType}

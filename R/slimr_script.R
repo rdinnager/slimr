@@ -607,10 +607,12 @@ end_gen <- function(x) {
   x
 }
 
+#' @keywords internal
 `modify<-` <- function(x, field, position, value) {
   UseMethod("modify<-", x)
 }
 
+#' @keywords internal
 `modify<-.slimr_script` <- function(x, field, position, value) {
   if(field == "end_gen") {
     old_end_gen <- attr(x, "script_info")$end_gen

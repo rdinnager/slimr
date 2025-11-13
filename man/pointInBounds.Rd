@@ -3,53 +3,33 @@
 \name{pointInBounds}
 \alias{pointInBounds}
 \alias{Subpopulation$pointInBounds}
-\alias{.P$pointInBounds}
+\alias{P$pointInBounds}
 \title{SLiM method pointInBounds}
 \usage{
 pointInBounds(point)
 }
 \arguments{
-\item{point}{An object of type float. See details for description.}
+\item{point}{An object of type float.}
 }
 \value{
 An object of type logical.
 }
 \description{
-Documentation for SLiM function \code{pointInBounds}, which is a method of the
-SLiM class \code{\link{Subpopulation}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{pointInBounds}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=742}{SLiM manual: page
-742}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Returns T if point is inside the spatial boundaries of the
-subpopulation, F otherwise. For example, for a simulation with "xy"
-dimensionality, if point contains exactly two values constituting an (x,y)
-point, the result will be T if and only if ((point[0]>=x0) & (point[0]<=x1) &
-(point[1]>=y0) & (point[1]<=y1)) given spatial bounds (x0, y0, x1, y1). This
-method is useful for implementing absorbing or reprising boundary conditions.
-This may only be called in simulations for which continuous space has been
-enabled with initializeSLiMOptions(). The length of point must be an exact
-multiple of the dimensionality of the simulation; in other words, point may
-contain values comprising more than one point. In this case, a logical vector
-will be returned in which each element is T if the corresponding point in point
-is inside the spatial boundaries of the subpopulation, F otherwise.
+float point) Returns T if point is inside the spatial boundaries of the subpopulation, F otherwise. For example, for a simulation with "xy" dimensionality, if point contains exactly two values constituting an (x,y) point, the result will be T if and only if ((point[0]>=x0) & (point[0]<=x1) & (point[1]>=y0) & (point[1]<=y1)) given spatial bounds (x0, y0, x1, y1). This method is useful for implementing absorbing or reprising boundary conditions. This may only be called in simulations for which continuous space has been enabled with initializeSLiMOptions(). The length of point must be an exact multiple of the dimensionality of the simulation; in other words, point may contain values comprising more than one point. In this case, a logical vector will be returned in which each element is T if the corresponding point in point is inside the spatial boundaries of the subpopulation, F otherwise.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -59,12 +39,16 @@ Other Subpopulation:
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
+\code{\link{addMultiRecombinant}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
 \code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
+\code{\link{deviatePositions}()},
+\code{\link{deviatePositionsWithMap}()},
+\code{\link{haplosomesForChromosomes}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
@@ -73,6 +57,7 @@ Other Subpopulation:
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{pointUniformWithMap}()},
 \code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
@@ -89,7 +74,6 @@ Other Subpopulation:
 \code{\link{takeMigrants}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Subpopulation}

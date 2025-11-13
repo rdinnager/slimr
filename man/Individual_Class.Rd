@@ -8,309 +8,58 @@
 Documentation for Individual class from SLiM
 }
 \details{
-This class represents a single simulated individual. Individuals in
-SLiM are diploid, and thus
-contain two Genome objects. Most functionality in SLiM is contained in the
-Genome class; the
-Individual class is mostly a convenient way to treat the pairs of genomes
-associated with an
-individual as a single object, and to associate a tag value with individuals.
-Section 1.5.1 presents
-an overview of the conceptual role of this class.
+5.7.1 Individual properties 5.7 Class Individual
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{containsMutations}}}
-\item{\code{\link{countOfMutationsOfType}}}
-\item{\code{\link{relatedness}}}
-\item{\code{\link{setSpatialPosition}}}
-\item{\code{\link{sharedParentCount}}}
-\item{\code{\link{sumOfMutationsOfType}}}
-\item{\code{\link{uniqueMutationsOfType}}}
 }
 This class has the following properties:
 \describe{
-\item{age}{A property of type integer. It is of length one (a singleton). This
-property is a variable, so it is modifiable. \strong{Property Description:}
-The age of the individual, measured in cycles. A newly generated offspring
-individual will have an age of 0 in the same tick in which it was created. The
-age of every individual is incremented by one at the same point that its species
-cycle counter is incremented, at the end of the tick cycle, if and only if its
-species was active in that tick. The age of individuals may be changed; usually
-this only makes sense when setting up the initial state of a model, however. }
-\item{color}{A property of type string. It is of length one (a singleton). This
-property is a variable, so it is modifiable. \strong{Property Description:}
-The color used to display the individual in SLiMgui. Outside of SLiMgui, this
-property still exists, but is not used by SLiM. Colors may be specified by name,
-or with hexadecimal RGB values of the form "#RRGGBB" (see the Eidos manual). If
-color is the empty string, "", SLiMgui's default (fitness-based) color scheme
-is used; this is the default for new Individual objects. Note that named colors
-will be converted to RGB internally, so the value of this property will always
-be a hexadecimal RGB color string (or ""). }
-\item{fitnessScaling}{A property of type float. It is of length one (a
-singleton). This property is a variable, so it is modifiable. \strong{Property
-Description:} A float scaling factor applied to the individual's fitness
-(i.e., the fitness value computed for the individual will be multiplied by this
-value). This provides a simple, fast way to modify the fitness of an individual;
-conceptually it is similar to returning a fitness effect for the individual from
-a fitnessEffect() callback, but without the complexity and performance overhead
-of implementing such a callback. To scale the fitness of all individuals
-in a subpopulation by the same factor, see the fitnessScaling property of
-Subpopulation. The value of fitnessScaling is reset to 1.0 every tick, so
-that any scaling factor set lasts for only a single tick. This reset occurs
-immediately after fitness values are calculated, in both WF and nonWF models. }
-\item{genomes}{A property of type Genome object. This property is a constant, so
-it is not modifiable. \strong{Property Description:} The pair of Genome objects
-associated with this individual. If only one of the two genomes is desired, the
-genome1 or genome2 property may be used. }
-\item{genomesNonNull}{A property of type Genome object. This property is a
-constant, so it is not modifiable. \strong{Property Description:} The pair of
-Genome objects associated with this individual, as with the genomes property, if
-both are not null genomes. If one or both are null genomes, the null genomes are
-excluded from the returned vector. This is a convenience shorthand, sometimes
-useful in models that involve null genomes. }
-\item{genome1}{A property of type Genome object. It is of length one
-(a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The first Genome object associated with this
-individual. This property is particularly useful when you want the first genome
-from each of a vector of individuals, as often arises in haploid models. }
-\item{genome2}{A property of type Genome object. It is of length one
-(a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The second Genome object associated with this
-individual. This property is particularly useful when you want the second genome
-from each of a vector of individuals, as often arises in haploid models. }
-\item{index}{A property of type integer. It is of length one (a singleton). This
-property is a constant, so it is not modifiable. \strong{Property Description:}
-The index of the individual in the individuals vector of its Subpopulation. }
-\item{meanParentAge}{A property of type float. It is of length one
-(a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The average age of the parents of this
-individual, measured in cycles. Parentless individuals will have a meanParentAge
-of 0.0. The mean parent age is determined when a new offspring is generated,
-from the age property of the parent or parents involved in generating the
-offspring. For addRecombinant() that is somewhat complex; see that method for
-details. }
-\item{migrant}{A property of type logical. It is of length one (a singleton).
-This property is a constant, so it is not modifiable. \strong{Property
-Description:} Set to T if the individual is a recent migrant, F otherwise. The
-definition of "recent" depends upon the model type (WF or nonWF). In WF models,
-this flag is set at the point when a new child is generated if it is a migrant
-(i.e., if its source subpopulation is not the same as its subpopulation), and
-remains valid, with the same value, for the rest of the individual's lifetime.
-In nonWF models, this flag is F for all new individuals, is set to F in all
-individuals at the end of the reproduction tick cycle stage, and is set to T on
-all individuals moved to a new subpopulation by takeMigrants() or a survival()
-callback; the T value set by takeMigrants() or survival() will remain until it
-is reset at the end of the next reproduction tick cycle stage. }
-\item{pedigreeID}{A property of type integer. It is of length one
-(a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} If pedigree tracking is turned on with
-initializeSLiMOptions(keepPedigrees=T), pedigreeID is a unique non-negative
-identifier for each individual in a simulation, never re-used throughout the
-duration of the simulation run. If pedigree tracking is not enabled, this
-property is unavailable. }
-\item{pedigreeParentIDs}{A property of type integer. This property is
-a constant, so it is not modifiable. \strong{Property Description:} If
-pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
-pedigreeParentIDs contains the values of pedigreeID that were possessed by
-the parents of an individual; it is thus a vector of two values. If pedigree
-tracking is not enabled, this property is unavailable. Parental values may be -1
-if insufficient ticks have elapsed for that information to be available (because
-the simulation just started, or because a subpopulation is new). }
-\item{pedigreeGrandparentIDs}{A property of type integer. This property
-is a constant, so it is not modifiable. \strong{Property Description:} If
-pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T),
-pedigreeGrandparentIDs contains the values of pedigreeID that were possessed
-by the grandparents of an individual; it is thus a vector of four values. If
-pedigree tracking is not enabled, this property is unavailable. Grandparental
-values may be -1 if insufficient ticks have elapsed for that information to be
-available (because the simulation just started, or because a subpopulation is
-new). }
-\item{reproductiveOutput}{A property of type integer. It is of length
-one (a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} If pedigree tracking is turned on with
-initializeSLiMOptions(keepPedigrees=T), reproductiveOutput contains the
-number of offspring for which this individual has been a parent. If pedigree
-tracking is not enabled, this property is unavailable. If an individual is
-a parent by cloning or selfing, or as both parents for a biparental mating,
-this value is incremented by two. Involvement of an individual as a parent
-for an addRecombinant() call does not change this property's value, since the
-reproductive contribution in that case is unclear; one must conduct separate
-bookkeeping for that case if necessary. See also the Subpopulation property
-lifetimeReproductiveOutput. }
-\item{sex}{A property of type string. It is of length one (a singleton). This
-property is a constant, so it is not modifiable. \strong{Property Description:}
-The sex of the individual. This will be "H" if sex is not enabled in the
-simulation (i.e., for hermaphrodites), otherwise "F" or "M" as appropriate. }
-\item{spatialPosition}{A property of type float. This property is a constant,
-so it is not modifiable. \strong{Property Description:} The spatial position
-of the individual. The length of the spatialPosition property (the number
-of coordinates in the spatial position of an individual) depends upon the
-spatial dimensionality declared with initializeSLiMOptions(). If the spatial
-dimensionality is zero (as it is by default), it is an error to access
-this property. The elements of this property are identical to the values
-of the x, y, and z properties (if those properties are encompassed by the
-spatial dimensionality of the simulation). In other words, if the declared
-dimensionality is "xy", the individual.spatialPosition property is equivalent
-to c(individual.x, individual.y); individual.z is not used since it is not
-encompassed by the simulation's dimensionality. This property cannot be set, but
-the setSpatialPosition() method may be used to achieve the same thing. }
-\item{subpopulation}{A property of type Subpopulation object. It is of length
-one (a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The Subpopulation object to which the individual
-belongs. }
-\item{tag}{A property of type integer. It is of length one (a singleton). This
-property is a variable, so it is modifiable. \strong{Property Description:}
-A user-defined integer value (as opposed to tagF, which is of type float).
-The value of tag is initially undefined, and it is an error to try to read
-it; if you wish it to have a defined value, you must arrange that yourself by
-explicitly setting its value prior to using it elsewhere in your code. The value
-of tag is not used by SLiM; it is free for you to use. See also the getValue()
-and setValue() methods (provided by the Dictionary class; see the Eidos manual),
-for another way of attaching state to individuals. Note that the Individual
-objects used by SLiM are new for every new offspring, so the tag value of each
-new offspring generated in each tick will be initially undefined. }
-\item{tagF}{A property of type float. It is of length one (a singleton). This
-property is a variable, so it is modifiable. \strong{Property Description:}
-A user-defined float value (as opposed to tag, which is of type integer).
-The value of tagF is initially undefined, and it is an error to try to read
-it; if you wish it to have a defined value, you must arrange that yourself
-by explicitly setting its value prior to using it elsewhere in your code. The
-value of tagF is not used by SLiM; it is free for you to use. See also the
-getValue() and setValue() methods (provided by the Dictionary class; see the
-Eidos manual), for another way of attaching state to individuals. Note that at
-present, although many classes in SLiM have an integer-type tag property, only
-Individual has a float-type tagF property, because attaching model state to
-individuals seems to be particularly common and useful. If a tagF property would
-be helpful on another class, it would be easy to add. See the description of the
-tag property above for additional comments. }
-\item{tagL0}{A property of type logical. It is of length one (a singleton).
-This property is a variable, so it is modifiable. \strong{Property Description:}
-A user-defined logical value (see also tag and tagF). The value of tagL0 is
-initially undefined, and it is an error to try to read it; if you wish it to
-have a defined value, you must arrange that yourself by explicitly setting its
-value prior to using it elsewhere in your code. The value of tagL0 is not used
-by SLiM; it is free for you to use. See also the getValue() and setValue()
-methods (provided by the Dictionary class; see the Eidos manual), for another
-way of attaching state to individuals. }
-\item{tagL1}{A property of type logical. It is of length one (a singleton).
-This property is a variable, so it is modifiable. \strong{Property Description:}
-A user-defined logical value (see also tag and tagF). The value of tagL1 is
-initially undefined, and it is an error to try to read it; if you wish it to
-have a defined value, you must arrange that yourself by explicitly setting its
-value prior to using it elsewhere in your code. The value of tagL1 is not used
-by SLiM; it is free for you to use. See also the getValue() and setValue()
-methods (provided by the Dictionary class; see the Eidos manual), for another
-way of attaching state to individuals. }
-\item{tagL2}{A property of type logical. It is of length one (a singleton).
-This property is a variable, so it is modifiable. \strong{Property Description:}
-A user-defined logical value (see also tag and tagF). The value of tagL2 is
-initially undefined, and it is an error to try to read it; if you wish it to
-have a defined value, you must arrange that yourself by explicitly setting its
-value prior to using it elsewhere in your code. The value of tagL2 is not used
-by SLiM; it is free for you to use. See also the getValue() and setValue()
-methods (provided by the Dictionary class; see the Eidos manual), for another
-way of attaching state to individuals. }
-\item{tagL3}{A property of type logical. It is of length one (a singleton).
-This property is a variable, so it is modifiable. \strong{Property Description:}
-A user-defined logical value (see also tag and tagF). The value of tagL3 is
-initially undefined, and it is an error to try to read it; if you wish it to
-have a defined value, you must arrange that yourself by explicitly setting its
-value prior to using it elsewhere in your code. The value of tagL3 is not used
-by SLiM; it is free for you to use. See also the getValue() and setValue()
-methods (provided by the Dictionary class; see the Eidos manual), for another
-way of attaching state to individuals. }
-\item{tagL4}{A property of type logical. It is of length one (a singleton).
-This property is a variable, so it is modifiable. \strong{Property Description:}
-A user-defined logical value (see also tag and tagF). The value of tagL4 is
-initially undefined, and it is an error to try to read it; if you wish it to
-have a defined value, you must arrange that yourself by explicitly setting its
-value prior to using it elsewhere in your code. The value of tagL4 is not used
-by SLiM; it is free for you to use. See also the getValue() and setValue()
-methods (provided by the Dictionary class; see the Eidos manual), for another
-way of attaching state to individuals. }
-\item{uniqueMutations}{A property of type Mutation object. This property
-is a constant, so it is not modifiable. \strong{Property Description:}
-All of the Mutation objects present in this individual. Mutations present
-in both genomes will occur only once in this property, and the mutations
-will be given in sorted order by position, so this property is similar to
-sortBy(unique(individual.genomes.mutations), "position"). It is not identical
-to that call, only because if multiple mutations exist at the exact same
-position, they may be sorted differently by this method than they would
-be by sortBy(). This method is provided primarily for speed; it executes
-much faster than the Eidos equivalent above. Indeed, it is faster than just
-individual.genomes.mutations, and gives uniquing and sorting on top of that,
-so it is advantageous unless duplicate entries for homozygous mutations are
-actually needed. }
-\item{x}{A property of type float. It is of length one (a singleton). This
-property is a variable, so it is modifiable. \strong{Property Description:}
-A user-defined float value. The value of x is initially undefined (i.e., has
-an effectively random value that could be different every time you run your
-model); if you wish it to have a defined value, you must arrange that yourself
-by explicitly setting its value prior to using it elsewhere in your code. The
-value of x is not used by SLiM unless the optional "continuous space" facility
-is enabled with the dimensionality parameter to initializeSLiMOptions(), in
-which case x will be understood to represent the x coordinate of the individual
-in space. If continuous space is not enabled, you may use x as an additional tag
-value of type float. }
-\item{xy}{A property of type float. This property is a constant, so it is
-not modifiable. \strong{Property Description:} This property provides joint
-read-only access to the x and y properties; they are returned as a twoelement
-float vector. This can be useful in complex spatial models in which the
-spatiality of interactions/maps differs from the overall dimensionality of the
-model. See the documentation for the separate properties x and y for further
-comments. }
-\item{xyz}{A property of type float. This property is a constant, so it
-is not modifiable. \strong{Property Description:} This property provides
-joint read-only access to the x, y, and z properties; they are returned as a
-threeelement float vector. This can be useful in complex spatial models in which
-the spatiality of interactions/maps differs from the overall dimensionality of
-the model. See the documentation for the separate properties x, y, and z for
-further comments. }
-\item{xz}{A property of type float. This property is a constant, so it is
-not modifiable. \strong{Property Description:} This property provides joint
-read-only access to the x and z properties; they are returned as a twoelement
-float vector. This can be useful in complex spatial models in which the
-spatiality of interactions/maps differs from the overall dimensionality of the
-model. See the documentation for the separate properties x and z for further
-comments. }
-\item{y}{A property of type float. It is of length one (a singleton). This
-property is a variable, so it is modifiable. \strong{Property Description:}
-A user-defined float value. The value of y is initially undefined (i.e., has
-an effectively random value that could be different every time you run your
-model); if you wish it to have a defined value, you must arrange that yourself
-by explicitly setting its value prior to using it elsewhere in your code. The
-value of y is not used by SLiM unless the optional "continuous space" facility
-is enabled with the dimensionality parameter to initializeSLiMOptions(), in
-which case y will be understood to represent the y coordinate of the individual
-in space (if the dimensionality is "xy" or "xyz"). If continuous space is
-not enabled, or the dimensionality is not "xy" or "xyz", you may use y as an
-additional tag value of type float. }
-\item{yz}{A property of type float. This property is a constant, so it is
-not modifiable. \strong{Property Description:} This property provides joint
-read-only access to the y and z properties; they are returned as a twoelement
-float vector. This can be useful in complex spatial models in which the
-spatiality of interactions/maps differs from the overall dimensionality of the
-model. See the documentation for the separate properties y and z for further
-comments. }
-\item{z}{A property of type float. It is of length one (a singleton). This
-property is a variable, so it is modifiable. \strong{Property Description:}
-A user-defined float value. The value of z is initially undefined (i.e., has
-an effectively random value that could be different every time you run your
-model); if you wish it to have a defined value, you must arrange that yourself
-by explicitly setting its value prior to using it elsewhere in your code. The
-value of z is not used by SLiM unless the optional "continuous space" facility
-is enabled with the dimensionality parameter to initializeSLiMOptions(), in
-which case z will be understood to represent the z coordinate of the individual
-in space (if the dimensionality is "xyz"). If continuous space is not enabled,
-or the dimensionality is not "xyz", you may use z as an additional tag value of
-type float.}
-
+\item{age}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The age of the individual, measured in cycles. A newly generated offspring individual will have an age of 0 in the same tick in which it was created. The age of every individual is incremented by one at the same point that its species cycle counter is incremented, at the end of the tick cycle, if and only if its species was active in that tick. The age of individuals may be changed; usually this only makes sense when setting up the initial state of a model, however.}
+\item{color}{A property of type string. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} The color used to display the individual in SLiMgui. Outside of SLiMgui, this property still exists, but is not used by SLiM. Colors may be specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see the Eidos manual). If color is the empty string, "", SLiMgui's default (fitness-based) color scheme is used; this is the default for new Individual objects. Note that named colors will be converted to RGB internally, so the value of this property will always be a hexadecimal RGB color string (or "").}
+\item{fitnessScaling}{A property of type float. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A float scaling factor applied to the individual's fitness (i.e., the fitness value computed for the individual will be multiplied by this value). This provides a simple, fast way to modify the fitness of an individual; conceptually it is similar to returning a fitness effect for the individual from a fitnessEffect() callback, but without the complexity and performance overhead of implementing such a callback. To scale the fitness of all individuals in a subpopulation by the same factor, see the fitnessScaling property of Subpopulation. The value of fitnessScaling is reset to 1.0 every tick, so that any scaling factor set lasts for only a single tick. This reset occurs immediately after fitness values are calculated, in both WF and nonWF models.}
+\item{haploidGenome1}{A property of type Haplosome object.  This property is a constant, so it is not modifiable. \strong{Property Description:} A vector of all Haplosome objects associated with this individual that are attributed to its first parent (the female parent, in sexual models). This method assumes the individual was generated by the typical method for each chromosome type, as explained below; it does not trace back the true ancestry of each haplosome. The semantics of this are more obvious for some chromosome types than others, depending on the inheritance pattern of the chromosome as described in initializeChromosome(). For chromosomes with two associated haplosomes (types "A", "X", "Z", "H-", and "-Y"), the first haplosome is assumed to be from the first parent, and is thus included, whereas the second haplosome is assumed to be from the second parent and is thus not included. For chromosomes with one associated haplosome that is inherited from the female/first parent in one way or another (types "W", "HF", and "FL"), that haplosome is always included. For type "H", the single haplosome is assumed to have come from the first parent (since clonal inheritance is the common case), and so is included. Other chromosome types ("Y", "HM", "ML") are never included. See also the haploidGenome1NonNull property and the haplosomesForChromosomes() method.}
+\item{haploidGenome1NonNull}{A property of type Haplosome object.  This property is a constant, so it is not modifiable. \strong{Property Description:} This provides the same vector of haplosomes as the haploidGenome1 property, except that null haplosomes are not included in this property. This is a convenience shorthand, sometimes useful in models that involve null haplosomes. See also the haplosomesForChromosomes() method.}
+\item{haploidGenome2}{A property of type Haplosome object.  This property is a constant, so it is not modifiable. \strong{Property Description:} A vector of all Haplosome objects associated with this individual that are attributed to its second parent (the male parent, in sexual models). This method assumes the individual was generated by the typical method for each chromosome type, as explained below; it does not trace back the true ancestry of each haplosome. The semantics of this are more obvious for some chromosome types than others, depending on the inheritance pattern of the chromosome as described in initializeChromosome(). For chromosomes with two associated haplosomes (types "A", "X", "Z", "H-", and"-Y"), the second haplosome is assumed to be from the second parent, and is thus included, whereas the first haplosome is assumed to be from the first parent and is thus not included. For chromosomes with one associated haplosome that is inherited from the male/second parent in one way or another (types "Y", "HM", and "ML"), that haplosome is always included. For type "H", the single haplosome is assumed to have come from the first parent (since clonal inheritance is the common case), and so is not included. Other chromosome types ("W", "HF", "FL") are never included. See also the haploidGenome2NonNull property and the haplosomesForChromosomes() method.}
+\item{haploidGenome2NonNull}{A property of type Haplosome object.  This property is a constant, so it is not modifiable. \strong{Property Description:} This provides the same vector of haplosomes as the haploidGenome2 property, except that null haplosomes are not included in this property. This is a convenience shorthand, sometimes useful in models that involve null haplosomes. See also the haplosomesForChromosomes() method.}
+\item{haplosomes}{A property of type Haplosome object.  This property is a constant, so it is not modifiable. \strong{Property Description:} A vector of all Haplosome objects associated with this individual, in the order in which the chromosomes were defined for the species. See also the haplosomesNonNull, haploidGenome1, haploidGenome1NonNull, haploidGenome2, and haploidGenome2NonNull properties and the haplosomesForChromosomes() method.}
+\item{haplosomesNonNull}{A property of type Haplosome object.  This property is a constant, so it is not modifiable. \strong{Property Description:} A vector of all Haplosome objects associated with this individual, in the order in which the chromosomes were defined for the species (as with the haplosomes property), but excluding any null haplosomes from the returned vector. This is a convenience shorthand, sometimes useful in models that involve null haplosomes.}
+\item{index}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The index of the individual in the individuals vector of its Subpopulation.}
+\item{meanParentAge}{A property of type float. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The average age of the parents of this individual, measured in cycles. Parentless individuals will have a meanParentAge of 0.0. The mean parent age is determined when a new offspring is generated, from the age property of the parent or parents involved in generating the offspring. For addRecombinant() and addMultiRecombinant() that is somewhat complex; see those methods for details.}
+\item{migrant}{A property of type logical. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} Set to T if the individual is a recent migrant, F otherwise. The definition of "recent" depends upon the model type (WF or nonWF). In WF models, this flag is set at the point when a new child is generated if it is a migrant (i.e., if its source subpopulation is not the same as its subpopulation), and remains valid, with the same value, for the rest of the individual's lifetime. In nonWF models, this flag is F for all new individuals, is set to F in all individuals at the end of the reproduction tick cycle stage, and is set to T on all individuals moved to a new subpopulation by takeMigrants() or a survival() callback; the T value set by takeMigrants() or survival() will remain until it is reset at the end of the next reproduction tick cycle stage.}
+\item{pedigreeID}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), pedigreeID is a unique non-negative identifier for each individual in a simulation, never re-used throughout the duration of the simulation run. If pedigree tracking is not enabled, this property is unavailable.}
+\item{pedigreeParentIDs}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), pedigreeParentIDs contains the values of pedigreeID that were possessed by the parents of an individual; it is thus a vector of two values. If pedigree tracking is not enabled, this property is unavailable. Parental values may be -1 if insufficient ticks have elapsed for that information to be available (because the simulation just started, or because a subpopulation is new).}
+\item{pedigreeGrandparentIDs}{A property of type integer.  This property is a constant, so it is not modifiable. \strong{Property Description:} If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), pedigreeGrandparentIDs contains the values of pedigreeID that were possessed by the grandparents of an individual; it is thus a vector of four values. If pedigree tracking is not enabled, this property is unavailable. Grandparental values may be -1 if insufficient ticks have elapsed for that information to be available (because the simulation just started, or because a subpopulation is new).}
+\item{reproductiveOutput}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} If pedigree tracking is turned on with initializeSLiMOptions(keepPedigrees=T), reproductiveOutput contains the number of offspring for which this individual has been a parent. If pedigree tracking is not enabled, this property is unavailable. If an individual is a parent by cloning or selfing, or as both parents for a biparental mating, this value is incremented by two. Involvement of an individual as a parent for an addRecombinant() or addMultiRecombinant() call does not change this property's value, since the reproductive contribution in that case is unclear; one must conduct separate bookkeeping for that case if necessary, or use tree-sequence recording to infer it from the inheritance record. See also the Subpopulation property lifetimeReproductiveOutput.}
+\item{sex}{A property of type string. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The sex of the individual. This will be "H" if sex is not enabled in the simulation (i.e., for hermaphrodites), otherwise "F" or "M" as appropriate.}
+\item{spatialPosition}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} The spatial position of the individual. The length of the spatialPosition property (the number of coordinates in the spatial position of an individual) depends upon the spatial dimensionality declared with initializeSLiMOptions(). If the spatial dimensionality is zero (as it is by default), it is an error to access this property. The elements of this property are identical to the values of the x, y, and z properties (if those properties are encompassed by the spatial dimensionality of the simulation). In other words, if the declared dimensionality is "xy", the individual.spatialPosition property is equivalent to c(individual.x, individual.y); individual.z is not used since it is not encompassed by the simulation's dimensionality.}
+\item{subpopulation}{A property of type Subpopulation object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The Subpopulation object to which the individual belongs.}
+\item{tag}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value (as opposed to tagF, which is of type float). The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to individuals. Note that the Individual objects used by SLiM are new for every new offspring, so the tag value of each new offspring generated in each tick will be initially undefined.}
+\item{tagF}{A property of type float. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined float value (as opposed to tag, which is of type integer). The value of tagF is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tagF is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to individuals. Note that at present, although many classes in SLiM have an integer-type tag property, only Individual has a float-type tagF property, because attaching model state to individuals seems to be particularly common and useful. If a tagF property would be helpful on another class, it would be easy to add. See the description of the tag property above for additional comments.}
+\item{tagL0}{A property of type logical. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined logical value (see also tag and tagF). The value of tagL0 is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tagL0 is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to individuals.}
+\item{tagL1}{A property of type logical. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined logical value (see also tag and tagF). The value of tagL1 is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tagL1 is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to individuals.}
+\item{tagL2}{A property of type logical. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined logical value (see also tag and tagF). The value of tagL2 is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tagL2 is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to individuals.}
+\item{tagL3}{A property of type logical. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined logical value (see also tag and tagF). The value of tagL3 is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tagL3 is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to individuals.}
+\item{tagL4}{A property of type logical. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined logical value (see also tag and tagF). The value of tagL4 is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tagL4 is not used by SLiM; it is free for you to use. See also the getValue() and setValue() methods (provided by the Dictionary class; see the Eidos manual), for another way of attaching state to individuals.}
+\item{uniqueMutations}{A property of type Mutation object.  This property is a constant, so it is not modifiable. \strong{Property Description:} All of the Mutation objects present in this individual. Mutations present in homologous haplosomes will occur only once in this property, and the mutations for a given chromosome will be given in sorted order by position, so in single-chromosome simulations this property is similar to sortBy(unique(individual.haplosomes.mutations), "position"). (Even with a single chromosome it is not identical to that call, since if multiple mutations exist at the exact same position, they might be sorted differently by this method than they would be by sortBy().) This method is provided primarily for speed; it executes much faster than the Eidos equivalent above. Indeed, it is faster than just individual.haplosomes.mutations, and gives uniquing and sorting on top of that, so it is advantageous unless duplicate entries for homozygous mutations are actually needed. For more flexibility, see the method mutationsFromHaplosomes().}
+\item{x}{A property of type float. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined float value. The value of x is initially undefined (i.e., has an effectively random value that could be different every time you run your model); if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of x is not used by SLiM unless the optional "continuous space" facility is enabled with the dimensionality parameter to initializeSLiMOptions(), in which case x will be understood to represent the x coordinate of the individual in space. If continuous space is not enabled, you may use x as an additional tag value of type float.}
+\item{xy}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} This property provides joint read-only access to the x and y properties; they are returned as a two-element float vector. This can be useful in complex spatial models in which the spatiality of interactions/maps differs from the overall dimensionality of the model. See the documentation for the separate properties x and y for further comments.}
+\item{xyz}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} This property provides joint read-only access to the x, y, and z properties; they are returned as a three-element float vector. This can be useful in complex spatial models in which the spatiality of interactions/maps differs from the overall dimensionality of the model. See the documentation for the separate properties x, y, and z for further comments.}
+\item{xz}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} This property provides joint read-only access to the x and z properties; they are returned as a two-element float vector. This can be useful in complex spatial models in which the spatiality of interactions/maps differs from the overall dimensionality of the model. See the documentation for the separate properties x and z for further comments.}
+\item{y}{A property of type float. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined float value. The value of y is initially undefined (i.e., has an effectively random value that could be different every time you run your model); if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of y is not used by SLiM unless the optional "continuous space" facility is enabled with the dimensionality parameter to initializeSLiMOptions(), in which case y will be understood to represent the y coordinate of the individual in space (if the dimensionality is "xy" or "xyz"). If continuous space is not enabled, or the dimensionality is not "xy" or "xyz", you may use y as an additional tag value of type float.}
+\item{yz}{A property of type float.  This property is a constant, so it is not modifiable. \strong{Property Description:} This property provides joint read-only access to the y and z properties; they are returned as a two-element float vector. This can be useful in complex spatial models in which the spatiality of interactions/maps differs from the overall dimensionality of the model. See the documentation for the separate properties y and z for further comments.}
+\item{z}{A property of type float. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined float value. The value of z is initially undefined (i.e., has an effectively random value that could be different every time you run your model); if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of z is not used by SLiM unless the optional "continuous space" facility is enabled with the dimensionality parameter to initializeSLiMOptions(), in which case z will be understood to represent the z coordinate of the individual in space (if the dimensionality is "xyz"). If continuous space is not enabled, or the dimensionality is not "xyz", you may use z as an additional tag value of type float.}
 }
 }
 \seealso{
 Other Individual: 
 \code{\link{containsMutations}()},
 \code{\link{countOfMutationsOfType}()},
+\code{\link{haplosomesForChromosomes}()},
+\code{\link{mutationsFromHaplosomes}()},
+\code{\link{outputIndividuals}()},
+\code{\link{outputIndividualsToVCF}()},
+\code{\link{readIndividualsFromVCF}()},
 \code{\link{relatedness}()},
 \code{\link{setSpatialPosition}()},
 \code{\link{sharedParentCount}()},

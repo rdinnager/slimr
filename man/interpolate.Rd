@@ -3,73 +3,35 @@
 \name{interpolate}
 \alias{interpolate}
 \alias{SpatialMap$interpolate}
-\alias{.SM$interpolate}
+\alias{SM$interpolate}
 \title{SLiM method interpolate}
 \usage{
-interpolate(factor, method)
+interpolate(factor, method = NULL)
 }
 \arguments{
-\item{factor}{An object of type integer or string. Must be of length 1 (a
-singleton). See details for description.}
+\item{factor}{An object of type integer or string (singleton).}
 
-\item{method}{An object of type integer or string. Must be of length 1 (a
-singleton). The default value is \code{"linear"}. See details for description.}
+\item{method}{An object of type integer or string (singleton).}
 }
 \value{
-An object of type SpatialMap object. Return will be of length 1 (a
-singleton)
+An object of type SpatialMap object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{interpolate}, which is a method of the
-SLiM class \code{\link{SpatialMap}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{interpolate}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=714}{SLiM manual: page
-714}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Increases the resolution of the spatial map by factor, changing the
-dimensions of the spatial map's grid of values (while leaving its spatial
-bounds unchanged), by interpolating new values between the existing values.
-The parameter factor must be an integer in [2, 10001], somewhat arbitrarily.
-The target spatial map is returned, to allow easy chaining of operations. For
-a 1D spatial map, factor-1 new values will be inserted between every pair of
-values in the original value grid. A factor of 2 would therefore insert one
-new value between each pair of existing values, thereby increasing the map's
-resolution by a factor of two. Note that if the spatial map's original grid
-dimension was N, the new grid dimension with a factor of k would be k(N−1)+1,
-not kN, because new values are inserted only between existing values. For 2D
-and 3D spatial maps, essentially the same process is conducted along each axis
-of the map's spatiality, increasing the resolution of the map by factor in
-every dimension. If method is "linear" (the default), linear (or bilinear or
-trilinear, for 2D/3D maps) interpolation will be used to interpolate the values
-for the new grid points. Alternatively, if method is "nearest", the nearest
-value in the old grid will be used for new grid points; with this method, it is
-recommended that factor be odd, not even, to avoid artifacts due to rounding of
-coordinates midway between the original grid positions. If method is "cubic",
-cubic (or bicubic, for 2D maps) will be used; this generally produces smoother
-interpolation with fewer artifacts than "linear", but it is not supported for 3D
-maps. The choice of interpolation method used here is independent of the map's
-interpolate property. Note that while the "nearest" and "linear" interpolation
-methods will leave the range of values in the map unchanged, "cubic"
-interpolation may produce interpolated values that are outside the original
-range of values (by design). Periodic boundaries are currently supported only
-for "nearest", "linear", and 1D "cubic" interpolation.
+integer$ factor, [string$ method = "linear"]) Increases the resolution of the spatial map by factor, changing the dimensions of the spatial map's grid of values (while leaving its spatial bounds unchanged), by interpolating new values between the existing values. The parameter factor must be an integer in [2, 10001], somewhat arbitrarily. The target spatial map is returned, to allow easy chaining of operations. For a 1D spatial map, factor-1 new values will be inserted between every pair of values in the original value grid. A factor of 2 would therefore insert one new value between each pair of existing values, thereby increasing the map's resolution by a factor of two. Note that if the spatial map's original grid dimension was N, the new grid dimension with a factor of k would be k(N1)+1, not kN, because new values are inserted only between existing values. For 2D and 3D spatial maps, essentially the same process is conducted along each axis of the map's spatiality, increasing the resolution of the map by factor in every dimension. If method is "linear" (the default), linear (or bilinear or trilinear, for 2D/3D maps) interpolation will be used to interpolate the values for the new grid points. Alternatively, if method is "nearest", the nearest value in the old grid will be used for new grid points; with this method, it is recommended that factor be odd, not even, to avoid artifacts due to rounding of coordinates midway between the original grid positions. If method is "cubic", cubic (or bicubic, for 2D maps) will be used; this generally produces smoother interpolation with fewer artifacts than "linear", but it is not supported for 3D maps. The choice of interpolation method used here is independent of the map's interpolate property. Note that while the "nearest" and "linear" interpolation methods will leave the range of values in the map unchanged, "cubic" interpolation may produce interpolated values that are outside the original range of values (by design). Periodic boundaries are currently supported only for "nearest", "linear", and 1D "cubic" interpolation.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -96,7 +58,6 @@ Other SpatialMap:
 \code{\link{subtract}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{SpatialMap}

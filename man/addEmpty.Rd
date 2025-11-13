@@ -3,83 +3,44 @@
 \name{addEmpty}
 \alias{addEmpty}
 \alias{Subpopulation$addEmpty}
-\alias{.P$addEmpty}
+\alias{P$addEmpty}
 \title{SLiM method addEmpty}
 \usage{
-addEmpty(sex, genome1Null, genome2Null, count)
+addEmpty(
+  sex = NULL,
+  haplosome1Null = NULL,
+  haplosome2Null = NULL,
+  count = NULL
+)
 }
 \arguments{
-\item{sex}{An object of type null or float or string. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{sex}{An object of type null or float or string (singleton).}
 
-\item{genome1Null}{An object of type null or logical. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{haplosome1Null}{An object of type null or logical (singleton).}
 
-\item{genome2Null}{An object of type null or logical. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{haplosome2Null}{An object of type null or logical (singleton).}
 
-\item{count}{An object of type integer. Must be of length 1 (a singleton). The
-default value is \code{1}. See details for description.}
+\item{count}{An object of type integer (singleton).}
 }
 \value{
 An object of type Individual object.
 }
 \description{
-Documentation for SLiM function \code{addEmpty}, which is a method of the SLiM
-class \code{\link{Subpopulation}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{addEmpty}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=734}{SLiM manual: page
-734}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Generates a new offspring individual with empty genomes (i.e.,
-containing no mutations), queues it for addition to the target subpopulation,
-and returns it. The new offspring will not be visible as a member of the
-target subpopulation until the end of the offspring generation tick cycle
-stage. No recombination() or mutation() callbacks will be called. The target
-subpopulation will be used to locate applicable modifyChild() callbacks
-governing the generation of the offspring individual (unlike the other addX()
-methods, because there is no parental individual to reference). The offspring
-is considered to have no parents for the purposes of pedigree tracking. The
-sex parameter is treated as in addCrossed(). By default - when genome1Null
-and genome2Null are both NULL - null genomes will be generated instead of
-empty genomes only in sex-chromosome simulations, where the sex chromosome
-that is not being simulated is represented by a null genome; otherwise, empty
-genomes rather than null genomes will be created. This default behavior can be
-changed by passing T or F for genome1Null or genome2Null, which will force the
-corresponding offspring genome to be null (T) or non-null (F). The behavior
-in sex-chromosome simulations cannot be changed, since the presence of null
-genomes there is dictated by sex, but T or F may be passed as long as it matches
-what SLiM would do anyway. In all other simulations there is little point in
-passing F (since that would be the default behavior anyway), but passing T can
-be used to make one or both genomes be null genomes, which can be useful for,
-e.g., modeling haploids (for which, by convention, the second genome is usually
-a null genome in SLiM). Beginning in SLiM 4.1, the count parameter dictates
-how many offspring will be generated (previously, exactly one offspring was
-generated). Each offspring is generated independently, based upon the given
-parameters. The returned vector contains all generated offspring, except those
-that were rejected by a modifyChild() callback. If all offspring are rejected,
-object<Individual>(0) is returned, which is a zero-length object vector of
-class Individual; note that this is a change in behavior from earlier versions,
-which would return NULL. Note that this method is only for use in nonWF models.
-See addCrossed() for further general notes on the addition of new offspring
-individuals.
+[Nfs$ sex = NULL], [Nl$ haplosome1Null = NULL], [Nl$ haplosome2Null = NULL], [integer$ count = 1]) Generates a new offspring individual with empty haplosomes (i.e., containing no mutations), queues it for addition to the target subpopulation, and returns it. The new offspring will not be visible as a member of the target subpopulation until the end of the offspring generation tick cycle stage. No recombination() or mutation() callbacks will be called. The target subpopulation will be used to locate applicable modifyChild() callbacks governing the generation of the offspring individual (unlike the other addX() methods, because there is no parental individual to reference). The offspring is considered to have no parents for the purposes of pedigree tracking. The sex parameter is treated as in addCrossed(). For all chromosome types except "A", null haplosomes will be generated as dictated by the sex of the individual and type of the chromosome. For example, for chromosome type "X" a female would be generated with two empty haplosomes for that chromosome (XX), whereas a male would be generated with one empty haplosome and one null haplosome (X-, in SLiM parlance). For chromosome type "H" an empty haplosome is always generated, not a null haplosome. But for chromosome type "A", in particular, more control is afforded. Passing NULL (the default) or F for haplosome1Null will make the first haplosome for every chromosome of type "A" be a non-null (empty) haplosome, the standard behavior. More interestingly, passing T for haplosome1Null would make the first haplosome for every chromosome of type "A" be a null haplosome. Similarly, passing T for haplosome2Null would make the second haplosome for every chromosome of type "A" be a null haplosome. This option could be useful for situations such as adding new haploids into a haplodiploid model. (Separate control over the haploid or diploid configuration of each chromosome of type "A" is not presently supported, but would be a simple extension to the design, by allowing haplosome1Null and haplosome2Null to provide a whole vector of logical flags rather than just a singleton value; please request this feature if you require it.) Beginning in SLiM 4.1, the count parameter dictates how many offspring will be generated (previously, exactly one offspring was generated). Each offspring is generated independently, based upon the given parameters. The returned vector contains all generated offspring, except those that were rejected by a modifyChild() callback. If all offspring are rejected, object<Individual>(0) is returned, which is a zero-length object vector of class Individual; note that this is a change in behavior from earlier versions, which would return NULL. Note that this method is only for use in nonWF models. See addCrossed() for further general notes on the addition of new offspring individuals.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -88,12 +49,16 @@ Other Subpopulation:
 \code{\link{P}},
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
+\code{\link{addMultiRecombinant}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
 \code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
+\code{\link{deviatePositions}()},
+\code{\link{deviatePositionsWithMap}()},
+\code{\link{haplosomesForChromosomes}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
@@ -103,6 +68,7 @@ Other Subpopulation:
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{pointUniformWithMap}()},
 \code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
@@ -119,7 +85,6 @@ Other Subpopulation:
 \code{\link{takeMigrants}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Subpopulation}

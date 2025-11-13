@@ -2,79 +2,59 @@
 % Please edit documentation in R/slim_lang.R
 \name{addMutations}
 \alias{addMutations}
-\alias{Genome$addMutations}
-\alias{.G$addMutations}
+\alias{Haplosome$addMutations}
+\alias{Ha$addMutations}
 \title{SLiM method addMutations}
 \usage{
 addMutations(mutations)
 }
 \arguments{
-\item{mutations}{An object of type Mutation object. See details for description.}
+\item{mutations}{An object of type Mutation object.}
 }
 \value{
 An object of type void.
 }
 \description{
-Documentation for SLiM function \code{addMutations}, which is a method of the
-SLiM class \code{\link{Genome}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{addMutations}, which is a method of the SLiM class \code{\link{Haplosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=670}{SLiM manual: page
-670}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Add the existing mutations in mutations to the genome, if they are
-not already present (if they are already present, they will be ignored), and
-if the addition is not prevented by the mutation stacking policy (see the
-mutationStackPolicy property of MutationType, section 25.11.1). Calling this
-will normally affect the fitness values calculated toward the end of the
-current tick; if you want current fitness values to be affected, you can call
-the Species method recalculateFitness() - but see the documentation of that
-method for caveats. Note that in nonWF models that use tree-sequence recording,
-mutations cannot be added to an individual after the tick in which the
-individual is created (i.e., when the age of the individual is greater than 0),
-to prevent the possibility of inconsistencies in the recorded tree sequence.
+object<Mutation> mutations) Add the existing mutations in mutations to the target haplosomes, if they are not already present (if they are already present, they will be ignored), and if the addition is not prevented by the mutation stacking policy (see the mutationStackPolicy property of MutationType). All target haplosomes and all mutations in mutations must be associated with the same Chromosome object; attempting to add a mutation to a haplosome associated with a different chromosome will raise an error. Calling this will normally affect the fitness values calculated toward the end of the current tick; if you want current fitness values to be affected, you can call the Species method recalculateFitness() - but see the documentation of that method for caveats. Note that in nonWF models that use tree-sequence recording, mutations cannot be added to an individual after the tick in which the individual is created (i.e., when the age of the individual is greater than 0), to prevent the possibility of inconsistencies in the recorded tree sequence.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
 \seealso{
-Other Genome: 
-\code{\link{G}},
+Other Haplosome: 
+\code{\link{Ha}},
 \code{\link{addNewDrawnMutation}()},
 \code{\link{addNewMutation}()},
 \code{\link{containsMarkerMutation}()},
 \code{\link{containsMutations}()},
 \code{\link{countOfMutationsOfType}()},
-\code{\link{mutationCountsInGenomes}()},
-\code{\link{mutationFrequenciesInGenomes}()},
+\code{\link{mutationCountsInHaplosomes}()},
+\code{\link{mutationFrequenciesInHaplosomes}()},
 \code{\link{mutationsOfType}()},
 \code{\link{nucleotides}()},
-\code{\link{output}()},
-\code{\link{outputMS}()},
-\code{\link{outputVCF}()},
+\code{\link{outputHaplosomes}()},
+\code{\link{outputHaplosomesToMS}()},
+\code{\link{outputHaplosomesToVCF}()},
 \code{\link{positionsOfMutationsOfType}()},
-\code{\link{readFromMS}()},
-\code{\link{readFromVCF}()},
+\code{\link{readHaplosomesFromMS}()},
+\code{\link{readHaplosomesFromVCF}()},
 \code{\link{removeMutations}()},
 \code{\link{sumOfMutationsOfType}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
-\concept{Genome}
+\concept{Haplosome}

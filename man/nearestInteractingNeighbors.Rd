@@ -3,90 +3,44 @@
 \name{nearestInteractingNeighbors}
 \alias{nearestInteractingNeighbors}
 \alias{InteractionType$nearestInteractingNeighbors}
-\alias{.IT$nearestInteractingNeighbors}
+\alias{IT$nearestInteractingNeighbors}
 \title{SLiM method nearestInteractingNeighbors}
 \usage{
-nearestInteractingNeighbors(receiver, count, exerterSubpop, returnDict)
+nearestInteractingNeighbors(
+  receiver,
+  count = NULL,
+  exerterSubpop = NULL,
+  returnDict = NULL
+)
 }
 \arguments{
-\item{receiver}{An object of type Individual object. See details for
-description.}
+\item{receiver}{An object of type Individual object.}
 
-\item{count}{An object of type integer. Must be of length 1 (a singleton). The
-default value is \code{1}. See details for description.}
+\item{count}{An object of type integer (singleton).}
 
-\item{exerterSubpop}{An object of type null or Subpopulation object. Must be
-of length 1 (a singleton). The default value is \code{NULL}. See details for
-description.}
+\item{exerterSubpop}{An object of type null or Subpopulation object (singleton).}
 
-\item{returnDict}{An object of type logical. Must be of length 1 (a singleton).
-The default value is \code{F}. See details for description.}
+\item{returnDict}{An object of type logical (singleton).}
 }
 \value{
 An object of type .
 }
 \description{
-Documentation for SLiM function \code{nearestInteractingNeighbors}, which is a
-method of the SLiM class \code{\link{InteractionType}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{nearestInteractingNeighbors}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=695}{SLiM manual: page
-695}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Returns an object<Individual> vector containing up to count interacting
-individuals that are spatially closest to receiver, according to the distance
-metric of the InteractionType, from among the exerters in exerterSubpop (or, if
-that is NULL, then from among all individuals in the receiver's subpopulation).
-More specifically, this method returns only individuals which can exert
-an interaction upon receiver, which must be singleton in the default mode
-of operation (but see below). To obtain all of the interacting individuals
-within the maximum interaction distance of receiver, simply pass a value for
-count that is greater than or equal to the size of the exerter subpopulation.
-Note that if fewer than count interacting individuals are within the maximum
-interaction distance, the vector returned may be shorter than count, or even
-zero-length; it is important to check for this possibility even when requesting
-a single neighbor. If only the number of interacting individuals is needed,
-use interactingNeighborCount() instead. The evaluate() method must have been
-previously called for the receiver and exerter subpopulations, and positions
-saved at evaluation time will be used. If the InteractionType is non-spatial,
-this method may not be called. Note that this method uses interaction
-eligibility as a criterion; it will not return neighbors that cannot exert
-an interaction upon the receiver (due to the configured receiver or exerter
-constraints). (It will also never return the receiver as a neighbor of itself.)
-To find all neighbors of a receiver, whether they can interact with it or not,
-use nearestNeighbors(). Beginning in SLiM 4.1, this method has a vectorized
-mode of operation in which the receiver parameter may be non-singleton. To
-switch the method to this mode, pass T for returnDict, rather than the default
-of F (the operation of which is described above). In this mode, the return
-value is a Dictionary object instead of a vector of Individual objects. This
-dictionary uses integer keys that range from 0 to N-1, where N is the number
-of individuals passed in receiver; these keys thus correspond directly to
-the indices of the individuals in receiver, and there is one entry in the
-dictionary for each receiver. The value in the dictionary, for a given integer
-key, is an object<Individual> vector with the interacting neighbors found for
-the corresponding receiver, exactly as described above for the non-vectorized
-case. The results for each receiver can therefore be obtained from the returned
-dictionary with getValue(), passing the index of the receiver. The speed of this
-mode of operation will probably be similar to the speed of making N separate
-non-vectorized calls to nearestInteractingNeighbors(), but may have other
-advantages. In this mode of operation, all receivers must belong to the same
-subpopulation.
+object<Individual> receiver, [integer$ count = 1], [No<Subpopulation>$ exerterSubpop = NULL], [logical$ returnDict = F]) Returns an object<Individual> vector containing up to count interacting individuals that are spatially closest to receiver, according to the distance metric of the InteractionType, from among the exerters in exerterSubpop (or, if that is NULL, then from among all individuals in the receiver's subpopulation). More specifically, this method returns only individuals which can exert an interaction upon receiver, which must be singleton in the default mode of operation (but see below). To obtain all of the interacting individuals within the maximum interaction distance of receiver, simply pass a value for count that is greater than or equal to the size of the exerter subpopulation. Note that if fewer than count interacting individuals are within the maximum interaction distance, the vector returned may be shorter than count, or even zero-length; it is important to check for this possibility even when requesting a single neighbor. If only the number of interacting individuals is needed, use interactingNeighborCount() instead. The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. If the InteractionType is non-spatial, this method may not be called. Note that this method uses interaction eligibility as a criterion; it will not return neighbors that cannot exert an interaction upon the receiver (due to the configured receiver or exerter constraints). (It will also never return the receiver as a neighbor of itself.) To find all neighbors of a receiver, whether they can interact with it or not, use nearestNeighbors(). Beginning in SLiM 4.1, this method has a vectorized mode of operation in which the receiver parameter may be non-singleton. To switch the method to this mode, pass T for returnDict, rather than the default of F (the operation of which is described above). In this mode, the return value is a Dictionary object instead of a vector of Individual objects. This dictionary uses integer keys that range from 0 to N-1, where N is the number of individuals passed in receiver; these keys thus correspond directly to the indices of the individuals in receiver, and there is one entry in the dictionary for each receiver. The value in the dictionary, for a given integer key, is an object<Individual> vector with the interacting neighbors found for the corresponding receiver, exactly as described above for the non-vectorized case. The results for each receiver can therefore be obtained from the returned dictionary with getValue(), passing the index of the receiver. The speed of this mode of operation will probably be similar to the speed of making N separate non-vectorized calls to nearestInteractingNeighbors(), when running single-threaded. When running multi-threaded, however, a substantial performance improvement may be realized by using the vectorized version of this method, since the queries can then be executed in parallel. In this mode of operation, all receivers must belong to the same subpopulation.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -113,7 +67,6 @@ Other InteractionType:
 \code{\link{unevaluate}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{InteractionType}

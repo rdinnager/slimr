@@ -3,49 +3,35 @@
 \name{spatialMapColor}
 \alias{spatialMapColor}
 \alias{Subpopulation$spatialMapColor}
-\alias{.P$spatialMapColor}
+\alias{P$spatialMapColor}
 \title{SLiM method spatialMapColor}
 \usage{
 spatialMapColor(name, value)
 }
 \arguments{
-\item{name}{An object of type string or numeric. Must be of length 1 (a
-singleton). See details for description.}
+\item{name}{An object of type string or numeric (singleton).}
 
-\item{value}{An object of type string or numeric. See details for description.}
+\item{value}{An object of type string or numeric.}
 }
 \value{
 An object of type string.
 }
 \description{
-Documentation for SLiM function \code{spatialMapColor}, which is a method of the
-SLiM class \code{\link{Subpopulation}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{spatialMapColor}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=745}{SLiM manual: page
-745}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-This method has been deprecated, and may be removed in a future release
-of SLiM. In SLiM 4.1 and later, use the SpatialMap method mapColor() instead,
-and see that method's documentation. (This method differs only in taking a name
-parameter, which is used to look up the spatial map from those that have been
-added to the subpopulation.)
+string$ name, numeric value) This method has been deprecated, and may be removed in a future release of SLiM. In SLiM 4.1 and later, use the SpatialMap method mapColor() instead, and see that method's documentation. (This method differs only in taking a name parameter, which is used to look up the spatial map from those that have been added to the subpopulation.)
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -55,12 +41,16 @@ Other Subpopulation:
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
+\code{\link{addMultiRecombinant}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
 \code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
+\code{\link{deviatePositions}()},
+\code{\link{deviatePositionsWithMap}()},
+\code{\link{haplosomesForChromosomes}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
@@ -70,6 +60,7 @@ Other Subpopulation:
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{pointUniformWithMap}()},
 \code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
@@ -85,7 +76,6 @@ Other Subpopulation:
 \code{\link{takeMigrants}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Subpopulation}

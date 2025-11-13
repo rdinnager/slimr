@@ -3,60 +3,35 @@
 \name{setDistribution}
 \alias{setDistribution}
 \alias{MutationType$setDistribution}
-\alias{.MT$setDistribution}
+\alias{MT$setDistribution}
 \title{SLiM method setDistribution}
 \usage{
 setDistribution(distributionType, ...)
 }
 \arguments{
-\item{distributionType}{An object of type string. Must be of length 1 (a
-singleton). See details for description.}
+\item{distributionType}{An object of type string (singleton).}
 
-\item{...}{An object of type NA. NA See details for description.}
+\item{...}{An object of type NA.}
 }
 \value{
 An object of type float or void.
 }
 \description{
-Documentation for SLiM function \code{setDistribution}, which is a method of the
-SLiM class \code{\link{MutationType}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{setDistribution}, which is a method of the SLiM class \code{\link{MutationType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=709}{SLiM manual: page
-709}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Set the distribution of fitness effects for a mutation type. The
-distributionType may be "f", in which case the ellipsis ... should supply a
-numeric$ fixed selection coefficient; "e", in which case the ellipsis should
-supply a numeric$ mean selection coefficient for the exponential distribution;
-"g", in which case the ellipsis should supply a numeric$ mean selection
-coefficient and a numeric$ alpha shape parameter for a gamma distribution; "n",
-in which case the ellipsis should supply a numeric$ mean selection coefficient
-and a numeric$ sigma (standard deviation) parameter for a normal distribution;
-"p", in which case the ellipsis should supply a numeric$ mean selection
-coefficient and a numeric$ scale parameter for a Laplace distribution; "w",
-in which case the ellipsis should supply a numeric$ λ scale parameter and a
-numeric$ k shape parameter for a Weibull distribution; or "s", in which case the
-ellipsis should supply a string$ Eidos script parameter. See section 25.11 above
-for discussions of these distributions and their uses. The DFE for a mutation
-type is normally a constant in simulations, so be sure you know what you are
-doing.
+string$ distributionType, ...) Set the distribution of fitness effects for a mutation type. The distributionType may be "f", in which case the ellipsis ... should supply a numeric$ fixed selection coefficient; "e", in which case the ellipsis should supply a numeric$ mean selection coefficient for the exponential distribution; "g", in which case the ellipsis should supply a numeric$ mean selection coefficient and a numeric$ alpha shape parameter for a gamma distribution; "n", in which case the ellipsis should supply a numeric$ mean selection coefficient and a numeric$ sigma (standard deviation) parameter for a normal distribution; "p", in which case the ellipsis should supply a numeric$ mean selection coefficient and a numeric$ scale parameter for a Laplace distribution; "w", in which case the ellipsis should supply a numeric$  scale parameter and a numeric$ k shape parameter for a Weibull distribution; or "s", in which case the ellipsis should supply a string$ Eidos script parameter. The DFE for a mutation type is normally a constant in simulations, so be sure you know what you are doing.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -66,7 +41,6 @@ Other MutationType:
 \code{\link{drawSelectionCoefficient}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{MutationType}

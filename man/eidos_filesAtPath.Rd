@@ -2,54 +2,35 @@
 % Please edit documentation in R/slim_lang.R
 \name{eidos_filesAtPath}
 \alias{eidos_filesAtPath}
-\alias{Eidos$filesAtPath}
-\alias{.E$filesAtPath}
-\title{Eidos method filesAtPath}
+\alias{E$filesAtPath}
+\title{SLiM function filesAtPath}
 \usage{
-eidos_filesAtPath(path, fullPaths)
+eidos_filesAtPath(path, fullPaths = NULL)
 }
 \arguments{
-\item{path}{An object of type string or logical. Must be of length 1 (a
-singleton). See details for description.}
+\item{path}{An object of type string or logical (singleton).}
 
-\item{fullPaths}{An object of type string or logical. Must be of length 1 (a
-singleton). The default value is \code{F}. See details for description.}
+\item{fullPaths}{An object of type string or logical (singleton).}
 }
 \value{
 An object of type string.
 }
 \description{
-Documentation for Eidos function \code{filesAtPath}, which is a method of
-\code{\link{Eidos}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{filesAtPath}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Returns a string vector containing the names of all files in a
-directory specified by path. If the optional parameter fullPaths is T, full
-filesystem paths are returned for each file; if fullPaths is F (the default),
-then only the filenames relative to the specified directory are returned.
-This list includes directories (i.e. subfolders), including the "." and ".."
-directories on Un*x systems. The list also includes invisible files, such as
-those that begin with a "." on Un*x systems. This function does not descend
-recursively into subdirectories. If an error occurs during the read, NULL will
-be returned.
+Returns a string vector containing the names of all files in a directory specified by path. If the optional parameter fullPaths is T, full filesystem paths are returned for each file; if fullPaths is F (the default), then only the filenames relative to the specified directory are returned. This list includes directories (i.e. subfolders), including the "." and ".." directories on Un*x systems. The list also includes invisible files, such as those that begin with a "." on Un*x systems. This function does not descend recursively into subdirectories. If an error occurs during the read, NULL will be returned.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -66,6 +47,7 @@ Other Eidos:
 \code{\link{eidos_asInteger}()},
 \code{\link{eidos_asLogical}()},
 \code{\link{eidos_asString}()},
+\code{\link{eidos_asVector}()},
 \code{\link{eidos_asin}()},
 \code{\link{eidos_assert}()},
 \code{\link{eidos_atan}()},
@@ -79,6 +61,7 @@ Other Eidos:
 \code{\link{eidos_citation}()},
 \code{\link{eidos_clock}()},
 \code{\link{eidos_cmColors}()},
+\code{\link{eidos_colSums}()},
 \code{\link{eidos_color2rgb}()},
 \code{\link{eidos_colors}()},
 \code{\link{eidos_cor}()},
@@ -93,17 +76,21 @@ Other Eidos:
 \code{\link{eidos_defineConstant}()},
 \code{\link{eidos_defineGlobal}()},
 \code{\link{eidos_deleteFile}()},
+\code{\link{eidos_det}()},
 \code{\link{eidos_dexp}()},
 \code{\link{eidos_dgamma}()},
 \code{\link{eidos_diag}()},
 \code{\link{eidos_dim}()},
 \code{\link{eidos_dmvnorm}()},
 \code{\link{eidos_dnorm}()},
+\code{\link{eidos_doCall}()},
 \code{\link{eidos_drop}()},
 \code{\link{eidos_elementType}()},
+\code{\link{eidos_executeLambda}()},
 \code{\link{eidos_exists}()},
 \code{\link{eidos_exp}()},
 \code{\link{eidos_fileExists}()},
+\code{\link{eidos_filter}()},
 \code{\link{eidos_findInterval}()},
 \code{\link{eidos_float}()},
 \code{\link{eidos_floor}()},
@@ -113,6 +100,7 @@ Other Eidos:
 \code{\link{eidos_functionSource}()},
 \code{\link{eidos_getSeed}()},
 \code{\link{eidos_getwd}()},
+\code{\link{eidos_grep}()},
 \code{\link{eidos_heatColors}()},
 \code{\link{eidos_hsv2rgb}()},
 \code{\link{eidos_identical}()},
@@ -120,6 +108,7 @@ Other Eidos:
 \code{\link{eidos_integer}()},
 \code{\link{eidos_integerDiv}()},
 \code{\link{eidos_integerMod}()},
+\code{\link{eidos_inverse}()},
 \code{\link{eidos_isFinite}()},
 \code{\link{eidos_isFloat}()},
 \code{\link{eidos_isInfinite}()},
@@ -140,6 +129,7 @@ Other Eidos:
 \code{\link{eidos_match}()},
 \code{\link{eidos_matrix}()},
 \code{\link{eidos_matrixMult}()},
+\code{\link{eidos_matrixPow}()},
 \code{\link{eidos_max}()},
 \code{\link{eidos_mean}()},
 \code{\link{eidos_min}()},
@@ -148,6 +138,12 @@ Other Eidos:
 \code{\link{eidos_nrow}()},
 \code{\link{eidos_object}()},
 \code{\link{eidos_order}()},
+\code{\link{eidos_outerProduct}()},
+\code{\link{eidos_parallelGetMaxThreads}()},
+\code{\link{eidos_parallelGetNumThreads}()},
+\code{\link{eidos_parallelGetTaskThreadCounts}()},
+\code{\link{eidos_parallelSetNumThreads}()},
+\code{\link{eidos_parallelSetTaskThreadCounts}()},
 \code{\link{eidos_paste}()},
 \code{\link{eidos_paste0}()},
 \code{\link{eidos_pmax}()},
@@ -182,9 +178,11 @@ Other Eidos:
 \code{\link{eidos_rnbinom}()},
 \code{\link{eidos_rnorm}()},
 \code{\link{eidos_round}()},
+\code{\link{eidos_rowSums}()},
 \code{\link{eidos_rpois}()},
 \code{\link{eidos_runif}()},
 \code{\link{eidos_rweibull}()},
+\code{\link{eidos_rztpois}()},
 \code{\link{eidos_sample}()},
 \code{\link{eidos_sapply}()},
 \code{\link{eidos_sd}()},
@@ -197,6 +195,7 @@ Other Eidos:
 \code{\link{eidos_setSymmetricDifference}()},
 \code{\link{eidos_setUnion}()},
 \code{\link{eidos_setwd}()},
+\code{\link{eidos_sign}()},
 \code{\link{eidos_sin}()},
 \code{\link{eidos_size}()},
 \code{\link{eidos_sort}()},
@@ -223,6 +222,7 @@ Other Eidos:
 \code{\link{eidos_tempdir}()},
 \code{\link{eidos_terrainColors}()},
 \code{\link{eidos_time}()},
+\code{\link{eidos_tr}()},
 \code{\link{eidos_trunc}()},
 \code{\link{eidos_ttest}()},
 \code{\link{eidos_type}()},
@@ -238,7 +238,6 @@ Other Eidos:
 \code{\link{eidos_writeTempFile}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Eidos}

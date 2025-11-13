@@ -3,107 +3,65 @@
 \name{subsetIndividuals}
 \alias{subsetIndividuals}
 \alias{Subpopulation$subsetIndividuals}
-\alias{.P$subsetIndividuals}
+\alias{P$subsetIndividuals}
 \title{SLiM method subsetIndividuals}
 \usage{
 subsetIndividuals(
-  exclude,
-  sex,
-  tag,
-  minAge,
-  maxAge,
-  migrant,
-  tagL0,
-  tagL1,
-  tagL2,
-  tagL3,
-  tagL4
+  exclude = NULL,
+  sex = NULL,
+  tag = NULL,
+  minAge = NULL,
+  maxAge = NULL,
+  migrant = NULL,
+  tagL0 = NULL,
+  tagL1 = NULL,
+  tagL2 = NULL,
+  tagL3 = NULL,
+  tagL4 = NULL
 )
 }
 \arguments{
-\item{exclude}{An object of type null or Individual object. Must be of length 1
-(a singleton). The default value is \code{NULL}. See details for description.}
+\item{exclude}{An object of type null or Individual object (singleton).}
 
-\item{sex}{An object of type null or string. Must be of length 1 (a singleton).
-The default value is \code{NULL}. See details for description.}
+\item{sex}{An object of type null or string (singleton).}
 
-\item{tag}{An object of type null or integer. Must be of length 1 (a singleton).
-The default value is \code{NULL}. See details for description.}
+\item{tag}{An object of type null or integer (singleton).}
 
-\item{minAge}{An object of type null or integer. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{minAge}{An object of type null or integer (singleton).}
 
-\item{maxAge}{An object of type null or integer. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{maxAge}{An object of type null or integer (singleton).}
 
-\item{migrant}{An object of type null or logical. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{migrant}{An object of type null or logical (singleton).}
 
-\item{tagL0}{An object of type null or logical. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{tagL0}{An object of type null or logical (singleton).}
 
-\item{tagL1}{An object of type null or logical. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{tagL1}{An object of type null or logical (singleton).}
 
-\item{tagL2}{An object of type null or logical. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{tagL2}{An object of type null or logical (singleton).}
 
-\item{tagL3}{An object of type null or logical. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{tagL3}{An object of type null or logical (singleton).}
 
-\item{tagL4}{An object of type null or logical. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{tagL4}{An object of type null or logical (singleton).}
 }
 \value{
 An object of type Individual object.
 }
 \description{
-Documentation for SLiM function \code{subsetIndividuals}, which is a method of
-the SLiM class \code{\link{Subpopulation}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{subsetIndividuals}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=746}{SLiM manual: page
-746}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Returns a vector of individuals subset from the individuals in the
-target subpopulation. The parameters specify constraints upon the subset
-of individuals that will be returned. Parameter exclude, if non- NULL, may
-specify a specific individual that should not be included (typically the focal
-individual in some operation). Parameter sex, if non-NULL, may specify a sex
-("M" or "F") for the individuals to be returned, in sexual models. Parameter
-tag, if non-NULL, may specify a tag property value for the individuals to be
-returned. Parameters minAge and maxAge, if non-NULL, may specify a minimum
-or maximum age for the individuals to be returned, in nonWF models. Parameter
-migrant, if non-NULL, may specify a required value for the migrant property
-of the individuals to be returned (so T will require that individuals be
-migrants, F will require that they not be). Finally, parameters tagL0, tagL1,
-tagL2, tagL3, and tagL4, if non-NULL, may specify a required value (T or F)
-for the corresponding properties (tagL0, tagL1, tagL2, tagL3, and tagL4) of the
-individuals to be returned. Note that if any tag/tagL parameter is specified as
-non-NULL, that tag/tagL property must have a defined value for every individual
-in the subpopulation, otherwise an error may result (although this requirement
-will not necessarily be checked comprehensively by this method in every
-invocation). This method is shorthand for getting the individuals property of
-the subpopulation, and then using operator [] to select only individuals with
-the desired properties; besides being much simpler than the equivalent Eidos
-code, it is also much faster. See sampleIndividuals() for a similar method that
-returns a sample taken from a chosen subset of individuals.
+[No<Individual>$ exclude = NULL], [Ns$ sex = NULL], [Ni$ tag = NULL], [Ni$ minAge = NULL], [Ni$ maxAge = NULL], [Nl$ migrant = NULL], [Nl$ tagL0 = NULL], [Nl$ tagL1 = NULL], [Nl$ tagL2 = NULL], [Nl$ tagL3 = NULL], [Nl$ tagL4 = NULL]) Returns a vector of individuals subset from the individuals in the target subpopulation. The parameters specify constraints upon the subset of individuals that will be returned. Parameter exclude, if non-NULL, may specify a specific individual that should not be included (typically the focal individual in some operation). Parameter sex, if non-NULL, may specify a sex ("M" or "F") for the individuals to be returned, in sexual models. Parameter tag, if non-NULL, may specify a tag property value for the individuals to be returned. Parameters minAge and maxAge, if non-NULL, may specify a minimum or maximum age for the individuals to be returned, in nonWF models. Parameter migrant, if non-NULL, may specify a required value for the migrant property of the individuals to be returned (so T will require that individuals be migrants, F will require that they not be). Finally, parameters tagL0, tagL1, tagL2, tagL3, and tagL4, if non-NULL, may specify a required value (T or F) for the corresponding properties (tagL0, tagL1, tagL2, tagL3, and tagL4) of the individuals to be returned. Note that if any tag/tagL parameter is specified as non-NULL, that tag/tagL property must have a defined value for every individual in the subpopulation, otherwise an error may result (although this requirement will not necessarily be checked comprehensively by this method in every invocation). This method is shorthand for getting the individuals property of the subpopulation, and then using operator [] to select only individuals with the desired properties; besides being much simpler than the equivalent Eidos code, it is also much faster. See sampleIndividuals() for a similar method that returns a sample taken from a chosen subset of individuals.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -113,12 +71,16 @@ Other Subpopulation:
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
+\code{\link{addMultiRecombinant}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
 \code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
+\code{\link{deviatePositions}()},
+\code{\link{deviatePositionsWithMap}()},
+\code{\link{haplosomesForChromosomes}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
@@ -128,6 +90,7 @@ Other Subpopulation:
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{pointUniformWithMap}()},
 \code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
@@ -143,7 +106,6 @@ Other Subpopulation:
 \code{\link{takeMigrants}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Subpopulation}

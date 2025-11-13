@@ -3,52 +3,33 @@
 \name{pointStopped}
 \alias{pointStopped}
 \alias{Subpopulation$pointStopped}
-\alias{.P$pointStopped}
+\alias{P$pointStopped}
 \title{SLiM method pointStopped}
 \usage{
 pointStopped(point)
 }
 \arguments{
-\item{point}{An object of type float. See details for description.}
+\item{point}{An object of type float.}
 }
 \value{
 An object of type float.
 }
 \description{
-Documentation for SLiM function \code{pointStopped}, which is a method of the
-SLiM class \code{\link{Subpopulation}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{pointStopped}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=743}{SLiM manual: page
-743}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Returns a revised version of point that has been brought inside the
-spatial boundaries of the subpopulation by clamping. In brief, if a coordinate
-of point lies beyond a spatial boundary, that coordinate is set to exactly the
-position of the boundary, so that it lies on the edge of the spatial boundary.
-This method is useful for implementing stopping boundary conditions. This may
-only be called in simulations for which continuous space has been enabled with
-initializeSLiMOptions(). The length of point must be an exact multiple of the
-dimensionality of the simulation; in other words, point may contain values
-comprising more than one point. In this case, each point will be processed as
-described above and a new vector containing all of the processed points will be
-returned.
+float point) Returns a revised version of point that has been brought inside the spatial boundaries of the subpopulation by clamping. In brief, if a coordinate of point lies beyond a spatial boundary, that coordinate is set to exactly the position of the boundary, so that it lies on the edge of the spatial boundary. This method is useful for implementing stopping boundary conditions. This may only be called in simulations for which continuous space has been enabled with initializeSLiMOptions(). The length of point must be an exact multiple of the dimensionality of the simulation; in other words, point may contain values comprising more than one point. In this case, each point will be processed as described above and a new vector containing all of the processed points will be returned.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -58,12 +39,16 @@ Other Subpopulation:
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
+\code{\link{addMultiRecombinant}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
 \code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
+\code{\link{deviatePositions}()},
+\code{\link{deviatePositionsWithMap}()},
+\code{\link{haplosomesForChromosomes}()},
 \code{\link{outputMSSample}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
@@ -72,6 +57,7 @@ Other Subpopulation:
 \code{\link{pointPeriodic}()},
 \code{\link{pointReflected}()},
 \code{\link{pointUniform}()},
+\code{\link{pointUniformWithMap}()},
 \code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
@@ -88,7 +74,6 @@ Other Subpopulation:
 \code{\link{takeMigrants}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Subpopulation}

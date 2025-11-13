@@ -3,54 +3,33 @@
 \name{addSuppliedColumn}
 \alias{addSuppliedColumn}
 \alias{LogFile$addSuppliedColumn}
-\alias{.LF$addSuppliedColumn}
+\alias{LF$addSuppliedColumn}
 \title{SLiM method addSuppliedColumn}
 \usage{
 addSuppliedColumn(columnName)
 }
 \arguments{
-\item{columnName}{An object of type string. Must be of length 1 (a singleton).
-See details for description.}
+\item{columnName}{An object of type string (singleton).}
 }
 \value{
-An object of type void or void or void or void or void or void or void
-or void or void or void or void or void or void or void or void or void or void
-or void or logical.
+An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical.
 }
 \description{
-Documentation for SLiM function \code{addSuppliedColumn}, which is a method of
-the SLiM class \code{\link{LogFile}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{addSuppliedColumn}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
-702}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Adds a new data column with its name provided by columnName. The value
-for the column is initially undefined, and will be written as NA. A different
-value may (optionally) be provided by calling setSuppliedValue() with a value
-for columnName. That value will be used for the column the next time a row is
-generated (whether automatically or by a call to logRow()), and the column's
-value will subsequently be undefined again. In other words, for any given logged
-row the default of NA may be kept, or a different value may be supplied. This
-allows the value for the column to be set at any point during the tick cycle,
-which can be convenient if the column's value depends upon transient state that
-is no longer available at the time the row is logged.
+string$ columnName) Adds a new data column with its name provided by columnName. The new column will be logged each time that a row is generated, either by automatic logging or by a call to logRow(). The value for the column is initially undefined, and will be written as NA. A different value may (optionally) be provided by calling setSuppliedValue() with a value for columnName. That value will be used for the column the next time a row is generated (whether automatically or by a call to logRow()), and the column's value will subsequently be undefined again. In other words, for any given logged row the default of NA may be kept, or a different value may be supplied. This allows the value for the column to be set at any point during the tick cycle, which can be convenient if the column's value depends upon transient state that is no longer available at the time the row is logged.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -77,7 +56,6 @@ Other LogFile:
 \code{\link{willAutolog}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{LogFile}

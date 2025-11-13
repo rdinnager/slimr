@@ -3,59 +3,37 @@
 \name{addMeanSDColumns}
 \alias{addMeanSDColumns}
 \alias{LogFile$addMeanSDColumns}
-\alias{.LF$addMeanSDColumns}
+\alias{LF$addMeanSDColumns}
 \title{SLiM method addMeanSDColumns}
 \usage{
-addMeanSDColumns(columnName, source, context)
+addMeanSDColumns(columnName, source, context = NULL)
 }
 \arguments{
-\item{columnName}{An object of type string or string or any. Must be of length 1
-(a singleton). See details for description.}
+\item{columnName}{An object of type string or string or any (singleton).}
 
-\item{source}{An object of type string or string or any. Must be of length 1 (a
-singleton). See details for description.}
+\item{source}{An object of type string or string or any (singleton).}
 
-\item{context}{An object of type string or string or any. The default value is
-\code{NULL}. See details for description.}
+\item{context}{An object of type string or string or any.}
 }
 \value{
-An object of type void or void or void or void or void or void or void
-or void or void or void or void or void or void or void or void or void or void
-or void or logical.
+An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical.
 }
 \description{
-Documentation for SLiM function \code{addMeanSDColumns}, which is a method of
-the SLiM class \code{\link{LogFile}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{addMeanSDColumns}, which is a method of the SLiM class \code{\link{LogFile}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=702}{SLiM manual: page
-702}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Adds two new data columns with names of columnName_mean and
-columnName_sd. When a given row is generated, the code supplied in source is
-expected to return either a zero-length vector of any type including NULL (which
-will write out NA to both columns), or a non-zero-length vector of integer or
-float values. In the latter case, the result vector will be summarized in the
-two columns by its mean and standard deviation respectively. If the result
-vector has exactly one value, the standard deviation will be written as NA.
-The context parameter is set up as a pseudo-parameter when source is called, as
-described in addCustomColumn().
+string$ columnName, string$ source, [* context = NULL]) Adds two new data columns with names of columnName_mean and columnName_sd. The new columns will be logged each time that a row is generated, either by automatic logging or by a call to logRow(). When a given row is generated, the code supplied in source is expected to return either a zero-length vector of any type including NULL (which will write out NA to both columns), or a non-zero-length vector of integer or float values. In the latter case, the result vector will be summarized in the two columns by its mean and standard deviation respectively. If the result vector has exactly one value, the standard deviation will be written as NA. The context parameter is set up as a pseudo-parameter when source is called, as described in addCustomColumn(). See the documentation for that method for further discussion of context, including limitations on its use.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -82,7 +60,6 @@ Other LogFile:
 \code{\link{willAutolog}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{LogFile}

@@ -8,37 +8,17 @@
 Documentation for GenomicElement class from SLiM
 }
 \details{
-This class represents a genomic element of a particular genomic element
-type, with a start and
-end; the chromosome is composed of a series of such genomic elements. Section
-1.5.4 presents
-an overview of the conceptual role of this class.
+5.5.1 GenomicElement properties 5.5 Class GenomicElement
 This class has the following methods (functions):
 \itemize{
 \item{\code{\link{setGenomicElementType}}}
 }
 This class has the following properties:
 \describe{
-\item{endPosition}{A property of type integer. It is of length one
-(a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The last position in the chromosome contained by
-this genomic element. }
-\item{genomicElementType}{A property of type GenomicElementType object. It is of
-length one (a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The GenomicElementType object that defines the
-behavior of this genomic element. }
-\item{startPosition}{A property of type integer. It is of length one
-(a singleton). This property is a constant, so it is not modifiable.
-\strong{Property Description:} The first position in the chromosome contained by
-this genomic element. }
-\item{tag}{A property of type integer. It is of length one (a singleton). This
-property is a variable, so it is modifiable. \strong{Property Description:}
-A user-defined integer value. The value of tag is initially undefined, and
-it is an error to try to read it; if you wish it to have a defined value, you
-must arrange that yourself by explicitly setting its value prior to using it
-elsewhere in your code. The value of tag is not used by SLiM; it is free for you
-to use.}
-
+\item{endPosition}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The last position in the chromosome contained by this genomic element.}
+\item{genomicElementType}{A property of type GenomicElementType object. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The GenomicElementType object that defines the behavior of this genomic element.}
+\item{startPosition}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The first position in the chromosome contained by this genomic element.}
+\item{tag}{A property of type integer. It is of length one (a singleton). This property is a variable, so it is modifiable. \strong{Property Description:} A user-defined integer value. The value of tag is initially undefined, and it is an error to try to read it; if you wish it to have a defined value, you must arrange that yourself by explicitly setting its value prior to using it elsewhere in your code. The value of tag is not used by SLiM; it is free for you to use.}
 }
 }
 \seealso{

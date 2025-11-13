@@ -3,54 +3,33 @@
 \name{multiply}
 \alias{multiply}
 \alias{SpatialMap$multiply}
-\alias{.SM$multiply}
+\alias{SM$multiply}
 \title{SLiM method multiply}
 \usage{
 multiply(x)
 }
 \arguments{
-\item{x}{An object of type integer or float or SpatialMap object. See details
-for description.}
+\item{x}{An object of type integer or float or SpatialMap object.}
 }
 \value{
-An object of type SpatialMap object. Return will be of length 1 (a
-singleton)
+An object of type SpatialMap object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{multiply}, which is a method of the SLiM
-class \code{\link{SpatialMap}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{multiply}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=716}{SLiM manual: page
-716}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Multiplies the spatial map by x. One possibility is that x is a
-singleton integer or float value; in this case, each grid value of the target
-spatial map is multiplied by x. Another possibility is that x is an integer or
-float vector/matrix/array of the same dimensions as the target spatial map's
-grid; in this case, each grid value of the target spatial map is multiplied
-by the corresponding value of x. The third possibility is that x is itself a
-(singleton) spatial map; in this case, each grid value of the target spatial
-map is multiplied by the corresponding grid value of x (and thus the two
-spatial maps must match in their spatiality, their spatial bounds, and their
-grid dimensions). The target spatial map is returned, to allow easy chaining of
-operations.
+ifo<SpatialMap> x) Multiplies the spatial map by x. One possibility is that x is a singleton integer or float value; in this case, each grid value of the target spatial map is multiplied by x. Another possibility is that x is an integer or float vector/matrix/array of the same dimensions as the target spatial map's grid; in this case, each grid value of the target spatial map is multiplied by the corresponding value of x. The third possibility is that x is itself a (singleton) spatial map; in this case, each grid value of the target spatial map is multiplied by the corresponding grid value of x (and thus the two spatial maps must match in their spatiality, their spatial bounds, and their grid dimensions). The target spatial map is returned, to allow easy chaining of operations.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -77,7 +56,6 @@ Other SpatialMap:
 \code{\link{subtract}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{SpatialMap}

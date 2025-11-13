@@ -2,20 +2,29 @@
 % Please edit documentation in R/slim_recipes.R
 \name{slim_get_recipes}
 \alias{slim_get_recipes}
-\title{Get a list of SLiM recipes (as text)}
+\title{Get multiple SLiM recipes}
 \usage{
 slim_get_recipes(recipes = "all")
 }
 \arguments{
-\item{recipes}{Integer or Character specifying the recipe numbers / names, or "all", to retrieve all recipes.}
+\item{recipes}{Character vector of recipe names (e.g., c("4.1", "9.2")),
+numeric vector of indices (e.g., c(1, 45, 53)), or "all" to retrieve all recipes.}
 }
 \value{
-List of SLiM recipes, each element a length 1 character vector.
+Named list of SLiM recipes, each element a character vector
 }
 \description{
-Get a list of SLiM recipes (as text)
+Get multiple SLiM recipes
 }
 \examples{
-recipes <- slim_get_recipes("all")
-recipes[[12]]
+\dontrun{
+# Get all recipes
+all_recipes <- slim_get_recipes("all")
+
+# Get specific recipes by index
+some_recipes <- slim_get_recipes(c(1, 45, 53, 132))
+
+# Get specific recipes by name
+some_recipes <- slim_get_recipes(c("4.1", "9.2", "15.20"))
+}
 }

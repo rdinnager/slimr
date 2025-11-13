@@ -3,62 +3,45 @@
 \name{pauseExecution}
 \alias{pauseExecution}
 \alias{SLiMgui$pauseExecution}
-\alias{.SG$pauseExecution}
+\alias{SG$pauseExecution}
 \title{SLiM method pauseExecution}
 \usage{
-pauseExecution(filePath)
+pauseExecution(void)
 }
 \arguments{
-\item{filePath}{An object of type string. Must be of length 1 (a singleton). See
-details for description.}
+\item{void}{An object of type object.}
 }
 \value{
-An object of type void or void.
+An object of type void.
 }
 \description{
-Documentation for SLiM function \code{pauseExecution}, which is a method of the
-SLiM class \code{\link{SLiMgui}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{pauseExecution}, which is a method of the SLiM class \code{\link{SLiMgui}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=711}{SLiM manual: page
-711}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Pauses a model that is playing in SLiMgui. This is essentially
-equivalent to clicking the "Play" button to stop the execution of the model.
-Execution can be resumed by the user, by clicking the "Play" button again;
-unlike calling stop() or simulationFinished(), the simulation is not terminated.
-This method can be useful for debugging or exploratory purposes, to pause the
-model at a point of interest. Execution is paused at the end of the currently
-executing tick, not mid-tick. If the model is being profiled, or is executing
-forward to a tick number entered in the tick field, pauseExecution() will do
-nothing; by design, pauseExecution() only pauses execution when SLiMgui is doing
-a simple "Play" of the model.
+void) Pauses a model that is playing in SLiMgui. This is essentially equivalent to clicking the "Play" button to stop the execution of the model. Execution can be resumed by the user, by clicking the "Play" button again; unlike calling stop() or simulationFinished(), the simulation is not terminated. This method can be useful for debugging or exploratory purposes, to pause the model at a point of interest. Execution is paused at the end of the currently executing tick, not mid-tick. If the model is being profiled, or is executing forward to a tick number entered in the tick field, pauseExecution() will do nothing; by design, pauseExecution() only pauses execution when SLiMgui is doing a simple "Play" of the model.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
 \seealso{
 Other SLiMgui: 
 \code{\link{SG}},
-\code{\link{openDocument}()}
+\code{\link{createPlot}()},
+\code{\link{logFileData}()},
+\code{\link{openDocument}()},
+\code{\link{plotWithTitle}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{SLiMgui}

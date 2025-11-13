@@ -8,37 +8,22 @@
 Documentation for SLiMgui class from SLiM
 }
 \details{
-This class represents the SLiMgui application. When running under
-SLiMgui, a global object
-singleton constant of class SLiMgui will be defined, named slimgui. This object
-can be used to
-query and control the SLiMgui application. When running at the command line, the
-slimgui
-object will not exist; to determine whether the simulation is running under
-SLiMgui, one may
-therefore test exists("slimgui"). If a model needs to run both at the command
-line and under
-SLiMgui, all uses of the slimgui object should be protected by if
-(exists("slimgui")) to avoid
-errors.
+5.14.1 SLiMgui properties 5.14 Class SLiMgui
 This class has the following methods (functions):
 \itemize{
-\item{\code{\link{openDocument}}}
-\item{\code{\link{pauseExecution}}}
+\item{\code{\link{createPlot}}}
 }
 This class has the following properties:
 \describe{
-\item{pid}{A property of type integer. It is of length one (a singleton). This
-property is a constant, so it is not modifiable. \strong{Property Description:}
-The Un*x process identifier (commonly called the "pid") of the running SLiMgui
-application. This can be useful for scripts that wish to use system calls to
-influence the SLiMgui application.}
-
+\item{pid}{A property of type integer. It is of length one (a singleton). This property is a constant, so it is not modifiable. \strong{Property Description:} The Un*x process identifier (commonly called the "pid") of the running SLiMgui application. This can be useful for scripts that wish to use system calls to influence the SLiMgui application.}
 }
 }
 \seealso{
 Other SLiMgui: 
+\code{\link{createPlot}()},
+\code{\link{logFileData}()},
 \code{\link{openDocument}()},
-\code{\link{pauseExecution}()}
+\code{\link{pauseExecution}()},
+\code{\link{plotWithTitle}()}
 }
 \concept{SLiMgui}

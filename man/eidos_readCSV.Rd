@@ -2,148 +2,53 @@
 % Please edit documentation in R/slim_lang.R
 \name{eidos_readCSV}
 \alias{eidos_readCSV}
-\alias{Eidos$readCSV}
-\alias{.E$readCSV}
-\title{Eidos method readCSV}
+\alias{E$readCSV}
+\title{SLiM function readCSV}
 \usage{
-eidos_readCSV(filePath, colNames, colTypes, sep, quote, dec, comment)
+eidos_readCSV(
+  filePath,
+  colNames = NULL,
+  colTypes = NULL,
+  sep = NULL,
+  quote = NULL,
+  dec = NULL,
+  comment = NULL
+)
 }
 \arguments{
-\item{filePath}{An object of type string. Must be of length 1 (a singleton). See
-details for description.}
+\item{filePath}{An object of type string (singleton).}
 
-\item{colNames}{An object of type logical or string. The default value is
-\code{T}. See details for description.}
+\item{colNames}{An object of type logical or string.}
 
-\item{colTypes}{An object of type null or string. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{colTypes}{An object of type null or string (singleton).}
 
-\item{sep}{An object of type string. Must be of length 1 (a singleton). The
-default value is \code{","}. See details for description.}
+\item{sep}{An object of type string (singleton).}
 
-\item{quote}{An object of type string. Must be of length 1 (a singleton). The
-default value is \code{'"'}. See details for description.}
+\item{quote}{An object of type string (singleton).}
 
-\item{dec}{An object of type string. Must be of length 1 (a singleton). The
-default value is \code{"."}. See details for description.}
+\item{dec}{An object of type string (singleton).}
 
-\item{comment}{An object of type string. Must be of length 1 (a singleton). The
-default value is \code{""}. See details for description.}
+\item{comment}{An object of type string (singleton).}
 }
 \value{
-An object of type DataFrame object. Return will be of length 1 (a
-singleton)
+An object of type DataFrame object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for Eidos function \code{readCSV}, which is a method of
-\code{\link{Eidos}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{readCSV}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Reads data from a CSV or other delimited file specified by filePath
-and returns a DataFrame object containing the data in a tabular form. CSV
-(comma-separated value) files use a somewhat standard file format in which
-a table of data is provided, with values within a row separated by commas,
-while rows in the table are separated by newlines. Software from R to Excel
-(and Eidos; see the serialize() method of Dictionary) can export data in CSV
-format. This function can actually also read files that use a delimiter other
-than commas; TSV (tab-separated value) files are a popular alternative. Since
-there is substantial variation in the exact file format for CSV files, this
-documentation will try to specify the precise format expected by this function.
-Note that CSV files represent values differently that Eidos usually does, and
-some of the format options allowed by readCSV(), such as decimal commas, are
-not otherwise available in Eidos. If colNames is T (the default), the first
-row of data is taken to be a header, containing the string names of the columns
-in the data table; those names will be used by the resulting DataFrame. If
-colNames is F, a header row is not expected and column names are auto-generated
-as X1, X2, etc. If colNames is a string vector, a header row is not expected
-and colNames will be used as the column names; if additional columns exist
-beyond the length of colNames their names will be auto-generated. Duplicate
-column names will generate a warning and be made unique. If colTypes is NULL
-(the default), the value type for each column will be guessed from the values
-it contains, as described below. If colTypes is a singleton string, it should
-contain single-letter codes indicating the desired type for each column, from
-left to right. The letters lifs have the same meaning as in Eidos signatures
-(logical, integer, float, and string); in addition, ? may be used to indicate
-that the type for that column should be guessed as by default, and _ or -
-may be used to indicate that that column should be skipped - omitted from the
-returned DataFrame. Other characters in colTypes will result in an error. If
-additional columns exist beyond the end of the colTypes string their types will
-be guessed as by default. The separator between values is supplied by sep; it
-is a comma by default, but a tab can be used instead by supplying tab ("\\t"
-in Eidos), or another character may also be used. If sep is the empty string
-"", the separator between values is "whitespace", meaning one or more spaces
-or tabs. When the separator is whitespace, whitespace at the beginning or the
-end of a line will be ignored. 74 Similarly, the character used to quote string
-values is a double quote ('"' in Eidos), by default, but another character may
-be supplied in quote. When the string delimiter is encountered, all following
-characters are considered to be part of the string until another string
-delimiter is encountered, terminating the string; this includes spaces, comment
-characters, newlines, and everything else. Within a string value, the string
-delimiter itself is used twice in a row to indicate that the delimiter itself
-is present within the string; for example, if the string value (shown without
-the usual surrounding quotes to try to avoid confusion) is she said "hello", and
-the string delimiter is the double quote as it is by default, then in the CSV
-file the value would be given as "she said ""hello""". The usual Eidos style of
-escaping characters using a backslash is not part of the CSV standard followed
-here. (When a string value is provided without using the string delimiter,
-all following characters are considered part of the string except a newline,
-the value separator sep, the quote separator quote, and the comment separator
-comment; if none of those characters are present in the string value, the quote
-delimiter may be omitted.) The character used to indicate a decimal delimiter
-in numbers may be supplied with dec; by default this is "." (and so 10.0 would
-be ten, written with a decimal point), but "," is common in European data files
-(and so 10,0 would be ten, written with a decimal comma). Note that dec and
-sep may not be the same, so that it is unambiguous whether 10,0 is two numbers
-(10 and 0) or one number (10.0). For this reason, European CSV files that use
-a decimal comma typically use a semicolon as the value separator, which may be
-supplied with sep=";" to readCSV(). Finally, the remainder of a line following
-a comment character will be ignored when the file is read; by default comment
-is the empty string, "", indicating that comments do not exist at all, but "#"
-is a popular comment prefix. To translate the CSV data into a DataFrame, it
-is necessary for Eidos to guess what value type each column is unless a column
-type is specified by colTypes. Quotes surrounding a value are irrelevant to
-this guess; for example, 1997 and "1997" are both candidates to be integer
-values (because some programs generate CSV output in which every value is quoted
-regardless of type). If every value in a column is either true, false, TRUE,
-FALSE, T, or F, the column will be taken to be logical. Otherwise, if every
-value in a column is an integer (here defined as an optional + or -, followed by
-nothing but decimal digits 0123456789), the column will be taken to be integer.
-Otherwise, if every value in a column is a floating-point number (here defined
-as an optional + or -, followed by decimal digits 0123456789, optionally a
-decimal separator and then optionally more decimal digits, and ending with an
-optional exponent like e7, E+05, or e-2), the column will be taken to be float;
-the special values NAN, INF, INFINITY, -INF, and -INFINITY (not case-sensitive)
-are also candidates to be float (if the rest of the column is also convertible
-to float), representing the corresponding float constants. Otherwise, the column
-will be taken to be string. NULL and NA are not recognized by readCSV() in CSV
-files and will be read as strings. Every line in a CSV file must contain the
-same number of values (forming a rectangular data table); missing values are not
-allowed by readCSV() since there is no way to represent them in DataFrame (since
-Eidos has no equivalent of R's NA value). Spaces are considered part of a data
-field and are not trimmed, following the RFC 4180 standard. These choices are
-an attempt to provide optimal behavior for most clients, but given the lack of
-any universal standard for CSV files, and the lack of any type information in
-the CSV format, they will not always work as desired; in such cases, it should
-be reasonably straightforward to preprocess input files using standard Unix
-text-processing tools like sed and awk.
+Reads data from a CSV or other delimited file specified by filePath and returns a DataFrame object containing the data in a tabular form. CSV (comma-separated value) files use a somewhat standard file format in which a table of data is provided, with values within a row separated by commas, while rows in the table are separated by newlines. Software from R to Excel (and Eidos; see the serialize() method of Dictionary) can export data in CSV format. This function can actually also read files that use a delimiter other than commas; TSV (tab-separated value) files are a popular alternative. Since there is substantial variation in the exact file format for CSV files, this documentation will try to specify the precise format expected by this function. Note that CSV files represent values differently that Eidos usually does, and some of the format options allowed by readCSV(), such as decimal commas, are not otherwise available in Eidos. If colNames is T (the default), the first row of data is taken to be a header, containing the string names of the columns in the data table; those names will be used by the resulting DataFrame. If colNames is F, a header row is not expected and column names are auto-generated as X1, X2, etc. If colNames is a string vector, a header row is not expected and colNames will be used as the column names; if additional columns exist beyond the length of colNames their names will be auto-generated. Duplicate column names will generate a warning and be made unique. If colTypes is NULL (the default), the value type for each column will be guessed from the values it contains, as described below. If colTypes is a singleton string, it should contain single-letter codes indicating the desired type for each column, from left to right. The letters lifs have the same meaning as in Eidos signatures (logical, integer, float, and string); in addition, ? may be used to indicate that the type for that column should be guessed as by default, and _ or - may be used to indicate that that column should be skipped - omitted from the returned DataFrame. Other characters in colTypes will result in an error. If additional columns exist beyond the end of the colTypes string their types will be guessed as by default. The separator between values is supplied by sep; it is a comma by default, but a tab can be used instead by supplying tab ("\\\\t" in Eidos), or another character may also be used. If sep is the empty string "", the separator between values is "whitespace", meaning one or more spaces or tabs. When the separator is whitespace, whitespace at the beginning or the end of a line will be ignored. Similarly, the character used to quote string values is a double quote ('"' in Eidos), by default, but another character may be supplied in quote. When the string delimiter is encountered, all following characters are considered to be part of the string until another string delimiter is encountered, terminating the string; this includes spaces, comment characters, newlines, and everything else. Within a string value, the string delimiter itself is used twice in a row to indicate that the delimiter itself is present within the string; for example, if the string value (shown without the usual surrounding quotes to try to avoid confusion) is she said "hello", and the string delimiter is the double quote as it is by default, then in the CSV file the value would be given as "she said ""hello""". The usual Eidos style of escaping characters using a backslash is not part of the CSV standard followed here. (When a string value is provided without using the string delimiter, all following characters are considered part of the string except a newline, the value separator sep, the quote separator quote, and the comment separator comment; if none of those characters are present in the string value, the quote delimiter may be omitted.) The character used to indicate a decimal delimiter in numbers may be supplied with dec; by default this is "." (and so 10.0 would be ten, written with a decimal point), but "," is common in European data files (and so 10,0 would be ten, written with a decimal comma). Note that dec and sep may not be the same, so that it is unambiguous whether 10,0 is two numbers (10 and 0) or one number (10.0). For this reason, European CSV files that use a decimal comma typically use a semicolon as the value separator, which may be supplied with sep=";" to readCSV(). Finally, the remainder of a line following a comment character will be ignored when the file is read; by default comment is the empty string, "", indicating that comments do not exist at all, but "#" is a popular comment prefix. To translate the CSV data into a DataFrame, it is necessary for Eidos to guess what value type each column is unless a column type is specified by colTypes. Quotes surrounding a value are irrelevant to this guess; for example, 1997 and "1997" are both candidates to be integer values (because some programs generate CSV output in which every value is quoted regardless of type). If every value in a column is either true, false, TRUE, FALSE, T, or F, the column will be taken to be logical. Otherwise, if every value in a column is an integer (here defined as an optional + or -, followed by nothing but decimal digits 0123456789), the column will be taken to be integer. Otherwise, if every value in a column is a floating-point number (here defined as an optional + or -, followed by decimal digits 0123456789, optionally a decimal separator and then optionally more decimal digits, and ending with an optional exponent like e7, E+05, or e-2), the column will be taken to be float; the special values NAN, INF, INFINITY, -INF, and -INFINITY (not case-sensitive) are also candidates to be float (if the rest of the column is also convertible to float), representing the corresponding float constants. Otherwise, the column will be taken to be string. NULL and NA are not recognized by readCSV() in CSV files and will be read as strings. Every line in a CSV file must contain the same number of values (forming a rectangular data table); missing values are not allowed by readCSV() since there is no way to represent them in DataFrame (since Eidos has no equivalent of R's NA value). Spaces are considered part of a data field and are not trimmed, following the RFC 4180 standard. These choices are an attempt to provide optimal behavior for most clients, but given the lack of any universal standard for CSV files, and the lack of any type information in the CSV format, they will not always work as desired; in such cases, it should be reasonably straightforward to preprocess input files using standard Unix text-processing tools like sed and awk.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -160,6 +65,7 @@ Other Eidos:
 \code{\link{eidos_asInteger}()},
 \code{\link{eidos_asLogical}()},
 \code{\link{eidos_asString}()},
+\code{\link{eidos_asVector}()},
 \code{\link{eidos_asin}()},
 \code{\link{eidos_assert}()},
 \code{\link{eidos_atan}()},
@@ -173,6 +79,7 @@ Other Eidos:
 \code{\link{eidos_citation}()},
 \code{\link{eidos_clock}()},
 \code{\link{eidos_cmColors}()},
+\code{\link{eidos_colSums}()},
 \code{\link{eidos_color2rgb}()},
 \code{\link{eidos_colors}()},
 \code{\link{eidos_cor}()},
@@ -187,18 +94,22 @@ Other Eidos:
 \code{\link{eidos_defineConstant}()},
 \code{\link{eidos_defineGlobal}()},
 \code{\link{eidos_deleteFile}()},
+\code{\link{eidos_det}()},
 \code{\link{eidos_dexp}()},
 \code{\link{eidos_dgamma}()},
 \code{\link{eidos_diag}()},
 \code{\link{eidos_dim}()},
 \code{\link{eidos_dmvnorm}()},
 \code{\link{eidos_dnorm}()},
+\code{\link{eidos_doCall}()},
 \code{\link{eidos_drop}()},
 \code{\link{eidos_elementType}()},
+\code{\link{eidos_executeLambda}()},
 \code{\link{eidos_exists}()},
 \code{\link{eidos_exp}()},
 \code{\link{eidos_fileExists}()},
 \code{\link{eidos_filesAtPath}()},
+\code{\link{eidos_filter}()},
 \code{\link{eidos_findInterval}()},
 \code{\link{eidos_float}()},
 \code{\link{eidos_floor}()},
@@ -208,6 +119,7 @@ Other Eidos:
 \code{\link{eidos_functionSource}()},
 \code{\link{eidos_getSeed}()},
 \code{\link{eidos_getwd}()},
+\code{\link{eidos_grep}()},
 \code{\link{eidos_heatColors}()},
 \code{\link{eidos_hsv2rgb}()},
 \code{\link{eidos_identical}()},
@@ -215,6 +127,7 @@ Other Eidos:
 \code{\link{eidos_integer}()},
 \code{\link{eidos_integerDiv}()},
 \code{\link{eidos_integerMod}()},
+\code{\link{eidos_inverse}()},
 \code{\link{eidos_isFinite}()},
 \code{\link{eidos_isFloat}()},
 \code{\link{eidos_isInfinite}()},
@@ -235,6 +148,7 @@ Other Eidos:
 \code{\link{eidos_match}()},
 \code{\link{eidos_matrix}()},
 \code{\link{eidos_matrixMult}()},
+\code{\link{eidos_matrixPow}()},
 \code{\link{eidos_max}()},
 \code{\link{eidos_mean}()},
 \code{\link{eidos_min}()},
@@ -243,6 +157,12 @@ Other Eidos:
 \code{\link{eidos_nrow}()},
 \code{\link{eidos_object}()},
 \code{\link{eidos_order}()},
+\code{\link{eidos_outerProduct}()},
+\code{\link{eidos_parallelGetMaxThreads}()},
+\code{\link{eidos_parallelGetNumThreads}()},
+\code{\link{eidos_parallelGetTaskThreadCounts}()},
+\code{\link{eidos_parallelSetNumThreads}()},
+\code{\link{eidos_parallelSetTaskThreadCounts}()},
 \code{\link{eidos_paste}()},
 \code{\link{eidos_paste0}()},
 \code{\link{eidos_pmax}()},
@@ -276,9 +196,11 @@ Other Eidos:
 \code{\link{eidos_rnbinom}()},
 \code{\link{eidos_rnorm}()},
 \code{\link{eidos_round}()},
+\code{\link{eidos_rowSums}()},
 \code{\link{eidos_rpois}()},
 \code{\link{eidos_runif}()},
 \code{\link{eidos_rweibull}()},
+\code{\link{eidos_rztpois}()},
 \code{\link{eidos_sample}()},
 \code{\link{eidos_sapply}()},
 \code{\link{eidos_sd}()},
@@ -291,6 +213,7 @@ Other Eidos:
 \code{\link{eidos_setSymmetricDifference}()},
 \code{\link{eidos_setUnion}()},
 \code{\link{eidos_setwd}()},
+\code{\link{eidos_sign}()},
 \code{\link{eidos_sin}()},
 \code{\link{eidos_size}()},
 \code{\link{eidos_sort}()},
@@ -317,6 +240,7 @@ Other Eidos:
 \code{\link{eidos_tempdir}()},
 \code{\link{eidos_terrainColors}()},
 \code{\link{eidos_time}()},
+\code{\link{eidos_tr}()},
 \code{\link{eidos_trunc}()},
 \code{\link{eidos_ttest}()},
 \code{\link{eidos_type}()},
@@ -332,7 +256,6 @@ Other Eidos:
 \code{\link{eidos_writeTempFile}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Eidos}

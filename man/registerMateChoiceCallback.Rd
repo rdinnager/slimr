@@ -3,76 +3,56 @@
 \name{registerMateChoiceCallback}
 \alias{registerMateChoiceCallback}
 \alias{Species$registerMateChoiceCallback}
-\alias{.Sp$registerMateChoiceCallback}
+\alias{Sp$registerMateChoiceCallback}
 \title{SLiM method registerMateChoiceCallback}
 \usage{
-registerMateChoiceCallback(id, source, subpop, start, end)
+registerMateChoiceCallback(id, source, subpop = NULL, start = NULL, end = NULL)
 }
 \arguments{
-\item{id}{An object of type null or integer or string. Must be of length 1 (a
-singleton). See details for description.}
+\item{id}{An object of type null or integer or string (singleton).}
 
-\item{source}{An object of type string. Must be of length 1 (a singleton). See
-details for description.}
+\item{source}{An object of type string (singleton).}
 
-\item{subpop}{An object of type null or integer or Subpopulation object. Must
-be of length 1 (a singleton). The default value is \code{NULL}. See details for
-description.}
+\item{subpop}{An object of type null or integer or Subpopulation object (singleton).}
 
-\item{start}{An object of type null or integer. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{start}{An object of type null or integer (singleton).}
 
-\item{end}{An object of type null or integer. Must be of length 1 (a singleton).
-The default value is \code{NULL}. See details for description.}
+\item{end}{An object of type null or integer (singleton).}
 }
 \value{
-An object of type SLiMEidosBlock object. Return will be of length 1 (a
-singleton)
+An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{registerMateChoiceCallback}, which is a
-method of the SLiM class \code{\link{Species}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{registerMateChoiceCallback}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=725}{SLiM manual: page
-725}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Register a block of Eidos source code, represented as the string
-singleton source, as an Eidos mateChoice() callback in the current simulation
-(specific to the target species), with optional subpopulation subpop (which may
-be an integer identifier, or NULL, the default, to indicate all subpopulations)
-and optional start and end ticks all limiting its applicability. The script
-block will be given identifier id (specified as an integer, or as a string
-symbolic name such as "s5"); this may be NULL if there is no need to be able
-to refer to the block later. The registered callback is added to the end of the
-list of registered SLiMEidosBlock objects, and is active immediately; it may be
-eligible to execute in the current tick (see section 26.11 for details). The new
-SLiMEidosBlock will be defined as a global variable immediately by this method
-(see section 25.12), and will also be returned by this method.
+Nis$ id, string$ source, [Nio<Subpopulation>$ subpop = NULL], [Ni$ start = NULL], [Ni$ end = NULL]) Register a block of Eidos source code, represented as the string singleton source, as an Eidos mateChoice() callback in the current simulation (specific to the target species), with optional subpopulation subpop (which may be an integer identifier, or NULL, the default, to indicate all subpopulations) and optional start and end ticks all limiting its applicability. The script block will be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered callback is added to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in the current tick. The new SLiMEidosBlock will be defined as a global variable immediately by this method, and will also be returned by this method.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
 \seealso{
 Other Species: 
 \code{\link{Sp}},
+\code{\link{addPatternForClone}()},
+\code{\link{addPatternForCross}()},
+\code{\link{addPatternForNull}()},
+\code{\link{addPatternForRecombinant}()},
 \code{\link{addSubpop}()},
 \code{\link{addSubpopSplit}()},
+\code{\link{chromosomesOfType}()},
+\code{\link{chromosomesWithIDs}()},
+\code{\link{chromosomesWithSymbols}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{individualsWithPedigreeIDs}()},
 \code{\link{killIndividuals}()},
@@ -94,13 +74,13 @@ Other Species:
 \code{\link{simulationFinished}()},
 \code{\link{skipTick}()},
 \code{\link{subsetMutations}()},
+\code{\link{substitutionsOfType}()},
 \code{\link{treeSeqCoalesced}()},
 \code{\link{treeSeqOutput}()},
 \code{\link{treeSeqRememberIndividuals}()},
 \code{\link{treeSeqSimplify}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Species}

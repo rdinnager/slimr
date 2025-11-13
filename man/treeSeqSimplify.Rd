@@ -3,58 +3,48 @@
 \name{treeSeqSimplify}
 \alias{treeSeqSimplify}
 \alias{Species$treeSeqSimplify}
-\alias{.Sp$treeSeqSimplify}
+\alias{Sp$treeSeqSimplify}
 \title{SLiM method treeSeqSimplify}
 \usage{
 treeSeqSimplify(void)
 }
 \arguments{
-\item{void}{An object of type . See details for description.}
+\item{void}{An object of type object.}
 }
 \value{
 An object of type void.
 }
 \description{
-Documentation for SLiM function \code{treeSeqSimplify}, which is a method of the
-SLiM class \code{\link{Species}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{treeSeqSimplify}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=730}{SLiM manual: page
-730}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Triggers an immediate simplification of the tree sequence recording
-tables. This method may only be called if tree sequence recording has been
-turned on with initializeTreeSeq(). A call to this method will free up memory
-being used by entries that are no longer in the ancestral path of any individual
-within the current sample (currently living individuals, in other words, plus
-those explicitly added to the sample with treeSeqRememberIndividuals()), but it
-can also take a significant amount of time. Typically calling this method is not
-necessary; the automatic simplification performed occasionally by SLiM should be
-sufficient for most models.
+void) Triggers an immediate simplification of the tree sequence recording tables. This method may only be called if tree sequence recording has been turned on with initializeTreeSeq(). A call to this method will free up memory being used by entries that are no longer in the ancestral path of any individual within the current sample (currently living individuals, in other words, plus those explicitly added to the sample with treeSeqRememberIndividuals()), but it can also take a significant amount of time. Typically calling this method is not necessary; the automatic simplification performed occasionally by SLiM should be sufficient for most models.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
 \seealso{
 Other Species: 
 \code{\link{Sp}},
+\code{\link{addPatternForClone}()},
+\code{\link{addPatternForCross}()},
+\code{\link{addPatternForNull}()},
+\code{\link{addPatternForRecombinant}()},
 \code{\link{addSubpop}()},
 \code{\link{addSubpopSplit}()},
+\code{\link{chromosomesOfType}()},
+\code{\link{chromosomesWithIDs}()},
+\code{\link{chromosomesWithSymbols}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{individualsWithPedigreeIDs}()},
 \code{\link{killIndividuals}()},
@@ -77,12 +67,12 @@ Other Species:
 \code{\link{simulationFinished}()},
 \code{\link{skipTick}()},
 \code{\link{subsetMutations}()},
+\code{\link{substitutionsOfType}()},
 \code{\link{treeSeqCoalesced}()},
 \code{\link{treeSeqOutput}()},
 \code{\link{treeSeqRememberIndividuals}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Species}

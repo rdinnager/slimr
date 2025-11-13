@@ -3,74 +3,53 @@
 \name{addSubpop}
 \alias{addSubpop}
 \alias{Species$addSubpop}
-\alias{.Sp$addSubpop}
+\alias{Sp$addSubpop}
 \title{SLiM method addSubpop}
 \usage{
-addSubpop(subpopID, size, sexRatio, haploid)
+addSubpop(subpopID, size, sexRatio = NULL, haploid = NULL)
 }
 \arguments{
-\item{subpopID}{An object of type integer or string. Must be of length 1 (a
-singleton). See details for description.}
+\item{subpopID}{An object of type integer or string (singleton).}
 
-\item{size}{An object of type integer. Must be of length 1 (a singleton). See
-details for description.}
+\item{size}{An object of type integer (singleton).}
 
-\item{sexRatio}{An object of type float. Must be of length 1 (a singleton). The
-default value is \code{0.5}. See details for description.}
+\item{sexRatio}{An object of type float (singleton).}
 
-\item{haploid}{An object of type logical. Must be of length 1 (a singleton). The
-default value is \code{F}. See details for description.}
+\item{haploid}{An object of type logical (singleton).}
 }
 \value{
-An object of type Subpopulation object. Return will be of length 1 (a
-singleton)
+An object of type Subpopulation object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{addSubpop}, which is a method of the SLiM
-class \code{\link{Species}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{addSubpop}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=719}{SLiM manual: page
-719}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Add a new subpopulation with id subpopID and size individuals.
-The subpopID parameter may be either an integer giving the ID of the new
-subpopulation, or a string giving the name of the new subpopulation (such
-as "p5" to specify an ID of 5). Only if sex is enabled for the species, the
-initial sex ratio may optionally be specified as sexRatio (as the male fraction,
-M:M+F); if it is not specified, a default of 0.5 is used. The new subpopulation
-will be defined as a global variable immediately by this method (see section
-25.16), and will also be returned by this method. Subpopulations added by this
-method will initially consist of individuals with empty genomes. In order to
-model subpopulations that split from an already existing subpopulation, use
-addSubpopSplit(). Only in nonWF models, the haploid parameter may be T; in this
-case, the second genome of each new individual will be a null genome, rather
-than an empty genome. For even greater control in nonWF models, you can call
-addSubpop() with an initial size of 0 and then stock the population with new
-individuals created however you wish in the next tick's reproduction() callback.
+is$ subpopID, integer$ size, [float$ sexRatio = 0.5], [logical$ haploid = F]) Add a new subpopulation with id subpopID and size individuals. The subpopID parameter may be either an integer giving the ID of the new subpopulation, or a string giving the name of the new subpopulation (such as "p5" to specify an ID of 5). Only if sex is enabled for the species, the initial sex ratio may optionally be specified as sexRatio (as the male fraction, M:M+F); if it is not specified, a default of 0.5 is used. The new subpopulation will be defined as a global variable immediately by this method, and will also be returned by this method. Subpopulations added by this method will initially consist of individuals with empty haplosomes. In order to model subpopulations that split from an already existing subpopulation, use addSubpopSplit(). The haploid parameter defaults to F, indicating that the generated individuals should adopt their natural ploidy; in particular, type "A" chromosomes should be represented in each individual by two empty haplosomes. The haploid parameter may instead be T; in this case, for all chromosomes of type "A" (and only that type), the second haplosome of each new individual will be a null haplosome, rather than an empty haplosome. This could be useful in a model of haplodiploidy, for example, to generate initial individuals that are haploid for the autosomal chromosomes of the species. For even greater control in nonWF models, you can call addSubpop() with an initial size of 0 and then stock the population with new individuals created however you wish in the next tick's reproduction() callback, such as with the addEmpty() method, providing separate control over the configuration of each individual.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
 \seealso{
 Other Species: 
 \code{\link{Sp}},
+\code{\link{addPatternForClone}()},
+\code{\link{addPatternForCross}()},
+\code{\link{addPatternForNull}()},
+\code{\link{addPatternForRecombinant}()},
 \code{\link{addSubpopSplit}()},
+\code{\link{chromosomesOfType}()},
+\code{\link{chromosomesWithIDs}()},
+\code{\link{chromosomesWithSymbols}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{individualsWithPedigreeIDs}()},
 \code{\link{killIndividuals}()},
@@ -93,13 +72,13 @@ Other Species:
 \code{\link{simulationFinished}()},
 \code{\link{skipTick}()},
 \code{\link{subsetMutations}()},
+\code{\link{substitutionsOfType}()},
 \code{\link{treeSeqCoalesced}()},
 \code{\link{treeSeqOutput}()},
 \code{\link{treeSeqRememberIndividuals}()},
 \code{\link{treeSeqSimplify}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Species}

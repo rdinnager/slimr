@@ -158,7 +158,7 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
     all_gens <- paste(rep(pops$pop, times = pops$size * 2),
                       sequence(pops$size * 2) - 1L,
                       sep = ":") %>%
-      matrix(nrow = n_inds, byrow = TRUE) %>%
+      base::matrix(nrow = n_inds, byrow = TRUE) %>%
       dplyr::as_tibble(.name_repair = "universal") %>%
       dplyr::mutate("pop" := rep(pops$pop, times = pops$size))
   )
@@ -206,11 +206,11 @@ slim_make_pop_input <- function(snps, file_name = tempfile(), sim_gen = 10000, i
   }
 
   #if(is.null(gen_type)) {
-  gen_type <- matrix(rep("A", n_gen), nrow = n_inds, byrow = TRUE)
+  gen_type <- base::matrix(rep("A", n_gen), nrow = n_inds, byrow = TRUE)
   #}
   gens_txt <- purrr::pmap_chr(list(purrr::array_branch(inds %>%
                                                      dplyr::select(-dplyr::any_of(c("pop_ind", "sex"))) %>%
-                                                     as.matrix(), 1),
+                                                     base::as.matrix(), 1),
                                purrr::array_branch(gen_type, 1),
                                one_genome,
                                two_genome),

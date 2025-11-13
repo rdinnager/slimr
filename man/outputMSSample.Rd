@@ -3,88 +3,53 @@
 \name{outputMSSample}
 \alias{outputMSSample}
 \alias{Subpopulation$outputMSSample}
-\alias{.P$outputMSSample}
+\alias{P$outputMSSample}
 \title{SLiM method outputMSSample}
 \usage{
 outputMSSample(
   sampleSize,
-  replace,
-  requestedSex,
-  filePath,
-  append,
-  filterMonomorphic
+  replace = NULL,
+  requestedSex = NULL,
+  filePath = NULL,
+  append = NULL,
+  filterMonomorphic = NULL,
+  chromosome = NULL
 )
 }
 \arguments{
-\item{sampleSize}{An object of type integer. Must be of length 1 (a singleton).
-See details for description.}
+\item{sampleSize}{An object of type integer (singleton).}
 
-\item{replace}{An object of type logical. Must be of length 1 (a singleton). The
-default value is \code{T}. See details for description.}
+\item{replace}{An object of type logical (singleton).}
 
-\item{requestedSex}{An object of type string. Must be of length 1 (a singleton).
-The default value is \code{"*"}. See details for description.}
+\item{requestedSex}{An object of type string (singleton).}
 
-\item{filePath}{An object of type null or string. Must be of length 1 (a
-singleton). The default value is \code{NULL}. See details for description.}
+\item{filePath}{An object of type null or string (singleton).}
 
-\item{append}{An object of type logical. Must be of length 1 (a singleton). The
-default value is \code{F}. See details for description.}
+\item{append}{An object of type logical (singleton).}
 
-\item{filterMonomorphic}{An object of type logical. Must be of length 1 (a
-singleton). The default value is \code{F}. See details for description.}
+\item{filterMonomorphic}{An object of type logical (singleton).}
+
+\item{chromosome}{An object of type null or integer or string or Chromosome object (singleton).}
 }
 \value{
 An object of type void.
 }
 \description{
-Documentation for SLiM function \code{outputMSSample}, which is a method of the
-SLiM class \code{\link{Subpopulation}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{outputMSSample}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=740}{SLiM manual: page
-740}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Output a random sample from the subpopulation in MS format (see
-section 27.2.2 for output format details). Positions in the output will span
-the interval [0,1]. A sample of genomes (not entire individuals, note) of
-size sampleSize from the subpopulation will be output. The sample may be done
-either with or without replacement, as specified by replace; the default is to
-sample with replacement. A particular sex of individuals may be requested for
-the sample, for simulations in which sex is enabled, by passing "M" or "F" for
-requestedSex; passing "*", the default, indicates that genomes from individuals
-should be selected randomly, without respect to sex. If the sampling options
-provided by this method are not adequate, see the outputMS() method of Genome
-for a more flexible low-level option. If the optional parameter filePath is NULL
-(the default), output will be sent to Eidos's output stream (see section 4.2.1).
-Otherwise, output will be sent to the filesystem path specified by filePath,
-overwriting that file if append if F, or appending to the end of it if append
-is T. If filterMonomorphic is F (the default), all mutations that are present
-in the sample will be included in the output. This means that some mutations may
-be included that are actually monomorphic within the sample (i.e., that exist
-in every sampled genome, and are thus apparently fixed). These may be filtered
-out with filterMonomorphic = T if desired; note that this option means that
-some mutations that do exist in the sampled genomes might not be included in the
-output, simply because they exist in every sampled genome. See outputSample()
-and outputVCFSample() for other output formats. Output is generally done in a
-late() event, so that the output reflects the state of the simulation at the end
-of a tick.
+integer$ sampleSize, [logical$ replace = T], [string$ requestedSex = "*"], [Ns$ filePath = NULL], [logical$ append = F], [logical$ filterMonomorphic = F], [Niso<Chromosome>$ chromosome = NULL]) Output a random sample from the subpopulation in MS format. Positions in the output will span the interval [0,1]. A sample of non-null haplosomes (not entire individuals, note) of size sampleSize from the subpopulation will be output. The sample may be done either with or without replacement, as specified by replace; the default is to sample with replacement. A particular sex of individuals may be requested for the sample, for simulations in which sex is enabled, by passing "M" or "F" for requestedSex; passing "*", the default, indicates that haplosomes from individuals should be selected randomly, without respect to sex. If the sampling options provided by this method are not adequate, see the outputHaplosomesToMS() method of Haplosome for a more flexible low-level option. If the optional parameter filePath is NULL (the default), output will be sent to Eidos's output stream. Otherwise, output will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. If filterMonomorphic is F (the default), all mutations that are present in the sample will be included in the output. This means that some mutations may be included that are actually monomorphic within the sample (i.e., that exist in every sampled haplosome, and are thus apparently fixed). These may be filtered out with filterMonomorphic = T if desired; note that this option means that some mutations that do exist in the sampled haplosomes might not be included in the output, simply because they exist in every sampled haplosome. The chromosome parameter identifies the chromosome for which the sample of haplosomes should be taken. The default of NULL may be used only in single-chromosome models where the choice of chromosome is unambiguous. In multi-chromosome models, chromosome must be non-NULL; it must specify the chromosome by id (integer), by symbol (string) or by the Chromosome object itself. See outputSample() and outputVCFSample() for other output formats. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -94,12 +59,16 @@ Other Subpopulation:
 \code{\link{addCloned}()},
 \code{\link{addCrossed}()},
 \code{\link{addEmpty}()},
+\code{\link{addMultiRecombinant}()},
 \code{\link{addRecombinant}()},
 \code{\link{addSelfed}()},
 \code{\link{addSpatialMap}()},
 \code{\link{cachedFitness}()},
 \code{\link{configureDisplay}()},
 \code{\link{defineSpatialMap}()},
+\code{\link{deviatePositions}()},
+\code{\link{deviatePositionsWithMap}()},
+\code{\link{haplosomesForChromosomes}()},
 \code{\link{outputSample}()},
 \code{\link{outputVCFSample}()},
 \code{\link{pointDeviated}()},
@@ -108,6 +77,7 @@ Other Subpopulation:
 \code{\link{pointReflected}()},
 \code{\link{pointStopped}()},
 \code{\link{pointUniform}()},
+\code{\link{pointUniformWithMap}()},
 \code{\link{removeSpatialMap}()},
 \code{\link{removeSubpopulation}()},
 \code{\link{sampleIndividuals}()},
@@ -124,7 +94,6 @@ Other Subpopulation:
 \code{\link{takeMigrants}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Subpopulation}

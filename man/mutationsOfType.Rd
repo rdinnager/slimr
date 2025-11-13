@@ -2,10 +2,10 @@
 % Please edit documentation in R/slim_lang.R
 \name{mutationsOfType}
 \alias{mutationsOfType}
-\alias{Genome$mutationsOfType}
-\alias{.G$mutationsOfType}
+\alias{Haplosome$mutationsOfType}
+\alias{Ha$mutationsOfType}
 \alias{Species$mutationsOfType}
-\alias{.Sp$mutationsOfType}
+\alias{Sp$mutationsOfType}
 \title{SLiM method mutationsOfType}
 \usage{
 mutationsOfType(mutType)
@@ -13,8 +13,7 @@ mutationsOfType(mutType)
 mutationsOfType(mutType)
 }
 \arguments{
-\item{mutType}{An object of type integer or MutationType object. Must be of
-length 1 (a singleton). See details for description.}
+\item{mutType}{An object of type integer or MutationType object (singleton).}
 }
 \value{
 An object of type Mutation object.
@@ -22,96 +21,71 @@ An object of type Mutation object.
 An object of type Mutation object.
 }
 \description{
-Documentation for SLiM function \code{mutationsOfType}, which is a method of the
-SLiM class \code{\link{Genome}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{mutationsOfType}, which is a method of the SLiM class \code{\link{Haplosome}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 
-Documentation for SLiM function \code{mutationsOfType}, which is a method of the
-SLiM class \code{\link{Species}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{mutationsOfType}, which is a method of the SLiM class \code{\link{Species}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=673}{SLiM manual: page
-673}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Returns an object vector of all the mutations that are of the type
-specified by mutType, out of all of the mutations in the genome. If you just
-need a count of the matching Mutation objects, rather than a vector of the
-matches, use -countOfMutationsOfType(); if you need just the positions of
-matching Mutation objects, use -positionsOfMutationsOfType(); and if you are
-aiming for a sum of the selection coefficients of matching Mutation objects, use
--sumOfMutationsOfType(). This method is provided for speed; it is much faster
-than the corresponding Eidos code.
+io<MutationType>$ mutType) Returns an object vector of all the mutations that are of the type specified by mutType, out of all of the mutations in the haplosome. If you just need a count of the matching Mutation objects, rather than a vector of the matches, use -countOfMutationsOfType(); if you need just the positions of matching Mutation objects, use -positionsOfMutationsOfType(); and if you are aiming for a sum of the selection coefficients of matching Mutation objects, use -sumOfMutationsOfType(). This method is provided for speed; it is much faster than the corresponding Eidos code. See also substitutionsOfType().
 
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=721}{SLiM manual: page
-721}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Returns an object vector of all the mutations that are of the type
-specified by mutType, out of all of the mutations that are currently active in
-the species. If you just need a count of the matching Mutation objects, rather
-than a vector of the matches, use -countOfMutationsOfType(). This method is
-often used to look up an introduced mutation at a later point in the simulation,
-since there is no way to keep persistent references to objects in SLiM. This
-method is provided for speed; it is much faster than the corresponding Eidos
-code.
+io<MutationType>$ mutType) Returns an object vector of all the mutations that are of the type specified by mutType, out of all of the mutations that are currently active in the species. If you just need a count of the matching Mutation objects, rather than a vector of the matches, use -countOfMutationsOfType(). This method is often used to look up an introduced mutation at a later point in the simulation, since there is no way to keep persistent references to objects in SLiM. This method is provided for speed; it is much faster than the corresponding Eidos code.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
 \seealso{
-Other Genome: 
-\code{\link{G}},
+Other Haplosome: 
+\code{\link{Ha}},
 \code{\link{addMutations}()},
 \code{\link{addNewDrawnMutation}()},
 \code{\link{addNewMutation}()},
 \code{\link{containsMarkerMutation}()},
 \code{\link{containsMutations}()},
 \code{\link{countOfMutationsOfType}()},
-\code{\link{mutationCountsInGenomes}()},
-\code{\link{mutationFrequenciesInGenomes}()},
+\code{\link{mutationCountsInHaplosomes}()},
+\code{\link{mutationFrequenciesInHaplosomes}()},
 \code{\link{nucleotides}()},
-\code{\link{output}()},
-\code{\link{outputMS}()},
-\code{\link{outputVCF}()},
+\code{\link{outputHaplosomes}()},
+\code{\link{outputHaplosomesToMS}()},
+\code{\link{outputHaplosomesToVCF}()},
 \code{\link{positionsOfMutationsOfType}()},
-\code{\link{readFromMS}()},
-\code{\link{readFromVCF}()},
+\code{\link{readHaplosomesFromMS}()},
+\code{\link{readHaplosomesFromVCF}()},
 \code{\link{removeMutations}()},
 \code{\link{sumOfMutationsOfType}()}
 
 Other Species: 
 \code{\link{Sp}},
+\code{\link{addPatternForClone}()},
+\code{\link{addPatternForCross}()},
+\code{\link{addPatternForNull}()},
+\code{\link{addPatternForRecombinant}()},
 \code{\link{addSubpop}()},
 \code{\link{addSubpopSplit}()},
+\code{\link{chromosomesOfType}()},
+\code{\link{chromosomesWithIDs}()},
+\code{\link{chromosomesWithSymbols}()},
 \code{\link{countOfMutationsOfType}()},
 \code{\link{individualsWithPedigreeIDs}()},
 \code{\link{killIndividuals}()},
@@ -133,14 +107,14 @@ Other Species:
 \code{\link{simulationFinished}()},
 \code{\link{skipTick}()},
 \code{\link{subsetMutations}()},
+\code{\link{substitutionsOfType}()},
 \code{\link{treeSeqCoalesced}()},
 \code{\link{treeSeqOutput}()},
 \code{\link{treeSeqRememberIndividuals}()},
 \code{\link{treeSeqSimplify}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
-\concept{Genome}
+\concept{Haplosome}
 \concept{Species}

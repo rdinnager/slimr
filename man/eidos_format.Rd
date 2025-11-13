@@ -2,111 +2,35 @@
 % Please edit documentation in R/slim_lang.R
 \name{eidos_format}
 \alias{eidos_format}
-\alias{Eidos$format}
-\alias{.E$format}
-\title{Eidos method format}
+\alias{E$format}
+\title{SLiM function format}
 \usage{
 eidos_format(format, x)
 }
 \arguments{
-\item{format}{An object of type string or numeric. Must be of length 1 (a
-singleton). See details for description.}
+\item{format}{An object of type string or numeric (singleton).}
 
-\item{x}{An object of type string or numeric. See details for description.}
+\item{x}{An object of type string or numeric.}
 }
 \value{
 An object of type string.
 }
 \description{
-Documentation for Eidos function \code{format}, which is a method of
-\code{\link{Eidos}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{format}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=NA}{SLiM manual: page NA}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Returns a vector of formatted strings generated from x, based upon
-the formatting string format. The format parameter may be any string value,
-but must contain exactly one escape sequence beginning with the % character.
-This escape sequence specifies how to format a single value from the vector
-x. The returned vector contains one string value for each element of x; each
-string value is identical to the string supplied in format, except with a
-formatted version of the corresponding value from x substituted in place
-of the escape sequence. The syntax for format is a subset of the standard
-C/C++ printf()-style format strings (available in many places online, such
-as http://en.cppreference.com/w/c/io/fprintf). The escape sequence used to
-format each value of x is composed of several elements: - A % character at
-the beginning, initiating the escape sequence (if an actual % character is
-desired, rather than an escape sequence, %% may be used) - Optional flags that
-modify the style of formatting: • - : The value is left-justified with the
-field (as opposed to the default of right-justification). • + : The sign of
-the value is always prepended, even if the value is positive (as opposed to
-the default of appending the sign only if the value is negative). • space :
-The value is prepended by a space when a sign is not prepended. This is ignored
-if the + flag is present, since values are then always prepended by a sign. •
-# : An alternative format is used. For %o, at least one leading zero is always
-produced. For %x and %X, 0x or 0X (respectively) is prepended if the value is
-nonzero. For %f, %F, %e, %E, %g, and %G, a decimal point is forced even if no
-zeros follow. • 0 : Leading zeros are used to pad the field instead of spaces.
-This flag is ignored if the left-justification flag, -, is present. It is also
-ignored for integer values, if a precision is specified. - An optional minimum
-field width, specified as an integer value. Fields will be padded out to this
-minimum width. Padding will be done with space characters by default (or with
-zeros, if the 0 flag is used), on the left by default (or on the right, if the
-- flag is used). - An optional precision, given as an integer value preceded
-by a . character. If no integer value follows the . character, a precision of
-zero will be used. For integer values of x (formatted with %d, %i, %o, %x, or
-%X) the precision specifies the minimum number of digits that will appear (with
-extra zeros on the left if necessary), with a default precision of 1. For float
-values of x formatted with %f, %F, %e, %E, %g, or %G, the precision specifies
-the minimum number of digits that will appear to the right of the decimal
-point (with extra zeros on the right if necessary), with a default precision
-of 6. - A format specifier. For integer values, this may be %d or %i (producing
-base-10 output; there is no difference between the two), %o (producing base-8
-or octal output), %x (producing base-16 hexadecimal output using lowercase
-letters), or %X (producing base-16 hexadecimal output using uppercase letters).
-For float values, this may be %f or %F to produce decimal notation (of the
-form [−]ddd.ddd; there is no difference between the two), %e or %E to produce
-scientific notation (of the form [−]d.ddde±dd or [−]d.dddE±dd, respectively),
-or %g or %G to produce either decimal notation or scientific notation (using
-the formatting of %f / %e or %F / %E, respectively) on a per-value basis,
-depending upon the range of the value. Note that relative to the standard C/C++
-printf()-style behavior, there are a few differences: (1) only a single escape
-sequence may be present in the format string, (2) the use of * to defer field
-width and precision values to a passed parameter is not supported, (3) only
-integer and float values of x are supported, (4) only the %d, %i, %o, %x, %X,
-%f, %F, %e, %E, %g, and %G format specifiers are supported, and (5) no length
-modifiers may be supplied, since Eidos does not support different sizes of the
-integer and float types. Note also that the Eidos conventions of emitting INF
-and NAN for infinities and Not-A-Number values respectively is not honored by
-this function; the strings generated for such 64 values are platform-dependent,
-following the implementation definition of the C++ compiler used to build
-Eidos, since format() calls through to snprintf() to assemble the final string
-values. For example, format("A number: %+7.2f", c(-4.1, 15.375, 8)) will produce
-a vector with three elements: "A number: -4.10" "A number: +15.38" "A number:
-+8.00". The precision of .2 results in two digits after the decimal point, the
-minimum field width of 7 results in padding of the values on the left (with
-spaces) to a minimum of seven characters, the flag + causes a sign to be shown
-on positive values as well as negative values, and the format specifier f leads
-to the float values of x being formatted in base-10 decimal. One string value
-is produced in the result vector for each value in the parameter x. These values
-could then be merged into a single string with paste(), for example, or printed
-with print() or cat().
+Returns a vector of formatted strings generated from x, based upon the formatting string format. The format parameter may be any string value, but must contain exactly one escape sequence beginning with the % character. This escape sequence specifies how to format a single value from the vector x. The returned vector contains one string value for each element of x; each string value is identical to the string supplied in format, except with a formatted version of the corresponding value from x substituted in place of the escape sequence. The syntax for format is a subset of the standard C/C++ printf()-style format strings (e.g., http://en.cppreference.com/w/c/io/fprintf). The escape sequence used to format each value of x is composed of several elements: - A % character at the beginning, initiating the escape sequence (if an actual % character is desired, rather than an escape sequence, %% may be used) - Optional flags that modify the style of formatting: ¥ - : The value is left-justified with the field (as opposed to the default of right-justification). ¥ + : The sign of the value is always prepended, even if the value is positive (as opposed to the default of appending the sign only if the value is negative). ¥ space : The value is prepended by a space when a sign is not prepended. This is ignored if the + flag is present, since values are then always prepended by a sign. ¥ # : An alternative format is used. For %o, at least one leading zero is always produced. For %x and %X, 0x or 0X (respectively) is prepended if the value is nonzero. For %f, %F, %e, %E, %g, and %G, a decimal point is forced even if no zeros follow. ¥ 0 : Leading zeros are used to pad the field instead of spaces. This flag is ignored if the left-justification flag, -, is present. It is also ignored for integer values, if a precision is specified. - An optional minimum field width, specified as an integer value. Fields will be padded out to this minimum width. Padding will be done with space characters by default (or with zeros, if the 0 flag is used), on the left by default (or on the right, if the - flag is used). - An optional precision, given as an integer value preceded by a . character. If no integer value follows the . character, a precision of zero will be used. For integer values of x (formatted with %d, %i, %o, %x, or %X) the precision specifies the minimum number of digits that will appear (with extra zeros on the left if necessary), with a default precision of 1. For float values of x formatted with %f, %F, %e, %E, %g, or %G, the precision specifies the minimum number of digits that will appear to the right of the decimal point (with extra zeros on the right if necessary), with a default precision of 6. - A format specifier. For integer values, this may be %d or %i (producing base-10 output; there is no difference between the two), %o (producing base-8 or octal output), %x (producing base-16 hexadecimal output using lowercase letters), or %X (producing base-16 hexadecimal output using uppercase letters). For float values, this may be %f or %F to produce decimal notation (of the form []ddd.ddd; there is no difference between the two), %e or %E to produce scientific notation (of the form []d.ddde±dd or []d.dddE±dd, respectively), or %g or %G to produce either decimal notation or scientific notation (using the formatting of %f / %e or %F / %E, respectively) on a per-value basis, depending upon the range of the value. Note that relative to the standard C/C++ printf()-style behavior, there are a few differences: (1) only a single escape sequence may be present in the format string, (2) the use of * to defer field width and precision values to a passed parameter is not supported, (3) only integer and float values of x are supported, (4) only the %d, %i, %o, %x, %X, %f, %F, %e, %E, %g, and %G format specifiers are supported, and (5) no length modifiers may be supplied, since Eidos does not support different sizes of the integer and float types. Note also that the Eidos conventions of emitting INF and NAN for infinities and Not-A-Number values respectively is not honored by this function; the strings generated for such values are platform-dependent, following the implementation definition of the C++ compiler used to build Eidos, since format() calls through to snprintf() to assemble the final string values. For example, format("A number: %+7.2f", c(-4.1, 15.375, 8)) will produce a vector with three elements: "A number: -4.10" "A number: +15.38" "A number: +8.00". The precision of .2 results in two digits after the decimal point, the minimum field width of 7 results in padding of the values on the left (with spaces) to a minimum of seven characters, the flag + causes a sign to be shown on positive values as well as negative values, and the format specifier f leads to the float values of x being formatted in base-10 decimal. One string value is produced in the result vector for each value in the parameter x. These values could then be merged into a single string with paste(), for example, or printed with print() or cat().
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -123,6 +47,7 @@ Other Eidos:
 \code{\link{eidos_asInteger}()},
 \code{\link{eidos_asLogical}()},
 \code{\link{eidos_asString}()},
+\code{\link{eidos_asVector}()},
 \code{\link{eidos_asin}()},
 \code{\link{eidos_assert}()},
 \code{\link{eidos_atan}()},
@@ -136,6 +61,7 @@ Other Eidos:
 \code{\link{eidos_citation}()},
 \code{\link{eidos_clock}()},
 \code{\link{eidos_cmColors}()},
+\code{\link{eidos_colSums}()},
 \code{\link{eidos_color2rgb}()},
 \code{\link{eidos_colors}()},
 \code{\link{eidos_cor}()},
@@ -150,18 +76,22 @@ Other Eidos:
 \code{\link{eidos_defineConstant}()},
 \code{\link{eidos_defineGlobal}()},
 \code{\link{eidos_deleteFile}()},
+\code{\link{eidos_det}()},
 \code{\link{eidos_dexp}()},
 \code{\link{eidos_dgamma}()},
 \code{\link{eidos_diag}()},
 \code{\link{eidos_dim}()},
 \code{\link{eidos_dmvnorm}()},
 \code{\link{eidos_dnorm}()},
+\code{\link{eidos_doCall}()},
 \code{\link{eidos_drop}()},
 \code{\link{eidos_elementType}()},
+\code{\link{eidos_executeLambda}()},
 \code{\link{eidos_exists}()},
 \code{\link{eidos_exp}()},
 \code{\link{eidos_fileExists}()},
 \code{\link{eidos_filesAtPath}()},
+\code{\link{eidos_filter}()},
 \code{\link{eidos_findInterval}()},
 \code{\link{eidos_float}()},
 \code{\link{eidos_floor}()},
@@ -170,6 +100,7 @@ Other Eidos:
 \code{\link{eidos_functionSource}()},
 \code{\link{eidos_getSeed}()},
 \code{\link{eidos_getwd}()},
+\code{\link{eidos_grep}()},
 \code{\link{eidos_heatColors}()},
 \code{\link{eidos_hsv2rgb}()},
 \code{\link{eidos_identical}()},
@@ -177,6 +108,7 @@ Other Eidos:
 \code{\link{eidos_integer}()},
 \code{\link{eidos_integerDiv}()},
 \code{\link{eidos_integerMod}()},
+\code{\link{eidos_inverse}()},
 \code{\link{eidos_isFinite}()},
 \code{\link{eidos_isFloat}()},
 \code{\link{eidos_isInfinite}()},
@@ -197,6 +129,7 @@ Other Eidos:
 \code{\link{eidos_match}()},
 \code{\link{eidos_matrix}()},
 \code{\link{eidos_matrixMult}()},
+\code{\link{eidos_matrixPow}()},
 \code{\link{eidos_max}()},
 \code{\link{eidos_mean}()},
 \code{\link{eidos_min}()},
@@ -205,6 +138,12 @@ Other Eidos:
 \code{\link{eidos_nrow}()},
 \code{\link{eidos_object}()},
 \code{\link{eidos_order}()},
+\code{\link{eidos_outerProduct}()},
+\code{\link{eidos_parallelGetMaxThreads}()},
+\code{\link{eidos_parallelGetNumThreads}()},
+\code{\link{eidos_parallelGetTaskThreadCounts}()},
+\code{\link{eidos_parallelSetNumThreads}()},
+\code{\link{eidos_parallelSetTaskThreadCounts}()},
 \code{\link{eidos_paste}()},
 \code{\link{eidos_paste0}()},
 \code{\link{eidos_pmax}()},
@@ -239,9 +178,11 @@ Other Eidos:
 \code{\link{eidos_rnbinom}()},
 \code{\link{eidos_rnorm}()},
 \code{\link{eidos_round}()},
+\code{\link{eidos_rowSums}()},
 \code{\link{eidos_rpois}()},
 \code{\link{eidos_runif}()},
 \code{\link{eidos_rweibull}()},
+\code{\link{eidos_rztpois}()},
 \code{\link{eidos_sample}()},
 \code{\link{eidos_sapply}()},
 \code{\link{eidos_sd}()},
@@ -254,6 +195,7 @@ Other Eidos:
 \code{\link{eidos_setSymmetricDifference}()},
 \code{\link{eidos_setUnion}()},
 \code{\link{eidos_setwd}()},
+\code{\link{eidos_sign}()},
 \code{\link{eidos_sin}()},
 \code{\link{eidos_size}()},
 \code{\link{eidos_sort}()},
@@ -280,6 +222,7 @@ Other Eidos:
 \code{\link{eidos_tempdir}()},
 \code{\link{eidos_terrainColors}()},
 \code{\link{eidos_time}()},
+\code{\link{eidos_tr}()},
 \code{\link{eidos_trunc}()},
 \code{\link{eidos_ttest}()},
 \code{\link{eidos_type}()},
@@ -295,7 +238,6 @@ Other Eidos:
 \code{\link{eidos_writeTempFile}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{Eidos}

@@ -3,75 +3,35 @@
 \name{totalOfNeighborStrengths}
 \alias{totalOfNeighborStrengths}
 \alias{InteractionType$totalOfNeighborStrengths}
-\alias{.IT$totalOfNeighborStrengths}
+\alias{IT$totalOfNeighborStrengths}
 \title{SLiM method totalOfNeighborStrengths}
 \usage{
-totalOfNeighborStrengths(receivers, exerterSubpop)
+totalOfNeighborStrengths(receivers, exerterSubpop = NULL)
 }
 \arguments{
-\item{receivers}{An object of type Individual object. See details for
-description.}
+\item{receivers}{An object of type Individual object.}
 
-\item{exerterSubpop}{An object of type null or Subpopulation object. Must be
-of length 1 (a singleton). The default value is \code{NULL}. See details for
-description.}
+\item{exerterSubpop}{An object of type null or Subpopulation object (singleton).}
 }
 \value{
 An object of type float.
 }
 \description{
-Documentation for SLiM function \code{totalOfNeighborStrengths}, which is a
-method of the SLiM class \code{\link{InteractionType}}.
-Note that the R function is a stub, it does not do anything in R (except bring
-up this documentation). It will only do
-anything useful when used inside a \code{\link{slim_block}} function further
-nested in a \code{\link{slim_script}}
-function call, where it will be translated into valid SLiM code as part of a
-full SLiM script.
+Documentation for SLiM function \code{totalOfNeighborStrengths}, which is a method of the SLiM class \code{\link{InteractionType}}.
+Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
+anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
+function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official
-\href{http://benhaller.com/slim/SLiM_Manual.pdf#page=699}{SLiM manual: page
-699}.
+Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
 
-Returns a vector of the total interaction strength felt by each
-individual in receivers by the exerters in exerterSubpop (or, if that is
-NULL, then by all individuals in the receiver's subpopulation). The receivers
-parameter does not need to be a singleton; indeed, it can be a vector of
-all of the individuals in a given subpopulation. All of the receivers must
-belong to a single subpopulation, and all of the exerters must belong to
-a single subpopulation, but those two subpopulations do not need to be
-the same. The evaluate() method must have been previously called for the
-receiver and exerter subpopulations, and positions saved at evaluation
-time will be used. If the InteractionType is nonspatial, this method may
-not be called. For one individual, this is essentially the same as calling
-nearestInteractingNeighbors() with a large count so as to obtain the
-complete vector of all interacting neighbors, calling strength() for each
-of those interactions to get each interaction strength, and adding those
-interaction strengths together with sum(). This method is much faster than
-that implementation, however, since all of that work is done as a single
-operation. Also, totalOfNeighborStrengths() can total up interactions for more
-than one receiver in a single vectorized call. Similarly, for one individual
-this is essentially the same as calling strength() to get the interaction
-strengths between a receiver and all individuals in the exerter subpopulation,
-and then calling sum(). Again, this method should be much faster, since this
-algorithm looks only at neighbors, whereas calling strength() directly assesses
-interaction strengths with all other individuals. This will make a particularly
-large difference when the subpopulation size is large and the maximum distance
-of the InteractionType is small. See localPopulationDensity() for a related
-method that calculates the total interaction strength divided by the amount
-of "interaction field" present for an individual (i.e., the integral of the
-interaction function clipped to the spatial bounds of the subpopulation) to
-provide an estimate of the "interaction density" felt by an individual.
+object<Individual> receivers, [No<Subpopulation>$ exerterSubpop = NULL]) Returns a vector of the total interaction strength felt by each individual in receivers by the exerters in exerterSubpop (or, if that is NULL, then by all individuals in the receiver's subpopulation). The receivers parameter does not need to be a singleton; indeed, it can be a vector of all of the individuals in a given subpopulation. All of the receivers must belong to a single subpopulation, and all of the exerters must belong to a single subpopulation, but those two subpopulations do not need to be the same. The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. If the InteractionType is non-spatial, this method may not be called. For one individual, this is essentially the same as calling nearestInteractingNeighbors() with a large count so as to obtain the complete vector of all interacting neighbors, calling strength() for each of those interactions to get each interaction strength, and adding those interaction strengths together with sum(). This method is much faster than that implementation, however, since all of that work is done as a single operation. Also, totalOfNeighborStrengths() can total up interactions for more than one receiver in a single vectorized call. Similarly, for one individual this is essentially the same as calling strength() to get the interaction strengths between a receiver and all individuals in the exerter subpopulation, and then calling sum(). Again, this method should be much faster, since this algorithm looks only at neighbors, whereas calling strength() directly assesses interaction strengths with all other individuals. This will make a particularly large difference when the subpopulation size is large and the maximum distance of the InteractionType is small. See localPopulationDensity() for a related method that calculates the total interaction strength divided by the amount of "interaction field" present for an individual (i.e., the integral of the interaction function clipped to the spatial bounds of the subpopulation) to provide an estimate of the "interaction density" felt by an individual.
 }
 \section{Copyright}{
 
-This is documentation for a function in the SLiM software, and has been
-reproduced from the official manual,
-which can be found here: \url{http://benhaller.com/slim/SLiM_Manual.pdf}. This
-documentation is
-Copyright © 2016-2020 Philipp Messer. All rights reserved. More information
-about SLiM can be found
+This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
+which can be found here: \url{https://messerlab.org/slim/}. This documentation is
+Copyright (c) 2016-2025 Philipp Messer. All rights reserved. More information about SLiM can be found
 on the official website: \url{https://messerlab.org/slim/}
 }
 
@@ -98,7 +58,6 @@ Other InteractionType:
 \code{\link{unevaluate}()}
 }
 \author{
-Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer
-(\email{messer@cornell.edu})
+Benjamin C Haller (\email{bhaller@benhaller.com}) and Philipp W Messer (\email{messer@cornell.edu})
 }
 \concept{InteractionType}

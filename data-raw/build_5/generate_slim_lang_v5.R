@@ -208,7 +208,7 @@ method_code <- "
 # Template for Eidos method code
 # Use #.. prefix so lines are treated as code (not roxygen comments)
 eidos_method_code <- "
-#..<<class_abbr>>$<<function_name>> <- function(<<args_with_dots>>) {
+#..<<class_name>>$<<function_name>> <- <<class_abbr>>$<<function_name>> <- <<class_internal>>$<<function_name>> <- function(<<args_with_dots>>) {
 #..  ?eidos_<<function_name>>
 #..}
 "

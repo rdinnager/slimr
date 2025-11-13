@@ -26,18 +26,20 @@ calcPairHeterozygosity(
 \item{infiniteSites}{An object of type logical (singleton).}
 }
 \value{
-An object of type float. Return will be of length 1 (a singleton)
+\strong{SLiMBuiltin method:} An object of type float. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{calcPairHeterozygosity}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
+\strong{SLiMBuiltin method:} Documentation for SLiM function \code{calcPairHeterozygosity}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Calculates the heterozygosity for a pair of haplosomes; these will typically be two homologous haplosomes of the same diploid individual, but any two haplosomes associated with the same chromosome may be supplied. The calculation can be narrowed to apply to only a window - a subrange of the full chromosome - by passing the interval bounds [start, end] for the desired window. In this case, the vector of mutations used for the calculation will be subset to include only mutations within the specified window. The default behavior, with start and end of NULL, provides the haplosome-wide heterozygosity. The implementation calcPairHeterozygosity(), viewable with functionSource(), treats every mutation as independent in the heterozygosity calculations by default (i.e., with infiniteSites=T). If mutations are stacked, the heterozygosity calculated therefore depends upon the number of unshared mutations, not the number of differing sites. Similarly, if multiple Mutation objects exist in different haplosomes at the same site (whether representing different genetic states, or multiple mutational lineages for the same genetic state), each Mutation object is treated separately for purposes of the heterozygosity calculation, just as if they were at different sites. One could regard these choices as embodying an infinite-sites interpretation of the segregating mutations. In most biologically realistic models, such genetic states will be quite rare, and so the impact of this choice will be negligible; however, in some models this distinction may be important. The behavior of calcPairHeterozygosity() can be switched to calculate based upon the number of differing sites, rather than the number of unshared mutations, by passing infiniteSites=F.
+\strong{SLiMBuiltin method:} Calculates the heterozygosity for a pair of haplosomes; these will typically be two homologous haplosomes of the same diploid individual, but any two haplosomes associated with the same chromosome may be supplied. The calculation can be narrowed to apply to only a window - a subrange of the full chromosome - by passing the interval bounds [start, end] for the desired window. In this case, the vector of mutations used for the calculation will be subset to include only mutations within the specified window. The default behavior, with start and end of NULL, provides the haplosome-wide heterozygosity. The implementation calcPairHeterozygosity(), viewable with functionSource(), treats every mutation as independent in the heterozygosity calculations by default (i.e., with infiniteSites=T). If mutations are stacked, the heterozygosity calculated therefore depends upon the number of unshared mutations, not the number of differing sites. Similarly, if multiple Mutation objects exist in different haplosomes at the same site (whether representing different genetic states, or multiple mutational lineages for the same genetic state), each Mutation object is treated separately for purposes of the heterozygosity calculation, just as if they were at different sites. One could regard these choices as embodying an infinite-sites interpretation of the segregating mutations. In most biologically realistic models, such genetic states will be quite rare, and so the impact of this choice will be negligible; however, in some models this distinction may be important. The behavior of calcPairHeterozygosity() can be switched to calculate based upon the number of differing sites, rather than the number of unshared mutations, by passing infiniteSites=F.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

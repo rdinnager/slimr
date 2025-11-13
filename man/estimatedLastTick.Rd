@@ -12,18 +12,20 @@ estimatedLastTick(void)
 \item{void}{An object of type object.}
 }
 \value{
-An object of type integer. Return will be of length 1 (a singleton)
+\strong{Community method:} An object of type integer. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{estimatedLastTick}, which is a method of the SLiM class \code{\link{Community}}.
+\strong{Community method:} Documentation for SLiM function \code{estimatedLastTick}, which is a method of the SLiM class \code{\link{Community}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-void) Returns SLiM's current estimate of the last tick in which the model will execute. Because script blocks can be added, removed, and rescheduled, and because the simulation may end prematurely (due to a call to simulationFinished(), for example), this is only an estimate, and may change over time.
+\strong{Community method:} Returns SLiM's current estimate of the last tick in which the model will execute. Because script blocks can be added, removed, and rescheduled, and because the simulation may end prematurely (due to a call to simulationFinished(), for example), this is only an estimate, and may change over time.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

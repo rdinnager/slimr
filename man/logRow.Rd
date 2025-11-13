@@ -12,18 +12,20 @@ logRow(void)
 \item{void}{An object of type object.}
 }
 \value{
-An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical.
+\strong{LogFile method:} An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical.
 }
 \description{
-Documentation for SLiM function \code{logRow}, which is a method of the SLiM class \code{\link{LogFile}}.
+\strong{LogFile method:} Documentation for SLiM function \code{logRow}, which is a method of the SLiM class \code{\link{LogFile}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-void) This logs a new row of data, by evaluating all of the generators added to the LogFile with add...() calls. Note that the new row may be buffered, and thus may not be written out to disk immediately; see flush(). This method may be used instead of, or in conjunction with, automatic logging. You can get the LogFile instance, in order to call logRow() on it, from community.logFiles, or you can remember it in a global constant with defineConstant().
+\strong{LogFile method:} This logs a new row of data, by evaluating all of the generators added to the LogFile with add...() calls. Note that the new row may be buffered, and thus may not be written out to disk immediately; see flush(). This method may be used instead of, or in conjunction with, automatic logging. You can get the LogFile instance, in order to call logRow() on it, from community.logFiles, or you can remember it in a global constant with defineConstant().
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

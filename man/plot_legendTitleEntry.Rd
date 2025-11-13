@@ -12,18 +12,20 @@ plot_legendTitleEntry(label)
 \item{label}{An object of type string (singleton).}
 }
 \value{
-An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
+\strong{Plot method:} An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
 }
 \description{
-Documentation for SLiM function \code{legendTitleEntry}, which is a method of the SLiM class \code{\link{Plot}}.
+\strong{Plot method:} Documentation for SLiM function \code{legendTitleEntry}, which is a method of the SLiM class \code{\link{Plot}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-string$ label) Adds a legend entry with text label to the plot. The entry will be displayed as a title, left-aligned with no graphical representation (no line, point, or swatch). A label of "", the empty string, is allowed and will produce a blank line in the legend (for spacing). Note that title entries always produce their own separate line in the legend; they do not participate in the overdrawing scheme used for other types of legend entries.
+\strong{Plot method:} Adds a legend entry with text label to the plot. The entry will be displayed as a title, left-aligned with no graphical representation (no line, point, or swatch). A label of "", the empty string, is allowed and will produce a blank line in the legend (for spacing). Note that title entries always produce their own separate line in the legend; they do not participate in the overdrawing scheme used for other types of legend entries.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

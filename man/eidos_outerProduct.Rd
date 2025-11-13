@@ -13,18 +13,20 @@ eidos_outerProduct(x, y)
 \item{y}{An object of type numeric or numeric.}
 }
 \value{
-An object of type numeric.
+\strong{Eidos function:} An object of type numeric.
 }
 \description{
-Documentation for SLiM function \code{outerProduct}.
+\strong{Eidos function:} Documentation for SLiM function \code{outerProduct}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the outer product of vectors x and y. The outer product, x  y, is the result of matrix multiplication of x with the transpose of y, or xyT. It will be a matrix with a number of rows equal to the length of x, and a number of columns equal to the length of y. It is required that x and y be vectors, not matrices or arrays, that they have non-zero lengths, and that they be the same type - both integer or both float. The return value will be of the same type as x and y.
+\strong{Eidos function:} Returns the outer product of vectors x and y. The outer product, x  y, is the result of matrix multiplication of x with the transpose of y, or xyT. It will be a matrix with a number of rows equal to the length of x, and a number of columns equal to the length of y. It is required that x and y be vectors, not matrices or arrays, that they have non-zero lengths, and that they be the same type - both integer or both float. The return value will be of the same type as x and y.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

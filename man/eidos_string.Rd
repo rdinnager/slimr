@@ -11,18 +11,20 @@ eidos_string(length)
 \item{length}{An object of type integer (singleton).}
 }
 \value{
-An object of type string.
+\strong{Eidos function:} An object of type string.
 }
 \description{
-Documentation for SLiM function \code{string}.
+\strong{Eidos function:} Documentation for SLiM function \code{string}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a new string vector of the length specified by length, filled with "" values. This can be useful for pre-allocating a vector which you then fill with values by subscripting. 3.5. Value inspection & manipulation functions
+\strong{Eidos function:} Returns a new string vector of the length specified by length, filled with "" values. This can be useful for pre-allocating a vector which you then fill with values by subscripting. 3.5. Value inspection & manipulation functions
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

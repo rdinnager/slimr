@@ -13,18 +13,20 @@ eidos_filesAtPath(path, fullPaths = NULL)
 \item{fullPaths}{An object of type string or logical (singleton).}
 }
 \value{
-An object of type string.
+\strong{Eidos function:} An object of type string.
 }
 \description{
-Documentation for SLiM function \code{filesAtPath}.
+\strong{Eidos function:} Documentation for SLiM function \code{filesAtPath}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a string vector containing the names of all files in a directory specified by path. If the optional parameter fullPaths is T, full filesystem paths are returned for each file; if fullPaths is F (the default), then only the filenames relative to the specified directory are returned. This list includes directories (i.e. subfolders), including the "." and ".." directories on Un*x systems. The list also includes invisible files, such as those that begin with a "." on Un*x systems. This function does not descend recursively into subdirectories. If an error occurs during the read, NULL will be returned.
+\strong{Eidos function:} Returns a string vector containing the names of all files in a directory specified by path. If the optional parameter fullPaths is T, full filesystem paths are returned for each file; if fullPaths is F (the default), then only the filenames relative to the specified directory are returned. This list includes directories (i.e. subfolders), including the "." and ".." directories on Un*x systems. The list also includes invisible files, such as those that begin with a "." on Un*x systems. This function does not descend recursively into subdirectories. If an error occurs during the read, NULL will be returned.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

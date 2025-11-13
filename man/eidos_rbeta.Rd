@@ -15,18 +15,20 @@ eidos_rbeta(n, alpha, beta)
 \item{beta}{An object of type integer or numeric or numeric.}
 }
 \value{
-An object of type float.
+\strong{Eidos function:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{rbeta}.
+\strong{Eidos function:} Documentation for SLiM function \code{rbeta}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a vector of n random draws from a beta distribution with parameters alpha and beta. The alpha and beta parameters may either be singletons, specifying a single value to be used for all of the draws, or they may be vectors of length n, specifying a value for each draw. Draws are made from a beta distribution with probability density P(s | ,) = [(+)/()()]s1(1s)1, where  is alpha and  is beta. Both parameters must be greater than 0. The values drawn are in the interval [0, 1].
+\strong{Eidos function:} Returns a vector of n random draws from a beta distribution with parameters alpha and beta. The alpha and beta parameters may either be singletons, specifying a single value to be used for all of the draws, or they may be vectors of length n, specifying a value for each draw. Draws are made from a beta distribution with probability density P(s | ,) = [(+)/()()]s1(1s)1, where  is alpha and  is beta. Both parameters must be greater than 0. The values drawn are in the interval [0, 1].
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

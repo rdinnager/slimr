@@ -29,18 +29,20 @@ initializeRecombinationRateFromFile(
 \item{sex}{An object of type string or integer or float or string or string or string (singleton).}
 }
 \value{
-An object of type void.
+\strong{Initialize method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{initializeRecombinationRateFromFile}, which is a method of the SLiM class \code{\link{Initialize}}.
+\strong{Initialize method:} Documentation for SLiM function \code{initializeRecombinationRateFromFile}, which is a method of the SLiM class \code{\link{Initialize}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Set a recombination rate map from data read from the file at path. This function is essentially a wrapper for initializeRecombinationRate() that uses readCSV() and passes the data through. The file is expected to contain two columns of data. The first column must be integer start positions for rate map regions; the first region should start at position 0 if the map's positions are 0-based, or at position 1 if the map's positions are 1-based; in the latter case, 1 will be subtracted from every position since SLiM uses 0-based positions. The second column must be float rates, relative to the scaling factor specified in scale; for example, if a given rate is 1.2 and scale is 1e-8 (the default), the rate used will be 1.2e-8. No column header line should be present; the file should start immediately with numerical data. The expected separator between columns is a tab character by default, but may be passed in sep; the expected decimal separator is a period by default, but may be passed in dec. Once read, the map is converted into a rate map specified with end positions, rather than start positions, and the position given by lastPosition is used as the end of the last rate region; it should be the last position of the chromosome. See readCSV() for further details on sep and dec, which are passed through to it; and see initializeRecombinationRate() for details on how the rate map is validated and used, and how the sex parameter is used. This function is written in Eidos, and its source code can be viewed with functionSource(), so you can copy and modify its code if you need to modify its functionality.
+\strong{Initialize method:} Set a recombination rate map from data read from the file at path. This function is essentially a wrapper for initializeRecombinationRate() that uses readCSV() and passes the data through. The file is expected to contain two columns of data. The first column must be integer start positions for rate map regions; the first region should start at position 0 if the map's positions are 0-based, or at position 1 if the map's positions are 1-based; in the latter case, 1 will be subtracted from every position since SLiM uses 0-based positions. The second column must be float rates, relative to the scaling factor specified in scale; for example, if a given rate is 1.2 and scale is 1e-8 (the default), the rate used will be 1.2e-8. No column header line should be present; the file should start immediately with numerical data. The expected separator between columns is a tab character by default, but may be passed in sep; the expected decimal separator is a period by default, but may be passed in dec. Once read, the map is converted into a rate map specified with end positions, rather than start positions, and the position given by lastPosition is used as the end of the last rate region; it should be the last position of the chromosome. See readCSV() for further details on sep and dec, which are passed through to it; and see initializeRecombinationRate() for details on how the rate map is validated and used, and how the sex parameter is used. This function is written in Eidos, and its source code can be viewed with functionSource(), so you can copy and modify its code if you need to modify its functionality.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

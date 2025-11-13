@@ -15,18 +15,20 @@ eidos_substr(x, first, last = NULL)
 \item{last}{An object of type null or integer.}
 }
 \value{
-An object of type string.
+\strong{Eidos function:} An object of type string.
 }
 \description{
-Documentation for SLiM function \code{substr}.
+\strong{Eidos function:} Documentation for SLiM function \code{substr}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns substrings extracted from the elements of x, spanning character position first to character position last (inclusive). Character positions are numbered from 0 to nchar(x)-1. Positions that fall outside of that range are legal; a substring range that encompasses no characters will produce an empty string. If first is greater than last, an empty string will also result. If last is NULL (the default), then the substring will extend to the end of the string. The parameters first and last may either be singletons, specifying a single value to be used for all of the substrings, or they may be vectors of the same length as x, specifying a value for each substring. 3.8. Matrix and array functions
+\strong{Eidos function:} Returns substrings extracted from the elements of x, spanning character position first to character position last (inclusive). Character positions are numbered from 0 to nchar(x)-1. Positions that fall outside of that range are legal; a substring range that encompasses no characters will produce an empty string. If first is greater than last, an empty string will also result. If last is NULL (the default), then the substring will extend to the end of the string. The parameters first and last may either be singletons, specifying a single value to be used for all of the substrings, or they may be vectors of the same length as x, specifying a value for each substring. 3.8. Matrix and array functions
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

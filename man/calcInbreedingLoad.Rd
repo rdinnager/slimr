@@ -14,18 +14,20 @@ calcInbreedingLoad(haplosomes, mutType = NULL)
 \item{mutType}{An object of type null or integer or MutationType object (singleton).}
 }
 \value{
-An object of type float. Return will be of length 1 (a singleton)
+\strong{SLiMBuiltin method:} An object of type float. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{calcInbreedingLoad}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
+\strong{SLiMBuiltin method:} Documentation for SLiM function \code{calcInbreedingLoad}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Calculates inbreeding load (the haploid number of lethal equivalents, or B) for a vector of haplosomes (containing at least one element) passed in haplosomes. The calculation can be limited to a focal mutation type passed in mutType (which may be either an integer representing the ID of the desired mutation type, or a MutationType object specified directly); if mutType is NULL (the default), all of the mutations for the focal species will be considered. In any case, only deleterious mutations (those with a negative selection coefficient) will be included in the final calculation. The inbreeding load is a measure of the quantity of recessive deleterious variation that is heterozygous in a population and can contribute to fitness declines under inbreeding. This function implements the following equation from Morton et al. (1956), which assumes no epistasis and random mating: B = sum(qs)  sum(q2s)  2sum(q(1q)sh) where q is the frequency of a given deleterious allele, s is the absolute value of the selection coefficient, and h is its dominance coefficient. Note that the implementation, viewable with functionSource(), sets a maximum |s| of 1.0 (i.e., a lethal allele); |s| can sometimes be greater than 1.0 when s is drawn from a distribution, but in practice an allele with s < -1.0 has the same lethal effect as when s = -1.0. Also note that this implementation will not work when the model changes the dominance coefficients of mutations using mutationEffect() callbacks, since it relies on the dominanceCoeff property of MutationType. Finally, note that, to estimate the diploid number of lethal equivalents (2B), the result from this function can simply be multiplied by two. This function was contributed by Chris Kyriazis; thanks, Chris!
+\strong{SLiMBuiltin method:} Calculates inbreeding load (the haploid number of lethal equivalents, or B) for a vector of haplosomes (containing at least one element) passed in haplosomes. The calculation can be limited to a focal mutation type passed in mutType (which may be either an integer representing the ID of the desired mutation type, or a MutationType object specified directly); if mutType is NULL (the default), all of the mutations for the focal species will be considered. In any case, only deleterious mutations (those with a negative selection coefficient) will be included in the final calculation. The inbreeding load is a measure of the quantity of recessive deleterious variation that is heterozygous in a population and can contribute to fitness declines under inbreeding. This function implements the following equation from Morton et al. (1956), which assumes no epistasis and random mating: B = sum(qs)  sum(q2s)  2sum(q(1q)sh) where q is the frequency of a given deleterious allele, s is the absolute value of the selection coefficient, and h is its dominance coefficient. Note that the implementation, viewable with functionSource(), sets a maximum |s| of 1.0 (i.e., a lethal allele); |s| can sometimes be greater than 1.0 when s is drawn from a distribution, but in practice an allele with s < -1.0 has the same lethal effect as when s = -1.0. Also note that this implementation will not work when the model changes the dominance coefficients of mutations using mutationEffect() callbacks, since it relies on the dominanceCoeff property of MutationType. Finally, note that, to estimate the diploid number of lethal equivalents (2B), the result from this function can simply be multiplied by two. This function was contributed by Chris Kyriazis; thanks, Chris!
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

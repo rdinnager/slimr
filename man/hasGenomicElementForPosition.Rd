@@ -12,18 +12,20 @@ hasGenomicElementForPosition(positions)
 \item{positions}{An object of type integer.}
 }
 \value{
-An object of type logical.
+\strong{Chromosome method:} An object of type logical.
 }
 \description{
-Documentation for SLiM function \code{hasGenomicElementForPosition}, which is a method of the SLiM class \code{\link{Chromosome}}.
+\strong{Chromosome method:} Documentation for SLiM function \code{hasGenomicElementForPosition}, which is a method of the SLiM class \code{\link{Chromosome}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-integer positions) Returns a logical vector corresponding to the given vector positions, which contains base positions along the chromosome. The returned vector will have the same length as positions, and will correspond one-to-one with it, containing T if the corresponding position lies inside a genomic element, or F if it does not. The method genomicElementForPosition() can be used to look up the GenomicElement objects themselves.
+\strong{Chromosome method:} Returns a logical vector corresponding to the given vector positions, which contains base positions along the chromosome. The returned vector will have the same length as positions, and will correspond one-to-one with it, containing T if the corresponding position lies inside a genomic element, or F if it does not. The method genomicElementForPosition() can be used to look up the GenomicElement objects themselves.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

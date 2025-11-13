@@ -11,18 +11,20 @@ eidos_version(print = NULL)
 \item{print}{An object of type logical (singleton).}
 }
 \value{
-An object of type float.
+\strong{Eidos function:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{version}.
+\strong{Eidos function:} Documentation for SLiM function \code{version}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Get Eidos's version. There are two ways to use this function. If print is T, the default, then the version number is printed to the Eidos output stream in a formatted manner, like "Eidos version 2.1". If Eidos is attached to a Context that provides a version number, that is also printed, like "SLiM version 3.1". In this case, the Eidos version number, and the Context version number if available, are returned as an invisible float vector. This is most useful when using Eidos interactively. If print is F, on the other hand, nothing is printed, but the returned float vector of version numbers is not invisible. This is useful for scripts that need to test the Eidos or Context version they are running against. In both cases, in the float version numbers returned, a version like 2.4.2 would be returned as 2.42; this would not scale well to subversions greater than nine, so that will be avoided in our versioning.
+\strong{Eidos function:} Get Eidos's version. There are two ways to use this function. If print is T, the default, then the version number is printed to the Eidos output stream in a formatted manner, like "Eidos version 2.1". If Eidos is attached to a Context that provides a version number, that is also printed, like "SLiM version 3.1". In this case, the Eidos version number, and the Context version number if available, are returned as an invisible float vector. This is most useful when using Eidos interactively. If print is F, on the other hand, nothing is printed, but the returned float vector of version numbers is not invisible. This is useful for scripts that need to test the Eidos or Context version they are running against. In both cases, in the float version numbers returned, a version like 2.4.2 would be returned as 2.42; this would not scale well to subversions greater than nine, so that will be avoided in our versioning.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

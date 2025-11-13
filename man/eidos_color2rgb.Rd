@@ -11,18 +11,20 @@ eidos_color2rgb(color)
 \item{color}{An object of type string.}
 }
 \value{
-An object of type float.
+\strong{Eidos function:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{color2rgb}.
+\strong{Eidos function:} Documentation for SLiM function \code{color2rgb}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Converts a color string to RGB. The color string specified in color may be either a named color or a color in hexadecimal format such as "#007FC0". The equivalent RGB color is returned as a float vector of length three (red, green, blue). Returned RGB values will be in the interval [0, 1]. This function can also be called with a non-singleton vector of color strings in color. In this case, the returned float value will be a matrix of RGB values, with three columns (red, green, blue) and one row per element of color.
+\strong{Eidos function:} Converts a color string to RGB. The color string specified in color may be either a named color or a color in hexadecimal format such as "#007FC0". The equivalent RGB color is returned as a float vector of length three (red, green, blue). Returned RGB values will be in the interval [0, 1]. This function can also be called with a non-singleton vector of color strings in color. In this case, the returned float value will be a matrix of RGB values, with three columns (red, green, blue) and one row per element of color.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -16,29 +16,33 @@ mutationsOfType(mutType)
 \item{mutType}{An object of type integer or MutationType object (singleton).}
 }
 \value{
-An object of type Mutation object.
+\strong{Haplosome method:} An object of type Mutation object.
 
-An object of type Mutation object.
+\strong{Species method:} An object of type Mutation object.
 }
 \description{
-Documentation for SLiM function \code{mutationsOfType}, which is a method of the SLiM class \code{\link{Haplosome}}.
+\strong{Haplosome method:} Documentation for SLiM function \code{mutationsOfType}, which is a method of the SLiM class \code{\link{Haplosome}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 
-Documentation for SLiM function \code{mutationsOfType}, which is a method of the SLiM class \code{\link{Species}}.
+\strong{Species method:} Documentation for SLiM function \code{mutationsOfType}, which is a method of the SLiM class \code{\link{Species}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-io<MutationType>$ mutType) Returns an object vector of all the mutations that are of the type specified by mutType, out of all of the mutations in the haplosome. If you just need a count of the matching Mutation objects, rather than a vector of the matches, use -countOfMutationsOfType(); if you need just the positions of matching Mutation objects, use -positionsOfMutationsOfType(); and if you are aiming for a sum of the selection coefficients of matching Mutation objects, use -sumOfMutationsOfType(). This method is provided for speed; it is much faster than the corresponding Eidos code. See also substitutionsOfType().
+\strong{Haplosome method:} Returns an object vector of all the mutations that are of the type specified by mutType, out of all of the mutations in the haplosome. If you just need a count of the matching Mutation objects, rather than a vector of the matches, use -countOfMutationsOfType(); if you need just the positions of matching Mutation objects, use -positionsOfMutationsOfType(); and if you are aiming for a sum of the selection coefficients of matching Mutation objects, use -sumOfMutationsOfType(). This method is provided for speed; it is much faster than the corresponding Eidos code. See also substitutionsOfType().
 
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 
-io<MutationType>$ mutType) Returns an object vector of all the mutations that are of the type specified by mutType, out of all of the mutations that are currently active in the species. If you just need a count of the matching Mutation objects, rather than a vector of the matches, use -countOfMutationsOfType(). This method is often used to look up an introduced mutation at a later point in the simulation, since there is no way to keep persistent references to objects in SLiM. This method is provided for speed; it is much faster than the corresponding Eidos code.
+See \strong{Details} below for complete documentation of this SLiM method.
+
+\strong{Species method:} Returns an object vector of all the mutations that are of the type specified by mutType, out of all of the mutations that are currently active in the species. If you just need a count of the matching Mutation objects, rather than a vector of the matches, use -countOfMutationsOfType(). This method is often used to look up an introduced mutation at a later point in the simulation, since there is no way to keep persistent references to objects in SLiM. This method is provided for speed; it is much faster than the corresponding Eidos code.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

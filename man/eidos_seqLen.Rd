@@ -11,18 +11,20 @@ eidos_seqLen(length)
 \item{length}{An object of type integer (singleton).}
 }
 \value{
-An object of type integer.
+\strong{Eidos function:} An object of type integer.
 }
 \description{
-Documentation for SLiM function \code{seqLen}.
+\strong{Eidos function:} Documentation for SLiM function \code{seqLen}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns an index sequence of length, from 0 to length - 1, with a step of 1; if length is 0 the sequence will be zero-length. This is a convenience function for easily obtaining a set of indices to address or iterate through a vector. Note that when length is 0, using the sequence operator with 0:(length-1) will produce 0 -1, and calling seq(a, b, length=length) will raise an error, but seqLen(length) will return integer(0), making seqLen() particularly useful for generating a sequence of a given length that might be zero.
+\strong{Eidos function:} Returns an index sequence of length, from 0 to length - 1, with a step of 1; if length is 0 the sequence will be zero-length. This is a convenience function for easily obtaining a set of indices to address or iterate through a vector. Note that when length is 0, using the sequence operator with 0:(length-1) will produce 0 -1, and calling seq(a, b, length=length) will raise an error, but seqLen(length) will return integer(0), making seqLen() particularly useful for generating a sequence of a given length that might be zero.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

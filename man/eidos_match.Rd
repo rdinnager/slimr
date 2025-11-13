@@ -13,18 +13,20 @@ eidos_match(x, table)
 \item{table}{An object of type any or any.}
 }
 \value{
-An object of type integer.
+\strong{Eidos function:} An object of type integer.
 }
 \description{
-Documentation for SLiM function \code{match}.
+\strong{Eidos function:} Documentation for SLiM function \code{match}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a vector of the positions of (first) matches of x in table. Type promotion is not performed; x and table must be of the same type. For each element of x, the corresponding element in the result will give the position of the first match for that element of x in table; if the element has no match in table, the element in the result vector will be -1. The result is therefore a vector of the same length as x. If a logical result is desired, with T indicating that a match was found for the corresponding element of x, use (match(x, table) >= 0).
+\strong{Eidos function:} Returns a vector of the positions of (first) matches of x in table. Type promotion is not performed; x and table must be of the same type. For each element of x, the corresponding element in the result will give the position of the first match for that element of x in table; if the element has no match in table, the element in the result vector will be -1. The result is therefore a vector of the same length as x. If a logical result is desired, with T indicating that a match was found for the corresponding element of x, use (match(x, table) >= 0).
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

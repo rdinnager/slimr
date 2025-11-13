@@ -29,18 +29,20 @@ setFilePath(
 \item{header}{An object of type null or logical (singleton).}
 }
 \value{
-An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical.
+\strong{LogFile method:} An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical.
 }
 \description{
-Documentation for SLiM function \code{setFilePath}, which is a method of the SLiM class \code{\link{LogFile}}.
+\strong{LogFile method:} Documentation for SLiM function \code{setFilePath}, which is a method of the SLiM class \code{\link{LogFile}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-string$ filePath, [Ns initialContents = NULL], [logical$ append = F], [Nl$ compress = NULL], [Ns$ sep = NULL], [Nl$ header = NULL]) Redirects the LogFile to write new rows to a new filePath. Any rows that have been buffered but not flushed will be written to the previous file first, as if flush() had been called. With this call, new initialContents may be supplied, which will either replace any existing file or will be appended to it, depending upon the value of append. New values may be supplied for compress, sep, and header; the meaning of these parameters is identical to their meaning in createLogFile(), except that a value of NULL for these means "do not change this setting from its previous value". In effect, then, this method lets you start a completely new log file at a new path, without having to create and configure a new LogFile object. The new file will be created (or appended) synchronously, with the specified initial contents.
+\strong{LogFile method:} Redirects the LogFile to write new rows to a new filePath. Any rows that have been buffered but not flushed will be written to the previous file first, as if flush() had been called. With this call, new initialContents may be supplied, which will either replace any existing file or will be appended to it, depending upon the value of append. New values may be supplied for compress, sep, and header; the meaning of these parameters is identical to their meaning in createLogFile(), except that a value of NULL for these means "do not change this setting from its previous value". In effect, then, this method lets you start a completely new log file at a new path, without having to create and configure a new LogFile object. The new file will be created (or appended) synchronously, with the specified initial contents.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

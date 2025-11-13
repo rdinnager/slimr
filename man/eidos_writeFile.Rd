@@ -17,18 +17,20 @@ eidos_writeFile(filePath, contents, append = NULL, compress = NULL)
 \item{compress}{An object of type string or string or logical or logical (singleton).}
 }
 \value{
-An object of type logical. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type logical. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{writeFile}.
+\strong{Eidos function:} Documentation for SLiM function \code{writeFile}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Writes or appends to a file specified by filePath with contents specified by contents, a string vector of lines. If append is T, the write will be appended to the existing file (if any) at filePath; if it is F (the default), then the write will replace an existing file at that path. If the write is successful, T will be returned; if not, F will be returned (but at present, an error will result instead). If compress is T, the contents will be compressed with zlib as they are written, and the standard .gz extension for gzip-compressed files will be appended to the filename in filePath if it is not already present. If the compress option is used in conjunction with append==T, Eidos will buffer data to append and flush it to the file in a delayed fashion (for performance reasons), and so appended data may not be visible in the file until later - potentially not until the process ends (i.e., the end of the SLiM simulation, for example). If that delay if undesirable, buffered data can be explicitly flushed to the filesystem with flushFile(). The compress option was added in Eidos 2.4 (SLiM 3.4). Note that readFile() does not currently support reading in compressed data. Note that newline characters will be added at the ends of the lines in contents. If you do not wish to have newlines added, you should use paste() to assemble the elements of contents together into a singleton string.
+\strong{Eidos function:} Writes or appends to a file specified by filePath with contents specified by contents, a string vector of lines. If append is T, the write will be appended to the existing file (if any) at filePath; if it is F (the default), then the write will replace an existing file at that path. If the write is successful, T will be returned; if not, F will be returned (but at present, an error will result instead). If compress is T, the contents will be compressed with zlib as they are written, and the standard .gz extension for gzip-compressed files will be appended to the filename in filePath if it is not already present. If the compress option is used in conjunction with append==T, Eidos will buffer data to append and flush it to the file in a delayed fashion (for performance reasons), and so appended data may not be visible in the file until later - potentially not until the process ends (i.e., the end of the SLiM simulation, for example). If that delay if undesirable, buffered data can be explicitly flushed to the filesystem with flushFile(). The compress option was added in Eidos 2.4 (SLiM 3.4). Note that readFile() does not currently support reading in compressed data. Note that newline characters will be added at the ends of the lines in contents. If you do not wish to have newlines added, you should use paste() to assemble the elements of contents together into a singleton string.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

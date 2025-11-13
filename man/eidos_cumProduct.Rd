@@ -11,18 +11,20 @@ eidos_cumProduct(x)
 \item{x}{An object of type numeric.}
 }
 \value{
-An object of type numeric.
+\strong{Eidos function:} An object of type numeric.
 }
 \description{
-Documentation for SLiM function \code{cumProduct}.
+\strong{Eidos function:} Documentation for SLiM function \code{cumProduct}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the cumulative product of x: a vector of equal length as x, in which the element at index i is equal to the product of the elements of x across the range 0:i. The return type will match the type of x. If x is of type integer, but all of the values of the cumulative product vector cannot be represented in that type, an error condition will result.
+\strong{Eidos function:} Returns the cumulative product of x: a vector of equal length as x, in which the element at index i is equal to the product of the elements of x across the range 0:i. The return type will match the type of x. If x is of type integer, but all of the values of the cumulative product vector cannot be represented in that type, an error condition will result.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

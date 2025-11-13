@@ -11,18 +11,20 @@ eidos_flushFile(filePath)
 \item{filePath}{An object of type string (singleton).}
 }
 \value{
-An object of type logical. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type logical. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{flushFile}.
+\strong{Eidos function:} Documentation for SLiM function \code{flushFile}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Flushes buffered content to a file specified by filePath. Normally, written data is buffered by writeFile() if the compress option of that function is T, holding the data in memory rather than writing it to disk immediately. This buffering improves both performance and file size; however, sometimes it is desirable to flush the buffered data to disk with flush() so that the filesystem is up to date. Note that flushing after every write is not recommended, since it will lose all of the benefits of buffering. Calling flushFile() for a path that has not been written to, or is not being buffered, will do nothing. If the flush is successful, T will be returned; if not, F will be returned (but at present, an error will result instead).
+\strong{Eidos function:} Flushes buffered content to a file specified by filePath. Normally, written data is buffered by writeFile() if the compress option of that function is T, holding the data in memory rather than writing it to disk immediately. This buffering improves both performance and file size; however, sometimes it is desirable to flush the buffered data to disk with flush() so that the filesystem is up to date. Note that flushing after every write is not recommended, since it will lose all of the benefits of buffering. Calling flushFile() for a path that has not been written to, or is not being buffered, will do nothing. If the flush is successful, T will be returned; if not, F will be returned (but at present, an error will result instead).
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

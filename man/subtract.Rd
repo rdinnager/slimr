@@ -12,18 +12,20 @@ subtract(x)
 \item{x}{An object of type integer or float or SpatialMap object.}
 }
 \value{
-An object of type SpatialMap object. Return will be of length 1 (a singleton)
+\strong{SpatialMap method:} An object of type SpatialMap object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{subtract}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+\strong{SpatialMap method:} Documentation for SLiM function \code{subtract}, which is a method of the SLiM class \code{\link{SpatialMap}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-ifo<SpatialMap> x) Subtracts x from the spatial map. One possibility is that x is a singleton integer or float value; in this case, x is subtracted from each grid value of the target spatial map. Another possibility is that x is an integer or float vector/matrix/array of the same dimensions as the target spatial map's grid; in this case, each value of x is subtracted from the corresponding grid value of the target spatial map. The third possibility is that x is itself a (singleton) spatial map; in this case, each grid value of x is subtracted from the corresponding grid value of the target spatial map (and thus the two spatial maps must match in their spatiality, their spatial bounds, and their grid dimensions). The target spatial map is returned, to allow easy chaining of operations.
+\strong{SpatialMap method:} Subtracts x from the spatial map. One possibility is that x is a singleton integer or float value; in this case, x is subtracted from each grid value of the target spatial map. Another possibility is that x is an integer or float vector/matrix/array of the same dimensions as the target spatial map's grid; in this case, each value of x is subtracted from the corresponding grid value of the target spatial map. The third possibility is that x is itself a (singleton) spatial map; in this case, each grid value of x is subtracted from the corresponding grid value of the target spatial map (and thus the two spatial maps must match in their spatiality, their spatial bounds, and their grid dimensions). The target spatial map is returned, to allow easy chaining of operations.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

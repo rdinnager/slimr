@@ -11,18 +11,20 @@ eidos_var(x)
 \item{x}{An object of type numeric.}
 }
 \value{
-An object of type float. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type float. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{var}.
+\strong{Eidos function:} Documentation for SLiM function \code{var}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the corrected sample variance of x. If x has a size of 0 or 1, NAN will be returned (a change in behavior from Eidos 4.0; it used to return NULL). This is the square of the standard deviation calculated by sd(). It is illegal to call var() with a matrix or array argument; use cov() to calculate a variance-covariance matrix. 3.3. Distribution drawing and density functions
+\strong{Eidos function:} Returns the corrected sample variance of x. If x has a size of 0 or 1, NAN will be returned (a change in behavior from Eidos 4.0; it used to return NULL). This is the square of the standard deviation calculated by sd(). It is illegal to call var() with a matrix or array argument; use cov() to calculate a variance-covariance matrix. 3.3. Distribution drawing and density functions
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

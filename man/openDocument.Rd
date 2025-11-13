@@ -12,18 +12,20 @@ openDocument(filePath)
 \item{filePath}{An object of type string (singleton).}
 }
 \value{
-An object of type void.
+\strong{SLiMgui method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{openDocument}, which is a method of the SLiM class \code{\link{SLiMgui}}.
+\strong{SLiMgui method:} Documentation for SLiM function \code{openDocument}, which is a method of the SLiM class \code{\link{SLiMgui}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-string$ filePath) Open the document at filePath in SLiMgui, if possible. Supported document types include SLiM model files (typically with a .slim path extension), text files (typically with a .txt path extension, and opened as untitled model files), and PNG, JPG/JPEG, BMP, and GIF image file formats (typically .png / .jpg / .jpeg / .bmp / .gif, respectively). (Note that in SLiMguiLegacy, PDF files (.pdf) are supported but these other image file formats are not.) This method can be particularly useful for opening images created by the simulation itself, often by sublaunching a plotting process in R or another environment.
+\strong{SLiMgui method:} Open the document at filePath in SLiMgui, if possible. Supported document types include SLiM model files (typically with a .slim path extension), text files (typically with a .txt path extension, and opened as untitled model files), and PNG, JPG/JPEG, BMP, and GIF image file formats (typically .png / .jpg / .jpeg / .bmp / .gif, respectively). (Note that in SLiMguiLegacy, PDF files (.pdf) are supported but these other image file formats are not.) This method can be particularly useful for opening images created by the simulation itself, often by sublaunching a plotting process in R or another environment.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

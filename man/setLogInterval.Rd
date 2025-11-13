@@ -12,18 +12,20 @@ setLogInterval(logInterval = NULL)
 \item{logInterval}{An object of type null or integer (singleton).}
 }
 \value{
-An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical.
+\strong{LogFile method:} An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical.
 }
 \description{
-Documentation for SLiM function \code{setLogInterval}, which is a method of the SLiM class \code{\link{LogFile}}.
+\strong{LogFile method:} Documentation for SLiM function \code{setLogInterval}, which is a method of the SLiM class \code{\link{LogFile}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-[Ni$ logInterval = NULL]) Sets the automatic logging interval. A logInterval of NULL stops automatic logging immediately. Other values request that a new row should be logged (as if logRow() were called) at the end of every logInterval ticks (just before the tick count increment, in both WF and nonWF models), starting at the end of the tick in which setLogInterval() was called.
+\strong{LogFile method:} Sets the automatic logging interval. A logInterval of NULL stops automatic logging immediately. Other values request that a new row should be logged (as if logRow() were called) at the end of every logInterval ticks (just before the tick count increment, in both WF and nonWF models), starting at the end of the tick in which setLogInterval() was called.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

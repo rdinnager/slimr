@@ -12,18 +12,20 @@ initializeAncestralNucleotides(sequence)
 \item{sequence}{An object of type integer or string.}
 }
 \value{
-An object of type integer. Return will be of length 1 (a singleton)
+\strong{Initialize method:} An object of type integer. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{initializeAncestralNucleotides}, which is a method of the SLiM class \code{\link{Initialize}}.
+\strong{Initialize method:} Documentation for SLiM function \code{initializeAncestralNucleotides}, which is a method of the SLiM class \code{\link{Initialize}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-This function, which may be called only in nucleotide-based models, supplies an ancestral nucleotide sequence for the model. The sequence parameter may be an integer vector providing nucleotide values (A=0, C=1, G=2, T=3), or a string vector providing single-character nucleotides ("A", "C", "G", "T"), or a singleton string providing the sequence as one string ("ACGT..."), or a singleton string providing the filesystem path of a FASTA file which will be read in to provide the sequence (if the file contains than one sequence, the first sequence will be used). Only A/C/G/T nucleotide values may be provided; other symbols, such as those for amino acids, gaps, or nucleotides of uncertain identity, are not allowed. The two semantic meanings of sequence that involve a singleton string value are distinguished heuristically; a singleton string that contains only the letters ACGT will be assumed to be a nucleotide sequence rather than a filename. The length of the ancestral sequence is returned. A utility function, randomNucleotides(), is provided by SLiM to assist in generating simple random nucleotide sequences.
+\strong{Initialize method:} This function, which may be called only in nucleotide-based models, supplies an ancestral nucleotide sequence for the model. The sequence parameter may be an integer vector providing nucleotide values (A=0, C=1, G=2, T=3), or a string vector providing single-character nucleotides ("A", "C", "G", "T"), or a singleton string providing the sequence as one string ("ACGT..."), or a singleton string providing the filesystem path of a FASTA file which will be read in to provide the sequence (if the file contains than one sequence, the first sequence will be used). Only A/C/G/T nucleotide values may be provided; other symbols, such as those for amino acids, gaps, or nucleotides of uncertain identity, are not allowed. The two semantic meanings of sequence that involve a singleton string value are distinguished heuristically; a singleton string that contains only the letters ACGT will be assumed to be a nucleotide sequence rather than a filename. The length of the ancestral sequence is returned. A utility function, randomNucleotides(), is provided by SLiM to assist in generating simple random nucleotide sequences.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

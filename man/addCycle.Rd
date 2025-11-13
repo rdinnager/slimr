@@ -12,18 +12,20 @@ addCycle(species = NULL)
 \item{species}{An object of type null or Species object (singleton).}
 }
 \value{
-An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical.
+\strong{LogFile method:} An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical.
 }
 \description{
-Documentation for SLiM function \code{addCycle}, which is a method of the SLiM class \code{\link{LogFile}}.
+\strong{LogFile method:} Documentation for SLiM function \code{addCycle}, which is a method of the SLiM class \code{\link{LogFile}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-[No<Species>$ species = NULL]) Adds a new data column that provides the cycle counter for species (the same as the value of the cycle property of that species). The new column will be logged each time that a row is generated, either by automatic logging or by a call to logRow(). In single-species models, species may be NULL to indicate that single species. The column will simply be named cycle in single-species models; an underscore and the name of the species will be appended in multispecies models.
+\strong{LogFile method:} Adds a new data column that provides the cycle counter for species (the same as the value of the cycle property of that species). The new column will be logged each time that a row is generated, either by automatic logging or by a call to logRow(). In single-species models, species may be NULL to indicate that single species. The column will simply be named cycle in single-species models; an underscore and the name of the species will be appended in multispecies models.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

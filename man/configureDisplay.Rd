@@ -16,18 +16,20 @@ configureDisplay(center = NULL, scale = NULL, color = NULL)
 \item{color}{An object of type null or string (singleton).}
 }
 \value{
-An object of type void.
+\strong{Subpopulation method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{configureDisplay}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+\strong{Subpopulation method:} Documentation for SLiM function \code{configureDisplay}, which is a method of the SLiM class \code{\link{Subpopulation}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-[Nf center = NULL], [Nf$ scale = NULL], [Ns$ color = NULL]) This method customizes the display of the subpopulation in SLiMgui's Population Visualization graph. When this method is called by a model running outside SLiMgui, it will do nothing except type-checking and bounds-checking its arguments. When called by a model running in SLiMgui, the position, size, and color of the subpopulation's displayed circle can be controlled as specified below. The center parameter sets the coordinates of the center of the subpopulation's displayed circle; it must be a float vector of length two, such that center[0] provides the x-coordinate and center[1] provides the y-coordinate. The square central area of the Population Visualization occupies scaled coordinates in [0,1] for both x and y, so the values in center must be within those bounds. If a value of NULL is provided, SLiMgui's default center will be used (which currently arranges subpopulations in a circle). The scale parameter sets a scaling factor to be applied to the radius of the subpopulation's displayed circle. The default radius used by SLiMgui is a function of the subpopulation's number of individuals; this default radius is then multiplied by scale. If a value of NULL is provided, the default radius will be used; this is equivalent to supplying a scale of 1.0. Typically the same scale value should be used by all subpopulations, to scale all of their circles up or down uniformly, but that is not required. The color parameter sets the color to be used for the displayed subpopulation's circle. Colors may be specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see the Eidos manual). If color is NULL or the empty string, "", SLiMgui's default (fitness-based) color will be used.
+\strong{Subpopulation method:} This method customizes the display of the subpopulation in SLiMgui's Population Visualization graph. When this method is called by a model running outside SLiMgui, it will do nothing except type-checking and bounds-checking its arguments. When called by a model running in SLiMgui, the position, size, and color of the subpopulation's displayed circle can be controlled as specified below. The center parameter sets the coordinates of the center of the subpopulation's displayed circle; it must be a float vector of length two, such that center[0] provides the x-coordinate and center[1] provides the y-coordinate. The square central area of the Population Visualization occupies scaled coordinates in [0,1] for both x and y, so the values in center must be within those bounds. If a value of NULL is provided, SLiMgui's default center will be used (which currently arranges subpopulations in a circle). The scale parameter sets a scaling factor to be applied to the radius of the subpopulation's displayed circle. The default radius used by SLiMgui is a function of the subpopulation's number of individuals; this default radius is then multiplied by scale. If a value of NULL is provided, the default radius will be used; this is equivalent to supplying a scale of 1.0. Typically the same scale value should be used by all subpopulations, to scale all of their circles up or down uniformly, but that is not required. The color parameter sets the color to be used for the displayed subpopulation's circle. Colors may be specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see the Eidos manual). If color is NULL or the empty string, "", SLiMgui's default (fitness-based) color will be used.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

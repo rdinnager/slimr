@@ -11,18 +11,20 @@ eidos_isNAN(x)
 \item{x}{An object of type float.}
 }
 \value{
-An object of type logical.
+\strong{Eidos function:} An object of type logical.
 }
 \description{
-Documentation for SLiM function \code{isNAN}.
+\strong{Eidos function:} Documentation for SLiM function \code{isNAN}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the undefinedness of x: T if x is not NAN, F if x is NAN. NAN is defined only for type float, so x is required to be a float.
+\strong{Eidos function:} Returns the undefinedness of x: T if x is not NAN, F if x is NAN. NAN is defined only for type float, so x is required to be a float.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

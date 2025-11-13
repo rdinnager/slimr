@@ -12,18 +12,20 @@ setSexRatio(sexRatio)
 \item{sexRatio}{An object of type float (singleton).}
 }
 \value{
-An object of type void.
+\strong{Subpopulation method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{setSexRatio}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+\strong{Subpopulation method:} Documentation for SLiM function \code{setSexRatio}, which is a method of the SLiM class \code{\link{Subpopulation}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-float$ sexRatio) Set the sex ratio of this subpopulation to sexRatio. As defined in SLiM, this is actually the fraction of the subpopulation that is male; in other words, the M:(M+F) ratio. This will take effect when children are next generated; it does not change the current subpopulation state. Unlike the selfing rate, the cloning rate, and migration rates, the sex ratio is deterministic: SLiM will generate offspring that exactly satisfy the requested sex ratio (within integer roundoff limits).
+\strong{Subpopulation method:} Set the sex ratio of this subpopulation to sexRatio. As defined in SLiM, this is actually the fraction of the subpopulation that is male; in other words, the M:(M+F) ratio. This will take effect when children are next generated; it does not change the current subpopulation state. Unlike the selfing rate, the cloning rate, and migration rates, the sex ratio is deterministic: SLiM will generate offspring that exactly satisfy the requested sex ratio (within integer roundoff limits).
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

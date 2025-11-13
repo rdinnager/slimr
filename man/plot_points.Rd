@@ -35,18 +35,20 @@ plot_points(
 \item{alpha}{An object of type numeric or numeric or integer or string or string or numeric or numeric or float.}
 }
 \value{
-An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
+\strong{Plot method:} An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
 }
 \description{
-Documentation for SLiM function \code{points}, which is a method of the SLiM class \code{\link{Plot}}.
+\strong{Plot method:} Documentation for SLiM function \code{points}, which is a method of the SLiM class \code{\link{Plot}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-numeric x, numeric y, [integer symbol = 0], [string color = "red"], [string border = "black"], [numeric lwd = 1.0], [numeric size = 1.0], [float alpha = 1.0]) Adds point data given by x and y to the plot. The data will be plotted as a set of point symbols, centered at the (x, y) positions given; note that the x and y vectors must be the same length. The new point data will be plotted on top of any previously added data. The symbol plotted for each point depends upon the value of symbol. In general, symbols will be drawn in color color, with a line width lwd used for lines (if any) in the symbol, and an overall size scaled by size. Symbols 21-25 involve both a filled shape and a border line around that shape; for those symbols, the border line will use the color provided by border, while the filled shape will use color color. Opacity values may be supplied with alpha; alpha values must be in [0.0, 1.0], where 0.0 is fully transparent and 1.0 is fully opaque. All of these parameters (symbol, color, border, lwd, size, and alpha) may either be a singleton value applied to all points, or a vector with one value per corresponding point.
+\strong{Plot method:} Adds point data given by x and y to the plot. The data will be plotted as a set of point symbols, centered at the (x, y) positions given; note that the x and y vectors must be the same length. The new point data will be plotted on top of any previously added data. The symbol plotted for each point depends upon the value of symbol. In general, symbols will be drawn in color color, with a line width lwd used for lines (if any) in the symbol, and an overall size scaled by size. Symbols 21-25 involve both a filled shape and a border line around that shape; for those symbols, the border line will use the color provided by border, while the filled shape will use color color. Opacity values may be supplied with alpha; alpha values must be in [0.0, 1.0], where 0.0 is fully transparent and 1.0 is fully opaque. All of these parameters (symbol, color, border, lwd, size, and alpha) may either be a singleton value applied to all points, or a vector with one value per corresponding point.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

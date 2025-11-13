@@ -13,18 +13,20 @@ eidos_array(data, dim)
 \item{dim}{An object of type any or integer.}
 }
 \value{
-An object of type any.
+\strong{Eidos function:} An object of type any.
 }
 \description{
-Documentation for SLiM function \code{array}.
+\strong{Eidos function:} Documentation for SLiM function \code{array}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Creates a new array from the data specified by data, with the dimension sizes specified by dim. The first dimension size in dim is the number of rows, and the second is the number of columns; further entries specify the sizes of higher-order dimensions. As many dimensions may be specified as desired, but with a minimum of two dimensions. An array with two dimensions is a matrix (by definition); note that matrix() may provide a more convenient way to make a new matrix. Each dimension must be of size 1 or greater; 0-size dimensions are not allowed. The elements of data are used to populate the new array; the size of data must therefore be equal to the size of the new array, which is the product of all the values in dim. The new array will be filled in dimension order: one element in each row until a column is filled, then on to the next column in the same manner until all columns are filled, and then onward into the higher-order dimensions in the same manner.
+\strong{Eidos function:} Creates a new array from the data specified by data, with the dimension sizes specified by dim. The first dimension size in dim is the number of rows, and the second is the number of columns; further entries specify the sizes of higher-order dimensions. As many dimensions may be specified as desired, but with a minimum of two dimensions. An array with two dimensions is a matrix (by definition); note that matrix() may provide a more convenient way to make a new matrix. Each dimension must be of size 1 or greater; 0-size dimensions are not allowed. The elements of data are used to populate the new array; the size of data must therefore be equal to the size of the new array, which is the product of all the values in dim. The new array will be filled in dimension order: one element in each row until a column is filled, then on to the next column in the same manner until all columns are filled, and then onward into the higher-order dimensions in the same manner.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -13,18 +13,20 @@ eidos_sort(x, ascending = NULL)
 \item{ascending}{An object of type any but object or logical (singleton).}
 }
 \value{
-An object of type any but object.
+\strong{Eidos function:} An object of type any but object.
 }
 \description{
-Documentation for SLiM function \code{sort}.
+\strong{Eidos function:} Documentation for SLiM function \code{sort}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a sorted copy of x: a new vector with the same elements as x, but in sorted order. If the optional logical parameter ascending is T (the default), then the sorted order will be ascending; if it is F, the sorted order will be descending. The ordering is determined according to the same logic as the < and > operators in Eidos. To sort an object vector, use sortBy(). To obtain indices for sorting, use order().
+\strong{Eidos function:} Returns a sorted copy of x: a new vector with the same elements as x, but in sorted order. If the optional logical parameter ascending is T (the default), then the sorted order will be ascending; if it is F, the sorted order will be descending. The ordering is determined according to the same logic as the < and > operators in Eidos. To sort an object vector, use sortBy(). To obtain indices for sorting, use order().
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

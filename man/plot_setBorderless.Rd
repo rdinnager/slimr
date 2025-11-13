@@ -23,18 +23,20 @@ plot_setBorderless(
 \item{marginBottom}{An object of type numeric or numeric or numeric or numeric (singleton).}
 }
 \value{
-An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
+\strong{Plot method:} An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
 }
 \description{
-Documentation for SLiM function \code{setBorderless}, which is a method of the SLiM class \code{\link{Plot}}.
+\strong{Plot method:} Documentation for SLiM function \code{setBorderless}, which is a method of the SLiM class \code{\link{Plot}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-[numeric$ marginLeft = 0.0], [numeric$ marginTop = 0.0], [numeric$ marginRight = 0.0], [numeric$ marginBottom = 0.0]) Reconfigures the plot to be borderless - to not display axes, ticks, or the labels for axes and ticks. Since those elements are not present, the plot area in borderless plots essentially fills the window's available area, except for being inset by the margins given in marginLeft, marginTop, marginRight, and marginBottom, which are specified in pixels. The axis ranges are not extended in the usual manner; if the range of the x axis is specified as c(0,1), for example, then that is the range actually used for the x axis. (This is similar to R's "xaxs" and "yaxs" being specified as "i", rather than the usual behavior specified by the default of "r".) If you want the plotted data to have "breathing room" around it, you should therefore specify non-zero margins. Note that the fullBox parameter of createPlot() is still honored; for borderless plots, the box is drawn at the outer edge of the margin area. If you don't want the box to overdraw any of the data area of the plot (within the extents of the axes), you should specify each margin value as 1 (or greater), to provide a pixel of margin space within which the box will be drawn without impinging upon the plotted data.
+\strong{Plot method:} Reconfigures the plot to be borderless - to not display axes, ticks, or the labels for axes and ticks. Since those elements are not present, the plot area in borderless plots essentially fills the window's available area, except for being inset by the margins given in marginLeft, marginTop, marginRight, and marginBottom, which are specified in pixels. The axis ranges are not extended in the usual manner; if the range of the x axis is specified as c(0,1), for example, then that is the range actually used for the x axis. (This is similar to R's "xaxs" and "yaxs" being specified as "i", rather than the usual behavior specified by the default of "r".) If you want the plotted data to have "breathing room" around it, you should therefore specify non-zero margins. Note that the fullBox parameter of createPlot() is still honored; for borderless plots, the box is drawn at the outer edge of the margin area. If you don't want the box to overdraw any of the data area of the plot (within the extents of the axes), you should specify each margin value as 1 (or greater), to provide a pixel of margin space within which the box will be drawn without impinging upon the plotted data.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -12,18 +12,20 @@ nucleotideFrequencies(sequence)
 \item{sequence}{An object of type integer or string.}
 }
 \value{
-An object of type float.
+\strong{SLiMBuiltin method:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{nucleotideFrequencies}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
+\strong{SLiMBuiltin method:} Documentation for SLiM function \code{nucleotideFrequencies}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-A convenience function that returns a float vector of length four, providing the frequencies of occurrences of A / C / G / T nucleotides, respectively, in the supplied nucleotide sequence. The parameter sequence may be a singleton string (e.g., "TATA"), a string vector of single characters (e.g., "T", "A", "T", "A"), or an integer vector (e.g., 3, 0, 3, 0), using SLiM's standard code of A=0, C=1, G=2, T=3.
+\strong{SLiMBuiltin method:} A convenience function that returns a float vector of length four, providing the frequencies of occurrences of A / C / G / T nucleotides, respectively, in the supplied nucleotide sequence. The parameter sequence may be a singleton string (e.g., "TATA"), a string vector of single characters (e.g., "T", "A", "T", "A"), or an integer vector (e.g., 3, 0, 3, 0), using SLiM's standard code of A=0, C=1, G=2, T=3.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

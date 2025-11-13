@@ -11,18 +11,20 @@ eidos_cbind(...)
 \item{...}{An object of type object.}
 }
 \value{
-An object of type any.
+\strong{Eidos function:} An object of type any.
 }
 \description{
-Documentation for SLiM function \code{cbind}.
+\strong{Eidos function:} Documentation for SLiM function \code{cbind}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Combines vectors or matrices by column to produce a single matrix. The parameters must be vectors (which are interpreted by cbind() as if they were one-column matrices) or matrices. They must be of the same type, of the same class if they are of type object, and have the same number of rows. If these conditions are met, the result is a single matrix with the parameters joined together, left to right. Parameters may instead be NULL, in which case they are ignored; or if all parameters are NULL, the result is NULL. A sequence of vectors, matrices, and NULLs may thus be concatenated with the NULL values removed, analogous to c(). Calling cbind(x) is an easy way to create a one-column matrix from a vector. To combine vectors or matrices by row instead, see rbind().
+\strong{Eidos function:} Combines vectors or matrices by column to produce a single matrix. The parameters must be vectors (which are interpreted by cbind() as if they were one-column matrices) or matrices. They must be of the same type, of the same class if they are of type object, and have the same number of rows. If these conditions are met, the result is a single matrix with the parameters joined together, left to right. Parameters may instead be NULL, in which case they are ignored; or if all parameters are NULL, the result is NULL. A sequence of vectors, matrices, and NULLs may thus be concatenated with the NULL values removed, analogous to c(). Calling cbind(x) is an easy way to create a one-column matrix from a vector. To combine vectors or matrices by row instead, see rbind().
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

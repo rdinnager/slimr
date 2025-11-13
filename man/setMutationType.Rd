@@ -12,18 +12,20 @@ setMutationType(mutType)
 \item{mutType}{An object of type integer or MutationType object (singleton).}
 }
 \value{
-An object of type void or void.
+\strong{Mutation method:} An object of type void or void.
 }
 \description{
-Documentation for SLiM function \code{setMutationType}, which is a method of the SLiM class \code{\link{Mutation}}.
+\strong{Mutation method:} Documentation for SLiM function \code{setMutationType}, which is a method of the SLiM class \code{\link{Mutation}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-io<MutationType>$ mutType) Set the mutation type of the mutation to mutType (which may be specified as either an integer identifier or a MutationType object). This implicitly changes the dominance coefficient of the mutation to that of the new mutation type, since the dominance coefficient is a property of the mutation type. On the other hand, the selection coefficient of the mutation is not changed, since it is a property of the mutation object itself; it can be changed explicitly using the setSelectionCoeff() method if so desired. The mutation type of a mutation is normally a constant in simulations, so be sure you know what you are doing. Changing this will normally affect the fitness values calculated toward the end of the current tick; if you want current fitness values to be affected, you can call the Species method recalculateFitness() - but see the documentation of that method for caveats. In nucleotide-based models, a restriction applies: nucleotide-based mutations may not be changed to a non-nucleotide-based mutation type, and non-nucleotide-based mutations may not be changed to a nucleotide-based mutation type.
+\strong{Mutation method:} Set the mutation type of the mutation to mutType (which may be specified as either an integer identifier or a MutationType object). This implicitly changes the dominance coefficient of the mutation to that of the new mutation type, since the dominance coefficient is a property of the mutation type. On the other hand, the selection coefficient of the mutation is not changed, since it is a property of the mutation object itself; it can be changed explicitly using the setSelectionCoeff() method if so desired. The mutation type of a mutation is normally a constant in simulations, so be sure you know what you are doing. Changing this will normally affect the fitness values calculated toward the end of the current tick; if you want current fitness values to be affected, you can call the Species method recalculateFitness() - but see the documentation of that method for caveats. In nucleotide-based models, a restriction applies: nucleotide-based mutations may not be changed to a non-nucleotide-based mutation type, and non-nucleotide-based mutations may not be changed to a nucleotide-based mutation type.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

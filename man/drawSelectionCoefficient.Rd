@@ -12,18 +12,20 @@ drawSelectionCoefficient(n = NULL)
 \item{n}{An object of type integer (singleton).}
 }
 \value{
-An object of type float or void.
+\strong{MutationType method:} An object of type float or void.
 }
 \description{
-Documentation for SLiM function \code{drawSelectionCoefficient}, which is a method of the SLiM class \code{\link{MutationType}}.
+\strong{MutationType method:} Documentation for SLiM function \code{drawSelectionCoefficient}, which is a method of the SLiM class \code{\link{MutationType}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-[integer$ n = 1]) Draws and returns a vector of n selection coefficients using the currently defined distribution of fitness effects (DFE) for the target mutation type. If the DFE is type "s", this method will result in synchronous execution of the DFE's script.
+\strong{MutationType method:} Draws and returns a vector of n selection coefficients using the currently defined distribution of fitness effects (DFE) for the target mutation type. If the DFE is type "s", this method will result in synchronous execution of the DFE's script.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -13,18 +13,20 @@ eidos_max(x, ...)
 \item{...}{An object of type NA.}
 }
 \value{
-An object of type any but object. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type any but object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{max}.
+\strong{Eidos function:} Documentation for SLiM function \code{max}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the maximum of x and the other arguments supplied: the single greatest value contained by all of them. All of the arguments must be the same type as x, and the return type will match that of x. If all of the arguments have a size of 0, the return value will be NULL; note that this means that max(x, max(y)) may produce an error, if max(y) is NULL, in cases where max(x, y) does not.
+\strong{Eidos function:} Returns the maximum of x and the other arguments supplied: the single greatest value contained by all of them. All of the arguments must be the same type as x, and the return type will match that of x. If all of the arguments have a size of 0, the return value will be NULL; note that this means that max(x, max(y)) may produce an error, if max(y) is NULL, in cases where max(x, y) does not.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

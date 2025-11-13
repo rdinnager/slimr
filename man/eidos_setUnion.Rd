@@ -13,18 +13,20 @@ eidos_setUnion(x, y)
 \item{y}{An object of type any or any.}
 }
 \value{
-An object of type any.
+\strong{Eidos function:} An object of type any.
 }
 \description{
-Documentation for SLiM function \code{setUnion}.
+\strong{Eidos function:} Documentation for SLiM function \code{setUnion}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the set-theoretic union of x and y, denoted x  y: a vector containing all elements that are in x and/or y. Duplicate elements will be stripped out, in the same manner as the unique() function. This function is therefore roughly equivalent to unique(c(x, y)), but this function will probably be faster. The order of elements in the returned vector is arbitrary and should not be relied upon. The returned vector will be of the same type as x and y, and x and y must be of the same type.
+\strong{Eidos function:} Returns the set-theoretic union of x and y, denoted x  y: a vector containing all elements that are in x and/or y. Duplicate elements will be stripped out, in the same manner as the unique() function. This function is therefore roughly equivalent to unique(c(x, y)), but this function will probably be faster. The order of elements in the returned vector is arbitrary and should not be relied upon. The returned vector will be of the same type as x and y, and x and y must be of the same type.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

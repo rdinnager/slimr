@@ -14,18 +14,20 @@ logFileData(logFile, column)
 \item{column}{An object of type integer or string (singleton).}
 }
 \value{
-An object of type null or float or string.
+\strong{SLiMgui method:} An object of type null or float or string.
 }
 \description{
-Documentation for SLiM function \code{logFileData}, which is a method of the SLiM class \code{\link{SLiMgui}}.
+\strong{SLiMgui method:} Documentation for SLiM function \code{logFileData}, which is a method of the SLiM class \code{\link{SLiMgui}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-object<LogFile>$ logFile, is$ column) Returns a vector containing data from the LogFile object logFile, taken from a specified column (identified in column either by the column's name or by its zero-based index). If the data are all numeric, they will be returned as a float vector. Otherwise - if the data are non-numeric - they will be returned as a string vector. If the specified column does not exist in the log file, NULL will be returned. This functionality is provided as a method on the SLiMgui class, rather than on LogFile, because in SLiMgui logged data is kept in memory anyway, for display in the debugging output viewer window. When running at the command line logged data is not kept in memory, and thus is not available.
+\strong{SLiMgui method:} Returns a vector containing data from the LogFile object logFile, taken from a specified column (identified in column either by the column's name or by its zero-based index). If the data are all numeric, they will be returned as a float vector. Otherwise - if the data are non-numeric - they will be returned as a string vector. If the specified column does not exist in the log file, NULL will be returned. This functionality is provided as a method on the SLiMgui class, rather than on LogFile, because in SLiMgui logged data is kept in memory anyway, for display in the debugging output viewer window. When running at the command line logged data is not kept in memory, and thus is not available.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

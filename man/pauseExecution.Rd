@@ -12,18 +12,20 @@ pauseExecution(void)
 \item{void}{An object of type object.}
 }
 \value{
-An object of type void.
+\strong{SLiMgui method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{pauseExecution}, which is a method of the SLiM class \code{\link{SLiMgui}}.
+\strong{SLiMgui method:} Documentation for SLiM function \code{pauseExecution}, which is a method of the SLiM class \code{\link{SLiMgui}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-void) Pauses a model that is playing in SLiMgui. This is essentially equivalent to clicking the "Play" button to stop the execution of the model. Execution can be resumed by the user, by clicking the "Play" button again; unlike calling stop() or simulationFinished(), the simulation is not terminated. This method can be useful for debugging or exploratory purposes, to pause the model at a point of interest. Execution is paused at the end of the currently executing tick, not mid-tick. If the model is being profiled, or is executing forward to a tick number entered in the tick field, pauseExecution() will do nothing; by design, pauseExecution() only pauses execution when SLiMgui is doing a simple "Play" of the model.
+\strong{SLiMgui method:} Pauses a model that is playing in SLiMgui. This is essentially equivalent to clicking the "Play" button to stop the execution of the model. Execution can be resumed by the user, by clicking the "Play" button again; unlike calling stop() or simulationFinished(), the simulation is not terminated. This method can be useful for debugging or exploratory purposes, to pause the model at a point of interest. Execution is paused at the end of the currently executing tick, not mid-tick. If the model is being profiled, or is executing forward to a tick number entered in the tick field, pauseExecution() will do nothing; by design, pauseExecution() only pauses execution when SLiMgui is doing a simple "Play" of the model.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

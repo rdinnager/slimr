@@ -14,18 +14,20 @@ setMigrationRates(sourceSubpops, rates)
 \item{rates}{An object of type numeric.}
 }
 \value{
-An object of type void.
+\strong{Subpopulation method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{setMigrationRates}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+\strong{Subpopulation method:} Documentation for SLiM function \code{setMigrationRates}, which is a method of the SLiM class \code{\link{Subpopulation}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-io<Subpopulation> sourceSubpops, numeric rates) Set the migration rates to this subpopulation from the subpopulations in sourceSubpops to the corresponding rates specified in rates; in other words, rates gives the expected fractions of the children in this subpopulation that will subsequently be generated from parents in the subpopulations sourceSubpops (see the SLiM manual for further details). This method will only set the migration fractions from the subpopulations given; migration rates from other subpopulations will be left unchanged (explicitly set a zero rate to turn off migration from a given subpopulation). The type of sourceSubpops may be either integer, specifying subpopulations by identifier, or object, specifying subpopulations directly.
+\strong{Subpopulation method:} Set the migration rates to this subpopulation from the subpopulations in sourceSubpops to the corresponding rates specified in rates; in other words, rates gives the expected fractions of the children in this subpopulation that will subsequently be generated from parents in the subpopulations sourceSubpops (see the SLiM manual for further details). This method will only set the migration fractions from the subpopulations given; migration rates from other subpopulations will be left unchanged (explicitly set a zero rate to turn off migration from a given subpopulation). The type of sourceSubpops may be either integer, specifying subpopulations by identifier, or object, specifying subpopulations directly.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

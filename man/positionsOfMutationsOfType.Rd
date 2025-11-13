@@ -12,18 +12,20 @@ positionsOfMutationsOfType(mutType)
 \item{mutType}{An object of type integer or MutationType object (singleton).}
 }
 \value{
-An object of type integer.
+\strong{Haplosome method:} An object of type integer.
 }
 \description{
-Documentation for SLiM function \code{positionsOfMutationsOfType}, which is a method of the SLiM class \code{\link{Haplosome}}.
+\strong{Haplosome method:} Documentation for SLiM function \code{positionsOfMutationsOfType}, which is a method of the SLiM class \code{\link{Haplosome}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-io<MutationType>$ mutType) Returns the positions of mutations that are of the type specified by mutType, out of all of the mutations in the haplosome. If you need a vector of the matching Mutation objects, rather than just positions, use -mutationsOfType(). This method is provided for speed; it is much faster than the corresponding Eidos code.
+\strong{Haplosome method:} Returns the positions of mutations that are of the type specified by mutType, out of all of the mutations in the haplosome. If you need a vector of the matching Mutation objects, rather than just positions, use -mutationsOfType(). This method is provided for speed; it is much faster than the corresponding Eidos code.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

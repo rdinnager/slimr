@@ -15,18 +15,20 @@ eidos_catn(x = NULL, sep = NULL, error = NULL)
 \item{error}{An object of type any or string or logical (singleton).}
 }
 \value{
-An object of type void.
+\strong{Eidos function:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{catn}.
+\strong{Eidos function:} Documentation for SLiM function \code{catn}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Concatenates output (with a trailing newline) to Eidos's output stream, joined together by sep. The behavior of catn() is identical to that of cat(), except that a final newline character is appended to the output for convenience. For catn() a default value of "" is supplied for x, to allow a simple catn() call with no parameters to emit a newline. By default (when error is F), the output is sent to the standard Eidos output stream. When running at the command line, this sends it to stdout; when running in SLiMgui, this sends it to the simulation window's output textview. If error is T, the output is instead sent to the Eidos error stream. When running at the command line, this sends it to stderr; when running in SLiMgui, the output is routed to the simulation's debugging output window.
+\strong{Eidos function:} Concatenates output (with a trailing newline) to Eidos's output stream, joined together by sep. The behavior of catn() is identical to that of cat(), except that a final newline character is appended to the output for convenience. For catn() a default value of "" is supplied for x, to allow a simple catn() call with no parameters to emit a newline. By default (when error is F), the output is sent to the standard Eidos output stream. When running at the command line, this sends it to stdout; when running in SLiMgui, this sends it to the simulation window's output textview. If error is T, the output is instead sent to the Eidos error stream. When running at the command line, this sends it to stderr; when running in SLiMgui, the output is routed to the simulation's debugging output window.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

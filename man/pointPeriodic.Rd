@@ -12,18 +12,20 @@ pointPeriodic(point)
 \item{point}{An object of type float.}
 }
 \value{
-An object of type float.
+\strong{Subpopulation method:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{pointPeriodic}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+\strong{Subpopulation method:} Documentation for SLiM function \code{pointPeriodic}, which is a method of the SLiM class \code{\link{Subpopulation}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-float point) Returns a revised version of point that has been brought inside the periodic spatial boundaries of the subpopulation (as specified by the periodicity parameter of initializeSLiMOptions()) by wrapping around periodic spatial boundaries. In brief, if a coordinate of point lies beyond a periodic spatial boundary, that coordinate is wrapped around the boundary, so that it lies inside the spatial extent by the same magnitude that it previously lay outside, but on the opposite side of the space; in effect, the two edges of the periodic spatial boundary are seamlessly joined. This is done iteratively until all coordinates lie inside the subpopulation's periodic boundaries. Note that non-periodic spatial boundaries are not enforced by this method; they should be enforced using pointReflected(), pointStopped(), or some other means of enforcing boundary constraints (which can be used after pointPeriodic() to bring the remaining coordinates into bounds; coordinates already brought into bounds by pointPeriodic() will be unaffected by those calls). This method is useful for implementing periodic boundary conditions. This may only be called in simulations for which continuous space and at least one periodic spatial dimension have been enabled with initializeSLiMOptions(). The length of point must be an exact multiple of the dimensionality of the simulation; in other words, point may contain values comprising more than one point. In this case, each point will be processed as described above and a new vector containing all of the processed points will be returned.
+\strong{Subpopulation method:} Returns a revised version of point that has been brought inside the periodic spatial boundaries of the subpopulation (as specified by the periodicity parameter of initializeSLiMOptions()) by wrapping around periodic spatial boundaries. In brief, if a coordinate of point lies beyond a periodic spatial boundary, that coordinate is wrapped around the boundary, so that it lies inside the spatial extent by the same magnitude that it previously lay outside, but on the opposite side of the space; in effect, the two edges of the periodic spatial boundary are seamlessly joined. This is done iteratively until all coordinates lie inside the subpopulation's periodic boundaries. Note that non-periodic spatial boundaries are not enforced by this method; they should be enforced using pointReflected(), pointStopped(), or some other means of enforcing boundary constraints (which can be used after pointPeriodic() to bring the remaining coordinates into bounds; coordinates already brought into bounds by pointPeriodic() will be unaffected by those calls). This method is useful for implementing periodic boundary conditions. This may only be called in simulations for which continuous space and at least one periodic spatial dimension have been enabled with initializeSLiMOptions(). The length of point must be an exact multiple of the dimensionality of the simulation; in other words, point may contain values comprising more than one point. In this case, each point will be processed as described above and a new vector containing all of the processed points will be returned.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

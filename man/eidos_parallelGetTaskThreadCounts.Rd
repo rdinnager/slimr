@@ -11,18 +11,20 @@ eidos_parallelGetTaskThreadCounts(void)
 \item{void}{An object of type object.}
 }
 \value{
-An object of type Dictionary object. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type Dictionary object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{parallelGetTaskThreadCounts}.
+\strong{Eidos function:} Documentation for SLiM function \code{parallelGetTaskThreadCounts}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Gets the number of threads that is requested to be used for specific tasks in Eidos and SLiM. Returns a new Dictionary containing values for all of the tasks for which a number of threads can be specified; see parallelSetTaskThreadCounts() for a list of all such tasks. Note that the specified number of threads will not necessarily be used in practice; in particular, a thread count set by parallelSetNumThreads() will override these per-task counts. Also, if the task size is below a certain task-specific threshold the task will not be executed in parallel regardless of these settings.
+\strong{Eidos function:} Gets the number of threads that is requested to be used for specific tasks in Eidos and SLiM. Returns a new Dictionary containing values for all of the tasks for which a number of threads can be specified; see parallelSetTaskThreadCounts() for a list of all such tasks. Note that the specified number of threads will not necessarily be used in practice; in particular, a thread count set by parallelSetNumThreads() will override these per-task counts. Also, if the task size is below a certain task-specific threshold the task will not be executed in parallel regardless of these settings.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

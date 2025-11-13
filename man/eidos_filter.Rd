@@ -15,18 +15,20 @@ eidos_filter(x, filter, outside = NULL)
 \item{outside}{An object of type logical or integer or float (singleton).}
 }
 \value{
-An object of type float.
+\strong{Eidos function:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{filter}.
+\strong{Eidos function:} Documentation for SLiM function \code{filter}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the result of convolving x with filter. The returned vector will be the same length as x. The convolution is performed by centering filter on each position of x to produce a corresponding result element that is the sum over the products of each filter value with each x value within the filter's range. The length of filter is required to be odd, so that the filter has a central value (and can thus be centered over each value of x). If the filter, centered over a given value of x, extends beyond the end of x then the calculation of the corresponding element of the result is governed by the outside parameter. When outside is F (the default), the corresponding element in the result will be NAN; this matches the behavior of the R filter() function (except that R uses NA). If outside is T, values outside x will be excluded from the calculation (the filter value covering that position will be considered to be 0), and the other values in the filter will be adjusted so that the sum of the absolute values of the filter weights used is unchanged, to compensate for the excluded values by giving the positions inside x more weight. Finally, if outside is integer or float, that value will be used as the value of x for all positions outside x; one might pass an expected value or mean value in this way, to be used for all outside positions. This function is useful for computing running means and similar transformations of an input vector. For a simple running mean of width w, pass rep(1/w, w) for filter. That case is automatically detected and handled efficiently; otherwise, the runtime of this function is proportional to the length of x times the length of filter, and so will be slow for long filters.
+\strong{Eidos function:} Returns the result of convolving x with filter. The returned vector will be the same length as x. The convolution is performed by centering filter on each position of x to produce a corresponding result element that is the sum over the products of each filter value with each x value within the filter's range. The length of filter is required to be odd, so that the filter has a central value (and can thus be centered over each value of x). If the filter, centered over a given value of x, extends beyond the end of x then the calculation of the corresponding element of the result is governed by the outside parameter. When outside is F (the default), the corresponding element in the result will be NAN; this matches the behavior of the R filter() function (except that R uses NA). If outside is T, values outside x will be excluded from the calculation (the filter value covering that position will be considered to be 0), and the other values in the filter will be adjusted so that the sum of the absolute values of the filter weights used is unchanged, to compensate for the excluded values by giving the positions inside x more weight. Finally, if outside is integer or float, that value will be used as the value of x for all positions outside x; one might pass an expected value or mean value in this way, to be used for all outside positions. This function is useful for computing running means and similar transformations of an input vector. For a simple running mean of width w, pass rep(1/w, w) for filter. That case is automatically detected and handled efficiently; otherwise, the runtime of this function is proportional to the length of x times the length of filter, and so will be slow for long filters.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

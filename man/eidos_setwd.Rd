@@ -11,18 +11,20 @@ eidos_setwd(path)
 \item{path}{An object of type string (singleton).}
 }
 \value{
-An object of type string. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type string. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{setwd}.
+\strong{Eidos function:} Documentation for SLiM function \code{setwd}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Sets the current filesystem working directory. The filesystem working directory is the directory which will be used as a base path for relative filesystem paths (see getwd() for further discussion). An error will result if the working directory cannot be set to the given path. The current working directory prior to the change will be returned as an invisible string value; the value returned is identical to the value that would have been returned by getwd(), apart from its invisibility. See getwd() for discussion regarding the initial working directory, before it is set with setwd().
+\strong{Eidos function:} Sets the current filesystem working directory. The filesystem working directory is the directory which will be used as a base path for relative filesystem paths (see getwd() for further discussion). An error will result if the working directory cannot be set to the given path. The current working directory prior to the change will be returned as an invisible string value; the value returned is identical to the value that would have been returned by getwd(), apart from its invisibility. See getwd() for discussion regarding the initial working directory, before it is set with setwd().
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

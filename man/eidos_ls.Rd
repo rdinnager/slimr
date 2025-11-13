@@ -11,18 +11,20 @@ eidos_ls(showSymbolTables = NULL)
 \item{showSymbolTables}{An object of type logical (singleton).}
 }
 \value{
-An object of type void.
+\strong{Eidos function:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{ls}.
+\strong{Eidos function:} Documentation for SLiM function \code{ls}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Prints all currently defined variables to Eidos's output stream. Beginning in Eidos 2.5 (SLiM 3.5), the showSymbolTables optional argument can be set to T to request full information on the current symbol table chain. This will show which symbol table a given symbol is defined in, as well as revealing whether there are other symbols with the same name that have been masked by a local definition. This is mostly useful for debugging.
+\strong{Eidos function:} Prints all currently defined variables to Eidos's output stream. Beginning in Eidos 2.5 (SLiM 3.5), the showSymbolTables optional argument can be set to T to request full information on the current symbol table chain. This will show which symbol table a given symbol is defined in, as well as revealing whether there are other symbols with the same name that have been masked by a local definition. This is mostly useful for debugging.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

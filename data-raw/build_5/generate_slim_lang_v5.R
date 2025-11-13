@@ -113,19 +113,21 @@ cat("STEP 3: Defining roxygen templates...\n")
 func_template <- "
 SLiM method <<r_function_name>>
 
-Documentation for SLiM function \\code{<<function_name>>}, which is a method of the SLiM class \\code{\\link{<<class_name>>}}.
+\\strong{<<class_name>> method:} Documentation for SLiM function \\code{<<function_name>>}, which is a method of the SLiM class \\code{\\link{<<class_name>>}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \\code{\\link{slim_block}} function further nested in a \\code{\\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 
-Documentation for this function can be found in the official SLiM manual at \\url{https://messerlab.org/slim/}.
+See \\strong{Details} below for complete documentation of this SLiM method.
 
 <<params>>
 
 @aliases <<class_name>>$<<function_name>> <<class_abbr>>$<<function_name>>
 @family <<class_name>>
-@return An object of type <<return_type_desc>>. <<ifelse(return_singleton, 'Return will be of length 1 (a singleton)', '')>>
-@details <<description>>
+@return \\strong{<<class_name>> method:} An object of type <<return_type_desc>>. <<ifelse(return_singleton, 'Return will be of length 1 (a singleton)', '')>>
+@details \\strong{<<class_name>> method:} <<description>>
+
+Full documentation for this function can be found in the official SLiM manual: \\url{https://messerlab.org/slim/}.
 @section Copyright:
 This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
 which can be found here: \\url{https://messerlab.org/slim/}. This documentation is
@@ -144,19 +146,21 @@ on the official website: \\url{https://messerlab.org/slim/}
 plot_func_template <- "
 SLiM method <<r_function_name>>
 
-Documentation for SLiM function \\code{<<function_name>>}, which is a method of the SLiM class \\code{\\link{Plot}}.
+\\strong{Plot method:} Documentation for SLiM function \\code{<<function_name>>}, which is a method of the SLiM class \\code{\\link{Plot}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \\code{\\link{slim_block}} function further nested in a \\code{\\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 
-Documentation for this function can be found in the official SLiM manual at \\url{https://messerlab.org/slim/}.
+See \\strong{Details} below for complete documentation of this SLiM method.
 
 <<params>>
 
 @aliases Plot$<<function_name>> Pl$<<function_name>>
 @family Plot
-@return An object of type <<return_type_desc>>. <<ifelse(return_singleton, 'Return will be of length 1 (a singleton)', '')>>
-@details <<description>>
+@return \\strong{Plot method:} An object of type <<return_type_desc>>. <<ifelse(return_singleton, 'Return will be of length 1 (a singleton)', '')>>
+@details \\strong{Plot method:} <<description>>
+
+Full documentation for this function can be found in the official SLiM manual: \\url{https://messerlab.org/slim/}.
 @section Copyright:
 This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
 which can be found here: \\url{https://messerlab.org/slim/}. This documentation is
@@ -172,19 +176,21 @@ on the official website: \\url{https://messerlab.org/slim/}
 eidos_func_template <- "
 SLiM function <<function_name>>
 
-Documentation for SLiM function \\code{<<function_name>>}.
+\\strong{Eidos function:} Documentation for SLiM function \\code{<<function_name>>}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \\code{\\link{slim_block}} function further nested in a \\code{\\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 
-Documentation for this function can be found in the official SLiM manual at \\url{https://messerlab.org/slim/}.
+See \\strong{Details} below for complete documentation of this SLiM function.
 
 <<params>>
 
 @aliases <<class_abbr>>$<<function_name>>
 @family Eidos
-@return An object of type <<return_type_desc>>. <<ifelse(return_singleton, 'Return will be of length 1 (a singleton)', '')>>
-@details <<description>>
+@return \\strong{Eidos function:} An object of type <<return_type_desc>>. <<ifelse(return_singleton, 'Return will be of length 1 (a singleton)', '')>>
+@details \\strong{Eidos function:} <<description>>
+
+Full documentation for this function can be found in the official SLiM manual: \\url{https://messerlab.org/slim/}.
 @section Copyright:
 This is documentation for a function in the SLiM software, and has been reproduced from the official manual,
 which can be found here: \\url{https://messerlab.org/slim/}. This documentation is

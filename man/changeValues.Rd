@@ -12,18 +12,20 @@ changeValues(x)
 \item{x}{An object of type integer or float or SpatialMap object.}
 }
 \value{
-An object of type void.
+\strong{SpatialMap method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{changeValues}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+\strong{SpatialMap method:} Documentation for SLiM function \code{changeValues}, which is a method of the SLiM class \code{\link{SpatialMap}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-ifo<SpatialMap> x) Changes the grid values used for the target spatial map. The parameter x should be either a SpatialMap object from which values are taken directly, or a vector, matrix, or array of numeric values as described in the documentation for defineSpatialMap(). Other characteristics of the spatial map, such as its color mapping (if defined), its spatial bounds, and its spatiality, will remain unchanged. The grid resolution of the spatial map is allowed to change with this method. This method is useful for changing the values of a spatial map over time, such as to implement changes to the landscape's characteristics due to seasonality, climate change, processes such as fire or urbanization, and so forth. As with the original map values provided to defineSpatialMap(), it is often useful to read map values from a PNG image file using the Eidos class Image.
+\strong{SpatialMap method:} Changes the grid values used for the target spatial map. The parameter x should be either a SpatialMap object from which values are taken directly, or a vector, matrix, or array of numeric values as described in the documentation for defineSpatialMap(). Other characteristics of the spatial map, such as its color mapping (if defined), its spatial bounds, and its spatiality, will remain unchanged. The grid resolution of the spatial map is allowed to change with this method. This method is useful for changing the values of a spatial map over time, such as to implement changes to the landscape's characteristics due to seasonality, climate change, processes such as fire or urbanization, and so forth. As with the original map values provided to defineSpatialMap(), it is often useful to read map values from a PNG image file using the Eidos class Image.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

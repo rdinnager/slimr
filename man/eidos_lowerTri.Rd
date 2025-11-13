@@ -13,18 +13,20 @@ eidos_lowerTri(x, diag = NULL)
 \item{diag}{An object of type any or logical (singleton).}
 }
 \value{
-An object of type logical.
+\strong{Eidos function:} An object of type logical.
 }
 \description{
-Documentation for SLiM function \code{lowerTri}.
+\strong{Eidos function:} Documentation for SLiM function \code{lowerTri}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the lower triangle of x, which must be a matrix. The return value will be a logical matrix of the same dimensions as x, with elements T in the lower triangle, F elsewhere. If diag is F (the default), the diagonal is not included in the lower triangle; if diag is T, the diagonal is included in the lower triangle (i.e., its elements will be T).
+\strong{Eidos function:} Returns the lower triangle of x, which must be a matrix. The return value will be a logical matrix of the same dimensions as x, with elements T in the lower triangle, F elsewhere. If diag is F (the default), the diagonal is not included in the lower triangle; if diag is T, the diagonal is included in the lower triangle (i.e., its elements will be T).
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -12,18 +12,20 @@ initializeSLiMModelType(modelType)
 \item{modelType}{An object of type string (singleton).}
 }
 \value{
-An object of type void.
+\strong{Initialize method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{initializeSLiMModelType}, which is a method of the SLiM class \code{\link{Initialize}}.
+\strong{Initialize method:} Documentation for SLiM function \code{initializeSLiMModelType}, which is a method of the SLiM class \code{\link{Initialize}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Configure the type of SLiM model used for the simulation. At present, one of two model types may be selected. If modelType is "WF", SLiM will use a Wright-Fisher (WF) model; this is the model type that has always been supported by SLiM, and is the model type used if initializeSLiMModelType() is not called. If modelType is "nonWF", SLiM will use a non-Wright-Fisher (nonWF) model instead; this is a new model type supported by SLiM 3.0 and above. If initializeSLiMModelType() is called at all then it must be called before any other initialization function, so that SLiM knows from the outset which features are enabled and which are not.
+\strong{Initialize method:} Configure the type of SLiM model used for the simulation. At present, one of two model types may be selected. If modelType is "WF", SLiM will use a Wright-Fisher (WF) model; this is the model type that has always been supported by SLiM, and is the model type used if initializeSLiMModelType() is not called. If modelType is "nonWF", SLiM will use a non-Wright-Fisher (nonWF) model instead; this is a new model type supported by SLiM 3.0 and above. If initializeSLiMModelType() is called at all then it must be called before any other initialization function, so that SLiM knows from the outset which features are enabled and which are not.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

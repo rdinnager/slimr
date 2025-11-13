@@ -12,18 +12,20 @@ scriptBlocksWithIDs(ids)
 \item{ids}{An object of type integer.}
 }
 \value{
-An object of type SLiMEidosBlock object.
+\strong{Community method:} An object of type SLiMEidosBlock object.
 }
 \description{
-Documentation for SLiM function \code{scriptBlocksWithIDs}, which is a method of the SLiM class \code{\link{Community}}.
+\strong{Community method:} Documentation for SLiM function \code{scriptBlocksWithIDs}, which is a method of the SLiM class \code{\link{Community}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-integer ids) Find and return the SLiMEidosBlock objects with id values matching the values in ids. If no matching SLiMEidosBlock object can be found with a given id, an error results.
+\strong{Community method:} Find and return the SLiMEidosBlock objects with id values matching the values in ids. If no matching SLiMEidosBlock object can be found with a given id, an error results.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

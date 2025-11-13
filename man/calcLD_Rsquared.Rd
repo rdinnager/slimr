@@ -18,18 +18,20 @@ calcLD_Rsquared(mut1, mut2 = NULL, haplosomes = NULL, squared = NULL)
 \item{squared}{An object of type logical (singleton).}
 }
 \value{
-An object of type float.
+\strong{SLiMBuiltin method:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{calcLD_Rsquared}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
+\strong{SLiMBuiltin method:} Documentation for SLiM function \code{calcLD_Rsquared}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Calculates the linkage disequilibrium (LD) squared correlation coefficient r2 between a focal mutation mut1 and one or more mutations in mut2, evaluated across a set of haplosomes given by haplosomes. The result is a float vector that matches the size and order of mut2. The implementation of this function, viewable with functionSource(), calculates r2 as defined by Hill and Robertson (1968, p. 227). The squared correlation coefficient r2 is a normalized measure of LD within [0, 1] (for the unnormalized LD coefficient D, see calcLD_D()). When r2 = 0, there is no statistical association between the mutations; they co-occur as expected by chance. A value of r2 = 1 indicates complete correlation: the mutations either always appear together or never appear together, depending on the sign of the underlying correlation coefficient r. To obtain the raw (signed) r value instead of r2, you can pass squared=F instead of the default of T. All mutations in mut2 must be associated with the same chromosome as mut1; this function does not currently calculate LD between mutations associated with different chromosomes. If mut2 is NULL (the default), all such mutations in the population (including mut1 itself) will be used. Similarly, all haplosomes must be associated with the same chromosome as mut1. If the haplosomes parameter is NULL (the default), all such haplosomes in the population will be used. This function was written by Vitor Sudbrack (currently affiliated with University of Lausanne).
+\strong{SLiMBuiltin method:} Calculates the linkage disequilibrium (LD) squared correlation coefficient r2 between a focal mutation mut1 and one or more mutations in mut2, evaluated across a set of haplosomes given by haplosomes. The result is a float vector that matches the size and order of mut2. The implementation of this function, viewable with functionSource(), calculates r2 as defined by Hill and Robertson (1968, p. 227). The squared correlation coefficient r2 is a normalized measure of LD within [0, 1] (for the unnormalized LD coefficient D, see calcLD_D()). When r2 = 0, there is no statistical association between the mutations; they co-occur as expected by chance. A value of r2 = 1 indicates complete correlation: the mutations either always appear together or never appear together, depending on the sign of the underlying correlation coefficient r. To obtain the raw (signed) r value instead of r2, you can pass squared=F instead of the default of T. All mutations in mut2 must be associated with the same chromosome as mut1; this function does not currently calculate LD between mutations associated with different chromosomes. If mut2 is NULL (the default), all such mutations in the population (including mut1 itself) will be used. Similarly, all haplosomes must be associated with the same chromosome as mut1. If the haplosomes parameter is NULL (the default), all such haplosomes in the population will be used. This function was written by Vitor Sudbrack (currently affiliated with University of Lausanne).
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -11,18 +11,20 @@ eidos_mean(x)
 \item{x}{An object of type logical or integer or float.}
 }
 \value{
-An object of type float. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type float. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{mean}.
+\strong{Eidos function:} Documentation for SLiM function \code{mean}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the arithmetic mean of x: the sum of x divided by the number of values in x. If x has a size of 0, the return value will be NULL. The unusual parameter type signature lif indicates that x can be logical, integer, or float; if x is logical, it is coerced to integer internally (with F being 0 and T being 1, as always), allowing mean() to calculate the average truth value of a logical vector.
+\strong{Eidos function:} Returns the arithmetic mean of x: the sum of x divided by the number of values in x. If x has a size of 0, the return value will be NULL. The unusual parameter type signature lif indicates that x can be logical, integer, or float; if x is logical, it is coerced to integer internally (with F being 0 and T being 1, as always), allowing mean() to calculate the average truth value of a logical vector.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

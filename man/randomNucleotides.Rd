@@ -16,18 +16,20 @@ randomNucleotides(length, basis = NULL, format = NULL)
 \item{format}{An object of type string (singleton).}
 }
 \value{
-An object of type integer or string.
+\strong{SLiMBuiltin method:} An object of type integer or string.
 }
 \description{
-Documentation for SLiM function \code{randomNucleotides}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
+\strong{SLiMBuiltin method:} Documentation for SLiM function \code{randomNucleotides}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Generates a new random nucleotide sequence with length bases. The four nucleotides ACGT are equally probable if basis is NULL (the default); otherwise, basis may be a 4-element integer or float vector providing relative fractions for A, C, G, and T respectively (these need not sum to 1.0, as they will be normalized). More complex generative models such as Markov processes are not supported intrinsically in SLiM at this time, but arbitrary generated sequences may always be loaded from files on disk. The format parameter controls the format of the returned sequence. It may be "string" to obtain the generated sequence as a singleton string (e.g., "TATA"), "char" to obtain it as a string vector of single characters (e.g., "T", "A", "T", "A"), or "integer" to obtain it as an integer vector (e.g., 3, 0, 3, 0), using SLiM's standard code of A=0, C=1, G=2, T=3. For passing directly to initializeAncestralNucleotides(), format "string" (a singleton string) will certainly be the most memory-efficient, and probably also the fastest. Memory efficiency can be a significant consideration; the nucleotide sequence for a chromosome of length 109 will occupy approximately 1 GB of memory when stored as a singleton string (with one byte per nucleotide), and much more if stored in the other formats. However, the other formats can be easier to work with in Eidos, and so may be preferable for relatively short chromosomes if you are manipulating the generated sequence. 3.3. Population genetics utilities
+\strong{SLiMBuiltin method:} Generates a new random nucleotide sequence with length bases. The four nucleotides ACGT are equally probable if basis is NULL (the default); otherwise, basis may be a 4-element integer or float vector providing relative fractions for A, C, G, and T respectively (these need not sum to 1.0, as they will be normalized). More complex generative models such as Markov processes are not supported intrinsically in SLiM at this time, but arbitrary generated sequences may always be loaded from files on disk. The format parameter controls the format of the returned sequence. It may be "string" to obtain the generated sequence as a singleton string (e.g., "TATA"), "char" to obtain it as a string vector of single characters (e.g., "T", "A", "T", "A"), or "integer" to obtain it as an integer vector (e.g., 3, 0, 3, 0), using SLiM's standard code of A=0, C=1, G=2, T=3. For passing directly to initializeAncestralNucleotides(), format "string" (a singleton string) will certainly be the most memory-efficient, and probably also the fastest. Memory efficiency can be a significant consideration; the nucleotide sequence for a chromosome of length 109 will occupy approximately 1 GB of memory when stored as a singleton string (with one byte per nucleotide), and much more if stored in the other formats. However, the other formats can be easier to work with in Eidos, and so may be preferable for relatively short chromosomes if you are manipulating the generated sequence. 3.3. Population genetics utilities
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

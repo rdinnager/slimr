@@ -15,18 +15,20 @@ eidos_rgamma(n, mean, shape)
 \item{shape}{An object of type integer or numeric or numeric.}
 }
 \value{
-An object of type float.
+\strong{Eidos function:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{rgamma}.
+\strong{Eidos function:} Documentation for SLiM function \code{rgamma}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a vector of n random draws from a gamma distribution with mean mean and shape parameter shape. The mean and shape parameters may either be singletons, specifying a single value to be used for all of the draws, or they may be vectors of length n, specifying a value for each draw. Draws are made from a gamma distribution with probability density P(s | ,) = [()]1exp(s/), where  is the shape parameter shape, and the mean of the distribution given by mean is equal to . Values of mean less than zero are allowed, and are equivalent (in principle) to the negation of a draw from a gamma distribution with the same shape parameter and the negation of the mean parameter.
+\strong{Eidos function:} Returns a vector of n random draws from a gamma distribution with mean mean and shape parameter shape. The mean and shape parameters may either be singletons, specifying a single value to be used for all of the draws, or they may be vectors of length n, specifying a value for each draw. Draws are made from a gamma distribution with probability density P(s | ,) = [()]1exp(s/), where  is the shape parameter shape, and the mean of the distribution given by mean is equal to . Values of mean less than zero are allowed, and are equivalent (in principle) to the negation of a draw from a gamma distribution with the same shape parameter and the negation of the mean parameter.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

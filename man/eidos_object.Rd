@@ -11,18 +11,20 @@ eidos_object(void)
 \item{void}{An object of type object.}
 }
 \value{
-An object of type Object object.
+\strong{Eidos function:} An object of type Object object.
 }
 \description{
-Documentation for SLiM function \code{object}.
+\strong{Eidos function:} Documentation for SLiM function \code{object}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a new empty object vector. Unlike float(), integer(), logical(), and string(), a length cannot be specified and the new vector contains no elements. This is because there is no default value for the object type. Adding to such a vector is typically done with c(). Note that the return value is of type object<Object>; this method creates an object vector that does not know what element type it contains. Such object vectors may be mixed freely with other object vectors in c() and similar contexts; the result of such mixing will take its object-element type from the object vector with a defined object-element type (if any).
+\strong{Eidos function:} Returns a new empty object vector. Unlike float(), integer(), logical(), and string(), a length cannot be specified and the new vector contains no elements. This is because there is no default value for the object type. Adding to such a vector is typically done with c(). Note that the return value is of type object<Object>; this method creates an object vector that does not know what element type it contains. Such object vectors may be mixed freely with other object vectors in c() and similar contexts; the result of such mixing will take its object-element type from the object vector with a defined object-element type (if any).
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

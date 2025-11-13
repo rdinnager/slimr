@@ -13,18 +13,20 @@ eidos_source(filePath, chdir = NULL)
 \item{chdir}{An object of type string or logical (singleton).}
 }
 \value{
-An object of type void.
+\strong{Eidos function:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{source}.
+\strong{Eidos function:} Documentation for SLiM function \code{source}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Executes the contents of an Eidos source file found at the filesystem path filePath. This is essentially shorthand for calling readFile(), joining the read lines with newlines to form a single string using paste(), and then passing that string to executeLambda(). The source file must consist of complete Eidos statements. Regardless of what the last executed source line evaluates to, source() has no return value. If no file exists at filePath, an error will be raised. The chdir parameter controls the current working directory in effect while the source file is executed. If chdir is F (the default), the current working directory will remain unchanged. If chdir is T, the current working directory will be temporarily changed to the filesystem path at which the source file is located, and restored after execution of the source file is complete.
+\strong{Eidos function:} Executes the contents of an Eidos source file found at the filesystem path filePath. This is essentially shorthand for calling readFile(), joining the read lines with newlines to form a single string using paste(), and then passing that string to executeLambda(). The source file must consist of complete Eidos statements. Regardless of what the last executed source line evaluates to, source() has no return value. If no file exists at filePath, an error will be raised. The chdir parameter controls the current working directory in effect while the source file is executed. If chdir is F (the default), the current working directory will remain unchanged. If chdir is T, the current working directory will be temporarily changed to the filesystem path at which the source file is located, and restored after execution of the source file is complete.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

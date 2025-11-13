@@ -11,18 +11,20 @@ eidos_getwd(void)
 \item{void}{An object of type object.}
 }
 \value{
-An object of type string. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type string. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{getwd}.
+\strong{Eidos function:} Documentation for SLiM function \code{getwd}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Gets the current filesystem working directory. The filesystem working directory is the directory which will be used as a base path for relative filesystem paths. For example, if the working directory is "~/Desktop" (the Desktop subdirectory within the current user's home directory, as represented by ~), then the filename "foo.txt" would correspond to the filesystem path "~/Desktop/foo.txt", and the relative path "bar/baz/" would correspond to the filesystem path "~/Desktop/bar/baz/". Note that the path returned may not be identical to the path previously set with setwd(), if for example symbolic links are involved; but it ought to refer to the same actual directory in the filesystem. The initial working directory is - as is generally the case on Un*x - simply the directory given to the running Eidos process by its parent process (the operating system, a shell, a job scheduler, a debugger, or whatever the case may be). If you launch Eidos (or SLiM) from the command line in a Un*x shell, it is typically the current directory in that shell. Before relative filesystem paths are used, you may therefore wish check what the initial working directory is on your platform, with getwd(), if you are not sure. Alternatively, you can simply use setwd() to set the working directory to a known path.
+\strong{Eidos function:} Gets the current filesystem working directory. The filesystem working directory is the directory which will be used as a base path for relative filesystem paths. For example, if the working directory is "~/Desktop" (the Desktop subdirectory within the current user's home directory, as represented by ~), then the filename "foo.txt" would correspond to the filesystem path "~/Desktop/foo.txt", and the relative path "bar/baz/" would correspond to the filesystem path "~/Desktop/bar/baz/". Note that the path returned may not be identical to the path previously set with setwd(), if for example symbolic links are involved; but it ought to refer to the same actual directory in the filesystem. The initial working directory is - as is generally the case on Un*x - simply the directory given to the running Eidos process by its parent process (the operating system, a shell, a job scheduler, a debugger, or whatever the case may be). If you launch Eidos (or SLiM) from the command line in a Un*x shell, it is typically the current directory in that shell. Before relative filesystem paths are used, you may therefore wish check what the initial working directory is on your platform, with getwd(), if you are not sure. Alternatively, you can simply use setwd() to set the working directory to a known path.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

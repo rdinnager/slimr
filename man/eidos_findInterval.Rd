@@ -17,18 +17,20 @@ eidos_findInterval(x, vec, rightmostClosed = NULL, allInside = NULL)
 \item{allInside}{An object of type numeric or numeric or logical or logical (singleton).}
 }
 \value{
-An object of type integer.
+\strong{Eidos function:} An object of type integer.
 }
 \description{
-Documentation for SLiM function \code{findInterval}.
+\strong{Eidos function:} Documentation for SLiM function \code{findInterval}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a vector of interval indices for the values in x within a vector of non-decreasing breakpoints vec. The returned integer vector contains, for each corresponding element of x, the index of the interval in vec within which that element of x is contained. More precisely, if i is the returned integer vector from findInterval(x, v), and N is length(v), then for each index j in x, it will be true that v[i[j]]  x[j] < v[i[j]+1], treating v[-1] as -INF and v[N] as INF, assuming that the two flags rightmostClosed and allInside have their default value of F. The effects of the flags will be discussed below. Note that vec must be non-decreasing; in other words, it must be sorted in ascending order, although it may have duplicate values. The returned vector will thus be equal in length to x, and each of its elements will be in the interval [-1, N-1]. The rightmostClosed flag, if T, alters the above behavior to treat the rightmost interval, vec[N-2] .. vec[N-1], as closed. This means that if x[j]==vec[N-1] (i.e., equals max(vec)), the corresponding result i[j] will be N-2 as for all other values in the last interval. The allInside flag, if T, alters the above behavior to coerce returned indices into 0 .. N-2. In other words, -1 is mapped to 0, and N-1 is mapped to N-2.
+\strong{Eidos function:} Returns a vector of interval indices for the values in x within a vector of non-decreasing breakpoints vec. The returned integer vector contains, for each corresponding element of x, the index of the interval in vec within which that element of x is contained. More precisely, if i is the returned integer vector from findInterval(x, v), and N is length(v), then for each index j in x, it will be true that v[i[j]]  x[j] < v[i[j]+1], treating v[-1] as -INF and v[N] as INF, assuming that the two flags rightmostClosed and allInside have their default value of F. The effects of the flags will be discussed below. Note that vec must be non-decreasing; in other words, it must be sorted in ascending order, although it may have duplicate values. The returned vector will thus be equal in length to x, and each of its elements will be in the interval [-1, N-1]. The rightmostClosed flag, if T, alters the above behavior to treat the rightmost interval, vec[N-2] .. vec[N-1], as closed. This means that if x[j]==vec[N-1] (i.e., equals max(vec)), the corresponding result i[j] will be N-2 as for all other values in the last interval. The allInside flag, if T, alters the above behavior to coerce returned indices into 0 .. N-2. In other words, -1 is mapped to 0, and N-1 is mapped to N-2.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

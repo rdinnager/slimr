@@ -11,18 +11,20 @@ eidos_dim(x)
 \item{x}{An object of type any.}
 }
 \value{
-An object of type integer.
+\strong{Eidos function:} An object of type integer.
 }
 \description{
-Documentation for SLiM function \code{dim}.
+\strong{Eidos function:} Documentation for SLiM function \code{dim}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the dimensions of matrix or array x. The first dimension value is the number of rows, the second is the number of columns, and further values indicate the sizes of higher-order dimensions, identically to how dimensions are supplied to array(). NULL is returned if x is not a matrix or array.
+\strong{Eidos function:} Returns the dimensions of matrix or array x. The first dimension value is the number of rows, the second is the number of columns, and further values indicate the sizes of higher-order dimensions, identically to how dimensions are supplied to array(). NULL is returned if x is not a matrix or array.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -13,18 +13,20 @@ eidos_cor(x, y = NULL)
 \item{y}{An object of type null or integer or float.}
 }
 \value{
-An object of type float.
+\strong{Eidos function:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{cor}.
+\strong{Eidos function:} Documentation for SLiM function \code{cor}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the sample Pearson's correlation coefficient between vectors x and y, usually denoted r. If y is NULL, it is considered to have the same value as x; for vector x this is not very useful (since the correlation of x with itself is 1.0 by definition), but it is more useful for calculating a correlation matrix using the columns of x (see below). The sizes of x and y must be identical. If x and y have a size of 0 or 1, NAN will be returned (a change in behavior from Eidos 4.0; it used to return NULL). The return value will be a singleton float. It is also legal to call cor() with matrix x and/or y. In this case the return value will be a correlation matrix between x and y. Each column of x will be represented by one row of the result (or if x is a vector, the result will simply have one row representing x), and each column of y will be represented by one column of the result (or if y is a vector, the result will simply have one column representing y). Each element in the result matrix will therefore represent the correlation between a column of matrix x (or the entirety of vector x) and a column of matrix y (or the entirety of vector y). Calling cor(x, x), or equivalently cor(x), thus produces a symmetric correlation matrix among the columns of x.
+\strong{Eidos function:} Returns the sample Pearson's correlation coefficient between vectors x and y, usually denoted r. If y is NULL, it is considered to have the same value as x; for vector x this is not very useful (since the correlation of x with itself is 1.0 by definition), but it is more useful for calculating a correlation matrix using the columns of x (see below). The sizes of x and y must be identical. If x and y have a size of 0 or 1, NAN will be returned (a change in behavior from Eidos 4.0; it used to return NULL). The return value will be a singleton float. It is also legal to call cor() with matrix x and/or y. In this case the return value will be a correlation matrix between x and y. Each column of x will be represented by one row of the result (or if x is a vector, the result will simply have one row representing x), and each column of y will be represented by one column of the result (or if y is a vector, the result will simply have one column representing y). Each element in the result matrix will therefore represent the correlation between a column of matrix x (or the entirety of vector x) and a column of matrix y (or the entirety of vector y). Calling cor(x, x), or equivalently cor(x), thus produces a symmetric correlation matrix among the columns of x.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

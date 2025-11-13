@@ -15,18 +15,20 @@ eidos_rcauchy(n, location = NULL, scale = NULL)
 \item{scale}{An object of type integer or numeric or numeric.}
 }
 \value{
-An object of type float.
+\strong{Eidos function:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{rcauchy}.
+\strong{Eidos function:} Documentation for SLiM function \code{rcauchy}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a vector of n random draws from a Cauchy distribution with location location and scale scale. The location and scale parameters may either be singletons, specifying a single value to be used for all of the draws, or they may be vectors of length n, specifying a value for each draw.
+\strong{Eidos function:} Returns a vector of n random draws from a Cauchy distribution with location location and scale scale. The location and scale parameters may either be singletons, specifying a single value to be used for all of the draws, or they may be vectors of length n, specifying a value for each draw.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

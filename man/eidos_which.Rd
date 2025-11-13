@@ -11,18 +11,20 @@ eidos_which(x)
 \item{x}{An object of type logical.}
 }
 \value{
-An object of type integer.
+\strong{Eidos function:} An object of type integer.
 }
 \description{
-Documentation for SLiM function \code{which}.
+\strong{Eidos function:} Documentation for SLiM function \code{which}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the indices of T values in x. In other words, if an index k in x is T, then the vector returned will contain k; if index k in x is F, the vector returned will omit k. One way to look at this is that it converts from a logical subsetting vector to an integer (index-based) subsetting vector, without changing which subset positions would be selected.
+\strong{Eidos function:} Returns the indices of T values in x. In other words, if an index k in x is T, then the vector returned will contain k; if index k in x is F, the vector returned will omit k. One way to look at this is that it converts from a logical subsetting vector to an integer (index-based) subsetting vector, without changing which subset positions would be selected.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

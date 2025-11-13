@@ -12,18 +12,20 @@ removeSubpopulation(void)
 \item{void}{An object of type object.}
 }
 \value{
-An object of type void.
+\strong{Subpopulation method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{removeSubpopulation}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+\strong{Subpopulation method:} Documentation for SLiM function \code{removeSubpopulation}, which is a method of the SLiM class \code{\link{Subpopulation}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-void) Removes this subpopulation from the model. The subpopulation is immediately removed from the list of active subpopulations, and the symbol representing the subpopulation is undefined. The subpopulation object itself remains unchanged until children are next generated (at which point it is deallocated), but it is no longer part of the simulation and should not be used. Note that this method is only for use in nonWF models, in which there is a distinction between a subpopulation being empty and a subpopulation being removed from the simulation; an empty subpopulation may be re-colonized by migrants, whereas as a removed subpopulation no longer exists at all. WF models do not make this distinction; when a subpopulation is empty it is automatically removed. WF models should therefore call setSubpopulationSize(0) instead of this method; setSubpopulationSize() is the standard way for WF models to change the subpopulation size, including to a size of 0.
+\strong{Subpopulation method:} Removes this subpopulation from the model. The subpopulation is immediately removed from the list of active subpopulations, and the symbol representing the subpopulation is undefined. The subpopulation object itself remains unchanged until children are next generated (at which point it is deallocated), but it is no longer part of the simulation and should not be used. Note that this method is only for use in nonWF models, in which there is a distinction between a subpopulation being empty and a subpopulation being removed from the simulation; an empty subpopulation may be re-colonized by migrants, whereas as a removed subpopulation no longer exists at all. WF models do not make this distinction; when a subpopulation is empty it is automatically removed. WF models should therefore call setSubpopulationSize(0) instead of this method; setSubpopulationSize() is the standard way for WF models to change the subpopulation size, including to a size of 0.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

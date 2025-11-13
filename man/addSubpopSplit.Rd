@@ -18,18 +18,20 @@ addSubpopSplit(subpopID, size, sourceSubpop, sexRatio = NULL)
 \item{sexRatio}{An object of type float (singleton).}
 }
 \value{
-An object of type Subpopulation object. Return will be of length 1 (a singleton)
+\strong{Species method:} An object of type Subpopulation object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{addSubpopSplit}, which is a method of the SLiM class \code{\link{Species}}.
+\strong{Species method:} Documentation for SLiM function \code{addSubpopSplit}, which is a method of the SLiM class \code{\link{Species}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-is$ subpopID, integer$ size, io<Subpopulation>$ sourceSubpop, [float$ sexRatio = 0.5]) Split off a new subpopulation with id subpopID and size individuals derived from subpopulation sourceSubpop. The subpopID parameter may be either an integer giving the ID of the new subpopulation, or a string giving the name of the new subpopulation (such as "p5" to specify an ID of 5). The sourceSubpop parameter may specify the source subpopulation either as a Subpopulation object or by integer identifier. Only if sex is enabled for the species, the initial sex ratio may optionally be specified as sexRatio (as the male fraction, M:M+F); if it is not specified, a default of 0.5 is used. The new subpopulation will be defined as a global variable immediately by this method, and will also be returned by this method. Subpopulations added by this method will consist of individuals that are clonal copies of individuals from the source subpopulation, randomly chosen with probabilities proportional to fitness. The fitness of all of these initial individuals is considered to be 1.0, to avoid a doubled round of selection in the initial tick, given that fitness values were already used to choose the individuals to clone. Once this initial set of individuals has mated to produce offspring, the model is effectively of parental individuals in the source subpopulation mating randomly according to fitness, as usual in SLiM, with juveniles migrating to the newly added subpopulation. Effectively, then, then new subpopulation is created empty, and is filled by migrating juveniles from the source subpopulation, in accordance with SLiM's usual model of juvenile migration.
+\strong{Species method:} Split off a new subpopulation with id subpopID and size individuals derived from subpopulation sourceSubpop. The subpopID parameter may be either an integer giving the ID of the new subpopulation, or a string giving the name of the new subpopulation (such as "p5" to specify an ID of 5). The sourceSubpop parameter may specify the source subpopulation either as a Subpopulation object or by integer identifier. Only if sex is enabled for the species, the initial sex ratio may optionally be specified as sexRatio (as the male fraction, M:M+F); if it is not specified, a default of 0.5 is used. The new subpopulation will be defined as a global variable immediately by this method, and will also be returned by this method. Subpopulations added by this method will consist of individuals that are clonal copies of individuals from the source subpopulation, randomly chosen with probabilities proportional to fitness. The fitness of all of these initial individuals is considered to be 1.0, to avoid a doubled round of selection in the initial tick, given that fitness values were already used to choose the individuals to clone. Once this initial set of individuals has mated to produce offspring, the model is effectively of parental individuals in the source subpopulation mating randomly according to fitness, as usual in SLiM, with juveniles migrating to the newly added subpopulation. Effectively, then, then new subpopulation is created empty, and is filled by migrating juveniles from the source subpopulation, in accordance with SLiM's usual model of juvenile migration.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

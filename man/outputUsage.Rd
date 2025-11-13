@@ -12,18 +12,20 @@ outputUsage(void)
 \item{void}{An object of type object.}
 }
 \value{
-An object of type void.
+\strong{Community method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{outputUsage}, which is a method of the SLiM class \code{\link{Community}}.
+\strong{Community method:} Documentation for SLiM function \code{outputUsage}, which is a method of the SLiM class \code{\link{Community}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-void) Output the current memory usage of the simulation to Eidos's output stream. The specifics of what is printed, and in what format, should not be relied upon as they may change from version to version of SLiM. This method is primarily useful for understanding where the memory usage of a simulation predominantly resides, for debugging or optimization. Note that it does not capture all memory usage by the process; rather, it summarizes the memory usage by SLiM and Eidos in directly allocated objects and buffers. To get the same memory usage reported by outputUsage(), but as a float$ value, use the Community method usage(). To get the total memory usage of the running process (either current or peak), use the Eidos function usage().
+\strong{Community method:} Output the current memory usage of the simulation to Eidos's output stream. The specifics of what is printed, and in what format, should not be relied upon as they may change from version to version of SLiM. This method is primarily useful for understanding where the memory usage of a simulation predominantly resides, for debugging or optimization. Note that it does not capture all memory usage by the process; rather, it summarizes the memory usage by SLiM and Eidos in directly allocated objects and buffers. To get the same memory usage reported by outputUsage(), but as a float$ value, use the Community method usage(). To get the total memory usage of the running process (either current or peak), use the Eidos function usage().
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

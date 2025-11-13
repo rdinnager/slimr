@@ -14,18 +14,20 @@ calcVA(individuals, mutType)
 \item{mutType}{An object of type integer or MutationType object (singleton).}
 }
 \value{
-An object of type float. Return will be of length 1 (a singleton)
+\strong{SLiMBuiltin method:} An object of type float. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{calcVA}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
+\strong{SLiMBuiltin method:} Documentation for SLiM function \code{calcVA}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Calculates VA, the additive genetic variance, among a vector of individuals (containing at least two elements) passed in individuals, in a particular mutation type mutType that represents quantitative trait loci (QTLs) influencing a quantitative phenotypic trait. The mutType parameter may be either an integer representing the ID of the desired mutation type, or a MutationType object specified directly. This function assumes that mutations of type mutType encode their effect size upon the quantitative trait in their selectionCoeff property, as is fairly standard in SLiM. The implementation of calcVA(), which is viewable with functionSource(), is quite simple; if effect sizes are stored elsewhere (such as with setValue()), a new user-defined function following the pattern of calcVA() can easily be written.
+\strong{SLiMBuiltin method:} Calculates VA, the additive genetic variance, among a vector of individuals (containing at least two elements) passed in individuals, in a particular mutation type mutType that represents quantitative trait loci (QTLs) influencing a quantitative phenotypic trait. The mutType parameter may be either an integer representing the ID of the desired mutation type, or a MutationType object specified directly. This function assumes that mutations of type mutType encode their effect size upon the quantitative trait in their selectionCoeff property, as is fairly standard in SLiM. The implementation of calcVA(), which is viewable with functionSource(), is quite simple; if effect sizes are stored elsewhere (such as with setValue()), a new user-defined function following the pattern of calcVA() can easily be written.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

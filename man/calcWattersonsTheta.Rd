@@ -18,18 +18,20 @@ calcWattersonsTheta(haplosomes, muts = NULL, start = NULL, end = NULL)
 \item{end}{An object of type null or integer (singleton).}
 }
 \value{
-An object of type float. Return will be of length 1 (a singleton)
+\strong{SLiMBuiltin method:} An object of type float. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{calcWattersonsTheta}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
+\strong{SLiMBuiltin method:} Documentation for SLiM function \code{calcWattersonsTheta}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Calculates Watterson's theta (a metric of genetic diversity comparable to heterozygosity) for a vector of haplosomes (containing at least one element), based upon the mutations in the haplosomes. Often haplosomes will be all of the haplosomes in a subpopulation, or in the entire population, but any haplosome vector may be used. By default, with muts=NULL, the calculation is based upon all mutations in the simulation; the calculation can instead be based upon a subset of mutations, such as mutations of a specific mutation type, by passing the desired vector of mutations for muts. The calculation can be narrowed to apply to only a window - a subrange of the full chromosome - by passing the interval bounds [start, end] for the desired window. In this case, the vector of mutations used for the calculation will be subset to include only mutations within the specified window. The default behavior, with start and end of NULL, provides the haplosome-wide Watterson's theta. The implementation of calcWattersonsTheta(), viewable with functionSource(), treats every mutation as independent in the heterozygosity calculations. One could regard this choice as embodying an infinite-sites interpretation of the segregating mutations, as with calcHeterozygosity(). In most biologically realistic models, such genetic states will be quite rare, and so the impact of this assumption will be negligible; however, in some models this distinction may be important. See calcPairHeterozygosity() for further discussion. 3.4. Other utilities
+\strong{SLiMBuiltin method:} Calculates Watterson's theta (a metric of genetic diversity comparable to heterozygosity) for a vector of haplosomes (containing at least one element), based upon the mutations in the haplosomes. Often haplosomes will be all of the haplosomes in a subpopulation, or in the entire population, but any haplosome vector may be used. By default, with muts=NULL, the calculation is based upon all mutations in the simulation; the calculation can instead be based upon a subset of mutations, such as mutations of a specific mutation type, by passing the desired vector of mutations for muts. The calculation can be narrowed to apply to only a window - a subrange of the full chromosome - by passing the interval bounds [start, end] for the desired window. In this case, the vector of mutations used for the calculation will be subset to include only mutations within the specified window. The default behavior, with start and end of NULL, provides the haplosome-wide Watterson's theta. The implementation of calcWattersonsTheta(), viewable with functionSource(), treats every mutation as independent in the heterozygosity calculations. One could regard this choice as embodying an infinite-sites interpretation of the segregating mutations, as with calcHeterozygosity(). In most biologically realistic models, such genetic states will be quite rare, and so the impact of this assumption will be negligible; however, in some models this distinction may be important. See calcPairHeterozygosity() for further discussion. 3.4. Other utilities
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

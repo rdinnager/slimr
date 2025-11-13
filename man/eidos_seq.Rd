@@ -17,18 +17,20 @@ eidos_seq(from, to, by = NULL, length = NULL)
 \item{length}{An object of type null or integer (singleton).}
 }
 \value{
-An object of type numeric.
+\strong{Eidos function:} An object of type numeric.
 }
 \description{
-Documentation for SLiM function \code{seq}.
+\strong{Eidos function:} Documentation for SLiM function \code{seq}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a sequence, starting at from and proceeding in the direction of to until the next value in the sequence would fall beyond to. If the optional parameters by and length are both NULL (the default), the sequence steps by values of 1 or -1 (as needed to proceed in the direction of to). A different step value may be supplied with by, but must have the necessary sign. Alternatively, a sequence length may be supplied in length, in which case the step magnitude will be chosen to produce a sequence of the requested length (with the necessary sign, as before). If from and to are both integer then the return type will be integer when possible (but this may not be possible, depending upon values supplied for by or length), otherwise it will be float.
+\strong{Eidos function:} Returns a sequence, starting at from and proceeding in the direction of to until the next value in the sequence would fall beyond to. If the optional parameters by and length are both NULL (the default), the sequence steps by values of 1 or -1 (as needed to proceed in the direction of to). A different step value may be supplied with by, but must have the necessary sign. Alternatively, a sequence length may be supplied in length, in which case the step magnitude will be chosen to produce a sequence of the requested length (with the necessary sign, as before). If from and to are both integer then the return type will be integer when possible (but this may not be possible, depending upon values supplied for by or length), otherwise it will be float.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

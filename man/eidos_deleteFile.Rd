@@ -11,18 +11,20 @@ eidos_deleteFile(filePath)
 \item{filePath}{An object of type string (singleton).}
 }
 \value{
-An object of type logical. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type logical. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{deleteFile}.
+\strong{Eidos function:} Documentation for SLiM function \code{deleteFile}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Deletes the file specified by filePath and returns a logical value indicating if the deletion succeeded (T) or failed (F). This function might also be able to delete a directory at filePath, but only if it is empty (apart from the . and .. directory entries that exist on Un*x filesystems). If other files (including invisible files) exist in the directory, deleteFile() will probably fail as a safety measure, in which case the contained files must be deleted individually first. This is vague because the actual policy regarding deletion of directories will depend upon the operating system, since Eidos achieves the deletion by calling an operating-system function.
+\strong{Eidos function:} Deletes the file specified by filePath and returns a logical value indicating if the deletion succeeded (T) or failed (F). This function might also be able to delete a directory at filePath, but only if it is empty (apart from the . and .. directory entries that exist on Un*x filesystems). If other files (including invisible files) exist in the directory, deleteFile() will probably fail as a safety measure, in which case the contained files must be deleted individually first. This is vague because the actual policy regarding deletion of directories will depend upon the operating system, since Eidos achieves the deletion by calling an operating-system function.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

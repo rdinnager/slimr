@@ -35,18 +35,20 @@ plot_rects(
 \item{alpha}{An object of type numeric or numeric or numeric or numeric or string or string or numeric or float.}
 }
 \value{
-An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
+\strong{Plot method:} An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
 }
 \description{
-Documentation for SLiM function \code{rects}, which is a method of the SLiM class \code{\link{Plot}}.
+\strong{Plot method:} Documentation for SLiM function \code{rects}, which is a method of the SLiM class \code{\link{Plot}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-numeric x1, numeric y1, numeric x2, numeric y2, [string color = "red"], [string border = "black"], [numeric lwd = 1.0], [float alpha = 1.0]) Adds rectangle data given by x1, y1, x2, and y2 to the plot; note that these four vectors must all be the same length. The data will be plotted as a series of rectangles, defined by each (x1, y1, x2, y2) quadret providing the left, right, top and bottom of each rectangle. The coordinates of each rectangle do not need to be sorted; in other words, it is not required that x1[i] <= x2[i], or that y1[i] <= y2[i], and different sorting orders for the coordinates of a given rectangle will draw identically. The fill of a each rectangle is contained within its coordinates, but the frame of each rectangle is composed of lines of some width, drawn between the vertices of the rectangle, and will therefore extend beyond the coordinates of the rectangle by one-half of the line width; if this is not desired, inset the rectangle coordinates by one-half of the line width to compensate. The new rectangle data will be plotted on top of any previously added data. The rectangles will be drawn in fill colors color, with border colors border, using line widths lwd, with opacities alpha applied to both the fill and the border. The color, border, lwd, and alpha parameters may each be either a singleton value (applying to all rectangles) or a vector with one value per rectangle. Alpha values must be in [0.0, 1.0], where 0.0 is fully transparent and 1.0 is fully opaque. If a filled rectangle with no border is desired, a border value of "none" can be used; similarly, if a framed rectangle with no fill is desired, a color value of "none" can be used. Note that that "none" a special color value supported only by rects(); it is not part of the standard set of named colors in Eidos.
+\strong{Plot method:} Adds rectangle data given by x1, y1, x2, and y2 to the plot; note that these four vectors must all be the same length. The data will be plotted as a series of rectangles, defined by each (x1, y1, x2, y2) quadret providing the left, right, top and bottom of each rectangle. The coordinates of each rectangle do not need to be sorted; in other words, it is not required that x1[i] <= x2[i], or that y1[i] <= y2[i], and different sorting orders for the coordinates of a given rectangle will draw identically. The fill of a each rectangle is contained within its coordinates, but the frame of each rectangle is composed of lines of some width, drawn between the vertices of the rectangle, and will therefore extend beyond the coordinates of the rectangle by one-half of the line width; if this is not desired, inset the rectangle coordinates by one-half of the line width to compensate. The new rectangle data will be plotted on top of any previously added data. The rectangles will be drawn in fill colors color, with border colors border, using line widths lwd, with opacities alpha applied to both the fill and the border. The color, border, lwd, and alpha parameters may each be either a singleton value (applying to all rectangles) or a vector with one value per rectangle. Alpha values must be in [0.0, 1.0], where 0.0 is fully transparent and 1.0 is fully opaque. If a filled rectangle with no border is desired, a border value of "none" can be used; similarly, if a framed rectangle with no fill is desired, a color value of "none" can be used. Note that that "none" a special color value supported only by rects(); it is not part of the standard set of named colors in Eidos.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

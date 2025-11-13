@@ -12,18 +12,20 @@ setAncestralNucleotides(sequence)
 \item{sequence}{An object of type integer or string.}
 }
 \value{
-An object of type integer. Return will be of length 1 (a singleton)
+\strong{Chromosome method:} An object of type integer. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{setAncestralNucleotides}, which is a method of the SLiM class \code{\link{Chromosome}}.
+\strong{Chromosome method:} Documentation for SLiM function \code{setAncestralNucleotides}, which is a method of the SLiM class \code{\link{Chromosome}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-is sequence) This method, which may be called only in nucleotide-based models, replaces the ancestral nucleotide sequence for the model. The sequence parameter is interpreted exactly as it is in the initializeAncestralSequence() function; see that documentation for details. The length of the ancestral sequence is returned. It is unusual to replace the ancestral sequence in a running simulation, since the nucleotide states of segregating and fixed mutations will depend upon the original ancestral sequence. It can be useful when loading a new population state with readHaplosomesFromMS() or readHaplosomesFromVCF(), such as when resetting the simulation state to an earlier state in a conditional simulation; however, that is more commonly done using readFromPopulationFile() with a SLiM or .trees file.
+\strong{Chromosome method:} This method, which may be called only in nucleotide-based models, replaces the ancestral nucleotide sequence for the model. The sequence parameter is interpreted exactly as it is in the initializeAncestralSequence() function; see that documentation for details. The length of the ancestral sequence is returned. It is unusual to replace the ancestral sequence in a running simulation, since the nucleotide states of segregating and fixed mutations will depend upon the original ancestral sequence. It can be useful when loading a new population state with readHaplosomesFromMS() or readHaplosomesFromVCF(), such as when resetting the simulation state to an earlier state in a conditional simulation; however, that is more commonly done using readFromPopulationFile() with a SLiM or .trees file.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

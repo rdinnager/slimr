@@ -12,18 +12,20 @@ mutationCountsInHaplosomes(mutations = NULL)
 \item{mutations}{An object of type null or Mutation object.}
 }
 \value{
-An object of type integer.
+\strong{Haplosome method:} An object of type integer.
 }
 \description{
-Documentation for SLiM function \code{mutationCountsInHaplosomes}, which is a method of the SLiM class \code{\link{Haplosome}}.
+\strong{Haplosome method:} Documentation for SLiM function \code{mutationCountsInHaplosomes}, which is a method of the SLiM class \code{\link{Haplosome}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-[No<Mutation> mutations = NULL]) Return an integer vector with the frequency counts of all of the Mutation objects passed in mutations, within the target Haplosome vector. If the optional mutations argument is NULL (the default), frequency counts will be returned for all of the active Mutation objects in the species - the same Mutation objects, and in the same order, as would be returned by the mutations property of sim, in other words. In multi-chromosome models, you might often wish to obtain counts only for mutations associated with one particular chromosome. In that case, you would probably want to pass a vector of the mutations associated with that specific chromosome, as obtained from the subsetMutations() method of Species, rather than passing NULL. (Passing NULL in that scenario would give you counts of 0 for all of the mutations associated with other chromosomes in the model.) See the +mutationFrequenciesInHaplosomes() method to obtain float frequencies instead of integer counts. See also the Species methods mutationCounts() and mutationFrequencies(), which might be more efficient for getting counts/frequencies for whole subpopulations or for the whole species.
+\strong{Haplosome method:} Return an integer vector with the frequency counts of all of the Mutation objects passed in mutations, within the target Haplosome vector. If the optional mutations argument is NULL (the default), frequency counts will be returned for all of the active Mutation objects in the species - the same Mutation objects, and in the same order, as would be returned by the mutations property of sim, in other words. In multi-chromosome models, you might often wish to obtain counts only for mutations associated with one particular chromosome. In that case, you would probably want to pass a vector of the mutations associated with that specific chromosome, as obtained from the subsetMutations() method of Species, rather than passing NULL. (Passing NULL in that scenario would give you counts of 0 for all of the mutations associated with other chromosomes in the model.) See the +mutationFrequenciesInHaplosomes() method to obtain float frequencies instead of integer counts. See also the Species methods mutationCounts() and mutationFrequencies(), which might be more efficient for getting counts/frequencies for whole subpopulations or for the whole species.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

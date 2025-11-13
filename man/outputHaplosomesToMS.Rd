@@ -16,18 +16,20 @@ outputHaplosomesToMS(filePath = NULL, append = NULL, filterMonomorphic = NULL)
 \item{filterMonomorphic}{An object of type logical (singleton).}
 }
 \value{
-An object of type void.
+\strong{Haplosome method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{outputHaplosomesToMS}, which is a method of the SLiM class \code{\link{Haplosome}}.
+\strong{Haplosome method:} Documentation for SLiM function \code{outputHaplosomesToMS}, which is a method of the SLiM class \code{\link{Haplosome}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-[Ns$ filePath = NULL], [logical$ append = F], [logical$ filterMonomorphic = F]) Output the target haplosomes in MS format. This low-level output method may be used to output any sample of Haplosome objects associated with a single chromosome. The Eidos function sample() may be useful for constructing custom samples, as may the SLiM class Individual. For output of a sample from a single Subpopulation, the outputMSSample() of Subpopulation may be more straightforward to use. If the optional parameter filePath is NULL (the default), output is directed to SLiM's standard output. Otherwise, the output is sent to the file specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. Positions in the output will span the interval [0,1]. If filterMonomorphic is F (the default), all mutations that are present in the sample will be included in the output. This means that some mutations may be included that are actually monomorphic within the sample (i.e., that exist in every sampled haplosome, and are thus apparently fixed). These may be filtered out with filterMonomorphic = T if desired; note that this option means that some mutations that do exist in the sampled haplosomes might not be included in the output, simply because they exist in every sampled haplosome. See outputHaplosomes() and outputHaplosomesToVCF() for other output formats. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
+\strong{Haplosome method:} Output the target haplosomes in MS format. This low-level output method may be used to output any sample of Haplosome objects associated with a single chromosome. The Eidos function sample() may be useful for constructing custom samples, as may the SLiM class Individual. For output of a sample from a single Subpopulation, the outputMSSample() of Subpopulation may be more straightforward to use. If the optional parameter filePath is NULL (the default), output is directed to SLiM's standard output. Otherwise, the output is sent to the file specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. Positions in the output will span the interval [0,1]. If filterMonomorphic is F (the default), all mutations that are present in the sample will be included in the output. This means that some mutations may be included that are actually monomorphic within the sample (i.e., that exist in every sampled haplosome, and are thus apparently fixed). These may be filtered out with filterMonomorphic = T if desired; note that this option means that some mutations that do exist in the sampled haplosomes might not be included in the output, simply because they exist in every sampled haplosome. See outputHaplosomes() and outputHaplosomesToVCF() for other output formats. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

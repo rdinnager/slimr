@@ -12,18 +12,20 @@ setGenomicElementType(genomicElementType)
 \item{genomicElementType}{An object of type integer or GenomicElementType object (singleton).}
 }
 \value{
-An object of type void.
+\strong{GenomicElement method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{setGenomicElementType}, which is a method of the SLiM class \code{\link{GenomicElement}}.
+\strong{GenomicElement method:} Documentation for SLiM function \code{setGenomicElementType}, which is a method of the SLiM class \code{\link{GenomicElement}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-io<GenomicElementType>$ genomicElementType) Set the genomic element type used for a genomic element. The genomicElementType parameter should supply the new genomic element type for the element, either as a GenomicElementType object or as an integer identifier. The genomic element type for a genomic element is normally a constant in simulations, so be sure you know what you are doing.
+\strong{GenomicElement method:} Set the genomic element type used for a genomic element. The genomicElementType parameter should supply the new genomic element type for the element, either as a GenomicElementType object or as an integer identifier. The genomic element type for a genomic element is normally a constant in simulations, so be sure you know what you are doing.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

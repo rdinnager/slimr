@@ -12,18 +12,20 @@ chromosomesWithIDs(ids)
 \item{ids}{An object of type integer.}
 }
 \value{
-An object of type Chromosome object.
+\strong{Species method:} An object of type Chromosome object.
 }
 \description{
-Documentation for SLiM function \code{chromosomesWithIDs}, which is a method of the SLiM class \code{\link{Species}}.
+\strong{Species method:} Documentation for SLiM function \code{chromosomesWithIDs}, which is a method of the SLiM class \code{\link{Species}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-integer ids) Returns a vector of Chromosome objects corresponding to the chromosome ids supplied in ids, in the same order. If any chromosome id in ids does not correspond to a chromosome in the target species, an error will be raised. See also chromosomesOfType() and chromosomesWithSymbols().
+\strong{Species method:} Returns a vector of Chromosome objects corresponding to the chromosome ids supplied in ids, in the same order. If any chromosome id in ids does not correspond to a chromosome in the target species, an error will be raised. See also chromosomesOfType() and chromosomesWithSymbols().
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

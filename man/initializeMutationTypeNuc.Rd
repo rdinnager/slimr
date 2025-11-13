@@ -18,18 +18,20 @@ initializeMutationTypeNuc(id, dominanceCoeff, distributionType, ...)
 \item{...}{An object of type NA.}
 }
 \value{
-An object of type MutationType object. Return will be of length 1 (a singleton)
+\strong{Initialize method:} An object of type MutationType object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{initializeMutationTypeNuc}, which is a method of the SLiM class \code{\link{Initialize}}.
+\strong{Initialize method:} Documentation for SLiM function \code{initializeMutationTypeNuc}, which is a method of the SLiM class \code{\link{Initialize}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Add a nucleotide-based mutation type at initialization time. This function is identical to initializeMutationType() except that the new mutation type will be nucleotide-based - in other words, mutations belonging to the new mutation type will have an associated nucleotide. This function may be called only in nucleotide-based models (as enabled by the nucleotideBased parameter to initializeSLiMOptions()). Nucleotide-based mutations always use a mutationStackGroup of -1 and a mutationStackPolicy of "l". This ensures that a new nucleotide mutation always replaces any previously existing nucleotide mutation at a given position, regardless of the mutation types of the nucleotide mutations. These values are set automatically by initializeMutationTypeNuc(), and may not be changed. See the documentation for initializeMutationType() for all other discussion.
+\strong{Initialize method:} Add a nucleotide-based mutation type at initialization time. This function is identical to initializeMutationType() except that the new mutation type will be nucleotide-based - in other words, mutations belonging to the new mutation type will have an associated nucleotide. This function may be called only in nucleotide-based models (as enabled by the nucleotideBased parameter to initializeSLiMOptions()). Nucleotide-based mutations always use a mutationStackGroup of -1 and a mutationStackPolicy of "l". This ensures that a new nucleotide mutation always replaces any previously existing nucleotide mutation at a given position, regardless of the mutation types of the nucleotide mutations. These values are set automatically by initializeMutationTypeNuc(), and may not be changed. See the documentation for initializeMutationType() for all other discussion.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

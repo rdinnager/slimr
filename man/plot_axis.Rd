@@ -16,18 +16,20 @@ plot_axis(side, at = NULL, labels = NULL)
 \item{labels}{An object of type logical or string.}
 }
 \value{
-An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
+\strong{Plot method:} An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
 }
 \description{
-Documentation for SLiM function \code{axis}, which is a method of the SLiM class \code{\link{Plot}}.
+\strong{Plot method:} Documentation for SLiM function \code{axis}, which is a method of the SLiM class \code{\link{Plot}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-integer$ side, [Nif at = NULL], [ls labels = T]) Configures an axis of the plot. The side parameter controls which axis is being configured; at present, it may be 1 for the x-axis (at the bottom of the plot), or 2 for the y-axis (at the left of the plot). The positions of tick marks (and of any associated labels) are controlled by at; if at is NULL (the default) these positions will be computed automatically based upon the range of the data in the plot, otherwise at must be a vector of numeric positions. Note that the coordinate system of the plot is controlled not by this method, but by the xrange and yrange parameters of createPlot(); at controls only the positions of axis ticks within that coordinate system. The labels parameter controls the text labels displayed for ticks; it may be T (the default) to label ticks with their numeric positions, F to suppress all tick labels, or a vector of type string, equal in length to at, providing the label for each position in at. Label values may be the empty string, "", if a label at a given position is not desired, and if labels is T, some ticks may not receive a label for readability.
+\strong{Plot method:} Configures an axis of the plot. The side parameter controls which axis is being configured; at present, it may be 1 for the x-axis (at the bottom of the plot), or 2 for the y-axis (at the left of the plot). The positions of tick marks (and of any associated labels) are controlled by at; if at is NULL (the default) these positions will be computed automatically based upon the range of the data in the plot, otherwise at must be a vector of numeric positions. Note that the coordinate system of the plot is controlled not by this method, but by the xrange and yrange parameters of createPlot(); at controls only the positions of axis ticks within that coordinate system. The labels parameter controls the text labels displayed for ticks; it may be T (the default) to label ticks with their numeric positions, F to suppress all tick labels, or a vector of type string, equal in length to at, providing the label for each position in at. Label values may be the empty string, "", if a label at a given position is not desired, and if labels is T, some ticks may not receive a label for readability.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

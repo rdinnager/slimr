@@ -17,18 +17,20 @@ eidos_sample(x, size, replace = NULL, weights = NULL)
 \item{weights}{An object of type null or integer or float.}
 }
 \value{
-An object of type any.
+\strong{Eidos function:} An object of type any.
 }
 \description{
-Documentation for SLiM function \code{sample}.
+\strong{Eidos function:} Documentation for SLiM function \code{sample}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a vector of size containing a sample from the elements of x. If replace is T, sampling is conducted with replacement (the same element may be drawn more than once); if it is F (the default), then sampling is done without replacement. A vector of weights may be supplied in the optional parameter weights; if not NULL, it must be equal in size to x, all weights must be non-negative, and the sum of the weights must be greater than 0. If weights is NULL (the default), then equal weights are used for all elements of x. An error occurs if sample() runs out of viable elements from which to draw; most notably, if sampling is done without replacement then size must be at most equal to the size of x, but if weights of zero are supplied then the restriction on size will be even more stringent. The draws are obtained from the standard Eidos random number generator, which might be shared with the Context.
+\strong{Eidos function:} Returns a vector of size containing a sample from the elements of x. If replace is T, sampling is conducted with replacement (the same element may be drawn more than once); if it is F (the default), then sampling is done without replacement. A vector of weights may be supplied in the optional parameter weights; if not NULL, it must be equal in size to x, all weights must be non-negative, and the sum of the weights must be greater than 0. If weights is NULL (the default), then equal weights are used for all elements of x. An error occurs if sample() runs out of viable elements from which to draw; most notably, if sampling is done without replacement then size must be at most equal to the size of x, but if weights of zero are supplied then the restriction on size will be even more stringent. The draws are obtained from the standard Eidos random number generator, which might be shared with the Context.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

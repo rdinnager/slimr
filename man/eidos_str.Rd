@@ -13,18 +13,20 @@ eidos_str(x, error = NULL)
 \item{error}{An object of type any or logical (singleton).}
 }
 \value{
-An object of type void.
+\strong{Eidos function:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{str}.
+\strong{Eidos function:} Documentation for SLiM function \code{str}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Prints the structure of x: a summary of its type and the values it contains. If x is an object, note that str() produces different results from the str() method of x; the str() function prints the external structure of x (the fact that it is an object, and the number and type of its elements), whereas the str() method prints the internal structure of x (the external structure of all the properties contained by x). By default (when error is F), the output is sent to the standard Eidos output stream. When running at the command line, this sends it to stdout; when running in SLiMgui, this sends it to the simulation window's output textview. If error is T, the output is instead sent to the Eidos error stream. When running at the command line, this sends it to stderr; when running in SLiMgui, the output is routed to the simulation's debugging output window.
+\strong{Eidos function:} Prints the structure of x: a summary of its type and the values it contains. If x is an object, note that str() produces different results from the str() method of x; the str() function prints the external structure of x (the fact that it is an object, and the number and type of its elements), whereas the str() method prints the internal structure of x (the external structure of all the properties contained by x). By default (when error is F), the output is sent to the standard Eidos output stream. When running at the command line, this sends it to stdout; when running in SLiMgui, this sends it to the simulation window's output textview. If error is T, the output is instead sent to the Eidos error stream. When running at the command line, this sends it to stderr; when running in SLiMgui, the output is routed to the simulation's debugging output window.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

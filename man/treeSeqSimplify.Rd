@@ -12,18 +12,20 @@ treeSeqSimplify(void)
 \item{void}{An object of type object.}
 }
 \value{
-An object of type void.
+\strong{Species method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{treeSeqSimplify}, which is a method of the SLiM class \code{\link{Species}}.
+\strong{Species method:} Documentation for SLiM function \code{treeSeqSimplify}, which is a method of the SLiM class \code{\link{Species}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-void) Triggers an immediate simplification of the tree sequence recording tables. This method may only be called if tree sequence recording has been turned on with initializeTreeSeq(). A call to this method will free up memory being used by entries that are no longer in the ancestral path of any individual within the current sample (currently living individuals, in other words, plus those explicitly added to the sample with treeSeqRememberIndividuals()), but it can also take a significant amount of time. Typically calling this method is not necessary; the automatic simplification performed occasionally by SLiM should be sufficient for most models.
+\strong{Species method:} Triggers an immediate simplification of the tree sequence recording tables. This method may only be called if tree sequence recording has been turned on with initializeTreeSeq(). A call to this method will free up memory being used by entries that are no longer in the ancestral path of any individual within the current sample (currently living individuals, in other words, plus those explicitly added to the sample with treeSeqRememberIndividuals()), but it can also take a significant amount of time. Typically calling this method is not necessary; the automatic simplification performed occasionally by SLiM should be sufficient for most models.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

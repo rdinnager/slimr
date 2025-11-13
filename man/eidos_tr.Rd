@@ -11,18 +11,20 @@ eidos_tr(x)
 \item{x}{An object of type numeric.}
 }
 \value{
-An object of type numeric. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type numeric. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{tr}.
+\strong{Eidos function:} Documentation for SLiM function \code{tr}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the trace of x, which must be a square matrix (otherwise an error is raised). The trace is the sum of the diagonal elements of the matrix. The return type will match the type of x.
+\strong{Eidos function:} Returns the trace of x, which must be a square matrix (otherwise an error is raised). The trace is the sum of the diagonal elements of the matrix. The return type will match the type of x.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

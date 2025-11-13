@@ -11,18 +11,20 @@ eidos_date(void)
 \item{void}{An object of type object.}
 }
 \value{
-An object of type string. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type string. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{date}.
+\strong{Eidos function:} Documentation for SLiM function \code{date}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a standard date string for the current date in the local time of the executing machine. The format is %d-%m-%Y (day in two digits, then month in two digits, then year in four digits, zero-padded and separated by dashes) regardless of the localization of the executing machine, for predictability and consistency.
+\strong{Eidos function:} Returns a standard date string for the current date in the local time of the executing machine. The format is %d-%m-%Y (day in two digits, then month in two digits, then year in four digits, zero-padded and separated by dashes) regardless of the localization of the executing machine, for predictability and consistency.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

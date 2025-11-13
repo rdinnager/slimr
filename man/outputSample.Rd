@@ -29,18 +29,20 @@ outputSample(
 \item{chromosome}{An object of type null or integer or string or Chromosome object (singleton).}
 }
 \value{
-An object of type void.
+\strong{Subpopulation method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{outputSample}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+\strong{Subpopulation method:} Documentation for SLiM function \code{outputSample}, which is a method of the SLiM class \code{\link{Subpopulation}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-integer$ sampleSize, [logical$ replace = T], [string$ requestedSex = "*"], [Ns$ filePath = NULL], [logical$ append = F], [Niso<Chromosome>$ chromosome = NULL]) Output a random sample from the subpopulation in SLiM's native format. A sample of non-null haplosomes (not entire individuals, note) of size sampleSize from the subpopulation will be output. The sample may be done either with or without replacement, as specified by replace; the default is to sample with replacement. A particular sex of individuals may be requested for the sample, for simulations in which sex is enabled, by passing "M" or "F" for requestedSex; passing "*", the default, indicates that haplosomes from individuals should be selected randomly, without respect to sex. If the sampling options provided by this method are not adequate, see the outputHaplosomes() method of Haplosome for a more flexible low-level option. If the optional parameter filePath is NULL (the default), output will be sent to Eidos's output stream. Otherwise, output will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. The chromosome parameter identifies the chromosome for which the sample of haplosomes should be taken. The default of NULL may be used only in single-chromosome models where the choice of chromosome is unambiguous. In multi-chromosome models, chromosome must be non-NULL; it must specify the chromosome by id (integer), by symbol (string) or by the Chromosome object itself. See outputMSSample() and outputVCFSample() for other output formats. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
+\strong{Subpopulation method:} Output a random sample from the subpopulation in SLiM's native format. A sample of non-null haplosomes (not entire individuals, note) of size sampleSize from the subpopulation will be output. The sample may be done either with or without replacement, as specified by replace; the default is to sample with replacement. A particular sex of individuals may be requested for the sample, for simulations in which sex is enabled, by passing "M" or "F" for requestedSex; passing "*", the default, indicates that haplosomes from individuals should be selected randomly, without respect to sex. If the sampling options provided by this method are not adequate, see the outputHaplosomes() method of Haplosome for a more flexible low-level option. If the optional parameter filePath is NULL (the default), output will be sent to Eidos's output stream. Otherwise, output will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. The chromosome parameter identifies the chromosome for which the sample of haplosomes should be taken. The default of NULL may be used only in single-chromosome models where the choice of chromosome is unambiguous. In multi-chromosome models, chromosome must be non-NULL; it must specify the chromosome by id (integer), by symbol (string) or by the Chromosome object itself. See outputMSSample() and outputVCFSample() for other output formats. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

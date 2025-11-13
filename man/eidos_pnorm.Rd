@@ -15,18 +15,20 @@ eidos_pnorm(q, mean = NULL, sd = NULL)
 \item{sd}{An object of type float or numeric or numeric.}
 }
 \value{
-An object of type float.
+\strong{Eidos function:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{pnorm}.
+\strong{Eidos function:} Documentation for SLiM function \code{pnorm}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a vector of cumulative distribution function values for a normal distribution at quantiles q with mean mean and standard deviation sd. The mean and sd parameters may either be singletons, specifying a single value to be used for all of the quantiles, or they may be vectors of the same length as q, specifying a value for each quantile.
+\strong{Eidos function:} Returns a vector of cumulative distribution function values for a normal distribution at quantiles q with mean mean and standard deviation sd. The mean and sd parameters may either be singletons, specifying a single value to be used for all of the quantiles, or they may be vectors of the same length as q, specifying a value for each quantile.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

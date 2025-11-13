@@ -20,29 +20,33 @@ haplosomesForChromosomes(chromosomes = NULL, index = NULL, includeNulls = NULL)
 \item{includeNulls}{An object of type logical (singleton).}
 }
 \value{
-An object of type Haplosome object.
+\strong{Individual method:} An object of type Haplosome object.
 
-An object of type Haplosome object.
+\strong{Subpopulation method:} An object of type Haplosome object.
 }
 \description{
-Documentation for SLiM function \code{haplosomesForChromosomes}, which is a method of the SLiM class \code{\link{Individual}}.
+\strong{Individual method:} Documentation for SLiM function \code{haplosomesForChromosomes}, which is a method of the SLiM class \code{\link{Individual}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 
-Documentation for SLiM function \code{haplosomesForChromosomes}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+\strong{Subpopulation method:} Documentation for SLiM function \code{haplosomesForChromosomes}, which is a method of the SLiM class \code{\link{Subpopulation}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-[Niso<Chromosome> chromosomes = NULL], [Ni$ index = NULL], [logical$ includeNulls = T]) Returns a vector containing the haplosomes of the target individual that correspond to the chromosomes passed in chromosomes (following the order of the chromosomes property of Individual). Chromosomes can be specified by id (integer), by symbol (string) or by the Chromosome objects themselves; if NULL is passed (the default), all chromosomes defined for the species are used, in the order in which they were defined. For chromosomes that are intrinsically diploid (types "A", "X", and "Z", as well as the "H-" and "-Y" backward-compatibility chromosome types), index can be 0 or 1, requesting only the first or second haplosome, respectively, for that chromosome; for other chromosome types, index is ignored. If includeNulls is T (the default), any null haplosomes corresponding to the specified chromosomes are included in the result; if it is F, null haplosomes are excluded. See also the properties haplosomes, haplosomesNonNull, haploidGenome1, haploidGenome1NonNull, haploidGenome2, and haploidGenome2NonNull.
+\strong{Individual method:} Returns a vector containing the haplosomes of the target individual that correspond to the chromosomes passed in chromosomes (following the order of the chromosomes property of Individual). Chromosomes can be specified by id (integer), by symbol (string) or by the Chromosome objects themselves; if NULL is passed (the default), all chromosomes defined for the species are used, in the order in which they were defined. For chromosomes that are intrinsically diploid (types "A", "X", and "Z", as well as the "H-" and "-Y" backward-compatibility chromosome types), index can be 0 or 1, requesting only the first or second haplosome, respectively, for that chromosome; for other chromosome types, index is ignored. If includeNulls is T (the default), any null haplosomes corresponding to the specified chromosomes are included in the result; if it is F, null haplosomes are excluded. See also the properties haplosomes, haplosomesNonNull, haploidGenome1, haploidGenome1NonNull, haploidGenome2, and haploidGenome2NonNull.
 
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 
-[Niso<Chromosome> chromosomes = NULL], [Ni$ index = NULL], [logical$ includeNulls = T]) Returns a vector containing the subpopulation's haplosomes that correspond to the chromosomes passed in chromosomes (following the order of the chromosomes property of Individual). Chromosomes can be specified by id (integer), by symbol (string) or by the Chromosome objects themselves; if NULL is passed (the default), all chromosomes defined for the species are used, in the order in which they were defined. This method is equivalent to calling haplosomesForChromosomes(chromosomes, index, includeNulls) on subpop.individuals, where subpop is the target subpopulation. It therefore appends together the specified haplosomes from each individual in the subpopulation to form a single vector. See the documentation for the Individual method haplosomesForChromosomes() for further details, such as on the meaning of the index and includeNulls parameters.
+See \strong{Details} below for complete documentation of this SLiM method.
+
+\strong{Subpopulation method:} Returns a vector containing the subpopulation's haplosomes that correspond to the chromosomes passed in chromosomes (following the order of the chromosomes property of Individual). Chromosomes can be specified by id (integer), by symbol (string) or by the Chromosome objects themselves; if NULL is passed (the default), all chromosomes defined for the species are used, in the order in which they were defined. This method is equivalent to calling haplosomesForChromosomes(chromosomes, index, includeNulls) on subpop.individuals, where subpop is the target subpopulation. It therefore appends together the specified haplosomes from each individual in the subpopulation to form a single vector. See the documentation for the Individual method haplosomesForChromosomes() for further details, such as on the meaning of the index and includeNulls parameters.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

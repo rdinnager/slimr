@@ -14,18 +14,20 @@ readHaplosomesFromMS(filePath, mutationType)
 \item{mutationType}{An object of type integer or MutationType object (singleton).}
 }
 \value{
-An object of type Mutation object.
+\strong{Haplosome method:} An object of type Mutation object.
 }
 \description{
-Documentation for SLiM function \code{readHaplosomesFromMS}, which is a method of the SLiM class \code{\link{Haplosome}}.
+\strong{Haplosome method:} Documentation for SLiM function \code{readHaplosomesFromMS}, which is a method of the SLiM class \code{\link{Haplosome}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-string$ filePath, io<MutationType>$ mutationType) Read new mutations from the MS format file at filePath and add them to the target haplosomes. The number of target haplosomes must match the number of haplosomes represented in the MS file, and all target haplosomes must be associated with the same chromosome, and must not be null haplosomes. The target haplosomes correspond, in order, to the call lines in the MS file. To read into all of the non-null haplosomes in a given subpopulation pN in a single-chromosome model, simply call pN.haplosomesNonNull.readHaplosomesFromMS(), assuming the subpopulation's size matches that of the MS file. A vector containing all of the mutations created by readHaplosomesFromMS() is returned. Each mutation is created at the position specified in the file, using the mutation type given by mutationType. Positions are expected to be in [0,1], and are scaled to the length of the chromosome by multiplying by the last valid base position of the chromosome (i.e., one less than the chromosome length). Selection coefficients are drawn from the mutation type. The population of origin for each mutation is set to -1, and the tick of origin is set to the current tick. In a nucleotide-based model, if mutationType is nucleotide-based, a random nucleotide different from the ancestral nucleotide at the position will be chosen with equal probability.
+\strong{Haplosome method:} Read new mutations from the MS format file at filePath and add them to the target haplosomes. The number of target haplosomes must match the number of haplosomes represented in the MS file, and all target haplosomes must be associated with the same chromosome, and must not be null haplosomes. The target haplosomes correspond, in order, to the call lines in the MS file. To read into all of the non-null haplosomes in a given subpopulation pN in a single-chromosome model, simply call pN.haplosomesNonNull.readHaplosomesFromMS(), assuming the subpopulation's size matches that of the MS file. A vector containing all of the mutations created by readHaplosomesFromMS() is returned. Each mutation is created at the position specified in the file, using the mutation type given by mutationType. Positions are expected to be in [0,1], and are scaled to the length of the chromosome by multiplying by the last valid base position of the chromosome (i.e., one less than the chromosome length). Selection coefficients are drawn from the mutation type. The population of origin for each mutation is set to -1, and the tick of origin is set to the current tick. In a nucleotide-based model, if mutationType is nucleotide-based, a random nucleotide different from the ancestral nucleotide at the position will be chosen with equal probability.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

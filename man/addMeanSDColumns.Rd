@@ -16,18 +16,20 @@ addMeanSDColumns(columnName, source, context = NULL)
 \item{context}{An object of type string or string or any.}
 }
 \value{
-An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical.
+\strong{LogFile method:} An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical.
 }
 \description{
-Documentation for SLiM function \code{addMeanSDColumns}, which is a method of the SLiM class \code{\link{LogFile}}.
+\strong{LogFile method:} Documentation for SLiM function \code{addMeanSDColumns}, which is a method of the SLiM class \code{\link{LogFile}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-string$ columnName, string$ source, [* context = NULL]) Adds two new data columns with names of columnName_mean and columnName_sd. The new columns will be logged each time that a row is generated, either by automatic logging or by a call to logRow(). When a given row is generated, the code supplied in source is expected to return either a zero-length vector of any type including NULL (which will write out NA to both columns), or a non-zero-length vector of integer or float values. In the latter case, the result vector will be summarized in the two columns by its mean and standard deviation respectively. If the result vector has exactly one value, the standard deviation will be written as NA. The context parameter is set up as a pseudo-parameter when source is called, as described in addCustomColumn(). See the documentation for that method for further discussion of context, including limitations on its use.
+\strong{LogFile method:} Adds two new data columns with names of columnName_mean and columnName_sd. The new columns will be logged each time that a row is generated, either by automatic logging or by a call to logRow(). When a given row is generated, the code supplied in source is expected to return either a zero-length vector of any type including NULL (which will write out NA to both columns), or a non-zero-length vector of integer or float values. In the latter case, the result vector will be summarized in the two columns by its mean and standard deviation respectively. If the result vector has exactly one value, the standard deviation will be written as NA. The context parameter is set up as a pseudo-parameter when source is called, as described in addCustomColumn(). See the documentation for that method for further discussion of context, including limitations on its use.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

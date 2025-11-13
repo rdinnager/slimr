@@ -12,18 +12,20 @@ genomicElementForPosition(positions)
 \item{positions}{An object of type integer.}
 }
 \value{
-An object of type GenomicElement object.
+\strong{Chromosome method:} An object of type GenomicElement object.
 }
 \description{
-Documentation for SLiM function \code{genomicElementForPosition}, which is a method of the SLiM class \code{\link{Chromosome}}.
+\strong{Chromosome method:} Documentation for SLiM function \code{genomicElementForPosition}, which is a method of the SLiM class \code{\link{Chromosome}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-integer positions) Returns a vector of GenomicElement objects corresponding to the given vector positions, which contains base positions along the chromosome. If every position lies within a defined genomic element, the returned vector will have the same length as positions, and will correspond one-to-one with it. However, if a position in positions is not within a genomic element, no GenomicElement object will be present for it in the returned vector, and so the returned vector will no longer have the same length as positions, and will no longer correspond one-to-one with it. The method hasGenomicElementForPosition() can be used to detect this circumstance.
+\strong{Chromosome method:} Returns a vector of GenomicElement objects corresponding to the given vector positions, which contains base positions along the chromosome. If every position lies within a defined genomic element, the returned vector will have the same length as positions, and will correspond one-to-one with it. However, if a position in positions is not within a genomic element, no GenomicElement object will be present for it in the returned vector, and so the returned vector will no longer have the same length as positions, and will no longer correspond one-to-one with it. The method hasGenomicElementForPosition() can be used to detect this circumstance.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -11,18 +11,20 @@ eidos_rm(variableNames = NULL)
 \item{variableNames}{An object of type null or string.}
 }
 \value{
-An object of type void.
+\strong{Eidos function:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{rm}.
+\strong{Eidos function:} Documentation for SLiM function \code{rm}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Removes variables from the Eidos namespace; in other words, it causes the variables to become undefined. Variables are specified by their string name in the variableNames parameter. If the optional variableNames parameter is NULL (the default), all variables will be removed (be careful!). In SLiM 3, there was an optional parameter removeConstants that, if T, allowed you to remove defined constants (and then potentially redefine them to have a different value). The removeConstants parameter was removed in SLiM 4, since the defineGlobal() function now provides the ability to define (and redefine) global variables that are not constant.
+\strong{Eidos function:} Removes variables from the Eidos namespace; in other words, it causes the variables to become undefined. Variables are specified by their string name in the variableNames parameter. If the optional variableNames parameter is NULL (the default), all variables will be removed (be careful!). In SLiM 3, there was an optional parameter removeConstants that, if T, allowed you to remove defined constants (and then potentially redefine them to have a different value). The removeConstants parameter was removed in SLiM 4, since the defineGlobal() function now provides the ability to define (and redefine) global variables that are not constant.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

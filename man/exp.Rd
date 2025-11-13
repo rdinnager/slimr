@@ -12,18 +12,20 @@ exp(void)
 \item{void}{An object of type object.}
 }
 \value{
-An object of type SpatialMap object. Return will be of length 1 (a singleton)
+\strong{SpatialMap method:} An object of type SpatialMap object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{exp}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+\strong{SpatialMap method:} Documentation for SLiM function \code{exp}, which is a method of the SLiM class \code{\link{SpatialMap}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-void) Exponentiates the values of the spatial map. More precisely, each grid value x of the target spatial map is exponentiated - replaced by the value ex. The target spatial map is returned, to allow easy chaining of operations.
+\strong{SpatialMap method:} Exponentiates the values of the spatial map. More precisely, each grid value x of the target spatial map is exponentiated - replaced by the value ex. The target spatial map is returned, to allow easy chaining of operations.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -14,18 +14,20 @@ strength(receiver, exerters = NULL)
 \item{exerters}{An object of type null or Individual object.}
 }
 \value{
-An object of type float.
+\strong{InteractionType method:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{strength}, which is a method of the SLiM class \code{\link{InteractionType}}.
+\strong{InteractionType method:} Documentation for SLiM function \code{strength}, which is a method of the SLiM class \code{\link{InteractionType}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-object<Individual>$ receiver, [No<Individual> exerters = NULL]) Returns a vector containing the interaction strengths exerted upon receiver by the individuals in exerters. If exerters is NULL (the default), then a vector of the interaction strengths exerted by all individuals in the subpopulation of receiver (including receiver itself, with a strength of 0.0) is returned; this case may be handled much more efficiently than if a vector of all individuals in the subpopulation is explicitly provided. Otherwise, all individuals in exerters must belong to a single subpopulation (but not necessarily the same subpopulation as receiver). The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. If the strengths of interactions exerted by a single individual upon multiple individuals are needed instead (the inverse of what this method provides), multiple calls to this method will be necessary, one per pairwise interaction queried; the interaction engine is not optimized for the inverse case, and so it will likely be quite slow to compute. If the interaction is reciprocal and has the same receiver and exerter constraints, the opposite query should provide identical results in a single efficient call (because then the interactions exerted are equal to the interactions received); otherwise, the best approach might be to define a second interaction type representing the inverse interaction that you wish to be able to query efficiently.
+\strong{InteractionType method:} Returns a vector containing the interaction strengths exerted upon receiver by the individuals in exerters. If exerters is NULL (the default), then a vector of the interaction strengths exerted by all individuals in the subpopulation of receiver (including receiver itself, with a strength of 0.0) is returned; this case may be handled much more efficiently than if a vector of all individuals in the subpopulation is explicitly provided. Otherwise, all individuals in exerters must belong to a single subpopulation (but not necessarily the same subpopulation as receiver). The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. If the strengths of interactions exerted by a single individual upon multiple individuals are needed instead (the inverse of what this method provides), multiple calls to this method will be necessary, one per pairwise interaction queried; the interaction engine is not optimized for the inverse case, and so it will likely be quite slow to compute. If the interaction is reciprocal and has the same receiver and exerter constraints, the opposite query should provide identical results in a single efficient call (because then the interactions exerted are equal to the interactions received); otherwise, the best approach might be to define a second interaction type representing the inverse interaction that you wish to be able to query efficiently.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

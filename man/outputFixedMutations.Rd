@@ -16,18 +16,20 @@ outputFixedMutations(filePath = NULL, append = NULL, objectTags = NULL)
 \item{objectTags}{An object of type logical (singleton).}
 }
 \value{
-An object of type void.
+\strong{Species method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{outputFixedMutations}, which is a method of the SLiM class \code{\link{Species}}.
+\strong{Species method:} Documentation for SLiM function \code{outputFixedMutations}, which is a method of the SLiM class \code{\link{Species}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-[Ns$ filePath = NULL], [logical$ append = F], [logical$ objectTags = F]) Output all fixed mutations - all Substitution objects, in other words - in a SLiM native format. If the optional parameter filePath is NULL (the default), output will be sent to Eidos's output stream. Otherwise, output will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. Mutations which have fixed but have not been turned into Substitution objects - typically because convertToSubstitution has been set to F for their mutation type - are not output; they are still considered to be segregating mutations by SLiM. In SLiM 3.3 and later, the output format includes the nucleotides associated with any nucleotide-based mutations. In SLiM 5.0 and later, in models with multiple chromosome the output includes the symbol of the chromosome associated with each mutation. Beginning with SLiM 5.0, the objectTags parameter may be used to request that tag values for substitutions be written out. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
+\strong{Species method:} Output all fixed mutations - all Substitution objects, in other words - in a SLiM native format. If the optional parameter filePath is NULL (the default), output will be sent to Eidos's output stream. Otherwise, output will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. Mutations which have fixed but have not been turned into Substitution objects - typically because convertToSubstitution has been set to F for their mutation type - are not output; they are still considered to be segregating mutations by SLiM. In SLiM 3.3 and later, the output format includes the nucleotides associated with any nucleotide-based mutations. In SLiM 5.0 and later, in models with multiple chromosome the output includes the symbol of the chromosome associated with each mutation. Beginning with SLiM 5.0, the objectTags parameter may be used to request that tag values for substitutions be written out. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

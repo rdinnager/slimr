@@ -13,18 +13,20 @@ eidos_identical(x, y)
 \item{y}{An object of type any or any.}
 }
 \value{
-An object of type logical. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type logical. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{identical}.
+\strong{Eidos function:} Documentation for SLiM function \code{identical}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a logical value indicating whether two values are identical. If x and y have exactly the same type and size, and all of their corresponding elements are exactly the same, and (for matrices and arrays) their dimensions are identical, this will return T, otherwise it will return F. The test here is for exact equality; an integer value of 1 is not considered identical to a float value of 1.0, for example. Elements in object values must be literally the same element, not simply identical in all of their properties. Type promotion is never done. For testing whether two values are the same, this is generally preferable to the use of operator == or operator !=. Note that identical(NULL,NULL) is T.
+\strong{Eidos function:} Returns a logical value indicating whether two values are identical. If x and y have exactly the same type and size, and all of their corresponding elements are exactly the same, and (for matrices and arrays) their dimensions are identical, this will return T, otherwise it will return F. The test here is for exact equality; an integer value of 1 is not considered identical to a float value of 1.0, for example. Elements in object values must be literally the same element, not simply identical in all of their properties. Type promotion is never done. For testing whether two values are the same, this is generally preferable to the use of operator == or operator !=. Note that identical(NULL,NULL) is T.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

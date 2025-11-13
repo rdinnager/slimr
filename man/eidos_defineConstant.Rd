@@ -13,18 +13,20 @@ eidos_defineConstant(symbol, value)
 \item{value}{An object of type string or any.}
 }
 \value{
-An object of type void.
+\strong{Eidos function:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{defineConstant}.
+\strong{Eidos function:} Documentation for SLiM function \code{defineConstant}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Defines a new constant with the name symbol and the value specified by value. The name cannot previously be defined in any way (i.e., as either a variable or a constant). The defined constant acts identically to intrinsic Eidos constants such as T, NAN, and PI, and will remain defined for as long as the Eidos context lives even if it is defined inside a block being executed by executeLambda(), apply(), sapply(), or a Context-defined script block. Syntactically, value may be any value at all; semantically, however, if value is of object type then value's class must be under an internal memory-management scheme called "retain-release". Objects that are not under retain-release can cease to exist whenever the Context is finished using them, and thus a defined constant referencing such an object could become invalid, which must be prevented. Objects that are under retain-release will not cease to exist if they are referenced by a global constant; the reference to them from the global constant "retains" them and keeps them in existence. All object classes built into Eidos are under retain-release; see the SLiM manual (section "SLiM scoping rules") for discussion of which SLiM object classes are under retain-release.
+\strong{Eidos function:} Defines a new constant with the name symbol and the value specified by value. The name cannot previously be defined in any way (i.e., as either a variable or a constant). The defined constant acts identically to intrinsic Eidos constants such as T, NAN, and PI, and will remain defined for as long as the Eidos context lives even if it is defined inside a block being executed by executeLambda(), apply(), sapply(), or a Context-defined script block. Syntactically, value may be any value at all; semantically, however, if value is of object type then value's class must be under an internal memory-management scheme called "retain-release". Objects that are not under retain-release can cease to exist whenever the Context is finished using them, and thus a defined constant referencing such an object could become invalid, which must be prevented. Objects that are under retain-release will not cease to exist if they are referenced by a global constant; the reference to them from the global constant "retains" them and keeps them in existence. All object classes built into Eidos are under retain-release; see the SLiM manual (section "SLiM scoping rules") for discussion of which SLiM object classes are under retain-release.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -16,18 +16,20 @@ containsMarkerMutation(mutType, position, returnMutation = NULL)
 \item{returnMutation}{An object of type logical (singleton).}
 }
 \value{
-An object of type null or logical or Mutation object. Return will be of length 1 (a singleton)
+\strong{Haplosome method:} An object of type null or logical or Mutation object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{containsMarkerMutation}, which is a method of the SLiM class \code{\link{Haplosome}}.
+\strong{Haplosome method:} Documentation for SLiM function \code{containsMarkerMutation}, which is a method of the SLiM class \code{\link{Haplosome}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-io<MutationType>$ mutType, integer$ position, [logical$ returnMutation = F]) Returns T if the haplosome contains a mutation of type mutType at position, F otherwise (if returnMutation has its default value of F; see below). This method is, as its name suggests, intended for checking for "marker mutations": mutations of a special mutation type that are not literally mutations in the usual sense, but instead are added in to particular haplosomes to mark them as possessing some property. Marker mutations are not typically added by SLiM's mutation-generating machinery; instead they are added explicitly with addNewMutation() or addNewDrawnMutation() at a known, constant position in the haplosome. This method provides a check for whether a marker mutation of a given type exists in a particular haplosome; because the position to check is known in advance, that check can be done much faster than the equivalent check with containsMutations() or countOfMutationsOfType(), using a binary search of the haplosome. If returnMutation is T (an option added in SLiM 3), this method returns the actual mutation found, rather than just T or F. More specifically, the first mutation found of mutType at position will be returned; if more than one such mutation exists in the target haplosome, which one is returned is not defined. If returnMutation is T and no mutation of mutType is found at position, NULL will be returned.
+\strong{Haplosome method:} Returns T if the haplosome contains a mutation of type mutType at position, F otherwise (if returnMutation has its default value of F; see below). This method is, as its name suggests, intended for checking for "marker mutations": mutations of a special mutation type that are not literally mutations in the usual sense, but instead are added in to particular haplosomes to mark them as possessing some property. Marker mutations are not typically added by SLiM's mutation-generating machinery; instead they are added explicitly with addNewMutation() or addNewDrawnMutation() at a known, constant position in the haplosome. This method provides a check for whether a marker mutation of a given type exists in a particular haplosome; because the position to check is known in advance, that check can be done much faster than the equivalent check with containsMutations() or countOfMutationsOfType(), using a binary search of the haplosome. If returnMutation is T (an option added in SLiM 3), this method returns the actual mutation found, rather than just T or F. More specifically, the first mutation found of mutType at position will be returned; if more than one such mutation exists in the target haplosome, which one is returned is not defined. If returnMutation is T and no mutation of mutType is found at position, NULL will be returned.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -11,18 +11,20 @@ eidos_asVector(x)
 \item{x}{An object of type any.}
 }
 \value{
-An object of type any.
+\strong{Eidos function:} An object of type any.
 }
 \description{
-Documentation for SLiM function \code{asVector}.
+\strong{Eidos function:} Documentation for SLiM function \code{asVector}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Creates a new vector from the elements of x, stripping off any dimensional information associated with x being a vector or array. The values of the resulting vector are read out from x in dimension order: one element from each row until a column is completed, then on to the next column in the same manner until all columns are completed, and then onward into the higher-order dimensions in the same manner. If x is already a vector, it is returned unmodified. See drop() for a similar method that drops only matrix/array dimensions that are redundant.
+\strong{Eidos function:} Creates a new vector from the elements of x, stripping off any dimensional information associated with x being a vector or array. The values of the resulting vector are read out from x in dimension order: one element from each row until a column is completed, then on to the next column in the same manner until all columns are completed, and then onward into the higher-order dimensions in the same manner. If x is already a vector, it is returned unmodified. See drop() for a similar method that drops only matrix/array dimensions that are redundant.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -11,18 +11,20 @@ eidos_asLogical(x)
 \item{x}{An object of type any but object.}
 }
 \value{
-An object of type logical.
+\strong{Eidos function:} An object of type logical.
 }
 \description{
-Documentation for SLiM function \code{asLogical}.
+\strong{Eidos function:} Documentation for SLiM function \code{asLogical}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the conversion to logical of x. Recall that in Eidos the empty string "" is considered F, and all other string values are considered T. Converting INF or -INF to logical yields T (since those values are not equal to zero); converting NAN to logical throws an error.
+\strong{Eidos function:} Returns the conversion to logical of x. Recall that in Eidos the empty string "" is considered F, and all other string values are considered T. Converting INF or -INF to logical yields T (since those values are not equal to zero); converting NAN to logical throws an error.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

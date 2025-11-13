@@ -29,18 +29,20 @@ outputIndividualsToVCF(
 \item{outputNonnucleotides}{An object of type logical (singleton).}
 }
 \value{
-An object of type void.
+\strong{Individual method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{outputIndividualsToVCF}, which is a method of the SLiM class \code{\link{Individual}}.
+\strong{Individual method:} Documentation for SLiM function \code{outputIndividualsToVCF}, which is a method of the SLiM class \code{\link{Individual}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-[Ns$ filePath = NULL], [logical$ append = F], [Niso<Chromosome>$ chromosome = NULL], [logical$ outputMultiallelics = T], [logical$ simplifyNucleotides = F], [logical$ outputNonnucleotides = T]) Output the state of the target vector of individuals in VCF format. If the optional parameter filePath is NULL (the default), output will be sent to Eidos's output stream. Otherwise, output will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. This method is quite similar to the Subpopulation method outputVCFSample(), but (1) it can produce output for any vector of individuals, rather than sampling from a single population; (2) it can produce output regarding the genetics for all chromosomes or for just one focal chromosome, whereas outputVCFSample() can only output data for a single chromosome; and (3) because it can output genetic information for more than one chromosome, the groupAsIndividuals option provided by outputVCFSample() is not available for outputIndividualsToVCF(); each VCF sample has to correspond directly to one individual. The chromosome parameter specifies a focal chromosome for which the genetics of the target individuals will be output. If chromosome is NULL, all chromosomes will be output (distinguished in the VCF output by the chromosome symbol output in the CHROM column); otherwise, chromosome may specify the focal chromosome with an integer chromosome id, a string chromosome symbol, or a Chromosome object. The parameters outputMultiallelics, simplifyNucleotides, and outputNonnucleotides affect the format of the output produced. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
+\strong{Individual method:} Output the state of the target vector of individuals in VCF format. If the optional parameter filePath is NULL (the default), output will be sent to Eidos's output stream. Otherwise, output will be sent to the filesystem path specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. This method is quite similar to the Subpopulation method outputVCFSample(), but (1) it can produce output for any vector of individuals, rather than sampling from a single population; (2) it can produce output regarding the genetics for all chromosomes or for just one focal chromosome, whereas outputVCFSample() can only output data for a single chromosome; and (3) because it can output genetic information for more than one chromosome, the groupAsIndividuals option provided by outputVCFSample() is not available for outputIndividualsToVCF(); each VCF sample has to correspond directly to one individual. The chromosome parameter specifies a focal chromosome for which the genetics of the target individuals will be output. If chromosome is NULL, all chromosomes will be output (distinguished in the VCF output by the chromosome symbol output in the CHROM column); otherwise, chromosome may specify the focal chromosome with an integer chromosome id, a string chromosome symbol, or a Chromosome object. The parameters outputMultiallelics, simplifyNucleotides, and outputNonnucleotides affect the format of the output produced. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

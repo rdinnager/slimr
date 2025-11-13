@@ -12,18 +12,20 @@ skipTick(void)
 \item{void}{An object of type object.}
 }
 \value{
-An object of type void.
+\strong{Species method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{skipTick}, which is a method of the SLiM class \code{\link{Species}}.
+\strong{Species method:} Documentation for SLiM function \code{skipTick}, which is a method of the SLiM class \code{\link{Species}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-void) Deactivate the target species for the current tick. This sets the active property of the species to F; it also set the active property of all callbacks that belong to the species (with the species as their species specifier) to F, and sets the active property of all events that are synchronized with the species (with the species as their ticks specifier) to F. The cycle counter for the species will not be incremented at the end of the tick. This method may only be called in first() events, to ensure that species are either active or inactive throughout a given tick.
+\strong{Species method:} Deactivate the target species for the current tick. This sets the active property of the species to F; it also set the active property of all callbacks that belong to the species (with the species as their species specifier) to F, and sets the active property of all events that are synchronized with the species (with the species as their ticks specifier) to F. The cycle counter for the species will not be incremented at the end of the tick. This method may only be called in first() events, to ensure that species are either active or inactive throughout a given tick.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

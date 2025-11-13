@@ -15,18 +15,20 @@ eidos_rweibull(n, lambda, k)
 \item{k}{An object of type integer or numeric or numeric.}
 }
 \value{
-An object of type float.
+\strong{Eidos function:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{rweibull}.
+\strong{Eidos function:} Documentation for SLiM function \code{rweibull}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a vector of n random draws from a Weibull distribution with scale parameter lambda and shape parameter k, both greater than zero. The lambda and k parameters may either be singletons, specifying a single value to be used for all of the draws, or they may be vectors of length n, specifying a value for each draw. Draws are made from a Weibull distribution with probability distribution P(s | ,k) = (k / k) sk1 exp(-(s/)k).
+\strong{Eidos function:} Returns a vector of n random draws from a Weibull distribution with scale parameter lambda and shape parameter k, both greater than zero. The lambda and k parameters may either be singletons, specifying a single value to be used for all of the draws, or they may be vectors of length n, specifying a value for each draw. Draws are made from a Weibull distribution with probability distribution P(s | ,k) = (k / k) sk1 exp(-(s/)k).
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

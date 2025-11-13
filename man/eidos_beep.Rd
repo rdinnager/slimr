@@ -11,18 +11,20 @@ eidos_beep(soundName = NULL)
 \item{soundName}{An object of type null or string (singleton).}
 }
 \value{
-An object of type void.
+\strong{Eidos function:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{beep}.
+\strong{Eidos function:} Documentation for SLiM function \code{beep}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Plays a sound or beeps. On macOS in a GUI environment (i.e., in EidosScribe or SLiMgui), the optional parameter soundName can be the name of a sound file to play; in other cases (if soundName is NULL, or at the command line, or on platforms other than OS X) soundName is ignored and a standard system beep is played. When soundName is not NULL, a sound file in a supported format (such as .aiff or .mp3) is searched for sequentially in four standard locations, in this order: ~/Library/Sounds, /Library/Sounds, /Network/Library/Sounds, and finally /System/Library/Sounds. Standard OS X sounds located in /System/Library/Sounds include "Basso", "Blow", "Bottle", "Frog", "Funk", "Glass", "Hero", "Morse", "Ping", "Pop", "Purr", "Sosumi", "Submarine", and "Tink". Do not include the file extension, such as .aiff or .mp3, in soundName. CAUTION: When not running in EidosScribe or SLiMgui, it is often the case that the only simple means available to play a beep is to send a BEL character (ASCII 7) to the standard output. Unfortunately, when this is the case, it means that (1) no beep will be audible if output is being redirected into a file, and (2) a control character, ^G, will occur in the output at the point when the beep was requested. It is therefore recommended that beep() be used only when doing interactive work in a terminal shell (or in a GUI), not when producing output files. However, this issue is platform-specific; on some platforms beep() may result in a beep, and no emitted ^G, even when output is redirected. When a ^G must be emitted to the standard output to generate the beep, a warning message will also be emitted to make any associated problems easier to diagnose.
+\strong{Eidos function:} Plays a sound or beeps. On macOS in a GUI environment (i.e., in EidosScribe or SLiMgui), the optional parameter soundName can be the name of a sound file to play; in other cases (if soundName is NULL, or at the command line, or on platforms other than OS X) soundName is ignored and a standard system beep is played. When soundName is not NULL, a sound file in a supported format (such as .aiff or .mp3) is searched for sequentially in four standard locations, in this order: ~/Library/Sounds, /Library/Sounds, /Network/Library/Sounds, and finally /System/Library/Sounds. Standard OS X sounds located in /System/Library/Sounds include "Basso", "Blow", "Bottle", "Frog", "Funk", "Glass", "Hero", "Morse", "Ping", "Pop", "Purr", "Sosumi", "Submarine", and "Tink". Do not include the file extension, such as .aiff or .mp3, in soundName. CAUTION: When not running in EidosScribe or SLiMgui, it is often the case that the only simple means available to play a beep is to send a BEL character (ASCII 7) to the standard output. Unfortunately, when this is the case, it means that (1) no beep will be audible if output is being redirected into a file, and (2) a control character, ^G, will occur in the output at the point when the beep was requested. It is therefore recommended that beep() be used only when doing interactive work in a terminal shell (or in a GUI), not when producing output files. However, this issue is platform-specific; on some platforms beep() may result in a beep, and no emitted ^G, even when output is redirected. When a ^G must be emitted to the standard output to generate the beep, a warning message will also be emitted to make any associated problems easier to diagnose.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

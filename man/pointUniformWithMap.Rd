@@ -14,18 +14,20 @@ pointUniformWithMap(n, map)
 \item{map}{An object of type string or SpatialMap object (singleton).}
 }
 \value{
-An object of type float.
+\strong{Subpopulation method:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{pointUniformWithMap}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+\strong{Subpopulation method:} Documentation for SLiM function \code{pointUniformWithMap}, which is a method of the SLiM class \code{\link{Subpopulation}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-integer$ n, so<SpatialMap>$ map) Returns a new point (or points, for n > 1) generated from uniform draws for each coordinate, within the spatial boundaries of the subpopulation, and rejection sampled using the spatial map map as described below. The returned vector will contain n points, each comprised of a number of coordinates equal to the dimensionality of the simulation, so it will be of total length n*dimensionality. This may only be called in simulations for which continuous space has been enabled with initializeSLiMOptions(). The spatial map defined by map must be configured in a specific way. First of all, it must be defined in, or added to, the target subpopulation (and thus, by implication, it must match the spatial bounds of the subpopulation, and its spatiality must be compatible with the subpopulation's dimensionality, as discussed in defineSpatialMap() and/or addSpatialMap()). Second, the values in the spatial map must represent "habitability", in the following sense. The value of map at a given drawn point is obtained, symbolized here by x. Next, x is clamped to the range [0, 1]; values less than 0 become 0, values greater than 1 become 1. The resulting x value is then interpreted as the probability that the point is considered "within bounds" (as far as the spatial map is concerned; points that are outside the subpopulation's spatial bounds are always considered "out of bounds"). Given this, 1-x is thus the probability that the point will be redrawn because it fell out of bounds. Each point will be redrawn repeatedly until a point considered "within bounds" is obtained.
+\strong{Subpopulation method:} Returns a new point (or points, for n > 1) generated from uniform draws for each coordinate, within the spatial boundaries of the subpopulation, and rejection sampled using the spatial map map as described below. The returned vector will contain n points, each comprised of a number of coordinates equal to the dimensionality of the simulation, so it will be of total length n*dimensionality. This may only be called in simulations for which continuous space has been enabled with initializeSLiMOptions(). The spatial map defined by map must be configured in a specific way. First of all, it must be defined in, or added to, the target subpopulation (and thus, by implication, it must match the spatial bounds of the subpopulation, and its spatiality must be compatible with the subpopulation's dimensionality, as discussed in defineSpatialMap() and/or addSpatialMap()). Second, the values in the spatial map must represent "habitability", in the following sense. The value of map at a given drawn point is obtained, symbolized here by x. Next, x is clamped to the range [0, 1]; values less than 0 become 0, values greater than 1 become 1. The resulting x value is then interpreted as the probability that the point is considered "within bounds" (as far as the spatial map is concerned; points that are outside the subpopulation's spatial bounds are always considered "out of bounds"). Given this, 1-x is thus the probability that the point will be redrawn because it fell out of bounds. Each point will be redrawn repeatedly until a point considered "within bounds" is obtained.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

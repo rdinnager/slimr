@@ -12,18 +12,20 @@ killIndividuals(individuals)
 \item{individuals}{An object of type Individual object.}
 }
 \value{
-An object of type void.
+\strong{Species method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{killIndividuals}, which is a method of the SLiM class \code{\link{Species}}.
+\strong{Species method:} Documentation for SLiM function \code{killIndividuals}, which is a method of the SLiM class \code{\link{Species}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-object<Individual> individuals) Immediately kills the individuals in individuals. This removes them from their subpopulation and gives them an index value of -1. The Individual objects are not freed immediately, since references to them could still exist in local Eidos variables; instead, the individuals are kept in a temporary "graveyard" until they can be freed safely. It therefore continues to be safe to use them and their haplosomes, except that accessing their subpopulation property will raise an error since they no longer have a subpopulation. Note that the indices and order of individuals and haplosomes in all source subpopulations will change unpredictably as a side effect of this method. All evaluated interactions are invalidated as a side effect of calling this method. Note that this method is only for use in nonWF models, in which mortality is managed manually by the model script. In WF models, mortality is managed automatically by the SLiM core when the new offspring generation becomes the parental generation and the previous parental generation dies; mortality does not otherwise occur in WF models. In nonWF models, mortality normally occurs during the survival stage of the tick cycle, based upon the fitness values calculated by SLiM, and survival() callbacks can influence the outcome of that survival stage. Calls to killIndividuals(), on the other hand, can be made at any time during first(), early(), or late() events, and the result cannot be modified by survival() callbacks; the given individuals are simply immediately killed. This method therefore provides an alternative, and relatively rarely used, mortality mechanism that is disconnected from fitness.
+\strong{Species method:} Immediately kills the individuals in individuals. This removes them from their subpopulation and gives them an index value of -1. The Individual objects are not freed immediately, since references to them could still exist in local Eidos variables; instead, the individuals are kept in a temporary "graveyard" until they can be freed safely. It therefore continues to be safe to use them and their haplosomes, except that accessing their subpopulation property will raise an error since they no longer have a subpopulation. Note that the indices and order of individuals and haplosomes in all source subpopulations will change unpredictably as a side effect of this method. All evaluated interactions are invalidated as a side effect of calling this method. Note that this method is only for use in nonWF models, in which mortality is managed manually by the model script. In WF models, mortality is managed automatically by the SLiM core when the new offspring generation becomes the parental generation and the previous parental generation dies; mortality does not otherwise occur in WF models. In nonWF models, mortality normally occurs during the survival stage of the tick cycle, based upon the fitness values calculated by SLiM, and survival() callbacks can influence the outcome of that survival stage. Calls to killIndividuals(), on the other hand, can be made at any time during first(), early(), or late() events, and the result cannot be modified by survival() callbacks; the given individuals are simply immediately killed. This method therefore provides an alternative, and relatively rarely used, mortality mechanism that is disconnected from fitness.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

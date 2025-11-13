@@ -15,18 +15,20 @@ eidos_diag(x = NULL, nrow = NULL, ncol = NULL)
 \item{ncol}{An object of type null or integer (singleton).}
 }
 \value{
-An object of type any.
+\strong{Eidos function:} An object of type any.
 }
 \description{
-Documentation for SLiM function \code{diag}.
+\strong{Eidos function:} Documentation for SLiM function \code{diag}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the diagonal of x. This function has four distinct usage patterns (matching R). First, if x is a matrix of any type, it returns the diagonal elements of x as a vector; in this case, nrow and ncol must be NULL. Second, if x is 1 (the default) and nrow is non-NULL, it returns an identity matrix with the requested number of rows (and, if ncol is also non-NULL, the requested number of columns, otherwise the matrix will be square). Third, if x is a singleton integer value and nrow and ncol are NULL, it returns a square identity matrix of size x. Fourth, if x is a logical, integer, or float vector of length at least 2, it returns a matrix that uses the values of x as its diagonal (without recycling or truncation, unlike R) and has F, 0, or 0.0 off-diagonal entries as appropriate. Note that using diag(x), without nrow or ncol, can have unexpected effects if x is a vector that could be of length one. Use diag(x, nrow=length(x)) for consistent behavior.
+\strong{Eidos function:} Returns the diagonal of x. This function has four distinct usage patterns (matching R). First, if x is a matrix of any type, it returns the diagonal elements of x as a vector; in this case, nrow and ncol must be NULL. Second, if x is 1 (the default) and nrow is non-NULL, it returns an identity matrix with the requested number of rows (and, if ncol is also non-NULL, the requested number of columns, otherwise the matrix will be square). Third, if x is a singleton integer value and nrow and ncol are NULL, it returns a square identity matrix of size x. Fourth, if x is a logical, integer, or float vector of length at least 2, it returns a matrix that uses the values of x as its diagonal (without recycling or truncation, unlike R) and has F, 0, or 0.0 off-diagonal entries as appropriate. Note that using diag(x), without nrow or ncol, can have unexpected effects if x is a vector that could be of length one. Use diag(x, nrow=length(x)) for consistent behavior.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

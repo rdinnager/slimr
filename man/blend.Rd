@@ -14,18 +14,20 @@ blend(x, xFraction)
 \item{xFraction}{An object of type float (singleton).}
 }
 \value{
-An object of type SpatialMap object. Return will be of length 1 (a singleton)
+\strong{SpatialMap method:} An object of type SpatialMap object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{blend}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+\strong{SpatialMap method:} Documentation for SLiM function \code{blend}, which is a method of the SLiM class \code{\link{SpatialMap}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-ifo<SpatialMap> x, float$ xFraction) Blends x into the spatial map, giving x a weight of xFraction and the existing values in the target spatial map a weight of 1 - xFraction, such that the resulting values in the target spatial map are then given by x * xFraction + target * (1 - xFraction). The value of xFraction must be in [0.0, 1.0]. One possibility is that x is a singleton integer or float value; in this case, x is blended with each grid value of the target spatial map. Another possibility is that x is an integer or float vector/matrix/array of the same dimensions as the target spatial map's grid; in this case, each value of x is blended with the corresponding grid value of the target spatial map. The third possibility is that x is itself a (singleton) spatial map; in this case, each grid value of x is blended with the corresponding grid value of the target spatial map (and thus the two spatial maps must match in their spatiality, their spatial bounds, and their grid dimensions). The target spatial map is returned, to allow easy chaining of operations.
+\strong{SpatialMap method:} Blends x into the spatial map, giving x a weight of xFraction and the existing values in the target spatial map a weight of 1 - xFraction, such that the resulting values in the target spatial map are then given by x * xFraction + target * (1 - xFraction). The value of xFraction must be in [0.0, 1.0]. One possibility is that x is a singleton integer or float value; in this case, x is blended with each grid value of the target spatial map. Another possibility is that x is an integer or float vector/matrix/array of the same dimensions as the target spatial map's grid; in this case, each value of x is blended with the corresponding grid value of the target spatial map. The third possibility is that x is itself a (singleton) spatial map; in this case, each grid value of x is blended with the corresponding grid value of the target spatial map (and thus the two spatial maps must match in their spatiality, their spatial bounds, and their grid dimensions). The target spatial map is returned, to allow easy chaining of operations.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

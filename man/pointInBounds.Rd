@@ -12,18 +12,20 @@ pointInBounds(point)
 \item{point}{An object of type float.}
 }
 \value{
-An object of type logical.
+\strong{Subpopulation method:} An object of type logical.
 }
 \description{
-Documentation for SLiM function \code{pointInBounds}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+\strong{Subpopulation method:} Documentation for SLiM function \code{pointInBounds}, which is a method of the SLiM class \code{\link{Subpopulation}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-float point) Returns T if point is inside the spatial boundaries of the subpopulation, F otherwise. For example, for a simulation with "xy" dimensionality, if point contains exactly two values constituting an (x,y) point, the result will be T if and only if ((point[0]>=x0) & (point[0]<=x1) & (point[1]>=y0) & (point[1]<=y1)) given spatial bounds (x0, y0, x1, y1). This method is useful for implementing absorbing or reprising boundary conditions. This may only be called in simulations for which continuous space has been enabled with initializeSLiMOptions(). The length of point must be an exact multiple of the dimensionality of the simulation; in other words, point may contain values comprising more than one point. In this case, a logical vector will be returned in which each element is T if the corresponding point in point is inside the spatial boundaries of the subpopulation, F otherwise.
+\strong{Subpopulation method:} Returns T if point is inside the spatial boundaries of the subpopulation, F otherwise. For example, for a simulation with "xy" dimensionality, if point contains exactly two values constituting an (x,y) point, the result will be T if and only if ((point[0]>=x0) & (point[0]<=x1) & (point[1]>=y0) & (point[1]<=y1)) given spatial bounds (x0, y0, x1, y1). This method is useful for implementing absorbing or reprising boundary conditions. This may only be called in simulations for which continuous space has been enabled with initializeSLiMOptions(). The length of point must be an exact multiple of the dimensionality of the simulation; in other words, point may contain values comprising more than one point. In this case, a logical vector will be returned in which each element is T if the corresponding point in point is inside the spatial boundaries of the subpopulation, F otherwise.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

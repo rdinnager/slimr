@@ -11,18 +11,20 @@ eidos_inverse(x)
 \item{x}{An object of type numeric.}
 }
 \value{
-An object of type float.
+\strong{Eidos function:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{inverse}.
+\strong{Eidos function:} Documentation for SLiM function \code{inverse}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the (multiplicative) inverse of x, which must be a square non-singular matrix (otherwise an error is raised). If matrix B is the inverse of n-by-n matrix A, then AB = BA = In, where In denotes the n-by-n identity matrix and the multiplication used is ordinary matrix multiplication as performed by matrixMult(). If x might be singular (and thus non-invertible), and you wish to avoid the possibility of an error, you can call det() first to find the determinant of the matrix; if the determinant is zero, the matrix is singular and does not have an inverse, and so inverse() should not be called. In Eidos the inverse is calculated from the LU decomposition of the matrix.
+\strong{Eidos function:} Returns the (multiplicative) inverse of x, which must be a square non-singular matrix (otherwise an error is raised). If matrix B is the inverse of n-by-n matrix A, then AB = BA = In, where In denotes the n-by-n identity matrix and the multiplication used is ordinary matrix multiplication as performed by matrixMult(). If x might be singular (and thus non-invertible), and you wish to avoid the possibility of an error, you can call det() first to find the determinant of the matrix; if the determinant is zero, the matrix is singular and does not have an inverse, and so inverse() should not be called. In Eidos the inverse is calculated from the LU decomposition of the matrix.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

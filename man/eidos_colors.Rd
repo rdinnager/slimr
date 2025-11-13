@@ -13,18 +13,20 @@ eidos_colors(x, name)
 \item{name}{An object of type numeric or string (singleton).}
 }
 \value{
-An object of type string.
+\strong{Eidos function:} An object of type string.
 }
 \description{
-Documentation for SLiM function \code{colors}.
+\strong{Eidos function:} Documentation for SLiM function \code{colors}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Generate colors in a standard color palette. If x is a singleton integer, the returned vector will contain x color strings representing x colors equidistant along the named palette, spanning its full extent. Alternatively, if x is a float vector of values in [0,1], the returned vector will contain one color string for each value in x, representing the color at the corresponding fraction along the named palette (values outside [0,1] will be clamped to that range). (Note that the function signature states the type of x as numeric, but in this function the integer and float cases have completely different semantic meanings.) The color palette specified by name may be any of the following color palettes based upon color palettes in R: "cm", "heat", and "terrain". It may also be one of the following color palettes based on color palettes in MATLAB (and the Turbo palette from Anton Mikhailov of the Google AI group, based upon the Jet palette provided by MATLAB): "parula", "hot", "jet", "turbo", and "gray". Finally, it may be one of the following color palettes based upon color palettes in Matplotlib, also available in the viridis R package: "magma", "inferno", "plasma", "viridis", and "cividis". These color palettes are designed to be perceptually uniform, changing continuously and linearly. They are also designed to perform well even for users with red-green colorblindness; the "cividis" palette, in particular, is designed to look nearly identical to those with and without red-green colorblindness, to be perceptually uniform in both hue and brightness, and to increase linearly in brightness. This function replaces the deprecated cmColors(), heatColors(), and terrainColors() functions, and adds several several additional color palettes to Eidos. See rainbow() for another color palette function.
+\strong{Eidos function:} Generate colors in a standard color palette. If x is a singleton integer, the returned vector will contain x color strings representing x colors equidistant along the named palette, spanning its full extent. Alternatively, if x is a float vector of values in [0,1], the returned vector will contain one color string for each value in x, representing the color at the corresponding fraction along the named palette (values outside [0,1] will be clamped to that range). (Note that the function signature states the type of x as numeric, but in this function the integer and float cases have completely different semantic meanings.) The color palette specified by name may be any of the following color palettes based upon color palettes in R: "cm", "heat", and "terrain". It may also be one of the following color palettes based on color palettes in MATLAB (and the Turbo palette from Anton Mikhailov of the Google AI group, based upon the Jet palette provided by MATLAB): "parula", "hot", "jet", "turbo", and "gray". Finally, it may be one of the following color palettes based upon color palettes in Matplotlib, also available in the viridis R package: "magma", "inferno", "plasma", "viridis", and "cividis". These color palettes are designed to be perceptually uniform, changing continuously and linearly. They are also designed to perform well even for users with red-green colorblindness; the "cividis" palette, in particular, is designed to look nearly identical to those with and without red-green colorblindness, to be perceptually uniform in both hue and brightness, and to increase linearly in brightness. This function replaces the deprecated cmColors(), heatColors(), and terrainColors() functions, and adds several several additional color palettes to Eidos. See rainbow() for another color palette function.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

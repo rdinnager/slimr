@@ -14,18 +14,20 @@ interactionDistance(receiver, exerters = NULL)
 \item{exerters}{An object of type null or Individual object.}
 }
 \value{
-An object of type float.
+\strong{InteractionType method:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{interactionDistance}, which is a method of the SLiM class \code{\link{InteractionType}}.
+\strong{InteractionType method:} Documentation for SLiM function \code{interactionDistance}, which is a method of the SLiM class \code{\link{InteractionType}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-object<Individual>$ receiver, [No<Individual> exerters = NULL]) Returns a vector containing interaction-dependent distances between receiver and individuals in exerters. If exerters is NULL (the default), then a vector of the interaction-dependent distances from receiver to all individuals in its subpopulation (including receiver itself) is returned; this case may be handled much more efficiently than if a vector of all individuals in the subpopulation is explicitly provided. Otherwise, all individuals in exerters must belong to a single subpopulation (but not necessarily the same subpopulation as receiver). The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. If the InteractionType is non-spatial, this method may not be called. Importantly, distances are calculated according to the spatiality of the InteractionType (as declared in initializeInteractionType()), not the dimensionality of the model as a whole (as declared in initializeSLiMOptions()). The distances returned are therefore the distances that would be used to calculate interaction strengths. In addition, interactionDistance() will return INF as the distance between receiver and any individual which does not exert an interaction upon receiver; the interactionDistance() between an individual and itself will thus be INF, and likewise for pairs excluded from interacting by receiver constraints, exerter constraints, or the maximum interaction distance of the interaction type. See distance() for an alternative distance definition.
+\strong{InteractionType method:} Returns a vector containing interaction-dependent distances between receiver and individuals in exerters. If exerters is NULL (the default), then a vector of the interaction-dependent distances from receiver to all individuals in its subpopulation (including receiver itself) is returned; this case may be handled much more efficiently than if a vector of all individuals in the subpopulation is explicitly provided. Otherwise, all individuals in exerters must belong to a single subpopulation (but not necessarily the same subpopulation as receiver). The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. If the InteractionType is non-spatial, this method may not be called. Importantly, distances are calculated according to the spatiality of the InteractionType (as declared in initializeInteractionType()), not the dimensionality of the model as a whole (as declared in initializeSLiMOptions()). The distances returned are therefore the distances that would be used to calculate interaction strengths. In addition, interactionDistance() will return INF as the distance between receiver and any individual which does not exert an interaction upon receiver; the interactionDistance() between an individual and itself will thus be INF, and likewise for pairs excluded from interacting by receiver constraints, exerter constraints, or the maximum interaction distance of the interaction type. See distance() for an alternative distance definition.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

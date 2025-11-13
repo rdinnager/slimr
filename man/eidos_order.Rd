@@ -13,18 +13,20 @@ eidos_order(x, ascending = NULL)
 \item{ascending}{An object of type any but object or logical (singleton).}
 }
 \value{
-An object of type integer.
+\strong{Eidos function:} An object of type integer.
 }
 \description{
-Documentation for SLiM function \code{order}.
+\strong{Eidos function:} Documentation for SLiM function \code{order}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a vector of sorting indices for x: a new integer vector of the same length as x, containing the indices into x that would sort x. In other words, x[order(x)]==sort(x). This can be useful for more complex sorting problems, such as sorting several vectors in parallel by a sort order determined by one of the vectors. If the optional logical parameter ascending is T (the default), then the sorted order will be ascending; if it is F, the sorted order will be descending. The ordering is determined according to the same logic as the < and > operators in Eidos. To easily sort vectors in a single step, use sort() or sortBy(), for non-object and object vectors respectively.
+\strong{Eidos function:} Returns a vector of sorting indices for x: a new integer vector of the same length as x, containing the indices into x that would sort x. In other words, x[order(x)]==sort(x). This can be useful for more complex sorting problems, such as sorting several vectors in parallel by a sort order determined by one of the vectors. If the optional logical parameter ascending is T (the default), then the sorted order will be ascending; if it is F, the sorted order will be descending. The ordering is determined according to the same logic as the < and > operators in Eidos. To easily sort vectors in a single step, use sort() or sortBy(), for non-object and object vectors respectively.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

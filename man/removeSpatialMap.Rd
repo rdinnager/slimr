@@ -12,18 +12,20 @@ removeSpatialMap(map)
 \item{map}{An object of type string or SpatialMap object (singleton).}
 }
 \value{
-An object of type void.
+\strong{Subpopulation method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{removeSpatialMap}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+\strong{Subpopulation method:} Documentation for SLiM function \code{removeSpatialMap}, which is a method of the SLiM class \code{\link{Subpopulation}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-so<SpatialMap>$ map) Removes the SpatialMap object specified by map from the subpopulation. The parameter map may be either a SpatialMap object, or a string name for spatial map. The map must have been added to the subpopulation with addSpatialMap(); if it has not been, an error results. Removing spatial maps that are no longer in use is optional in most cases. It is generally a good idea because it might decrease SLiM's memory footprint; also, it avoids an error if the subpopulation's spatial bounds are changed (see setSpatialBounds()).
+\strong{Subpopulation method:} Removes the SpatialMap object specified by map from the subpopulation. The parameter map may be either a SpatialMap object, or a string name for spatial map. The map must have been added to the subpopulation with addSpatialMap(); if it has not been, an error results. Removing spatial maps that are no longer in use is optional in most cases. It is generally a good idea because it might decrease SLiM's memory footprint; also, it avoids an error if the subpopulation's spatial bounds are changed (see setSpatialBounds()).
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

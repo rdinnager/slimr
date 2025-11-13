@@ -11,18 +11,20 @@ eidos_exists(symbol)
 \item{symbol}{An object of type string.}
 }
 \value{
-An object of type logical.
+\strong{Eidos function:} An object of type logical.
 }
 \description{
-Documentation for SLiM function \code{exists}.
+\strong{Eidos function:} Documentation for SLiM function \code{exists}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a logical vector indicating whether symbols exist. If a symbol has been defined as an intrinsic Eidos constant like T, INF, and PI, or as a Context-defined constant like sim in SLiM, or as a user-defined constant using defineConstant(), or as a variable by assignment, this function returns T. Otherwise, the symbol has not been defined, and exists() returns F. This is commonly used to check whether a user-defined constant already exists, with the intention of defining the constant if it has not already been defined. A vector of symbols may be passed, producing a vector of corresponding results.
+\strong{Eidos function:} Returns a logical vector indicating whether symbols exist. If a symbol has been defined as an intrinsic Eidos constant like T, INF, and PI, or as a Context-defined constant like sim in SLiM, or as a user-defined constant using defineConstant(), or as a variable by assignment, this function returns T. Otherwise, the symbol has not been defined, and exists() returns F. This is commonly used to check whether a user-defined constant already exists, with the intention of defining the constant if it has not already been defined. A vector of symbols may be passed, producing a vector of corresponding results.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

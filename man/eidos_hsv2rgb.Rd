@@ -11,18 +11,20 @@ eidos_hsv2rgb(hsv)
 \item{hsv}{An object of type float.}
 }
 \value{
-An object of type float.
+\strong{Eidos function:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{hsv2rgb}.
+\strong{Eidos function:} Documentation for SLiM function \code{hsv2rgb}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Converts an HSV color to RGB. The HSV color is specified in hsv as a float vector of length three (hue, saturation, value), and the equivalent RGB color is returned as a float vector of length three (red, green, blue). HSV values will be clamped to the interval [0, 1], and returned RGB values will also be in the interval [0, 1]. This function can also be called with a matrix of HSV values, with three columns (hue, saturation, value). In this case, the returned float value will be a matrix of RGB values, with three columns (red, green, blue) and one row per row of hsv.
+\strong{Eidos function:} Converts an HSV color to RGB. The HSV color is specified in hsv as a float vector of length three (hue, saturation, value), and the equivalent RGB color is returned as a float vector of length three (red, green, blue). HSV values will be clamped to the interval [0, 1], and returned RGB values will also be in the interval [0, 1]. This function can also be called with a matrix of HSV values, with three columns (hue, saturation, value). In this case, the returned float value will be a matrix of RGB values, with three columns (red, green, blue) and one row per row of hsv.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

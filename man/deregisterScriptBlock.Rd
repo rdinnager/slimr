@@ -12,18 +12,20 @@ deregisterScriptBlock(scriptBlocks)
 \item{scriptBlocks}{An object of type integer or SLiMEidosBlock object.}
 }
 \value{
-An object of type void.
+\strong{Community method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{deregisterScriptBlock}, which is a method of the SLiM class \code{\link{Community}}.
+\strong{Community method:} Documentation for SLiM function \code{deregisterScriptBlock}, which is a method of the SLiM class \code{\link{Community}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-io<SLiMEidosBlock> scriptBlocks) All SLiMEidosBlock objects specified by scriptBlocks (either with SLiMEidosBlock objects or with integer identifiers) will be scheduled for deregistration. The deregistered blocks remain valid, and may even still be executed in the current stage of the current tick; the blocks are not actually deregistered and deallocated until sometime after the currently executing script block has completed. To immediately prevent a script block from executing, even when it is scheduled to execute in the current stage of the current tick, use the active property of the script block.
+\strong{Community method:} All SLiMEidosBlock objects specified by scriptBlocks (either with SLiMEidosBlock objects or with integer identifiers) will be scheduled for deregistration. The deregistered blocks remain valid, and may even still be executed in the current stage of the current tick; the blocks are not actually deregistered and deallocated until sometime after the currently executing script block has completed. To immediately prevent a script block from executing, even when it is scheduled to execute in the current stage of the current tick, use the active property of the script block.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

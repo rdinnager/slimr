@@ -20,40 +20,46 @@ countOfMutationsOfType(mutType)
 \item{mutType}{An object of type integer or MutationType object (singleton).}
 }
 \value{
-An object of type integer. Return will be of length 1 (a singleton)
+\strong{Haplosome method:} An object of type integer. Return will be of length 1 (a singleton)
 
-An object of type integer. Return will be of length 1 (a singleton)
+\strong{Individual method:} An object of type integer. Return will be of length 1 (a singleton)
 
-An object of type integer. Return will be of length 1 (a singleton)
+\strong{Species method:} An object of type integer. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{countOfMutationsOfType}, which is a method of the SLiM class \code{\link{Haplosome}}.
+\strong{Haplosome method:} Documentation for SLiM function \code{countOfMutationsOfType}, which is a method of the SLiM class \code{\link{Haplosome}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 
-Documentation for SLiM function \code{countOfMutationsOfType}, which is a method of the SLiM class \code{\link{Individual}}.
+\strong{Individual method:} Documentation for SLiM function \code{countOfMutationsOfType}, which is a method of the SLiM class \code{\link{Individual}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 
-Documentation for SLiM function \code{countOfMutationsOfType}, which is a method of the SLiM class \code{\link{Species}}.
+\strong{Species method:} Documentation for SLiM function \code{countOfMutationsOfType}, which is a method of the SLiM class \code{\link{Species}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-io<MutationType>$ mutType) Returns the number of mutations that are of the type specified by mutType, out of all of the mutations in the haplosome. If you need a vector of the matching Mutation objects, rather than just a count, use -mutationsOfType(). This method is provided for speed; it is much faster than the corresponding Eidos code.
+\strong{Haplosome method:} Returns the number of mutations that are of the type specified by mutType, out of all of the mutations in the haplosome. If you need a vector of the matching Mutation objects, rather than just a count, use -mutationsOfType(). This method is provided for speed; it is much faster than the corresponding Eidos code.
 
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 
-io<MutationType>$ mutType) Returns the number of mutations that are of the type specified by mutType, out of all of the mutations in the individual (in all of its haplosomes; a mutation that is present in both homologous haplosomes counts twice). If you need a vector of the matching Mutation objects, rather than just a count, you should probably use mutationsFromHaplosomes(). This method is provided for speed; it is much faster than the corresponding Eidos code.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+\strong{Individual method:} Returns the number of mutations that are of the type specified by mutType, out of all of the mutations in the individual (in all of its haplosomes; a mutation that is present in both homologous haplosomes counts twice). If you need a vector of the matching Mutation objects, rather than just a count, you should probably use mutationsFromHaplosomes(). This method is provided for speed; it is much faster than the corresponding Eidos code.
 
-io<MutationType>$ mutType) Returns the number of mutations that are of the type specified by mutType, out of all of the mutations that are currently active in the species. If you need a vector of the matching Mutation objects, rather than just a count, use -mutationsOfType(). This method is often used to determine whether an introduced mutation is still active (as opposed to being either lost or fixed). This method is provided for speed; it is much faster than the corresponding Eidos code.
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
+
+See \strong{Details} below for complete documentation of this SLiM method.
+
+\strong{Species method:} Returns the number of mutations that are of the type specified by mutType, out of all of the mutations that are currently active in the species. If you need a vector of the matching Mutation objects, rather than just a count, use -mutationsOfType(). This method is often used to determine whether an introduced mutation is still active (as opposed to being either lost or fixed). This method is provided for speed; it is much faster than the corresponding Eidos code.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

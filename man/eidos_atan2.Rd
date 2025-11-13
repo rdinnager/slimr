@@ -13,18 +13,20 @@ eidos_atan2(x, y)
 \item{y}{An object of type numeric or numeric.}
 }
 \value{
-An object of type float.
+\strong{Eidos function:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{atan2}.
+\strong{Eidos function:} Documentation for SLiM function \code{atan2}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the arc tangent of y/x using the C++ function atan2(), which uses the signs of both x and y to determine the correct quadrant for the result.
+\strong{Eidos function:} Returns the arc tangent of y/x using the C++ function atan2(), which uses the signs of both x and y to determine the correct quadrant for the result.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

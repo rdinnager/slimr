@@ -15,18 +15,20 @@ eidos_rnbinom(n, size, prob)
 \item{prob}{An object of type integer or numeric or float.}
 }
 \value{
-An object of type integer.
+\strong{Eidos function:} An object of type integer.
 }
 \description{
-Documentation for SLiM function \code{rnbinom}.
+\strong{Eidos function:} Documentation for SLiM function \code{rnbinom}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a vector of n random draws from a negative binomial distribution representing the number of failures which occur in a sequence of Bernoulli trials before reaching a target number of successful trials specified by size, given a probability of success specified by prob. The mean of this distribution for size s and prob p is s(1p)/p, with variance s(1p)/p2. The size and prob parameters may either be singletons, specifying a single value to be used for all of the draws, or they may be vectors of length n, specifying a value for each draw.
+\strong{Eidos function:} Returns a vector of n random draws from a negative binomial distribution representing the number of failures which occur in a sequence of Bernoulli trials before reaching a target number of successful trials specified by size, given a probability of success specified by prob. The mean of this distribution for size s and prob p is s(1p)/p, with variance s(1p)/p2. The size and prob parameters may either be singletons, specifying a single value to be used for all of the draws, or they may be vectors of length n, specifying a value for each draw.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

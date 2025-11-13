@@ -12,18 +12,20 @@ plotWithTitle(title)
 \item{title}{An object of type string (singleton).}
 }
 \value{
-An object of type null or Plot object. Return will be of length 1 (a singleton)
+\strong{SLiMgui method:} An object of type null or Plot object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{plotWithTitle}, which is a method of the SLiM class \code{\link{SLiMgui}}.
+\strong{SLiMgui method:} Documentation for SLiM function \code{plotWithTitle}, which is a method of the SLiM class \code{\link{SLiMgui}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-string$ title) Returns an existing plot that was created by createPlot() with title; if such a plot does not exist, NULL is returned. Note that other SLiMgui plots cannot be accessed through this method; only plots created by createPlot() are available in Eidos.
+\strong{SLiMgui method:} Returns an existing plot that was created by createPlot() with title; if such a plot does not exist, NULL is returned. Note that other SLiMgui plots cannot be accessed through this method; only plots created by createPlot() are available in Eidos.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

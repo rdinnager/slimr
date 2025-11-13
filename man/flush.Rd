@@ -12,18 +12,20 @@ flush(void)
 \item{void}{An object of type object.}
 }
 \value{
-An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical.
+\strong{LogFile method:} An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or logical.
 }
 \description{
-Documentation for SLiM function \code{flush}, which is a method of the SLiM class \code{\link{LogFile}}.
+\strong{LogFile method:} Documentation for SLiM function \code{flush}, which is a method of the SLiM class \code{\link{LogFile}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-void) Flushes all buffered data to the output file, synchronously. This will make the contents of the file on disk be up-to-date with the running simulation. Flushing frequently may entail a small performance penalty. More importantly, if .gz compression has been requested with compress=T the size of the resulting file will be larger - potentially much larger - if flush() is called frequently. Note that automatic periodic flushing can be requested with the flushInterval parameter to createLogFile().
+\strong{LogFile method:} Flushes all buffered data to the output file, synchronously. This will make the contents of the file on disk be up-to-date with the running simulation. Flushing frequently may entail a small performance penalty. More importantly, if .gz compression has been requested with compress=T the size of the resulting file will be larger - potentially much larger - if flush() is called frequently. Note that automatic periodic flushing can be requested with the flushInterval parameter to createLogFile().
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

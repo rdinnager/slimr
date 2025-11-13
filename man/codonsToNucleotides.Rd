@@ -14,18 +14,20 @@ codonsToNucleotides(codons, format = NULL)
 \item{format}{An object of type integer or string (singleton).}
 }
 \value{
-An object of type integer or string.
+\strong{SLiMBuiltin method:} An object of type integer or string.
 }
 \description{
-Documentation for SLiM function \code{codonsToNucleotides}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
+\strong{SLiMBuiltin method:} Documentation for SLiM function \code{codonsToNucleotides}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Returns the nucleotide sequence corresponding to the codon sequence supplied in codons. Codons should be represented with values in [0, 63] where AAA is 0, AAC is 1, AAG is 2, and TTT is 63; see ancestralNucleotides() for discussion of this encoding. The format parameter controls the format of the returned sequence. It may be "string" to obtain the sequence as a singleton string (e.g., "TATACG"), "char" to obtain it as a string vector of single characters (e.g., "T", "A", "T", "A", "C", "G"), or "integer" to obtain it as an integer vector (e.g., 3, 0, 3, 0, 1, 2), using SLiM's standard code of A=0, C=1, G=2, T=3.
+\strong{SLiMBuiltin method:} Returns the nucleotide sequence corresponding to the codon sequence supplied in codons. Codons should be represented with values in [0, 63] where AAA is 0, AAC is 1, AAG is 2, and TTT is 63; see ancestralNucleotides() for discussion of this encoding. The format parameter controls the format of the returned sequence. It may be "string" to obtain the sequence as a singleton string (e.g., "TATACG"), "char" to obtain it as a string vector of single characters (e.g., "T", "A", "T", "A", "C", "G"), or "integer" to obtain it as an integer vector (e.g., 3, 0, 3, 0, 1, 2), using SLiM's standard code of A=0, C=1, G=2, T=3.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

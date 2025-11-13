@@ -12,18 +12,20 @@ mapValue(point)
 \item{point}{An object of type float.}
 }
 \value{
-An object of type float.
+\strong{SpatialMap method:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{mapValue}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+\strong{SpatialMap method:} Documentation for SLiM function \code{mapValue}, which is a method of the SLiM class \code{\link{SpatialMap}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-float point) Uses the spatial map's mapping machinery (as defined by the gridSize, values, and interpolate parameters to defineSpatialMap()) to translate the coordinates of point into a corresponding map value. The length of point must be equal to the spatiality of the spatial map; in other words, for a spatial map with spatiality "xz", point must be of length 2, specifying the x and z coordinates of the point to be evaluated. Interpolation will automatically be used if it was enabled for the spatial map. Point coordinates are clamped into the range defined by the spatial boundaries, even if the spatial boundaries are periodic; use pointPeriodic() to wrap the point coordinates first if desired. See the documentation for defineSpatialMap() for information regarding the details of value mapping. The point parameter may also contain more than one point to be looked up. In this case, the length of point must be an exact multiple of the spatiality of the spatial map; for a spatial map with spatiality "xz", for example, the length of point must be an exact multiple of 2, and successive pairs of elements from point (elements 0 and 1, then elements 2 and 3, etc.) will be taken as the x and z coordinates of the points to be evaluated. This allows mapValue() to be used in a vectorized fashion. The spatialMapValue() method of Subpopulation provides essentially the same functionality as this method; it may be more convenient to use, for some usage cases, and it checks that the spatial map is actually added to the subpopulation in question, providing an additional consistency check. However, either method may be used.
+\strong{SpatialMap method:} Uses the spatial map's mapping machinery (as defined by the gridSize, values, and interpolate parameters to defineSpatialMap()) to translate the coordinates of point into a corresponding map value. The length of point must be equal to the spatiality of the spatial map; in other words, for a spatial map with spatiality "xz", point must be of length 2, specifying the x and z coordinates of the point to be evaluated. Interpolation will automatically be used if it was enabled for the spatial map. Point coordinates are clamped into the range defined by the spatial boundaries, even if the spatial boundaries are periodic; use pointPeriodic() to wrap the point coordinates first if desired. See the documentation for defineSpatialMap() for information regarding the details of value mapping. The point parameter may also contain more than one point to be looked up. In this case, the length of point must be an exact multiple of the spatiality of the spatial map; for a spatial map with spatiality "xz", for example, the length of point must be an exact multiple of 2, and successive pairs of elements from point (elements 0 and 1, then elements 2 and 3, etc.) will be taken as the x and z coordinates of the points to be evaluated. This allows mapValue() to be used in a vectorized fashion. The spatialMapValue() method of Subpopulation provides essentially the same functionality as this method; it may be more convenient to use, for some usage cases, and it checks that the spatial map is actually added to the subpopulation in question, providing an additional consistency check. However, either method may be used.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

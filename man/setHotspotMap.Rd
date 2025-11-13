@@ -16,18 +16,20 @@ setHotspotMap(multipliers, ends = NULL, sex = NULL)
 \item{sex}{An object of type string (singleton).}
 }
 \value{
-An object of type void.
+\strong{Chromosome method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{setHotspotMap}, which is a method of the SLiM class \code{\link{Chromosome}}.
+\strong{Chromosome method:} Documentation for SLiM function \code{setHotspotMap}, which is a method of the SLiM class \code{\link{Chromosome}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-numeric multipliers, [Ni ends = NULL], [string$ sex = "*"]) In nucleotide-based models, set the mutation rate multiplier along the chromosome. There are two ways to call this method. If the optional ends parameter is NULL (the default), then multipliers must be a singleton value that specifies a single multiplier to be used along the entire chromosome. If, on the other hand, ends is supplied, then multipliers and ends must be the same length, and the values in ends must be specified in ascending order. In that case, multipliers and ends taken together specify the multipliers to be used along successive contiguous stretches of the chromosome, from beginning to end; the last position specified in ends should extend to the end of the chromosome (as previously determined, during simulation initialization). See the initializeHotspotMap() function for further discussion of precisely how these multipliers and positions are interpreted. If the optional sex parameter is "*" (the default), then the supplied hotspot map will be used for both sexes (which is the only option for hermaphroditic simulations). In sexual simulations sex may be "M" or "F" instead, in which case the supplied hotspot map is used only for that sex. Note that whether sex-specific hotspot maps will be used is set by the way that the simulation is initially configured with initializeHotspot(), and cannot be changed with this method; so if the simulation was set up to use sex-specific hotspot maps then sex must be "M" or "F" here, whereas if it was set up not to, then sex must be "*" or unsupplied here. If a simulation needs sex-specific hotspot maps only some of the time, the male and female maps can simply be set to be identical the rest of the time. The hotspot map is normally constant in simulations, so be sure you know what you are doing.
+\strong{Chromosome method:} In nucleotide-based models, set the mutation rate multiplier along the chromosome. There are two ways to call this method. If the optional ends parameter is NULL (the default), then multipliers must be a singleton value that specifies a single multiplier to be used along the entire chromosome. If, on the other hand, ends is supplied, then multipliers and ends must be the same length, and the values in ends must be specified in ascending order. In that case, multipliers and ends taken together specify the multipliers to be used along successive contiguous stretches of the chromosome, from beginning to end; the last position specified in ends should extend to the end of the chromosome (as previously determined, during simulation initialization). See the initializeHotspotMap() function for further discussion of precisely how these multipliers and positions are interpreted. If the optional sex parameter is "*" (the default), then the supplied hotspot map will be used for both sexes (which is the only option for hermaphroditic simulations). In sexual simulations sex may be "M" or "F" instead, in which case the supplied hotspot map is used only for that sex. Note that whether sex-specific hotspot maps will be used is set by the way that the simulation is initially configured with initializeHotspot(), and cannot be changed with this method; so if the simulation was set up to use sex-specific hotspot maps then sex must be "M" or "F" here, whereas if it was set up not to, then sex must be "*" or unsupplied here. If a simulation needs sex-specific hotspot maps only some of the time, the male and female maps can simply be set to be identical the rest of the time. The hotspot map is normally constant in simulations, so be sure you know what you are doing.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

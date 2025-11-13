@@ -11,18 +11,20 @@ eidos_clock(type = NULL)
 \item{type}{An object of type string (singleton).}
 }
 \value{
-An object of type float. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type float. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{clock}.
+\strong{Eidos function:} Documentation for SLiM function \code{clock}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the value of a system clock. If type is "cpu", this returns the current value of the CPU usage clock. This is the amount of CPU time used by the current process, in seconds; it is unrelated to the current time of day (for that, see the time() function). This is useful mainly for determining how much processor time a given section of code takes; clock() can be called before and after a block of code, and the end clock minus the start clock gives the elapsed CPU time consumed in the execution of the block of code. See also the timed parameter of executeLambda(), which automates this procedure. Note that if multiple cores are utilized by the process, the CPU usage clock will be the sum of the CPU usage across all cores, and may therefore run faster than the wall clock. If type is "mono", this returns the value of the system's monotonic clock. This represents user-perceived ("wall clock") elapsed time from some arbitrary timebase (which will not change during the execution of the program), but it will not jump if the time zone or the wall clock time are changed for the system. This clock is useful for measuring user-perceived elapsed time, as described above, and may provide a more useful metric for performance than CPU time if multiple cores are being utilized.
+\strong{Eidos function:} Returns the value of a system clock. If type is "cpu", this returns the current value of the CPU usage clock. This is the amount of CPU time used by the current process, in seconds; it is unrelated to the current time of day (for that, see the time() function). This is useful mainly for determining how much processor time a given section of code takes; clock() can be called before and after a block of code, and the end clock minus the start clock gives the elapsed CPU time consumed in the execution of the block of code. See also the timed parameter of executeLambda(), which automates this procedure. Note that if multiple cores are utilized by the process, the CPU usage clock will be the sum of the CPU usage across all cores, and may therefore run faster than the wall clock. If type is "mono", this returns the value of the system's monotonic clock. This represents user-perceived ("wall clock") elapsed time from some arbitrary timebase (which will not change during the execution of the program), but it will not jump if the time zone or the wall clock time are changed for the system. This clock is useful for measuring user-perceived elapsed time, as described above, and may provide a more useful metric for performance than CPU time if multiple cores are being utilized.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

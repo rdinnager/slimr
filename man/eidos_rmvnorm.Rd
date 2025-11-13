@@ -15,18 +15,20 @@ eidos_rmvnorm(n, mu, sigma)
 \item{sigma}{An object of type integer or numeric or numeric.}
 }
 \value{
-An object of type float.
+\strong{Eidos function:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{rmvnorm}.
+\strong{Eidos function:} Documentation for SLiM function \code{rmvnorm}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a matrix of n random draws from a k-dimensional multivariate normal distribution with a length k mean vector mu and a k x k variance-covariance matrix sigma. The mu and sigma parameters are used for all n draws. The draws are returned as a matrix with n rows (one row per draw) and k columns (one column per dimension). The number of dimensions k must be at least two; for k=1, use rnorm(). Cholesky decomposition of the variance-covariance matrix sigma is involved as an internal step, and this requires that sigma be positive-definite; if it is not, an error will result. When more than one draw is needed, it is much more efficient to call rmvnorm() once to generate all of the draws, since the Cholesky decomposition of sigma can then be done just once.
+\strong{Eidos function:} Returns a matrix of n random draws from a k-dimensional multivariate normal distribution with a length k mean vector mu and a k x k variance-covariance matrix sigma. The mu and sigma parameters are used for all n draws. The draws are returned as a matrix with n rows (one row per draw) and k columns (one column per dimension). The number of dimensions k must be at least two; for k=1, use rnorm(). Cholesky decomposition of the variance-covariance matrix sigma is involved as an internal step, and this requires that sigma be positive-definite; if it is not, an error will result. When more than one draw is needed, it is much more efficient to call rmvnorm() once to generate all of the draws, since the Cholesky decomposition of sigma can then be done just once.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -16,18 +16,20 @@ outputHaplosomes(filePath = NULL, append = NULL, objectTags = NULL)
 \item{objectTags}{An object of type logical (singleton).}
 }
 \value{
-An object of type void.
+\strong{Haplosome method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{outputHaplosomes}, which is a method of the SLiM class \code{\link{Haplosome}}.
+\strong{Haplosome method:} Documentation for SLiM function \code{outputHaplosomes}, which is a method of the SLiM class \code{\link{Haplosome}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-[Ns$ filePath = NULL], [logical$ append = F], [logical$ objectTags = F]) Output the target haplosomes in SLiM's native format. This low-level output method may be used to output any sample of Haplosome objects associated with a single chromosome. The Eidos function sample() may be useful for constructing custom samples, as may the SLiM class Individual. For output of a sample from a single Subpopulation, the outputSample() method of Subpopulation may be more straightforward to use. If the optional parameter filePath is NULL (the default), output is directed to SLiM's standard output. Otherwise, the output is sent to the file specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. The objectTags parameter may be used to request that tag values for objects be written out. This option is turned off (F) by default, for brevity; if it turned on (T), the tag property values of all haplosomes and mutations in the output will be written. If there is other state that you wish you persist, such as tags on objects of other classes, values attached to objects with setValue(), and so forth, you should persist that state in separate files using calls such as writeFile(). See outputHaplosomesToMS() and outputHaplosomesToVCF() for other output formats. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
+\strong{Haplosome method:} Output the target haplosomes in SLiM's native format. This low-level output method may be used to output any sample of Haplosome objects associated with a single chromosome. The Eidos function sample() may be useful for constructing custom samples, as may the SLiM class Individual. For output of a sample from a single Subpopulation, the outputSample() method of Subpopulation may be more straightforward to use. If the optional parameter filePath is NULL (the default), output is directed to SLiM's standard output. Otherwise, the output is sent to the file specified by filePath, overwriting that file if append if F, or appending to the end of it if append is T. The objectTags parameter may be used to request that tag values for objects be written out. This option is turned off (F) by default, for brevity; if it turned on (T), the tag property values of all haplosomes and mutations in the output will be written. If there is other state that you wish you persist, such as tags on objects of other classes, values attached to objects with setValue(), and so forth, you should persist that state in separate files using calls such as writeFile(). See outputHaplosomesToMS() and outputHaplosomesToVCF() for other output formats. Output is generally done in a late() event, so that the output reflects the state of the simulation at the end of a tick.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

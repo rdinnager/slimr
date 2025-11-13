@@ -11,18 +11,20 @@ eidos_sign(x)
 \item{x}{An object of type numeric.}
 }
 \value{
-An object of type numeric.
+\strong{Eidos function:} An object of type numeric.
 }
 \description{
-Documentation for SLiM function \code{sign}.
+\strong{Eidos function:} Documentation for SLiM function \code{sign}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the sign of x, meaning that for each element of x, a value of either -1, 0, or 1 will be returned as the corresponding element in the returned vector depending upon whether the original element was (respectively) negative, zero, or positive. If x is integer, an integer vector is returned; if x is float, a float vector is returned.
+\strong{Eidos function:} Returns the sign of x, meaning that for each element of x, a value of either -1, 0, or 1 will be returned as the corresponding element in the returned vector depending upon whether the original element was (respectively) negative, zero, or positive. If x is integer, an integer vector is returned; if x is float, a float vector is returned.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -11,18 +11,20 @@ eidos_sum(x)
 \item{x}{An object of type logical or integer or float.}
 }
 \value{
-An object of type numeric. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type numeric. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{sum}.
+\strong{Eidos function:} Documentation for SLiM function \code{sum}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the sum of x: the result of adding all of the elements of x together. The unusual parameter type signature lif indicates that x can be logical, integer, or float. If x is float, the result will be float. If x is logical, the result will be integer (the number of T values in x, since the integer values of T and F are 1 and 0 respectively). If x is integer, things are a bit more complex; in this case, the result will be integer if it can fit into the integer type without overflow issues (including during intermediate stages of the computation), otherwise it will be float. Note that floating-point roundoff issues can cause this function to return inexact results when x is float type; this is rarely an issue, but see the sumExact() function for an alternative.
+\strong{Eidos function:} Returns the sum of x: the result of adding all of the elements of x together. The unusual parameter type signature lif indicates that x can be logical, integer, or float. If x is float, the result will be float. If x is logical, the result will be integer (the number of T values in x, since the integer values of T and F are 1 and 0 respectively). If x is integer, things are a bit more complex; in this case, the result will be integer if it can fit into the integer type without overflow issues (including during intermediate stages of the computation), otherwise it will be float. Note that floating-point roundoff issues can cause this function to return inexact results when x is float type; this is rarely an issue, but see the sumExact() function for an alternative.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

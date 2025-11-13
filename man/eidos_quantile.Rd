@@ -13,18 +13,20 @@ eidos_quantile(x, probs = NULL)
 \item{probs}{An object of type null or float.}
 }
 \value{
-An object of type float.
+\strong{Eidos function:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{quantile}.
+\strong{Eidos function:} Documentation for SLiM function \code{quantile}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns sample quantiles of x for the given probabilities. The smallest value in x corresponds to a probability of 0, and the largest value in x to a probability of 1. The probs vector should be a vector of probabilities in [0, 1], or NULL, which is equivalent to c(0.0, 0.25, 0.5, 0.75, 1.0), requesting sample quartiles. The quantile function linearly interpolates between the points of the empirical cumulative distribution function. In other words, if x is a vector of length n+1, then the quantiles with probs equal to (0, 1/n, 2/n, ..., (n1)/n, 1) are equal to the sorted values of x, and the quantile is a linear function of probs otherwise. Note that there are many ways to compute quantiles; this algorithm corresponds to R's default "type 7" algorithm.
+\strong{Eidos function:} Returns sample quantiles of x for the given probabilities. The smallest value in x corresponds to a probability of 0, and the largest value in x to a probability of 1. The probs vector should be a vector of probabilities in [0, 1], or NULL, which is equivalent to c(0.0, 0.25, 0.5, 0.75, 1.0), requesting sample quartiles. The quantile function linearly interpolates between the points of the empirical cumulative distribution function. In other words, if x is a vector of length n+1, then the quantiles with probs equal to (0, 1/n, 2/n, ..., (n1)/n, 1) are equal to the sorted values of x, and the quantile is a linear function of probs otherwise. Note that there are many ways to compute quantiles; this algorithm corresponds to R's default "type 7" algorithm.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

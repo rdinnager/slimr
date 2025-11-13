@@ -14,18 +14,20 @@ setDistribution(distributionType, ...)
 \item{...}{An object of type NA.}
 }
 \value{
-An object of type float or void.
+\strong{MutationType method:} An object of type float or void.
 }
 \description{
-Documentation for SLiM function \code{setDistribution}, which is a method of the SLiM class \code{\link{MutationType}}.
+\strong{MutationType method:} Documentation for SLiM function \code{setDistribution}, which is a method of the SLiM class \code{\link{MutationType}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-string$ distributionType, ...) Set the distribution of fitness effects for a mutation type. The distributionType may be "f", in which case the ellipsis ... should supply a numeric$ fixed selection coefficient; "e", in which case the ellipsis should supply a numeric$ mean selection coefficient for the exponential distribution; "g", in which case the ellipsis should supply a numeric$ mean selection coefficient and a numeric$ alpha shape parameter for a gamma distribution; "n", in which case the ellipsis should supply a numeric$ mean selection coefficient and a numeric$ sigma (standard deviation) parameter for a normal distribution; "p", in which case the ellipsis should supply a numeric$ mean selection coefficient and a numeric$ scale parameter for a Laplace distribution; "w", in which case the ellipsis should supply a numeric$  scale parameter and a numeric$ k shape parameter for a Weibull distribution; or "s", in which case the ellipsis should supply a string$ Eidos script parameter. The DFE for a mutation type is normally a constant in simulations, so be sure you know what you are doing.
+\strong{MutationType method:} Set the distribution of fitness effects for a mutation type. The distributionType may be "f", in which case the ellipsis ... should supply a numeric$ fixed selection coefficient; "e", in which case the ellipsis should supply a numeric$ mean selection coefficient for the exponential distribution; "g", in which case the ellipsis should supply a numeric$ mean selection coefficient and a numeric$ alpha shape parameter for a gamma distribution; "n", in which case the ellipsis should supply a numeric$ mean selection coefficient and a numeric$ sigma (standard deviation) parameter for a normal distribution; "p", in which case the ellipsis should supply a numeric$ mean selection coefficient and a numeric$ scale parameter for a Laplace distribution; "w", in which case the ellipsis should supply a numeric$  scale parameter and a numeric$ k shape parameter for a Weibull distribution; or "s", in which case the ellipsis should supply a string$ Eidos script parameter. The DFE for a mutation type is normally a constant in simulations, so be sure you know what you are doing.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

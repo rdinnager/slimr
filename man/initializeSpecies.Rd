@@ -23,18 +23,20 @@ initializeSpecies(
 \item{color}{An object of type integer or integer or string or string (singleton).}
 }
 \value{
-An object of type void.
+\strong{Initialize method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{initializeSpecies}, which is a method of the SLiM class \code{\link{Initialize}}.
+\strong{Initialize method:} Documentation for SLiM function \code{initializeSpecies}, which is a method of the SLiM class \code{\link{Initialize}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Configure options for the species being initialized. This initialization function may only be called in multispecies models (i.e., models with explicit species declarations); in single-species models, the default values are assumed and cannot be changed. The tickModulo and tickPhase parameters determine the activation schedule for the species. The active property of the species will be set to T (thus activating the species) every tickModulo ticks, beginning in tick tickPhase. (However, when the species is activated in a given tick, the skipTick() method may still be called in a first() event to deactivate it.) See the active property of Species for more details. The avatar parameter, if not "", sets a string value used to represent the species graphically, particularly in SLiMgui but perhaps in other contexts also. The avatar should generally be a single character - usually an emoji corresponding to the species, such as "" for foxes or "" for mice. If avatar is the empty string, "", SLiMgui will choose a default avatar. The color parameter, if not "", sets a string color value used to represent the species in SLiMgui. Colors may be specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see the Eidos manual for details). If color is the empty string, "", SLiMgui will choose a default color.
+\strong{Initialize method:} Configure options for the species being initialized. This initialization function may only be called in multispecies models (i.e., models with explicit species declarations); in single-species models, the default values are assumed and cannot be changed. The tickModulo and tickPhase parameters determine the activation schedule for the species. The active property of the species will be set to T (thus activating the species) every tickModulo ticks, beginning in tick tickPhase. (However, when the species is activated in a given tick, the skipTick() method may still be called in a first() event to deactivate it.) See the active property of Species for more details. The avatar parameter, if not "", sets a string value used to represent the species graphically, particularly in SLiMgui but perhaps in other contexts also. The avatar should generally be a single character - usually an emoji corresponding to the species, such as "" for foxes or "" for mice. If avatar is the empty string, "", SLiMgui will choose a default avatar. The color parameter, if not "", sets a string color value used to represent the species in SLiMgui. Colors may be specified by name, or with hexadecimal RGB values of the form "#RRGGBB" (see the Eidos manual for details). If color is the empty string, "", SLiMgui will choose a default color.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

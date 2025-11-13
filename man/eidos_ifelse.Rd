@@ -15,18 +15,20 @@ eidos_ifelse(test, trueValues, falseValues)
 \item{falseValues}{An object of type logical or any or any.}
 }
 \value{
-An object of type any.
+\strong{Eidos function:} An object of type any.
 }
 \description{
-Documentation for SLiM function \code{ifelse}.
+\strong{Eidos function:} Documentation for SLiM function \code{ifelse}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the result of a vector conditional operation: a vector composed of values from trueValues, for indices where test is T, and values from falseValues, for indices where test is F. The lengths of trueValues and falseValues must either be equal to 1 or to the length of test; however, trueValues and falseValues don't need to be the same length as each other. Furthermore, the type of trueValues and falseValues must be the same (including, if they are object type, their element type). The return will be of the same length as test, and of the same type as trueValues and falseValues. Each element of the return vector will be taken from the corresponding element of trueValues if the corresponding element of test is T, or from the corresponding element of falseValues if the corresponding element of test is F; if the vector from which the value is to be taken (i.e., trueValues or falseValues) has a length of 1, that single value is used repeatedly, recycling the vector. If test, trueValues, and/or falseValues are matrices or arrays, that will be ignored by ifelse() except that the result will be of the same dimensionality as test. This is quite similar to a function in R of the same name; note, however, that Eidos evaluates all arguments to functions calls immediately, so trueValues and falseValues will be evaluated fully regardless of the values in test, unlike in R. Value expressions without side effects are therefore recommended.
+\strong{Eidos function:} Returns the result of a vector conditional operation: a vector composed of values from trueValues, for indices where test is T, and values from falseValues, for indices where test is F. The lengths of trueValues and falseValues must either be equal to 1 or to the length of test; however, trueValues and falseValues don't need to be the same length as each other. Furthermore, the type of trueValues and falseValues must be the same (including, if they are object type, their element type). The return will be of the same length as test, and of the same type as trueValues and falseValues. Each element of the return vector will be taken from the corresponding element of trueValues if the corresponding element of test is T, or from the corresponding element of falseValues if the corresponding element of test is F; if the vector from which the value is to be taken (i.e., trueValues or falseValues) has a length of 1, that single value is used repeatedly, recycling the vector. If test, trueValues, and/or falseValues are matrices or arrays, that will be ignored by ifelse() except that the result will be of the same dimensionality as test. This is quite similar to a function in R of the same name; note, however, that Eidos evaluates all arguments to functions calls immediately, so trueValues and falseValues will be evaluated fully regardless of the values in test, unlike in R. Value expressions without side effects are therefore recommended.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

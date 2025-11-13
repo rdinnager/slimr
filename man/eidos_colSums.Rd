@@ -11,18 +11,20 @@ eidos_colSums(x)
 \item{x}{An object of type logical or integer or float.}
 }
 \value{
-An object of type numeric.
+\strong{Eidos function:} An object of type numeric.
 }
 \description{
-Documentation for SLiM function \code{colSums}.
+\strong{Eidos function:} Documentation for SLiM function \code{colSums}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the sums of the columns of x, which must be a matrix. The result is a vector of elements, each providing the sum of the corresponding column of x. If x is of type logical or integer the result will be of type integer; unlike the sum() function, colSums() does not promote the return type to float if integer overflow occurs, but instead throws an error. If x is of type float the result will be of type float. Except for the change in the treatment of integer overflow noted above, this is equivalent to using apply() with sum() to sum the columns of x, but is much faster.
+\strong{Eidos function:} Returns the sums of the columns of x, which must be a matrix. The result is a vector of elements, each providing the sum of the corresponding column of x. If x is of type logical or integer the result will be of type integer; unlike the sum() function, colSums() does not promote the return type to float if integer overflow occurs, but instead throws an error. If x is of type float the result will be of type float. Except for the change in the treatment of integer overflow noted above, this is equivalent to using apply() with sum() to sum the columns of x, but is much faster.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

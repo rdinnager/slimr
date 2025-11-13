@@ -11,18 +11,20 @@ eidos_sumExact(x)
 \item{x}{An object of type float.}
 }
 \value{
-An object of type float. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type float. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{sumExact}.
+\strong{Eidos function:} Documentation for SLiM function \code{sumExact}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the exact sum of x: the exact result of adding all of the elements of x together. Unlike the sum() function, sumExact() accepts only type float, since the sum() function is already exact for other types. When summing floating-point values - particularly values that vary across many orders of magnitude - the precision limits of floating-point numbers can lead to roundoff errors that cause the sum() function to return an inexact result. This function does additional work to ensure that the final result is exact within the possible limits of the float type; some roundoff may still inevitably occur, in other words, but a more exact result could not be represented with a value of type float. The disadvantage of using this function instead of sum() is that it is much slower - about 35 times slower, according to one test on macOS, but that will vary across operating systems and hardware. This function is rarely truly needed, but apart from the performance consequences there is no disadvantage to using it.
+\strong{Eidos function:} Returns the exact sum of x: the exact result of adding all of the elements of x together. Unlike the sum() function, sumExact() accepts only type float, since the sum() function is already exact for other types. When summing floating-point values - particularly values that vary across many orders of magnitude - the precision limits of floating-point numbers can lead to roundoff errors that cause the sum() function to return an inexact result. This function does additional work to ensure that the final result is exact within the possible limits of the float type; some roundoff may still inevitably occur, in other words, but a more exact result could not be represented with a value of type float. The disadvantage of using this function instead of sum() is that it is much slower - about 35 times slower, according to one test on macOS, but that will vary across operating systems and hardware. This function is rarely truly needed, but apart from the performance consequences there is no disadvantage to using it.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

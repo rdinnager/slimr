@@ -13,18 +13,20 @@ eidos_matrixPow(x, power)
 \item{power}{An object of type numeric or integer (singleton).}
 }
 \value{
-An object of type numeric.
+\strong{Eidos function:} An object of type numeric.
 }
 \description{
-Documentation for SLiM function \code{matrixPow}.
+\strong{Eidos function:} Documentation for SLiM function \code{matrixPow}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the result of raising matrix x to an integer power. The parameter x must be a square matrix (or an error will be raised). This operation is performed by repeated matrix multiplication with matrixMult(), and uses inverse() to compute the inverse of the matrix if power is negative.
+\strong{Eidos function:} Returns the result of raising matrix x to an integer power. The parameter x must be a square matrix (or an error will be raised). This operation is performed by repeated matrix multiplication with matrixMult(), and uses inverse() to compute the inverse of the matrix if power is negative.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -12,18 +12,20 @@ cachedFitness(indices)
 \item{indices}{An object of type null or integer.}
 }
 \value{
-An object of type float.
+\strong{Subpopulation method:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{cachedFitness}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+\strong{Subpopulation method:} Documentation for SLiM function \code{cachedFitness}, which is a method of the SLiM class \code{\link{Subpopulation}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Ni indices) The fitness values calculated for the individuals at the indices given are returned. If NULL is passed, fitness values for all individuals in the subpopulation are returned. The fitness values returned are cached values; mutationEffect() and fitnessEffect() callbacks are therefore not called as a side effect of this method. It is always an error to call cachedFitness() from inside a mutationEffect() or fitnessEffect() callback, since fitness values are in the middle of being set up. In WF models, it is also an error to call cachedFitness() from a late() event, because fitness values for the new offspring generation have not yet been calculated and are undefined. In nonWF models, the population may be a mixture of new and old individuals, so instead, NAN will be returned as the fitness of any new individuals whose fitness has not yet been calculated. When new subpopulations are first created with addSubpop() or addSubpopSplit(), the fitness of all of the newly created individuals is considered to be 1.0 until fitness values are recalculated.
+\strong{Subpopulation method:} The fitness values calculated for the individuals at the indices given are returned. If NULL is passed, fitness values for all individuals in the subpopulation are returned. The fitness values returned are cached values; mutationEffect() and fitnessEffect() callbacks are therefore not called as a side effect of this method. It is always an error to call cachedFitness() from inside a mutationEffect() or fitnessEffect() callback, since fitness values are in the middle of being set up. In WF models, it is also an error to call cachedFitness() from a late() event, because fitness values for the new offspring generation have not yet been calculated and are undefined. In nonWF models, the population may be a mixture of new and old individuals, so instead, NAN will be returned as the fitness of any new individuals whose fitness has not yet been calculated. When new subpopulations are first created with addSubpop() or addSubpopSplit(), the fitness of all of the newly created individuals is considered to be 1.0 until fitness values are recalculated.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

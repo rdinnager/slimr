@@ -12,18 +12,20 @@ nucleotidesToCodons(sequence)
 \item{sequence}{An object of type integer or string.}
 }
 \value{
-An object of type integer.
+\strong{SLiMBuiltin method:} An object of type integer.
 }
 \description{
-Documentation for SLiM function \code{nucleotidesToCodons}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
+\strong{SLiMBuiltin method:} Documentation for SLiM function \code{nucleotidesToCodons}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Returns the codon sequence corresponding to the nucleotide sequence in sequence. The codon sequence is an integer vector with values from 0 to 63, based upon successive nucleotide triplets in the nucleotide sequence. The codon value for a given nucleotide triplet XYZ is 16X + 4Y + Z, where X, Y, and Z have the usual values A=0, C=1, G=2, T=3. For example, the triplet AAA has a codon value of 0, AAC is 1, AAG is 2, AAT is 3, ACA is 4, and on upward to TTT which is 63. If the nucleotide sequence AACACATTT is passed in, the codon vector 1 4 63 will therefore be returned. These codon values can be useful in themselves; they can also be passed to codonsToAminoAcids() to translate them into the corresponding amino acid sequence if desired. The nucleotide sequence in sequence may be supplied in any of three formats: a string vector with single-letter nucleotides (e.g., "T", "A", "T", "A"), a singleton string of nucleotide letters (e.g., "TATA"), or an integer vector of nucleotide values (e.g., 3, 0, 3, 0) using SLiM's standard code of A=0, C=1, G=2, T=3. If the choice of format is not driven by other considerations, such as ease of manipulation, then the singleton string format will certainly be the most memory-efficient for long sequences, and will probably also be the fastest. The nucleotide sequence provided must be a multiple of three in length, so that it translates to an integral number of codons.
+\strong{SLiMBuiltin method:} Returns the codon sequence corresponding to the nucleotide sequence in sequence. The codon sequence is an integer vector with values from 0 to 63, based upon successive nucleotide triplets in the nucleotide sequence. The codon value for a given nucleotide triplet XYZ is 16X + 4Y + Z, where X, Y, and Z have the usual values A=0, C=1, G=2, T=3. For example, the triplet AAA has a codon value of 0, AAC is 1, AAG is 2, AAT is 3, ACA is 4, and on upward to TTT which is 63. If the nucleotide sequence AACACATTT is passed in, the codon vector 1 4 63 will therefore be returned. These codon values can be useful in themselves; they can also be passed to codonsToAminoAcids() to translate them into the corresponding amino acid sequence if desired. The nucleotide sequence in sequence may be supplied in any of three formats: a string vector with single-letter nucleotides (e.g., "T", "A", "T", "A"), a singleton string of nucleotide letters (e.g., "TATA"), or an integer vector of nucleotide values (e.g., 3, 0, 3, 0) using SLiM's standard code of A=0, C=1, G=2, T=3. If the choice of format is not driven by other considerations, such as ease of manipulation, then the singleton string format will certainly be the most memory-efficient for long sequences, and will probably also be the fastest. The nucleotide sequence provided must be a multiple of three in length, so that it translates to an integral number of codons.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

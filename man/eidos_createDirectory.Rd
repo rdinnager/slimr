@@ -11,18 +11,20 @@ eidos_createDirectory(path)
 \item{path}{An object of type string (singleton).}
 }
 \value{
-An object of type logical. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type logical. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{createDirectory}.
+\strong{Eidos function:} Documentation for SLiM function \code{createDirectory}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Creates a new filesystem directory at the path specified by path and returns a logical value indicating if the creation succeeded (T) or failed (F). If the path already exists, createDirectory() will do nothing to the filesystem, will emit a warning, and will return T to indicate success if the existing path is a directory, or F to indicate failure if the existing path is not a directory.
+\strong{Eidos function:} Creates a new filesystem directory at the path specified by path and returns a logical value indicating if the creation succeeded (T) or failed (F). If the path already exists, createDirectory() will do nothing to the filesystem, will emit a warning, and will return T to indicate success if the existing path is a directory, or F to indicate failure if the existing path is not a directory.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

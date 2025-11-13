@@ -13,18 +13,20 @@ eidos_unique(x, preserveOrder = NULL)
 \item{preserveOrder}{An object of type any or logical (singleton).}
 }
 \value{
-An object of type any.
+\strong{Eidos function:} An object of type any.
 }
 \description{
-Documentation for SLiM function \code{unique}.
+\strong{Eidos function:} Documentation for SLiM function \code{unique}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the unique values in x. In other words, for each value k in x that occurs at least once, the vector returned will contain k exactly once. If preserveOrder is T (the default), the order of values in x is preserved, taking the first instance of each value; this is relatively slow, with O(n^2) performance. If preserveOrder if F instead, the order of values in x is not preserved, and no particular ordering should be relied upon; this is relatively fast, with O(n log n) performance. This performance difference will only matter for large vectors, however; for most applications the default behavior can be retained whether the order of the result matters or not.
+\strong{Eidos function:} Returns the unique values in x. In other words, for each value k in x that occurs at least once, the vector returned will contain k exactly once. If preserveOrder is T (the default), the order of values in x is preserved, taking the first instance of each value; this is relatively slow, with O(n^2) performance. If preserveOrder if F instead, the order of values in x is not preserved, and no particular ordering should be relied upon; this is relatively fast, with O(n log n) performance. This performance difference will only matter for large vectors, however; for most applications the default behavior can be retained whether the order of the result matters or not.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -32,18 +32,20 @@ plot_addLegend(
 \item{interiorMargin}{An object of type null or integer or float (singleton).}
 }
 \value{
-An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
+\strong{Plot method:} An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
 }
 \description{
-Documentation for SLiM function \code{addLegend}, which is a method of the SLiM class \code{\link{Plot}}.
+\strong{Plot method:} Documentation for SLiM function \code{addLegend}, which is a method of the SLiM class \code{\link{Plot}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-[Ns$ position = NULL], [Ni$ inset = NULL], [Nif$ labelSize = NULL], [Nif$ lineHeight = NULL], [Nif$ graphicsWidth = NULL], [Nif$ exteriorMargin = NULL], [Nif$ interiorMargin = NULL]) Adds a legend to the plot. The legend will be displayed within the plot at the location specified by position, which must be "topRight", "topLeft", "bottomRight", or "bottomLeft", or NULL (the default) requesting that SLiMgui choose the position. The position of the legend will be inset from the chosen corner by a margin inset, measured in pixels; the default of NULL allows SLiMgui to choose the inset. The internal layout of the legend is a bit complex, and can be controlled by five parameters; in all cases, the default value of NULL requests that SLiMgui provide a reasonable default. The labelSize parameter specifies the font size used for the text labels for each legend entry (measured in "points", the standard metric of font sizes). The lineHeight parameter specifies the vertical size, in pixels, of one entry line. The graphicsWidth parameter species the width, in pixels, of the column used to display the "graphics" (whether a line segment, a point symbol, a swatch, or a combination of those) associated with each entry. The exteriorMargin parameter specifies the width/height of margins, in pixels, outside of the entries (between the entries and the legend's frame). Finally, the interiorMargin parameter specifies the width/height of margins, in pixels, vertically between entries, and also between the "graphics" column and the label. It is easy to produce a legend that looks terrible, using these layout metrics; SLiMgui does only minimal sanity-checking of their values, to provide maximal flexibility. The legend is initially empty; entries for it can be added with legendLineEntry(), legendPointEntry(), and legendSwatchEntry().
+\strong{Plot method:} Adds a legend to the plot. The legend will be displayed within the plot at the location specified by position, which must be "topRight", "topLeft", "bottomRight", or "bottomLeft", or NULL (the default) requesting that SLiMgui choose the position. The position of the legend will be inset from the chosen corner by a margin inset, measured in pixels; the default of NULL allows SLiMgui to choose the inset. The internal layout of the legend is a bit complex, and can be controlled by five parameters; in all cases, the default value of NULL requests that SLiMgui provide a reasonable default. The labelSize parameter specifies the font size used for the text labels for each legend entry (measured in "points", the standard metric of font sizes). The lineHeight parameter specifies the vertical size, in pixels, of one entry line. The graphicsWidth parameter species the width, in pixels, of the column used to display the "graphics" (whether a line segment, a point symbol, a swatch, or a combination of those) associated with each entry. The exteriorMargin parameter specifies the width/height of margins, in pixels, outside of the entries (between the entries and the legend's frame). Finally, the interiorMargin parameter specifies the width/height of margins, in pixels, vertically between entries, and also between the "graphics" column and the label. It is easy to produce a legend that looks terrible, using these layout metrics; SLiMgui does only minimal sanity-checking of their values, to provide maximal flexibility. The legend is initially empty; entries for it can be added with legendLineEntry(), legendPointEntry(), and legendSwatchEntry().
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

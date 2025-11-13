@@ -14,18 +14,20 @@ changeColors(valueRange = NULL, colors = NULL)
 \item{colors}{An object of type null or string.}
 }
 \value{
-An object of type void.
+\strong{SpatialMap method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{changeColors}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+\strong{SpatialMap method:} Documentation for SLiM function \code{changeColors}, which is a method of the SLiM class \code{\link{SpatialMap}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-[Nif valueRange = NULL], [Ns colors = NULL]) Changes the color scheme for the target spatial map. The meaning of valueRange and colors are identical to their meaning in defineSpatialMap(), but are also described here. The valueRange and colors parameters travel together; either both are NULL, or both are specified. They control how map values will be transformed into colors, by SLiMgui and by the mapColor() method. The valueRange parameter establishes the color-mapped range of spatial map values, as a vector of length two specifying a minimum and maximum; this does not need to match the actual range of values in the map. The colors parameter then establishes the corresponding colors for values within the interval defined by valueRange: values less than or equal to valueRange[0] will map to colors[0], values greater than or equal to valueRange[1] will map to the last colors value, and intermediate values will shade continuously through the specified vector of colors, with interpolation between adjacent colors to produce a continuous spectrum. This is much simpler than it sounds in this description; see the recipes for an illustration of its use. If valueRange and colors are both NULL, a default grayscale color scheme will be used in SLiMgui, but an error will result if mapColor() is called.
+\strong{SpatialMap method:} Changes the color scheme for the target spatial map. The meaning of valueRange and colors are identical to their meaning in defineSpatialMap(), but are also described here. The valueRange and colors parameters travel together; either both are NULL, or both are specified. They control how map values will be transformed into colors, by SLiMgui and by the mapColor() method. The valueRange parameter establishes the color-mapped range of spatial map values, as a vector of length two specifying a minimum and maximum; this does not need to match the actual range of values in the map. The colors parameter then establishes the corresponding colors for values within the interval defined by valueRange: values less than or equal to valueRange[0] will map to colors[0], values greater than or equal to valueRange[1] will map to the last colors value, and intermediate values will shade continuously through the specified vector of colors, with interpolation between adjacent colors to produce a continuous spectrum. This is much simpler than it sounds in this description; see the recipes for an illustration of its use. If valueRange and colors are both NULL, a default grayscale color scheme will be used in SLiMgui, but an error will result if mapColor() is called.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

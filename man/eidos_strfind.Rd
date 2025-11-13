@@ -15,18 +15,20 @@ eidos_strfind(x, s, pos = NULL)
 \item{pos}{An object of type string or string or integer (singleton).}
 }
 \value{
-An object of type integer.
+\strong{Eidos function:} An object of type integer.
 }
 \description{
-Documentation for SLiM function \code{strfind}.
+\strong{Eidos function:} Documentation for SLiM function \code{strfind}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the first occurrence of a string specified by s in each of the elements of x, starting at position pos. Position 0, the default, is the beginning of x; a position of 0 means the entire string is searched. A starting search position that is at or beyond the end of a given element of x is not an error; it just implies that a match will not be found in that element. The positions of matches are returned as an integer vector; if no match was found in a given element, the corresponding value in the returned vector is -1. The strcontains() function may be used when a logical value (found / not found) is desired.
+\strong{Eidos function:} Returns the first occurrence of a string specified by s in each of the elements of x, starting at position pos. Position 0, the default, is the beginning of x; a position of 0 means the entire string is searched. A starting search position that is at or beyond the end of a given element of x is not an error; it just implies that a match will not be found in that element. The positions of matches are returned as an integer vector; if no match was found in a given element, the corresponding value in the returned vector is -1. The strcontains() function may be used when a logical value (found / not found) is desired.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

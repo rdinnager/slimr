@@ -16,29 +16,33 @@ containsMutations(mutations)
 \item{mutations}{An object of type Mutation object.}
 }
 \value{
-An object of type logical.
+\strong{Haplosome method:} An object of type logical.
 
-An object of type logical.
+\strong{Individual method:} An object of type logical.
 }
 \description{
-Documentation for SLiM function \code{containsMutations}, which is a method of the SLiM class \code{\link{Haplosome}}.
+\strong{Haplosome method:} Documentation for SLiM function \code{containsMutations}, which is a method of the SLiM class \code{\link{Haplosome}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 
-Documentation for SLiM function \code{containsMutations}, which is a method of the SLiM class \code{\link{Individual}}.
+\strong{Individual method:} Documentation for SLiM function \code{containsMutations}, which is a method of the SLiM class \code{\link{Individual}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-object<Mutation> mutations) Returns a logical vector indicating whether each of the mutations in mutations is present in the target haplosome; each element in the returned vector indicates whether the corresponding mutation is present (T) or absent (F). This method is provided for speed; it is much faster than the corresponding Eidos code. Note that the mutations must be associated with the same chromosome as the target haplosome, otherwise an error is raised. The containsMutations() method of Individual does not have this restriction, since it checks for mutations across all of the haplosomes of the target individual. This restriction is intended to find logic errors, since it seems to make little sense to check for a mutation in a haplosome for the wrong chromosome; but if this restriction proves inconvenient in common situations, it could be relaxed.
+\strong{Haplosome method:} Returns a logical vector indicating whether each of the mutations in mutations is present in the target haplosome; each element in the returned vector indicates whether the corresponding mutation is present (T) or absent (F). This method is provided for speed; it is much faster than the corresponding Eidos code. Note that the mutations must be associated with the same chromosome as the target haplosome, otherwise an error is raised. The containsMutations() method of Individual does not have this restriction, since it checks for mutations across all of the haplosomes of the target individual. This restriction is intended to find logic errors, since it seems to make little sense to check for a mutation in a haplosome for the wrong chromosome; but if this restriction proves inconvenient in common situations, it could be relaxed.
 
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 
-object<Mutation> mutations) Returns a logical vector indicating whether each of the mutations in mutations is present in the individual (in any of its haplosomes); each element in the returned vector indicates whether the corresponding mutation is present (T) or absent (F). This method is provided for speed; it is much faster than the corresponding Eidos code.
+See \strong{Details} below for complete documentation of this SLiM method.
+
+\strong{Individual method:} Returns a logical vector indicating whether each of the mutations in mutations is present in the individual (in any of its haplosomes); each element in the returned vector indicates whether the corresponding mutation is present (T) or absent (F). This method is provided for speed; it is much faster than the corresponding Eidos code.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

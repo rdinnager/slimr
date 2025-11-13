@@ -11,18 +11,20 @@ eidos_setSeed(seed)
 \item{seed}{An object of type integer (singleton).}
 }
 \value{
-An object of type void.
+\strong{Eidos function:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{setSeed}.
+\strong{Eidos function:} Documentation for SLiM function \code{setSeed}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Set the random number seed. Future random numbers will be based upon the seed value set, and the random number sequence generated from a particular seed value is guaranteed to be reproducible. The last seed set can be recovered with the getSeed() function.
+\strong{Eidos function:} Set the random number seed. Future random numbers will be based upon the seed value set, and the random number sequence generated from a particular seed value is guaranteed to be reproducible. The last seed set can be recovered with the getSeed() function.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -13,18 +13,20 @@ eidos_strsplit(x, sep = NULL)
 \item{sep}{An object of type string or string (singleton).}
 }
 \value{
-An object of type string.
+\strong{Eidos function:} An object of type string.
 }
 \description{
-Documentation for SLiM function \code{strsplit}.
+\strong{Eidos function:} Documentation for SLiM function \code{strsplit}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns substrings of x that were separated by the separator string sep. Every substring defined by an occurrence of the separator is included, and thus zero-length substrings may be returned. For example, strsplit(".foo..bar.", ".") returns a string vector containing "", "foo", "", "bar", "". In that example, the empty string between "foo" and "bar" in the returned vector is present because there were two periods between foo and bar in the input string - the empty string is the substring between those two separators. If sep is "", a vector of single characters will be returned, resulting from splitting x at every position. Note that paste() performs the inverse operation of strsplit().
+\strong{Eidos function:} Returns substrings of x that were separated by the separator string sep. Every substring defined by an occurrence of the separator is included, and thus zero-length substrings may be returned. For example, strsplit(".foo..bar.", ".") returns a string vector containing "", "foo", "", "bar", "". In that example, the empty string between "foo" and "bar" in the returned vector is present because there were two periods between foo and bar in the input string - the empty string is the substring between those two separators. If sep is "", a vector of single characters will be returned, resulting from splitting x at every position. Note that paste() performs the inverse operation of strsplit().
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

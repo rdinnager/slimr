@@ -16,18 +16,20 @@ plot_legendLineEntry(label, color = NULL, lwd = NULL)
 \item{lwd}{An object of type string or string or numeric (singleton).}
 }
 \value{
-An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
+\strong{Plot method:} An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
 }
 \description{
-Documentation for SLiM function \code{legendLineEntry}, which is a method of the SLiM class \code{\link{Plot}}.
+\strong{Plot method:} Documentation for SLiM function \code{legendLineEntry}, which is a method of the SLiM class \code{\link{Plot}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-string$ label, [string$ color = "red"], [numeric$ lwd = 1.0]) Adds a legend entry with text label to the plot. The entry will be displayed as a line segment drawn in color color, using line width lwd, mirroring the appearance produced by lines() for the same parameters. If one or more other legend entries already exist with the same label, the new entry will be drawn on top of the previously set entries for that label (allowing legend entries that display both a line and a point, for example).
+\strong{Plot method:} Adds a legend entry with text label to the plot. The entry will be displayed as a line segment drawn in color color, using line width lwd, mirroring the appearance produced by lines() for the same parameters. If one or more other legend entries already exist with the same label, the new entry will be drawn on top of the previously set entries for that label (allowing legend entries that display both a line and a point, for example).
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

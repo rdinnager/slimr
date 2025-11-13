@@ -47,18 +47,20 @@ createPlot(
 \item{tickLabelSize}{An object of type numeric (singleton).}
 }
 \value{
-An object of type null or Plot object. Return will be of length 1 (a singleton)
+\strong{SLiMgui method:} An object of type null or Plot object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{createPlot}, which is a method of the SLiM class \code{\link{SLiMgui}}.
+\strong{SLiMgui method:} Documentation for SLiM function \code{createPlot}, which is a method of the SLiM class \code{\link{SLiMgui}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-string$ title, [Nif xrange = NULL], [Nif yrange = NULL], [string$ xlab = "x"], [string$ ylab = "y"], [Nif$ width = NULL], [Nif$ height = NULL], [logical$ horizontalGrid = F], [logical$ verticalGrid = F], [logical$ fullBox = T], [numeric$ axisLabelSize = 15], [numeric$ tickLabelSize = 10]) Creates and returns a new custom plot referred to by title, or restarts and returns the existing plot with that title; if the plot cannot be created (notably, when running under SLiMguiLegacy rather than SLiMgui), NULL is returned. The range for the x and y axes of the plot can optionally be provided in xrange and yrange, as vectors of length 2 containing the minimum and maximum values for the corresponding axis; the default of NULL for these parameters requests that the axis ranges be determined heuristically based upon the data subsequently added to the plot. Labels for the x and y axes can be provided in xlab and ylab; if no axis label is desired, the empty string "" may be passed. The width and height of the window itself can optionally be set with width and height, in units of pixels (perhaps 70-100 pixels per inch, depending on your screen's pixel density); the default of NULL for these parameters requests SLiMgui's default plot window size. The display of horizontal grid lines, vertical grid lines, and a full box around the plot area can be controlled with horizontalGrid, verticalGrid, and fullBox respectively, and the size (in points) of axis and tick labels can be controlled with axisLabelSize and tickLabelSize respectively. Once the plot has been created, data can be added to it using Plot methods such as lines(), points(), and text(). As with other plot windows in SLiMgui, the "action button" can be used to access plot configuration options, and to copy or save the final plot as a raster image or a PDF file.
+\strong{SLiMgui method:} Creates and returns a new custom plot referred to by title, or restarts and returns the existing plot with that title; if the plot cannot be created (notably, when running under SLiMguiLegacy rather than SLiMgui), NULL is returned. The range for the x and y axes of the plot can optionally be provided in xrange and yrange, as vectors of length 2 containing the minimum and maximum values for the corresponding axis; the default of NULL for these parameters requests that the axis ranges be determined heuristically based upon the data subsequently added to the plot. Labels for the x and y axes can be provided in xlab and ylab; if no axis label is desired, the empty string "" may be passed. The width and height of the window itself can optionally be set with width and height, in units of pixels (perhaps 70-100 pixels per inch, depending on your screen's pixel density); the default of NULL for these parameters requests SLiMgui's default plot window size. The display of horizontal grid lines, vertical grid lines, and a full box around the plot area can be controlled with horizontalGrid, verticalGrid, and fullBox respectively, and the size (in points) of axis and tick labels can be controlled with axisLabelSize and tickLabelSize respectively. Once the plot has been created, data can be added to it using Plot methods such as lines(), points(), and text(). As with other plot windows in SLiMgui, the "action button" can be used to access plot configuration options, and to copy or save the final plot as a raster image or a PDF file.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

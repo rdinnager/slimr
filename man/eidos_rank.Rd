@@ -13,18 +13,20 @@ eidos_rank(x, tiesMethod = NULL)
 \item{tiesMethod}{An object of type numeric or string (singleton).}
 }
 \value{
-An object of type numeric.
+\strong{Eidos function:} An object of type numeric.
 }
 \description{
-Documentation for SLiM function \code{rank}.
+\strong{Eidos function:} Documentation for SLiM function \code{rank}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the ranks of the elements of x: a vector of length L (the length of x), composed of the relative ranks, from 1 to L, of each corresponding element of x. The tiesMethod parameter may be any of "average" (the default), "first", "last", "max", or "min" ("random", supported by R, is not supported by Eidos at this time but could be added if needed). For "average", the return value is of type float; for all others, it is of type integer. (Note that the return type does not depend upon the type of x.) The result for all of these tiesMethod values is identical (except for type) if the elements of x are unique; the difference between these methods is in how ties are resolved. Suppose that n elements of x are tied (because they are equal), corresponding to ranks k through k+n1. For tiesMethod "average", all n tied elements receive the same rank, (k + (n1)/2), which is the average of the ranks. For "first", the first tied element receives rank k, upward to the last tied element receiving rank k+n1. For "last", the last tied element receives rank k, downward to the first tied element receiving rank k+n1. For "max", all n tied element receive the maximum rank, k+n1. For "min", all n tied element receive the minimum rank, k.
+\strong{Eidos function:} Returns the ranks of the elements of x: a vector of length L (the length of x), composed of the relative ranks, from 1 to L, of each corresponding element of x. The tiesMethod parameter may be any of "average" (the default), "first", "last", "max", or "min" ("random", supported by R, is not supported by Eidos at this time but could be added if needed). For "average", the return value is of type float; for all others, it is of type integer. (Note that the return type does not depend upon the type of x.) The result for all of these tiesMethod values is identical (except for type) if the elements of x are unique; the difference between these methods is in how ties are resolved. Suppose that n elements of x are tied (because they are equal), corresponding to ranks k through k+n1. For tiesMethod "average", all n tied elements receive the same rank, (k + (n1)/2), which is the average of the ranks. For "first", the first tied element receives rank k, upward to the last tied element receiving rank k+n1. For "last", the last tied element receives rank k, downward to the first tied element receiving rank k+n1. For "max", all n tied element receive the maximum rank, k+n1. For "min", all n tied element receive the minimum rank, k.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

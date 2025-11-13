@@ -14,18 +14,20 @@ individualsWithPedigreeIDs(pedigreeIDs, subpops = NULL)
 \item{subpops}{An object of type null or integer or Subpopulation object.}
 }
 \value{
-An object of type Individual object.
+\strong{Species method:} An object of type Individual object.
 }
 \description{
-Documentation for SLiM function \code{individualsWithPedigreeIDs}, which is a method of the SLiM class \code{\link{Species}}.
+\strong{Species method:} Documentation for SLiM function \code{individualsWithPedigreeIDs}, which is a method of the SLiM class \code{\link{Species}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-integer pedigreeIDs, [Nio<Subpopulation> subpops = NULL]) Looks up individuals by pedigree ID, optionally within specific subpopulations. Pedigree tracking must be turned on with initializeSLiMOptions(keepPedigrees=T) to use this method, otherwise an error will result. This method is vectorized; more than one pedigree id may be passed in pedigreeID, in which case the returned vector will contain all of the individuals for which a match was found (in the same order in which they were supplied). If a given id is not found, the returned vector will contain no entry for that id (so the length of the returned vector may not match the length of pedigreeIDs). If none of the given ids were found, the returned vector will be object<Individual>(0), an empty object vector of class Individual. If you have more than one pedigree ID to look up, calling this method just once, in vectorized fashion, may be much faster than calling it once for each ID, due to internal optimizations. To find individuals within all subpopulations, pass the default of NULL for subpops. If you are interested only in matches within a specific subpopulation, pass that subpopulation for subpops; that will make the search faster. Similarly, if you know that a particular subpopulation is the most likely to contain matches, you should supply that subpopulation first in the subpops vector so that it will be searched first; the supplied subpopulations are searched in order. Subpopulations may be supplied either as integer IDs, or as Subpopulation objects.
+\strong{Species method:} Looks up individuals by pedigree ID, optionally within specific subpopulations. Pedigree tracking must be turned on with initializeSLiMOptions(keepPedigrees=T) to use this method, otherwise an error will result. This method is vectorized; more than one pedigree id may be passed in pedigreeID, in which case the returned vector will contain all of the individuals for which a match was found (in the same order in which they were supplied). If a given id is not found, the returned vector will contain no entry for that id (so the length of the returned vector may not match the length of pedigreeIDs). If none of the given ids were found, the returned vector will be object<Individual>(0), an empty object vector of class Individual. If you have more than one pedigree ID to look up, calling this method just once, in vectorized fashion, may be much faster than calling it once for each ID, due to internal optimizations. To find individuals within all subpopulations, pass the default of NULL for subpops. If you are interested only in matches within a specific subpopulation, pass that subpopulation for subpops; that will make the search faster. Similarly, if you know that a particular subpopulation is the most likely to contain matches, you should supply that subpopulation first in the subpops vector so that it will be searched first; the supplied subpopulations are searched in order. Subpopulations may be supplied either as integer IDs, or as Subpopulation objects.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

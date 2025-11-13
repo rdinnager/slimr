@@ -12,18 +12,20 @@ subpopulationsWithNames(names)
 \item{names}{An object of type string.}
 }
 \value{
-An object of type Subpopulation object.
+\strong{Community method:} An object of type Subpopulation object.
 }
 \description{
-Documentation for SLiM function \code{subpopulationsWithNames}, which is a method of the SLiM class \code{\link{Community}}.
+\strong{Community method:} Documentation for SLiM function \code{subpopulationsWithNames}, which is a method of the SLiM class \code{\link{Community}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-string names) Find and return the Subpopulation objects with name values matching the values in names. If no matching Subpopulation object can be found with a given name, an error results.
+\strong{Community method:} Find and return the Subpopulation objects with name values matching the values in names. If no matching Subpopulation object can be found with a given name, an error results.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

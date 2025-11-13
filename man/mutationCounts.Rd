@@ -14,18 +14,20 @@ mutationCounts(subpops, mutations = NULL)
 \item{mutations}{An object of type null or Mutation object.}
 }
 \value{
-An object of type integer.
+\strong{Species method:} An object of type integer.
 }
 \description{
-Documentation for SLiM function \code{mutationCounts}, which is a method of the SLiM class \code{\link{Species}}.
+\strong{Species method:} Documentation for SLiM function \code{mutationCounts}, which is a method of the SLiM class \code{\link{Species}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Nio<Subpopulation> subpops, [No<Mutation> mutations = NULL]) Return an integer vector with the frequency counts of all of the Mutation objects passed in mutations, within the Subpopulation objects in subpops. The subpops argument is required, but you may pass NULL to get population-wide frequency counts. Subpopulations may be supplied either as integer IDs, or as Subpopulation objects. If the optional mutations argument is NULL (the default), frequency counts will be returned for all of the active Mutation objects in the species - the same Mutation objects, and in the same order, as would be returned by the mutations property of sim, in other words. See the -mutationFrequencies() method to obtain float frequencies instead of integer counts. See also the Haplosome methods mutationCountsInHaplosomes() and mutationFrequenciesInHaplosomes().
+\strong{Species method:} Return an integer vector with the frequency counts of all of the Mutation objects passed in mutations, within the Subpopulation objects in subpops. The subpops argument is required, but you may pass NULL to get population-wide frequency counts. Subpopulations may be supplied either as integer IDs, or as Subpopulation objects. If the optional mutations argument is NULL (the default), frequency counts will be returned for all of the active Mutation objects in the species - the same Mutation objects, and in the same order, as would be returned by the mutations property of sim, in other words. See the -mutationFrequencies() method to obtain float frequencies instead of integer counts. See also the Haplosome methods mutationCountsInHaplosomes() and mutationFrequenciesInHaplosomes().
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

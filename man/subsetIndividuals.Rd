@@ -44,18 +44,20 @@ subsetIndividuals(
 \item{tagL4}{An object of type null or logical (singleton).}
 }
 \value{
-An object of type Individual object.
+\strong{Subpopulation method:} An object of type Individual object.
 }
 \description{
-Documentation for SLiM function \code{subsetIndividuals}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+\strong{Subpopulation method:} Documentation for SLiM function \code{subsetIndividuals}, which is a method of the SLiM class \code{\link{Subpopulation}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-[No<Individual>$ exclude = NULL], [Ns$ sex = NULL], [Ni$ tag = NULL], [Ni$ minAge = NULL], [Ni$ maxAge = NULL], [Nl$ migrant = NULL], [Nl$ tagL0 = NULL], [Nl$ tagL1 = NULL], [Nl$ tagL2 = NULL], [Nl$ tagL3 = NULL], [Nl$ tagL4 = NULL]) Returns a vector of individuals subset from the individuals in the target subpopulation. The parameters specify constraints upon the subset of individuals that will be returned. Parameter exclude, if non-NULL, may specify a specific individual that should not be included (typically the focal individual in some operation). Parameter sex, if non-NULL, may specify a sex ("M" or "F") for the individuals to be returned, in sexual models. Parameter tag, if non-NULL, may specify a tag property value for the individuals to be returned. Parameters minAge and maxAge, if non-NULL, may specify a minimum or maximum age for the individuals to be returned, in nonWF models. Parameter migrant, if non-NULL, may specify a required value for the migrant property of the individuals to be returned (so T will require that individuals be migrants, F will require that they not be). Finally, parameters tagL0, tagL1, tagL2, tagL3, and tagL4, if non-NULL, may specify a required value (T or F) for the corresponding properties (tagL0, tagL1, tagL2, tagL3, and tagL4) of the individuals to be returned. Note that if any tag/tagL parameter is specified as non-NULL, that tag/tagL property must have a defined value for every individual in the subpopulation, otherwise an error may result (although this requirement will not necessarily be checked comprehensively by this method in every invocation). This method is shorthand for getting the individuals property of the subpopulation, and then using operator [] to select only individuals with the desired properties; besides being much simpler than the equivalent Eidos code, it is also much faster. See sampleIndividuals() for a similar method that returns a sample taken from a chosen subset of individuals.
+\strong{Subpopulation method:} Returns a vector of individuals subset from the individuals in the target subpopulation. The parameters specify constraints upon the subset of individuals that will be returned. Parameter exclude, if non-NULL, may specify a specific individual that should not be included (typically the focal individual in some operation). Parameter sex, if non-NULL, may specify a sex ("M" or "F") for the individuals to be returned, in sexual models. Parameter tag, if non-NULL, may specify a tag property value for the individuals to be returned. Parameters minAge and maxAge, if non-NULL, may specify a minimum or maximum age for the individuals to be returned, in nonWF models. Parameter migrant, if non-NULL, may specify a required value for the migrant property of the individuals to be returned (so T will require that individuals be migrants, F will require that they not be). Finally, parameters tagL0, tagL1, tagL2, tagL3, and tagL4, if non-NULL, may specify a required value (T or F) for the corresponding properties (tagL0, tagL1, tagL2, tagL3, and tagL4) of the individuals to be returned. Note that if any tag/tagL parameter is specified as non-NULL, that tag/tagL property must have a defined value for every individual in the subpopulation, otherwise an error may result (although this requirement will not necessarily be checked comprehensively by this method in every invocation). This method is shorthand for getting the individuals property of the subpopulation, and then using operator [] to select only individuals with the desired properties; besides being much simpler than the equivalent Eidos code, it is also much faster. See sampleIndividuals() for a similar method that returns a sample taken from a chosen subset of individuals.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

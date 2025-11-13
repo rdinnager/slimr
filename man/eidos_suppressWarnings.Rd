@@ -11,18 +11,20 @@ eidos_suppressWarnings(suppress)
 \item{suppress}{An object of type logical (singleton).}
 }
 \value{
-An object of type logical. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type logical. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{suppressWarnings}.
+\strong{Eidos function:} Documentation for SLiM function \code{suppressWarnings}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Turns suppression of warning messages on or off. The suppress flag indicates whether suppression of warnings should be enabled (T) or disabled (F). The previous warning-suppression value is returned by suppressWarnings(), making it easy to suppress warnings from a given call and then return to the previous suppression state afterwards. It is recommended that warnings be suppressed only around short blocks of code (not all the time), so that unexpected but perhaps important warnings are not missed. And of course warnings are generally emitted for good reasons; before deciding to disregard a given warning, make sure that you understand exactly why it is being issued, and are certain that it does not represent a serious problem.
+\strong{Eidos function:} Turns suppression of warning messages on or off. The suppress flag indicates whether suppression of warnings should be enabled (T) or disabled (F). The previous warning-suppression value is returned by suppressWarnings(), making it easy to suppress warnings from a given call and then return to the previous suppression state afterwards. It is recommended that warnings be suppressed only around short blocks of code (not all the time), so that unexpected but perhaps important warnings are not missed. And of course warnings are generally emitted for good reasons; before deciding to disregard a given warning, make sure that you understand exactly why it is being issued, and are certain that it does not represent a serious problem.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

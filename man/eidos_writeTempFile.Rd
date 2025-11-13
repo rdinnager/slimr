@@ -17,18 +17,20 @@ eidos_writeTempFile(prefix, suffix, contents, compress = NULL)
 \item{compress}{An object of type string or string or string or logical (singleton).}
 }
 \value{
-An object of type string. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type string. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{writeTempFile}.
+\strong{Eidos function:} Documentation for SLiM function \code{writeTempFile}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Writes to a unique temporary file with contents specified by contents, a string vector of lines. The filename used will begin with prefix and end with suffix, and will contain six random characters in between; for example, if prefix is "plot1_" and suffix is ".pdf", the generated filename might look like "plot1_r5Mq0t.pdf". It is legal for prefix, suffix, or both to be the empty string, "", but supplying a file extension is usually advisable at minimum. The file will be created inside the /tmp/ directory of the system, which is provided by Un*x systems as a standard location for temporary files; the /tmp/ directory should not be specified as part of prefix (nor should any other directory information). The filename generated is guaranteed not to already exist in /tmp/. The file is created with Un*x permissions 0600, allowing reading and writing only by the user for security. If the write is successful, the full path to the temporary file will be returned; if not, "" will be returned. If compress is T, the contents will be compressed with zlib as they are written, and the standard .gz extension for gzip-compressed files will be appended to the filename suffix in suffix if it is not already present. The compress option was added in Eidos 2.4 (SLiM 3.4). Note that readFile() does not currently support reading in compressed data. Note that newline characters will be added at the ends of the lines in contents. If you do not wish to have newlines added, you should use paste() to assemble the elements of contents together into a singleton string. 3.10. Color manipulation functions
+\strong{Eidos function:} Writes to a unique temporary file with contents specified by contents, a string vector of lines. The filename used will begin with prefix and end with suffix, and will contain six random characters in between; for example, if prefix is "plot1_" and suffix is ".pdf", the generated filename might look like "plot1_r5Mq0t.pdf". It is legal for prefix, suffix, or both to be the empty string, "", but supplying a file extension is usually advisable at minimum. The file will be created inside the /tmp/ directory of the system, which is provided by Un*x systems as a standard location for temporary files; the /tmp/ directory should not be specified as part of prefix (nor should any other directory information). The filename generated is guaranteed not to already exist in /tmp/. The file is created with Un*x permissions 0600, allowing reading and writing only by the user for security. If the write is successful, the full path to the temporary file will be returned; if not, "" will be returned. If compress is T, the contents will be compressed with zlib as they are written, and the standard .gz extension for gzip-compressed files will be appended to the filename suffix in suffix if it is not already present. The compress option was added in Eidos 2.4 (SLiM 3.4). Note that readFile() does not currently support reading in compressed data. Note that newline characters will be added at the ends of the lines in contents. If you do not wish to have newlines added, you should use paste() to assemble the elements of contents together into a singleton string. 3.10. Color manipulation functions
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

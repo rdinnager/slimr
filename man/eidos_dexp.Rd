@@ -13,18 +13,20 @@ eidos_dexp(x, mu = NULL)
 \item{mu}{An object of type float or numeric.}
 }
 \value{
-An object of type float.
+\strong{Eidos function:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{dexp}.
+\strong{Eidos function:} Documentation for SLiM function \code{dexp}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a vector of probability densities for an exponential distribution at quantiles x with mean mu (i.e. rate 1/mu). The mu parameter may either be a singleton, specifying a single value to be used for all of the draws, or they may be vectors of the same length as x, specifying a value for each density computation.
+\strong{Eidos function:} Returns a vector of probability densities for an exponential distribution at quantiles x with mean mu (i.e. rate 1/mu). The mu parameter may either be a singleton, specifying a single value to be used for all of the draws, or they may be vectors of the same length as x, specifying a value for each density computation.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -12,18 +12,20 @@ unevaluate(void)
 \item{void}{An object of type object.}
 }
 \value{
-An object of type void.
+\strong{InteractionType method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{unevaluate}, which is a method of the SLiM class \code{\link{InteractionType}}.
+\strong{InteractionType method:} Documentation for SLiM function \code{unevaluate}, which is a method of the SLiM class \code{\link{InteractionType}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-void) Discards all evaluation of this interaction, for all subpopulations. The state of the InteractionType is reset to a state prior to evaluation. This can be useful if the model state has changed in such a way that the evaluation already conducted is no longer valid. For example, if the maximum distance, the interaction function, or the receiver or exerter constraints of the InteractionType need to be changed with immediate effect, or if the data used by an interaction() callback has changed in such a way that previously calculated interaction strengths are no longer correct, unevaluate() allows the interaction to begin again from scratch. In WF models, all interactions are automatically reset to an unevaluated state at the moment when the new offspring generation becomes the parental generation (at step 4 in the tick cycle). In nonWF models, all interactions are automatically reset to an unevaluated state twice per tick: immediately after reproduction() callbacks have completed (after step 1 in the tick cycle), and immediately before viability/survival selection (before step 4 in the tick cycle). Given this automatic invalidation, most simulations have no reason to call unevaluate().
+\strong{InteractionType method:} Discards all evaluation of this interaction, for all subpopulations. The state of the InteractionType is reset to a state prior to evaluation. This can be useful if the model state has changed in such a way that the evaluation already conducted is no longer valid. For example, if the maximum distance, the interaction function, or the receiver or exerter constraints of the InteractionType need to be changed with immediate effect, or if the data used by an interaction() callback has changed in such a way that previously calculated interaction strengths are no longer correct, unevaluate() allows the interaction to begin again from scratch. In WF models, all interactions are automatically reset to an unevaluated state at the moment when the new offspring generation becomes the parental generation (at step 4 in the tick cycle). In nonWF models, all interactions are automatically reset to an unevaluated state twice per tick: immediately after reproduction() callbacks have completed (after step 1 in the tick cycle), and immediately before viability/survival selection (before step 4 in the tick cycle). Given this automatic invalidation, most simulations have no reason to call unevaluate().
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

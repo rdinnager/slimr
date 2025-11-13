@@ -13,18 +13,20 @@ eidos_rztpois(n, lambda)
 \item{lambda}{An object of type integer or numeric.}
 }
 \value{
-An object of type integer.
+\strong{Eidos function:} An object of type integer.
 }
 \description{
-Documentation for SLiM function \code{rztpois}.
+\strong{Eidos function:} Documentation for SLiM function \code{rztpois}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a vector of n random draws from a zero-truncated Poisson distribution with parameter lambda (not to be confused with the language concept of a "lambda"; lambda here is just the name of a parameter, because the symbol typically used for the parameter of a Poisson distribution is the Greek letter ). The zero-truncated Poisson distribution is the conditional probability distribution of a Poisson-distributed random variable, given that the value of the random variable is not zero. The values returned by rztpois() will therefore never be zero. The lambda parameter, , may either be a singleton, specifying a single value to be used for all of the draws, or it may be a vector of length n, specifying a value for each draw. It is important to note that for rpois() the expected mean of the distribution is , but for rztpois() the expected mean of the distribution is  / (1  exp()), precisely because the zero-truncated Poisson distribution is conditional upon being non-zero. 3.4. Vector construction functions
+\strong{Eidos function:} Returns a vector of n random draws from a zero-truncated Poisson distribution with parameter lambda (not to be confused with the language concept of a "lambda"; lambda here is just the name of a parameter, because the symbol typically used for the parameter of a Poisson distribution is the Greek letter ). The zero-truncated Poisson distribution is the conditional probability distribution of a Poisson-distributed random variable, given that the value of the random variable is not zero. The values returned by rztpois() will therefore never be zero. The lambda parameter, , may either be a singleton, specifying a single value to be used for all of the draws, or it may be a vector of length n, specifying a value for each draw. It is important to note that for rpois() the expected mean of the distribution is , but for rztpois() the expected mean of the distribution is  / (1  exp()), precisely because the zero-truncated Poisson distribution is conditional upon being non-zero. 3.4. Vector construction functions
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -13,18 +13,20 @@ eidos_doCall(functionName, ...)
 \item{...}{An object of type NA.}
 }
 \value{
-An object of type void or null or logical or integer or float or string.
+\strong{Eidos function:} An object of type void or null or logical or integer or float or string.
 }
 \description{
-Documentation for SLiM function \code{doCall}.
+\strong{Eidos function:} Documentation for SLiM function \code{doCall}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the results from a call to a specified function. The function named by the parameter functionName is called, and the remaining parameters to doCall() are forwarded on to that function verbatim. This can be useful for calling one of a set of similar functions, such as sin(), cos(), etc., to perform a math function determined at runtime, or one of the as...() family of functions to convert to a type determined at runtime. Note that named arguments and default arguments, beyond the functionName argument, are not supported by doCall(); all arguments to the target function must be specified explicitly, without names.
+\strong{Eidos function:} Returns the results from a call to a specified function. The function named by the parameter functionName is called, and the remaining parameters to doCall() are forwarded on to that function verbatim. This can be useful for calling one of a set of similar functions, such as sin(), cos(), etc., to perform a math function determined at runtime, or one of the as...() family of functions to convert to a type determined at runtime. Note that named arguments and default arguments, beyond the functionName argument, are not supported by doCall(); all arguments to the target function must be specified explicitly, without names.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

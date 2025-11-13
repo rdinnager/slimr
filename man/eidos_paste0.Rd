@@ -11,18 +11,20 @@ eidos_paste0(...)
 \item{...}{An object of type object.}
 }
 \value{
-An object of type string. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type string. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{paste0}.
+\strong{Eidos function:} Documentation for SLiM function \code{paste0}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a joined string composed from the string representations of the elements of the parameters passed in, taken in order, joined together with no separator. This function is identical to paste(), except that no separator is used. Note that this differs from the semantics of paste0() in R.
+\strong{Eidos function:} Returns a joined string composed from the string representations of the elements of the parameters passed in, taken in order, joined together with no separator. This function is identical to paste(), except that no separator is used. Note that this differs from the semantics of paste0() in R.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -13,18 +13,20 @@ eidos_defineGlobal(symbol, value)
 \item{value}{An object of type string or any.}
 }
 \value{
-An object of type void.
+\strong{Eidos function:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{defineGlobal}.
+\strong{Eidos function:} Documentation for SLiM function \code{defineGlobal}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Defines a new global variable with the name symbol and the value specified by value. The name cannot previously be defined as a constant. The result is similar to a standard variable assignment with operator =, except that the variable is always defined in the global scope (even if the defineGlobal() call is made inside a user-defined function or other locally-scoped block, such as a SLiM event or callback). This means that the variable will remain defined even after the current scope is exited. Note that global variables can be hidden by local variables with the same name; unlike defined constants, such scoped masking is allowed. Syntactically, value may be any value at all; semantically, however, if value is of object type then value's class must be under an internal memory-management scheme called "retain-release". Objects that are not under retain-release can cease to exist whenever the Context is finished using them, and thus a global variable referencing such an object could become invalid, which must be prevented. Objects that are under retain-release will not cease to exist if they are referenced by a global variable; the reference to them from the global variable "retains" them and keeps them in existence. All object classes built into Eidos are under retain-release; see the SLiM manual (section "SLiM scoping rules") for discussion of which SLiM object classes are under retain-release.
+\strong{Eidos function:} Defines a new global variable with the name symbol and the value specified by value. The name cannot previously be defined as a constant. The result is similar to a standard variable assignment with operator =, except that the variable is always defined in the global scope (even if the defineGlobal() call is made inside a user-defined function or other locally-scoped block, such as a SLiM event or callback). This means that the variable will remain defined even after the current scope is exited. Note that global variables can be hidden by local variables with the same name; unlike defined constants, such scoped masking is allowed. Syntactically, value may be any value at all; semantically, however, if value is of object type then value's class must be under an internal memory-management scheme called "retain-release". Objects that are not under retain-release can cease to exist whenever the Context is finished using them, and thus a global variable referencing such an object could become invalid, which must be prevented. Objects that are under retain-release will not cease to exist if they are referenced by a global variable; the reference to them from the global variable "retains" them and keeps them in existence. All object classes built into Eidos are under retain-release; see the SLiM manual (section "SLiM scoping rules") for discussion of which SLiM object classes are under retain-release.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -12,18 +12,20 @@ mm16To256(mutationMatrix16)
 \item{mutationMatrix16}{An object of type float.}
 }
 \value{
-An object of type float.
+\strong{SLiMBuiltin method:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{mm16To256}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
+\strong{SLiMBuiltin method:} Documentation for SLiM function \code{mm16To256}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Returns a 64x4 mutation matrix that is functionally identical to the supplied 4x4 mutation matrix in mutationMatrix16. The mutation rate for each of the 64 trinucleotides will depend only upon the central nucleotide of the trinucleotide, and will be taken from the corresponding entry for the same nucleotide in mutationMatrix16. This function can be used to easily construct a simple trinucleotide-based mutation matrix which can then be modified so that specific trinucleotides sustain a mutation rate that does not depend only upon their central nucleotide. See the documentation for initializeGenomicElementType() for further discussion of how these 64x4 mutation matrices are interpreted and used.
+\strong{SLiMBuiltin method:} Returns a 64x4 mutation matrix that is functionally identical to the supplied 4x4 mutation matrix in mutationMatrix16. The mutation rate for each of the 64 trinucleotides will depend only upon the central nucleotide of the trinucleotide, and will be taken from the corresponding entry for the same nucleotide in mutationMatrix16. This function can be used to easily construct a simple trinucleotide-based mutation matrix which can then be modified so that specific trinucleotides sustain a mutation rate that does not depend only upon their central nucleotide. See the documentation for initializeGenomicElementType() for further discussion of how these 64x4 mutation matrices are interpreted and used.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

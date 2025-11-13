@@ -13,18 +13,20 @@ eidos_pmax(x, y)
 \item{y}{An object of type any but object or any but object.}
 }
 \value{
-An object of type any but object.
+\strong{Eidos function:} An object of type any but object.
 }
 \description{
-Documentation for SLiM function \code{pmax}.
+\strong{Eidos function:} Documentation for SLiM function \code{pmax}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the parallel maximum of x and y: the element-wise maximum for each corresponding pair of elements in x and y. The type of x and y must match, and the returned value will have the same type. In one usage pattern the size of x and y match, in which case the returned value will have the same size. In the other usage pattern either x and y is a singleton, in which case the returned value will match the size of the non-singleton argument, and pairs of elements for comparison will be formed between the singleton's element and each of the elements in the non-singleton.
+\strong{Eidos function:} Returns the parallel maximum of x and y: the element-wise maximum for each corresponding pair of elements in x and y. The type of x and y must match, and the returned value will have the same type. In one usage pattern the size of x and y match, in which case the returned value will have the same size. In the other usage pattern either x and y is a singleton, in which case the returned value will match the size of the non-singleton argument, and pairs of elements for comparison will be formed between the singleton's element and each of the elements in the non-singleton.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -11,18 +11,20 @@ eidos_drop(x)
 \item{x}{An object of type any.}
 }
 \value{
-An object of type any.
+\strong{Eidos function:} An object of type any.
 }
 \description{
-Documentation for SLiM function \code{drop}.
+\strong{Eidos function:} Documentation for SLiM function \code{drop}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the result of dropping redundant dimensions from matrix or array x. Redundant dimensions are those with a size of exactly 1. Non-redundant dimensions are retained. If only one non-redundant dimension is present, the result is a vector; if more than one non-redundant dimension is present, the result will be a matrix or array. If x is not a matrix or array, it is returned unmodified. See asVector() for a way to drop all dimensions of a matrix or array, whether redundant or not.
+\strong{Eidos function:} Returns the result of dropping redundant dimensions from matrix or array x. Redundant dimensions are those with a size of exactly 1. Non-redundant dimensions are retained. If only one non-redundant dimension is present, the result is a vector; if more than one non-redundant dimension is present, the result will be a matrix or array. If x is not a matrix or array, it is returned unmodified. See asVector() for a way to drop all dimensions of a matrix or array, whether redundant or not.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

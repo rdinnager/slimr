@@ -17,18 +17,20 @@ eidos_integer(length, fill1 = NULL, fill2 = NULL, fill2Indices = NULL)
 \item{fill2Indices}{An object of type null or integer.}
 }
 \value{
-An object of type integer.
+\strong{Eidos function:} An object of type integer.
 }
 \description{
-Documentation for SLiM function \code{integer}.
+\strong{Eidos function:} Documentation for SLiM function \code{integer}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a new integer vector of the length specified by length, filled with 0 values by default. This can be useful for pre-allocating a vector which you then fill with values by subscripting. If a value is supplied for fill1, the new vector will be filled with that value instead of the default of 0. Additionally, if a non-NULL vector is supplied for fill2Indices, the indices specified by fill2Indices will be filled with the value provided by fill2. For example, given the default values of 0 and 1 for fill1 and fill2, the returned vector will contain 1 at all positions specified by fill2Indices, and will contain 0 at all other positions.
+\strong{Eidos function:} Returns a new integer vector of the length specified by length, filled with 0 values by default. This can be useful for pre-allocating a vector which you then fill with values by subscripting. If a value is supplied for fill1, the new vector will be filled with that value instead of the default of 0. Additionally, if a non-NULL vector is supplied for fill2Indices, the indices specified by fill2Indices will be filled with the value provided by fill2. For example, given the default values of 0 and 1 for fill1 and fill2, the returned vector will contain 1 at all positions specified by fill2Indices, and will contain 0 at all other positions.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

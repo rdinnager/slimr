@@ -24,18 +24,20 @@ plot_segments(x1, y1, x2, y2, color = NULL, lwd = NULL, alpha = NULL)
 \item{alpha}{An object of type numeric or numeric or numeric or numeric or string or numeric or float.}
 }
 \value{
-An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
+\strong{Plot method:} An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
 }
 \description{
-Documentation for SLiM function \code{segments}, which is a method of the SLiM class \code{\link{Plot}}.
+\strong{Plot method:} Documentation for SLiM function \code{segments}, which is a method of the SLiM class \code{\link{Plot}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-numeric x1, numeric y1, numeric x2, numeric y2, [string color = "red"], [numeric lwd = 1.0], [float alpha = 1.0]) Adds line segment data given by x1, y1, x2, and y2 to the plot; note that these four vectors must all be the same length. The data will be plotted as a series of unconnected line segments, from each (x1, y1) position to the corresponding (x2, y2) position. The new line segment data will be plotted on top of any previously added data. The line segments will be drawn in colors color, using line widths lwd, with opacities alpha. The color, lwd, and alpha parameters may each be either a singleton value (applying to all line segments) or a vector with one value per line segment. Alpha values must be in [0.0, 1.0], where 0.0 is fully transparent and 1.0 is fully opaque. See also lines() and abline().
+\strong{Plot method:} Adds line segment data given by x1, y1, x2, and y2 to the plot; note that these four vectors must all be the same length. The data will be plotted as a series of unconnected line segments, from each (x1, y1) position to the corresponding (x2, y2) position. The new line segment data will be plotted on top of any previously added data. The line segments will be drawn in colors color, using line widths lwd, with opacities alpha. The color, lwd, and alpha parameters may each be either a singleton value (applying to all line segments) or a vector with one value per line segment. Alpha values must be in [0.0, 1.0], where 0.0 is fully transparent and 1.0 is fully opaque. See also lines() and abline().
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

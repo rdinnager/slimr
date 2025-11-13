@@ -12,18 +12,20 @@ addMutations(mutations)
 \item{mutations}{An object of type Mutation object.}
 }
 \value{
-An object of type void.
+\strong{Haplosome method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{addMutations}, which is a method of the SLiM class \code{\link{Haplosome}}.
+\strong{Haplosome method:} Documentation for SLiM function \code{addMutations}, which is a method of the SLiM class \code{\link{Haplosome}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-object<Mutation> mutations) Add the existing mutations in mutations to the target haplosomes, if they are not already present (if they are already present, they will be ignored), and if the addition is not prevented by the mutation stacking policy (see the mutationStackPolicy property of MutationType). All target haplosomes and all mutations in mutations must be associated with the same Chromosome object; attempting to add a mutation to a haplosome associated with a different chromosome will raise an error. Calling this will normally affect the fitness values calculated toward the end of the current tick; if you want current fitness values to be affected, you can call the Species method recalculateFitness() - but see the documentation of that method for caveats. Note that in nonWF models that use tree-sequence recording, mutations cannot be added to an individual after the tick in which the individual is created (i.e., when the age of the individual is greater than 0), to prevent the possibility of inconsistencies in the recorded tree sequence.
+\strong{Haplosome method:} Add the existing mutations in mutations to the target haplosomes, if they are not already present (if they are already present, they will be ignored), and if the addition is not prevented by the mutation stacking policy (see the mutationStackPolicy property of MutationType). All target haplosomes and all mutations in mutations must be associated with the same Chromosome object; attempting to add a mutation to a haplosome associated with a different chromosome will raise an error. Calling this will normally affect the fitness values calculated toward the end of the current tick; if you want current fitness values to be affected, you can call the Species method recalculateFitness() - but see the documentation of that method for caveats. Note that in nonWF models that use tree-sequence recording, mutations cannot be added to an individual after the tick in which the individual is created (i.e., when the age of the individual is greater than 0), to prevent the possibility of inconsistencies in the recorded tree sequence.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

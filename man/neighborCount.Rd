@@ -14,18 +14,20 @@ neighborCount(receivers, exerterSubpop = NULL)
 \item{exerterSubpop}{An object of type null or Subpopulation object (singleton).}
 }
 \value{
-An object of type integer.
+\strong{InteractionType method:} An object of type integer.
 }
 \description{
-Documentation for SLiM function \code{neighborCount}, which is a method of the SLiM class \code{\link{InteractionType}}.
+\strong{InteractionType method:} Documentation for SLiM function \code{neighborCount}, which is a method of the SLiM class \code{\link{InteractionType}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-object<Individual> receivers, [No<Subpopulation>$ exerterSubpop = NULL]) Returns the number of neighbors for each individual in receivers, within the maximum interaction distance according to the distance metric of the InteractionType, from among the individuals in exerterSubpop (or, if that is NULL, then from among all individuals in the receiver's subpopulation). All of the receivers must belong to a single subpopulation, and all of the exerters must belong to a single subpopulation, but those two subpopulations do not need to be the same. The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. This method is similar to nearestNeighbors() (when passed a large count so as to guarantee that all neighbors are returned), but this method returns only a count of the individuals, not a vector containing the individuals. Note that this method does not use interaction eligibility as a criterion; it will count neighbors that cannot exert an interaction upon a receiver (due to the configured receiver or exerter constraints). (It still does not count a receiver as a neighbor of itself, however.) If a count of only interacting neighbors is desired, use interactingNeighborCount(). If the InteractionType is non-spatial, this method may not be called.
+\strong{InteractionType method:} Returns the number of neighbors for each individual in receivers, within the maximum interaction distance according to the distance metric of the InteractionType, from among the individuals in exerterSubpop (or, if that is NULL, then from among all individuals in the receiver's subpopulation). All of the receivers must belong to a single subpopulation, and all of the exerters must belong to a single subpopulation, but those two subpopulations do not need to be the same. The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. This method is similar to nearestNeighbors() (when passed a large count so as to guarantee that all neighbors are returned), but this method returns only a count of the individuals, not a vector containing the individuals. Note that this method does not use interaction eligibility as a criterion; it will count neighbors that cannot exert an interaction upon a receiver (due to the configured receiver or exerter constraints). (It still does not count a receiver as a neighbor of itself, however.) If a count of only interacting neighbors is desired, use interactingNeighborCount(). If the InteractionType is non-spatial, this method may not be called.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -12,18 +12,20 @@ mapColor(value)
 \item{value}{An object of type numeric.}
 }
 \value{
-An object of type string.
+\strong{SpatialMap method:} An object of type string.
 }
 \description{
-Documentation for SLiM function \code{mapColor}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+\strong{SpatialMap method:} Documentation for SLiM function \code{mapColor}, which is a method of the SLiM class \code{\link{SpatialMap}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-numeric value) Uses the spatial map's color-translation machinery (as defined by the valueRange and colors parameters to defineSpatialMap()) to translate each element of value into a corresponding color string. If the spatial map does not have color-translation capabilities, an error will result. See the documentation for defineSpatialMap() for information regarding the details of color translation. See the Eidos manual for further information on color strings.
+\strong{SpatialMap method:} Uses the spatial map's color-translation machinery (as defined by the valueRange and colors parameters to defineSpatialMap()) to translate each element of value into a corresponding color string. If the spatial map does not have color-translation capabilities, an error will result. See the documentation for defineSpatialMap() for information regarding the details of color translation. See the Eidos manual for further information on color strings.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

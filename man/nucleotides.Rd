@@ -16,18 +16,20 @@ nucleotides(start = NULL, end = NULL, format = NULL)
 \item{format}{An object of type string (singleton).}
 }
 \value{
-An object of type integer or string.
+\strong{Haplosome method:} An object of type integer or string.
 }
 \description{
-Documentation for SLiM function \code{nucleotides}, which is a method of the SLiM class \code{\link{Haplosome}}.
+\strong{Haplosome method:} Documentation for SLiM function \code{nucleotides}, which is a method of the SLiM class \code{\link{Haplosome}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-[Ni$ start = NULL], [Ni$ end = NULL], [string$ format = "string"]) Returns the nucleotide sequence for the haplosome. This is the current ancestral sequence, as would be returned by the Chromosome method ancestralNucleotides(), with the nucleotides for any nucleotide-based mutations in the haplosome overlaid. The range of the returned sequence may be constrained by a start position given in start and/or an end position given in end; nucleotides will be returned from start to end, inclusive. The default value of NULL for start and end represent the first and last base positions of the chromosome, respectively. The format of the returned sequence is controlled by the format parameter. A format of "string" will return the sequence as a singleton string (e.g., "TATA"). A format of "char" will return a string vector with one element per nucleotide (e.g., "T", "A", "T", "A"). A format of "integer" will return an integer vector with values A=0, C=1, G=2, T=3 (e.g., 3, 0, 3, 0). A format of "codon" will return an integer vector with values from 0 to 63, based upon successive nucleotide triplets in the sequence (which, for this format, must have a length that is a multiple of three); see the ancestralNucleotides() documentation for details. If the sequence returned is likely to be long, the "string" format will be the most memory-efficient, and may also be the fastest (but may be harder to work with). Several helper functions are provided for working with sequences, such as nucleotideCounts() to get the counts of A/C/G/T nucleotides in a sequence, nucleotideFrequencies() to get the same information as frequencies, and codonsToAminoAcids() to convert a codon sequence (such as provided by the codon format described above) to an amino acid sequence.
+\strong{Haplosome method:} Returns the nucleotide sequence for the haplosome. This is the current ancestral sequence, as would be returned by the Chromosome method ancestralNucleotides(), with the nucleotides for any nucleotide-based mutations in the haplosome overlaid. The range of the returned sequence may be constrained by a start position given in start and/or an end position given in end; nucleotides will be returned from start to end, inclusive. The default value of NULL for start and end represent the first and last base positions of the chromosome, respectively. The format of the returned sequence is controlled by the format parameter. A format of "string" will return the sequence as a singleton string (e.g., "TATA"). A format of "char" will return a string vector with one element per nucleotide (e.g., "T", "A", "T", "A"). A format of "integer" will return an integer vector with values A=0, C=1, G=2, T=3 (e.g., 3, 0, 3, 0). A format of "codon" will return an integer vector with values from 0 to 63, based upon successive nucleotide triplets in the sequence (which, for this format, must have a length that is a multiple of three); see the ancestralNucleotides() documentation for details. If the sequence returned is likely to be long, the "string" format will be the most memory-efficient, and may also be the fastest (but may be harder to work with). Several helper functions are provided for working with sequences, such as nucleotideCounts() to get the counts of A/C/G/T nucleotides in a sequence, nucleotideFrequencies() to get the same information as frequencies, and codonsToAminoAcids() to convert a codon sequence (such as provided by the codon format described above) to an amino acid sequence.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

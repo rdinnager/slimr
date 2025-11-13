@@ -11,18 +11,20 @@ eidos_readFile(filePath)
 \item{filePath}{An object of type string (singleton).}
 }
 \value{
-An object of type string.
+\strong{Eidos function:} An object of type string.
 }
 \description{
-Documentation for SLiM function \code{readFile}.
+\strong{Eidos function:} Documentation for SLiM function \code{readFile}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Reads in the contents of a file specified by filePath and returns a string vector containing the lines (separated by \\\\n and \\\\r characters) of the file. Reading files other than text files is not presently supported. If an error occurs during the read, NULL will be returned.
+\strong{Eidos function:} Reads in the contents of a file specified by filePath and returns a string vector containing the lines (separated by \\\\n and \\\\r characters) of the file. Reading files other than text files is not presently supported. If an error occurs during the read, NULL will be returned.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

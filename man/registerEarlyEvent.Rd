@@ -20,18 +20,20 @@ registerEarlyEvent(id, source, start = NULL, end = NULL, ticksSpec = NULL)
 \item{ticksSpec}{An object of type null or Species object (singleton).}
 }
 \value{
-An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
+\strong{Community method:} An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{registerEarlyEvent}, which is a method of the SLiM class \code{\link{Community}}.
+\strong{Community method:} Documentation for SLiM function \code{registerEarlyEvent}, which is a method of the SLiM class \code{\link{Community}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Nis$ id, string$ source, [Ni$ start = NULL], [Ni$ end = NULL], [No<Species>$ ticksSpec = NULL]) Register a block of Eidos source code, represented as the string singleton source, as an Eidos early() event in the current simulation, with optional start and end ticks (and, for multispecies models, optional ticks specifier ticksSpec) limiting its applicability. The script block will be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered event is added to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in the current tick. The new SLiMEidosBlock will be defined as a global variable immediately by this method, and will also be returned by this method.
+\strong{Community method:} Register a block of Eidos source code, represented as the string singleton source, as an Eidos early() event in the current simulation, with optional start and end ticks (and, for multispecies models, optional ticks specifier ticksSpec) limiting its applicability. The script block will be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered event is added to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it may be eligible to execute in the current tick. The new SLiMEidosBlock will be defined as a global variable immediately by this method, and will also be returned by this method.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

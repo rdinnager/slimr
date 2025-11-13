@@ -23,18 +23,20 @@ setGeneConversion(
 \item{bias}{An object of type numeric or numeric or numeric or numeric (singleton).}
 }
 \value{
-An object of type void.
+\strong{Chromosome method:} An object of type void.
 }
 \description{
-Documentation for SLiM function \code{setGeneConversion}, which is a method of the SLiM class \code{\link{Chromosome}}.
+\strong{Chromosome method:} Documentation for SLiM function \code{setGeneConversion}, which is a method of the SLiM class \code{\link{Chromosome}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-numeric$ nonCrossoverFraction, numeric$ meanLength, numeric$ simpleConversionFraction, [numeric$ bias = 0]) This method switches the recombination model to the "double-stranded break (DSB)" model (if it is not already set to that), and configures the details of the gene conversion tracts that will therefore be modeled. The meanings and effects of the parameters exactly mirror the initializeGeneConversion() function.
+\strong{Chromosome method:} This method switches the recombination model to the "double-stranded break (DSB)" model (if it is not already set to that), and configures the details of the gene conversion tracts that will therefore be modeled. The meanings and effects of the parameters exactly mirror the initializeGeneConversion() function.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -12,18 +12,20 @@ substitutionsOfType(mutType)
 \item{mutType}{An object of type integer or MutationType object (singleton).}
 }
 \value{
-An object of type Substitution object.
+\strong{Species method:} An object of type Substitution object.
 }
 \description{
-Documentation for SLiM function \code{substitutionsOfType}, which is a method of the SLiM class \code{\link{Species}}.
+\strong{Species method:} Documentation for SLiM function \code{substitutionsOfType}, which is a method of the SLiM class \code{\link{Species}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-io<MutationType>$ mutType) Returns an object vector of all the substitutions that are of the type specified by mutType, out of all of the substitutions that are currently present in the species. This method is provided for speed; it is much faster than the corresponding Eidos code. See also mutationsOfType().
+\strong{Species method:} Returns an object vector of all the substitutions that are of the type specified by mutType, out of all of the substitutions that are currently present in the species. This method is provided for speed; it is much faster than the corresponding Eidos code. See also mutationsOfType().
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

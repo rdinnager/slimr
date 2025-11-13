@@ -14,18 +14,20 @@ rescale(min = NULL, max = NULL)
 \item{max}{An object of type numeric or numeric (singleton).}
 }
 \value{
-An object of type SpatialMap object. Return will be of length 1 (a singleton)
+\strong{SpatialMap method:} An object of type SpatialMap object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{rescale}, which is a method of the SLiM class \code{\link{SpatialMap}}.
+\strong{SpatialMap method:} Documentation for SLiM function \code{rescale}, which is a method of the SLiM class \code{\link{SpatialMap}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-[numeric$ min = 0.0], [numeric$ max = 1.0]) Rescales the values of the spatial map to the range [min, max]. By default, the rescaling is to the range [0.0, 1.0]. It is required that min be less than max, and that both be finite. Note that the final range may not be exactly [min, max] due to numerical error. The target spatial map is returned, to allow easy chaining of operations.
+\strong{SpatialMap method:} Rescales the values of the spatial map to the range [min, max]. By default, the rescaling is to the range [0.0, 1.0]. It is required that min be less than max, and that both be finite. Note that the final range may not be exactly [min, max] due to numerical error. The target spatial map is returned, to allow easy chaining of operations.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

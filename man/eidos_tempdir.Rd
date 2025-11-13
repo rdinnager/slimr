@@ -11,18 +11,20 @@ eidos_tempdir(void)
 \item{void}{An object of type object.}
 }
 \value{
-An object of type string. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type string. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{tempdir}.
+\strong{Eidos function:} Documentation for SLiM function \code{tempdir}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a path to a directory appropriate for saving temporary files. The path returned by tempdir() is platform-specific, and is not guaranteed to be the same from one run of SLiM to the next. It is guaranteed to end in a slash, so further path components should be appended without a leading slash. At present, on macOS and Linux systems, the path will be "/tmp/"; this may change in future Eidos versions without warning.
+\strong{Eidos function:} Returns a path to a directory appropriate for saving temporary files. The path returned by tempdir() is platform-specific, and is not guaranteed to be the same from one run of SLiM to the next. It is guaranteed to end in a slash, so further path components should be appended without a leading slash. At present, on macOS and Linux systems, the path will be "/tmp/"; this may change in future Eidos versions without warning.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

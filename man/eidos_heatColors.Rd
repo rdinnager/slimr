@@ -11,18 +11,20 @@ eidos_heatColors(n)
 \item{n}{An object of type integer (singleton).}
 }
 \value{
-An object of type string.
+\strong{Eidos function:} An object of type string.
 }
 \description{
-Documentation for SLiM function \code{heatColors}.
+\strong{Eidos function:} Documentation for SLiM function \code{heatColors}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-This method has been deprecated, and may be removed in a future release of Eidos. In SLiM 3.5 and later, use colors(n, "heat") instead. Generate colors in a "heat map" color palette.
+\strong{Eidos function:} This method has been deprecated, and may be removed in a future release of Eidos. In SLiM 3.5 and later, use colors(n, "heat") instead. Generate colors in a "heat map" color palette.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

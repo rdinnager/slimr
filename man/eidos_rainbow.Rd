@@ -21,18 +21,20 @@ eidos_rainbow(n, s = NULL, v = NULL, start = NULL, end = NULL, ccw = NULL)
 \item{ccw}{An object of type logical (singleton).}
 }
 \value{
-An object of type string.
+\strong{Eidos function:} An object of type string.
 }
 \description{
-Documentation for SLiM function \code{rainbow}.
+\strong{Eidos function:} Documentation for SLiM function \code{rainbow}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Generate colors in a "rainbow" color palette. The number of colors desired is passed in n, and the returned vector will contain n color strings. Parameters s and v control the saturation and value of the rainbow colors generated. The color sequence begins with the hue start, and ramps to the hue end, in a counter-clockwise direction around the standard HSV color wheel if ccw is T (the default, following R), otherwise in a clockwise direction. If end is NULL (the default), a value of (n-1)/n is used, producing a complete rainbow around the color wheel when start is also the default value of 0.0. See colors() for other color palettes.
+\strong{Eidos function:} Generate colors in a "rainbow" color palette. The number of colors desired is passed in n, and the returned vector will contain n color strings. Parameters s and v control the saturation and value of the rainbow colors generated. The color sequence begins with the hue start, and ramps to the hue end, in a counter-clockwise direction around the standard HSV color wheel if ccw is T (the default, following R), otherwise in a clockwise direction. If end is NULL (the default), a value of (n-1)/n is used, producing a complete rainbow around the color wheel when start is also the default value of 0.0. See colors() for other color palettes.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

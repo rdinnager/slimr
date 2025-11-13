@@ -12,18 +12,20 @@ plot_write(filePath)
 \item{filePath}{An object of type string (singleton).}
 }
 \value{
-An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
+\strong{Plot method:} An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
 }
 \description{
-Documentation for SLiM function \code{write}, which is a method of the SLiM class \code{\link{Plot}}.
+\strong{Plot method:} Documentation for SLiM function \code{write}, which is a method of the SLiM class \code{\link{Plot}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-string$ filePath) Writes the plot to the given filesystem path filePath as a PDF file. It is suggested, but not required, that filePath should end in a .pdf or .PDF filename extension. If the file cannot be written, an error will result.
+\strong{Plot method:} Writes the plot to the given filesystem path filePath as a PDF file. It is suggested, but not required, that filePath should end in a .pdf or .PDF filename extension. If the file cannot be written, an error will result.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

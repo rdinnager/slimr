@@ -13,18 +13,20 @@ eidos_integerMod(x, y)
 \item{y}{An object of type integer or integer.}
 }
 \value{
-An object of type integer.
+\strong{Eidos function:} An object of type integer.
 }
 \description{
-Documentation for SLiM function \code{integerMod}.
+\strong{Eidos function:} Documentation for SLiM function \code{integerMod}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the result of integer modulo of x by y. The % operator in Eidos always produces a float result; if you want an integer result you may use this function instead. If any value of y is 0, an error will result. The parameters x and y must either be of equal length, or one of the two must be a singleton. The precise behavior of integer modulo, in terms of how rounding and negative values are handled, may be platform dependent; it will be whatever the C++ behavior of integer modulo is on the given platform. Eidos does not guarantee any particular behavior, so use this function with caution.
+\strong{Eidos function:} Returns the result of integer modulo of x by y. The % operator in Eidos always produces a float result; if you want an integer result you may use this function instead. If any value of y is 0, an error will result. The parameters x and y must either be of equal length, or one of the two must be a singleton. The precise behavior of integer modulo, in terms of how rounding and negative values are handled, may be platform dependent; it will be whatever the C++ behavior of integer modulo is on the given platform. Eidos does not guarantee any particular behavior, so use this function with caution.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

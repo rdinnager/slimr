@@ -18,18 +18,20 @@ addSubpop(subpopID, size, sexRatio = NULL, haploid = NULL)
 \item{haploid}{An object of type logical (singleton).}
 }
 \value{
-An object of type Subpopulation object. Return will be of length 1 (a singleton)
+\strong{Species method:} An object of type Subpopulation object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{addSubpop}, which is a method of the SLiM class \code{\link{Species}}.
+\strong{Species method:} Documentation for SLiM function \code{addSubpop}, which is a method of the SLiM class \code{\link{Species}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-is$ subpopID, integer$ size, [float$ sexRatio = 0.5], [logical$ haploid = F]) Add a new subpopulation with id subpopID and size individuals. The subpopID parameter may be either an integer giving the ID of the new subpopulation, or a string giving the name of the new subpopulation (such as "p5" to specify an ID of 5). Only if sex is enabled for the species, the initial sex ratio may optionally be specified as sexRatio (as the male fraction, M:M+F); if it is not specified, a default of 0.5 is used. The new subpopulation will be defined as a global variable immediately by this method, and will also be returned by this method. Subpopulations added by this method will initially consist of individuals with empty haplosomes. In order to model subpopulations that split from an already existing subpopulation, use addSubpopSplit(). The haploid parameter defaults to F, indicating that the generated individuals should adopt their natural ploidy; in particular, type "A" chromosomes should be represented in each individual by two empty haplosomes. The haploid parameter may instead be T; in this case, for all chromosomes of type "A" (and only that type), the second haplosome of each new individual will be a null haplosome, rather than an empty haplosome. This could be useful in a model of haplodiploidy, for example, to generate initial individuals that are haploid for the autosomal chromosomes of the species. For even greater control in nonWF models, you can call addSubpop() with an initial size of 0 and then stock the population with new individuals created however you wish in the next tick's reproduction() callback, such as with the addEmpty() method, providing separate control over the configuration of each individual.
+\strong{Species method:} Add a new subpopulation with id subpopID and size individuals. The subpopID parameter may be either an integer giving the ID of the new subpopulation, or a string giving the name of the new subpopulation (such as "p5" to specify an ID of 5). Only if sex is enabled for the species, the initial sex ratio may optionally be specified as sexRatio (as the male fraction, M:M+F); if it is not specified, a default of 0.5 is used. The new subpopulation will be defined as a global variable immediately by this method, and will also be returned by this method. Subpopulations added by this method will initially consist of individuals with empty haplosomes. In order to model subpopulations that split from an already existing subpopulation, use addSubpopSplit(). The haploid parameter defaults to F, indicating that the generated individuals should adopt their natural ploidy; in particular, type "A" chromosomes should be represented in each individual by two empty haplosomes. The haploid parameter may instead be T; in this case, for all chromosomes of type "A" (and only that type), the second haplosome of each new individual will be a null haplosome, rather than an empty haplosome. This could be useful in a model of haplodiploidy, for example, to generate initial individuals that are haploid for the autosomal chromosomes of the species. For even greater control in nonWF models, you can call addSubpop() with an initial size of 0 and then stock the population with new individuals created however you wish in the next tick's reproduction() callback, such as with the addEmpty() method, providing separate control over the configuration of each individual.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

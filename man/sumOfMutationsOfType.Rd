@@ -16,29 +16,33 @@ sumOfMutationsOfType(mutType)
 \item{mutType}{An object of type integer or MutationType object (singleton).}
 }
 \value{
-An object of type float. Return will be of length 1 (a singleton)
+\strong{Haplosome method:} An object of type float. Return will be of length 1 (a singleton)
 
-An object of type float. Return will be of length 1 (a singleton)
+\strong{Individual method:} An object of type float. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{sumOfMutationsOfType}, which is a method of the SLiM class \code{\link{Haplosome}}.
+\strong{Haplosome method:} Documentation for SLiM function \code{sumOfMutationsOfType}, which is a method of the SLiM class \code{\link{Haplosome}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 
-Documentation for SLiM function \code{sumOfMutationsOfType}, which is a method of the SLiM class \code{\link{Individual}}.
+\strong{Individual method:} Documentation for SLiM function \code{sumOfMutationsOfType}, which is a method of the SLiM class \code{\link{Individual}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-io<MutationType>$ mutType) Returns the sum of the selection coefficients of all mutations that are of the type specified by mutType, out of all of the mutations in the haplosome. This is often useful in models that use a particular mutation type to represent QTLs with additive effects; in that context, sumOfMutationsOfType() will provide the sum of the additive effects of the QTLs for the given mutation type. This method is provided for speed; it is much faster than the corresponding Eidos code. Note that this method also exists on Individual, for cases in which the sum across both haplosomes of an individual is desired.
+\strong{Haplosome method:} Returns the sum of the selection coefficients of all mutations that are of the type specified by mutType, out of all of the mutations in the haplosome. This is often useful in models that use a particular mutation type to represent QTLs with additive effects; in that context, sumOfMutationsOfType() will provide the sum of the additive effects of the QTLs for the given mutation type. This method is provided for speed; it is much faster than the corresponding Eidos code. Note that this method also exists on Individual, for cases in which the sum across both haplosomes of an individual is desired.
 
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 
-io<MutationType>$ mutType) Returns the sum of the selection coefficients of all mutations that are of the type specified by mutType, out of all of the mutations in the haplosomes of the individual. This is often useful in models that use a particular mutation type to represent QTLs with additive effects; in that context, sumOfMutationsOfType() will provide the sum of the additive effects of the QTLs for the given mutation type. This method is provided for speed; it is much faster than the corresponding Eidos code. Note that this method also exists on Haplosome, for cases in which the sum for just one haplosome is desired.
+See \strong{Details} below for complete documentation of this SLiM method.
+
+\strong{Individual method:} Returns the sum of the selection coefficients of all mutations that are of the type specified by mutType, out of all of the mutations in the haplosomes of the individual. This is often useful in models that use a particular mutation type to represent QTLs with additive effects; in that context, sumOfMutationsOfType() will provide the sum of the additive effects of the QTLs for the given mutation type. This method is provided for speed; it is much faster than the corresponding Eidos code. Note that this method also exists on Haplosome, for cases in which the sum for just one haplosome is desired.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

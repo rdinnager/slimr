@@ -13,18 +13,20 @@ eidos_range(x, ...)
 \item{...}{An object of type NA.}
 }
 \value{
-An object of type numeric.
+\strong{Eidos function:} An object of type numeric.
 }
 \description{
-Documentation for SLiM function \code{range}.
+\strong{Eidos function:} Documentation for SLiM function \code{range}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the range of x and the other arguments supplied: a vector of length 2 composed of the minimum and maximum values contained by all of them, at indices 0 and 1 respectively. All of the arguments must be the same type as x, and the return type will match that of x. If all of the arguments have a size of 0, the return value will be NULL; note that this means that range(x, range(y)) may produce an error, if range(y) is NULL, in cases where range(x, y) does not.
+\strong{Eidos function:} Returns the range of x and the other arguments supplied: a vector of length 2 composed of the minimum and maximum values contained by all of them, at indices 0 and 1 respectively. All of the arguments must be the same type as x, and the return type will match that of x. If all of the arguments have a size of 0, the return value will be NULL; note that this means that range(x, range(y)) may produce an error, if range(y) is NULL, in cases where range(x, y) does not.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -26,18 +26,20 @@ spatialMapImage(
 \item{color}{An object of type logical (singleton).}
 }
 \value{
-An object of type Image object. Return will be of length 1 (a singleton)
+\strong{Subpopulation method:} An object of type Image object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{spatialMapImage}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+\strong{Subpopulation method:} Documentation for SLiM function \code{spatialMapImage}, which is a method of the SLiM class \code{\link{Subpopulation}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-string$ name, [Ni$ width = NULL], [Ni$ height = NULL], [logical$ centers = F], [logical$ color = T]) This method has been deprecated, and may be removed in a future release of SLiM. In SLiM 4.1 and later, use the SpatialMap method mapImage() instead, and see that method's documentation. (This method differs only in taking a name parameter, which is used to look up the spatial map from those that have been added to the subpopulation.)
+\strong{Subpopulation method:} This method has been deprecated, and may be removed in a future release of SLiM. In SLiM 4.1 and later, use the SpatialMap method mapImage() instead, and see that method's documentation. (This method differs only in taking a name parameter, which is used to look up the spatial map from those that have been added to the subpopulation.)
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

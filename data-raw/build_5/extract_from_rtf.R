@@ -395,8 +395,8 @@ extract_methods_from_class <- function(class_data) {
       desc_lines <- method_lines[method_def_indices[method_idx]:length(method_lines)]
     }
 
-    # Remove the method definition from the first line
-    desc_lines[1] <- str_remove(desc_lines[1], method_def_pattern) %>% str_trim()
+    # Remove the method definition from the first line (use full_pattern to remove complete signature)
+    desc_lines[1] <- str_remove(desc_lines[1], full_pattern) %>% str_trim()
     description <- paste(desc_lines, collapse = " ") %>% str_trim()
 
     # Parse arguments (reuse logic from v4)

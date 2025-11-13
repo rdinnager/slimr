@@ -15,18 +15,20 @@ eidos_ttest(x, y = NULL, mu = NULL)
 \item{mu}{An object of type null or float (singleton).}
 }
 \value{
-An object of type float. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type float. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{ttest}.
+\strong{Eidos function:} Documentation for SLiM function \code{ttest}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the p-value resulting from running a t-test with the supplied data. Two types of t-tests can be performed. If x and y are supplied (i.e., y is non-NULL), a two-sample unpaired two-sided Welch's t-test is conducted using the samples in x and y, each of which must contain at least two elements. The null hypothesis for this test is that the two samples are drawn from populations with the same mean. Other options, such as pooled-variance t-tests, paired t-tests, and one-sided t-tests, are not presently available. If x and mu are supplied (i.e., mu is non-NULL), a one-sample t-test is conducted in which the null hypothesis is that the sample is drawn from a population with mean mu. Note that the results from this function are substantially different from those produced by R. The Eidos ttest() function uses uncorrected sample statistics, which means they will be biased for small sample sizes, whereas R probably uses corrected, unbiased sample statistics. This is an Eidos bug, and might be fixed if anyone complains. If large sample sizes are used, however, the bias is likely to be small, and uncorrected statistics are simpler and faster to compute.
+\strong{Eidos function:} Returns the p-value resulting from running a t-test with the supplied data. Two types of t-tests can be performed. If x and y are supplied (i.e., y is non-NULL), a two-sample unpaired two-sided Welch's t-test is conducted using the samples in x and y, each of which must contain at least two elements. The null hypothesis for this test is that the two samples are drawn from populations with the same mean. Other options, such as pooled-variance t-tests, paired t-tests, and one-sided t-tests, are not presently available. If x and mu are supplied (i.e., mu is non-NULL), a one-sample t-test is conducted in which the null hypothesis is that the sample is drawn from a population with mean mu. Note that the results from this function are substantially different from those produced by R. The Eidos ttest() function uses uncorrected sample statistics, which means they will be biased for small sample sizes, whereas R probably uses corrected, unbiased sample statistics. This is an Eidos bug, and might be fixed if anyone complains. If large sample sizes are used, however, the bias is likely to be small, and uncorrected statistics are simpler and faster to compute.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

@@ -14,18 +14,20 @@ setMutationFractions(mutationTypes, proportions)
 \item{proportions}{An object of type numeric.}
 }
 \value{
-An object of type void or void.
+\strong{GenomicElementType method:} An object of type void or void.
 }
 \description{
-Documentation for SLiM function \code{setMutationFractions}, which is a method of the SLiM class \code{\link{GenomicElementType}}.
+\strong{GenomicElementType method:} Documentation for SLiM function \code{setMutationFractions}, which is a method of the SLiM class \code{\link{GenomicElementType}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-io<MutationType> mutationTypes, numeric proportions) Set the mutation type fractions contributing to a genomic element type. The mutationTypes vector should supply the mutation types used by the genomic element (either as MutationType objects or as integer identifiers), and the proportions vector should be of equal length, specifying the relative proportion of mutations that will be drawn from each corresponding type. This is normally a constant in simulations, so be sure you know what you are doing.
+\strong{GenomicElementType method:} Set the mutation type fractions contributing to a genomic element type. The mutationTypes vector should supply the mutation types used by the genomic element (either as MutationType objects or as integer identifiers), and the proportions vector should be of equal length, specifying the relative proportion of mutations that will be drawn from each corresponding type. This is normally a constant in simulations, so be sure you know what you are doing.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

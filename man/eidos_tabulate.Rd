@@ -13,18 +13,20 @@ eidos_tabulate(bin, maxbin = NULL)
 \item{maxbin}{An object of type null or integer (singleton).}
 }
 \value{
-An object of type integer.
+\strong{Eidos function:} An object of type integer.
 }
 \description{
-Documentation for SLiM function \code{tabulate}.
+\strong{Eidos function:} Documentation for SLiM function \code{tabulate}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns occurrence counts for each non-negative integer in bin. Occurrence counts are tabulated into bins for each value 0:maxbin in bin; values outside that range are ignored. The default value of maxbin, NULL, is equivalent to passing maxbin=max(0, bin); in other words, by default the result vector will be exactly large enough to accommodate counts for every integer in bin. In any case, the result vector will contain maxbin+1 elements (some or all of which might be zero, if the occurrence count of that integer in bin is zero). Note that the semantics of this function differ slightly from the tabulate() function in R, because R is 1-based and Eidos is 0-based.
+\strong{Eidos function:} Returns occurrence counts for each non-negative integer in bin. Occurrence counts are tabulated into bins for each value 0:maxbin in bin; values outside that range are ignored. The default value of maxbin, NULL, is equivalent to passing maxbin=max(0, bin); in other words, by default the result vector will be exactly large enough to accommodate counts for every integer in bin. In any case, the result vector will contain maxbin+1 elements (some or all of which might be zero, if the occurrence count of that integer in bin is zero). Note that the semantics of this function differ slightly from the tabulate() function in R, because R is 1-based and Eidos is 0-based.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

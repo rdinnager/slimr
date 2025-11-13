@@ -11,18 +11,20 @@ eidos_sysinfo(key)
 \item{key}{An object of type string (singleton).}
 }
 \value{
-An object of type any.
+\strong{Eidos function:} An object of type any.
 }
 \description{
-Documentation for SLiM function \code{sysinfo}.
+\strong{Eidos function:} Documentation for SLiM function \code{sysinfo}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns information about the system. The information returned by tempdir() depends upon the value of key, which selects one of the pieces of information listed: key value os the name of the OS; "macOS" or "Windows", or "Unix" for all others sysname the name of the kernel release the operating system (kernel) release version the operating system (kernel) version nodename the name by which the machine is known on the network machine the hardware type; often the CPU type (e.g., "x86_64") The value "unknown" will be returned for a key if the correct value cannot be ascertained. Note that the values of keys that refer to the kernel may not be what you expect; for example, on one particular macOS 10.15.7 system, sysname returns "Darwin", release returns "19.6.0", and version returns "Darwin Kernel Version 19.6.0: Thu Sep 16 20:58:47 PDT 2021; root:xnu-6153.141.40.1~1/RELEASE_X86_64". Further keys can be added if there is information that would be useful, particularly if a cross-platform way to obtain the information can be found.
+\strong{Eidos function:} Returns information about the system. The information returned by tempdir() depends upon the value of key, which selects one of the pieces of information listed: key value os the name of the OS; "macOS" or "Windows", or "Unix" for all others sysname the name of the kernel release the operating system (kernel) release version the operating system (kernel) version nodename the name by which the machine is known on the network machine the hardware type; often the CPU type (e.g., "x86_64") The value "unknown" will be returned for a key if the correct value cannot be ascertained. Note that the values of keys that refer to the kernel may not be what you expect; for example, on one particular macOS 10.15.7 system, sysname returns "Darwin", release returns "19.6.0", and version returns "Darwin Kernel Version 19.6.0: Thu Sep 16 20:58:47 PDT 2021; root:xnu-6153.141.40.1~1/RELEASE_X86_64". Further keys can be added if there is information that would be useful, particularly if a cross-platform way to obtain the information can be found.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

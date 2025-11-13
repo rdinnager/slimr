@@ -13,18 +13,20 @@ eidos_repEach(x, count)
 \item{count}{An object of type any or integer.}
 }
 \value{
-An object of type any.
+\strong{Eidos function:} An object of type any.
 }
 \description{
-Documentation for SLiM function \code{repEach}.
+\strong{Eidos function:} Documentation for SLiM function \code{repEach}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the repetition of elements of x: each element of x is repeated. If count is a singleton, it specifies the number of times that each element of x will be repeated. Otherwise, the length of count must be equal to the length of x; in this case, each element of x is repeated a number of times specified by the corresponding value of count.
+\strong{Eidos function:} Returns the repetition of elements of x: each element of x is repeated. If count is a singleton, it specifies the number of times that each element of x will be repeated. Otherwise, the length of count must be equal to the length of x; in this case, each element of x is repeated a number of times specified by the corresponding value of count.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

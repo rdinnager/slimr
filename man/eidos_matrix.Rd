@@ -17,18 +17,20 @@ eidos_matrix(data, nrow = NULL, ncol = NULL, byrow = NULL)
 \item{byrow}{An object of type logical (singleton).}
 }
 \value{
-An object of type any.
+\strong{Eidos function:} An object of type any.
 }
 \description{
-Documentation for SLiM function \code{matrix}.
+\strong{Eidos function:} Documentation for SLiM function \code{matrix}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Creates a new matrix from the data specified by data. By default this creates a one-column matrix. If non-NULL values are supplied for nrow and/or ncol, a matrix will be made with the requested number of rows and/or columns if possible; if the length of data is not compatible with the requested dimensions, an error will result. By default, values from data will populate the matrix by columns, filling each column sequentially before moving on to the next column; if byrow is T the matrix will be populated by rows instead.
+\strong{Eidos function:} Creates a new matrix from the data specified by data. By default this creates a one-column matrix. If non-NULL values are supplied for nrow and/or ncol, a matrix will be made with the requested number of rows and/or columns if possible; if the length of data is not compatible with the requested dimensions, an error will result. By default, values from data will populate the matrix by columns, filling each column sequentially before moving on to the next column; if byrow is T the matrix will be populated by rows instead.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

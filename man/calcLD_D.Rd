@@ -16,18 +16,20 @@ calcLD_D(mut1, mut2 = NULL, haplosomes = NULL)
 \item{haplosomes}{An object of type null or Haplosome object.}
 }
 \value{
-An object of type float.
+\strong{SLiMBuiltin method:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{calcLD_D}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
+\strong{SLiMBuiltin method:} Documentation for SLiM function \code{calcLD_D}, which is a method of the SLiM class \code{\link{SLiMBuiltin}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Calculates the linkage disequilibrium (LD) coefficient D between a focal mutation mut1 and one or more mutations in mut2, evaluated across a set of haplosomes given by haplosomes. The result is a float vector that matches the size and order of mut2. The implementation of this function, viewable with functionSource(), calculates D as defined by Hill and Robertson (1968, p. 226). The coefficient D is within [p(1p), p(1p)], where p is the frequency of the more common mutation (that is, p = max(f1, f2) where f1 and f2 are the frequencies of the two mutations for which D is being calculated); for the normalized LD metric r2, which is within [0, 1], see calcLD_Rsquared(). Departures of D from zero indicate LD; more specifically, D > 0 indicates that the mutations occur together more often than expected by chance (positive linkage), whereas D < 0 indicates they occur together less often than expected by chance (negative linkage). All mutations in mut2 must be associated with the same chromosome as mut1; this function does not currently calculate LD between mutations associated with different chromosomes. If mut2 is NULL (the default), all such mutations in the population (including mut1 itself) will be used. Similarly, all haplosomes must be associated with the same chromosome as mut1. If the haplosomes parameter is NULL (the default), all such haplosomes in the population will be used. This function was written by Vitor Sudbrack (currently affiliated with University of Lausanne).
+\strong{SLiMBuiltin method:} Calculates the linkage disequilibrium (LD) coefficient D between a focal mutation mut1 and one or more mutations in mut2, evaluated across a set of haplosomes given by haplosomes. The result is a float vector that matches the size and order of mut2. The implementation of this function, viewable with functionSource(), calculates D as defined by Hill and Robertson (1968, p. 226). The coefficient D is within [p(1p), p(1p)], where p is the frequency of the more common mutation (that is, p = max(f1, f2) where f1 and f2 are the frequencies of the two mutations for which D is being calculated); for the normalized LD metric r2, which is within [0, 1], see calcLD_Rsquared(). Departures of D from zero indicate LD; more specifically, D > 0 indicates that the mutations occur together more often than expected by chance (positive linkage), whereas D < 0 indicates they occur together less often than expected by chance (negative linkage). All mutations in mut2 must be associated with the same chromosome as mut1; this function does not currently calculate LD between mutations associated with different chromosomes. If mut2 is NULL (the default), all such mutations in the population (including mut1 itself) will be used. Similarly, all haplosomes must be associated with the same chromosome as mut1. If the haplosomes parameter is NULL (the default), all such haplosomes in the population will be used. This function was written by Vitor Sudbrack (currently affiliated with University of Lausanne).
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

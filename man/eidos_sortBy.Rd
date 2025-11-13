@@ -15,18 +15,20 @@ eidos_sortBy(x, property, ascending = NULL)
 \item{ascending}{An object of type logical (singleton).}
 }
 \value{
-An object of type .
+\strong{Eidos function:} An object of type .
 }
 \description{
-Documentation for SLiM function \code{sortBy}.
+\strong{Eidos function:} Documentation for SLiM function \code{sortBy}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns a sorted copy of x: a new vector with the same elements as x, but in sorted order. If the optional logical parameter ascending is T (the default), then the sorted order will be ascending; if it is F, the sorted order will be descending. The ordering is determined according to the same logic as the < and > operators in Eidos. The property argument gives the name of the property within the elements of x according to which sorting should be done. This must be a simple property name; it cannot be a property path. For example, to sort a Mutation vector by the selection coefficients of the mutations, you would simply pass "selectionCoeff", including the quotes, for property. To sort a non-object vector, use sort(). To obtain indices for sorting, use order().
+\strong{Eidos function:} Returns a sorted copy of x: a new vector with the same elements as x, but in sorted order. If the optional logical parameter ascending is T (the default), then the sorted order will be ascending; if it is F, the sorted order will be descending. The ordering is determined according to the same logic as the < and > operators in Eidos. The property argument gives the name of the property within the elements of x according to which sorting should be done. This must be a simple property name; it cannot be a property path. For example, to sort a Mutation vector by the selection coefficients of the mutations, you would simply pass "selectionCoeff", including the quotes, for property. To sort a non-object vector, use sort(). To obtain indices for sorting, use order().
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

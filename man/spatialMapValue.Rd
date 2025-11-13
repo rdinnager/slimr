@@ -14,18 +14,20 @@ spatialMapValue(map, point)
 \item{point}{An object of type float.}
 }
 \value{
-An object of type float.
+\strong{Subpopulation method:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{spatialMapValue}, which is a method of the SLiM class \code{\link{Subpopulation}}.
+\strong{Subpopulation method:} Documentation for SLiM function \code{spatialMapValue}, which is a method of the SLiM class \code{\link{Subpopulation}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-so<SpatialMap>$ map, float point) Looks up the spatial map specified by map, and uses its mapping machinery (as defined by the gridSize, values, and interpolate parameters to defineSpatialMap()) to translate the coordinates of point into a corresponding map value. The parameter map may specify the map either as a SpatialMap object, or by its string name; in either case, the map must have been added to the subpopulation. The length of point must be equal to the spatiality of the spatial map; in other words, for a spatial map with spatiality "xz", point must be of length 2, specifying the x and z coordinates of the point to be evaluated. Interpolation will automatically be used if it was enabled for the spatial map. Point coordinates are clamped into the range defined by the spatial boundaries, even if the spatial boundaries are periodic; use pointPeriodic() to wrap the point coordinates first if desired. See the documentation for defineSpatialMap() for information regarding the details of value mapping. Beginning in SLiM 3.3, point may contain more than one point to be looked up. In this case, the length of point must be an exact multiple of the spatiality of the spatial map; for a spatial map with spatiality "xz", for example, the length of point must be an exact multiple of 2, and successive pairs of elements from point (elements 0 and 1, then elements 2 and 3, etc.) will be taken as the x and z coordinates of the points to be evaluated. This allows spatialMapValue() to be used in a vectorized fashion. The mapValue() method of SpatialMap provides the same functionality directly on the SpatialMap class; spatialMapValue() is provided on Subpopulation partly for backward compatibility, but also for convenience in some usage cases.
+\strong{Subpopulation method:} Looks up the spatial map specified by map, and uses its mapping machinery (as defined by the gridSize, values, and interpolate parameters to defineSpatialMap()) to translate the coordinates of point into a corresponding map value. The parameter map may specify the map either as a SpatialMap object, or by its string name; in either case, the map must have been added to the subpopulation. The length of point must be equal to the spatiality of the spatial map; in other words, for a spatial map with spatiality "xz", point must be of length 2, specifying the x and z coordinates of the point to be evaluated. Interpolation will automatically be used if it was enabled for the spatial map. Point coordinates are clamped into the range defined by the spatial boundaries, even if the spatial boundaries are periodic; use pointPeriodic() to wrap the point coordinates first if desired. See the documentation for defineSpatialMap() for information regarding the details of value mapping. Beginning in SLiM 3.3, point may contain more than one point to be looked up. In this case, the length of point must be an exact multiple of the spatiality of the spatial map; for a spatial map with spatiality "xz", for example, the length of point must be an exact multiple of 2, and successive pairs of elements from point (elements 0 and 1, then elements 2 and 3, etc.) will be taken as the x and z coordinates of the points to be evaluated. This allows spatialMapValue() to be used in a vectorized fashion. The mapValue() method of SpatialMap provides the same functionality directly on the SpatialMap class; spatialMapValue() is provided on Subpopulation partly for backward compatibility, but also for convenience in some usage cases.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

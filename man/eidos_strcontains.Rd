@@ -15,18 +15,20 @@ eidos_strcontains(x, s, pos = NULL)
 \item{pos}{An object of type string or string or integer (singleton).}
 }
 \value{
-An object of type logical.
+\strong{Eidos function:} An object of type logical.
 }
 \description{
-Documentation for SLiM function \code{strcontains}.
+\strong{Eidos function:} Documentation for SLiM function \code{strcontains}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the occurrence of a string specified by s in each of the elements of x, starting at position pos. Position 0, the default, is the beginning of x; a position of 0 means the entire string is searched. A starting search position that is at or beyond the end of a given element of x is not an error; it just implies that a match will not be found in that element. The existences of matches are returned as a logical vector; if a match was found in a given element, the corresponding value in the returned vector is T, otherwise it is F. This function is a simplified version of strfind(), which returns the positions of matches. The strprefix() and strsuffix() functions are also related.
+\strong{Eidos function:} Returns the occurrence of a string specified by s in each of the elements of x, starting at position pos. Position 0, the default, is the beginning of x; a position of 0 means the entire string is searched. A starting search position that is at or beyond the end of a given element of x is not an error; it just implies that a match will not be found in that element. The existences of matches are returned as a logical vector; if a match was found in a given element, the corresponding value in the returned vector is T, otherwise it is F. This function is a simplified version of strfind(), which returns the positions of matches. The strprefix() and strsuffix() functions are also related.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

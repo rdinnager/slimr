@@ -13,18 +13,20 @@ eidos_all(x, ...)
 \item{...}{An object of type NA.}
 }
 \value{
-An object of type logical. Return will be of length 1 (a singleton)
+\strong{Eidos function:} An object of type logical. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{all}.
+\strong{Eidos function:} Documentation for SLiM function \code{all}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns T if all values are T in x and in any other arguments supplied; if any value is F, returns F. All arguments must be of logical type. If all arguments are zero-length, T is returned.
+\strong{Eidos function:} Returns T if all values are T in x and in any other arguments supplied; if any value is F, returns F. All arguments must be of logical type. If all arguments are zero-length, T is returned.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

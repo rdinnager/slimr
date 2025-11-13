@@ -14,18 +14,20 @@ distance(receiver, exerters = NULL)
 \item{exerters}{An object of type null or Individual object.}
 }
 \value{
-An object of type float.
+\strong{InteractionType method:} An object of type float.
 }
 \description{
-Documentation for SLiM function \code{distance}, which is a method of the SLiM class \code{\link{InteractionType}}.
+\strong{InteractionType method:} Documentation for SLiM function \code{distance}, which is a method of the SLiM class \code{\link{InteractionType}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-object<Individual>$ receiver, [No<Individual> exerters = NULL]) Returns a vector containing distances between receiver and the individuals in exerters. If exerters is NULL (the default), then a vector of the distances from receiver to all individuals in its subpopulation (including itself) is returned; this case may be handled differently internally, for greater speed, so supplying NULL is preferable to supplying the vector of all individuals in the subpopulation explicitly. Otherwise, all individuals in exerters must belong to a single subpopulation (but not necessarily the same subpopulation as receiver). The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. If the InteractionType is non-spatial, this method may not be called. Importantly, distances are calculated according to the spatiality of the InteractionType (as declared in initializeInteractionType()), not the dimensionality of the model as a whole (as declared in initializeSLiMOptions()). The distances returned are therefore the distances that would be used to calculate interaction strengths. However, distance() will return finite distances for all pairs of individuals, even if the individuals are non-interacting due to the maximum interaction distance or the interaction constraints; the distance() between an individual and itself will thus be 0. See interactionDistance() for an alternative distance definition.
+\strong{InteractionType method:} Returns a vector containing distances between receiver and the individuals in exerters. If exerters is NULL (the default), then a vector of the distances from receiver to all individuals in its subpopulation (including itself) is returned; this case may be handled differently internally, for greater speed, so supplying NULL is preferable to supplying the vector of all individuals in the subpopulation explicitly. Otherwise, all individuals in exerters must belong to a single subpopulation (but not necessarily the same subpopulation as receiver). The evaluate() method must have been previously called for the receiver and exerter subpopulations, and positions saved at evaluation time will be used. If the InteractionType is non-spatial, this method may not be called. Importantly, distances are calculated according to the spatiality of the InteractionType (as declared in initializeInteractionType()), not the dimensionality of the model as a whole (as declared in initializeSLiMOptions()). The distances returned are therefore the distances that would be used to calculate interaction strengths. However, distance() will return finite distances for all pairs of individuals, even if the individuals are non-interacting due to the maximum interaction distance or the interaction constraints; the distance() between an individual and itself will thus be 0. See interactionDistance() for an alternative distance definition.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

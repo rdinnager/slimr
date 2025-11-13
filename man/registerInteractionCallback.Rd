@@ -29,18 +29,20 @@ registerInteractionCallback(
 \item{end}{An object of type null or integer (singleton).}
 }
 \value{
-An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
+\strong{Community method:} An object of type SLiMEidosBlock object. Return will be of length 1 (a singleton)
 }
 \description{
-Documentation for SLiM function \code{registerInteractionCallback}, which is a method of the SLiM class \code{\link{Community}}.
+\strong{Community method:} Documentation for SLiM function \code{registerInteractionCallback}, which is a method of the SLiM class \code{\link{Community}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-Nis$ id, string$ source, io<InteractionType>$ intType, [Nio<Subpopulation>$ subpop = NULL], [Ni$ start = NULL], [Ni$ end = NULL]) Register a block of Eidos source code, represented as the string singleton source, as an Eidos interaction() callback in the current simulation (global to the community), with a required interaction type intType (which may be an integer identifier), optional exerter subpopulation subpop (which may also be an integer identifier, or NULL, the default, to indicate all subpopulations), and optional start and end ticks all limiting its applicability. The script block will be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered callback is added to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it will be eligible to execute the next time an InteractionType is evaluated. The new SLiMEidosBlock will be defined as a global variable immediately by this method, and will also be returned by this method.
+\strong{Community method:} Register a block of Eidos source code, represented as the string singleton source, as an Eidos interaction() callback in the current simulation (global to the community), with a required interaction type intType (which may be an integer identifier), optional exerter subpopulation subpop (which may also be an integer identifier, or NULL, the default, to indicate all subpopulations), and optional start and end ticks all limiting its applicability. The script block will be given identifier id (specified as an integer, or as a string symbolic name such as "s5"); this may be NULL if there is no need to be able to refer to the block later. The registered callback is added to the end of the list of registered SLiMEidosBlock objects, and is active immediately; it will be eligible to execute the next time an InteractionType is evaluated. The new SLiMEidosBlock will be defined as a global variable immediately by this method, and will also be returned by this method.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

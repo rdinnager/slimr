@@ -32,18 +32,20 @@ plot_abline(
 \item{alpha}{An object of type float.}
 }
 \value{
-An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
+\strong{Plot method:} An object of type void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void or void.
 }
 \description{
-Documentation for SLiM function \code{abline}, which is a method of the SLiM class \code{\link{Plot}}.
+\strong{Plot method:} Documentation for SLiM function \code{abline}, which is a method of the SLiM class \code{\link{Plot}}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM method.
 
-[Nif a = NULL], [Nif b = NULL], [Nif h = NULL], [Nif v = NULL], [string color = "red"], [numeric lwd = 1.0], [float alpha = 1.0]) Adds one or more straight lines to the plot. There are three supported modes of operation for this method. In the first mode, the lines are specified by a and b, representing the intercepts and slopes of the lines, respectively; in this case, a and b may be the same length, or one of them may be a singleton to provide a single value used for all of the lines specified by the other. In the second mode, the lines are specified by h, representing the y-values of horizontal lines. In the third mode, the lines are specified by v, representing the x-values of vertical lines. These modes are mutually exclusive and cannot be mixed within one call to abline(). The new lines will be plotted on top of any previously added data. The lines will be drawn in colors, line widths, and alpha (opacity) values specified by color, lwd, and alpha, each of which may be either a singleton (to provide one value used for all lines) or a vector equal in length to the number of lines plotted (to provide one value per line). Alpha values must be in [0.0, 1.0], where 0.0 is fully transparent and 1.0 is fully opaque. See also lines() and segments() for more common approaches to line plotting. The abline() method is different, and more specialized; the lines plotted by it span the full extent of the plot area, and their coordinates are not considered when dynamically resizing the axes of the plot (i.e., when createPlot() is not passed explicit, non-NULL values for xrange or yrange). This is typically useful for plotting things such as expected values and fit lines.
+\strong{Plot method:} Adds one or more straight lines to the plot. There are three supported modes of operation for this method. In the first mode, the lines are specified by a and b, representing the intercepts and slopes of the lines, respectively; in this case, a and b may be the same length, or one of them may be a singleton to provide a single value used for all of the lines specified by the other. In the second mode, the lines are specified by h, representing the y-values of horizontal lines. In the third mode, the lines are specified by v, representing the x-values of vertical lines. These modes are mutually exclusive and cannot be mixed within one call to abline(). The new lines will be plotted on top of any previously added data. The lines will be drawn in colors, line widths, and alpha (opacity) values specified by color, lwd, and alpha, each of which may be either a singleton (to provide one value used for all lines) or a vector equal in length to the number of lines plotted (to provide one value per line). Alpha values must be in [0.0, 1.0], where 0.0 is fully transparent and 1.0 is fully opaque. See also lines() and segments() for more common approaches to line plotting. The abline() method is different, and more specialized; the lines plotted by it span the full extent of the plot area, and their coordinates are not considered when dynamically resizing the axes of the plot (i.e., when createPlot() is not passed explicit, non-NULL values for xrange or yrange). This is typically useful for plotting things such as expected values and fit lines.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

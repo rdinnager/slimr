@@ -13,18 +13,20 @@ eidos_matrixMult(x, y)
 \item{y}{An object of type numeric or numeric.}
 }
 \value{
-An object of type numeric.
+\strong{Eidos function:} An object of type numeric.
 }
 \description{
-Documentation for SLiM function \code{matrixMult}.
+\strong{Eidos function:} Documentation for SLiM function \code{matrixMult}.
 Note that the R function is a stub, it does not do anything in R (except bring up this documentation). It will only do
 anything useful when used inside a \code{\link{slim_block}} function further nested in a \code{\link{slim_script}}
 function call, where it will be translated into valid SLiM code as part of a full SLiM script.
 }
 \details{
-Documentation for this function can be found in the official SLiM manual at \url{https://messerlab.org/slim/}.
+See \strong{Details} below for complete documentation of this SLiM function.
 
-Returns the result of matrix multiplication of x with y. In Eidos (as in R), with two matrices A and B the simple product A * B multiplies the corresponding elements of the matrices; in other words, if X is the result of A * B, then Xij = Aij * Bij. This is parallel to the definition of other operators; A + B adds the corresponding elements of the matrices (Xij = Aij + Bij), etc. In R, true matrix multiplication is achieved with a special operator, %*%; in Eidos, the matrixMult() function is used instead. Both x and y must be matrices, and must be conformable according to the standard definition of matrix multiplication (i.e., if x is an n x m matrix then y must be a m x p matrix, and the result will be a n x p matrix). Vectors will not be promoted to matrices by this function, even if such promotion would lead to a conformable matrix.
+\strong{Eidos function:} Returns the result of matrix multiplication of x with y. In Eidos (as in R), with two matrices A and B the simple product A * B multiplies the corresponding elements of the matrices; in other words, if X is the result of A * B, then Xij = Aij * Bij. This is parallel to the definition of other operators; A + B adds the corresponding elements of the matrices (Xij = Aij + Bij), etc. In R, true matrix multiplication is achieved with a special operator, %*%; in Eidos, the matrixMult() function is used instead. Both x and y must be matrices, and must be conformable according to the standard definition of matrix multiplication (i.e., if x is an n x m matrix then y must be a m x p matrix, and the result will be a n x p matrix). Vectors will not be promoted to matrices by this function, even if such promotion would lead to a conformable matrix.
+
+Full documentation for this function can be found in the official SLiM manual: \url{https://messerlab.org/slim/}.
 }
 \section{Copyright}{
 

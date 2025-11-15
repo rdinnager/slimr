@@ -9,10 +9,10 @@ make_minimal_script <- function(end_gen = 10) {
       initializeGenomicElementType("g1", m1, 1.0)
       initializeGenomicElement(g1, 0, 99999)
       initializeRecombinationRate(1e-8)
-    }),
+    })
     slim_block(1, early(), {
       sim$addSubpop("p1", 100)
-    }),
+    })
     slim_block(!!end_gen, late(), {
       sim$simulationFinished()
     })
@@ -28,10 +28,10 @@ make_template_script <- function() {
       initializeGenomicElementType("g1", m1, 1.0)
       initializeGenomicElement(g1, 0, 99999)
       initializeRecombinationRate(1e-8)
-    }),
+    })
     slim_block(1, early(), {
       sim$addSubpop("p1", r_template("pop_size", 100))
-    }),
+    })
     slim_block(10, late(), {
       sim$simulationFinished()
     })
@@ -47,10 +47,10 @@ make_error_script <- function() {
       initializeGenomicElementType("g1", m1, 1.0)
       initializeGenomicElement(g1, 0, 99999)
       initializeRecombinationRate(1e-8)
-    }),
+    })
     slim_block(1, early(), {
       sim$addSubpop("p1", 100)
-    }),
+    })
     slim_block(5, late(), {
       # This will cause an error: invalid function call
       stop("ERROR")
@@ -72,7 +72,7 @@ test_that("unrendered script gets auto-rendered with inform message", {
 
   # Running should auto-render and inform user
   expect_message(
-    result <- slim_run(script),
+    result <- slim_run(script)
     "slimr_script is unrendered. Trying to render now..."
   )
 
@@ -91,8 +91,8 @@ test_that("rendered script doesn't re-render", {
 
   # Running should NOT show auto-render message
   expect_no_message(
-    result <- slim_run(rendered_script),
-    regexp = "unrendered"
+    result <- slim_run(rendered_script)
+    
   )
 
   expect_s3_class(result, "slimr_results")
@@ -109,8 +109,8 @@ test_that("script without templates is marked as rendered", {
 
   # Should not show auto-render message
   expect_no_message(
-    result <- slim_run(script),
-    regexp = "unrendered"
+    result <- slim_run(script)
+    
   )
 })
 
@@ -145,7 +145,7 @@ test_that("successful run shows 'Success!' message", {
   script <- make_minimal_script()
 
   expect_message(
-    result <- slim_run(script),
+    result <- slim_run(script)
     "Success!"
   )
 })
@@ -171,7 +171,7 @@ test_that("throw_error = FALSE returns result with error field", {
 
   # Should warn but not error
   expect_warning(
-    result <- slim_run(script, throw_error = FALSE),
+    result <- slim_run(script, throw_error = FALSE)
     "Failed!"
   )
 
@@ -187,7 +187,7 @@ test_that("throw_error default is FALSE", {
 
   # Default should not throw
   expect_warning(
-    result <- slim_run(script),
+    result <- slim_run(script)
     "Failed!"
   )
 
@@ -216,7 +216,7 @@ test_that("collection with parallel = FALSE runs sequentially", {
 
   script <- make_template_script()
   coll <- slim_script_render(script, template = data.frame(
-    mut_rate = c(1e-7, 1e-6, 1e-5),
+    mut_rate = c(1e-7, 1e-6, 1e-5)
     pop_size = c(50, 75, 100)
   ))
 
@@ -235,7 +235,7 @@ test_that("collection results have correct structure", {
 
   script <- make_template_script()
   coll <- slim_script_render(script, template = data.frame(
-    mut_rate = c(1e-7, 1e-6),
+    mut_rate = c(1e-7, 1e-6)
     pop_size = c(50, 100)
   ))
 
@@ -256,7 +256,7 @@ test_that("collection with parallel = TRUE requires future backend", {
 
   script <- make_template_script()
   coll <- slim_script_render(script, template = data.frame(
-    mut_rate = c(1e-7, 1e-6),
+    mut_rate = c(1e-7, 1e-6)
     pop_size = c(50, 100)
   ))
 
@@ -369,7 +369,7 @@ test_that("slim_run.character concatenates multi-element vectors", {
   )
 
   expect_warning(
-    result <- slim_run(slim_code),
+    result <- slim_run(slim_code)
     "Concatenating them with newline separators"
   )
 
@@ -446,12 +446,12 @@ test_that("assert_slim_installed is called for all methods", {
 
   # If SLiM is not installed, should error
   expect_error(
-    slim_run(make_minimal_script()),
+    slim_run(make_minimal_script())
     "SLiM"
   )
 
   expect_error(
-    slim_run("initialize() { }"),
+    slim_run("initialize() { }")
     "SLiM"
   )
 })

@@ -1,0 +1,10 @@
+test_that("Recipe 8.2.2: Reading a recombination map from a file works", {
+  skip_if_not(slim_is_avail())
+  skip_if(Sys.getenv("TEST_RECIPES") != "true")
+
+  source(system.file("extdata/slim_recipes/converted/recipe_8_2_2.R", package = "slimr"))
+  result <- slim_run(recipe_8_2_2_script)
+
+  expect_equal(result$exit_status, 0)
+  expect_true(file.exists(result$output_file))
+})

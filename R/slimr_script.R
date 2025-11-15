@@ -329,10 +329,12 @@ obj_print_data.slimr_script <- function(x, add_block_names = TRUE, suppress_cat 
                                    stringr::regex("\\{\n(.*)\n\\}$", dotall = TRUE))
 
     prettify_code <- function(code) {
-      code <- stringr::str_split(code, "\n")[[1]] %>%
-        prettycode::highlight() %>%
-        paste(collapse = "\n")
-      code
+      # Vectorized version: handle each code block independently
+      purrr::map_chr(code, function(x) {
+        stringr::str_split(x, "\n")[[1]] %>%
+          prettycode::highlight() %>%
+          paste(collapse = "\n")
+      })
     }
 
     string <- stringr::str_replace_all(string,
